@@ -14,62 +14,62 @@ using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    /// <summary> The type used for update operations of the Policy. </summary>
-    public partial class PolicyPatch : IJsonModel<PolicyPatch>
+    /// <summary> Request payload for revoking device credentials. </summary>
+    public partial class DeviceCredentialsRevokeRequest : IJsonModel<DeviceCredentialsRevokeRequest>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PolicyPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DeviceCredentialsRevokeRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceCredentialsRevokeRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePolicyPatch(document.RootElement, options);
+                        return DeserializeDeviceCredentialsRevokeRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceCredentialsRevokeRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceCredentialsRevokeRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceCredentialsRevokeRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PolicyPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeviceCredentialsRevokeRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PolicyPatch IPersistableModel<PolicyPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DeviceCredentialsRevokeRequest IPersistableModel<DeviceCredentialsRevokeRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PolicyPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeviceCredentialsRevokeRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="policyPatch"> The <see cref="PolicyPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PolicyPatch policyPatch)
+        /// <param name="deviceCredentialsRevokeRequest"> The <see cref="DeviceCredentialsRevokeRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeviceCredentialsRevokeRequest deviceCredentialsRevokeRequest)
         {
-            if (policyPatch == null)
+            if (deviceCredentialsRevokeRequest == null)
             {
                 return null;
             }
-            return RequestContent.Create(policyPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(deviceCredentialsRevokeRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PolicyPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeviceCredentialsRevokeRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceCredentialsRevokeRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceCredentialsRevokeRequest)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Disable))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("disable"u8);
+                writer.WriteBooleanValue(Disable.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -109,40 +109,40 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PolicyPatch IJsonModel<PolicyPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DeviceCredentialsRevokeRequest IJsonModel<DeviceCredentialsRevokeRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PolicyPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DeviceCredentialsRevokeRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceCredentialsRevokeRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceCredentialsRevokeRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePolicyPatch(document.RootElement, options);
+            return DeserializeDeviceCredentialsRevokeRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PolicyPatch DeserializePolicyPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeviceCredentialsRevokeRequest DeserializeDeviceCredentialsRevokeRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            PolicyUpdateProperties properties = default;
+            bool? disable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("properties"u8))
+                if (prop.NameEquals("disable"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = PolicyUpdateProperties.DeserializePolicyUpdateProperties(prop.Value, options);
+                    disable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PolicyPatch(properties, additionalBinaryDataProperties);
+            return new DeviceCredentialsRevokeRequest(disable, additionalBinaryDataProperties);
         }
     }
 }

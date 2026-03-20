@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             var testModeEnvVar = Environment.GetEnvironmentVariable("AZURE_TEST_MODE") ?? "(not set → defaults to Playback)";
             Console.WriteLine($"\n  AZURE_TEST_MODE = {testModeEnvVar}");
             // This allows running tests with specified test modes without needing to set env vars locally (e.g. in Visual Studio Test Explorer):
-            // Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "PLAYBACK");
+            //Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "RECORD");
         }
 
         // Iteration number appended to the suffix for resource name uniqueness.
@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
         private readonly AzureLocation _region;
         private readonly string _namespaceName;
         private readonly string _policyName;
+        private readonly string _byorPolicyName;
 
         // PREREQUISITES
         // =============
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             _resourceGroupName = $"adr-sdk-test-cms-{suffix}";
             _namespaceName = $"cms-test-namespace-{suffix}";
             _policyName = $"cms-test-policy-{suffix}";
+            _byorPolicyName = $"cms-test-byor-policy-{suffix}";
         }
 
         [RecordedTest]
@@ -118,7 +120,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Credential created successfully\n");
 
                 // Allow backend propagation after credential creation
-                await DelayForPropagationAsync(10, "Waiting for credential propagation...", sw);
+                // await DelayForPropagationAsync(10, "Waiting for credential propagation...", sw);
             }
             else
             {
@@ -152,9 +154,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                     leafCertificateConfig.ValidityPeriodInDays);
 
                 // Create policy data with certificate configuration
+                // Note: PolicyData is a proxy resource in 2026-03-01-preview (no Location/Tags)
                 var policyData = new PolicyData()
                 {
-                    Location = _region.Name,
                     Properties = new PolicyProperties()
                     {
                         Certificate = certificateConfig
@@ -169,12 +171,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                     CancellationToken.None);
                 policyResource = policyOperation.Value;
                 Assert.IsNotNull(policyResource);
-                Assert.AreEqual(policyResource.Data.Location, _region.Name);
                 Assert.AreEqual(policyResource.Data.Name, _policyName);
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy created successfully\n");
 
                 // Allow backend propagation after policy creation
-                await DelayForPropagationAsync(10, "Waiting for policy propagation...", sw);
+                // await DelayForPropagationAsync(10, "Waiting for policy propagation...", sw);
             }
             else
             {
@@ -188,7 +189,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             // Verify policy was created or retrieved successfully
             Assert.IsNotNull(policyResource.Data);
-            Assert.AreEqual(policyResource.Data.Location, _region.Name);
             Assert.IsNotNull(policyResource.Data.Properties);
             Assert.IsNotNull(policyResource.Data.Properties.Certificate);
 
@@ -226,10 +226,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.IsTrue(syncOperation.HasCompleted);
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Synchronization completed successfully\n");
 
-            // Allow extra time for IoT Hub synchronization propagation
-            await DelayForPropagationAsync(10, "Waiting for IoT Hub synchronization propagation...", sw);
-
-            // Step 6: GET fresh policy after sync before updating
+            // Step 6: GET policy after sync before updating
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 6: Getting fresh policy after sync...");
             var policyGetAfterSyncResponse = await policyCollection.GetAsync(_policyName, CancellationToken.None);
             policyResource = policyGetAfterSyncResponse.Value;
@@ -237,6 +234,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Fresh policy retrieved (current validity: {currentValidity} days)\n");
 
             // Step 7: Test Policy Update - minimal change (only validity period)
+            // NOTE: Use the int-only CertificateConfiguration constructor for PATCH operations.
+            // This omits certificateAuthorityConfiguration from the payload, which contains
+            // immutable properties (keyType, bringYourOwnRoot) that the 2026-03-01-preview API
+            // rejects on PATCH. A custom CertificateConfiguration.Serialization.cs in
+            // src/Custom/Models/ makes certificateAuthorityConfiguration conditional (null-safe).
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 7: Testing UPDATE operation - changing validity from {currentValidity} to 60 days...");
 
             // Output policy state before update
@@ -246,10 +248,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             var policyPatch = new PolicyPatch();
             policyPatch.Properties = new PolicyUpdateProperties()
             {
-                Certificate = new CertificateConfiguration(
-                    policyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration,  // Reuse existing config
-                    60
-                )
+                // Use int-only constructor — omits certificateAuthorityConfiguration for PATCH
+                Certificate = new CertificateConfiguration(60)
             };
 
             var updateOperation = await policyResource.UpdateAsync(
@@ -257,12 +257,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 policyPatch,
                 CancellationToken.None);
 
-            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Update operation initiated (not waiting for completion)");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Update operation completed");
 
             // Allow time for update to propagate
-            await DelayForPropagationAsync(20, "Waiting for update to propagate...", sw);
+            //await DelayForPropagationAsync(20, "Waiting for update to propagate...", sw);
 
-            // GET fresh policy after update to verify changes
+            // GET policy after update to verify changes
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Getting fresh policy after update...");
             var policyGetAfterUpdateResponse = await policyCollection.GetAsync(_policyName, CancellationToken.None);
             policyResource = policyGetAfterUpdateResponse.Value;
@@ -287,15 +287,99 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.IsTrue(policyDeleteOperation.HasCompleted);
 
             // Allow backend cleanup after policy deletion
-            await DelayForPropagationAsync(10, "Waiting for policy deletion propagation...", sw);
+            // await DelayForPropagationAsync(10, "Waiting for policy deletion propagation...", sw);
 
             // Verify policy no longer exists
             bool policyExistsAfterDelete = await policyCollection.ExistsAsync(_policyName, CancellationToken.None);
             Assert.IsFalse(policyExistsAfterDelete);
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy deleted successfully\n");
 
+            // ============================================================
+            // BYOR (Bring Your Own Root) Policy Flow
+            // ============================================================
+
+            // Step 9: Create a BYOR-enabled policy
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 9: Creating BYOR-enabled policy '{_byorPolicyName}'...");
+            var byorCertAuthorityConfig = new CertificateAuthorityConfiguration(SupportedKeyType.ECC)
+            {
+                BringYourOwnRoot = new BringYourOwnRoot(enabled: true)
+            };
+            var byorCertConfig = new CertificateConfiguration(
+                byorCertAuthorityConfig,
+                leafCertificateValidityPeriodInDays: 90);
+
+            var byorPolicyData = new PolicyData()
+            {
+                Properties = new PolicyProperties()
+                {
+                    Certificate = byorCertConfig
+                }
+            };
+
+            var byorPolicyOperation = await policyCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                _byorPolicyName,
+                byorPolicyData,
+                CancellationToken.None);
+            var byorPolicyResource = byorPolicyOperation.Value;
+
+            Assert.IsNotNull(byorPolicyResource);
+            Assert.AreEqual(byorPolicyResource.Data.Name, _byorPolicyName);
+            Assert.IsNotNull(byorPolicyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.BringYourOwnRoot);
+            Assert.IsTrue(byorPolicyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.BringYourOwnRoot.Enabled);
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ BYOR policy created successfully");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ BYOR enabled: {byorPolicyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.BringYourOwnRoot.Enabled}");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ BYOR status: {byorPolicyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.BringYourOwnRoot.Status}\n");
+
+            // Step 10: Update BYOR policy — change validity period
+            // This tests that both keyType AND bringYourOwnRoot are omitted from PATCH.
+            // The int-only CertificateConfiguration constructor leaves CertificateAuthorityConfiguration
+            // null, and the custom serialization skips it — preventing immutable properties from
+            // being sent to the API.
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 10: Updating BYOR policy - changing validity from 90 to 45 days...");
+
+            var byorPolicyPatch = new PolicyPatch();
+            byorPolicyPatch.Properties = new PolicyUpdateProperties()
+            {
+                // Use int-only constructor — omits certificateAuthorityConfiguration for PATCH
+                Certificate = new CertificateConfiguration(45)
+            };
+
+            var byorUpdateOperation = await byorPolicyResource.UpdateAsync(
+                WaitUntil.Completed,
+                byorPolicyPatch,
+                CancellationToken.None);
+
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Update operation completed");
+
+            // GET fresh BYOR policy after update to verify changes
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Getting fresh BYOR policy after update...");
+            var byorPolicyGetResponse = await policyCollection.GetAsync(_byorPolicyName, CancellationToken.None);
+            byorPolicyResource = byorPolicyGetResponse.Value;
+
+            // Verify update was successful
+            Assert.AreEqual(45,
+                byorPolicyResource.Data.Properties.Certificate.LeafCertificateValidityPeriodInDays);
+            // Verify BYOR is still enabled after update
+            Assert.IsTrue(byorPolicyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.BringYourOwnRoot.Enabled);
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ BYOR policy updated successfully, validity now 45 days");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ BYOR still enabled: {byorPolicyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.BringYourOwnRoot.Enabled}\n");
+
+            // Step 11: Delete BYOR policy
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 11: Deleting BYOR policy '{_byorPolicyName}'...");
+            var byorPolicyDeleteOperation = await byorPolicyResource.DeleteAsync(
+                WaitUntil.Completed,
+                CancellationToken.None);
+
+            Assert.IsNotNull(byorPolicyDeleteOperation);
+            Assert.IsTrue(byorPolicyDeleteOperation.HasCompleted);
+
+            bool byorPolicyExistsAfterDelete = await policyCollection.ExistsAsync(_byorPolicyName, CancellationToken.None);
+            Assert.IsFalse(byorPolicyExistsAfterDelete);
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ BYOR policy deleted successfully\n");
+
             // Clean up: Delete Credential
-            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 9: Deleting credential...");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 12: Deleting credential...");
             var credentialDeleteOperation = await credentialResource.DeleteAsync(
                 WaitUntil.Completed,
                 CancellationToken.None);
@@ -305,7 +389,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.IsTrue(credentialDeleteOperation.HasCompleted);
 
             // Allow backend cleanup after credential deletion
-            await DelayForPropagationAsync(10, "Waiting for credential deletion propagation...", sw);
+            // await DelayForPropagationAsync(10, "Waiting for credential deletion propagation...", sw);
 
             // Verify credential no longer exists
             bool credentialExistsAfterDelete = await credentialCollection.ExistsAsync(CancellationToken.None);
