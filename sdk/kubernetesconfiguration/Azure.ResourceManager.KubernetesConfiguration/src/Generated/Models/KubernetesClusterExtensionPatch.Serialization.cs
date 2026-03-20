@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesClusterExtensionPatch : IUtf8JsonSerializable, IJsonModel<KubernetesClusterExtensionPatch>
+    /// <summary> The Extension Patch Request object. </summary>
+    public partial class KubernetesClusterExtensionPatch : IJsonModel<KubernetesClusterExtensionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterExtensionPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KubernetesClusterExtensionPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKubernetesClusterExtensionPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KubernetesClusterExtensionPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KubernetesClusterExtensionPatch IPersistableModel<KubernetesClusterExtensionPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KubernetesClusterExtensionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="kubernetesClusterExtensionPatch"> The <see cref="KubernetesClusterExtensionPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(KubernetesClusterExtensionPatch kubernetesClusterExtensionPatch)
+        {
+            if (kubernetesClusterExtensionPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(kubernetesClusterExtensionPatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KubernetesClusterExtensionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,82 +80,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesClusterExtensionPatch)} does not support writing '{format}' format.");
             }
-
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("autoUpgradeMinorVersion"u8);
-                writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(ReleaseTrain))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("releaseTrain"u8);
-                writer.WriteStringValue(ReleaseTrain);
-            }
-            if (Optional.IsDefined(Version))
-            {
-                if (Version != null)
-                {
-                    writer.WritePropertyName("version"u8);
-                    writer.WriteStringValue(Version);
-                }
-                else
-                {
-                    writer.WriteNull("version");
-                }
-            }
-            if (Optional.IsCollectionDefined(ConfigurationSettings))
-            {
-                if (ConfigurationSettings != null)
-                {
-                    writer.WritePropertyName("configurationSettings"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in ConfigurationSettings)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("configurationSettings");
-                }
-            }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
-            {
-                if (ConfigurationProtectedSettings != null)
-                {
-                    writer.WritePropertyName("configurationProtectedSettings"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in ConfigurationProtectedSettings)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("configurationProtectedSettings");
-                }
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -112,145 +107,50 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
         }
 
-        KubernetesClusterExtensionPatch IJsonModel<KubernetesClusterExtensionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KubernetesClusterExtensionPatch IJsonModel<KubernetesClusterExtensionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KubernetesClusterExtensionPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesClusterExtensionPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKubernetesClusterExtensionPatch(document.RootElement, options);
         }
 
-        internal static KubernetesClusterExtensionPatch DeserializeKubernetesClusterExtensionPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KubernetesClusterExtensionPatch DeserializeKubernetesClusterExtensionPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? autoUpgradeMinorVersion = default;
-            string releaseTrain = default;
-            string version = default;
-            IDictionary<string, string> configurationSettings = default;
-            IDictionary<string, string> configurationProtectedSettings = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            KubernetesClusterExtensionPatchProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("autoUpgradeMinorVersion"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autoUpgradeMinorVersion = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("releaseTrain"u8))
-                        {
-                            releaseTrain = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("version"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                version = null;
-                                continue;
-                            }
-                            version = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("configurationSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                configurationSettings = null;
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            configurationSettings = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("configurationProtectedSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                configurationProtectedSettings = null;
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            configurationProtectedSettings = dictionary;
-                            continue;
-                        }
-                    }
+                    properties = KubernetesClusterExtensionPatchProperties.DeserializeKubernetesClusterExtensionPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new KubernetesClusterExtensionPatch(
-                autoUpgradeMinorVersion,
-                releaseTrain,
-                version,
-                configurationSettings ?? new ChangeTrackingDictionary<string, string>(),
-                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData);
+            return new KubernetesClusterExtensionPatch(properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<KubernetesClusterExtensionPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KubernetesClusterExtensionPatch IPersistableModel<KubernetesClusterExtensionPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKubernetesClusterExtensionPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KubernetesClusterExtensionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

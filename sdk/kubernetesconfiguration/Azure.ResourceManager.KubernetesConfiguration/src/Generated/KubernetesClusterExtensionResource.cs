@@ -6,51 +6,39 @@
 #nullable disable
 
 using System;
-using System.Globalization;
-using System.Linq;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.KubernetesConfiguration.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
     /// <summary>
-    /// A Class representing a KubernetesClusterExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KubernetesClusterExtensionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetKubernetesClusterExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetKubernetesClusterExtension method.
+    /// A class representing a KubernetesClusterExtension along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KubernetesClusterExtensionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetKubernetesClusterExtensions method.
     /// </summary>
     public partial class KubernetesClusterExtensionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="KubernetesClusterExtensionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="clusterRp"> The clusterRp. </param>
-        /// <param name="clusterResourceName"> The clusterResourceName. </param>
-        /// <param name="clusterName"> The clusterName. </param>
-        /// <param name="extensionName"> The extensionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _kubernetesClusterExtensionExtensionsClientDiagnostics;
-        private readonly ExtensionsRestOperations _kubernetesClusterExtensionExtensionsRestClient;
+        private readonly ClientDiagnostics _extensionsClientDiagnostics;
+        private readonly Extensions _extensionsRestClient;
+        private readonly ClientDiagnostics _operationStatusClientDiagnostics;
+        private readonly OperationStatus _operationStatusRestClient;
         private readonly KubernetesClusterExtensionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.KubernetesConfiguration/extensions";
 
-        /// <summary> Initializes a new instance of the <see cref="KubernetesClusterExtensionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of KubernetesClusterExtensionResource for mocking. </summary>
         protected KubernetesClusterExtensionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="KubernetesClusterExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KubernetesClusterExtensionResource(ArmClient client, KubernetesClusterExtensionData data) : this(client, data.Id)
@@ -59,71 +47,97 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="KubernetesClusterExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KubernetesClusterExtensionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _kubernetesClusterExtensionExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string kubernetesClusterExtensionExtensionsApiVersion);
-            _kubernetesClusterExtensionExtensionsRestClient = new ExtensionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, kubernetesClusterExtensionExtensionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string kubernetesClusterExtensionApiVersion);
+            _extensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration", ResourceType.Namespace, Diagnostics);
+            _extensionsRestClient = new Extensions(_extensionsClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2024-11-01");
+            _operationStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration", ResourceType.Namespace, Diagnostics);
+            _operationStatusRestClient = new OperationStatus(_operationStatusClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2024-11-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual KubernetesClusterExtensionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterRp"> The clusterRp. </param>
+        /// <param name="clusterResourceName"> The clusterResourceName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="extensionName"> The extensionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets Kubernetes Cluster Extension.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Extensions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Extensions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterExtensionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="KubernetesClusterExtensionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<KubernetesClusterExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionResource.Get");
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionResource.Get");
             scope.Start();
             try
             {
-                var response = await _kubernetesClusterExtensionExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _extensionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<KubernetesClusterExtensionData> response = Response.FromValue(KubernetesClusterExtensionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new KubernetesClusterExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -137,120 +151,42 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// Gets Kubernetes Cluster Extension.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Extensions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Extensions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterExtensionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="KubernetesClusterExtensionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<KubernetesClusterExtensionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionResource.Get");
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionResource.Get");
             scope.Start();
             try
             {
-                var response = _kubernetesClusterExtensionExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _extensionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<KubernetesClusterExtensionData> response = Response.FromValue(KubernetesClusterExtensionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new KubernetesClusterExtensionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Kubernetes Cluster Extension. This will cause the Agent to Uninstall the extension from the cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Extensions_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="forceDelete"> Delete the extension resource in Azure - not the normal asynchronous delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? forceDelete = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _kubernetesClusterExtensionExtensionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete, cancellationToken).ConfigureAwait(false);
-                var operation = new KubernetesConfigurationArmOperation(_kubernetesClusterExtensionExtensionsClientDiagnostics, Pipeline, _kubernetesClusterExtensionExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Kubernetes Cluster Extension. This will cause the Agent to Uninstall the extension from the cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Extensions_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="forceDelete"> Delete the extension resource in Azure - not the normal asynchronous delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? forceDelete = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _kubernetesClusterExtensionExtensionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete, cancellationToken);
-                var operation = new KubernetesConfigurationArmOperation(_kubernetesClusterExtensionExtensionsClientDiagnostics, Pipeline, _kubernetesClusterExtensionExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -263,20 +199,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// Patch an existing Kubernetes Cluster Extension.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Extensions_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Extensions_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterExtensionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="KubernetesClusterExtensionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,14 +224,27 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionResource.Update");
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionResource.Update");
             scope.Start();
             try
             {
-                var response = await _kubernetesClusterExtensionExtensionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new KubernetesConfigurationArmOperation<KubernetesClusterExtensionResource>(new KubernetesClusterExtensionOperationSource(Client), _kubernetesClusterExtensionExtensionsClientDiagnostics, Pipeline, _kubernetesClusterExtensionExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _extensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, KubernetesClusterExtensionPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                KubernetesConfigurationArmOperation<KubernetesClusterExtensionResource> operation = new KubernetesConfigurationArmOperation<KubernetesClusterExtensionResource>(
+                    new KubernetesClusterExtensionOperationSource(Client),
+                    _extensionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -309,20 +258,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// Patch an existing Kubernetes Cluster Extension.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Extensions_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Extensions_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterExtensionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="KubernetesClusterExtensionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -334,15 +283,234 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionResource.Update");
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionResource.Update");
             scope.Start();
             try
             {
-                var response = _kubernetesClusterExtensionExtensionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new KubernetesConfigurationArmOperation<KubernetesClusterExtensionResource>(new KubernetesClusterExtensionOperationSource(Client), _kubernetesClusterExtensionExtensionsClientDiagnostics, Pipeline, _kubernetesClusterExtensionExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _extensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, KubernetesClusterExtensionPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                KubernetesConfigurationArmOperation<KubernetesClusterExtensionResource> operation = new KubernetesConfigurationArmOperation<KubernetesClusterExtensionResource>(
+                    new KubernetesClusterExtensionOperationSource(Client),
+                    _extensionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Kubernetes Cluster Extension. This will cause the Agent to Uninstall the extension from the cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Extensions_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="KubernetesClusterExtensionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="forceDelete"> Delete the extension resource in Azure - not the normal asynchronous delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? forceDelete = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _extensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, forceDelete, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                KubernetesConfigurationArmOperation operation = new KubernetesConfigurationArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Kubernetes Cluster Extension. This will cause the Agent to Uninstall the extension from the cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Extensions_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="KubernetesClusterExtensionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="forceDelete"> Delete the extension resource in Azure - not the normal asynchronous delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? forceDelete = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _extensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, forceDelete, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                KubernetesConfigurationArmOperation operation = new KubernetesConfigurationArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get Async Operation status
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}/operations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Extensions_OperationStatusGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="KubernetesClusterExtensionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<OperationStatusResult>> GetAsync(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _operationStatusClientDiagnostics.CreateScope("KubernetesClusterExtensionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _operationStatusRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationStatusResult> response = Response.FromValue(OperationStatusResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get Async Operation status
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensions/{extensionName}/operations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Extensions_OperationStatusGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="KubernetesClusterExtensionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<OperationStatusResult> Get(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _operationStatusClientDiagnostics.CreateScope("KubernetesClusterExtensionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _operationStatusRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationStatusResult> response = Response.FromValue(OperationStatusResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {

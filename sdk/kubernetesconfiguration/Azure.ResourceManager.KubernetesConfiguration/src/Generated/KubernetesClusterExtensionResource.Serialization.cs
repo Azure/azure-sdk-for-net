@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
+    /// <summary></summary>
     public partial class KubernetesClusterExtensionResource : IJsonModel<KubernetesClusterExtensionData>
     {
-        private static KubernetesClusterExtensionData s_dataDeserializationInstance;
-        private static KubernetesClusterExtensionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<KubernetesClusterExtensionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<KubernetesClusterExtensionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new KubernetesClusterExtensionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KubernetesClusterExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesClusterExtensionData>)Data).Write(writer, options);
 
-        KubernetesClusterExtensionData IJsonModel<KubernetesClusterExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesClusterExtensionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KubernetesClusterExtensionData IJsonModel<KubernetesClusterExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<KubernetesClusterExtensionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KubernetesClusterExtensionData>(Data, options, AzureResourceManagerKubernetesConfigurationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         KubernetesClusterExtensionData IPersistableModel<KubernetesClusterExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesClusterExtensionData>(data, options, AzureResourceManagerKubernetesConfigurationContext.Default);
 
-        string IPersistableModel<KubernetesClusterExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubernetesClusterExtensionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KubernetesClusterExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

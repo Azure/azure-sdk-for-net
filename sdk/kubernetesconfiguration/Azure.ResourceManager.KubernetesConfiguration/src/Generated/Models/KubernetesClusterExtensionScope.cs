@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Scope of the extension. It can be either Cluster or Namespace; but not both. </summary>
     public partial class KubernetesClusterExtensionScope
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionScope"/>. </summary>
         public KubernetesClusterExtensionScope()
@@ -53,40 +24,50 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionScope"/>. </summary>
         /// <param name="cluster"> Specifies that the scope of the extension is Cluster. </param>
         /// <param name="namespace"> Specifies that the scope of the extension is Namespace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesClusterExtensionScope(ScopeCluster cluster, ScopeNamespace @namespace, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesClusterExtensionScope(KubernetesClusterExtensionScopeCluster cluster, KubernetesClusterExtensionScopeNamespace @namespace, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Cluster = cluster;
             Namespace = @namespace;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies that the scope of the extension is Cluster. </summary>
-        internal ScopeCluster Cluster { get; set; }
+        internal KubernetesClusterExtensionScopeCluster Cluster { get; set; }
+
+        /// <summary> Specifies that the scope of the extension is Namespace. </summary>
+        internal KubernetesClusterExtensionScopeNamespace Namespace { get; set; }
+
         /// <summary> Namespace where the extension Release must be placed, for a Cluster scoped extension.  If this namespace does not exist, it will be created. </summary>
-        [WirePath("cluster.releaseNamespace")]
         public string ClusterReleaseNamespace
         {
-            get => Cluster is null ? default : Cluster.ReleaseNamespace;
+            get
+            {
+                return Cluster is null ? default : Cluster.ReleaseNamespace;
+            }
             set
             {
                 if (Cluster is null)
-                    Cluster = new ScopeCluster();
+                {
+                    Cluster = new KubernetesClusterExtensionScopeCluster();
+                }
                 Cluster.ReleaseNamespace = value;
             }
         }
 
-        /// <summary> Specifies that the scope of the extension is Namespace. </summary>
-        internal ScopeNamespace Namespace { get; set; }
         /// <summary> Namespace where the extension will be created for an Namespace scoped extension.  If this namespace does not exist, it will be created. </summary>
-        [WirePath("namespace.targetNamespace")]
         public string TargetNamespace
         {
-            get => Namespace is null ? default : Namespace.TargetNamespace;
+            get
+            {
+                return Namespace is null ? default : Namespace.TargetNamespace;
+            }
             set
             {
                 if (Namespace is null)
-                    Namespace = new ScopeNamespace();
+                {
+                    Namespace = new KubernetesClusterExtensionScopeNamespace();
+                }
                 Namespace.TargetNamespace = value;
             }
         }

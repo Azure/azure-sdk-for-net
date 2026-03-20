@@ -4,10 +4,12 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-- Exposed `JsonModelWriteCore` for model serialization procedure.
+- Migrated from Swagger/AutoRest to TypeSpec-based generation using the Azure Management Plane Generator.
+- Updated the Extensions API version from `2022-11-01` to `2024-11-01`.
 
 ### Breaking Changes
+
+- FluxConfiguration and SourceControlConfiguration resource types have been marked as `[Obsolete]` and throw `NotSupportedException`. The service specification has been restructured into separate TypeSpec projects. These resource types will be available in separate packages in the future.
 
 ### Bugs Fixed
 

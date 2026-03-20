@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.KubernetesConfiguration.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,46 +14,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(ExtensionsList))]
-    [ModelReaderWriterBuildable(typeof(FluxConfigurationsList))]
-    [ModelReaderWriterBuildable(typeof(HelmOperatorProperties))]
-    [ModelReaderWriterBuildable(typeof(HelmReleaseProperties))]
-    [ModelReaderWriterBuildable(typeof(KubernetesAzureBlob))]
-    [ModelReaderWriterBuildable(typeof(KubernetesAzureBlobManagedIdentity))]
-    [ModelReaderWriterBuildable(typeof(KubernetesAzureBlobManagedIdentityUpdateContent))]
-    [ModelReaderWriterBuildable(typeof(KubernetesAzureBlobUpdateContent))]
-    [ModelReaderWriterBuildable(typeof(KubernetesBucket))]
-    [ModelReaderWriterBuildable(typeof(KubernetesBucketUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionAksAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionData))]
     [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionPatch))]
+    [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionPatchProperties))]
+    [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionProperties))]
     [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionResource))]
     [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionScope))]
+    [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionScopeCluster))]
+    [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionScopeNamespace))]
     [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionStatus))]
-    [ModelReaderWriterBuildable(typeof(KubernetesConfigurationComplianceStatus))]
-    [ModelReaderWriterBuildable(typeof(KubernetesFluxConfigurationData))]
-    [ModelReaderWriterBuildable(typeof(KubernetesFluxConfigurationPatch))]
-    [ModelReaderWriterBuildable(typeof(KubernetesFluxConfigurationResource))]
-    [ModelReaderWriterBuildable(typeof(KubernetesGitRepository))]
-    [ModelReaderWriterBuildable(typeof(KubernetesGitRepositoryRef))]
-    [ModelReaderWriterBuildable(typeof(KubernetesGitRepositoryUpdateContent))]
-    [ModelReaderWriterBuildable(typeof(KubernetesObjectReference))]
-    [ModelReaderWriterBuildable(typeof(KubernetesObjectStatus))]
-    [ModelReaderWriterBuildable(typeof(KubernetesObjectStatusCondition))]
-    [ModelReaderWriterBuildable(typeof(KubernetesServicePrincipal))]
-    [ModelReaderWriterBuildable(typeof(KubernetesServicePrincipalUpdateContent))]
-    [ModelReaderWriterBuildable(typeof(KubernetesSourceControlConfigurationData))]
-    [ModelReaderWriterBuildable(typeof(KubernetesSourceControlConfigurationResource))]
-    [ModelReaderWriterBuildable(typeof(Kustomization))]
-    [ModelReaderWriterBuildable(typeof(KustomizationUpdateContent))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(Models.OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(ScopeCluster))]
-    [ModelReaderWriterBuildable(typeof(ScopeNamespace))]
-    [ModelReaderWriterBuildable(typeof(SourceControlConfigurationList))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerKubernetesConfigurationContext : ModelReaderWriterContext
     {
     }

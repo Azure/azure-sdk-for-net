@@ -7,15 +7,99 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKubernetesConfigurationModelFactory
     {
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="extensionType"> Type of the Extension, of which this resource is an instance of.  It must be one of the Extension Types registered with Microsoft.KubernetesConfiguration by the Extension publisher. </param>
+        /// <param name="autoUpgradeMinorVersion"> Flag to note if this extension participates in auto upgrade of minor version, or not. </param>
+        /// <param name="releaseTrain"> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is 'true'. </param>
+        /// <param name="version"> User-specified version of the extension for this extension to 'pin'. To use 'version', autoUpgradeMinorVersion must be 'false'. </param>
+        /// <param name="scope"> Scope at which the extension is installed. </param>
+        /// <param name="configurationSettings"> Configuration settings, as name-value pairs for configuring this extension. </param>
+        /// <param name="configurationProtectedSettings"> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </param>
+        /// <param name="currentVersion"> Currently installed version of the extension. </param>
+        /// <param name="provisioningState"> Status of installation of this extension. </param>
+        /// <param name="statuses"> Status from this extension. </param>
+        /// <param name="errorInfo"> Error information from the Agent - e.g. errors during installation. </param>
+        /// <param name="customLocationSettings"> Custom Location settings properties. </param>
+        /// <param name="packageUri"> Uri of the Helm package. </param>
+        /// <param name="aksAssignedIdentity"> Identity of the Extension resource in an AKS cluster. </param>
+        /// <param name="isSystemExtension"> Flag to note if this extension is a system extension. </param>
+        /// <param name="identity"> Identity of the Extension resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
+        /// <returns> A new <see cref="KubernetesConfiguration.KubernetesClusterExtensionData"/> instance for mocking. </returns>
+        public static KubernetesClusterExtensionData KubernetesClusterExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string extensionType = default, bool? autoUpgradeMinorVersion = default, string releaseTrain = default, string version = default, KubernetesClusterExtensionScope scope = default, IDictionary<string, string> configurationSettings = default, IDictionary<string, string> configurationProtectedSettings = default, string currentVersion = default, KubernetesConfigurationProvisioningState? provisioningState = default, IEnumerable<KubernetesClusterExtensionStatus> statuses = default, ResponseError errorInfo = default, IReadOnlyDictionary<string, string> customLocationSettings = default, string packageUri = default, KubernetesClusterExtensionAksAssignedIdentity aksAssignedIdentity = default, bool? isSystemExtension = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        {
+            return new KubernetesClusterExtensionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                extensionType is null && autoUpgradeMinorVersion is null && releaseTrain is null && version is null && scope is null && configurationSettings is null && configurationProtectedSettings is null && currentVersion is null && provisioningState is null && statuses is null && errorInfo is null && customLocationSettings is null && packageUri is null && aksAssignedIdentity is null && isSystemExtension is null ? default : new KubernetesClusterExtensionProperties(
+                    extensionType,
+                    autoUpgradeMinorVersion,
+                    releaseTrain,
+                    version,
+                    scope,
+                    configurationSettings,
+                    configurationProtectedSettings,
+                    currentVersion,
+                    provisioningState,
+                    (statuses ?? new ChangeTrackingList<KubernetesClusterExtensionStatus>()).ToList(),
+                    errorInfo,
+                    customLocationSettings,
+                    packageUri,
+                    aksAssignedIdentity,
+                    isSystemExtension,
+                    null),
+                identity,
+                plan);
+        }
+
+        /// <summary> Identity of the Extension resource in an AKS cluster. </summary>
+        /// <param name="principalId"> The principal ID of resource identity. </param>
+        /// <param name="tenantId"> The tenant ID of resource. </param>
+        /// <param name="type"> The identity type. </param>
+        /// <returns> A new <see cref="Models.KubernetesClusterExtensionAksAssignedIdentity"/> instance for mocking. </returns>
+        public static KubernetesClusterExtensionAksAssignedIdentity KubernetesClusterExtensionAksAssignedIdentity(string principalId = default, string tenantId = default, AKSIdentityType? @type = default)
+        {
+            return new KubernetesClusterExtensionAksAssignedIdentity(principalId, tenantId, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The current status of an async operation. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="properties"> Additional information, if available. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <returns> A new <see cref="Models.OperationStatusResult"/> instance for mocking. </returns>
+        public static OperationStatusResult OperationStatusResult(string id = default, string name = default, string status = default, IDictionary<string, string> properties = default, ResponseError error = default)
+        {
+            properties ??= new ChangeTrackingDictionary<string, string>();
+
+            return new OperationStatusResult(
+                id,
+                name,
+                status,
+                properties,
+                error,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="KubernetesConfiguration.KubernetesClusterExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -39,240 +123,23 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="aksAssignedIdentity"> Identity of the Extension resource in an AKS cluster. Current supported identity types: SystemAssigned, UserAssigned. </param>
         /// <param name="isSystemExtension"> Flag to note if this extension is a system extension. </param>
         /// <returns> A new <see cref="KubernetesConfiguration.KubernetesClusterExtensionData"/> instance for mocking. </returns>
-        public static KubernetesClusterExtensionData KubernetesClusterExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, ArmPlan plan = null, string extensionType = null, bool? autoUpgradeMinorVersion = null, string releaseTrain = null, string version = null, KubernetesClusterExtensionScope scope = null, IDictionary<string, string> configurationSettings = null, IDictionary<string, string> configurationProtectedSettings = null, string currentVersion = null, KubernetesConfigurationProvisioningState? provisioningState = null, IEnumerable<KubernetesClusterExtensionStatus> statuses = null, ResponseError errorInfo = null, IReadOnlyDictionary<string, string> customLocationSettings = null, Uri packageUri = null, ManagedServiceIdentity aksAssignedIdentity = null, bool? isSystemExtension = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KubernetesClusterExtensionData KubernetesClusterExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ArmPlan plan, string extensionType, bool? autoUpgradeMinorVersion, string releaseTrain, string version, KubernetesClusterExtensionScope scope, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings, string currentVersion, KubernetesConfigurationProvisioningState? provisioningState, IEnumerable<KubernetesClusterExtensionStatus> statuses, ResponseError errorInfo, IReadOnlyDictionary<string, string> customLocationSettings, Uri packageUri, ManagedServiceIdentity aksAssignedIdentity, bool? isSystemExtension)
         {
-            configurationSettings ??= new Dictionary<string, string>();
-            configurationProtectedSettings ??= new Dictionary<string, string>();
-            statuses ??= new List<KubernetesClusterExtensionStatus>();
-            customLocationSettings ??= new Dictionary<string, string>();
+            configurationSettings ??= new ChangeTrackingDictionary<string, string>();
+            configurationProtectedSettings ??= new ChangeTrackingDictionary<string, string>();
+            statuses ??= new ChangeTrackingList<KubernetesClusterExtensionStatus>();
+            customLocationSettings ??= new ChangeTrackingDictionary<string, string>();
 
             return new KubernetesClusterExtensionData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                default,
                 identity,
-                plan,
-                extensionType,
-                autoUpgradeMinorVersion,
-                releaseTrain,
-                version,
-                scope,
-                configurationSettings,
-                configurationProtectedSettings,
-                currentVersion,
-                provisioningState,
-                statuses?.ToList(),
-                errorInfo,
-                customLocationSettings,
-                packageUri,
-                aksAssignedIdentity,
-                isSystemExtension,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KubernetesConfiguration.KubernetesFluxConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="scope"> Scope at which the operator will be installed. </param>
-        /// <param name="namespace"> The namespace to which this configuration is installed to. Maximum of 253 lower case alphanumeric characters, hyphen and period only. </param>
-        /// <param name="sourceKind"> Source Kind to pull the configuration data from. </param>
-        /// <param name="isReconciliationSuspended"> Whether this configuration should suspend its reconciliation of its kustomizations and sources. </param>
-        /// <param name="gitRepository"> Parameters to reconcile to the GitRepository source kind type. </param>
-        /// <param name="bucket"> Parameters to reconcile to the Bucket source kind type. </param>
-        /// <param name="azureBlob"> Parameters to reconcile to the AzureBlob source kind type. </param>
-        /// <param name="kustomizations"> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </param>
-        /// <param name="configurationProtectedSettings"> Key-value pairs of protected configuration settings for the configuration. </param>
-        /// <param name="statuses"> Statuses of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects provisioned by the fluxConfiguration. </param>
-        /// <param name="repositoryPublicKey"> Public Key associated with this fluxConfiguration (either generated within the cluster or provided by the user). </param>
-        /// <param name="sourceSyncedCommitId"> Branch and/or SHA of the source commit synced with the cluster. </param>
-        /// <param name="sourceUpdatedOn"> Datetime the fluxConfiguration synced its source on the cluster. </param>
-        /// <param name="statusUpdatedOn"> Datetime the fluxConfiguration synced its status on the cluster with Azure. </param>
-        /// <param name="complianceState"> Combined status of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects. </param>
-        /// <param name="provisioningState"> Status of the creation of the fluxConfiguration. </param>
-        /// <param name="errorMessage"> Error message returned to the user in the case of provisioning failure. </param>
-        /// <returns> A new <see cref="KubernetesConfiguration.KubernetesFluxConfigurationData"/> instance for mocking. </returns>
-        public static KubernetesFluxConfigurationData KubernetesFluxConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, KubernetesConfigurationScope? scope = null, string @namespace = null, KubernetesConfigurationSourceKind? sourceKind = null, bool? isReconciliationSuspended = null, KubernetesGitRepository gitRepository = null, KubernetesBucket bucket = null, KubernetesAzureBlob azureBlob = null, IDictionary<string, Kustomization> kustomizations = null, IDictionary<string, string> configurationProtectedSettings = null, IEnumerable<KubernetesObjectStatus> statuses = null, string repositoryPublicKey = null, string sourceSyncedCommitId = null, DateTimeOffset? sourceUpdatedOn = null, DateTimeOffset? statusUpdatedOn = null, KubernetesFluxComplianceState? complianceState = null, KubernetesConfigurationProvisioningState? provisioningState = null, string errorMessage = null)
-        {
-            kustomizations ??= new Dictionary<string, Kustomization>();
-            configurationProtectedSettings ??= new Dictionary<string, string>();
-            statuses ??= new List<KubernetesObjectStatus>();
-
-            return new KubernetesFluxConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                scope,
-                @namespace,
-                sourceKind,
-                isReconciliationSuspended,
-                gitRepository,
-                bucket,
-                azureBlob,
-                kustomizations,
-                configurationProtectedSettings,
-                statuses?.ToList(),
-                repositoryPublicKey,
-                sourceSyncedCommitId,
-                sourceUpdatedOn,
-                statusUpdatedOn,
-                complianceState,
-                provisioningState,
-                errorMessage,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.Kustomization"/>. </summary>
-        /// <param name="name"> Name of the Kustomization, matching the key in the Kustomizations object map. </param>
-        /// <param name="path"> The path in the source reference to reconcile on the cluster. </param>
-        /// <param name="dependsOn"> Specifies other Kustomizations that this Kustomization depends on. This Kustomization will not reconcile until all dependencies have completed their reconciliation. </param>
-        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the Kustomization on the cluster. </param>
-        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the Kustomization on the cluster. </param>
-        /// <param name="retryIntervalInSeconds"> The interval at which to re-reconcile the Kustomization on the cluster in the event of failure on reconciliation. </param>
-        /// <param name="prune"> Enable/disable garbage collections of Kubernetes objects created by this Kustomization. </param>
-        /// <param name="force"> Enable/disable re-creating Kubernetes resources on the cluster when patching fails due to an immutable field change. </param>
-        /// <returns> A new <see cref="Models.Kustomization"/> instance for mocking. </returns>
-        public static Kustomization Kustomization(string name = null, string path = null, IEnumerable<string> dependsOn = null, long? timeoutInSeconds = null, long? syncIntervalInSeconds = null, long? retryIntervalInSeconds = null, bool? prune = null, bool? force = null)
-        {
-            dependsOn ??= new List<string>();
-
-            return new Kustomization(
-                name,
-                path,
-                dependsOn?.ToList(),
-                timeoutInSeconds,
-                syncIntervalInSeconds,
-                retryIntervalInSeconds,
-                prune,
-                force,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KubernetesObjectStatus"/>. </summary>
-        /// <param name="name"> Name of the applied object. </param>
-        /// <param name="namespace"> Namespace of the applied object. </param>
-        /// <param name="kind"> Kind of the applied object. </param>
-        /// <param name="complianceState"> Compliance state of the applied object showing whether the applied object has come into a ready state on the cluster. </param>
-        /// <param name="appliedBy"> Object reference to the Kustomization that applied this object. </param>
-        /// <param name="statusConditions"> List of Kubernetes object status conditions present on the cluster. </param>
-        /// <param name="helmReleaseProperties"> Additional properties that are provided from objects of the HelmRelease kind. </param>
-        /// <returns> A new <see cref="Models.KubernetesObjectStatus"/> instance for mocking. </returns>
-        public static KubernetesObjectStatus KubernetesObjectStatus(string name = null, string @namespace = null, string kind = null, KubernetesFluxComplianceState? complianceState = null, KubernetesObjectReference appliedBy = null, IEnumerable<KubernetesObjectStatusCondition> statusConditions = null, HelmReleaseProperties helmReleaseProperties = null)
-        {
-            statusConditions ??= new List<KubernetesObjectStatusCondition>();
-
-            return new KubernetesObjectStatus(
-                name,
-                @namespace,
-                kind,
-                complianceState,
-                appliedBy,
-                statusConditions?.ToList(),
-                helmReleaseProperties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KubernetesObjectReference"/>. </summary>
-        /// <param name="name"> Name of the object. </param>
-        /// <param name="namespace"> Namespace of the object. </param>
-        /// <returns> A new <see cref="Models.KubernetesObjectReference"/> instance for mocking. </returns>
-        public static KubernetesObjectReference KubernetesObjectReference(string name = null, string @namespace = null)
-        {
-            return new KubernetesObjectReference(name, @namespace, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KubernetesObjectStatusCondition"/>. </summary>
-        /// <param name="lastTransitionOn"> Last time this status condition has changed. </param>
-        /// <param name="message"> A more verbose description of the object status condition. </param>
-        /// <param name="reason"> Reason for the specified status condition type status. </param>
-        /// <param name="status"> Status of the Kubernetes object condition type. </param>
-        /// <param name="objectStatusConditionDefinitionType"> Object status condition type for this object. </param>
-        /// <returns> A new <see cref="Models.KubernetesObjectStatusCondition"/> instance for mocking. </returns>
-        public static KubernetesObjectStatusCondition KubernetesObjectStatusCondition(DateTimeOffset? lastTransitionOn = null, string message = null, string reason = null, string status = null, string objectStatusConditionDefinitionType = null)
-        {
-            return new KubernetesObjectStatusCondition(
-                lastTransitionOn,
-                message,
-                reason,
-                status,
-                objectStatusConditionDefinitionType,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HelmReleaseProperties"/>. </summary>
-        /// <param name="lastRevisionApplied"> The revision number of the last released object change. </param>
-        /// <param name="helmChartRef"> The reference to the HelmChart object used as the source to this HelmRelease. </param>
-        /// <param name="failureCount"> Total number of times that the HelmRelease failed to install or upgrade. </param>
-        /// <param name="installFailureCount"> Number of times that the HelmRelease failed to install. </param>
-        /// <param name="upgradeFailureCount"> Number of times that the HelmRelease failed to upgrade. </param>
-        /// <returns> A new <see cref="Models.HelmReleaseProperties"/> instance for mocking. </returns>
-        public static HelmReleaseProperties HelmReleaseProperties(long? lastRevisionApplied = null, KubernetesObjectReference helmChartRef = null, long? failureCount = null, long? installFailureCount = null, long? upgradeFailureCount = null)
-        {
-            return new HelmReleaseProperties(
-                lastRevisionApplied,
-                helmChartRef,
-                failureCount,
-                installFailureCount,
-                upgradeFailureCount,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KubernetesConfiguration.KubernetesSourceControlConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="repositoryUri"> Url of the SourceControl Repository. </param>
-        /// <param name="operatorNamespace"> The namespace to which this operator is installed to. Maximum of 253 lower case alphanumeric characters, hyphen and period only. </param>
-        /// <param name="operatorInstanceName"> Instance name of the operator - identifying the specific configuration. </param>
-        /// <param name="operatorType"> Type of the operator. </param>
-        /// <param name="operatorParams"> Any Parameters for the Operator instance in string format. </param>
-        /// <param name="configurationProtectedSettings"> Name-value pairs of protected configuration settings for the configuration. </param>
-        /// <param name="operatorScope"> Scope at which the operator will be installed. </param>
-        /// <param name="repositoryPublicKey"> Public Key associated with this SourceControl configuration (either generated within the cluster or provided by the user). </param>
-        /// <param name="sshKnownHostsContents"> Base64-encoded known_hosts contents containing public SSH keys required to access private Git instances. </param>
-        /// <param name="isHelmOperatorEnabled"> Option to enable Helm Operator for this git configuration. </param>
-        /// <param name="helmOperatorProperties"> Properties for Helm operator. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource provider. </param>
-        /// <param name="complianceStatus"> Compliance Status of the Configuration. </param>
-        /// <returns> A new <see cref="KubernetesConfiguration.KubernetesSourceControlConfigurationData"/> instance for mocking. </returns>
-        public static KubernetesSourceControlConfigurationData KubernetesSourceControlConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri repositoryUri = null, string operatorNamespace = null, string operatorInstanceName = null, KubernetesOperator? operatorType = null, string operatorParams = null, IDictionary<string, string> configurationProtectedSettings = null, KubernetesOperatorScope? operatorScope = null, string repositoryPublicKey = null, string sshKnownHostsContents = null, bool? isHelmOperatorEnabled = null, HelmOperatorProperties helmOperatorProperties = null, KubernetesConfigurationProvisioningStateType? provisioningState = null, KubernetesConfigurationComplianceStatus complianceStatus = null)
-        {
-            configurationProtectedSettings ??= new Dictionary<string, string>();
-
-            return new KubernetesSourceControlConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                repositoryUri,
-                operatorNamespace,
-                operatorInstanceName,
-                operatorType,
-                operatorParams,
-                configurationProtectedSettings,
-                operatorScope,
-                repositoryPublicKey,
-                sshKnownHostsContents,
-                isHelmOperatorEnabled,
-                helmOperatorProperties,
-                provisioningState,
-                complianceStatus,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KubernetesConfigurationComplianceStatus"/>. </summary>
-        /// <param name="complianceState"> The compliance state of the configuration. </param>
-        /// <param name="lastConfigAppliedOn"> Datetime the configuration was last applied. </param>
-        /// <param name="message"> Message from when the configuration was applied. </param>
-        /// <param name="messageLevel"> Level of the message. </param>
-        /// <returns> A new <see cref="Models.KubernetesConfigurationComplianceStatus"/> instance for mocking. </returns>
-        public static KubernetesConfigurationComplianceStatus KubernetesConfigurationComplianceStatus(KubernetesConfigurationComplianceStateType? complianceState = null, DateTimeOffset? lastConfigAppliedOn = null, string message = null, KubernetesConfigurationMesageLevel? messageLevel = null)
-        {
-            return new KubernetesConfigurationComplianceStatus(complianceState, lastConfigAppliedOn, message, messageLevel, serializedAdditionalRawData: null);
+                plan);
         }
     }
 }

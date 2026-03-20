@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    internal class KubernetesClusterExtensionOperationSource : IOperationSource<KubernetesClusterExtensionResource>
+    /// <summary></summary>
+    internal partial class KubernetesClusterExtensionOperationSource : IOperationSource<KubernetesClusterExtensionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal KubernetesClusterExtensionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         KubernetesClusterExtensionResource IOperationSource<KubernetesClusterExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KubernetesClusterExtensionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKubernetesConfigurationContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            KubernetesClusterExtensionData data = KubernetesClusterExtensionData.DeserializeKubernetesClusterExtensionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new KubernetesClusterExtensionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<KubernetesClusterExtensionResource> IOperationSource<KubernetesClusterExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KubernetesClusterExtensionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKubernetesConfigurationContext.Default);
-            return await Task.FromResult(new KubernetesClusterExtensionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            KubernetesClusterExtensionData data = KubernetesClusterExtensionData.DeserializeKubernetesClusterExtensionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new KubernetesClusterExtensionResource(_client, data);
         }
     }
 }
