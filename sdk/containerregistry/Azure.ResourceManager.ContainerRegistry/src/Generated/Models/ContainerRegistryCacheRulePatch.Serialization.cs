@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -34,6 +36,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 throw new FormatException($"The model {nameof(ContainerRegistryCacheRulePatch)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CredentialSetResourceId))
@@ -79,11 +86,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier credentialSetResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerContainerRegistryContext.Default);
+                    continue;
+                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -111,7 +128,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerRegistryCacheRulePatch(credentialSetResourceId, serializedAdditionalRawData);
+            return new ContainerRegistryCacheRulePatch(identity, credentialSetResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryCacheRulePatch>.Write(ModelReaderWriterOptions options)

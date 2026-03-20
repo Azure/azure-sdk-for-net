@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.LoadTesting
     /// </summary>
     public partial class LoadTestingQuotaCollection : ArmCollection, IEnumerable<LoadTestingQuotaResource>, IAsyncEnumerable<LoadTestingQuotaResource>
     {
-        private readonly ClientDiagnostics _loadTestMgmtClientClientDiagnostics;
-        private readonly LoadTestMgmtClient _loadTestMgmtClientRestClient;
+        private readonly ClientDiagnostics _quotasClientDiagnostics;
+        private readonly Quotas _quotasRestClient;
         /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.LoadTesting
         {
             TryGetApiVersion(LoadTestingQuotaResource.ResourceType, out string loadTestingQuotaApiVersion);
             _location = location;
-            _loadTestMgmtClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", LoadTestingQuotaResource.ResourceType.Namespace, Diagnostics);
-            _loadTestMgmtClientRestClient = new LoadTestMgmtClient(_loadTestMgmtClientClientDiagnostics, Pipeline, Endpoint, loadTestingQuotaApiVersion ?? "2024-12-01-preview");
+            _quotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", LoadTestingQuotaResource.ResourceType.Namespace, Diagnostics);
+            _quotasRestClient = new Quotas(_quotasClientDiagnostics, Pipeline, Endpoint, loadTestingQuotaApiVersion ?? "2024-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_GetQuota. </description>
+        /// <description> Quotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingQuotaCollection.Get");
+            using DiagnosticScope scope = _quotasClientDiagnostics.CreateScope("LoadTestingQuotaCollection.Get");
             scope.Start();
             try
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMgmtClientRestClient.CreateGetQuotaRequest(Guid.Parse(Id.SubscriptionId), _location, quotaBucketName, context);
+                HttpMessage message = _quotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, quotaBucketName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LoadTestingQuotaData> response = Response.FromValue(LoadTestingQuotaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_GetQuota. </description>
+        /// <description> Quotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingQuotaCollection.Get");
+            using DiagnosticScope scope = _quotasClientDiagnostics.CreateScope("LoadTestingQuotaCollection.Get");
             scope.Start();
             try
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMgmtClientRestClient.CreateGetQuotaRequest(Guid.Parse(Id.SubscriptionId), _location, quotaBucketName, context);
+                HttpMessage message = _quotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, quotaBucketName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LoadTestingQuotaData> response = Response.FromValue(LoadTestingQuotaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_ListQuota. </description>
+        /// <description> Quotas_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new LoadTestMgmtClientGetQuotaAsyncCollectionResultOfT(_loadTestMgmtClientRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new LoadTestingQuotaResource(Client, data));
+            return new AsyncPageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new QuotasGetAllAsyncCollectionResultOfT(_quotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new LoadTestingQuotaResource(Client, data));
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_ListQuota. </description>
+        /// <description> Quotas_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new LoadTestMgmtClientGetQuotaCollectionResultOfT(_loadTestMgmtClientRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new LoadTestingQuotaResource(Client, data));
+            return new PageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new QuotasGetAllCollectionResultOfT(_quotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new LoadTestingQuotaResource(Client, data));
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_GetQuota. </description>
+        /// <description> Quotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingQuotaCollection.Exists");
+            using DiagnosticScope scope = _quotasClientDiagnostics.CreateScope("LoadTestingQuotaCollection.Exists");
             scope.Start();
             try
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMgmtClientRestClient.CreateGetQuotaRequest(Guid.Parse(Id.SubscriptionId), _location, quotaBucketName, context);
+                HttpMessage message = _quotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, quotaBucketName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LoadTestingQuotaData> response = default;
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_GetQuota. </description>
+        /// <description> Quotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingQuotaCollection.Exists");
+            using DiagnosticScope scope = _quotasClientDiagnostics.CreateScope("LoadTestingQuotaCollection.Exists");
             scope.Start();
             try
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMgmtClientRestClient.CreateGetQuotaRequest(Guid.Parse(Id.SubscriptionId), _location, quotaBucketName, context);
+                HttpMessage message = _quotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, quotaBucketName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LoadTestingQuotaData> response = default;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_GetQuota. </description>
+        /// <description> Quotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingQuotaCollection.GetIfExists");
+            using DiagnosticScope scope = _quotasClientDiagnostics.CreateScope("LoadTestingQuotaCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMgmtClientRestClient.CreateGetQuotaRequest(Guid.Parse(Id.SubscriptionId), _location, quotaBucketName, context);
+                HttpMessage message = _quotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, quotaBucketName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LoadTestingQuotaData> response = default;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_GetQuota. </description>
+        /// <description> Quotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingQuotaCollection.GetIfExists");
+            using DiagnosticScope scope = _quotasClientDiagnostics.CreateScope("LoadTestingQuotaCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMgmtClientRestClient.CreateGetQuotaRequest(Guid.Parse(Id.SubscriptionId), _location, quotaBucketName, context);
+                HttpMessage message = _quotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, quotaBucketName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LoadTestingQuotaData> response = default;

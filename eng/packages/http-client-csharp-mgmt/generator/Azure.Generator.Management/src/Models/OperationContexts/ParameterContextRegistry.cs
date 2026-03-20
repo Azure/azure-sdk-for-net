@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using TernaryConditionalExpression = Microsoft.TypeSpec.Generator.Expressions.TernaryConditionalExpression;
 
 namespace Azure.Generator.Management.Models;
 
@@ -95,7 +97,26 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                 var bodyParameter = methodParameters.SingleOrDefault(p => p.Location == ParameterLocation.Body);
                 if (bodyParameter is not null)
                 {
-                    arguments.Add(Static(bodyParameter.Type).Invoke(SerializationVisitor.ToRequestContentMethodName, [bodyParameter]));
+                    if (bodyParameter.Type.CanCreateRequestContent())
+                    {
+                        // For primitive types (string, BinaryData, Stream, byte[]) that have a direct
+                        // RequestContent.Create overload, use it instead of ToRequestContent.
+                        var createContent = Static(typeof(RequestContent)).Invoke(
+                            nameof(RequestContent.Create),
+                            [bodyParameter]);
+                        if (bodyParameter.Type.IsNullable)
+                        {
+                            arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));
+                        }
+                        else
+                        {
+                            arguments.Add(createContent);
+                        }
+                    }
+                    else
+                    {
+                        arguments.Add(Static(bodyParameter.Type).Invoke(SerializationVisitor.ToRequestContentMethodName, [bodyParameter]));
+                    }
                 }
                 else
                 {

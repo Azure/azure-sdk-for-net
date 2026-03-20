@@ -15,13 +15,12 @@ public class RedTeamTests : ProjectsClientTestBase
     {
     }
 
-    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task TestRedTeamCRUD()
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        AzureOpenAIModelConfiguration config = new(modelDeploymentName: TestEnvironment.MODELDEPLOYMENTNAME);
+        AzureOpenAIModelConfiguration config = new(modelDeploymentName: TestEnvironment.FOUNDRY_MODEL_NAME);
         RedTeam redTeam = new(target: config)
         {
             AttackStrategies = { AttackStrategy.Base64 },
@@ -48,13 +47,12 @@ public class RedTeamTests : ProjectsClientTestBase
         Assert.That(hshStatuses, Contains.Item(initialName), $"The red team names {initialName} was not listed.");
     }
 
-    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task TestRedTeamScan()
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        AzureOpenAIModelConfiguration config = new(modelDeploymentName: TestEnvironment.MODELDEPLOYMENTNAME);
+        AzureOpenAIModelConfiguration config = new(modelDeploymentName: TestEnvironment.FOUNDRY_MODEL_NAME);
         RedTeam redTeam = new(target: config)
         {
             AttackStrategies = { AttackStrategy.Base64 },

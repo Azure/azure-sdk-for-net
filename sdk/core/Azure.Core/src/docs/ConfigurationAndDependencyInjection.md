@@ -322,10 +322,20 @@ the `Credential` section as well.
   "Credential": {
     "CredentialSource": "EnvironmentCredential",
     "TenantId": "00000000-0000-0000-0000-000000000000",
+    "ClientId": "00000000-0000-0000-0000-000000000000",
+    "ClientSecret": "...",
+    "ClientCertificatePath": "/path/to/cert.pem",
+    "ClientCertificatePassword": "...",
+    "SendCertificateChain": false,
+    "Username": "...",
+    "Password": "...",
     "DisableInstanceDiscovery": false
   }
 }
 ```
+
+> `EnvironmentCredential` resolves authentication in priority order: client secret → client
+> certificate → username/password. Only one set of auth properties needs to be configured.
 
 **InteractiveBrowserCredential:**
 ```json
@@ -412,11 +422,15 @@ the `Credential` section as well.
     "CredentialSource": "WorkloadIdentityCredential",
     "TenantId": "00000000-0000-0000-0000-000000000000",
     "ClientId": "00000000-0000-0000-0000-000000000000",
+    "TokenFilePath": "/path/to/token",
     "IsAzureProxyEnabled": false,
     "DisableInstanceDiscovery": false
   }
 }
 ```
+
+> `TokenFilePath` falls back to the `AZURE_FEDERATED_TOKEN_FILE` environment variable
+> when not specified in configuration.
 
 ## Configuration Reference Syntax
 

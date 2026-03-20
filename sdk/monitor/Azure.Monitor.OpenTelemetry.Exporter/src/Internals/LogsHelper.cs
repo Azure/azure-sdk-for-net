@@ -55,7 +55,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         if (!properties.ContainsKey(scopeItem.Key))
                         {
-                            properties.Add(scopeItem.Key, Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                            var stringValue = SchemaConstants.TruncationExemptProperties.Contains(scopeItem.Key)
+                                ? Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)!
+                                : Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!;
+                            properties.Add(scopeItem.Key, stringValue);
                         }
                     }
                     catch (Exception ex)
@@ -211,7 +214,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 {
                                     if (!properties.ContainsKey(item.Key))
                                     {
-                                        properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                                        var stringValue = SchemaConstants.TruncationExemptProperties.Contains(item.Key)
+                                            ? item.Value.ToString()!
+                                            : item.Value.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!;
+                                        properties.Add(item.Key, stringValue);
                                     }
                                 }
                             }

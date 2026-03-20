@@ -100,6 +100,40 @@ public sealed class ValidationService
     }
 
     /// <summary>
+    /// Validates that the local specs path exists and contains a tspconfig.yaml file.
+    /// </summary>
+    /// <param name="localSpecsPath">Path to the local specs directory.</param>
+    /// <returns>Absolute path to the validated local specs directory.</returns>
+    /// <exception cref="ArgumentException">Thrown when path is null or empty.</exception>
+    /// <exception cref="DirectoryNotFoundException">Thrown when directory does not exist.</exception>
+    /// <exception cref="FileNotFoundException">Thrown when tspconfig.yaml is not found.</exception>
+    public string ValidateLocalSpecsPath(string localSpecsPath)
+    {
+        if (string.IsNullOrWhiteSpace(localSpecsPath))
+        {
+            throw new ArgumentException("Local specs path cannot be empty", nameof(localSpecsPath));
+        }
+
+        _logger.LogDebug("Validating local specs path: {LocalSpecsPath}", localSpecsPath);
+
+        var absolutePath = Path.GetFullPath(localSpecsPath);
+
+        if (!Directory.Exists(absolutePath))
+        {
+            throw new DirectoryNotFoundException($"Local specs directory not found: {absolutePath}");
+        }
+
+        var tspConfigPath = Path.Combine(absolutePath, "tspconfig.yaml");
+        if (!File.Exists(tspConfigPath))
+        {
+            throw new FileNotFoundException($"tspconfig.yaml not found in local specs directory: {absolutePath}", tspConfigPath);
+        }
+
+        _logger.LogDebug("Local specs path validation successful: {Path}", absolutePath);
+        return absolutePath;
+    }
+
+    /// <summary>
     /// Validates repository path parameter.
     /// </summary>
     /// <param name="path">Repository path.</param>

@@ -7,8 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent.Tests.Utilities;
@@ -26,6 +28,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
     public const string TraceContentsEnvironmentVariable = "AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED";
     public const string EnableOpenTelemetryEnvironmentVariable = "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE";
     private const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
+    private const string OPENAPI_SPEC_FILE = "weather_openapi.json";
     private MemoryTraceExporter _exporter;
     private TracerProvider _tracerProvider;
     private GenAiTraceVerifier _traceVerifier;
@@ -557,6 +560,99 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         CheckRunSteps(
             runStepActivity: listRunStepsSpan,
             contents: [null, "{\"tool_calls\":[{\"id\":\"*\",\"type\":\"bing_custom_search\",\"details\":{\"requesturl\":\"*\",\"response_metadata\":\"*\"}}]}"],
+            events: ["gen_ai.run_step.message_creation", "gen_ai.run_step.tool_calls"]);
+    }
+
+    [RecordedTest]
+    public async Task TestOpenAPITracingContentRecordingEnabled()
+    {
+        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        Type type = typeof(Azure.AI.Agents.Persistent.Telemetry.OpenTelemetryScope);
+        MethodInfo methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
+        methodInfo?.Invoke(null, null);
+
+        PersistentAgentsClient client = GetClient();
+        var modelDeploymentName = GetModelDeploymentName();
+
+        string system_prompt = "You are helpful agent.";
+        string prompt = "What is the weather in Seattle?";
+        string agentName = "WeatherAgent";
+        // Create agent with toolset
+        OpenApiToolDefinition openapiTool = new(
+            name: "get_weather",
+            description: "Retrieve weather information for a location",
+            spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(GetFile(fileName: OPENAPI_SPEC_FILE))),
+            openApiAuthentication: new OpenApiAnonymousAuthDetails(),
+            defaultParams: ["format"]
+        );
+        PersistentAgent agent = await client.Administration.CreateAgentAsync(
+            model: modelDeploymentName,
+            name: agentName,
+            instructions: system_prompt,
+            tools: [openapiTool]);
+
+        PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+
+        PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+            thread.Id,
+            MessageRole.User,
+            prompt);
+
+        ThreadRun run = await client.Runs.CreateRunAsync(
+            thread.Id,
+            agent.Id
+        );
+        run = await WaitForRun(client, run);
+
+        // Enumerate messages and run steps to trigger spans
+        await foreach (PersistentThreadMessage messageInList in client.Messages.GetMessagesAsync(thread.Id))
+        {
+            _ = messageInList;
+        }
+
+        await foreach (RunStep step in client.Runs.GetRunStepsAsync(thread.Id, run.Id))
+        {
+            _ = step;
+        }
+
+        await client.Administration.DeleteAgentAsync(agent.Id);
+
+        // Force flush spans
+        _exporter.ForceFlush();
+
+        // Verify create_agent span
+        Activity createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
+        CheckCreateAgentEvent(
+            createAgentSpan: createAgentSpan,
+            modelName: modelDeploymentName,
+            agentName: agentName,
+            content: $"{{\"content\": \"{system_prompt}\"}}"
+        );
+
+        // Verify create_message span
+        Activity createMessageSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "create_message");
+        CheckCreateMessageSpan(
+            createMessageActivity: createMessageSpan,
+            content: $"{{\"content\":\"{prompt}\",\"role\":\"user\"}}"
+        );
+
+        // Verify get_thread_run span
+        var getThreadRunSpan = _exporter.GetExportedActivities().LastOrDefault(s => s.DisplayName == "get_thread_run");
+        CheckThreadRunAttribute(threadRunActivity: getThreadRunSpan, modelName: modelDeploymentName);
+
+        // Verify list_messages span explicitly
+        Activity listMessagesSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "list_messages");
+        CheckListMessages(
+            listActivity: listMessagesSpan,
+            contents: [$"{{\"content\":{{\"text\":{{\"value\":\"{prompt}\"}}}},\"role\":\"user\"}}", "{\"content\":{\"text\":{\"value\":\"*\"}},\"role\":\"assistant\"}"],
+            roles: ["gen_ai.user.message", "gen_ai.assistant.message"]
+        );
+
+        // Verify list_run_steps span
+        var listRunStepsSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "list_run_steps");
+        CheckRunSteps(
+            runStepActivity: listRunStepsSpan,
+            contents: [null, "{\"tool_calls\":[{\"id\":\"*\",\"type\":\"openapi\"}]}"],
             events: ["gen_ai.run_step.message_creation", "gen_ai.run_step.tool_calls"]);
     }
 
@@ -1544,6 +1640,12 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
     {
         if (Mode != RecordedTestMode.Playback)
             await Task.Delay(timeout);
+    }
+
+    private static string GetFile([CallerFilePath] string pth = "", string fileName = "")
+    {
+        var dirName = Path.GetDirectoryName(pth) ?? "";
+        return Path.Combine(new string[] { dirName, "TestData", fileName });
     }
     #endregion
 }

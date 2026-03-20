@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Payload.MediaType
 {
     public partial class MediaTypeClientOptions : ClientOptions
     {
+        public MediaTypeClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal MediaTypeClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

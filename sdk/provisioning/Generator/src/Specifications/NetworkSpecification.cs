@@ -11,7 +11,7 @@ using System.Reflection;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class NetworkSpecification() :
-    Specification("Network", typeof(NetworkExtensions), ignorePropertiesWithoutPath: true)
+    Specification("Network", typeof(NetworkExtensions), ignorePropertiesWithoutPath: true, serviceDirectory: "network")
 {
     protected override void Customize()
     {
@@ -81,6 +81,13 @@ public class NetworkSpecification() :
         typeof(PublicIPAddressResource),
         typeof(PublicIPPrefixResource),
         typeof(NetworkSecurityGroupResource),
+        typeof(NetworkSecurityPerimeterResource),
+        typeof(NetworkSecurityPerimeterAccessRuleResource),
+        typeof(NetworkSecurityPerimeterAssociationResource),
+        typeof(NetworkSecurityPerimeterLinkResource),
+        // NetworkSecurityPerimeterLinkReferenceResource is read-only (no PUT operation)
+        typeof(NetworkSecurityPerimeterLoggingConfigurationResource),
+        typeof(NetworkSecurityPerimeterProfileResource),
         typeof(RouteResource),
         typeof(RouteTableResource),
         typeof(PrivateLinkServiceResource),

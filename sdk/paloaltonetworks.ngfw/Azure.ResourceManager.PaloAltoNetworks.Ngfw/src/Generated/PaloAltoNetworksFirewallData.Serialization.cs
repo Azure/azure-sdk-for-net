@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(paloAltoNetworksFirewallData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(paloAltoNetworksFirewallData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PaloAltoNetworksFirewallData"/> from. </param>

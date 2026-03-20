@@ -124,5 +124,9 @@ namespace Azure.Storage
         public static InvalidOperationException RequiredVersionClientAssembly(Assembly assembly, AssemblyInformationalVersionAttribute attribute)
             => new InvalidOperationException(
                     $"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{assembly.FullName}'.");
+
+        public static InvalidDataException InvalidCheckpointOffsetLength(int offset, int length, long streamLength)
+            => new InvalidDataException(
+                $"Invalid checkpoint file: offset {offset} plus length {length} exceeds stream length {streamLength}.");
     }
 }

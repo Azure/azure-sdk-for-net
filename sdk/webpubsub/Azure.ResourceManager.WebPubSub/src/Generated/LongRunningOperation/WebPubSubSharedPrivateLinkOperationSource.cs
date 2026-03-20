@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    internal class WebPubSubSharedPrivateLinkOperationSource : IOperationSource<WebPubSubSharedPrivateLinkResource>
+    /// <summary></summary>
+    internal partial class WebPubSubSharedPrivateLinkOperationSource : IOperationSource<WebPubSubSharedPrivateLinkResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal WebPubSubSharedPrivateLinkOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         WebPubSubSharedPrivateLinkResource IOperationSource<WebPubSubSharedPrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WebPubSubSharedPrivateLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWebPubSubContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            WebPubSubSharedPrivateLinkData data = WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new WebPubSubSharedPrivateLinkResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<WebPubSubSharedPrivateLinkResource> IOperationSource<WebPubSubSharedPrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WebPubSubSharedPrivateLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWebPubSubContext.Default);
-            return await Task.FromResult(new WebPubSubSharedPrivateLinkResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            WebPubSubSharedPrivateLinkData data = WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new WebPubSubSharedPrivateLinkResource(_client, data);
         }
     }
 }

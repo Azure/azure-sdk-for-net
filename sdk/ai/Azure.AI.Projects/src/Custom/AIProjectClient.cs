@@ -8,9 +8,8 @@ global using Microsoft.TypeSpec.Generator.Customizations;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Azure.AI.Projects.OpenAI;
-using Azure.AI.Projects.Telemetry;
-using Azure.Core;
+using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 
 #pragma warning disable AZC0007
 
@@ -22,14 +21,40 @@ namespace Azure.AI.Projects
     {
         private const int _defaultMaxCacheSize = 100;
         private readonly ClientConnectionCacheManager _cacheManager;
+        /// <summary> A credential provider used to authenticate to the service. </summary>
+        private readonly AuthenticationTokenProvider _tokenProvider;
         private static readonly string[] AuthorizationScopes = ["https://ai.azure.com/.default"];
         private ProjectOpenAIClient _cachedOpenAIClient;
+        private AgentAdministrationClient _cachedAgentsClient;
         private readonly TelemetryDetails _telemetryDetails;
 
         /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
         protected AIProjectClient()
             : base(maxCacheSize: _defaultMaxCacheSize)
         {
+        }
+
+        /// <summary> Initializes a new instance of AIProjectClient from a <see cref="AIProjectClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for AIProjectClient. </param>
+        [System.Diagnostics.CodeAnalysis.Experimental("SCME0002")]
+        public AIProjectClient(AIProjectClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of AIProjectClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal AIProjectClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AIProjectClientOptions options)
+            : base(maxCacheSize: _defaultMaxCacheSize)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new AIProjectClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AIProjectClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+            _apiVersion = options.Version;
         }
 
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
@@ -56,7 +81,7 @@ namespace Azure.AI.Projects
             _apiVersion = options.Version;
             _endpoint = endpoint;
             _tokenProvider = tokenProvider;
-            _telemetryDetails = new(typeof(AIProjectAgentsOperations).Assembly, options?.UserAgentApplicationId);
+            _telemetryDetails = new(typeof(AgentAdministrationClient).Assembly, options?.UserAgentApplicationId);
 
             PipelinePolicyHelpers.AddQueryParameterPolicyIf(
                 options,
@@ -117,6 +142,11 @@ namespace Azure.AI.Projects
             return Volatile.Read(ref _cachedOpenAIClient) ?? Interlocked.CompareExchange(ref _cachedOpenAIClient, this.GetProjectOpenAIClient(), null) ?? _cachedOpenAIClient;
         }
 
+        internal virtual AgentAdministrationClient GetCachedAgentsClient()
+        {
+            return Volatile.Read(ref _cachedAgentsClient) ?? Interlocked.CompareExchange(ref _cachedAgentsClient, this.GetProjectAgentsClient(), null) ?? _cachedAgentsClient;
+        }
+
         /// <summary> Initializes a new instance of RedTeams. </summary>
         internal virtual RedTeams GetRedTeamsClient()
         {
@@ -153,12 +183,6 @@ namespace Azure.AI.Projects
             return Volatile.Read(ref _cachedSchedules) ?? Interlocked.CompareExchange(ref _cachedSchedules, new Schedules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedSchedules;
         }
 
-        /// <summary> Initializes a new instance of AIProjectAgentsOperations. </summary>
-        internal virtual AIProjectAgentsOperations GetAIProjectAgentsOperationsClient()
-        {
-            return Volatile.Read(ref _cachedAIProjectAgentsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectAgentsOperations, new AIProjectAgentsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectAgentsOperations;
-        }
-
         /// <summary> Initializes a new instance of AIProjectMemoryStoresOperations. </summary>
         internal virtual AIProjectMemoryStoresOperations GetAIProjectMemoryStoresOperationsClient()
         {
@@ -174,7 +198,7 @@ namespace Azure.AI.Projects
         /// <summary> Gets the client for managing indexes. </summary>
         public virtual AIProjectIndexesOperations Indexes { get => GetAIProjectIndexesOperationsClient(); }
         public virtual ProjectOpenAIClient OpenAI => GetCachedOpenAIClient();
-        public virtual AIProjectAgentsOperations Agents => GetAIProjectAgentsOperationsClient();
+        public virtual AgentAdministrationClient Agents => GetCachedAgentsClient();
         public virtual AIProjectMemoryStoresOperations MemoryStores => GetAIProjectMemoryStoresOperationsClient();
         public virtual RedTeams RedTeams => GetRedTeamsClient();
         public virtual EvaluationRules EvaluationRules => GetEvaluationRulesClient();

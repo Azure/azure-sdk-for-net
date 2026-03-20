@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ScalingPlanResource>> UpdateAsync(ScalingPlanPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScalingPlanResource>> UpdateAsync(ScalingPlanPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _scalingPlansClientDiagnostics.CreateScope("ScalingPlanResource.Update");
             scope.Start();
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ScalingPlanResource> Update(ScalingPlanPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual Response<ScalingPlanResource> Update(ScalingPlanPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _scalingPlansClientDiagnostics.CreateScope("ScalingPlanResource.Update");
             scope.Start();
