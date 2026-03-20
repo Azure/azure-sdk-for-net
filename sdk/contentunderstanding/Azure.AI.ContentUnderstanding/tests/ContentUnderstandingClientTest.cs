@@ -805,6 +805,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// Tests analyzing a video with different ContentRange time windows.
         /// Verifies that the returned content is limited to the specified time range.
         /// </summary>
+        [LiveOnly]
         [RecordedTest]
         public async Task AnalyzeUrlAsync_VideoContentRange()
         {
@@ -863,6 +864,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// Tests analyzing audio with different ContentRange time windows.
         /// Verifies that the returned content is limited to the specified time range.
         /// </summary>
+        [LiveOnly]
         [RecordedTest]
         public async Task AnalyzeUrlAsync_AudioContentRange()
         {
