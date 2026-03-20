@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Upgraded api-verion to 2025-11-01.
+- Upgraded api-version to 2025-11-01.
 
 ### Other Changes
 
