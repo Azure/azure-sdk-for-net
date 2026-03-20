@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
-            SearchServicePatch patch = new SearchServicePatch()
+            SearchServicePatch patch = new SearchServicePatch(DefaultLocation)
             {
                 PartitionCount = 2,
                 ReplicaCount = 3,

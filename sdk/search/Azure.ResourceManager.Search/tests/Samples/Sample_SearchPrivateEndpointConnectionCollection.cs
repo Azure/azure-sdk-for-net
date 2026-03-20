@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Search.Samples
             {
                 Properties = new SearchServicePrivateEndpointConnectionProperties
                 {
-                    PrivateLinkServiceConnectionState = new SearchServicePrivateLinkServiceConnectionState
+                    ConnectionState = new SearchServicePrivateLinkServiceConnectionState
                     {
                         Status = SearchServicePrivateLinkServiceConnectionStatus.Rejected,
                         Description = "Rejected for some reason.",

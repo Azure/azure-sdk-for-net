@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Search.Samples
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            SearchServiceResource result = await searchService.GetAsync(new SearchManagementRequestOptions());
+            SearchServiceResource result = await searchService.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Search.Samples
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            await searchService.DeleteAsync(WaitUntil.Completed, new SearchManagementRequestOptions());
+            await searchService.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Search.Samples
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            SearchServicePatch patch = new SearchServicePatch()
+            SearchServicePatch patch = new SearchServicePatch(default)
             {
                 ReplicaCount = 2,
                 Tags =
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Search.Samples
 ["new-tag"] = "Adding a new tag"
 },
             };
-            SearchServiceResource result = await searchService.UpdateAsync(patch, new SearchManagementRequestOptions());
+            SearchServiceResource result = await searchService.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Search.Samples
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            SearchServicePatch patch = new SearchServicePatch()
+            SearchServicePatch patch = new SearchServicePatch(default)
             {
                 ReplicaCount = 2,
                 AuthOptions = new SearchAadAuthDataPlaneAuthOptions
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Search.Samples
 ["new-tag"] = "Adding a new tag"
 },
             };
-            SearchServiceResource result = await searchService.UpdateAsync(patch, new SearchManagementRequestOptions());
+            SearchServiceResource result = await searchService.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Search.Samples
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            SearchServicePatch patch = new SearchServicePatch()
+            SearchServicePatch patch = new SearchServicePatch(default)
             {
                 ReplicaCount = 2,
                 IsLocalAuthDisabled = true,
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Search.Samples
 ["new-tag"] = "Adding a new tag"
 },
             };
-            SearchServiceResource result = await searchService.UpdateAsync(patch, new SearchManagementRequestOptions());
+            SearchServiceResource result = await searchService.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -216,13 +216,13 @@ namespace Azure.ResourceManager.Search.Samples
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            SearchServicePatch patch = new SearchServicePatch()
+            SearchServicePatch patch = new SearchServicePatch(default)
             {
                 ReplicaCount = 1,
                 PartitionCount = 1,
                 PublicInternetAccess = SearchServicePublicInternetAccess.Disabled,
             };
-            SearchServiceResource result = await searchService.UpdateAsync(patch, new SearchManagementRequestOptions());
+            SearchServiceResource result = await searchService.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Search.Samples
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            SearchServicePatch patch = new SearchServicePatch()
+            SearchServicePatch patch = new SearchServicePatch(default)
             {
                 ReplicaCount = 3,
                 PartitionCount = 1,
@@ -268,7 +268,7 @@ Value = "123.4.6.0/18",
 }},
                 },
             };
-            SearchServiceResource result = await searchService.UpdateAsync(patch, new SearchManagementRequestOptions());
+            SearchServiceResource result = await searchService.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -298,7 +298,7 @@ Value = "123.4.6.0/18",
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            SearchServicePatch patch = new SearchServicePatch()
+            SearchServicePatch patch = new SearchServicePatch(default)
             {
                 ReplicaCount = 3,
                 PartitionCount = 1,
@@ -315,7 +315,7 @@ Value = "123.4.6.0/18",
                     Bypass = SearchBypass.AzureServices,
                 },
             };
-            SearchServiceResource result = await searchService.UpdateAsync(patch, new SearchManagementRequestOptions());
+            SearchServiceResource result = await searchService.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -345,12 +345,12 @@ Value = "123.4.6.0/18",
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            SearchServicePatch patch = new SearchServicePatch()
+            SearchServicePatch patch = new SearchServicePatch(default)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
-                Identity = new Azure.ResourceManager.Search.Models.Identity(IdentityType.None),
+                Identity = new ManagedServiceIdentity("None"),
             };
-            SearchServiceResource result = await searchService.UpdateAsync(patch, new SearchManagementRequestOptions());
+            SearchServiceResource result = await searchService.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -380,7 +380,7 @@ Value = "123.4.6.0/18",
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            SearchServicePatch patch = new SearchServicePatch()
+            SearchServicePatch patch = new SearchServicePatch(default)
             {
                 ReplicaCount = 2,
                 EncryptionWithCmk = new SearchEncryptionWithCmk
@@ -393,7 +393,7 @@ Value = "123.4.6.0/18",
 ["new-tag"] = "Adding a new tag"
 },
             };
-            SearchServiceResource result = await searchService.UpdateAsync(patch, new SearchManagementRequestOptions());
+            SearchServiceResource result = await searchService.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -423,7 +423,7 @@ Value = "123.4.6.0/18",
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            SearchServicePatch patch = new SearchServicePatch()
+            SearchServicePatch patch = new SearchServicePatch(default)
             {
                 ReplicaCount = 2,
                 DataExfiltrationProtections = { SearchDataExfiltrationProtection.BlockAll },
@@ -433,7 +433,7 @@ Value = "123.4.6.0/18",
 ["new-tag"] = "Adding a new tag"
 },
             };
-            SearchServiceResource result = await searchService.UpdateAsync(patch, new SearchManagementRequestOptions());
+            SearchServiceResource result = await searchService.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -463,7 +463,7 @@ Value = "123.4.6.0/18",
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            SearchServicePatch patch = new SearchServicePatch()
+            SearchServicePatch patch = new SearchServicePatch(default)
             {
                 ReplicaCount = 2,
                 SemanticSearch = SearchSemanticSearch.Standard,
@@ -473,7 +473,7 @@ Value = "123.4.6.0/18",
 ["new-tag"] = "Adding a new tag"
 },
             };
-            SearchServiceResource result = await searchService.UpdateAsync(patch, new SearchManagementRequestOptions());
+            SearchServiceResource result = await searchService.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -503,7 +503,7 @@ Value = "123.4.6.0/18",
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            SearchServicePatch patch = new SearchServicePatch()
+            SearchServicePatch patch = new SearchServicePatch(default)
             {
                 SearchSkuName = SearchServiceSkuName.Standard2,
                 Tags =
@@ -512,7 +512,7 @@ Value = "123.4.6.0/18",
 ["new-tag"] = "Adding a new tag"
 },
             };
-            SearchServiceResource result = await searchService.UpdateAsync(patch, new SearchManagementRequestOptions());
+            SearchServiceResource result = await searchService.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -542,7 +542,7 @@ Value = "123.4.6.0/18",
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation
-            SearchServiceAdminKeyResult result = await searchService.GetAdminKeyAsync(new SearchManagementRequestOptions());
+            SearchServiceAdminKeyResult result = await searchService.GetAdminKeyAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -569,7 +569,7 @@ Value = "123.4.6.0/18",
 
             // invoke the operation
             SearchServiceAdminKeyKind keyKind = SearchServiceAdminKeyKind.Primary;
-            SearchServiceAdminKeyResult result = await searchService.RegenerateAdminKeyAsync(keyKind, new SearchManagementRequestOptions());
+            SearchServiceAdminKeyResult result = await searchService.RegenerateAdminKeyAsync(keyKind);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -596,7 +596,7 @@ Value = "123.4.6.0/18",
 
             // invoke the operation
             string name = "An API key granting read-only access to the documents collection of an index.";
-            SearchServiceQueryKey result = await searchService.CreateQueryKeyAsync(name, new SearchManagementRequestOptions());
+            SearchServiceQueryKey result = await searchService.CreateQueryKeyAsync(name);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -622,7 +622,7 @@ Value = "123.4.6.0/18",
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SearchServiceQueryKey item in searchService.GetQueryKeysBySearchServiceAsync(new SearchManagementRequestOptions()))
+            await foreach (SearchServiceQueryKey item in searchService.GetQueryKeysBySearchServiceAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -652,7 +652,7 @@ Value = "123.4.6.0/18",
 
             // invoke the operation
             string key = "<a query API key>";
-            await searchService.DeleteQueryKeyAsync(key, new SearchManagementRequestOptions());
+            await searchService.DeleteQueryKeyAsync(key);
 
             Console.WriteLine("Succeeded");
         }
@@ -709,7 +709,7 @@ Value = "123.4.6.0/18",
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SearchPrivateLinkResource item in searchService.GetSupportedPrivateLinkResourcesAsync(new SearchManagementRequestOptions()))
+            await foreach (SearchPrivateLinkResource item in searchService.GetSupportedPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

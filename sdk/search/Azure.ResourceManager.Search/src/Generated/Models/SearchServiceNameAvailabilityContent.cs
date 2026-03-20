@@ -19,24 +19,22 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. </param>
-        /// <param name="resourceType"> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public SearchServiceNameAvailabilityContent(string name, SearchServiceResourceType resourceType)
+        public SearchServiceNameAvailabilityContent(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ResourceType = resourceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. </param>
-        /// <param name="resourceType"> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </param>
+        /// <param name="type"> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceNameAvailabilityContent(string name, SearchServiceResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchServiceNameAvailabilityContent(string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            ResourceType = resourceType;
+            Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +44,6 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </summary>
         [WirePath("type")]
-        public SearchServiceResourceType ResourceType { get; }
+        internal string Type { get; } = "searchServices";
     }
 }

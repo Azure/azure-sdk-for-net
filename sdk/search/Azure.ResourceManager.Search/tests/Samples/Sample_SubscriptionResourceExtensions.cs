@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // invoke the operation
             SearchServiceNameAvailabilityContent content = new SearchServiceNameAvailabilityContent("mysearchservice");
-            SearchServiceNameAvailabilityResult result = await subscriptionResource.CheckNameAvailabilityAsync(content, new SearchManagementRequestOptions());
+            SearchServiceNameAvailabilityResult result = await subscriptionResource.CheckSearchServiceNameAvailabilityAsync(content, new SearchManagementRequestOptions());
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("westus");
-            await foreach (QuotaUsageResult item in subscriptionResource.GetBySubscriptionAsync(location, new SearchManagementRequestOptions()))
+            await foreach (QuotaUsageResult item in subscriptionResource.GetUsagesBySubscriptionAsync(location, new SearchManagementRequestOptions()))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Search.Samples
 ["app-name"] = "My e-commerce app"
 },
             };
-            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data, new SearchManagementRequestOptions());
+            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
             SearchServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Search.Samples
 ["app-name"] = "My e-commerce app"
 },
             };
-            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data, new SearchManagementRequestOptions());
+            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
             SearchServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Search.Samples
 ["app-name"] = "My e-commerce app"
 },
             };
-            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data, new SearchManagementRequestOptions());
+            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
             SearchServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Search.Samples
 ["app-name"] = "My e-commerce app"
 },
             };
-            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data, new SearchManagementRequestOptions());
+            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
             SearchServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -254,7 +254,7 @@ Value = "123.4.6.0/18",
 ["app-name"] = "My e-commerce app"
 },
             };
-            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data, new SearchManagementRequestOptions());
+            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
             SearchServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -311,7 +311,7 @@ Value = "123.4.6.0/18",
 ["app-name"] = "My e-commerce app"
 },
             };
-            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data, new SearchManagementRequestOptions());
+            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
             SearchServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -361,7 +361,7 @@ Value = "123.4.6.0/18",
 ["app-name"] = "My e-commerce app"
 },
             };
-            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data, new SearchManagementRequestOptions());
+            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
             SearchServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -408,7 +408,7 @@ Value = "123.4.6.0/18",
 ["app-name"] = "My e-commerce app"
 },
             };
-            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data, new SearchManagementRequestOptions());
+            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
             SearchServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -445,11 +445,11 @@ Value = "123.4.6.0/18",
             SearchServiceData data = new SearchServiceData(new AzureLocation("westus"))
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
-                Identity = new Azure.ResourceManager.Search.Models.Identity(IdentityType.SystemAssignedUserAssigned)
+                Identity = new ManagedServiceIdentity("SystemAssigned, UserAssigned")
                 {
                     UserAssignedIdentities =
 {
-["/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/user-mi"] = new UserAssignedIdentity()
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/user-mi")] = new UserAssignedIdentity()
 },
                 },
                 ReplicaCount = 3,
@@ -461,7 +461,7 @@ Value = "123.4.6.0/18",
 ["app-name"] = "My e-commerce app"
 },
             };
-            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data, new SearchManagementRequestOptions());
+            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
             SearchServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -508,7 +508,7 @@ Value = "123.4.6.0/18",
 ["app-name"] = "My e-commerce app"
 },
             };
-            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data, new SearchManagementRequestOptions());
+            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
             SearchServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -542,7 +542,7 @@ Value = "123.4.6.0/18",
 
             // invoke the operation
             string searchServiceName = "mysearchservice";
-            SearchServiceResource result = await collection.GetAsync(searchServiceName, new SearchManagementRequestOptions());
+            SearchServiceResource result = await collection.GetAsync(searchServiceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -574,7 +574,7 @@ Value = "123.4.6.0/18",
             SearchServiceCollection collection = resourceGroupResource.GetSearchServices();
 
             // invoke the operation and iterate over the result
-            await foreach (SearchServiceResource item in collection.GetAllAsync(new SearchManagementRequestOptions()))
+            await foreach (SearchServiceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -610,7 +610,7 @@ Value = "123.4.6.0/18",
 
             // invoke the operation
             string searchServiceName = "mysearchservice";
-            bool result = await collection.ExistsAsync(searchServiceName, new SearchManagementRequestOptions());
+            bool result = await collection.ExistsAsync(searchServiceName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -639,7 +639,7 @@ Value = "123.4.6.0/18",
 
             // invoke the operation
             string searchServiceName = "mysearchservice";
-            NullableResponse<SearchServiceResource> response = await collection.GetIfExistsAsync(searchServiceName, new SearchManagementRequestOptions());
+            NullableResponse<SearchServiceResource> response = await collection.GetIfExistsAsync(searchServiceName);
             SearchServiceResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
