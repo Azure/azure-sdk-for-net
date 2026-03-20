@@ -997,15 +997,28 @@ namespace Azure.Generator.Mgmt.Tests
         /// </summary>
         private static CSharpType CreateFixedEnumCSharpType(string name, string ns, bool isNullable)
         {
+            // The internal CSharpType constructor signature:
+            // CSharpType(string name, string ns, bool isValueType, bool isNullable,
+            //            CSharpType declaringType, IReadOnlyList<CSharpType> args,
+            //            bool isPublic, bool isStruct, CSharpType baseType, Type underlyingEnumType)
             var ctor = typeof(CSharpType).GetConstructor(
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance,
                 null,
                 new[] { typeof(string), typeof(string), typeof(bool), typeof(bool), typeof(CSharpType),
                         typeof(IReadOnlyList<CSharpType>), typeof(bool), typeof(bool), typeof(CSharpType), typeof(Type) },
                 null);
+
+            bool isValueType = true;
+            CSharpType? declaringType = null;
+            IReadOnlyList<CSharpType> args = Array.Empty<CSharpType>();
+            bool isPublic = true;
+            bool isStruct = false; // false = fixed enum (C# enum), true = extensible enum (readonly struct)
+            CSharpType? baseType = null;
+            Type underlyingEnumType = typeof(string); // non-null marks this as an enum type
+
             return (CSharpType)ctor!.Invoke(new object?[] {
-                name, ns, true, isNullable, null,
-                (IReadOnlyList<CSharpType>)Array.Empty<CSharpType>(), true, false, null, typeof(string)
+                name, ns, isValueType, isNullable, declaringType,
+                args, isPublic, isStruct, baseType, underlyingEnumType
             });
         }
     }
