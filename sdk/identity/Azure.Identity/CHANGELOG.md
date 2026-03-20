@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-- All Azure.Identity types have been moved to Azure.Core and are now available through TypeForwardedTo attributes. This is a non-breaking change — existing code continues to work transparently.
+- All Azure.Identity types have been moved to Azure.Core and are now available through `TypeForwardedTo` attributes. This is a non-breaking change — existing code continues to work transparently. The library's version number now aligns with that of Azure.Core.
 
 ## 1.19.0 (2026-03-11)
 
