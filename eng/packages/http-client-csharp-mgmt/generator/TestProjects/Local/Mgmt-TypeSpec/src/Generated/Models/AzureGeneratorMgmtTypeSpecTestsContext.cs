@@ -151,6 +151,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(RedisPrivateEndpointConnection))]
     [ModelReaderWriterBuildable(typeof(RedisPrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(RedisPrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(ResourceTypeCheckContent))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeTestProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeTestResource))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeTestResourceData))]

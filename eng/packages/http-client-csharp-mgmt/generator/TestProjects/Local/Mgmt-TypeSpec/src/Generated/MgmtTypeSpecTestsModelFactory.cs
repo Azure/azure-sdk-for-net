@@ -962,6 +962,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 properties);
         }
 
+        /// <summary> Model with a constant string type mapped to armResourceType via alternateType. </summary>
+        /// <param name="name"> Name to check. </param>
+        /// <param name="resourceType"> Type of resource, constant string mapped to armResourceType via alternateType. </param>
+        /// <returns> A new <see cref="Models.ResourceTypeCheckContent"/> instance for mocking. </returns>
+        public static ResourceTypeCheckContent ResourceTypeCheckContent(string name = default, ResourceType resourceType = default)
+        {
+            return new ResourceTypeCheckContent(name, resourceType, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
