@@ -13,20 +13,15 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    /// <summary> Account resource. </summary>
+    /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class PurviewAccountData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PurviewAccountData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public PurviewAccountData(AzureLocation location) : base(location)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PurviewAccountData"/> for deserialization. </summary>
-        internal PurviewAccountData() : base(default)
         {
         }
 
@@ -36,12 +31,12 @@ namespace Azure.ResourceManager.Purview
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The account properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The Managed Identity of the resource. </param>
         /// <param name="sku"> Gets or sets the Sku. </param>
-        internal PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PurviewAccountProperties properties, IDictionary<string, string> tags, AzureLocation? location, ManagedServiceIdentity identity, PurviewAccountSku sku) : base(id, name, resourceType, systemData, tags ?? new Dictionary<string, string>(), location ?? default)
+        internal PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PurviewAccountProperties properties, ManagedServiceIdentity identity, PurviewAccountSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -49,7 +44,7 @@ namespace Azure.ResourceManager.Purview
             Sku = sku;
         }
 
-        /// <summary> The account properties. </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
         internal PurviewAccountProperties Properties { get; set; }
 
         /// <summary> The Managed Identity of the resource. </summary>
@@ -59,7 +54,7 @@ namespace Azure.ResourceManager.Purview
         public PurviewAccountSku Sku { get; set; }
 
         /// <summary> Gets or sets the status of the account. </summary>
-        public AccountPropertiesAccountStatus AccountStatus
+        public PurviewAccountStatus AccountStatus
         {
             get
             {
@@ -100,15 +95,6 @@ namespace Azure.ResourceManager.Purview
             get
             {
                 return Properties is null ? default : Properties.DefaultDomain;
-            }
-        }
-
-        /// <summary> The URIs that are the public endpoints of the account. </summary>
-        public PurviewAccountEndpoint Endpoints
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Endpoints;
             }
         }
 
@@ -172,17 +158,8 @@ namespace Azure.ResourceManager.Purview
             }
         }
 
-        /// <summary> Gets the resource identifiers of the managed resources. </summary>
-        public PurviewManagedResource ManagedResources
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ManagedResources;
-            }
-        }
-
         /// <summary> Gets or sets the public network access for managed resources. </summary>
-        public PurviewPublicNetworkAccess? ManagedResourcesPublicNetworkAccess
+        public ManagedResourcesPublicNetworkAccess? ManagedResourcesPublicNetworkAccess
         {
             get
             {

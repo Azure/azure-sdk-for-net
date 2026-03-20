@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Purview.Samples
             PurviewAccountData data = new PurviewAccountData(new AzureLocation("West US 2"))
             {
                 ManagedResourceGroupName = "custom-rgname",
-                ManagedResourcesPublicNetworkAccess = PurviewPublicNetworkAccess.Enabled,
+                ManagedResourcesPublicNetworkAccess = ManagedResourcesPublicNetworkAccess.Enabled,
             };
             ArmOperation<PurviewAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data);
             PurviewAccountResource result = lro.Value;

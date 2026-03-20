@@ -17,9 +17,14 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    /// <summary> Account resource. </summary>
+    /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class PurviewAccountData : TrackedResourceData, IJsonModel<PurviewAccountData>
     {
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountData"/> for deserialization. </summary>
+        internal PurviewAccountData()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -101,24 +106,6 @@ namespace Azure.ResourceManager.Purview
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -161,9 +148,9 @@ namespace Azure.ResourceManager.Purview
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            PurviewAccountProperties properties = default;
             IDictionary<string, string> tags = default;
-            AzureLocation? location = default;
+            AzureLocation location = default;
+            PurviewAccountProperties properties = default;
             ManagedServiceIdentity identity = default;
             PurviewAccountSku sku = default;
             foreach (var prop in element.EnumerateObject())
@@ -200,15 +187,6 @@ namespace Azure.ResourceManager.Purview
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPurviewContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = PurviewAccountProperties.DeserializePurviewAccountProperties(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -232,11 +210,16 @@ namespace Azure.ResourceManager.Purview
                 }
                 if (prop.NameEquals("location"u8))
                 {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    location = new AzureLocation(prop.Value.GetString());
+                    properties = PurviewAccountProperties.DeserializePurviewAccountProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -268,9 +251,9 @@ namespace Azure.ResourceManager.Purview
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 identity,
                 sku);
         }

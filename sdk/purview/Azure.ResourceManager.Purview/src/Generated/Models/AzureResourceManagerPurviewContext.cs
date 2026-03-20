@@ -17,9 +17,6 @@ namespace Azure.ResourceManager.Purview
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AccountList))]
-    [ModelReaderWriterBuildable(typeof(AccountPropertiesAccountStatus))]
-    [ModelReaderWriterBuildable(typeof(AccountPropertiesEndpoints))]
-    [ModelReaderWriterBuildable(typeof(AccountPropertiesManagedResources))]
     [ModelReaderWriterBuildable(typeof(CloudConnectors))]
     [ModelReaderWriterBuildable(typeof(CollectionAdminUpdateContent))]
     [ModelReaderWriterBuildable(typeof(DefaultPurviewAccountPayload))]
