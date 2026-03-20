@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> The private link resource properties. </param>
         internal ServiceBusPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceBusPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> The private link resource properties. </summary>
         [WirePath("properties")]
         internal ServiceBusPrivateLinkResourceProperties Properties { get; set; }
 

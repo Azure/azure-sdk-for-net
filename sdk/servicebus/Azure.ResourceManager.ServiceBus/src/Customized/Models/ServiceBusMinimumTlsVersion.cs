@@ -15,5 +15,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static ServiceBusMinimumTlsVersion Tls1_1 { get; } = Tls11;
         /// <summary> TLS 1.2 </summary>
         public static ServiceBusMinimumTlsVersion Tls1_2 { get; } = Tls12;
+        /// <summary> TLS 1.3 </summary>
+        public static ServiceBusMinimumTlsVersion Tls1_3 { get; } = Tls13;
     }
 }

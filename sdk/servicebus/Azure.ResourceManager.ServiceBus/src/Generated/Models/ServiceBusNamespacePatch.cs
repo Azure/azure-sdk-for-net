@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> The namespace update properties. </param>
         /// <param name="sku"> Properties of SKU. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
         internal ServiceBusNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SBNamespaceUpdateProperties properties, ServiceBusSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             Identity = identity;
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> The namespace update properties. </summary>
         [WirePath("properties")]
         internal SBNamespaceUpdateProperties Properties { get; set; }
 

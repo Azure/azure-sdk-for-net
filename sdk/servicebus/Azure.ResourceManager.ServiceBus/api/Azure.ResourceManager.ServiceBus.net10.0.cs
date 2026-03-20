@@ -1203,9 +1203,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls10 { get { throw null; } }
         public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls11 { get { throw null; } }
         public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls12 { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls13 { get { throw null; } }
         public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls1_0 { get { throw null; } }
         public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls1_1 { get { throw null; } }
         public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls1_2 { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls1_3 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
