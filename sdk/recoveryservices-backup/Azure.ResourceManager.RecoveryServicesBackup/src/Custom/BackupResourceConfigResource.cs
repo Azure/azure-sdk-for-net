@@ -7,6 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
+// TODO: need further investigation to determine why the behavior of this operation is different but spec is same.
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupResourceConfigResource : ArmResource
