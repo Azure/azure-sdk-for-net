@@ -13,6 +13,7 @@ namespace Azure.Identity
     internal static class WindowsNativeMethods
     {
 #pragma warning disable CA1712 // Do not prefix enum members
+[TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
         public enum CRED_PERSIST : uint
         {
             CRED_PERSIST_SESSION = 1,
@@ -21,6 +22,7 @@ namespace Azure.Identity
         }
 #pragma warning restore CA1712 // Do not prefix enum members
 
+[TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
         public enum CRED_TYPE
         {
             GENERIC = 1,
@@ -31,6 +33,7 @@ namespace Azure.Identity
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+[TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
         public struct CredentialData
         {
             public uint Flags;

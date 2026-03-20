@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using System.Runtime.CompilerServices;
 
 namespace Azure.Identity
 {
@@ -23,6 +24,7 @@ namespace Azure.Identity
     /// </summary>
 #pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     [UnsupportedOSPlatform("browser")]
+[TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public class AzurePowerShellCredential : TokenCredential
     {
         private readonly CredentialPipeline _pipeline;

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Identity.Client;
+using System.Runtime.CompilerServices;
 
 namespace Azure.Identity
 {
@@ -19,6 +20,7 @@ namespace Azure.Identity
     /// </summary>
     /// <seealso cref="TokenCachePersistenceOptions"/>.
 #pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+[TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public class AuthenticationRecord
     {
         internal const string CurrentVersion = "1.0";

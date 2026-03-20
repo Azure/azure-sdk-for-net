@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
+using System.Runtime.CompilerServices;
 
 namespace Azure.Identity
 {
@@ -16,6 +17,7 @@ namespace Azure.Identity
     /// Exposes client options related to logging, telemetry, and distributed tracing.
     /// </summary>
 #pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+[TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public class TokenCredentialDiagnosticsOptions : DiagnosticsOptions
     {
         /// <summary>
