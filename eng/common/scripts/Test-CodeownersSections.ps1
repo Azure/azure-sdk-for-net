@@ -75,20 +75,25 @@ New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
 # ---------------------------------------------------------------------------
 $failed = $false
 
+$beforePath = Resolve-Path $BeforeFile
+Write-Host "Before file: $beforePath"
+$afterPath  = Resolve-Path $AfterFile
+Write-Host "After file:  $afterPath"
+
 foreach ($section in $Sections) {
   $safeName      = $section -replace ' ', '_'
   $beforeSection = Join-Path $TempDirectory "before.${safeName}.txt"
   $afterSection  = Join-Path $TempDirectory "after.${safeName}.txt"
 
   Write-Host "Exporting section '$section' from before file..."
-  & $AzsdkCliPath config codeowners export-section --codeowners-path $BeforeFile --section $section --output-file $beforeSection
+  & $AzsdkCliPath config codeowners export-section --codeowners-path $beforePath --section $section --output-file $beforeSection
   if ($LASTEXITCODE -ne 0) {
     Write-Host "##vso[task.LogIssue type=warning;]Failed to export section '$section' from before file (exit code $LASTEXITCODE). Skipping this section."
     continue
   }
 
   Write-Host "Exporting section '$section' from after file..."
-  & $AzsdkCliPath config codeowners export-section --codeowners-path $AfterFile --section $section --output-file $afterSection
+  & $AzsdkCliPath config codeowners export-section --codeowners-path $afterPath --section $section --output-file $afterSection
   if ($LASTEXITCODE -ne 0) {
     Write-Host "##vso[task.LogIssue type=warning;]Failed to export section '$section' from after file (exit code $LASTEXITCODE). Skipping this section."
     continue
