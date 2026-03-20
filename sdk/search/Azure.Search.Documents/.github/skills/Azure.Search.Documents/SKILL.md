@@ -74,6 +74,12 @@ Placement rule: GA replacing a preview → replace at same integer; otherwise ap
 
 **Gate:** All five locations in sync, and only the latest preview version is allowed to be included if preview release, and no preview versions allowed if GA release.
 
+### Phase 3.7 — Update Test Version References
+
+Search test files for references to old API version strings or `ServiceVersion` enum values that should be updated to the new version. Fix any stale references.
+
+**Gate:** No stale version references in tests.
+
 ### Phase 4 — Export Public API
 
 Run `eng\scripts\Export-API.ps1 search`. For GA: run `dotnet pack` to check ApiCompat.
@@ -100,7 +106,8 @@ Run `eng\scripts\Update-Snippets.ps1 search`. Add/update samples for new API fea
 ### Phase 8 — Update Changelog
 
 Fill "Features Added", "Breaking Changes", "Bugs Fixed", "Other Changes" from generated code and API diffs. Write from the user's perspective. Use `azsdk_package_update_changelog_content` MCP tool if available.
-Never include Breaking changes 
+
+> **NOTE**: Verify each changelog entry against the actual public API surface (`api/*.cs`). Do not list types or features that don't exist in the codebase. Cross-reference new additions against the prior GA version's API surface to ensure only genuinely new items are included.
 
 ### Phase 9 — Update Version and Metadata
 

@@ -51,11 +51,14 @@ src/
 │   ├── DocumentsClientBuilderExtensions.cs
 │   ├── CollectionResults/         # Generated pageable result types
 │   ├── Internal/                  # Generator scaffolding (attributes, helpers)
-│   │   ├── CodeGenTypeAttribute.cs
-│   │   ├── CodeGenSuppressAttribute.cs
-│   │   ├── CodeGenMemberAttribute.cs
+│   │   ├── Argument.cs
 │   │   ├── ChangeTrackingList.cs
 │   │   ├── ChangeTrackingDictionary.cs
+│   │   ├── CodeGenMemberAttribute.cs
+│   │   ├── CodeGenSerializationAttribute.cs
+│   │   ├── CodeGenSuppressAttribute.cs
+│   │   ├── CodeGenTypeAttribute.cs
+│   │   ├── ModelSerializationExtensions.cs
 │   │   └── ...
 │   └── Models/                    # AUTO-GENERATED model types (~200+ files)
 │       ├── SearchIndex.cs / .Serialization.cs
@@ -72,6 +75,9 @@ src/
 ├── SearchExtensions.cs
 ├── QueryAnswerResult.cs
 ├── AzureSearchDocumentsEventSource.cs   # ETW/EventSource telemetry
+│
+├── Internal/                      # CUSTOM — internal helpers
+│   └── SyncAsyncEventHandlerExtensions.cs
 │
 ├── Indexes/                       # CUSTOM — index & indexer management
 │   ├── SearchIndexClient.cs       # Customization partial for SearchIndexClient
@@ -91,7 +97,6 @@ src/
 │       ├── SearchIndex.cs         # Custom public constructor
 │       ├── SearchIndexer.cs
 │       ├── SearchIndexerDataSourceConnection.cs
-│       ├── SearchIndexerCache.cs
 │       ├── SearchField.cs / SimpleField.cs / SearchableField.cs / ComplexField.cs
 │       ├── LexicalAnalyzer.cs / LexicalTokenizer.cs / TokenFilter.cs / CharFilter.cs
 │       ├── SearchFieldDataType.cs
@@ -104,10 +109,12 @@ src/
 │   ├── SearchModelFactory.cs      # Custom partial of the generated factory
 │   ├── SearchDocument/            # Dynamic/typed document types
 │   ├── SearchResult.cs / SearchResults.cs
+│   ├── SearchResultsWithReflection.cs / SearchResultsWithTypeInfo.cs
 │   ├── SuggestResults.cs / SearchSuggestion.cs
 │   ├── AutocompleteResults.cs
 │   ├── IndexDocumentsAction.cs / IndexDocumentsBatch.cs
-│   ├── QueryAnswer.cs / QueryCaption.cs / QueryRewrites.cs
+│   ├── QueryAnswer.cs / QueryCaption.cs
+│   ├── SearchContinuationToken.cs / SearchQueryType.cs
 │   ├── VectorQuery.cs
 │   ├── FacetResult.cs / RangeFacetResult.cs / ValueFacetResult.cs
 │   └── ...
@@ -144,6 +151,8 @@ src/
 └── Utilities/                     # CUSTOM — internal helpers, extensions
     ├── Constants.cs
     ├── AsyncPageableWrapper.cs / PageableWrapper.cs
+    ├── DictionaryExtensions.cs / InternalSearchExtensions.cs
+    ├── Polyfill/                   # Polyfills for older target frameworks
     └── ...
 ```
 
@@ -227,17 +236,17 @@ public enum ServiceVersion
     V2023_11_01 = 2,
     V2024_07_01 = 3,
     V2025_09_01 = 4,
-    V2025_11_01_Preview = 5,
+    V2026_04_01 = 5,
     // new versions added here
 }
 
-internal const ServiceVersion LatestVersion = ServiceVersion.V2025_11_01_Preview;
+internal const ServiceVersion LatestVersion = ServiceVersion.V2026_04_01;
 ```
 
 Three switch expressions must be kept in sync when adding a new API version:
 
 1. `Validate(ServiceVersion version)` — throws for invalid values  
-2. `ToVersionString(ServiceVersion version)` — maps enum → API version string (e.g. `"2025-11-01-preview"`)  
+2. `ToVersionString(ServiceVersion version)` — maps enum → API version string (e.g. `"2026-04-01"`)  
 3. `ToServiceVersion(string version)` — maps API version string → enum (used by `assets.json`/recording)
 
 > **Rule**: When adding a new `ServiceVersion` value, update all three switches and update `LatestVersion`.
@@ -259,15 +268,8 @@ Three switch expressions must be kept in sync when adding a new API version:
 The SDK is **multi-version**: it targets the latest API version by default but supports all prior versions via the `ServiceVersion` enum. When a type is **removed** from a newer spec version:
 
 - The generated file for that type is deleted by the generator.
-- The type must be **restored manually** from git as a non-generated custom file, so older API version callers continue to compile.
-- Restored files are placed in `Generated/Models/` but are no longer auto-generated on future runs.
-
-Examples of retained types for backwards compat:
-- `HybridSearch.cs`, `HybridCountAndFacetMode.cs`
-- `IndexerRuntime.cs`
-- `QueryLanguage.cs`, `QuerySpellerType.cs`, `QueryRewritesType.cs`
-- `SemanticQueryRewritesResultType.cs`, `KnowledgeRetrievalOutputMode.cs`
-- `QueryRewritesDebugInfo.cs`, `QueryRewritesValuesDebugInfo.cs`
+- The type must be **restored manually** from git as a non-generated custom file, so older API version callers continue to compile, ONLY if ApiCompat (during compile-time) checks fail for the particular model/property.
+- Restored files are placed in `src/`, not `src/Generated` but are no longer auto-generated on future runs.
 
 ---
 
