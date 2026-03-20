@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,23 +15,23 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    internal partial class WebPubSubReplicaSharedPrivateLinkResourcesGetAllCollectionResultOfT : Pageable<WebPubSubSharedPrivateLinkData>
+    internal partial class SharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT : AsyncPageable<WebPubSubSharedPrivateLinkData>
     {
-        private readonly WebPubSubReplicaSharedPrivateLinkResources _client;
+        private readonly SharedPrivateLinkResources _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _resourceName;
         private readonly string _replicaName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of WebPubSubReplicaSharedPrivateLinkResourcesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The WebPubSubReplicaSharedPrivateLinkResources client used to send requests. </param>
+        /// <summary> Initializes a new instance of SharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The SharedPrivateLinkResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="replicaName"> The name of the replica. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public WebPubSubReplicaSharedPrivateLinkResourcesGetAllCollectionResultOfT(WebPubSubReplicaSharedPrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string resourceName, string replicaName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public SharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT(SharedPrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string resourceName, string replicaName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,16 +41,16 @@ namespace Azure.ResourceManager.WebPubSub
             _context = context;
         }
 
-        /// <summary> Gets the pages of WebPubSubReplicaSharedPrivateLinkResourcesGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of SharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of WebPubSubReplicaSharedPrivateLinkResourcesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<WebPubSubSharedPrivateLinkData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of SharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<WebPubSubSharedPrivateLinkData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -67,14 +68,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _replicaName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _resourceName, _replicaName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("WebPubSubReplicaSharedPrivateLinkCollection.GetAll");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary></summary>
-    internal partial class WebPubSubReplicaSharedPrivateLinkResourceOperationSource : IOperationSource<WebPubSubReplicaSharedPrivateLinkResource>
+    internal partial class WebPubSubSharedPrivateLinkOperationSource : IOperationSource<WebPubSubSharedPrivateLinkResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal WebPubSubReplicaSharedPrivateLinkResourceOperationSource(ArmClient client)
+        internal WebPubSubSharedPrivateLinkOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        WebPubSubReplicaSharedPrivateLinkResource IOperationSource<WebPubSubReplicaSharedPrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WebPubSubSharedPrivateLinkResource IOperationSource<WebPubSubSharedPrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             WebPubSubSharedPrivateLinkData data = WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new WebPubSubReplicaSharedPrivateLinkResource(_client, data);
+            return new WebPubSubSharedPrivateLinkResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<WebPubSubReplicaSharedPrivateLinkResource> IOperationSource<WebPubSubReplicaSharedPrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WebPubSubSharedPrivateLinkResource> IOperationSource<WebPubSubSharedPrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             WebPubSubSharedPrivateLinkData data = WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new WebPubSubReplicaSharedPrivateLinkResource(_client, data);
+            return new WebPubSubSharedPrivateLinkResource(_client, data);
         }
     }
 }

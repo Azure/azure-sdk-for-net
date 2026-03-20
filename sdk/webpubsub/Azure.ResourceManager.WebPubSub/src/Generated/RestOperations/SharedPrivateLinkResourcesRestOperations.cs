@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    internal partial class WebPubSubReplicaSharedPrivateLinkResources
+    internal partial class SharedPrivateLinkResources
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of WebPubSubReplicaSharedPrivateLinkResources for mocking. </summary>
-        protected WebPubSubReplicaSharedPrivateLinkResources()
+        /// <summary> Initializes a new instance of SharedPrivateLinkResources for mocking. </summary>
+        protected SharedPrivateLinkResources()
         {
         }
 
-        /// <summary> Initializes a new instance of WebPubSubReplicaSharedPrivateLinkResources. </summary>
+        /// <summary> Initializes a new instance of SharedPrivateLinkResources. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal WebPubSubReplicaSharedPrivateLinkResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal SharedPrivateLinkResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
