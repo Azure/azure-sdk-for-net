@@ -246,48 +246,10 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSearchSubscriptionResource.CheckNameAvailabilityAsync(SearchServiceNameAvailabilityContent, SearchManagementRequestOptions, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="content"> The resource name and type to check. </param>
-        /// <param name="params"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<SearchServiceNameAvailabilityResult>> CheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableSearchSubscriptionResource(subscriptionResource).CheckNameAvailabilityAsync(content, @params, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSearchSubscriptionResource.CheckNameAvailability(SearchServiceNameAvailabilityContent, SearchManagementRequestOptions, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="content"> The resource name and type to check. </param>
-        /// <param name="params"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<SearchServiceNameAvailabilityResult> CheckNameAvailability(this SubscriptionResource subscriptionResource, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSearchSubscriptionResource(subscriptionResource).CheckNameAvailability(content, @params, cancellationToken);
-        }
-
-        /// <summary>
         /// Get a list of all Azure AI Search quota usages across the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSearchSubscriptionResource.GetBySubscriptionAsync(string, SearchManagementRequestOptions, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSearchSubscriptionResource.GetSearchServiceUsagesBySubscriptionAsync(string, SearchManagementRequestOptions, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -296,18 +258,18 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<QuotaUsageResult> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, string location, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public static AsyncPageable<QuotaUsageResult> GetSearchServiceUsagesBySubscriptionAsync(this SubscriptionResource subscriptionResource, string location, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSearchSubscriptionResource(subscriptionResource).GetBySubscriptionAsync(location, @params, cancellationToken);
+            return GetMockableSearchSubscriptionResource(subscriptionResource).GetSearchServiceUsagesBySubscriptionAsync(location, @params, cancellationToken);
         }
 
         /// <summary>
         /// Get a list of all Azure AI Search quota usages across the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSearchSubscriptionResource.GetBySubscription(string, SearchManagementRequestOptions, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSearchSubscriptionResource.GetSearchServiceUsagesBySubscription(string, SearchManagementRequestOptions, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -316,11 +278,11 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<QuotaUsageResult> GetBySubscription(this SubscriptionResource subscriptionResource, string location, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public static Pageable<QuotaUsageResult> GetSearchServiceUsagesBySubscription(this SubscriptionResource subscriptionResource, string location, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSearchSubscriptionResource(subscriptionResource).GetBySubscription(location, @params, cancellationToken);
+            return GetMockableSearchSubscriptionResource(subscriptionResource).GetSearchServiceUsagesBySubscription(location, @params, cancellationToken);
         }
     }
 }

@@ -221,15 +221,15 @@ namespace Azure.ResourceManager.Search.Mocking
         }
 
         /// <summary>
-        /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
+        /// Get a list of all Azure AI Search quota usages across the subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Search/locations/{location}/usages. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ServicesOperationGroup_CheckNameAvailability. </description>
+        /// <description> UsagesOperationGroup_ListBySubscription. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -237,87 +237,22 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The resource name and type to check. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="params"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="params"/> is null. </exception>
-        public virtual async Task<Response<SearchServiceNameAvailabilityResult>> CheckNameAvailabilityAsync(SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<QuotaUsageResult> GetSearchServiceUsagesBySubscriptionAsync(string location, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(@params, nameof(@params));
 
-            using DiagnosticScope scope = ServicesClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.CheckNameAvailability");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ServicesRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SearchServiceNameAvailabilityContent.ToRequestContent(content), default, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SearchServiceNameAvailabilityResult> response = Response.FromValue(SearchServiceNameAvailabilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServicesOperationGroup_CheckNameAvailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The resource name and type to check. </param>
-        /// <param name="params"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="params"/> is null. </exception>
-        public virtual Response<SearchServiceNameAvailabilityResult> CheckNameAvailability(SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNull(@params, nameof(@params));
-
-            using DiagnosticScope scope = ServicesClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.CheckNameAvailability");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ServicesRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SearchServiceNameAvailabilityContent.ToRequestContent(content), default, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SearchServiceNameAvailabilityResult> response = Response.FromValue(SearchServiceNameAvailabilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetSearchServiceUsagesBySubscriptionAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, default, context);
         }
 
         /// <summary>
@@ -343,7 +278,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="params"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuotaUsageResult> GetBySubscriptionAsync(string location, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual Pageable<QuotaUsageResult> GetSearchServiceUsagesBySubscription(string location, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(@params, nameof(@params));
@@ -352,42 +287,7 @@ namespace Azure.ResourceManager.Search.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetBySubscriptionAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, default, context);
-        }
-
-        /// <summary>
-        /// Get a list of all Azure AI Search quota usages across the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Search/locations/{location}/usages. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UsagesOperationGroup_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="params"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="params"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuotaUsageResult> GetBySubscription(string location, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(@params, nameof(@params));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new UsagesGetBySubscriptionCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, default, context);
+            return new UsagesGetSearchServiceUsagesBySubscriptionCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, default, context);
         }
     }
 }
