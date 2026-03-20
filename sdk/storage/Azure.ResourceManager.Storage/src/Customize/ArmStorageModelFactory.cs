@@ -32,8 +32,6 @@ namespace Azure.ResourceManager.Storage.Models
     // Suppress: prior GA used this wrapper-type signature; prevent generator from re-emitting
     // it so it doesn't conflict with the existing backward-compat overload.
     [CodeGenSuppress("StorageTaskReportInstance", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(StorageTaskReportProperties))]
-    // Suppress: prior GA used DateTimeOffset? for startOn/endOn, not string.
-    [CodeGenSuppress("StorageAccountSkuConversionStatus", typeof(StorageAccountSkuConversionState?), typeof(StorageSkuName?), typeof(string), typeof(string))]
     // Suppress: prior GA used flattened params, not a StoragePrivateEndpointConnectionProperties wrapper.
     [CodeGenSuppress("StoragePrivateEndpointConnectionData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(StoragePrivateEndpointConnectionProperties))]
     // Suppress: prior GA used flattened params, not a ManagementPolicyProperties wrapper.

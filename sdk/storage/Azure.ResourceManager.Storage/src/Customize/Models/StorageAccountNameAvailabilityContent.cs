@@ -12,6 +12,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
@@ -45,9 +46,9 @@ namespace Azure.ResourceManager.Storage.Models
         public ResourceType ResourceType { get; } = new ResourceType("Microsoft.Storage/storageAccounts");
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void SerializeResourceType(Utf8JsonWriter writer, ResourceType resourceType)
+        private void SerializeResourceType(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStringValue(resourceType.ToString());
+            writer.WriteStringValue(ResourceType.ToString());
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

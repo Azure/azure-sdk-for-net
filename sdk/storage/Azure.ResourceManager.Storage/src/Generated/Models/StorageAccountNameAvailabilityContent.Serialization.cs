@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteObjectValue(ResourceType, options);
+            this.SerializeResourceType(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
