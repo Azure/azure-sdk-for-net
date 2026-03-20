@@ -118,7 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             CopyTagIfPresent(telemetryItem, ContextTagKeys.AiDeviceId.ToString());
             CopyTagIfPresent(telemetryItem, ContextTagKeys.AiDeviceModel.ToString());
             CopyTagIfPresent(telemetryItem, ContextTagKeys.AiDeviceType.ToString());
-            CopyTagIfPresent(telemetryItem, ContextTagKeys.AiDeviceOsVersion.ToString());
+            CopyTagIfPresent(telemetryItem, ContextTagKeys.AiDeviceOSVersion.ToString());
             CopyTagIfPresent(telemetryItem, ContextTagKeys.AiOperationSyntheticSource.ToString());
             CopyTagIfPresent(telemetryItem, ContextTagKeys.AiUserAccountId.ToString());
             InstrumentationKey = telemetryItem.InstrumentationKey;
@@ -192,7 +192,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
                 if (logContext.DeviceOsVersion != null)
                 {
-                    Tags[ContextTagKeys.AiDeviceOsVersion.ToString()] = logContext.DeviceOsVersion.Truncate(SchemaConstants.Tags_AiDeviceOsVersion_MaxLength);
+                    Tags[ContextTagKeys.AiDeviceOSVersion.ToString()] = logContext.DeviceOsVersion.Truncate(SchemaConstants.Tags_AiDeviceOsVersion_MaxLength);
                 }
 
                 if (logContext.SyntheticSource != null)
@@ -311,7 +311,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             if (activityTagsProcessor.DeviceOsVersion != null)
             {
-                Tags[ContextTagKeys.AiDeviceOsVersion.ToString()] = activityTagsProcessor.DeviceOsVersion.Truncate(SchemaConstants.Tags_AiDeviceOsVersion_MaxLength);
+                Tags[ContextTagKeys.AiDeviceOSVersion.ToString()] = activityTagsProcessor.DeviceOsVersion.Truncate(SchemaConstants.Tags_AiDeviceOsVersion_MaxLength);
             }
 
             if (activityTagsProcessor.SyntheticSource != null)
