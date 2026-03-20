@@ -6,41 +6,177 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class SendReceipt
+    /// <summary>
+    /// The object returned in the QueueMessageList array when calling Put Message on a
+    /// Queue
+    /// </summary>
+    public partial class SendReceipt : IPersistableModel<SendReceipt>, IXmlSerializable
     {
-        internal static SendReceipt DeserializeSendReceipt(XElement element)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SendReceipt PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
+            string format = options.Format == "W" ? ((IPersistableModel<SendReceipt>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeSendReceipt(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SendReceipt)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SendReceipt>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "QueueMessage");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SendReceipt)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SendReceipt>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SendReceipt IPersistableModel<SendReceipt>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SendReceipt>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SendReceipt>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(SendReceipt)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartElement("MessageId");
+            writer.WriteValue(MessageId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("InsertionTime");
+            writer.WriteStringValue(InsertionTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("ExpirationTime");
+            writer.WriteStringValue(ExpirationTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("PopReceipt");
+            writer.WriteValue(PopReceipt);
+            writer.WriteEndElement();
+            writer.WriteStartElement("TimeNextVisible");
+            writer.WriteStringValue(TimeNextVisible, "R");
+            writer.WriteEndElement();
+        }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SendReceipt DeserializeSendReceipt(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
             string messageId = default;
             DateTimeOffset insertionTime = default;
             DateTimeOffset expirationTime = default;
             string popReceipt = default;
             DateTimeOffset timeNextVisible = default;
-            if (element.Element("MessageId") is XElement messageIdElement)
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
             {
-                messageId = (string)messageIdElement;
+                string localName = child.Name.LocalName;
+                if (localName == "MessageId")
+                {
+                    messageId = (string)child;
+                    continue;
+                }
+                if (localName == "InsertionTime")
+                {
+                    insertionTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "ExpirationTime")
+                {
+                    expirationTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "PopReceipt")
+                {
+                    popReceipt = (string)child;
+                    continue;
+                }
+                if (localName == "TimeNextVisible")
+                {
+                    timeNextVisible = child.GetDateTimeOffset("R");
+                    continue;
+                }
             }
-            if (element.Element("InsertionTime") is XElement insertionTimeElement)
-            {
-                insertionTime = insertionTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("ExpirationTime") is XElement expirationTimeElement)
-            {
-                expirationTime = expirationTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("PopReceipt") is XElement popReceiptElement)
-            {
-                popReceipt = (string)popReceiptElement;
-            }
-            if (element.Element("TimeNextVisible") is XElement timeNextVisibleElement)
-            {
-                timeNextVisible = timeNextVisibleElement.GetDateTimeOffsetValue("R");
-            }
-            return new SendReceipt(messageId, insertionTime, expirationTime, popReceipt, timeNextVisible);
+            return new SendReceipt(
+                messageId,
+                insertionTime,
+                expirationTime,
+                popReceipt,
+                timeNextVisible,
+                additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

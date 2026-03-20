@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Shared;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Storage.Queues
 {
@@ -14,7 +16,7 @@ namespace Azure.Storage.Queues
     /// Provides the client configuration options for connecting to Azure Queue
     /// Storage
     /// </summary>
-    public class QueueClientOptions : ClientOptions, ISupportsTenantIdChallenges
+    public partial class QueueClientOptions : ClientOptions, ISupportsTenantIdChallenges
     {
         /// <summary>
         /// The Latest service version supported by this client library.
@@ -226,6 +228,24 @@ namespace Azure.Storage.Queues
             AddHeadersAndQueryParameters();
         }
 
+        /// <summary> Initializes a new instance of QueueClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal QueueClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = LatestVersion;
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version && TryGetServiceVersion(version, out ServiceVersion serviceVersion))
+            {
+                Version = serviceVersion;
+            }
+            this.Initialize();
+            AddHeadersAndQueryParameters();
+        }
+
         /// <summary>
         /// Gets or sets the secondary storage <see cref="Uri"/> that can be read from for the storage account if the
         /// account is enabled for RA-GRS.
@@ -369,5 +389,108 @@ namespace Azure.Storage.Queues
         /// </summary>
         /// <value>If <c>null</c>, <see cref="QueueAudience.PublicAudience" /> will be assumed.</value>
         public QueueAudience? Audience { get; set; }
+
+        internal static bool TryGetServiceVersion(string version, out ServiceVersion serviceVersion)
+        {
+            serviceVersion = ServiceVersion.V2019_02_02;
+            switch (version)
+            {
+                case "2019-02-02":
+                    serviceVersion = ServiceVersion.V2019_02_02;
+                    return true;
+                case "2019-07-07":
+                    serviceVersion = ServiceVersion.V2019_07_07;
+                    return true;
+                case "2019-12-12":
+                    serviceVersion = ServiceVersion.V2019_12_12;
+                    return true;
+                case "2020-02-10":
+                    serviceVersion = ServiceVersion.V2020_02_10;
+                    return true;
+                case "2020-04-08":
+                    serviceVersion = ServiceVersion.V2020_04_08;
+                    return true;
+                case "2020-06-12":
+                    serviceVersion = ServiceVersion.V2020_06_12;
+                    return true;
+                case "2020-08-04":
+                    serviceVersion = ServiceVersion.V2020_08_04;
+                    return true;
+                case "2020-10-02":
+                    serviceVersion = ServiceVersion.V2020_10_02;
+                    return true;
+                case "2020-12-06":
+                    serviceVersion = ServiceVersion.V2020_12_06;
+                    return true;
+                case "2021-02-12":
+                    serviceVersion = ServiceVersion.V2021_02_12;
+                    return true;
+                case "2021-04-10":
+                    serviceVersion = ServiceVersion.V2021_04_10;
+                    return true;
+                case "2021-06-08":
+                    serviceVersion = ServiceVersion.V2021_06_08;
+                    return true;
+                case "2021-08-06":
+                    serviceVersion = ServiceVersion.V2021_08_06;
+                    return true;
+                case "2021-10-04":
+                    serviceVersion = ServiceVersion.V2021_10_04;
+                    return true;
+                case "2021-12-02":
+                    serviceVersion = ServiceVersion.V2021_12_02;
+                    return true;
+                case "2022-11-02":
+                    serviceVersion = ServiceVersion.V2022_11_02;
+                    return true;
+                case "2023-01-03":
+                    serviceVersion = ServiceVersion.V2023_01_03;
+                    return true;
+                case "2023-05-03":
+                    serviceVersion = ServiceVersion.V2023_05_03;
+                    return true;
+                case "2023-08-03":
+                    serviceVersion = ServiceVersion.V2023_08_03;
+                    return true;
+                case "2023-11-03":
+                    serviceVersion = ServiceVersion.V2023_11_03;
+                    return true;
+                case "2024-02-04":
+                    serviceVersion = ServiceVersion.V2024_02_04;
+                    return true;
+                case "2024-05-04":
+                    serviceVersion = ServiceVersion.V2024_05_04;
+                    return true;
+                case "2024-08-04":
+                    serviceVersion = ServiceVersion.V2024_08_04;
+                    return true;
+                case "2024-11-04":
+                    serviceVersion = ServiceVersion.V2024_11_04;
+                    return true;
+                case "2025-01-05":
+                    serviceVersion = ServiceVersion.V2025_01_05;
+                    return true;
+                case "2025-05-05":
+                    serviceVersion = ServiceVersion.V2025_05_05;
+                    return true;
+                case "2025-07-05":
+                    serviceVersion = ServiceVersion.V2025_07_05;
+                    return true;
+                case "2025-11-05":
+                    serviceVersion = ServiceVersion.V2025_11_05;
+                    return true;
+                case "2026-02-06":
+                    serviceVersion = ServiceVersion.V2026_02_06;
+                    return true;
+                case "2026-04-06":
+                    serviceVersion = ServiceVersion.V2026_04_06;
+                    return true;
+                case "2026-06-06":
+                    serviceVersion = ServiceVersion.V2026_06_06;
+                    return true;
+                default:
+                    return false;
+            }
+        }
     }
 }

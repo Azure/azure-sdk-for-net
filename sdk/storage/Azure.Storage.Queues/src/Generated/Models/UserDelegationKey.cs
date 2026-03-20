@@ -6,30 +6,26 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Common;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> A user delegation key. </summary>
     public partial class UserDelegationKey
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="UserDelegationKey"/>. </summary>
         /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
         /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
         /// <param name="signedStartsOn"> The date-time the key is active. </param>
         /// <param name="signedExpiresOn"> The date-time the key expires. </param>
-        /// <param name="signedService"> Abbreviation of the Azure Storage service that accepts the key. </param>
-        /// <param name="signedVersion"> The service version that created the key. </param>
+        /// <param name="signedService"> The service that created the key. </param>
+        /// <param name="signedVersion"> The version of the service that created the key. </param>
         /// <param name="value"> The key as a base64 string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="signedObjectId"/>, <paramref name="signedTenantId"/>, <paramref name="signedService"/>, <paramref name="signedVersion"/> or <paramref name="value"/> is null. </exception>
         internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string value)
         {
-            Argument.AssertNotNull(signedObjectId, nameof(signedObjectId));
-            Argument.AssertNotNull(signedTenantId, nameof(signedTenantId));
-            Argument.AssertNotNull(signedService, nameof(signedService));
-            Argument.AssertNotNull(signedVersion, nameof(signedVersion));
-            Argument.AssertNotNull(value, nameof(value));
-
             SignedObjectId = signedObjectId;
             SignedTenantId = signedTenantId;
             SignedStartsOn = signedStartsOn;
@@ -44,11 +40,12 @@ namespace Azure.Storage.Queues.Models
         /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
         /// <param name="signedStartsOn"> The date-time the key is active. </param>
         /// <param name="signedExpiresOn"> The date-time the key expires. </param>
-        /// <param name="signedService"> Abbreviation of the Azure Storage service that accepts the key. </param>
-        /// <param name="signedVersion"> The service version that created the key. </param>
+        /// <param name="signedService"> The service that created the key. </param>
+        /// <param name="signedVersion"> The version of the service that created the key. </param>
         /// <param name="signedDelegatedUserTenantId"> The delegated user tenant id in Azure AD. Return if DelegatedUserTid is specified. </param>
         /// <param name="value"> The key as a base64 string. </param>
-        internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string signedDelegatedUserTenantId, string value)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string signedDelegatedUserTenantId, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SignedObjectId = signedObjectId;
             SignedTenantId = signedTenantId;
@@ -58,6 +55,7 @@ namespace Azure.Storage.Queues.Models
             SignedVersion = signedVersion;
             SignedDelegatedUserTenantId = signedDelegatedUserTenantId;
             Value = value;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Azure.Storage.Queues.Models
 {
     internal static partial class QueueGeoReplicationStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this QueueGeoReplicationStatus value) => value switch
         {
             QueueGeoReplicationStatus.Live => "live",
@@ -19,11 +20,21 @@ namespace Azure.Storage.Queues.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueueGeoReplicationStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static QueueGeoReplicationStatus ToQueueGeoReplicationStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "live")) return QueueGeoReplicationStatus.Live;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "bootstrap")) return QueueGeoReplicationStatus.Bootstrap;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unavailable")) return QueueGeoReplicationStatus.Unavailable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "live"))
+            {
+                return QueueGeoReplicationStatus.Live;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "bootstrap"))
+            {
+                return QueueGeoReplicationStatus.Bootstrap;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unavailable"))
+            {
+                return QueueGeoReplicationStatus.Unavailable;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueueGeoReplicationStatus value.");
         }
     }

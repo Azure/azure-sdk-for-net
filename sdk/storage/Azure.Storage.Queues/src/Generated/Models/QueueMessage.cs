@@ -6,12 +6,23 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Common;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> A Message object which can be stored in a Queue. </summary>
     public partial class QueueMessage
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="QueueMessage"/>. </summary>
+        /// <param name="messageText"> The content of the message. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QueueMessage(string messageText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            MessageText = messageText;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
     }
 }

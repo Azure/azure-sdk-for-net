@@ -100,6 +100,7 @@ namespace Azure.Storage.Test.Shared
             });
 
             Tenants = new TenantConfigurationBuilder(this);
+            LegacyExcludedHeaders.Add("Accept");
         }
 
         public string SanitizeUri(string uri)

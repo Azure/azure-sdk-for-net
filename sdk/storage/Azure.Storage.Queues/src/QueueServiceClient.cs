@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -333,7 +333,7 @@ namespace Azure.Storage.Queues
             => new ServiceRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                _uri.AbsoluteUri,
+                _uri,
                 _clientConfiguration.Version.ToVersionString());
         #endregion ctors
 
@@ -450,7 +450,7 @@ namespace Azure.Storage.Queues
         /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
         /// After getting a segment, process it, and then call ListQueuesSegmentAsync again (passing in the next marker) to get the next segment.
         /// </remarks>
-        internal async Task<Response<ListQueuesSegmentResponse>> GetQueuesInternal(
+        internal async Task<Response<ListQueuesResponse>> GetQueuesInternal(
             string marker,
             QueueTraits traits,
             string prefix,
@@ -472,13 +472,13 @@ namespace Azure.Storage.Queues
 
                 try
                 {
-                    ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders> response;
+                    Response<ListQueuesResponse> response;
 
                     scope.Start();
                     IEnumerable<string> includeTypes = traits.AsIncludeTypes();
                     if (async)
                     {
-                        response = await _serviceRestClient.ListQueuesSegmentAsync(
+                        response = await _serviceRestClient.GetQueuesSegmentAsync(
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -488,7 +488,7 @@ namespace Azure.Storage.Queues
                     }
                     else
                     {
-                        response = _serviceRestClient.ListQueuesSegment(
+                        response = _serviceRestClient.GetQueuesSegment(
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -592,7 +592,7 @@ namespace Azure.Storage.Queues
 
                 try
                 {
-                    ResponseWithHeaders<QueueServiceProperties, ServiceGetPropertiesHeaders> response;
+                    Response<QueueServiceProperties> response;
 
                     scope.Start();
 
@@ -715,7 +715,7 @@ namespace Azure.Storage.Queues
 
                 try
                 {
-                    ResponseWithHeaders<ServiceSetPropertiesHeaders> response;
+                    Response response;
 
                     scope.Start();
 
@@ -733,7 +733,7 @@ namespace Azure.Storage.Queues
                             cancellationToken: cancellationToken);
                     }
 
-                    return response.GetRawResponse();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -824,7 +824,7 @@ namespace Azure.Storage.Queues
                     message: $"{nameof(Uri)}: {Uri}\n");
                 try
                 {
-                    ResponseWithHeaders<QueueServiceStatistics, ServiceGetStatisticsHeaders> response;
+                    Response<QueueServiceStatistics> response;
 
                     if (async)
                     {
@@ -1204,7 +1204,7 @@ namespace Azure.Storage.Queues
                         DelegatedUserTid = delegatedUserTenantId
                     };
 
-                    ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> response;
+                    Response<UserDelegationKey> response;
 
                     if (async)
                     {

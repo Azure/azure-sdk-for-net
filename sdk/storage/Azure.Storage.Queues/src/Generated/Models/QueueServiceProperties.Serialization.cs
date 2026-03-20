@@ -5,71 +5,207 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
-using Azure.Storage.Common;
+using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueServiceProperties : IXmlSerializable
+    /// <summary> The service properties. </summary>
+    public partial class QueueServiceProperties : IPersistableModel<QueueServiceProperties>, IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QueueServiceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
-            if (Common.Optional.IsDefined(Logging))
+            string format = options.Format == "W" ? ((IPersistableModel<QueueServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
             {
-                writer.WriteObjectValue(Logging, "Logging");
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeQueueServiceProperties(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QueueServiceProperties)} does not support reading '{options.Format}' format.");
             }
-            if (Common.Optional.IsDefined(HourMetrics))
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QueueServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
             {
-                writer.WriteObjectValue(HourMetrics, "HourMetrics");
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "StorageServiceProperties");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QueueServiceProperties)} does not support writing '{options.Format}' format.");
             }
-            if (Common.Optional.IsDefined(MinuteMetrics))
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<QueueServiceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QueueServiceProperties IPersistableModel<QueueServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<QueueServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="queueServiceProperties"> The <see cref="QueueServiceProperties"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(QueueServiceProperties queueServiceProperties)
+        {
+            if (queueServiceProperties == null)
             {
-                writer.WriteObjectValue(MinuteMetrics, "MinuteMetrics");
+                return null;
             }
-            if (Common.Optional.IsCollectionDefined(Cors))
+            XmlWriterContent content = new XmlWriterContent();
+            content.XmlWriter.WriteObjectValue(queueServiceProperties, ModelSerializationExtensions.WireOptions, "StorageServiceProperties");
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="QueueServiceProperties"/> from. </param>
+        public static explicit operator QueueServiceProperties(Response response)
+        {
+            using Stream stream = response.ContentStream;
+            if (stream == null)
+            {
+                return default;
+            }
+
+            return DeserializeQueueServiceProperties(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QueueServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(QueueServiceProperties)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(Logging))
+            {
+                writer.WriteStartElement("Logging");
+                writer.WriteObjectValue(Logging, options);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(HourMetrics))
+            {
+                writer.WriteStartElement("HourMetrics");
+                writer.WriteObjectValue(HourMetrics, options);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(MinuteMetrics))
+            {
+                writer.WriteStartElement("MinuteMetrics");
+                writer.WriteObjectValue(MinuteMetrics, options);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(Cors))
             {
                 writer.WriteStartElement("Cors");
-                foreach (var item in Cors)
+                foreach (QueueCorsRule item in Cors)
                 {
-                    writer.WriteObjectValue(item, "CorsRule");
+                    writer.WriteStartElement("CorsRule");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
                 }
                 writer.WriteEndElement();
             }
-            writer.WriteEndElement();
         }
 
-        internal static QueueServiceProperties DeserializeQueueServiceProperties(XElement element)
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static QueueServiceProperties DeserializeQueueServiceProperties(XElement element, ModelReaderWriterOptions options)
         {
+            if (element == null)
+            {
+                return null;
+            }
+
             QueueAnalyticsLogging logging = default;
             QueueMetrics hourMetrics = default;
             QueueMetrics minuteMetrics = default;
             IList<QueueCorsRule> cors = default;
-            if (element.Element("Logging") is XElement loggingElement)
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
             {
-                logging = QueueAnalyticsLogging.DeserializeQueueAnalyticsLogging(loggingElement);
-            }
-            if (element.Element("HourMetrics") is XElement hourMetricsElement)
-            {
-                hourMetrics = QueueMetrics.DeserializeQueueMetrics(hourMetricsElement);
-            }
-            if (element.Element("MinuteMetrics") is XElement minuteMetricsElement)
-            {
-                minuteMetrics = QueueMetrics.DeserializeQueueMetrics(minuteMetricsElement);
-            }
-            if (element.Element("Cors") is XElement corsElement)
-            {
-                var array = new List<QueueCorsRule>();
-                foreach (var e in corsElement.Elements("CorsRule"))
+                string localName = child.Name.LocalName;
+                if (localName == "Logging")
                 {
-                    array.Add(QueueCorsRule.DeserializeQueueCorsRule(e));
+                    logging = QueueAnalyticsLogging.DeserializeQueueAnalyticsLogging(child, options);
+                    continue;
                 }
-                cors = array;
+                if (localName == "HourMetrics")
+                {
+                    hourMetrics = QueueMetrics.DeserializeQueueMetrics(child, options);
+                    continue;
+                }
+                if (localName == "MinuteMetrics")
+                {
+                    minuteMetrics = QueueMetrics.DeserializeQueueMetrics(child, options);
+                    continue;
+                }
+                if (localName == "Cors")
+                {
+                    List<QueueCorsRule> array = new List<QueueCorsRule>();
+                    foreach (var e in child.Elements("CorsRule"))
+                    {
+                        array.Add(QueueCorsRule.DeserializeQueueCorsRule(e, options));
+                    }
+                    cors = array;
+                    continue;
+                }
             }
-            return new QueueServiceProperties(logging, hourMetrics, minuteMetrics, cors);
+            return new QueueServiceProperties(logging, hourMetrics, minuteMetrics, cors ?? new ChangeTrackingList<QueueCorsRule>(), additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

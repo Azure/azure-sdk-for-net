@@ -5,23 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> the retention policy. </summary>
+    /// <summary> The retention policy. </summary>
     public partial class QueueRetentionPolicy
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="QueueRetentionPolicy"/>. </summary>
-        /// <param name="enabled"> Indicates whether a retention policy is enabled for the storage service. </param>
-        /// <param name="days"> Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted. </param>
-        internal QueueRetentionPolicy(bool enabled, int? days)
+        /// <param name="enabled"> Whether to enable the retention policy. </param>
+        /// <param name="days"> The number of days to retain the logs. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QueueRetentionPolicy(bool enabled, int? days, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             Days = days;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Indicates whether a retention policy is enabled for the storage service. </summary>
+        /// <summary> Whether to enable the retention policy. </summary>
         public bool Enabled { get; set; }
-        /// <summary> Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted. </summary>
+
+        /// <summary> The number of days to retain the logs. </summary>
         public int? Days { get; set; }
     }
 }

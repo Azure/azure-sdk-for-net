@@ -7,31 +7,33 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> An Azure Storage Queue. </summary>
     public partial class QueueItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="QueueItem"/>. </summary>
-        /// <param name="name"> The name of the Queue. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <param name="name"> The name of the queue. </param>
         internal QueueItem(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="QueueItem"/>. </summary>
-        /// <param name="name"> The name of the Queue. </param>
-        /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
-        internal QueueItem(string name, IDictionary<string, string> metadata)
+        /// <param name="name"> The name of the queue. </param>
+        /// <param name="metadata"> The metadata of the container. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QueueItem(string name, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Metadata = metadata;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

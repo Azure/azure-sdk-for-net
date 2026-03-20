@@ -1,17 +1,19 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
     /// QueuesModelFactory provides utilities for mocking.
     /// </summary>
-    [CodeGenType("StorageQueuesModelFactory")]
+    [CodeGenSuppress("QueueMessage", typeof(string))]
+    [CodeGenSuppress("PeekedMessage", typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(long), typeof(string))]
     public static partial class QueuesModelFactory
     {
         /// <summary>
