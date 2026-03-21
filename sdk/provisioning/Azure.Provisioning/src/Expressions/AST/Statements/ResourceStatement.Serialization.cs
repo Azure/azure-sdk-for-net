@@ -85,6 +85,10 @@ public partial class ResourceStatement : IJsonModel<BicepStatement>
         bool existing = element.TryGetProperty("existing", out JsonElement e) && e.GetBoolean();
         BicepExpression body = UnknownBicepExpression.DeserializeBicepExpression(element.GetProperty("value"));
 
+        if (string.IsNullOrEmpty(apiVersion))
+        {
+            throw new FormatException($"Resource '{name}' of type '{type}' is missing a required 'apiVersion' value.");
+        }
         ResourceStatement stmt = new(name, new StringLiteralExpression($"{type}@{apiVersion}"), body);
         stmt.Existing = existing;
 
