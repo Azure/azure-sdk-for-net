@@ -22,7 +22,8 @@ public partial class FunctionCallExpression : IJsonModel<BicepExpression>
         }
         else
         {
-            writer.WriteString("target", Function.ToString());
+            writer.WritePropertyName("target");
+            ((IJsonModel<BicepExpression>)Function).Write(writer, options);
         }
         writer.WritePropertyName("args");
         writer.WriteStartArray();
@@ -75,7 +76,10 @@ public partial class FunctionCallExpression : IJsonModel<BicepExpression>
 
     internal static FunctionCallExpression DeserializeFunctionCallExpression(JsonElement element)
     {
-        string target = element.GetProperty("target").GetString()!;
+        JsonElement targetElement = element.GetProperty("target");
+        BicepExpression function = targetElement.ValueKind == JsonValueKind.String
+            ? new IdentifierExpression(targetElement.GetString()!)
+            : UnknownBicepExpression.DeserializeBicepExpression(targetElement);
         List<BicepExpression> args = new();
         if (element.TryGetProperty("args", out JsonElement argsElement))
         {
@@ -84,6 +88,6 @@ public partial class FunctionCallExpression : IJsonModel<BicepExpression>
                 args.Add(UnknownBicepExpression.DeserializeBicepExpression(arg));
             }
         }
-        return new FunctionCallExpression(new IdentifierExpression(target), [.. args]);
+        return new FunctionCallExpression(function, [.. args]);
     }
 }
