@@ -34,12 +34,8 @@ public partial class Infrastructure(string bicepName = "main") : Provisionable
     // Placeholder until we get module splitting handled
     private Infrastructure? _parent = null;
 
-    /// <summary>
-    /// Gets the collection of provisionable resources. The returned
-    /// <see cref="ProvisionableCollection"/> supports automatic upgrading of
-    /// deserialized resource wrappers via its <c>OfType</c> method.
-    /// </summary>
-    public new ProvisionableCollection GetProvisionableResources() => _resources;
+    /// <inheritdoc/>
+    public override IEnumerable<Provisionable> GetProvisionableResources() => _resources;
     private readonly ProvisionableCollection _resources = new(); // Owner set via Add
 
     /// <summary>
