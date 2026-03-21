@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -26,6 +27,11 @@ public static class ProvisionableEnumerableExtensions
     public static IEnumerable<T> OfType<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>(
         this IEnumerable<Provisionable> source) where T : Provisionable
     {
+        if (source == null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
         if (source is ProvisionableCollection collection)
         {
             return collection.OfType<T>();
