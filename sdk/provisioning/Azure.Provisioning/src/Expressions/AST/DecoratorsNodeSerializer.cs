@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -86,7 +87,13 @@ internal static class DecoratorsNodeSerializer
             }
             else if (prop.Value.ValueKind == JsonValueKind.Number)
             {
-                args = [new IntLiteralExpression(prop.Value.GetInt32())];
+                long rawValue = prop.Value.GetInt64();
+                if (rawValue < int.MinValue || rawValue > int.MaxValue)
+                {
+                    throw new FormatException(
+                        $"Decorator '{name}' numeric value '{rawValue}' is outside the supported Int32 range.");
+                }
+                args = [new IntLiteralExpression((int)rawValue)];
             }
             else if (prop.Value.ValueKind == JsonValueKind.False)
             {
