@@ -389,8 +389,9 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
     /// </summary>
     private static void HydrateProperties(IDictionary<string, IBicepValue> properties, ObjectExpression body)
     {
-        foreach (var (propertyName, property) in properties)
+        foreach (KeyValuePair<string, IBicepValue> kvp in properties)
         {
+            IBicepValue property = kvp.Value;
             if (property.IsOutput) continue;
 
             var path = property.Self?.BicepPath;
