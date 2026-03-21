@@ -68,8 +68,13 @@ internal static class SchemaOracle
             };
             using var proc = Process.Start(psi);
             if (proc == null) return null;
+            if (!proc.WaitForExit(10_000))
+            {
+                proc.Kill();
+                return null;
+            }
             string remoteSha = proc.StandardOutput.ReadToEnd().Trim();
-            proc.WaitForExit(10_000);
+            proc.StandardError.ReadToEnd(); // drain to avoid blocking
             if (proc.ExitCode != 0 || string.IsNullOrEmpty(remoteSha)) return null;
 
             if (!remoteSha.StartsWith(localSha) && !localSha.StartsWith(remoteSha))
