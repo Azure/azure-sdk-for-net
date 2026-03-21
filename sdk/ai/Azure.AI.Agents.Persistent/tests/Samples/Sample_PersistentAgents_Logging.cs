@@ -84,14 +84,18 @@ public class LoggingPolicy : HttpPipelinePolicy
     public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
     {
         ProcessMessage(message); // for request
+        DateTime start = DateTime.Now;
         ProcessNext(message, pipeline);
+        Console.WriteLine($"Response time {(DateTime.Now - start).TotalMilliseconds} ms");
         ProcessMessage(message); // for response
     }
 
     public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
     {
         ProcessMessage(message); // for request
+        DateTime start = DateTime.Now;
         await ProcessNextAsync(message, pipeline);
+        Console.WriteLine($"Response time {(DateTime.Now - start).TotalMilliseconds} ms");
         ProcessMessage(message); // for response
     }
 }
