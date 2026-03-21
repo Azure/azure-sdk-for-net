@@ -1,5 +1,11 @@
 namespace Azure.Provisioning
 {
+    public partial class AzureProvisioningContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureProvisioningContext() { }
+        public static Azure.Provisioning.AzureProvisioningContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BicepDictionary<T> : Azure.Provisioning.BicepValue, System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, Azure.Provisioning.BicepValue<T>>>, System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, Azure.Provisioning.IBicepValue>>, System.Collections.Generic.IDictionary<string, Azure.Provisioning.BicepValue<T>>, System.Collections.Generic.IDictionary<string, Azure.Provisioning.IBicepValue>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, Azure.Provisioning.BicepValue<T>>>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, Azure.Provisioning.IBicepValue>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, Azure.Provisioning.BicepValue<T>>>, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Provisioning.BicepValue<T>>, System.Collections.IEnumerable
     {
         public BicepDictionary() { }
@@ -111,8 +117,9 @@ namespace Azure.Provisioning
         Azure.Provisioning.Expressions.BicepExpression Compile();
         void SetReadOnly();
     }
-    public partial class Infrastructure : Azure.Provisioning.Primitives.Provisionable
+    public partial class Infrastructure : Azure.Provisioning.Primitives.Provisionable, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Infrastructure>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Infrastructure>
     {
+        public Infrastructure() { }
         public Infrastructure(string bicepName = "main") { }
         public string BicepName { get { throw null; } }
         public Azure.Provisioning.Primitives.DeploymentScope? TargetScope { get { throw null; } set { } }
@@ -120,11 +127,19 @@ namespace Azure.Provisioning
         public virtual Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningBuildOptions? options = null) { throw null; }
         protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
         protected internal System.Collections.Generic.IDictionary<string, System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement>> CompileModules(Azure.Provisioning.ProvisioningBuildOptions? options = null) { throw null; }
+        public bool Equals(Azure.Provisioning.Infrastructure? other) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
+        public override int GetHashCode() { throw null; }
         public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> GetProvisionableResources() { throw null; }
         public static bool IsValidBicepIdentifier(string? bicepIdentifier) { throw null; }
         public static string NormalizeBicepIdentifier(string? bicepIdentifier) { throw null; }
         public virtual void Remove(Azure.Provisioning.Primitives.Provisionable resource) { }
         protected internal override void Resolve(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
+        Azure.Provisioning.Infrastructure System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Infrastructure>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Infrastructure>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Infrastructure System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Infrastructure>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Infrastructure>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Infrastructure>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected internal override void Validate(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
         public static void ValidateBicepIdentifier(string? bicepIdentifier, string? paramName = null) { }
     }
@@ -562,17 +577,32 @@ namespace Azure.Provisioning.Authorization
 }
 namespace Azure.Provisioning.Expressions
 {
-    public partial class ArrayExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class ArrayExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public ArrayExpression(params Azure.Provisioning.Expressions.BicepExpression[] values) { }
         public Azure.Provisioning.Expressions.BicepExpression[] Values { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class BicepExpression
+    public abstract partial class BicepExpression : System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         protected BicepExpression() { }
+        public virtual bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
+        public override int GetHashCode() { throw null; }
         public static implicit operator Azure.Provisioning.Expressions.BicepExpression (bool value) { throw null; }
         public static implicit operator Azure.Provisioning.Expressions.BicepExpression (int value) { throw null; }
         public static implicit operator Azure.Provisioning.Expressions.BicepExpression (string value) { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public override string ToString() { throw null; }
         internal abstract Azure.Provisioning.Expressions.BicepWriter Write(Azure.Provisioning.Expressions.BicepWriter writer);
     }
@@ -610,9 +640,17 @@ namespace Azure.Provisioning.Expressions
         public string? ModuleName { get { throw null; } set { } }
         public override string ToString() { throw null; }
     }
-    public abstract partial class BicepStatement
+    public abstract partial class BicepStatement : System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>
     {
         protected BicepStatement() { }
+        public virtual bool Equals(Azure.Provisioning.Expressions.BicepStatement? other) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public override string ToString() { throw null; }
         internal abstract Azure.Provisioning.Expressions.BicepWriter Write(Azure.Provisioning.Expressions.BicepWriter writer);
     }
@@ -644,124 +682,271 @@ namespace Azure.Provisioning.Expressions
         Divide = 14,
         Modulo = 15,
     }
-    public partial class BinaryExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class BinaryExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public BinaryExpression(Azure.Provisioning.Expressions.BicepExpression left, Azure.Provisioning.Expressions.BinaryBicepOperator op, Azure.Provisioning.Expressions.BicepExpression right) { }
         public Azure.Provisioning.Expressions.BicepExpression Left { get { throw null; } }
         public Azure.Provisioning.Expressions.BinaryBicepOperator Operator { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Right { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BoolLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression
+    public partial class BoolLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public BoolLiteralExpression(bool value) : base (default(object)) { }
         public new bool Value { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CommentStatement : Azure.Provisioning.Expressions.BicepStatement
+    public partial class CommentStatement : Azure.Provisioning.Expressions.BicepStatement, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>
     {
         public CommentStatement(string comment) { }
         public string Comment { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepStatement? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConditionalExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class ConditionalExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public ConditionalExpression(Azure.Provisioning.Expressions.BicepExpression condition, Azure.Provisioning.Expressions.BicepExpression consequent, Azure.Provisioning.Expressions.BicepExpression alternate) { }
         public Azure.Provisioning.Expressions.BicepExpression Alternate { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Condition { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Consequent { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DecoratorExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class DecoratorExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public DecoratorExpression(Azure.Provisioning.Expressions.BicepExpression value) { }
         public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExpressionStatement : Azure.Provisioning.Expressions.BicepStatement
+    public partial class ExpressionStatement : Azure.Provisioning.Expressions.BicepStatement, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>
     {
         public ExpressionStatement(Azure.Provisioning.Expressions.BicepExpression expression) { }
         public Azure.Provisioning.Expressions.BicepExpression Expression { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepStatement? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FunctionCallExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class FunctionCallExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public FunctionCallExpression(Azure.Provisioning.Expressions.BicepExpression function, params Azure.Provisioning.Expressions.BicepExpression[] arguments) { }
         public Azure.Provisioning.Expressions.BicepExpression[] Arguments { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Function { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IdentifierExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class IdentifierExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public IdentifierExpression(string name) { }
         public string Name { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IndexExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class IndexExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public IndexExpression(Azure.Provisioning.Expressions.BicepExpression value, Azure.Provisioning.Expressions.BicepExpression index) { }
         public Azure.Provisioning.Expressions.BicepExpression Index { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class InterpolatedStringExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class InstanceFunctionCallExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
+    {
+        public InstanceFunctionCallExpression(Azure.Provisioning.Expressions.BicepExpression base, string name, params Azure.Provisioning.Expressions.BicepExpression[] arguments) { }
+        public Azure.Provisioning.Expressions.BicepExpression[] Arguments { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Base { get { throw null; } }
+        public string Name { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class InterpolatedStringExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public InterpolatedStringExpression(Azure.Provisioning.Expressions.BicepExpression[] values) { }
         public Azure.Provisioning.Expressions.BicepExpression[] Values { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IntLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression
+    public partial class IntLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public IntLiteralExpression(int value) : base (default(object)) { }
         public new int Value { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class LiteralExpression : Azure.Provisioning.Expressions.BicepExpression
     {
         protected LiteralExpression(object? value = null) { }
         public object? Value { get { throw null; } }
     }
-    public partial class MemberExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class MemberExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public MemberExpression(Azure.Provisioning.Expressions.BicepExpression value, string member) { }
         public string Member { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ModuleStatement : Azure.Provisioning.Expressions.BicepStatement
+    public partial class ModuleStatement : Azure.Provisioning.Expressions.BicepStatement, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>
     {
         public ModuleStatement(string name, Azure.Provisioning.Expressions.BicepExpression type, Azure.Provisioning.Expressions.BicepExpression body) { }
         public Azure.Provisioning.Expressions.BicepExpression Body { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.DecoratorExpression> Decorators { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Type { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepStatement? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NestedExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class NestedExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public NestedExpression(Azure.Provisioning.Expressions.BicepExpression value, string nestedMember) { }
         public string NestedMember { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NullLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression
+    public partial class NullLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public NullLiteralExpression() : base (default(object)) { }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ObjectExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class ObjectExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public ObjectExpression(params Azure.Provisioning.Expressions.PropertyExpression[] properties) { }
         public Azure.Provisioning.Expressions.PropertyExpression[] Properties { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OutputStatement : Azure.Provisioning.Expressions.BicepStatement
+    public partial class OutputStatement : Azure.Provisioning.Expressions.BicepStatement, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>
     {
         public OutputStatement(string name, Azure.Provisioning.Expressions.BicepExpression type, Azure.Provisioning.Expressions.BicepExpression value) { }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.DecoratorExpression> Decorators { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Type { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepStatement? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ParameterStatement : Azure.Provisioning.Expressions.BicepStatement
+    public partial class ParameterStatement : Azure.Provisioning.Expressions.BicepStatement, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>
     {
         public ParameterStatement(string name, Azure.Provisioning.Expressions.BicepExpression type, Azure.Provisioning.Expressions.BicepExpression? defaultValue) { }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.DecoratorExpression> Decorators { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression? DefaultValue { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Type { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepStatement? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PropertyExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class PropertyExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public PropertyExpression(string name, Azure.Provisioning.Expressions.BicepExpression value) { }
         public string Name { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceStatement : Azure.Provisioning.Expressions.BicepStatement
+    public partial class ResourceStatement : Azure.Provisioning.Expressions.BicepStatement, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>
     {
         public ResourceStatement(string name, Azure.Provisioning.Expressions.BicepExpression type, Azure.Provisioning.Expressions.BicepExpression body) { }
         public Azure.Provisioning.Expressions.BicepExpression Body { get { throw null; } }
@@ -770,33 +955,75 @@ namespace Azure.Provisioning.Expressions
         public bool Existing { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Type { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepStatement? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SafeIndexExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class SafeIndexExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public SafeIndexExpression(Azure.Provisioning.Expressions.BicepExpression value, Azure.Provisioning.Expressions.BicepExpression index) { }
         public Azure.Provisioning.Expressions.BicepExpression Index { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SafeMemberExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class SafeMemberExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public SafeMemberExpression(Azure.Provisioning.Expressions.BicepExpression value, string member) { }
         public string Member { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StringLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression
+    public partial class StringLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public StringLiteralExpression(string value) : base (default(object)) { }
         public new string Value { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TargetScopeStatement : Azure.Provisioning.Expressions.BicepStatement
+    public partial class TargetScopeStatement : Azure.Provisioning.Expressions.BicepStatement, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>
     {
         public TargetScopeStatement(Azure.Provisioning.Expressions.BicepExpression scope) { }
         public Azure.Provisioning.Expressions.BicepExpression Scope { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepStatement? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TypeExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class TypeExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public TypeExpression(System.Type type) { }
         public System.Type Type { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum UnaryBicepOperator
     {
@@ -804,18 +1031,32 @@ namespace Azure.Provisioning.Expressions
         Negate = 1,
         SuppressNull = 2,
     }
-    public partial class UnaryExpression : Azure.Provisioning.Expressions.BicepExpression
+    public partial class UnaryExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public UnaryExpression(Azure.Provisioning.Expressions.UnaryBicepOperator op, Azure.Provisioning.Expressions.BicepExpression value) { }
         public Azure.Provisioning.Expressions.UnaryBicepOperator Operator { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepExpression System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VariableStatement : Azure.Provisioning.Expressions.BicepStatement
+    public partial class VariableStatement : Azure.Provisioning.Expressions.BicepStatement, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>
     {
         public VariableStatement(string name, Azure.Provisioning.Expressions.BicepExpression value) { }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.DecoratorExpression> Decorators { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
+        public override bool Equals(Azure.Provisioning.Expressions.BicepStatement? other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.Provisioning.Primitives
@@ -889,6 +1130,13 @@ namespace Azure.Provisioning.Primitives
         protected internal virtual void Resolve(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
         protected internal virtual void Validate(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
     }
+    public partial class ProvisionableCollection : System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable>, System.Collections.IEnumerable
+    {
+        public ProvisionableCollection() { }
+        public System.Collections.Generic.IEnumerator<Azure.Provisioning.Primitives.Provisionable> GetEnumerator() { throw null; }
+        public System.Collections.Generic.IEnumerable<T> OfType<T>() where T : Azure.Provisioning.Primitives.Provisionable { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
     public abstract partial class ProvisionableConstruct : Azure.Provisioning.Primitives.Provisionable, Azure.Provisioning.IBicepValue
     {
         protected ProvisionableConstruct() { }
@@ -920,6 +1168,10 @@ namespace Azure.Provisioning.Primitives
         protected internal override void Resolve(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
         public void SetProvisioningProperty(Azure.Provisioning.IBicepValue property, Azure.Provisioning.BicepValue value) { }
         protected internal override void Validate(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
+    }
+    public static partial class ProvisionableEnumerableExtensions
+    {
+        public static System.Collections.Generic.IEnumerable<T> OfType<T>(this System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> source) where T : Azure.Provisioning.Primitives.Provisionable { throw null; }
     }
     public abstract partial class ProvisionableResource : Azure.Provisioning.Primitives.NamedProvisionableConstruct
     {
