@@ -158,6 +158,9 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
                     case VariableStatement vs:
                         variables.Add(vs);
                         break;
+                    default:
+                        throw new NotSupportedException(
+                            $"Unsupported BicepStatement type '{statement.GetType().Name}' during JSON serialization.");
                 }
             }
 
