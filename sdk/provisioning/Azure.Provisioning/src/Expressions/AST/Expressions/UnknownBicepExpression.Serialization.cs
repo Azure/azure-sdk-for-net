@@ -58,6 +58,8 @@ internal partial class UnknownBicepExpression : IJsonModel<BicepExpression>
             "interpolated-string" => InterpolatedStringExpression.DeserializeInterpolatedStringExpression(element),
             "nested-access" => NestedExpression.DeserializeNestedExpression(element),
             "decorator" => DecoratorExpression.DeserializeDecoratorExpression(element),
+            // TODO: For forward-compatibility, consider returning a node that preserves
+            // the raw JSON payload so unknown kinds can round-trip without data loss.
             _ => throw new InvalidOperationException($"Unknown BicepExpression kind: {kind}")
         };
     }
