@@ -76,7 +76,8 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         }
 
         using JsonDocument document = JsonDocument.Parse(data);
-        return DeserializeInfrastructure(document.RootElement)[0];    }
+        return DeserializeInfrastructure(document.RootElement)[0];
+    }
 
     string IPersistableModel<Infrastructure>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
