@@ -362,8 +362,10 @@ public class InfrastructureJsonRoundTripTests
         ProvisionableConstruct original,
         ProvisionableConstruct roundTripped)
     {
-        foreach (var (name, originalProp) in original.ProvisionableProperties)
+        foreach (var kvp in original.ProvisionableProperties)
         {
+            string name = kvp.Key;
+            var originalProp = kvp.Value;
             if (originalProp.IsEmpty || originalProp.IsOutput) continue;
 
             Assert.IsTrue(roundTripped.ProvisionableProperties.ContainsKey(name),
