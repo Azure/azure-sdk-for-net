@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Globalization;
 using System.Text.Json;
 using Azure.Provisioning;
 
@@ -51,6 +52,6 @@ public partial class IntLiteralExpression : IJsonModel<BicepExpression>
 
     internal static IntLiteralExpression DeserializeIntLiteralExpression(JsonElement element)
     {
-        return new IntLiteralExpression(int.Parse(element.GetProperty("value").GetString()!));
+        return new IntLiteralExpression(int.Parse(element.GetProperty("value").GetString()!, CultureInfo.InvariantCulture));
     }
 }
