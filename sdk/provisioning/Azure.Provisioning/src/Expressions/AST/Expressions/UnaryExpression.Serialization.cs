@@ -64,7 +64,7 @@ public partial class UnaryExpression : IJsonModel<BicepExpression>
             "!" => UnaryBicepOperator.Not,
             "-" => UnaryBicepOperator.Negate,
             "!*" => UnaryBicepOperator.SuppressNull,
-            _ => throw new NotImplementedException($"Unknown operator")
+            var unknown => throw new NotImplementedException($"Unknown unary operator: {unknown}")
         };
         return new UnaryExpression(op, UnknownBicepExpression.DeserializeBicepExpression(element.GetProperty("value")));
     }
