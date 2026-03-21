@@ -15,7 +15,7 @@ public partial class IntLiteralExpression : IJsonModel<BicepExpression>
     {
         writer.WriteStartObject();
         writer.WriteString("kind", "integer");
-        writer.WriteString("value", Value.ToString());
+        writer.WriteString("value", Value.ToString(CultureInfo.InvariantCulture));
         writer.WriteEndObject();
     }
 
