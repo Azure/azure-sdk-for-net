@@ -47,6 +47,7 @@ internal partial class UnknownBicepExpression : IJsonModel<BicepExpression>
             "array" => ArrayExpression.DeserializeArrayExpression(element),
             "identifier" => IdentifierExpression.DeserializeIdentifierExpression(element),
             "function-call" => FunctionCallExpression.DeserializeFunctionCallExpression(element),
+            "instance-function-call" => InstanceFunctionCallExpression.DeserializeInstanceFunctionCallExpression(element),
             "property-access" => DeserializePropertyAccess(element),
             "array-access" => DeserializeArrayAccess(element),
             "contextual-variable" => DeserializeContextualVariable(element),
