@@ -37,7 +37,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         }
 
         using JsonDocument document = JsonDocument.ParseValue(ref reader);
-        return DeserializeInfrastructure(document.RootElement);
+        return DeserializeInfrastructure(document.RootElement)[0];
     }
 
     BinaryData IPersistableModel<Infrastructure>.Write(ModelReaderWriterOptions options)
@@ -76,8 +76,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         }
 
         using JsonDocument document = JsonDocument.Parse(data);
-        return DeserializeInfrastructure(document.RootElement);
-    }
+        return DeserializeInfrastructure(document.RootElement)[0];    }
 
     string IPersistableModel<Infrastructure>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -238,12 +237,9 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         writer.WriteEndObject();
     }
 
-    internal static Infrastructure DeserializeInfrastructure(JsonElement element)
+    internal static List<Infrastructure> DeserializeInfrastructure(JsonElement element)
     {
-        // The first bicep file is the main Infrastructure
-        // Additional bicep files are nested modules
-        Infrastructure? mainInfra = null;
-        Dictionary<string, Infrastructure> allModules = new();
+        List<Infrastructure> modules = new();
 
         foreach (JsonElement bicepFile in element.GetProperty("bicepFiles").EnumerateArray())
         {
@@ -322,11 +318,10 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
                 }
             }
 
-            allModules[moduleName] = infra;
-            mainInfra ??= infra;
+            modules.Add(infra);
         }
 
-        return mainInfra ?? new Infrastructure();
+        return modules.Count > 0 ? modules : [new Infrastructure()];
     }
 
     /// <summary>
