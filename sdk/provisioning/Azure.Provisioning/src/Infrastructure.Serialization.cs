@@ -53,7 +53,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
                     ProvisioningPlan plan = Build();
                     IDictionary<string, string> compiled = plan.Compile();
                     // For a single module, return its bicep content directly
-                    // For multiple modules, concatenate with file markers
+                    // For multiple modules, concatenate separated by blank lines
                     StringBuilder sb = new();
                     foreach (var kvp in compiled)
                     {
