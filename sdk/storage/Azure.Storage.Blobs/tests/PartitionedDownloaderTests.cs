@@ -840,10 +840,18 @@ namespace Azure.Storage.Blobs.Test
                                 }
                             }, mockResponse));
                     }
-                    // First request returns normal data (streamed directly, not buffered)
-                    return async
-                        ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
-                        : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation));
+                    // First request returns normal data with structured message header.
+                    // The header causes CopyToInternal to skip hasher-based validation,
+                    // allowing the initial stream to succeed.
+                    Response<BlobDownloadStreamingResult> firstResponse = dataSource.GetStream(range, conditions, validation, progress, cancellation);
+                    var firstMockResponse = new MockResponse(200);
+                    firstMockResponse.AddHeader(Constants.StructuredMessage.StructuredMessageHeader, "1.0");
+                    return new ValueTask<Response<BlobDownloadStreamingResult>>(
+                        Response.FromValue(new BlobDownloadStreamingResult()
+                        {
+                            Content = firstResponse.Value.Content,
+                            Details = firstResponse.Value.Details,
+                        }, firstMockResponse));
                 });
 
             DownloadTransferValidationOptions checksumValidation = new DownloadTransferValidationOptions()
@@ -986,11 +994,6 @@ namespace Azure.Storage.Blobs.Test
                 => Task.FromException<int>(new IOException("Simulated read failure"));
         }
 
-        /// <summary>
-        /// A stream that always returns data on read, used to simulate a response
-        /// with more data than the Content-Length header indicates.
-        /// </summary>
-        /// <summary>
         /// A stream that returns exactly <paramref name="declaredLength"/> + 1 bytes
         /// then EOF. Unlike InfiniteStream, this specifically tests the overflow guard
         /// when the pooled buffer may be larger than the declared Content-Length.
