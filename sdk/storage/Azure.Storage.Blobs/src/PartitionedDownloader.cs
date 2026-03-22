@@ -301,7 +301,7 @@ namespace Azure.Storage.Blobs
                 // For the multi-worker path, kick off downloads for subsequent
                 // ranges immediately — they will download and buffer in the
                 // background while we stream the initial response below.
-                IEnumerator<HttpRange> remainingRanges = GetRanges(initialLength, totalLength).GetEnumerator();
+                using IEnumerator<HttpRange> remainingRanges = GetRanges(initialLength, totalLength).GetEnumerator();
                 if (effectiveWorkerCount > 1)
                 {
                     bufferedTasks = new();
@@ -573,27 +573,40 @@ namespace Azure.Storage.Blobs
                 ? ChecksumCalculatingStream.GetReadStream(rawSource, hasher.AppendHash)
                 : rawSource;
 
-            // Determine buffer size from response content length
+            // Determine buffer size from response content length.
+            // The range size is capped at MaxDownloadBytes (256 MB), so this
+            // should always fit in an int. Guard with an explicit check to
+            // surface a clear error if assumptions change.
             long contentLen = response.Value.Details.ContentLength;
-            int bufferSize = contentLen > 0 ? checked((int)contentLen) : checked((int)_rangeSize);
+            long expectedSize = contentLen > 0 ? contentLen : _rangeSize;
+            if (expectedSize > int.MaxValue)
+            {
+                throw new InvalidOperationException(
+                    $"The response content length ({expectedSize} bytes) exceeds the maximum " +
+                    $"bufferable size. Reduce StorageTransferOptions.MaximumTransferLength.");
+            }
+            int bufferSize = (int)expectedSize;
 
             byte[] buffer = _arrayPool.Rent(bufferSize);
             byte[] partitionChecksum = _checksumSize > 0 ? _arrayPool.Rent(_checksumSize) : null;
 
             try
             {
-                // Read the full response body into the buffer
+                // Read the full response body into the buffer.
+                // Use bufferSize (the expected byte count) rather than buffer.Length,
+                // because ArrayPool.Rent may return a larger array than requested.
                 int totalRead = 0;
                 int bytesRead;
-                while (totalRead < buffer.Length &&
+                while (totalRead < bufferSize &&
                     (bytesRead = await source.ReadAsync(
-                        buffer, totalRead, buffer.Length - totalRead, cancellationToken).ConfigureAwait(false)) > 0)
+                        buffer, totalRead, bufferSize - totalRead, cancellationToken).ConfigureAwait(false)) > 0)
                 {
                     totalRead += bytesRead;
                 }
 
-                // If we filled the buffer, ensure there is no additional data to avoid silent truncation.
-                if (totalRead == buffer.Length)
+                // Ensure there is no additional data beyond the expected size
+                // to avoid silent truncation.
+                if (totalRead == bufferSize)
                 {
                     int extraByte = await source.ReadAsync(buffer, 0, 1, cancellationToken).ConfigureAwait(false);
                     if (extraByte > 0)

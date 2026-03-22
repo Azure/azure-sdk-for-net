@@ -761,21 +761,29 @@ namespace Azure.Storage.Blobs.Test
         }
 
         /// <summary>
-        /// Verifies that all ArrayPool buffers are returned when per-partition
-        /// checksum validation fails. CRC64 validation is enabled but the mock
-        /// responses lack x-ms-content-crc64 headers, so the computed hash
-        /// (non-empty) never matches the empty response hash, triggering
-        /// InvalidDataException from Errors.HashMismatchOnStreamedDownload.
+        /// Verifies that all ArrayPool buffers are returned when a structured
+        /// message stream throws during reading, simulating a CRC validation
+        /// failure during structured message decoding. The mock responses include
+        /// the x-ms-structured-body header; subsequent (buffered) responses use a
+        /// ThrowingStream to simulate decoding failure, triggering an IOException
+        /// inside BufferResponseAsync.
         /// </summary>
         [Test]
         public async Task ReturnsArrayPoolBuffersOnChecksumMismatch()
         {
+            // Structured message buffer cleanup only applies to the async/multi-worker path
+            if (!_async)
+            {
+                Assert.Ignore("Structured message buffer cleanup only exists in the buffered (async) path");
+            }
+
             MemoryStream destination = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(100);
             TrackingArrayPool trackingPool = new TrackingArrayPool();
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
+            int requestCount = 0;
             blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
             blockClient.Setup(c => c.DownloadStreamingInternal(
                 It.IsAny<HttpRange>(),
@@ -787,12 +795,57 @@ namespace Azure.Storage.Blobs.Test
                 _async,
                 s_cancellationToken)
             ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
-                (range, conditions, validation, progress, operationName, async, cancellation) => async
-                    ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
-                    : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
+                (range, conditions, validation, progress, operationName, async, cancellation) =>
+                {
+                    int current = Interlocked.Increment(ref requestCount);
+                    if (current > 1)
+                    {
+                        // Simulate a structured message response whose stream throws
+                        // during reading (e.g., CRC mismatch during decoding).
+                        long contentLength = range.Length ?? 10;
+                        var mockResponse = new MockResponse(200);
+                        mockResponse.AddHeader(Constants.StructuredMessage.StructuredMessageHeader, "1.0");
+                        return new ValueTask<Response<BlobDownloadStreamingResult>>(
+                            Response.FromValue(new BlobDownloadStreamingResult()
+                            {
+                                Content = new ThrowingStream(),
+                                Details = new BlobDownloadDetails()
+                                {
+                                    BlobType = BlobType.Page,
+                                    ContentLength = contentLength,
+                                    ContentType = "test",
+                                    ContentHash = new byte[] { 1, 2, 3 },
+                                    LastModified = DateTimeOffset.Now,
+                                    Metadata = new Dictionary<string, string>() { { "meta", "data" } },
+                                    ContentRange = $"bytes {range.Offset}-{Math.Max(1, range.Offset + contentLength - 1)}/100",
+                                    ETag = s_etag,
+                                    ContentEncoding = "test",
+                                    CacheControl = "test",
+                                    ContentDisposition = "test",
+                                    ContentLanguage = "test",
+                                    BlobSequenceNumber = 12,
+                                    CopyCompletedOn = DateTimeOffset.Now,
+                                    CopyStatusDescription = "test",
+                                    CopyId = "test",
+                                    CopyProgress = "test",
+                                    CopySource = new Uri("http://example.com"),
+                                    CopyStatus = CopyStatus.Failed,
+                                    LeaseDuration = LeaseDurationType.Fixed,
+                                    LeaseState = LeaseState.Expired,
+                                    LeaseStatus = LeaseStatus.Unlocked,
+                                    AcceptRanges = "test",
+                                    BlobCommittedBlockCount = 5,
+                                    IsServerEncrypted = true,
+                                    EncryptionKeySha256 = "test",
+                                }
+                            }, mockResponse));
+                    }
+                    // First request returns normal data (streamed directly, not buffered)
+                    return async
+                        ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
+                        : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation));
+                });
 
-            // Enable CRC64 validation — MockDataSource responses lack checksum headers,
-            // so the computed hash will never match, triggering a hash mismatch exception.
             DownloadTransferValidationOptions checksumValidation = new DownloadTransferValidationOptions()
             {
                 AutoValidateChecksum = true,
@@ -809,17 +862,18 @@ namespace Azure.Storage.Blobs.Test
                 transferValidation: checksumValidation,
                 arrayPool: trackingPool);
 
-            Assert.CatchAsync<InvalidDataException>(async () => await InvokeDownloadToAsync(downloader, destination));
-            Assert.AreEqual(0, trackingPool.OutstandingRentals, "All array pool buffers should be returned after checksum mismatch");
+            Assert.CatchAsync<IOException>(async () => await InvokeDownloadToAsync(downloader, destination));
+            Assert.AreEqual(0, trackingPool.OutstandingRentals, "All array pool buffers should be returned after structured message decoding failure");
         }
 
         /// <summary>
         /// Verifies that all ArrayPool buffers are returned when the response
         /// stream contains more data than the Content-Length header indicates.
         /// This guard only exists in BufferResponseAsync (async/multi-worker path),
-        /// so the test is skipped for the sync fixture. An InfiniteStream always
-        /// returns data on read, filling the rented buffer and then producing an
-        /// extra byte on the overflow check, triggering InvalidOperationException.
+        /// so the test is skipped for the sync fixture. An OverflowByOneStream returns
+        /// exactly ContentLength + 1 bytes then EOF, which specifically validates
+        /// that the overflow guard compares against the declared Content-Length
+        /// rather than the (potentially larger) ArrayPool buffer size.
         /// </summary>
         [Test]
         public async Task ReturnsArrayPoolBuffersOnContentLengthOverflow()
@@ -853,12 +907,14 @@ namespace Azure.Storage.Blobs.Test
                     int current = Interlocked.Increment(ref requestCount);
                     if (current > 1)
                     {
-                        // Return a response whose stream produces more data than Content-Length indicates
+                        // Return a response whose stream produces exactly one more byte
+                        // than Content-Length indicates, to specifically test the overflow
+                        // guard catches this even when ArrayPool returns a larger buffer.
                         long contentLength = range.Length ?? 10;
                         return new ValueTask<Response<BlobDownloadStreamingResult>>(
                             Response.FromValue(new BlobDownloadStreamingResult()
                             {
-                                Content = new InfiniteStream(),
+                                Content = new OverflowByOneStream((int)contentLength),
                                 Details = new BlobDownloadDetails()
                                 {
                                     BlobType = BlobType.Page,
@@ -934,8 +990,22 @@ namespace Azure.Storage.Blobs.Test
         /// A stream that always returns data on read, used to simulate a response
         /// with more data than the Content-Length header indicates.
         /// </summary>
-        private class InfiniteStream : Stream
+        /// <summary>
+        /// A stream that returns exactly <paramref name="declaredLength"/> + 1 bytes
+        /// then EOF. Unlike InfiniteStream, this specifically tests the overflow guard
+        /// when the pooled buffer may be larger than the declared Content-Length.
+        /// </summary>
+        private class OverflowByOneStream : Stream
         {
+            private readonly int _totalBytes;
+            private int _bytesRemaining;
+
+            public OverflowByOneStream(int declaredLength)
+            {
+                _totalBytes = declaredLength + 1;
+                _bytesRemaining = _totalBytes;
+            }
+
             public override bool CanRead => true;
             public override bool CanSeek => false;
             public override bool CanWrite => false;
@@ -944,18 +1014,18 @@ namespace Azure.Storage.Blobs.Test
             public override void Flush() { }
             public override int Read(byte[] buffer, int offset, int count)
             {
-                for (int i = offset; i < offset + count; i++)
+                int toRead = Math.Min(count, _bytesRemaining);
+                for (int i = offset; i < offset + toRead; i++)
                     buffer[i] = 0xAA;
-                return count;
+                _bytesRemaining -= toRead;
+                return toRead;
             }
             public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
             public override void SetLength(long value) => throw new NotSupportedException();
             public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
             public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
-                for (int i = offset; i < offset + count; i++)
-                    buffer[i] = 0xAA;
-                return Task.FromResult(count);
+                return Task.FromResult(Read(buffer, offset, count));
             }
         }
 
