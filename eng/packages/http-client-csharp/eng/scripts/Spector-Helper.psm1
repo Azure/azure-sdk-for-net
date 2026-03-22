@@ -6,6 +6,8 @@ $failingSpecs = @(
     Join-Path 'http' 'type' 'file'
 # Azure scenarios not yet buildable
 
+    # individuallyParent sub-client factory methods have wrong constructor args in non-stub mode (base generator bug)
+    Join-Path 'http' 'azure' 'client-generator-core' 'client-initialization' 'individuallyParent'
     Join-Path 'http' 'azure' 'client-generator-core' 'alternate-type'
     Join-Path 'http' 'azure' 'client-generator-core' 'deserialize-empty-string-as-null' # long path issue and also not needed for Azure emitter
     Join-Path 'http' 'azure' 'client-generator-core' 'flatten-property' # flatten property not supported
