@@ -5,7 +5,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,7 +15,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Parameters supplied to the CreateOrUpdate Namespace operation. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class NotificationHubNamespaceCreateOrUpdateContent : TrackedResourceData
+    public partial class NotificationHubNamespaceCreateOrUpdateContent : TrackedResourceData, IJsonModel<NotificationHubNamespaceCreateOrUpdateContent>, IPersistableModel<NotificationHubNamespaceCreateOrUpdateContent>
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
