@@ -11,7 +11,7 @@ using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary></summary>
+    /// <summary> Extensible union for ContainerRegistryResourceType to accept both known enum values and arbitrary strings. </summary>
     public readonly partial struct ContainerRegistryResourceType : IEquatable<ContainerRegistryResourceType>
     {
         private readonly string _value;
