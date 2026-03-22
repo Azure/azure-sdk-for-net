@@ -5,7 +5,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -14,7 +16,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// Serialized Name: SharedAccessAuthorizationRuleCreateOrUpdateParameters
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent
+    public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent : IJsonModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>, IPersistableModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

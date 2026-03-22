@@ -5,11 +5,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ClientModel.Primitives;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Patch parameter for NamespaceResource. </summary>
-    public partial class NotificationHubUpdateContent
+    public partial class NotificationHubUpdateContent : IJsonModel<NotificationHubUpdateContent>, IPersistableModel<NotificationHubUpdateContent>
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
