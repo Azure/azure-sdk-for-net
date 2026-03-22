@@ -211,10 +211,10 @@ namespace Azure.Communication.Messages
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="locationName"> The [Optional] name of the location. </param>
         /// <param name="address"> The [Optional] address of the location. </param>
-        /// <param name="latitude"> The latitude of the location. </param>
-        /// <param name="longitude"> The longitude of the location. </param>
+        /// <param name="latitudeInternal"> The latitude of the location. </param>
+        /// <param name="longitudeInternal"> The longitude of the location. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateLocation"/> instance for mocking. </returns>
-        public static MessageTemplateLocation MessageTemplateLocation(string name = default, string locationName = default, string address = default, double latitude = default, double longitude = default)
+        public static MessageTemplateLocation MessageTemplateLocation(string name = default, string locationName = default, string address = default, double latitudeInternal = default, double longitudeInternal = default)
         {
             return new MessageTemplateLocation(
                 name,
@@ -222,8 +222,8 @@ namespace Azure.Communication.Messages
                 additionalBinaryDataProperties: null,
                 locationName,
                 address,
-                latitude,
-                longitude);
+                latitudeInternal,
+                longitudeInternal);
         }
 
         /// <summary>

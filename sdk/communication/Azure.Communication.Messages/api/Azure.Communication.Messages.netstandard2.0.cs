@@ -250,7 +250,7 @@ namespace Azure.Communication.Messages
         public static Azure.Communication.Messages.MessageTemplateDocument MessageTemplateDocument(string name, System.Uri uri, string caption, string fileName) { throw null; }
         public static Azure.Communication.Messages.MessageTemplateImage MessageTemplateImage(string name, System.Uri uri, string caption, string fileName) { throw null; }
         public static Azure.Communication.Messages.MessageTemplateItem MessageTemplateItem(string name, string language, Azure.Communication.Messages.MessageTemplateStatus status, string kind) { throw null; }
-        public static Azure.Communication.Messages.MessageTemplateLocation MessageTemplateLocation(string name = null, string locationName = null, string address = null, double latitude = 0, double longitude = 0) { throw null; }
+        public static Azure.Communication.Messages.MessageTemplateLocation MessageTemplateLocation(string name = null, string locationName = null, string address = null, double latitudeInternal = 0, double longitudeInternal = 0) { throw null; }
         public static Azure.Communication.Messages.MessageTemplateQuickAction MessageTemplateQuickAction(string name, string text, string payload) { throw null; }
         public static Azure.Communication.Messages.MessageTemplateText MessageTemplateText(string name, string text) { throw null; }
         public static Azure.Communication.Messages.MessageTemplateValue MessageTemplateValue(string name, string kind) { throw null; }
@@ -770,11 +770,8 @@ namespace Azure.Communication.Messages
     public partial class MessageTemplateLocation : Azure.Communication.Messages.MessageTemplateValue, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.MessageTemplateLocation>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.MessageTemplateLocation>
     {
         public MessageTemplateLocation(string name) : base (default(string)) { }
-        public MessageTemplateLocation(string name, double latitude, double longitude) : base (default(string)) { }
         public string Address { get { throw null; } set { } }
-        public double Latitude { get { throw null; } set { } }
         public string LocationName { get { throw null; } set { } }
-        public double Longitude { get { throw null; } set { } }
         public Azure.Core.GeoJson.GeoPosition Position { get { throw null; } set { } }
         protected override Azure.Communication.Messages.MessageTemplateValue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

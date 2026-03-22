@@ -15,31 +15,18 @@ namespace Azure.Communication.Messages
     {
         /// <summary> Initializes a new instance of <see cref="MessageTemplateLocation"/>. </summary>
         /// <param name="name"> Template binding reference name. </param>
-        /// <param name="latitude"> The latitude of the location. </param>
-        /// <param name="longitude"> The longitude of the location. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public MessageTemplateLocation(string name, double latitude, double longitude) : base(name, MessageTemplateValueKind.Location)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Latitude = latitude;
-            Longitude = longitude;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateLocation"/>. </summary>
-        /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="locationName"> The [Optional] name of the location. </param>
         /// <param name="address"> The [Optional] address of the location. </param>
-        /// <param name="latitude"> The latitude of the location. </param>
-        /// <param name="longitude"> The longitude of the location. </param>
-        internal MessageTemplateLocation(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string locationName, string address, double latitude, double longitude) : base(name, kind, additionalBinaryDataProperties)
+        /// <param name="latitudeInternal"> The latitude of the location. </param>
+        /// <param name="longitudeInternal"> The longitude of the location. </param>
+        internal MessageTemplateLocation(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string locationName, string address, double latitudeInternal, double longitudeInternal) : base(name, kind, additionalBinaryDataProperties)
         {
             LocationName = locationName;
             Address = address;
-            Latitude = latitude;
-            Longitude = longitude;
+            LatitudeInternal = latitudeInternal;
+            LongitudeInternal = longitudeInternal;
         }
 
         /// <summary> The [Optional] name of the location. </summary>
@@ -47,11 +34,5 @@ namespace Azure.Communication.Messages
 
         /// <summary> The [Optional] address of the location. </summary>
         public string Address { get; set; }
-
-        /// <summary> The latitude of the location. </summary>
-        public double Latitude { get; set; }
-
-        /// <summary> The longitude of the location. </summary>
-        public double Longitude { get; set; }
     }
 }

@@ -90,9 +90,9 @@ namespace Azure.Communication.Messages
                 writer.WriteStringValue(Address);
             }
             writer.WritePropertyName("latitude"u8);
-            writer.WriteNumberValue(Latitude);
+            writer.WriteNumberValue(LatitudeInternal);
             writer.WritePropertyName("longitude"u8);
-            writer.WriteNumberValue(Longitude);
+            writer.WriteNumberValue(LongitudeInternal);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -125,8 +125,8 @@ namespace Azure.Communication.Messages
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string locationName = default;
             string address = default;
-            double latitude = default;
-            double longitude = default;
+            double latitudeInternal = default;
+            double longitudeInternal = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -151,12 +151,12 @@ namespace Azure.Communication.Messages
                 }
                 if (prop.NameEquals("latitude"u8))
                 {
-                    latitude = prop.Value.GetDouble();
+                    latitudeInternal = prop.Value.GetDouble();
                     continue;
                 }
                 if (prop.NameEquals("longitude"u8))
                 {
-                    longitude = prop.Value.GetDouble();
+                    longitudeInternal = prop.Value.GetDouble();
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,8 +170,8 @@ namespace Azure.Communication.Messages
                 additionalBinaryDataProperties,
                 locationName,
                 address,
-                latitude,
-                longitude);
+                latitudeInternal,
+                longitudeInternal);
         }
     }
 }

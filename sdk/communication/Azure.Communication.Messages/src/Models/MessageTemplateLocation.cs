@@ -7,22 +7,32 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.GeoJson;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Communication.Messages
 {
     /// <summary> The message template's location value information. </summary>
+    [CodeGenSuppress("MessageTemplateLocation", typeof(string), typeof(double), typeof(double))]
     public partial class MessageTemplateLocation
     {
-        /// <summary> The geo position of the location. </summary>
-        public GeoPosition Position
+        /// <summary> The latitude of the location. </summary>
+        [CodeGenMember("Latitude")]
+        internal double LatitudeInternal
         {
-            get => new GeoPosition(Longitude, Latitude);
-            set
-            {
-                Latitude = value.Latitude;
-                Longitude = value.Longitude;
-            }
+            get => Position.Latitude;
+            set { }
         }
+
+        /// <summary> The longitude of the location. </summary>
+        [CodeGenMember("Longitude")]
+        internal double LongitudeInternal
+        {
+            get => Position.Longitude;
+            set { }
+        }
+
+        /// <summary> The geo position of the location. </summary>
+        public GeoPosition Position { get; set; } = new GeoPosition();
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateLocation"/>. </summary>
         /// <param name="name"> Name of the Template value. </param>
