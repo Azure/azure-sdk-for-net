@@ -391,7 +391,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 activity.SetTag(SemanticConventions.AttributeAiDeviceId, "device-456");
                 activity.SetTag(SemanticConventions.AttributeAiDeviceModel, "Surface Pro");
                 activity.SetTag(SemanticConventions.AttributeAiDeviceType, "PC");
-                activity.SetTag(SemanticConventions.AttributeAiDeviceOSVersion, "Microsoft Windows NT 10.0.22621.0");
+                activity.SetTag(SemanticConventions.AttributeAiDeviceOsVersion, "Microsoft Windows NT 10.0.22621.0");
                 activity.SetTag(SemanticConventions.AttributeMicrosoftSyntheticSource, "test-bot");
                 activity.SetTag(SemanticConventions.AttributeMicrosoftUserAccountId, "account-789");
             }
@@ -431,7 +431,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceId));
             Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceModel));
             Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceType));
-            Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceOSVersion));
+            Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceOsVersion));
             Assert.False(properties.ContainsKey(SemanticConventions.AttributeMicrosoftSyntheticSource));
             Assert.False(properties.ContainsKey(SemanticConventions.AttributeMicrosoftUserAccountId));
         }
