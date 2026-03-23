@@ -38,6 +38,7 @@
     <Compile Include="$(AzureStorageSharedSources)AesGcm\**\*.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Apache.Arrow" />
     <PackageReference Include="Azure.Core" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
   </ItemGroup>

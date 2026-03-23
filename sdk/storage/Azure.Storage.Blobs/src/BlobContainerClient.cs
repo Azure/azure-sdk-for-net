@@ -6,8 +6,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using Apache.Arrow;
+using Apache.Arrow.Ipc;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
@@ -15,7 +19,6 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
-using System.Xml.Linq;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -2792,10 +2795,15 @@ namespace Azure.Storage.Blobs
 
                         rawResponse = arrowResponse.GetRawResponse();
 
-                        if (arrowResponse.Headers.ContentType == "application/vnd.apache.arrow.stream")
+                        if (arrowResponse.Headers.ContentType == Constants.Blob.ApacheArrowContentType)
                         {
-                            // TODO: Parse Apache Arrow IPC stream into ListBlobsFlatSegmentResponse
-                            throw new NotImplementedException("Apache Arrow response parsing is not yet implemented.");
+                            listblobFlatResponse = await ParseArrowListBlobsFlatResponse(
+                                arrowResponse.Value,
+                                prefix,
+                                marker,
+                                pageSizeHint,
+                                async,
+                                cancellationToken).ConfigureAwait(false);
                         }
                         else
                         {
@@ -2870,6 +2878,227 @@ namespace Azure.Storage.Blobs
                     scope.Dispose();
                 }
             }
+        }
+
+        private async Task<ListBlobsFlatSegmentResponse> ParseArrowListBlobsFlatResponse(
+            Stream arrowStream,
+            string prefix,
+            string marker,
+            int? maxResults,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using var reader = new ArrowStreamReader(arrowStream);
+
+            string nextMarker = null;
+            if (reader.Schema.Metadata != null)
+            {
+                reader.Schema.Metadata.TryGetValue("NextMarker", out nextMarker);
+            }
+
+            var blobItems = new List<BlobItemInternal>();
+
+            while (true)
+            {
+                RecordBatch batch = async
+                    ? await reader.ReadNextRecordBatchAsync(cancellationToken).ConfigureAwait(false)
+                    : reader.ReadNextRecordBatch();
+
+                if (batch == null)
+                {
+                    break;
+                }
+
+                // Blob-level columns
+                StringArray nameCol = GetArrowColumn(batch, "Name") as StringArray;
+                BooleanArray deletedCol = GetArrowColumn(batch, "Deleted") as BooleanArray;
+                StringArray snapshotCol = GetArrowColumn(batch, "Snapshot") as StringArray;
+                StringArray versionIdCol = GetArrowColumn(batch, "VersionId") as StringArray;
+                BooleanArray isCurrentVersionCol = GetArrowColumn(batch, "IsCurrentVersion") as BooleanArray;
+                BooleanArray hasVersionsOnlyCol = GetArrowColumn(batch, "HasVersionsOnly") as BooleanArray;
+
+                // Properties columns
+                TimestampArray creationTimeCol = GetArrowColumn(batch, "Creation-Time") as TimestampArray;
+                TimestampArray lastModifiedCol = GetArrowColumn(batch, "Last-Modified") as TimestampArray;
+                StringArray etagCol = GetArrowColumn(batch, "Etag") as StringArray;
+                UInt64Array contentLengthCol = GetArrowColumn(batch, "Content-Length") as UInt64Array;
+                StringArray contentTypeCol = GetArrowColumn(batch, "Content-Type") as StringArray;
+                StringArray contentEncodingCol = GetArrowColumn(batch, "Content-Encoding") as StringArray;
+                StringArray contentLanguageCol = GetArrowColumn(batch, "Content-Language") as StringArray;
+                StringArray contentMD5Col = GetArrowColumn(batch, "Content-MD5") as StringArray;
+                StringArray contentDispositionCol = GetArrowColumn(batch, "Content-Disposition") as StringArray;
+                StringArray cacheControlCol = GetArrowColumn(batch, "Cache-Control") as StringArray;
+                UInt64Array blobSequenceNumberCol = GetArrowColumn(batch, "x-ms-blob-sequence-number") as UInt64Array;
+                StringArray blobTypeCol = GetArrowColumn(batch, "BlobType") as StringArray;
+                StringArray leaseStatusCol = GetArrowColumn(batch, "LeaseStatus") as StringArray;
+                StringArray leaseStateCol = GetArrowColumn(batch, "LeaseState") as StringArray;
+                StringArray leaseDurationCol = GetArrowColumn(batch, "LeaseDuration") as StringArray;
+                StringArray copyIdCol = GetArrowColumn(batch, "CopyId") as StringArray;
+                StringArray copyStatusCol = GetArrowColumn(batch, "CopyStatus") as StringArray;
+                StringArray copySourceCol = GetArrowColumn(batch, "CopySource") as StringArray;
+                StringArray copyProgressCol = GetArrowColumn(batch, "CopyProgress") as StringArray;
+                TimestampArray copyCompletionTimeCol = GetArrowColumn(batch, "CopyCompletionTime") as TimestampArray;
+                StringArray copyStatusDescriptionCol = GetArrowColumn(batch, "CopyStatusDescription") as StringArray;
+                StringArray destinationSnapshotCol = GetArrowColumn(batch, "CopyDestinationSnapshot") as StringArray;
+                BooleanArray serverEncryptedCol = GetArrowColumn(batch, "ServerEncrypted") as BooleanArray;
+                BooleanArray incrementalCopyCol = GetArrowColumn(batch, "IncrementalCopy") as BooleanArray;
+                TimestampArray deletedTimeCol = GetArrowColumn(batch, "DeletedTime") as TimestampArray;
+                UInt64Array remainingRetentionDaysCol = GetArrowColumn(batch, "RemainingRetentionDays") as UInt64Array;
+                StringArray accessTierCol = GetArrowColumn(batch, "AccessTier") as StringArray;
+                BooleanArray accessTierInferredCol = GetArrowColumn(batch, "AccessTierInferred") as BooleanArray;
+                StringArray archiveStatusCol = GetArrowColumn(batch, "ArchiveStatus") as StringArray;
+                StringArray customerProvidedKeySha256Col = GetArrowColumn(batch, "CustomerProvidedKeySha256") as StringArray;
+                StringArray encryptionScopeCol = GetArrowColumn(batch, "EncryptionScope") as StringArray;
+                TimestampArray accessTierChangeTimeCol = GetArrowColumn(batch, "AccessTierChangeTime") as TimestampArray;
+                UInt64Array tagCountCol = GetArrowColumn(batch, "TagCount") as UInt64Array;
+                BooleanArray sealedCol = GetArrowColumn(batch, "Sealed") as BooleanArray;
+                StringArray rehydratePriorityCol = GetArrowColumn(batch, "RehydratePriority") as StringArray;
+                TimestampArray lastAccessTimeCol = GetArrowColumn(batch, "LastAccessTime") as TimestampArray;
+                TimestampArray immutabilityPolicyUntilDateCol = GetArrowColumn(batch, "ImmutabilityPolicyUntilDate") as TimestampArray;
+                StringArray immutabilityPolicyModeCol = GetArrowColumn(batch, "ImmutabilityPolicyMode") as StringArray;
+                BooleanArray legalHoldCol = GetArrowColumn(batch, "LegalHold") as BooleanArray;
+
+                // Map columns
+                MapArray tagsCol = GetArrowColumn(batch, "Tags") as MapArray;
+                MapArray metadataCol = GetArrowColumn(batch, "Metadata") as MapArray;
+                MapArray orMetadataCol = GetArrowColumn(batch, "OrMetadata") as MapArray;
+
+                for (int i = 0; i < batch.Length; i++)
+                {
+                    string contentMD5Str = contentMD5Col?.GetString(i);
+                    byte[] contentMD5 = contentMD5Str != null ? Convert.FromBase64String(contentMD5Str) : null;
+
+                    var properties = new BlobPropertiesInternal(
+                        creationTime: creationTimeCol?.GetTimestamp(i),
+                        lastModified: lastModifiedCol?.GetTimestamp(i) ?? default,
+                        etag: etagCol?.GetString(i),
+                        contentLength: ReadNullableInt64(contentLengthCol, i),
+                        contentType: contentTypeCol?.GetString(i),
+                        contentEncoding: contentEncodingCol?.GetString(i),
+                        contentLanguage: contentLanguageCol?.GetString(i),
+                        contentMD5: contentMD5,
+                        contentDisposition: contentDispositionCol?.GetString(i),
+                        cacheControl: cacheControlCol?.GetString(i),
+                        blobSequenceNumber: ReadNullableInt64(blobSequenceNumberCol, i),
+                        blobType: ReadEnum(blobTypeCol, i, s => s.ToBlobType()),
+                        leaseStatus: ReadEnum(leaseStatusCol, i, s => s.ToLeaseStatus()),
+                        leaseState: ReadEnum(leaseStateCol, i, s => s.ToLeaseState()),
+                        leaseDuration: ReadEnum(leaseDurationCol, i, s => s.ToLeaseDurationType()),
+                        copyId: copyIdCol?.GetString(i),
+                        copyStatus: ReadEnum(copyStatusCol, i, s => s.ToCopyStatus()),
+                        copySource: copySourceCol?.GetString(i),
+                        copyProgress: copyProgressCol?.GetString(i),
+                        copyCompletionTime: copyCompletionTimeCol?.GetTimestamp(i),
+                        copyStatusDescription: copyStatusDescriptionCol?.GetString(i),
+                        serverEncrypted: ReadNullableBool(serverEncryptedCol, i),
+                        incrementalCopy: ReadNullableBool(incrementalCopyCol, i),
+                        destinationSnapshot: destinationSnapshotCol?.GetString(i),
+                        deletedTime: deletedTimeCol?.GetTimestamp(i),
+                        remainingRetentionDays: ReadNullableInt32(remainingRetentionDaysCol, i),
+                        accessTier: ReadEnum(accessTierCol, i, s => new AccessTier(s)),
+                        accessTierInferred: ReadNullableBool(accessTierInferredCol, i),
+                        archiveStatus: ReadEnum(archiveStatusCol, i, s => s.ToArchiveStatus()),
+                        customerProvidedKeySha256: customerProvidedKeySha256Col?.GetString(i),
+                        encryptionScope: encryptionScopeCol?.GetString(i),
+                        accessTierChangeTime: accessTierChangeTimeCol?.GetTimestamp(i),
+                        tagCount: ReadNullableInt32(tagCountCol, i),
+                        expiresOn: null,
+                        isSealed: ReadNullableBool(sealedCol, i),
+                        rehydratePriority: ReadEnum(rehydratePriorityCol, i, s => s.ToRehydratePriority().Value),
+                        lastAccessedOn: lastAccessTimeCol?.GetTimestamp(i),
+                        immutabilityPolicyExpiresOn: immutabilityPolicyUntilDateCol?.GetTimestamp(i),
+                        immutabilityPolicyMode: ReadEnum(immutabilityPolicyModeCol, i, s => s.ToBlobImmutabilityPolicyMode()),
+                        legalHold: ReadNullableBool(legalHoldCol, i));
+
+                    IReadOnlyDictionary<string, string> metadata = ReadArrowMap(metadataCol, i);
+                    IReadOnlyDictionary<string, string> orMetadata = ReadArrowMap(orMetadataCol, i);
+
+                    BlobTags blobTags = null;
+                    IReadOnlyDictionary<string, string> tagsDict = ReadArrowMap(tagsCol, i);
+                    if (tagsDict != null)
+                    {
+                        var tagList = new List<BlobTag>();
+                        foreach (KeyValuePair<string, string> kvp in tagsDict)
+                        {
+                            tagList.Add(new BlobTag(kvp.Key, kvp.Value));
+                        }
+                        blobTags = new BlobTags(tagList);
+                    }
+
+                    blobItems.Add(new BlobItemInternal(
+                        name: new BlobName(encoded: false, content: nameCol?.GetString(i)),
+                        deleted: ReadNullableBool(deletedCol, i) == true,
+                        snapshot: snapshotCol?.GetString(i) ?? string.Empty,
+                        versionId: versionIdCol?.GetString(i),
+                        isCurrentVersion: ReadNullableBool(isCurrentVersionCol, i),
+                        properties: properties,
+                        metadata: metadata,
+                        blobTags: blobTags,
+                        hasVersionsOnly: ReadNullableBool(hasVersionsOnlyCol, i),
+                        orMetadata: orMetadata));
+                }
+            }
+
+            return new ListBlobsFlatSegmentResponse(
+                serviceEndpoint: Uri.GetLeftPart(UriPartial.Authority),
+                containerName: Name,
+                prefix: prefix,
+                marker: marker,
+                maxResults: maxResults,
+                segment: new BlobFlatListSegment(blobItems),
+                nextMarker: nextMarker);
+        }
+
+        private static IArrowArray GetArrowColumn(RecordBatch batch, string name)
+        {
+            int index = batch.Schema.GetFieldIndex(name);
+            return index >= 0 ? batch.Column(index) : null;
+        }
+
+        private static IReadOnlyDictionary<string, string> ReadArrowMap(MapArray mapArray, int rowIndex)
+        {
+            if (mapArray == null || mapArray.IsNull(rowIndex))
+            {
+                return null;
+            }
+
+            StringArray keys = mapArray.Keys as StringArray;
+            StringArray values = mapArray.Values as StringArray;
+            int start = mapArray.ValueOffsets[rowIndex];
+            int length = mapArray.ValueOffsets[rowIndex + 1] - start;
+
+            var dict = new Dictionary<string, string>(length);
+            for (int j = start; j < start + length; j++)
+            {
+                string key = keys.GetString(j);
+                string value = values.GetString(j);
+                if (key != null)
+                {
+                    dict[key] = value;
+                }
+            }
+            return dict;
+        }
+
+        private static bool? ReadNullableBool(BooleanArray array, int index)
+        {
+            return array != null && !array.IsNull(index) ? (bool?)array.GetValue(index) : null;
+        }
+
+        private static long? ReadNullableInt64(UInt64Array array, int index)
+        {
+            return array != null && !array.IsNull(index) ? (long?)array.GetValue(index) : null;
+        }
+
+        private static int? ReadNullableInt32(UInt64Array array, int index)
+        {
+            return array != null && !array.IsNull(index) ? (int?)array.GetValue(index) : null;
+        }
+
+        private static T? ReadEnum<T>(StringArray array, int index, Func<string, T> parse) where T : struct
+        {
+            string value = array?.GetString(index);
+            return value != null ? parse(value) : null;
         }
         #endregion GetBlobs
 
