@@ -1,5 +1,8 @@
 # Azure SDK for .NET Libraries Inventory
 
+> **Auto-generated** by `Library_Inventory` on 2026-03-21 17:47:46 UTC.
+> Run that script to refresh this file.
+
 ## Table of Contents
 
 - [Summary](#summary)
@@ -13,10 +16,10 @@
 
 ## Summary
 
-- Total libraries: 410
-- Management Plane (MPG): 231
-  - Autorest/Swagger: 119
-  - New Emitter (TypeSpec): 112
+- Total libraries: 411
+- Management Plane (MPG): 232
+  - Autorest/Swagger: 118
+  - New Emitter (TypeSpec): 114
   - Old TypeSpec: 0
 - Data Plane (DPG): 145
   - Autorest/Swagger: 53
@@ -147,7 +150,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 53
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 112 / 112 (100%)
+**Migration Status**: 114 / 114 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -243,6 +246,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | resourceconnector | Azure.ResourceManager.ResourceConnector | ✅ |
 | resources | Azure.ResourceManager.Resources.Bicep | ✅ |
 | resources | Azure.ResourceManager.Resources.DeploymentStacks | ✅ |
+| resources | Azure.ResourceManager.Resources.Policy | ✅ |
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
 | selfhelp | Azure.ResourceManager.SelfHelp | ✅ |
 | servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | ✅ |
@@ -260,6 +264,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | trafficmanager | Azure.ResourceManager.TrafficManager | ✅ |
 | trustedsigning | Azure.ResourceManager.TrustedSigning | ✅ |
 | virtualenclaves | Azure.ResourceManager.VirtualEnclaves | ✅ |
+| webpubsub | Azure.ResourceManager.WebPubSub | ✅ |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
 | workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | ✅ |
 | workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | ✅ |
@@ -267,7 +272,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 119
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 118
 
 | Service | Library |
 | ------- | ------- |
@@ -386,7 +391,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 11
 | support | Azure.ResourceManager.Support |
 | synapse | Azure.ResourceManager.Synapse |
 | voiceservices | Azure.ResourceManager.VoiceServices |
-| webpubsub | Azure.ResourceManager.WebPubSub |
 | websites | Azure.ResourceManager.AppService |
 | workloadmonitor | Azure.ResourceManager.WorkloadMonitor |
 | workloads | Azure.ResourceManager.Workloads |
@@ -415,16 +419,16 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | eventgrid | Azure.Provisioning.EventGrid | Azure.ResourceManager.EventGrid | Reflection |
 | eventhub | Azure.Provisioning.EventHubs | Azure.ResourceManager.EventHubs ✅ | Reflection |
 | frontdoor | Azure.Provisioning.FrontDoor | Azure.ResourceManager.FrontDoor | Reflection |
+| hybridkubernetes | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes ✅ | Reflection |
 | keyvault | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault ✅ | Reflection |
+| kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
 | kusto | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto | Reflection |
+| network | Azure.Provisioning.Network | Azure.ResourceManager.Network | Reflection |
 | operationalinsights | Azure.Provisioning.OperationalInsights | Azure.ResourceManager.OperationalInsights | Reflection |
 | postgresql | Azure.Provisioning.PostgreSql | Azure.ResourceManager.PostgreSql | Reflection |
+| privatedns | Azure.Provisioning.PrivateDns | Azure.ResourceManager.PrivateDns | Reflection |
 | provisioning | Azure.Provisioning | Azure.ResourceManager<br>Azure.ResourceManager.Resources<br>Azure.ResourceManager.Authorization<br>Azure.ResourceManager.ManagedServiceIdentities | Reflection |
 | provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager<br>Azure.ResourceManager.Resources | None |
-| provisioning | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes ✅ | Reflection |
-| provisioning | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
-| provisioning | Azure.Provisioning.Network | Azure.ResourceManager.Network | Reflection |
-| provisioning | Azure.Provisioning.PrivateDns | Azure.ResourceManager.PrivateDns | Reflection |
 | redis | Azure.Provisioning.Redis | Azure.ResourceManager.Redis | Reflection |
 | redisenterprise | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise ✅ | Reflection |
 | search | Azure.Provisioning.Search | Azure.ResourceManager.Search | Reflection |
@@ -432,7 +436,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | signalr | Azure.Provisioning.SignalR | Azure.ResourceManager.SignalR ✅ | Reflection |
 | sqlmanagement | Azure.Provisioning.Sql | Azure.ResourceManager.Sql | Reflection |
 | storage | Azure.Provisioning.Storage | Azure.ResourceManager.Storage | Reflection |
-| webpubsub | Azure.Provisioning.WebPubSub | Azure.ResourceManager.WebPubSub | Reflection |
+| webpubsub | Azure.Provisioning.WebPubSub | Azure.ResourceManager.WebPubSub ✅ | Reflection |
 | websites | Azure.Provisioning.AppService | Azure.ResourceManager.AppService | Reflection |
 
 

@@ -20,7 +20,8 @@ import {
   postProcessArmResources,
   ParentResourceLookupContext,
   assignNonResourceMethodsToResources,
-  resolveResourceApiVersions
+  resolveResourceApiVersions,
+  extractRbacRoles
 } from "./resource-metadata.js";
 import {
   DecoratorInfo,
@@ -285,7 +286,8 @@ export function buildArmProviderSchema(
           // Use model name as default; will be updated later if multiple paths exist
           resourceName: model?.name ?? "Unknown",
           nameConstraints: {},
-          apiVersions: []
+          apiVersions: [],
+          rbacRoles: []
         } as ResourceMetadata;
         resourcePathToMetadataMap.set(metadataKey, entry);
       }
@@ -534,6 +536,9 @@ export function buildArmProviderSchema(
         ? getMaxLength(sdkContext.program, nameProperty)
         : undefined
     };
+
+    // Extract RBAC roles from @@clientOption decorator
+    resource.metadata.rbacRoles = extractRbacRoles(sdkModel);
   }
 
   // Assign non-resource methods to resources based on operationPath prefix matching.
