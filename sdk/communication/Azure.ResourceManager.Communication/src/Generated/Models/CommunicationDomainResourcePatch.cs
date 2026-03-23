@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -20,15 +21,33 @@ namespace Azure.ResourceManager.Communication.Models
 
         /// <summary> Initializes a new instance of <see cref="CommunicationDomainResourcePatch"/>. </summary>
         /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
-        internal CommunicationDomainResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, UserEngagementTracking? userEngagementTracking) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> A class that describes the updatable properties of a Domains resource. </param>
+        internal CommunicationDomainResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, UpdateDomainProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            UserEngagementTracking = userEngagementTracking;
+            Properties = properties;
         }
+
+        /// <summary> A class that describes the updatable properties of a Domains resource. </summary>
+        [WirePath("properties")]
+        internal UpdateDomainProperties Properties { get; set; }
 
         /// <summary> Describes whether user engagement tracking is enabled or disabled. </summary>
         [WirePath("properties.userEngagementTracking")]
-        public UserEngagementTracking? UserEngagementTracking { get; set; }
+        public UserEngagementTracking? UserEngagementTracking
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserEngagementTracking;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateDomainProperties();
+                }
+                Properties.UserEngagementTracking = value.Value;
+            }
+        }
     }
 }

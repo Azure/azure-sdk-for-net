@@ -4,7 +4,7 @@ To enable your Agent to Computer Use tool, you need to use `ComputerTool` while 
 1. First, we need to create clients and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_ComputerUse
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("COMPUTER_USE_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
@@ -56,7 +56,7 @@ Dictionary<string, string> screenshots = new() {
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_ComputerUse_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a computer automation assistant.\n\n" +
                    "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
@@ -76,7 +76,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_ComputerUse_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a computer automation assistant.\n\n" +
                    "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",

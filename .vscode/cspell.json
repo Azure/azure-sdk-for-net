@@ -953,16 +953,6 @@
       ]
     },
     {
-      "filename": "**/sdk/kusto/**/*.cs",
-      "words": [
-        "openai",
-        "scsv",
-        "sohsv",
-        "tbps",
-        "tsve"
-      ]
-    },
-    {
       "filename": "**/sdk/labservices/**/*.cs",
       "words": [
         "reimage",

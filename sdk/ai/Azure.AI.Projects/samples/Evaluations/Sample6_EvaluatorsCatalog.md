@@ -148,7 +148,7 @@ private static void DisplayEvaluatorVersion(EvaluatorVersion evaluator)
 3. We need to create project client and read the environment variables which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateClients_EvaluatorsCatalog
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 ```
 

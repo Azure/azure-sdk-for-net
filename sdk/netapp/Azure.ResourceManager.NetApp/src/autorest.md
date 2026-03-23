@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/2daa93270f6743188fe69d301f101d031a624fb2/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md
-tag: package-2025-12-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/17842bc766fcf93b9e18c7c0294761173d7a8b17/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md
+tag: package-preview-2025-12-15-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -269,6 +269,7 @@ rename-mapping:
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
+  CheckElasticResourceAvailabilityResponse: CheckElasticResourceAvailabilityResponseResult
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

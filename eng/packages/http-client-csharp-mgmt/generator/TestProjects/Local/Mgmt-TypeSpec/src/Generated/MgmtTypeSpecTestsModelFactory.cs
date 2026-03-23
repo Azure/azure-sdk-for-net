@@ -1464,6 +1464,53 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new SharedConfigProperties(displayName, description, provisioningState, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Paged collection of ContainerItemLike items. </summary>
+        /// <param name="value"> The ContainerItemLike items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.ContainerItemLikeListResult"/> instance for mocking. </returns>
+        public static ContainerItemLikeListResult ContainerItemLikeListResult(IEnumerable<ContainerItemLike> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<ContainerItemLike>();
+
+            return new ContainerItemLikeListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="containerItemLikeSomething"> A simple string property. </param>
+        /// <returns> A new <see cref="Models.ContainerItemLike"/> instance for mocking. </returns>
+        public static ContainerItemLike ContainerItemLike(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string etag = default, string containerItemLikeSomething = default)
+        {
+            return new ContainerItemLike(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                etag,
+                containerItemLikeSomething is null ? default : new ContainerItemLikeProperties(containerItemLikeSomething, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <returns> A new <see cref="Models.EntityResourceLike"/> instance for mocking. </returns>
+        public static EntityResourceLike EntityResourceLike(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string etag = default)
+        {
+            return new EntityResourceLike(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                etag);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>

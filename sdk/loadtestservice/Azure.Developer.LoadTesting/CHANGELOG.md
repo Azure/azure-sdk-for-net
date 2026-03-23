@@ -1,5 +1,18 @@
 # Release History
 
+## 1.3.0-beta.2 (Unreleased)
+
+### Features Added
+
+- Added `LoadTestAdministrationClientSettings` to support creating a `LoadTestAdministrationClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `LoadTestRunClientSettings` to support creating a `LoadTestRunClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.3.0-beta.1 (2026-03-15)
 
 ### Features Added

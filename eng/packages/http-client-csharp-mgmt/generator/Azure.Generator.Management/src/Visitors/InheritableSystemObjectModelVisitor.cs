@@ -167,7 +167,47 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
         model.Update(properties: properties);
 
+        // Fix raw data field reference mismatch: when the management generator adds a new
+        // _additionalBinaryDataProperties field to a base model (in Update()), the constructor
+        // parameter for this model may still reference the original field from a higher ancestor.
+        // The serialization code's base-model field search finds the newly-added field, creating
+        // two different FieldProvider objects for the same concept. This causes the code writer
+        // to generate mismatched variable names (e.g., additionalBinaryDataProperties0 vs
+        // additionalBinaryDataProperties). To fix, update the constructor parameter to reference
+        // the same field the serialization code will find.
+        FixRawDataFieldReference(model);
+
         _regularUpdated.Add(model);
+    }
+
+    private static void FixRawDataFieldReference(ModelProvider model)
+    {
+        // Find the raw data field that the serialization code's base-model search will find.
+        FieldProvider? rawDataField = null;
+        var baseModel = model.BaseModelProvider;
+        while (baseModel != null)
+        {
+            rawDataField = baseModel.Fields.FirstOrDefault(
+                f => f.Name == $"_{RawDataParameterName}");
+            if (rawDataField != null)
+            {
+                break;
+            }
+            baseModel = baseModel.BaseModelProvider;
+        }
+
+        if (rawDataField == null)
+        {
+            return;
+        }
+
+        // Update the constructor parameter to reference the same field.
+        var ctorParam = model.FullConstructor.Signature.Parameters
+            .FirstOrDefault(p => p.Name.Equals(RawDataParameterName));
+        if (ctorParam != null && ctorParam.Field != rawDataField)
+        {
+            ctorParam.Update(field: rawDataField);
+        }
     }
 
     private static readonly HashSet<string> _methodNamesToUpdate = new(){ "JsonModelCreateCore", "PersistableModelCreateCore", "PersistableModelWriteCore" };

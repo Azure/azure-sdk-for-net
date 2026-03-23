@@ -36,12 +36,6 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// The path to the agent card relative to the `base_url`.
-        /// If not provided, defaults to  `/.well-known/agent-card.json`
-        /// </summary>
-        public string AgentCardPath { get; set; }
-
-        /// <summary>
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </summary>
