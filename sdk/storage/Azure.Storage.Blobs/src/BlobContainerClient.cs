@@ -2525,10 +2525,12 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             new GetBlobsAsyncCollection(
                 this,
-                options?.Traits ?? BlobTraits.None,
-                options?.States ?? BlobStates.None,
-                options?.Prefix,
-                startFrom: options?.StartFrom)
+                useApacheArrow: options?.UseApacheArrow ?? false,
+                traits: options?.Traits ?? BlobTraits.None,
+                states: options?.States ?? BlobStates.None,
+                prefix: options?.Prefix,
+                startFrom: options?.StartFrom,
+                endBefore: options?.EndBefore)
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -2564,10 +2566,12 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             new GetBlobsAsyncCollection(
                 this,
-                options?.Traits ?? BlobTraits.None,
-                options?.States ?? BlobStates.None,
-                options?.Prefix,
-                options?.StartFrom)
+                useApacheArrow: options?.UseApacheArrow ?? false,
+                traits: options?.Traits ?? BlobTraits.None,
+                states: options?.States ?? BlobStates.None,
+                prefix: options?.Prefix,
+                startFrom: options?.StartFrom,
+                endBefore: options?.EndBefore)
             .ToAsyncCollection(cancellationToken);
 
         /// <summary>
@@ -2613,7 +2617,7 @@ namespace Azure.Storage.Blobs
             BlobStates states,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobsAsyncCollection(this, traits, states, prefix, startFrom: default).ToSyncCollection(cancellationToken);
+            new GetBlobsAsyncCollection(this, false, traits, states, prefix, startFrom: default, endBefore: default).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsAsync(BlobTraits, BlobStates, string, CancellationToken)"/>
@@ -2658,7 +2662,7 @@ namespace Azure.Storage.Blobs
             BlobStates states,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobsAsyncCollection(this, traits, states, prefix, startFrom: default).ToAsyncCollection(cancellationToken);
+            new GetBlobsAsyncCollection(this, false, traits, states, prefix, startFrom: default, endBefore: default).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsInternal"/> operation returns a
@@ -2674,6 +2678,9 @@ namespace Azure.Storage.Blobs
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
         /// List Blobs</see>.
         /// </summary>
+        /// <param name="useApacheArrow">
+        /// Specifies whether to use Apache Arrow for the operation.
+        /// </param>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
         /// of blobs to be returned with the next listing operation.  The
@@ -2698,6 +2705,11 @@ namespace Azure.Storage.Blobs
         /// is used to list paths starting from a defined location within prefix’s specified range.
         /// For non-recursive list, only one entity level is supported.
         /// </param>
+        /// <param name="endBefore">
+        /// Optional.  Specifies a fully qualified path within the container,
+        /// ending the listing when all results before have been returned.
+        /// This is only supported if <paramref name="useApacheArrow"/> is set to true.
+        /// </param>
         /// <param name="pageSizeHint">
         /// Gets or sets a value indicating the size of the page that should be
         /// requested.
@@ -2720,7 +2732,7 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<ListBlobsFlatSegmentResponse>> GetBlobsInternal(
-            bool useArrow,
+            bool useApacheArrow,
             string marker,
             BlobTraits traits,
             BlobStates states,
@@ -2750,7 +2762,7 @@ namespace Azure.Storage.Blobs
                     ListBlobsFlatSegmentResponse listblobFlatResponse;
                     Response rawResponse;
 
-                    if (useArrow)
+                    if (useApacheArrow)
                     {
                         ResponseWithHeaders<Stream, ContainerListBlobFlatSegmentApacheArrowHeaders> arrowResponse;
 

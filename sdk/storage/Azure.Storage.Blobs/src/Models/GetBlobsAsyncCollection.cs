@@ -19,19 +19,26 @@ namespace Azure.Storage.Blobs.Models
         private readonly BlobStates _states;
         private readonly string _prefix;
         private readonly string _startFrom;
+        private readonly string _endBefore;
+        //private readonly string _delimiter;
+        private readonly bool _useApacheArrow;
 
         public GetBlobsAsyncCollection(
             BlobContainerClient client,
+            bool useApacheArrow,
             BlobTraits traits,
             BlobStates states,
             string prefix,
-            string startFrom)
+            string startFrom,
+            string endBefore)
         {
             _client = client;
             _traits = traits;
             _states = states;
             _prefix = prefix;
             _startFrom = startFrom;
+            _endBefore = endBefore;
+            _useApacheArrow = useApacheArrow;
         }
 
         public override async ValueTask<Page<BlobItem>> GetNextPageAsync(
@@ -45,11 +52,13 @@ namespace Azure.Storage.Blobs.Models
             if (async)
             {
                 response = await _client.GetBlobsInternal(
+                    useApacheArrow: _useApacheArrow,
                     marker: continuationToken,
                     traits: _traits,
                     states: _states,
                     prefix: _prefix,
                     startFrom: _startFrom,
+                    endBefore: _endBefore,
                     pageSizeHint: pageSizeHint,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -58,11 +67,13 @@ namespace Azure.Storage.Blobs.Models
             else
             {
                 response = _client.GetBlobsInternal(
+                    useApacheArrow: _useApacheArrow,
                     marker: continuationToken,
                     traits: _traits,
                     states: _states,
                     prefix: _prefix,
                     startFrom: _startFrom,
+                    endBefore: _endBefore,
                     pageSizeHint: pageSizeHint,
                     async: async,
                     cancellationToken: cancellationToken)
