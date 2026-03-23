@@ -183,9 +183,16 @@ internal sealed class ResponseOrchestrator
             };
         }
 
-        // B1: non-background responses cannot be cancelled
+        // B1/B16: non-background responses cannot be cancelled via this endpoint.
+        // If still in-flight, return 404 (non-background in-flight not findable per B16).
+        // If finished, return 400 (background check takes priority per contract matrix).
         if (!execution.IsBackground)
         {
+            if (execution.CompletedAt is null)
+            {
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+
             throw new BadRequestException("Cannot cancel a synchronous response.");
         }
 

@@ -39,12 +39,25 @@ public class CancelAsyncTests : IDisposable
     }
 
     [Test]
-    public async Task NonBackground_ThrowsBadRequestException()
+    public async Task NonBackground_InFlight_ThrowsResourceNotFoundException()
     {
+        // B16: non-background in-flight responses are not findable — cancel returns 404
         _tracker.Create("resp_cancel_nb", isBackground: false, isStreaming: false, store: true);
 
-        Assert.ThrowsAsync<BadRequestException>(
+        Assert.ThrowsAsync<ResourceNotFoundException>(
             () => _orchestrator.CancelAsync("resp_cancel_nb"));
+    }
+
+    [Test]
+    public async Task NonBackground_Completed_ThrowsBadRequestException()
+    {
+        // B1: non-background completed responses return 400 "Cannot cancel a synchronous response."
+        var execution = _tracker.Create("resp_cancel_nbc", isBackground: false, isStreaming: false, store: true);
+        execution.Response = new Models.Response("resp_cancel_nbc", "test") { Status = ResponseStatus.Completed };
+        _tracker.MarkCompleted("resp_cancel_nbc");
+
+        Assert.ThrowsAsync<BadRequestException>(
+            () => _orchestrator.CancelAsync("resp_cancel_nbc"));
     }
 
     [Test]

@@ -87,8 +87,9 @@ internal static class ResponseMutations
 
     /// <summary>
     /// Transitions the response to <see cref="ResponseStatus.Incomplete"/>.
-    /// Sets <c>CompletedAt</c>, <c>IncompleteDetails</c> if a reason is provided,
+    /// Sets <c>IncompleteDetails</c> if a reason is provided,
     /// <c>Usage</c> (if provided), and computes <c>OutputText</c>.
+    /// Does NOT set <c>CompletedAt</c> — per B6, only <c>completed</c> status has a non-null <c>CompletedAt</c>.
     /// </summary>
     internal static void SetIncomplete(
         this Response response,
