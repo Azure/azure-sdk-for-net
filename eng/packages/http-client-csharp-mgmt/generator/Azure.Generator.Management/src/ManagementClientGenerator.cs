@@ -60,7 +60,6 @@ namespace Azure.Generator.Management
             AddVisitor(new TypeFilterVisitor());
             AddVisitor(new PaginationVisitor());
             AddVisitor(new ModelFactoryVisitor());
-
             if (IsWirePathEnabled())
             {
                 AddVisitor(new WirePathVisitor());
