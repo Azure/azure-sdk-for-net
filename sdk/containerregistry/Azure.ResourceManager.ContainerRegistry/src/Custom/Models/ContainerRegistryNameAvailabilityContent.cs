@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name of the container registry. </param>
+        [Obsolete("Use ContainerRegistryNameAvailabilityContent(string name, ContainerRegistryResourceType type) instead.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ContainerRegistryNameAvailabilityContent(string name)
             : this(name, ContainerRegistryResourceType.MicrosoftContainerRegistryRegistries)

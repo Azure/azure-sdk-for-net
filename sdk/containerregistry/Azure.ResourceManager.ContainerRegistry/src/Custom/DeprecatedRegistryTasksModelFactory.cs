@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default,
             int? count = null, string tier = null, ContainerRegistryOS? os = null,
             ResourceIdentifier virtualNetworkSubnetResourceId = null, ContainerRegistryProvisioningState? provisioningState = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string sourceRegistryAuth = null, string updateTriggerToken = null,
             ContainerRegistryImageDescriptor logArtifact = null,
             ContainerRegistryProvisioningState? provisioningState = null, bool? isArchiveEnabled = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryTriggerProperties trigger = null,
             ContainerRegistryCredentials credentials = null, string logTemplate = null,
             bool? isSystemTask = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             SystemData systemData = null, ManagedServiceIdentity identity = null, AzureLocation? location = null,
             ContainerRegistryProvisioningState? provisioningState = null, ContainerRegistryRunContent runRequest = null,
             ContainerRegistryRunData runResult = null, string forceUpdateTag = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryAgentPoolQueueStatus ContainerRegistryAgentPoolQueueStatus(int? count = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryBaseImageDependency ContainerRegistryBaseImageDependency(
             ContainerRegistryBaseImageDependencyType? dependencyType = null, string registry = null,
             string repository = null, string tag = null, string digest = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryBaseImageTriggerType? baseImageTriggerType = null, string updateTriggerEndpoint = null,
             ContainerRegistryUpdateTriggerPayloadType? updateTriggerPayloadType = null,
             ContainerRegistryTriggerStatus? status = null, string name = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             IEnumerable<string> imageNames = null, bool? isPushEnabled = null,
             bool? noCache = null, string dockerFilePath = null, string target = null,
             IEnumerable<ContainerRegistryRunArgument> arguments = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string contextPath = null, string contextAccessToken = null,
             string encodedTaskContent = null, string encodedValuesContent = null,
             IEnumerable<ContainerRegistryTaskOverridableValue> values = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string contextPath = null, string contextAccessToken = null,
             string taskFilePath = null, string valuesFilePath = null,
             IEnumerable<ContainerRegistryTaskOverridableValue> values = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryRunGetLogResult ContainerRegistryRunGetLogResult(
             string logLink = null, string logArtifactLink = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -128,24 +128,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             SourceCodeRepoUpdateContent sourceRepository = null,
             IEnumerable<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents = null,
             ContainerRegistryTriggerStatus? status = null, string name = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryTaskStepProperties ContainerRegistryTaskStepProperties(
             string contextPath = null, IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null,
             string contextAccessToken = null, string type = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryTimerTriggerUpdateContent ContainerRegistryTimerTriggerUpdateContent(
             string schedule = null, ContainerRegistryTriggerStatus? status = null, string name = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SourceUploadDefinition SourceUploadDefinition(Uri uploadUri = null, string relativePath = null)
-            => throw new NotImplementedException();
+            => throw new NotSupportedException();
     }
 }

@@ -4,8 +4,8 @@
 
 ### Features Added
 
+- Updated API version to 22026-01-01-preview.
 - Migrated from AutoRest/Swagger to TypeSpec-based generation.
-- Updated API version to 2025-11-01 (Registry).
 - Added support for Archive and ArchiveVersion resources.
 - Added support for ExportPipeline, ImportPipeline and PipelineRun resources.
 
