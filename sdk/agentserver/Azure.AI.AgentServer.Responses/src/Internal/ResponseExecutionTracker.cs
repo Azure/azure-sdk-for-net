@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Collections.Concurrent;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Hosting;

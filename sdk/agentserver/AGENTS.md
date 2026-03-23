@@ -1,79 +1,120 @@
-# AGENTS.md
+# AGENTS.md — Azure.AI.AgentServer
 
-## Project Overview
+> For general AI agent guidelines, safety boundaries, and repo-wide workflows,
+> see the root [AGENTS.md](../../AGENTS.md).
 
-**Azure.AI.AgentServer.Responses** is a .NET 8 NuGet class library (SDK) that helps developers build ASP.NET Core servers implementing the Azure AI Responses API. This is NOT a standalone application — it is a library consumed by other projects.
+## 1. Project Architecture
 
-## Architecture
+| Project | Path | Description |
+|---|---|---|
+| **Responses.Contracts** | `Azure.AI.AgentServer.Responses.Contracts/src/` | TypeSpec-generated model contracts (all generated models, internal helpers, customizations) |
+| **Responses** | `Azure.AI.AgentServer.Responses/src/` | Hand-written SDK library (builders, hosting extensions, `IResponseHandler`, streaming plumbing). References Contracts. |
+| **Tests** | `Azure.AI.AgentServer.Responses/tests/` | NUnit tests — protocol tests in `Protocol/`, provider tests in `Provider/`, builder tests in `Builder/` |
+| **Core** | `Azure.AI.AgentServer.Core/src/` | Shared core types |
+| **Contracts** | `Azure.AI.AgentServer.Contracts/src/` | Shared contract types |
+| **AgentFramework** | `Azure.AI.AgentServer.AgentFramework/src/` | Agent framework library |
 
-- **`Azure.AI.AgentServer.Responses.Contracts/src/`** — TypeSpec-generated model contracts (output: `Azure.AI.AgentServer.Responses.Contracts.dll`, NuGet: `Azure.AI.AgentServer.Responses.Contracts`). Contains all generated models, generated internal helpers, model customizations, and the TypeSpec pipeline.
-- **`Azure.AI.AgentServer.Responses/src/`** — Hand-written SDK library (output: `Azure.AI.AgentServer.Responses.dll`, NuGet: `Azure.AI.AgentServer.Responses`). Contains builders, exceptions, hosting extensions, internal plumbing, and core public types. References Contracts.
-- **`Azure.AI.AgentServer.Responses/tests/`** — NUnit test project (output: `Azure.AI.AgentServer.Responses.Tests.dll`)
-- **`Azure.AI.AgentServer.sln`** — Solution file (3 projects: Contracts, Sdk, Tests)
+Solution file: `Azure.AI.AgentServer.sln` (includes Contracts, Responses, Tests).
 
-## Key Conventions
+### Key namespaces
 
-### Namespaces & Assembly
-- Root namespace: `Azure.AI.AgentServer.Responses`
-- Test namespace: `Azure.AI.AgentServer.Responses.Tests`
-- File/directory names are short (`Azure.AI.AgentServer.Responses.csproj`, `Azure.AI.AgentServer.Responses.Tests.csproj`) but namespaces/assemblies use the full name
+- `Azure.AI.AgentServer.Responses` — public API surface
+- `Azure.AI.AgentServer.Responses.Models` — model types (from Contracts)
+- `Azure.AI.AgentServer.Responses.Internal` — internal implementation (e.g., `SeekableReplaySubject`)
 
-### SDK Design Patterns
-- Consumers add the NuGet package and call extension methods on `IServiceCollection` and `IApplicationBuilder`
-- Public API must be minimal and intuitive — use `internal` aggressively
-- XML documentation comments required on all `public` members
-- Follow Microsoft SDK design guidelines
+## 2. Azure SDK Compliance References
 
-### Development Workflow
-- **Spec-Driven Development (SDD)** via GitHub Spec-Kit
-- Constitution at `.specify/memory/constitution.md` — read before making changes
-- API behaviour contract at `docs/api-behaviour-contract.md` — canonical reference for all API behavioural rules, endpoint matrices, SSE event contract, and error shapes
-- Handler implementation guide at `docs/handler-implementation-guide.md` — developer guidance for implementing `IResponseHandler`
-- Feature specs in `.specify/specs/`
-- Use `/speckit.*` commands for structured workflow
+Do **not** duplicate repo-wide rules here. Instead, consult these canonical sources:
 
-### Build & Test
+| Topic | Canonical Source |
+|---|---|
+| Contributing & prerequisites | [CONTRIBUTING.md](../../CONTRIBUTING.md) |
+| Code style (StyleCop) | [eng/stylecop.json](../../eng/stylecop.json) |
+| Code analysis rules | [eng/CodeAnalysis.ruleset](../../eng/CodeAnalysis.ruleset) |
+| Target frameworks (`RequiredTargetFrameworks`, etc.) | [eng/Directory.Build.Common.props](../../eng/Directory.Build.Common.props) |
+| SDK project template & conventions | [sdk/template/Azure.Template/](../../sdk/template/Azure.Template/) |
+| Central package management | [eng/centralpackagemanagement/README.md](../../eng/centralpackagemanagement/README.md) |
+| Pre-commit checks (`dotnet format`, API export, snippets) | [.github/skills/pre-commit-checks/SKILL.md](../../.github/skills/pre-commit-checks/SKILL.md) |
+| Test framework (recorded tests, mocking) | [sdk/core/Azure.Core.TestFramework/README.md](../../sdk/core/Azure.Core.TestFramework/README.md) |
+| Copilot / agent-specific instructions | [.github/copilot-instructions.md](../../.github/copilot-instructions.md) |
+| Versioning strategy | [doc/dev/Versioning.md](../../doc/dev/Versioning.md) |
+| API listing targets | [eng/ApiListing.targets](../../eng/ApiListing.targets) |
+
+## 3. Build, Test & Finalize
+
+All commands run from `sdk/agentserver/`:
+
 ```bash
-make dev        # open dev container (from repo root via VS Code / devcontainer CLI)
-make restore    # dotnet restore
-make build      # dotnet build
-make test       # dotnet test (NUnit)
-make lint       # dotnet format --verify-no-changes
-make format     # dotnet format
-make pack       # dotnet pack (NuGet)
-make all        # restore → build → test → lint
+# Build
+dotnet build Azure.AI.AgentServer.sln
+
+# Test (excludes live tests)
+dotnet test Azure.AI.AgentServer.sln --filter TestCategory!=Live
+
+# Lint (verify formatting — fails on violations)
+dotnet format Azure.AI.AgentServer.sln --verify-no-changes
+
+# Fix formatting
+dotnet format Azure.AI.AgentServer.sln
 ```
 
-### Dev Container Setup
-The dev container config lives at the **monorepo root** (`.devcontainer/agentserver/`), not in this subfolder. This is the standard named-config pattern for monorepos — it lets you open the repo root in VS Code, select "Reopen in Container → AgentServer", and get git working at every level.
+### Pre-commit checks
 
-Three ways to launch:
-1. `make dev` — auto-detects `devcontainer` CLI or falls back to `code` CLI
-2. Open repo root in VS Code → Ctrl+Shift+P → "Reopen in Container" → select "AgentServer"
-3. `devcontainer open --workspace-folder <repo-root> --config .devcontainer/agentserver/devcontainer.json`
+Before committing changes, run the pre-commit validations for the `agentserver` service directory.
+See [pre-commit-checks SKILL.md](../../.github/skills/pre-commit-checks/SKILL.md) for the full procedure. Summary:
 
-For a multi-root workspace view (agentserver + monorepo root in file explorer), open `agentserver.code-workspace`.
+```powershell
+# Format
+dotnet format Azure.AI.AgentServer.sln
 
-### Code Style
-- .NET 8, C# with nullable reference types enabled
-- File-scoped namespaces
-- EditorConfig enforced (see `.editorconfig`)
-- `dotnet format` for formatting
+# Export public API
+eng/scripts/Export-API.ps1 agentserver
 
-## E2E Protocol Test Requirement
-- **Any API behaviour change must include E2E protocol tests.** This covers: endpoint logic, SSE event contract, error shapes, status transitions, response headers, HTTP status codes.
-- Protocol tests exercise the full HTTP pipeline via `TestWebApplicationFactory` and live in `Azure.AI.AgentServer.Responses/tests/Protocol/`.
-- Unit tests alone are insufficient — they miss middleware ordering, header propagation, serialization edge cases, and status code mapping.
-- Write protocol tests FIRST (TDD), verify they FAIL, then implement the behaviour change to make them pass.
+# Update doc snippets
+eng/scripts/Update-Snippets.ps1 agentserver
+```
 
-## Deterministic Test Synchronization
-- **Never use blind `Task.Delay()` to wait for asynchronous state changes in tests.** Use `TaskCompletionSource` gates, `WaitForBackgroundCompletionAsync()`, `PollUntilAsync<T>()`, or polling loops with explicit timeout assertions.
-- `Task.Delay` is acceptable only inside handler helpers to **simulate slow work** (e.g., `Task.Delay(200, CancellationToken.None)` to mimic a long-running tool call).
-- **Transient test failures must be fixed immediately.** A flaky test is a bug. Diagnose the root cause (race condition, blind delay) and fix with deterministic synchronization before proceeding with other work.
+### Regenerate Contracts (TypeSpec)
 
-## Do NOT
-- Expose internal implementation details in the public API
-- Add dependencies without justification
-- Skip tests — TDD is non-negotiable (see constitution)
-- Skip E2E protocol tests for API behaviour changes (see above)
-- Create standalone executable projects — this is a library SDK
+```powershell
+# Prerequisites: Node.js, Python 3 + pyyaml
+# Install npm deps (one-time)
+npm install
+
+# Regenerate
+./scripts/Generate-Contracts.ps1
+```
+
+> **Note**: The TypeSpec pipeline currently uses a standalone `package.json` with pinned
+> dependencies. This is a known deviation from the repo-standard pattern of
+> repo-level emitter packages + `tsp-location.yaml` with `emitterPackageJsonPath`.
+> Alignment is tracked for a future PR.
+
+## 4. Package-Specific Rules
+
+### Dependency isolation
+- **Responses** depends only on **Responses.Contracts** (project reference) plus `Microsoft.AspNetCore.App` (framework reference). No additional NuGet packages in production.
+- **Responses.Contracts** has zero NuGet dependencies.
+- Test dependencies are managed via central package management with overrides in `eng/centralpackagemanagement/overrides/Azure.AI.AgentServer.Responses.Packages.props`.
+
+### ASP.NET target framework
+`Responses` uses `$(RequiredRunnableTargetFrameworks)` (resolves to `net10.0;net8.0`) because it references `Microsoft.AspNetCore.App`. Standard `$(RequiredTargetFrameworks)` is used for Contracts and Tests.
+
+### Generated code suppressions
+Analyzer suppressions for generated code are scoped to `Azure.AI.AgentServer.Responses.Contracts/src/Generated/Directory.Build.props` — **not** in the root `Directory.Build.props`. Do not add blanket suppressions at higher levels.
+
+### Generation pipeline
+The TypeSpec generation pipeline is in `scripts/Generate-Contracts.ps1`:
+1. `npx tsp-client sync` — fetch upstream TypeSpec sources
+2. `npx tsp compile .` — compile TypeSpec → C# models + OpenAPI
+3. Copy `Models/` and `Internal/` into `Contracts/src/Generated/`
+4. `python3 generate-validators.py` — generate validators from OpenAPI spec
+5. Clean intermediate `tsp-output/`
+
+The Python validator generator (`scripts/generate-validators.py`) emits copyright-stamped C# files.
+
+### E2E protocol tests
+Any API behaviour change **must** include protocol tests in `tests/Protocol/`. These test the full HTTP pipeline via `TestWebApplicationFactory`. Unit tests alone are insufficient.
+
+### Deterministic test synchronization
+Never use blind `Task.Delay()` for async synchronization. Use `TaskCompletionSource`, `WaitAsync(TimeSpan)`, or polling loops with explicit timeout assertions. `Task.Delay` is acceptable only to simulate slow work in handlers.

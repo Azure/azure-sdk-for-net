@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;

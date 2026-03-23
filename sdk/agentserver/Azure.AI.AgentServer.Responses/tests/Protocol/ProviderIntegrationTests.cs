@@ -1,7 +1,9 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Http.Json;
-using System.Reactive;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;

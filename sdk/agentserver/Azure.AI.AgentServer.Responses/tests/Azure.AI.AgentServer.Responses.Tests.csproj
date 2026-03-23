@@ -1,13 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RequiredTargetFrameworks>net9.0;$(LtsTargetFramework);</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Responses.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <Nullable>enable</Nullable>
-    <NoWarn>$(NoWarn);AZC0014;AZC0100;AZC0112;SA1508;SA1633;SA1316;CS0162;CS1998;CS8425;CS8602;CS8604;CS8629;</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

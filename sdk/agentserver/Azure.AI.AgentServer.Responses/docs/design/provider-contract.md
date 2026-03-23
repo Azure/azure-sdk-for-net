@@ -46,7 +46,7 @@ builder.Services.AddResponsesServer();
 
 ## IAsyncObserver Event Streaming
 
-Event streaming uses `IAsyncObserver<ResponseStreamEvent>` from the `System.Reactive.Async` package (transitive dependency):
+Event streaming uses a custom `IAsyncObserver<ResponseStreamEvent>` interface defined in the SDK (see `IAsyncObserver.cs`):
 
 | Method | Purpose |
 |--------|---------|

@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RequiredTargetFrameworks>net9.0;$(LtsTargetFramework);</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Responses</RootNamespace>
     <Nullable>enable</Nullable>
@@ -9,7 +8,6 @@
     <Description>TypeSpec-generated model contracts for the Azure AI Agent Server Responses SDK.</Description>
     <PackageTags>Azure.AI.AgentServer.Responses.Contracts</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>$(NoWarn);CS1591;AZC0011;AZC0012;AZC0014;AZC0030;AZC0031;AZC0033;AZC0034;AZC0150;SA1633;SA1507;SA1649;SA1402;IDT002;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

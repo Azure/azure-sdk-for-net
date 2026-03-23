@@ -1,17 +1,15 @@
+# Sample 2: Function Calling — Two-Turn Weather Handler
+
+This sample shows the two-turn function calling pattern where the server emits a function call on the first turn, receives the function output on the second turn, and returns a final text message.
+
+## Implement the handler
+
+```csharp
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 
-namespace FunctionCalling;
-
-/// <summary>
-/// A two-turn function calling handler.
-/// Turn 1: emits a get_weather function call for the model to invoke.
-/// Turn 2: receives the function call output via input and returns
-///         a text message with the weather information.
-/// Turns are tied together using a conversation_id supplied by the client.
-/// </summary>
 public class WeatherHandler : IResponseHandler
 {
     public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -57,10 +55,12 @@ public class WeatherHandler : IResponseHandler
             yield return stream.EmitCreated();
             yield return stream.EmitInProgress();
 
-            var funcCall = stream.AddOutputItemFunctionCall("get_weather", "call_weather_1");
+            var funcCall = stream.AddOutputItemFunctionCall(
+                "get_weather", "call_weather_1");
             yield return funcCall.EmitAdded();
 
-            var arguments = JsonSerializer.Serialize(new { location = "Seattle", unit = "fahrenheit" });
+            var arguments = JsonSerializer.Serialize(
+                new { location = "Seattle", unit = "fahrenheit" });
             yield return funcCall.EmitArgumentsDelta(arguments);
             yield return funcCall.EmitArgumentsDone(arguments);
 
@@ -70,3 +70,49 @@ public class WeatherHandler : IResponseHandler
         }
     }
 }
+```
+
+## Configure the server
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddResponsesServer();
+builder.Services.AddSingleton<IResponseHandler, WeatherHandler>();
+
+var app = builder.Build();
+app.MapResponsesServer();
+app.Run();
+```
+
+## Test the endpoint
+
+### Turn 1 — request triggers a function call
+
+```bash
+curl -X POST http://localhost:5000/responses \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "test",
+    "conversation": "conv_demo_001",
+    "input": "What is the weather in Seattle?"
+  }' --no-buffer
+```
+
+The response will contain a `function_call` output item with `call_id` and arguments `{"location":"Seattle","unit":"fahrenheit"}`. Extract the `call_id` from the response for the next turn.
+
+### Turn 2 — submit function output, receive text
+
+```bash
+curl -X POST http://localhost:5000/responses \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "test",
+    "conversation": "conv_demo_001",
+    "input": [{
+      "type": "function_call_output",
+      "call_id": "call_weather_1",
+      "output": "{\"temperature\": 72, \"condition\": \"sunny\"}"
+    }]
+  }' --no-buffer
+```

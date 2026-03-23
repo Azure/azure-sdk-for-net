@@ -1,3 +1,7 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -25,6 +29,11 @@ public interface IResponseContext
     /// Allows handlers to access custom or extension fields that are not part of the typed model.
     /// Returns <c>default(JsonElement)</c> when no raw body is available (e.g., test-constructed contexts).
     /// </summary>
+    /// <remarks>
+    /// <see cref="JsonElement"/> is intentional here — handlers need direct access to the
+    /// raw request payload for extension fields that fall outside the typed model.
+    /// </remarks>
+    [SuppressMessage("Usage", "AZC0014:Avoid using banned types in public API", Justification = "Handlers require raw JSON access for extension fields beyond the typed model.")]
     JsonElement RawBody { get; }
 
     /// <summary>

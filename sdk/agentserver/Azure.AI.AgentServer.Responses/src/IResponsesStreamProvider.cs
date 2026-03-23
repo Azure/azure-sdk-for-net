@@ -12,8 +12,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// </summary>
 /// <remarks>
 /// <para>
-/// Event streaming uses <see cref="IAsyncObserver{T}"/> from the
-/// <c>System.Reactive.Async</c> package. Observer methods return
+/// Event streaming uses <see cref="IAsyncObserver{T}"/>. Observer methods return
 /// <see cref="ValueTask"/> and do not accept <see cref="CancellationToken"/>
 /// — subscription cancellation is handled via <see cref="IAsyncDisposable"/>.
 /// </para>

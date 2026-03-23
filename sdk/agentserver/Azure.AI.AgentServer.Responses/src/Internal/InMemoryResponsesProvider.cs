@@ -26,8 +26,8 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// window fully elapses since the last event was emitted.
 /// </para>
 /// <para>
-/// Event streaming uses <see cref="SeekableReplaySubject"/> which wraps
-/// <c>ConcurrentReplayAsyncSubject&lt;T&gt;</c> from <c>System.Reactive.Async</c>.
+/// Event streaming uses <see cref="SeekableReplaySubject"/> which provides
+/// replay buffering with time-based eviction and cursor-based seeking.
 /// </para>
 /// </remarks>
 internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponsesCancellationSignalProvider, IResponsesStreamProvider, IDisposable

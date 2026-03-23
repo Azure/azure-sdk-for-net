@@ -3,6 +3,10 @@
 
 namespace Azure.AI.AgentServer.Responses.Models;
 
+/// <summary>
+/// Custom partial extending the generated <see cref="ResponseStreamEvent"/> with
+/// a mutable <see cref="SequenceNumber"/> property.
+/// </summary>
 public abstract partial class ResponseStreamEvent
 {
     /// <summary> Gets the SequenceNumber. </summary>

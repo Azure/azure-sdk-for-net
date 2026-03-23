@@ -11,6 +11,10 @@ using System.Text.Json;
 
 namespace Azure.AI.AgentServer.Responses.Models;
 
+/// <summary>
+/// Custom partial extending the generated <see cref="ItemMessage"/> with a
+/// strongly-typed constructor and a mutable <see cref="Content"/> property.
+/// </summary>
 public partial class ItemMessage
 {
     /// <summary>

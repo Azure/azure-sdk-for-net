@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,9 +48,9 @@ public static class CreateResponseExtensions
                         return conversationId;
                 }
             }
-            catch
+            catch (JsonException)
             {
-                // Swallow parse errors — no conversation ID available
+                // Swallow JSON parse errors — no conversation ID available
             }
         }
 

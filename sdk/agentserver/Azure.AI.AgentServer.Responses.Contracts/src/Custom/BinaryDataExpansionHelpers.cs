@@ -74,7 +74,7 @@ internal static class BinaryDataExpansionHelpers
                     $"Expected a string or array for Input, but got {root.ValueKind}."),
             };
         }
-        catch (FormatException ex) when (ex.Message == "Failed to convert input items")
+        catch (FormatException)
         {
             throw;
         }

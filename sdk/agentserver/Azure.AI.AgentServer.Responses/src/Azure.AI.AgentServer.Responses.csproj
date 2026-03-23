@@ -1,15 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RequiredTargetFrameworks>net9.0;$(LtsTargetFramework);</RequiredTargetFrameworks>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredRunnableTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Responses</RootNamespace>
     <Version>1.0.0-beta.1</Version>
     <Description>An SDK for building ASP.NET Core servers that implement the Azure AI Responses API.</Description>
     <PackageTags>Azure.AI.AgentServer.Responses</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
-    <NoWarn>$(NoWarn);AZC0014;AZC0100;AZC0112;SA1633;SA1316;CS8604;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,10 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Responses.Contracts\src\Azure.AI.AgentServer.Responses.Contracts.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Reactive.Async" />
   </ItemGroup>
 
 </Project>
