@@ -9,6 +9,8 @@ namespace Azure.Health.Deidentification
     public partial class DeidentificationClient
     {
         protected DeidentificationClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public DeidentificationClient(Azure.Health.Deidentification.DeidentificationClientSettings settings) { }
         public DeidentificationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public DeidentificationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Health.Deidentification.DeidentificationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -49,6 +51,14 @@ namespace Azure.Health.Deidentification
             V2024_11_15 = 1,
             V2025_07_15_Preview = 2,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class DeidentificationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DeidentificationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Health.Deidentification.DeidentificationClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class DeidentificationContent : System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.DeidentificationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.DeidentificationContent>
     {
