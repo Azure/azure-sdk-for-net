@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Text.Json;
 using ModelContextProtocol.Server;
 
@@ -132,28 +131,8 @@ public static class FinalizationTool
 
     private static async Task<(int ExitCode, string Output)> RunPowerShellScriptAsync(string workingDirectory, string command)
     {
-        var psi = new ProcessStartInfo
-        {
-            FileName = "pwsh",
-            Arguments = $"-NoProfile -NonInteractive -Command \"{command}\"",
-            WorkingDirectory = workingDirectory,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-
-        using var process = Process.Start(psi)!;
-        var stdout = await process.StandardOutput.ReadToEndAsync().ConfigureAwait(false);
-        var stderr = await process.StandardError.ReadToEndAsync().ConfigureAwait(false);
-        await process.WaitForExitAsync().ConfigureAwait(false);
-
-        var output = stdout;
-        if (!string.IsNullOrWhiteSpace(stderr))
-        {
-            output += Environment.NewLine + stderr;
-        }
-
-        return (process.ExitCode, output);
+        var (output, exitCode) = await ProcessRunner.RunAsync(
+            "pwsh", $"-NoProfile -NonInteractive -Command \"{command}\"", workingDirectory).ConfigureAwait(false);
+        return (exitCode, output);
     }
 }

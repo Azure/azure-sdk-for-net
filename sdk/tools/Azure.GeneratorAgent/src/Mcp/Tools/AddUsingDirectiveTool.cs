@@ -75,22 +75,26 @@ public static class AddUsingDirectiveTool
             }
 
             // No existing usings — insert at the top (after any copyright header)
-            var lines = content.Split('\n');
-            var insertLine = 0;
-            for (var i = 0; i < lines.Length; i++)
+            var headerEndPos = 0;
+            var searchPos = 0;
+            while (searchPos < content.Length)
             {
-                var trimmed = lines[i].TrimStart();
+                var lineEnd = content.IndexOf('\n', searchPos);
+                var lineContent = lineEnd >= 0
+                    ? content[searchPos..lineEnd]
+                    : content[searchPos..];
+                var trimmed = lineContent.TrimStart();
                 if (trimmed.StartsWith("//", StringComparison.Ordinal) || string.IsNullOrWhiteSpace(trimmed))
                 {
-                    insertLine = i + 1;
+                    headerEndPos = lineEnd >= 0 ? lineEnd + 1 : content.Length;
+                    searchPos = headerEndPos;
                     continue;
                 }
                 break;
             }
 
-            var linesList = new List<string>(lines);
-            linesList.Insert(insertLine, usingDirective);
-            File.WriteAllText(normalizedPath, string.Join('\n', linesList));
+            var newContent2 = content.Insert(headerEndPos, usingDirective + "\n");
+            File.WriteAllText(normalizedPath, newContent2);
             return (true, true, null);
         }
         catch (Exception ex)

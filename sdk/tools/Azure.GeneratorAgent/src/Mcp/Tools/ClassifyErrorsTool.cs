@@ -26,13 +26,21 @@ public static class ClassifyErrorsTool
             }
 
             var classified = errors.Select(DeterministicFixRegistry.Classify).ToList();
+            var deterministicCount = 0;
+            foreach (var c in classified)
+            {
+                if (c.IsDeterministic)
+                {
+                    deterministicCount++;
+                }
+            }
 
             return JsonSerializer.Serialize(new
             {
                 success = true,
                 total = classified.Count,
-                deterministicCount = classified.Count(c => c.IsDeterministic),
-                requiresReasoningCount = classified.Count(c => !c.IsDeterministic),
+                deterministicCount,
+                requiresReasoningCount = classified.Count - deterministicCount,
                 results = classified
             });
         }

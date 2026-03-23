@@ -233,4 +233,310 @@ public class BuildOutputParserTests
         Assert.That(result, Has.Count.EqualTo(1));
         Assert.That(result[0].Code, Is.EqualTo("AZC0002"));
     }
+
+    // --- ApiCompat error tests ---
+
+    [Test]
+    public void Parse_ApiCompat_CannotRemoveAttribute_IsParsed()
+    {
+        var output = @"C:\Users\user\.nuget\packages\microsoft.dotnet.apicompat\5.0.0-beta.20467.1\build\Microsoft.DotNet.ApiCompat.targets(82,5): error : CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.SomeService.Models.DeprecatedModel' in the contract but not the implementation. [C:\src\project.csproj::TargetFramework=netstandard2.0]";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Code, Is.EqualTo("CannotRemoveAttribute"));
+            Assert.That(result[0].Message, Does.Contain("CannotRemoveAttribute"));
+            Assert.That(result[0].Message, Does.Contain("System.ObsoleteAttribute"));
+            Assert.That(result[0].Message, Does.Not.Contain(".csproj"));
+            Assert.That(result[0].Severity, Is.EqualTo("error"));
+            Assert.That(result[0].Line, Is.EqualTo(82));
+        });
+    }
+
+    [Test]
+    public void Parse_ApiCompat_CannotSealType_IsParsed()
+    {
+        var output = @"C:\nuget\Microsoft.DotNet.ApiCompat.targets(82,5): error : CannotSealType : Type 'Azure.SomeService.Models.SomeBaseModel' is effectively sealed in the implementation but not in the contract. [C:\src\project.csproj]";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Code, Is.EqualTo("CannotSealType"));
+            Assert.That(result[0].Message, Does.Contain("SomeBaseModel"));
+            Assert.That(result[0].Message, Does.Not.Contain(".csproj"));
+        });
+    }
+
+    [Test]
+    public void Parse_ApiCompat_MembersMustExist_IsParsed()
+    {
+        var output = @"C:\nuget\Microsoft.DotNet.ApiCompat.targets(82,5): error : MembersMustExist : Member 'Azure.SomeService.Models.SomeBaseType..ctor(System.Guid, System.Collections.Generic.IEnumerable<System.String>)' does not exist in the implementation but it does exist in the contract. [C:\src\project.csproj]";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Code, Is.EqualTo("MembersMustExist"));
+            Assert.That(result[0].Message, Does.Contain("SomeBaseType"));
+        });
+    }
+
+    [Test]
+    public void Parse_ApiCompat_TypesMustExist_IsParsed()
+    {
+        var output = @"C:\nuget\Microsoft.DotNet.ApiCompat.targets(82,5): error : TypesMustExist : Type 'Azure.SomeService.Models.SomeRemovedModel' does not exist in the implementation but it does exist in the contract. [C:\src\project.csproj]";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Code, Is.EqualTo("TypesMustExist"));
+            Assert.That(result[0].Message, Does.Contain("SomeRemovedModel"));
+        });
+    }
+
+    [Test]
+    public void Parse_ApiCompat_MultipleErrors_AllParsed()
+    {
+        var output = """
+            C:\nuget\ApiCompat.targets(82,5): error : CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Foo' in the contract but not the implementation. [C:\src\p.csproj]
+            C:\nuget\ApiCompat.targets(82,5): error : CannotSealType : Type 'Bar' is effectively sealed in the implementation. [C:\src\p.csproj]
+            C:\nuget\ApiCompat.targets(82,5): error : MembersMustExist : Member 'Bar..ctor()' does not exist in the implementation. [C:\src\p.csproj]
+            """;
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(3));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Code, Is.EqualTo("CannotRemoveAttribute"));
+            Assert.That(result[1].Code, Is.EqualTo("CannotSealType"));
+            Assert.That(result[2].Code, Is.EqualTo("MembersMustExist"));
+        });
+    }
+
+    [Test]
+    public void Parse_ApiCompat_MixedWithStandardErrors_AllParsed()
+    {
+        var output = """
+            C:\src\Client.cs(10,5): error CS0246: The type 'Foo' could not be found
+            C:\nuget\ApiCompat.targets(82,5): error : CannotSealType : Type 'Bar' is effectively sealed. [C:\src\p.csproj]
+            C:\src\Model.cs(20,3): error CS1061: 'Baz' does not contain a definition for '_pipeline'
+            """;
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(3));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Code, Is.EqualTo("CS0246"));
+            Assert.That(result[1].Code, Is.EqualTo("CS1061"));
+            Assert.That(result[2].Code, Is.EqualTo("CannotSealType"));
+        });
+    }
+
+    [Test]
+    public void Parse_ApiCompat_UnknownRule_FallsBackToApiCompat()
+    {
+        var output = @"C:\nuget\ApiCompat.targets(82,5): error : SomeNewRule : Something unexpected happened. [C:\src\p.csproj]";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.That(result[0].Code, Is.EqualTo("ApiCompat"));
+    }
+
+    [Test]
+    public void Parse_ApiCompat_DuplicateErrors_Deduplicated()
+    {
+        var output = """
+            C:\nuget\ApiCompat.targets(82,5): error : CannotSealType : Type 'Foo' is effectively sealed. [C:\src\p.csproj::TargetFramework=netstandard2.0]
+            C:\nuget\ApiCompat.targets(82,5): error : CannotSealType : Type 'Foo' is effectively sealed. [C:\src\p.csproj::TargetFramework=net8.0]
+            """;
+        var result = BuildOutputParser.Parse(output);
+
+        // Same file, line, code, and message — should be deduplicated
+        Assert.That(result, Has.Count.EqualTo(1));
+    }
+
+    // --- File-level error tests (no line/col) ---
+
+    [Test]
+    public void Parse_NuGetFileLevelError_IsParsed()
+    {
+        var output = @"C:\src\project.csproj : error NU1100: Unable to resolve 'Some.Package (>= 1.0.0)' for 'net8.0'. [C:\src\project.csproj]";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].FilePath, Is.EqualTo(@"C:\src\project.csproj"));
+            Assert.That(result[0].Code, Is.EqualTo("NU1100"));
+            Assert.That(result[0].Message, Does.Not.Contain(".csproj"));
+            Assert.That(result[0].Message, Does.Contain("Unable to resolve"));
+            Assert.That(result[0].Line, Is.EqualTo(0));
+            Assert.That(result[0].Column, Is.EqualTo(0));
+            Assert.That(result[0].Severity, Is.EqualTo("error"));
+        });
+    }
+
+    [Test]
+    public void Parse_MSBuildPrefixedError_IsParsed()
+    {
+        var output = "MSBUILD : error MSB1009: Project file does not exist.";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].FilePath, Is.EqualTo("MSBUILD"));
+            Assert.That(result[0].Code, Is.EqualTo("MSB1009"));
+            Assert.That(result[0].Message, Is.EqualTo("Project file does not exist."));
+            Assert.That(result[0].Line, Is.EqualTo(0));
+        });
+    }
+
+    [Test]
+    public void Parse_FileLevelWarning_IsParsed()
+    {
+        var output = @"C:\src\project.csproj : warning NU1903: Package 'SomePackage 1.0.0' has a known moderate severity vulnerability.";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Code, Is.EqualTo("NU1903"));
+            Assert.That(result[0].Severity, Is.EqualTo("warning"));
+            Assert.That(result[0].FilePath, Is.EqualTo(@"C:\src\project.csproj"));
+        });
+    }
+
+    [Test]
+    public void Parse_FileLevelDuplicate_Deduplicated()
+    {
+        var output = """
+            C:\src\project.csproj : error NU1100: Unable to resolve 'Pkg' for 'net8.0'. [C:\src\project.csproj]
+            C:\src\project.csproj : error NU1100: Unable to resolve 'Pkg' for 'net8.0'. [C:\src\project.csproj]
+            """;
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+    }
+
+    // --- Codeless project-level error tests ---
+
+    [Test]
+    public void Parse_CodelessProjectLevelError_IsParsed()
+    {
+        var output = "error : Unable to find package 'Some.Package'. No packages exist with this id in source(s): nuget.org";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Code, Is.EqualTo("BUILD"));
+            Assert.That(result[0].Message, Does.Contain("Unable to find package"));
+            Assert.That(result[0].FilePath, Is.Empty);
+            Assert.That(result[0].Line, Is.EqualTo(0));
+            Assert.That(result[0].Severity, Is.EqualTo("error"));
+        });
+    }
+
+    [Test]
+    public void Parse_IndentedCodelessProjectLevelError_IsParsed()
+    {
+        var output = "  error : Target 'GenerateCode' failed.";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Code, Is.EqualTo("BUILD"));
+            Assert.That(result[0].Message, Does.Contain("Target 'GenerateCode' failed"));
+        });
+    }
+
+    [Test]
+    public void Parse_CodelessProjectLevelWarning_IsParsed()
+    {
+        var output = "warning : Some build warning without a code";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Code, Is.EqualTo("BUILD"));
+            Assert.That(result[0].Severity, Is.EqualTo("warning"));
+        });
+    }
+
+    // --- Project reference stripping for standard errors ---
+
+    [Test]
+    public void Parse_StandardErrorWithProjectRef_MessageIsStripped()
+    {
+        var output = @"C:\src\File.cs(10,5): error CS0246: The type or namespace name 'Foo' could not be found [C:\src\project.csproj]";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Message, Does.Not.Contain("["));
+            Assert.That(result[0].Message, Does.Not.Contain(".csproj"));
+            Assert.That(result[0].Message, Is.EqualTo("The type or namespace name 'Foo' could not be found"));
+        });
+    }
+
+    [Test]
+    public void Parse_NoColErrorWithProjectRef_MessageIsStripped()
+    {
+        var output = @"C:\src\File.cs(10): error CS1234: Some message [C:\src\project.csproj::TargetFramework=net8.0]";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Message, Does.Not.Contain(".csproj"));
+            Assert.That(result[0].Message, Is.EqualTo("Some message"));
+        });
+    }
+
+    // --- Mixed format tests ---
+
+    [Test]
+    public void Parse_MixedAllFormats_AllParsed()
+    {
+        var output = """
+            C:\src\File.cs(10,5): error CS0246: The type 'Foo' could not be found [C:\src\p.csproj]
+            C:\src\project.csproj : error NU1100: Unable to resolve 'Pkg'
+            MSBUILD : error MSB1009: Project file does not exist.
+            error : Unable to find package 'Bar'
+            C:\nuget\ApiCompat.targets(82,5): error : CannotSealType : Type 'Baz' is effectively sealed. [C:\src\p.csproj]
+            """;
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(5));
+        var codes = result.Select(e => e.Code).ToList();
+        Assert.Multiple(() =>
+        {
+            Assert.That(codes, Does.Contain("CS0246"));
+            Assert.That(codes, Does.Contain("NU1100"));
+            Assert.That(codes, Does.Contain("MSB1009"));
+            Assert.That(codes, Does.Contain("BUILD"));
+            Assert.That(codes, Does.Contain("CannotSealType"));
+        });
+    }
+
+    [Test]
+    public void Parse_StandardErrorProjectRefDoesNotAffectDedup()
+    {
+        // Same error from two target frameworks — should dedup to 1
+        var output = """
+            C:\src\File.cs(10,5): error CS0246: The type 'Foo' could not be found [C:\src\p.csproj::TargetFramework=netstandard2.0]
+            C:\src\File.cs(10,5): error CS0246: The type 'Foo' could not be found [C:\src\p.csproj::TargetFramework=net8.0]
+            """;
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.That(result[0].Message, Does.Not.Contain(".csproj"));
+    }
 }

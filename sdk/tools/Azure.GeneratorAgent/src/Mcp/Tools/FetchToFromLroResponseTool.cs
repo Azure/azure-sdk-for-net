@@ -158,9 +158,7 @@ public static class FetchToFromLroResponseTool
             return types;
         }
 
-        var classRegex = new Regex(
-            @"(?:public|internal)\s+(?:static\s+)?(?:partial\s+)?class\s+(?<className>\w+)",
-            RegexOptions.Compiled);
+        var classRegex = CSharpPatterns.ClassDeclaration;
 
         foreach (var file in Directory.GetFiles(generatedPath, "*.cs", SearchOption.AllDirectories))
         {

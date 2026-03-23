@@ -130,6 +130,51 @@ public class RegexReplacementToolTests
         });
     }
 
+    [Test]
+    public void ExecuteInProcess_SingleLineMode_MatchesCrossLinePattern()
+    {
+        var content = """
+            [CodeGenSerialization(nameof(Id),
+                DeserializationValueHook = nameof(ReadId))]
+            public partial class MyModel
+            {
+            }
+            """;
+        var file = CreateTempFile(content);
+        // In Singleline mode, .* matches across newlines
+        var (success, count, error) = RegexReplacementTool.ExecuteInProcess(
+            file,
+            @"\[CodeGenSerialization\([^\]]*\)\]\s*\r?\n",
+            "",
+            singleLine: true);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(success, Is.True);
+            Assert.That(count, Is.EqualTo(1));
+            var result = File.ReadAllText(file);
+            Assert.That(result, Does.Not.Contain("CodeGenSerialization"));
+            Assert.That(result, Does.Contain("public partial class MyModel"));
+        });
+    }
+
+    [Test]
+    public void ExecuteInProcess_DefaultMode_DoesNotMatchCrossLine()
+    {
+        var content = "[Attr(\n    arg)]\nclass Foo {}";
+        var file = CreateTempFile(content);
+        // Without singleLine, .* does NOT match newlines
+        var (success, count, error) = RegexReplacementTool.ExecuteInProcess(
+            file, @"\[Attr\(.*\)\]", "");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(success, Is.True);
+            Assert.That(count, Is.EqualTo(0)); // No match — pattern doesn't span lines
+            Assert.That(File.ReadAllText(file), Is.EqualTo(content));
+        });
+    }
+
     private string CreateTempFile(string content)
     {
         var path = Path.Combine(_tempDir, $"{Guid.NewGuid():N}.cs");

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using ModelContextProtocol.Server;
@@ -149,9 +148,10 @@ public static class ValidateTspConfigTool
                 @"(\s*""?@azure-typespec/http-client-csharp""?\s*:)[\s\S]*?(?=\n\s*""?@|\n\s*emit\b|\n[^\s]|\z)",
                 RegexOptions.Compiled);
 
-            if (sectionRegex.IsMatch(content))
+            var replaced = sectionRegex.Replace(content, "\n" + correctSection);
+            if (!ReferenceEquals(replaced, content))
             {
-                content = sectionRegex.Replace(content, "\n" + correctSection);
+                content = replaced;
             }
             else if (content.Contains("options:", StringComparison.Ordinal))
             {
@@ -177,15 +177,4 @@ public static class ValidateTspConfigTool
             return (false, ex.Message);
         }
     }
-}
-
-/// <summary>
-/// Result of tspconfig.yaml validation.
-/// </summary>
-public sealed class TspConfigValidationResult
-{
-    public bool Success { get; set; }
-    public bool IsValid { get; set; }
-    public string Reason { get; set; } = string.Empty;
-    public List<string> Issues { get; set; } = [];
 }

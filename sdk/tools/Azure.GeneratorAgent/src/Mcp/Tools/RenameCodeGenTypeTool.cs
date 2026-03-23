@@ -21,10 +21,6 @@ public static class RenameCodeGenTypeTool
         @"\[CodeGenType\(""(?<oldName>[^""]+)""\)\]",
         RegexOptions.Compiled);
 
-    private static readonly Regex s_classNameRegex = new(
-        @"(?:public|internal)\s+(?:static\s+)?(?:partial\s+)?class\s+(?<className>\w+)",
-        RegexOptions.Compiled);
-
     [McpServerTool(Name = "rename_codegen_type"), Description("Fix mismatched [CodeGenType] attributes by finding the generated counterpart and updating the custom type's attribute.")]
     public static string Execute(
         [Description("Absolute path to the SDK project directory")] string projectPath,
@@ -101,7 +97,7 @@ public static class RenameCodeGenTypeTool
                 else
                 {
                     // Add [CodeGenType] attribute before the class declaration
-                    var classMatch = s_classNameRegex.Match(content);
+                    var classMatch = CSharpPatterns.ClassDeclaration.Match(content);
                     if (!classMatch.Success)
                     {
                         continue;
@@ -139,7 +135,7 @@ public static class RenameCodeGenTypeTool
         foreach (var file in Directory.GetFiles(generatedPath, "*.cs", SearchOption.AllDirectories))
         {
             var content = File.ReadAllText(file);
-            foreach (Match match in s_classNameRegex.Matches(content))
+            foreach (Match match in CSharpPatterns.ClassDeclaration.Matches(content))
             {
                 var className = match.Groups["className"].Value;
                 if (className.EndsWith(suffix, StringComparison.Ordinal))
@@ -166,7 +162,7 @@ public static class RenameCodeGenTypeTool
             }
 
             var content = File.ReadAllText(file);
-            foreach (Match match in s_classNameRegex.Matches(content))
+            foreach (Match match in CSharpPatterns.ClassDeclaration.Matches(content))
             {
                 var className = match.Groups["className"].Value;
                 if (className.EndsWith(suffix, StringComparison.Ordinal))
@@ -242,14 +238,4 @@ public static class RenameCodeGenTypeTool
         }
         return new string(' ', indent);
     }
-}
-
-/// <summary>
-/// Describes a CodeGenType fix that was applied.
-/// </summary>
-public sealed class CodeGenTypeFix
-{
-    public string FilePath { get; init; } = string.Empty;
-    public string CustomTypeName { get; init; } = string.Empty;
-    public string GeneratedTypeName { get; init; } = string.Empty;
 }

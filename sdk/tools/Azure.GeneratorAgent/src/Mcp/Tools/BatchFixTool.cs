@@ -73,7 +73,8 @@ public static class BatchFixTool
                         var filePath = fix.Args.GetValueOrDefault("filePath") ?? string.Empty;
                         var pattern = fix.Args.GetValueOrDefault("pattern") ?? string.Empty;
                         var replacement = fix.Args.GetValueOrDefault("replacement") ?? string.Empty;
-                        var (success, count, error) = RegexReplacementTool.ExecuteInProcess(filePath, pattern, replacement);
+                        var singleLine = string.Equals(fix.Args.GetValueOrDefault("singleLine"), "true", StringComparison.OrdinalIgnoreCase);
+                        var (success, count, error) = RegexReplacementTool.ExecuteInProcess(filePath, pattern, replacement, singleLine);
                         return new FixResult { Success = success, Tool = fix.Tool, Message = error ?? $"{count} replacements" };
                     }
                 case "add_using_directive":
@@ -114,6 +115,13 @@ public static class BatchFixTool
                         var (success, fixes, error) = RenameCodeGenTypeTool.ExecuteInProcess(projectPath, typeSuffix);
                         return new FixResult { Success = success, Tool = fix.Tool, Message = error ?? $"{fixes.Count} types fixed" };
                     }
+                case "add_codegen_suppress":
+                    {
+                        var filePath = fix.Args.GetValueOrDefault("filePath") ?? string.Empty;
+                        var memberName = fix.Args.GetValueOrDefault("memberName") ?? string.Empty;
+                        var (success, result, error) = AddCodeGenSuppressTool.ExecuteInProcess(filePath, memberName);
+                        return new FixResult { Success = success, Tool = fix.Tool, Message = error ?? result?.Attribute ?? "No matching member" };
+                    }
                 default:
                     return new FixResult { Success = false, Tool = fix.Tool, Message = $"Unknown tool: {fix.Tool}" };
             }
@@ -123,23 +131,4 @@ public static class BatchFixTool
             return new FixResult { Success = false, Tool = fix.Tool, Message = ex.Message };
         }
     }
-}
-
-/// <summary>
-/// Describes a single fix operation for batch processing.
-/// </summary>
-public sealed class FixOperation
-{
-    public string Tool { get; set; } = string.Empty;
-    public Dictionary<string, string> Args { get; set; } = new();
-}
-
-/// <summary>
-/// Result of a single fix operation.
-/// </summary>
-public sealed class FixResult
-{
-    public bool Success { get; set; }
-    public string Tool { get; set; } = string.Empty;
-    public string? Message { get; set; }
 }

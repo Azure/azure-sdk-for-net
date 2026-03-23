@@ -19,10 +19,12 @@ public static class RegexReplacementTool
     public static string Execute(
         [Description("Absolute path to the file to modify")] string filePath,
         [Description("Regex pattern to search for")] string pattern,
-        [Description("Replacement string (may include $1, $2 capture group references)")] string replacement)
+        [Description("Replacement string (may include $1, $2 capture group references)")] string replacement,
+        [Description("Set to 'true' to enable Singleline mode (dot matches newlines, for cross-line patterns)")] string? singleLine = null)
     {
         try
         {
+            var useSingleLine = string.Equals(singleLine, "true", StringComparison.OrdinalIgnoreCase);
             var normalizedPath = Path.GetFullPath(filePath);
             if (!File.Exists(normalizedPath))
             {
@@ -30,16 +32,17 @@ public static class RegexReplacementTool
             }
 
             var content = File.ReadAllText(normalizedPath);
-            var regex = new Regex(pattern, RegexOptions.Compiled);
-            var newContent = regex.Replace(content, replacement);
+            var options = RegexOptions.Compiled | (useSingleLine ? RegexOptions.Singleline : RegexOptions.None);
+            var regex = new Regex(pattern, options);
+            var matchCount = regex.Matches(content).Count;
 
-            if (string.Equals(content, newContent, StringComparison.Ordinal))
+            if (matchCount == 0)
             {
                 return JsonSerializer.Serialize(new { success = true, modified = false, message = "No matches found" });
             }
 
+            var newContent = regex.Replace(content, replacement);
             File.WriteAllText(normalizedPath, newContent);
-            var matchCount = regex.Matches(content).Count;
             return JsonSerializer.Serialize(new { success = true, modified = true, replacements = matchCount });
         }
         catch (Exception ex)
@@ -51,7 +54,7 @@ public static class RegexReplacementTool
     /// <summary>
     /// In-process execution for use by the orchestrator (avoids MCP serialization overhead).
     /// </summary>
-    public static (bool Success, int ReplacementCount, string? Error) ExecuteInProcess(string filePath, string pattern, string replacement)
+    public static (bool Success, int ReplacementCount, string? Error) ExecuteInProcess(string filePath, string pattern, string replacement, bool singleLine = false)
     {
         try
         {
@@ -62,7 +65,8 @@ public static class RegexReplacementTool
             }
 
             var content = File.ReadAllText(normalizedPath);
-            var regex = new Regex(pattern, RegexOptions.Compiled);
+            var options = RegexOptions.Compiled | (singleLine ? RegexOptions.Singleline : RegexOptions.None);
+            var regex = new Regex(pattern, options);
             var matchCount = regex.Matches(content).Count;
             if (matchCount == 0)
             {

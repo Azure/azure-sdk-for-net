@@ -21,13 +21,21 @@ public static class ParseBuildOutputTool
         {
             var errors = BuildOutputParser.Parse(buildOutput);
             var isSuccess = BuildOutputParser.IsSuccess(buildOutput);
+            var errorCount = 0;
+            foreach (var e in errors)
+            {
+                if (e.Severity == "error")
+                {
+                    errorCount++;
+                }
+            }
 
             return JsonSerializer.Serialize(new
             {
                 success = true,
                 buildSucceeded = isSuccess,
-                errorCount = errors.Count(e => e.Severity == "error"),
-                warningCount = errors.Count(e => e.Severity == "warning"),
+                errorCount,
+                warningCount = errors.Count - errorCount,
                 errors
             });
         }

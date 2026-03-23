@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Text.Json;
 using ModelContextProtocol.Server;
 
@@ -25,16 +24,27 @@ public static class BuildAndClassifyTool
             var (buildOutput, exitCode) = await RunBuildAsync(normalizedPath).ConfigureAwait(false);
             var errors = BuildOutputParser.Parse(buildOutput);
             var classified = errors.Select(DeterministicFixRegistry.Classify).ToList();
+            var deterministicCount = 0;
+            foreach (var c in classified)
+            {
+                if (c.IsDeterministic)
+                {
+                    deterministicCount++;
+                }
+            }
 
             return JsonSerializer.Serialize(new
             {
                 success = exitCode == 0,
                 exitCode,
                 totalErrors = errors.Count,
-                deterministicCount = classified.Count(c => c.IsDeterministic),
-                requiresReasoningCount = classified.Count(c => !c.IsDeterministic),
+                deterministicCount,
+                requiresReasoningCount = classified.Count - deterministicCount,
                 classifiedErrors = classified,
-                rawOutput = Truncate(buildOutput, 5000)
+                rawOutput = CSharpPatterns.Truncate(buildOutput, 5000),
+                buildFailureHint = exitCode != 0 && errors.Count == 0
+                    ? GetBuildFailureHint(buildOutput, exitCode)
+                    : (string?)null
             });
         }
         catch (Exception ex)
@@ -65,33 +75,31 @@ public static class BuildAndClassifyTool
 
     private static async Task<(string Output, int ExitCode)> RunBuildAsync(string projectPath)
     {
-        var psi = new ProcessStartInfo
-        {
-            FileName = "dotnet",
-            Arguments = "build /clp:ErrorsOnly",
-            WorkingDirectory = Directory.Exists(projectPath) ? projectPath : Path.GetDirectoryName(projectPath)!,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-
-        using var process = Process.Start(psi)!;
-        var stdout = await process.StandardOutput.ReadToEndAsync().ConfigureAwait(false);
-        var stderr = await process.StandardError.ReadToEndAsync().ConfigureAwait(false);
-        await process.WaitForExitAsync().ConfigureAwait(false);
-
-        var combinedOutput = stdout;
-        if (!string.IsNullOrWhiteSpace(stderr))
-        {
-            combinedOutput += Environment.NewLine + stderr;
-        }
-
-        return (combinedOutput, process.ExitCode);
+        var workDir = Directory.Exists(projectPath) ? projectPath : Path.GetDirectoryName(projectPath)!;
+        return await ProcessRunner.RunAsync("dotnet", "build /clp:ErrorsOnly", workDir).ConfigureAwait(false);
     }
 
-    private static string Truncate(string value, int maxLength)
+    private static string GetBuildFailureHint(string buildOutput, int exitCode)
     {
-        return value.Length <= maxLength ? value : value[..maxLength] + "... (truncated)";
+        var lines = buildOutput.Split('\n');
+        var relevantLines = lines
+            .Select(l => l.Trim())
+            .Where(l => l.Length > 0 && (
+                l.Contains("error", StringComparison.OrdinalIgnoreCase) ||
+                l.Contains("failed", StringComparison.OrdinalIgnoreCase)))
+            .Take(20)
+            .ToArray();
+
+        var hint = $"Build failed (exit code {exitCode}) but no structured errors were parsed.";
+        if (relevantLines.Length > 0)
+        {
+            hint += " Potentially relevant lines:\n" + string.Join('\n', relevantLines);
+        }
+        else
+        {
+            hint += " Check rawOutput for details.";
+        }
+
+        return hint;
     }
 }

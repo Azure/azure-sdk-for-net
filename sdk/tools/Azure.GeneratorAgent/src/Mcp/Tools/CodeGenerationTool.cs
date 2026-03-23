@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Text.Json;
 using ModelContextProtocol.Server;
 
@@ -25,7 +24,7 @@ public static class CodeGenerationTool
             {
                 return JsonSerializer.Serialize(new { success = false, error, output });
             }
-            return JsonSerializer.Serialize(new { success = true, output = Truncate(output, 3000) });
+            return JsonSerializer.Serialize(new { success = true, output = CSharpPatterns.Truncate(output, 3000) });
         }
         catch (Exception ex)
         {
@@ -44,29 +43,9 @@ public static class CodeGenerationTool
             var srcPath = Path.Combine(normalizedPath, "src");
             var workDir = Directory.Exists(srcPath) ? srcPath : normalizedPath;
 
-            var psi = new ProcessStartInfo
-            {
-                FileName = "dotnet",
-                Arguments = "build /t:generateCode",
-                WorkingDirectory = workDir,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
+            var (output, exitCode) = await ProcessRunner.RunAsync("dotnet", "build /t:generateCode", workDir).ConfigureAwait(false);
 
-            using var process = Process.Start(psi)!;
-            var stdout = await process.StandardOutput.ReadToEndAsync().ConfigureAwait(false);
-            var stderr = await process.StandardError.ReadToEndAsync().ConfigureAwait(false);
-            await process.WaitForExitAsync().ConfigureAwait(false);
-
-            var output = stdout;
-            if (!string.IsNullOrWhiteSpace(stderr))
-            {
-                output += Environment.NewLine + stderr;
-            }
-
-            return (process.ExitCode == 0, output, process.ExitCode != 0 ? $"Code generation failed with exit code {process.ExitCode}" : null);
+            return (exitCode == 0, output, exitCode != 0 ? $"Code generation failed with exit code {exitCode}" : null);
         }
         catch (Exception ex)
         {
@@ -74,8 +53,5 @@ public static class CodeGenerationTool
         }
     }
 
-    private static string Truncate(string value, int maxLength)
-    {
-        return value.Length <= maxLength ? value : value[..maxLength] + "... (truncated)";
-    }
+
 }

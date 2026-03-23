@@ -6,37 +6,6 @@ using System.Text.RegularExpressions;
 namespace Azure.GeneratorAgent.Mcp;
 
 /// <summary>
-/// A single rule that maps an error code + message pattern to a deterministic fix.
-/// </summary>
-public sealed class FixRule
-{
-    /// <summary>
-    /// The C# error code this rule matches (e.g., "CS0246", "CS1061"). Null matches any code.
-    /// </summary>
-    public string? ErrorCode { get; init; }
-
-    /// <summary>
-    /// Regex pattern to match against the error message.
-    /// </summary>
-    public Regex MessagePattern { get; init; } = null!;
-
-    /// <summary>
-    /// The MCP tool name to invoke for this fix.
-    /// </summary>
-    public string ToolName { get; init; } = string.Empty;
-
-    /// <summary>
-    /// Human-readable description of what this rule fixes.
-    /// </summary>
-    public string Description { get; init; } = string.Empty;
-
-    /// <summary>
-    /// Function that extracts tool arguments from the error and regex match.
-    /// </summary>
-    public Func<BuildError, Match, Dictionary<string, string>> ExtractArgs { get; init; } = (_, _) => new();
-}
-
-/// <summary>
 /// Static registry of deterministic fix rules. Each rule maps an error code + message pattern
 /// to a specific tool invocation. Call <see cref="Classify"/> to check if an error has a
 /// deterministic fix.
@@ -102,6 +71,51 @@ public static class DeterministicFixRegistry
         ["ArmResource"] = "Azure.ResourceManager",
         ["ArmClient"] = "Azure.ResourceManager",
 
+        // Azure.ResourceManager.Models
+        ["SubResource"] = "Azure.ResourceManager.Models",
+        ["TrackedResource"] = "Azure.ResourceManager.Models",
+        ["ManagedServiceIdentity"] = "Azure.ResourceManager.Models",
+        ["UserAssignedIdentity"] = "Azure.ResourceManager.Models",
+        ["SystemData"] = "Azure.ResourceManager.Models",
+
+        // Azure.Core (additional common types)
+        ["Argument"] = "Azure.Core",
+        ["ConnectionString"] = "Azure.Core",
+        ["ResourceType"] = "Azure.Core",
+        ["ContentType"] = "Azure.Core",
+        ["RequestConditions"] = "Azure.Core",
+        ["MatchConditions"] = "Azure.Core",
+        ["RetryOptions"] = "Azure.Core",
+        ["HttpAuthorization"] = "Azure.Core",
+        ["HttpRange"] = "Azure.Core",
+
+        // Azure (additional common types)
+        ["AzureSasCredential"] = "Azure",
+        ["ResponseError"] = "Azure",
+
+        // Azure.Core.GeoJson
+        ["GeoPosition"] = "Azure.Core.GeoJson",
+        ["GeoPoint"] = "Azure.Core.GeoJson",
+        ["GeoPolygon"] = "Azure.Core.GeoJson",
+        ["GeoLineString"] = "Azure.Core.GeoJson",
+        ["GeoBoundingBox"] = "Azure.Core.GeoJson",
+        ["GeoObject"] = "Azure.Core.GeoJson",
+        ["GeoCollection"] = "Azure.Core.GeoJson",
+
+        // Azure.Core.Serialization
+        ["DynamicData"] = "Azure.Core.Serialization",
+        ["JsonObjectSerializer"] = "Azure.Core.Serialization",
+        ["ObjectSerializer"] = "Azure.Core.Serialization",
+
+        // Azure.Core.Expressions.DataFactory
+        ["DataFactoryElement"] = "Azure.Core.Expressions.DataFactory",
+        ["DataFactoryExpression"] = "Azure.Core.Expressions.DataFactory",
+
+        // Azure.ResourceManager (additional types)
+        ["ArmEnvironment"] = "Azure.ResourceManager",
+        ["GenericResource"] = "Azure.ResourceManager",
+        ["ResourceProviderData"] = "Azure.ResourceManager",
+
         // Microsoft.TypeSpec.Generator.Customizations (CodeGen attributes)
         ["CodeGenType"] = "Microsoft.TypeSpec.Generator.Customizations",
         ["CodeGenMember"] = "Microsoft.TypeSpec.Generator.Customizations",
@@ -124,6 +138,9 @@ public static class DeterministicFixRegistry
         ["_apiVersion"] = "ApiVersion",
         ["_subscriptionId"] = "SubscriptionId",
         ["_diagnostics"] = "Diagnostics",
+        ["_tokenCredential"] = "TokenCredential",
+        ["_keyCredential"] = "KeyCredential",
+        ["_cachedPipeline"] = "Pipeline",
         ["_serializedAdditionalRawData"] = "_additionalBinaryDataProperties",
     };
 
@@ -152,7 +169,7 @@ public static class DeterministicFixRegistry
                 return new ClassifiedError
                 {
                     Error = error,
-                    IsDeterministic = true,
+                    IsDeterministic = rule.IsDeterministic,
                     ToolName = rule.ToolName,
                     ToolArgs = rule.ExtractArgs(error, match),
                     Reason = rule.Description
@@ -341,6 +358,22 @@ public static class DeterministicFixRegistry
             {
                 ["projectPath"] = Path.GetDirectoryName(Path.GetDirectoryName(err.FilePath)) ?? err.FilePath,
                 ["typeSuffix"] = "ClientBuilderExtensions"
+            }
+        });
+
+        // --- Mismatched *ClientOptions type names (must be before generic CS0246 rule) ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = null,
+            MessagePattern = new Regex(
+                @"'(?<typeName>\w+ClientOptions)'",
+                RegexOptions.Compiled),
+            ToolName = "rename_codegen_type",
+            Description = "Fix mismatched ClientOptions type name via [CodeGenType] attribute",
+            ExtractArgs = (err, _) => new Dictionary<string, string>
+            {
+                ["projectPath"] = Path.GetDirectoryName(Path.GetDirectoryName(err.FilePath)) ?? err.FilePath,
+                ["typeSuffix"] = "ClientOptions"
             }
         });
 
@@ -593,6 +626,458 @@ public static class DeterministicFixRegistry
                     ["pattern"] = $@"(?<![.\w]){Regex.Escape(type)}(?!\w)",
                     ["replacement"] = preferredFqn
                 };
+            }
+        });
+
+        // --- CS0111: Duplicate member definition (custom + generated clash) ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0111",
+            MessagePattern = new Regex(
+                @"Type '(?<typeName>[^']+)' already defines a member called '(?<memberName>[^']+)' with the same parameter types",
+                RegexOptions.Compiled),
+            ToolName = "add_codegen_suppress",
+            Description = "Suppress duplicate generated member via [CodeGenSuppress] attribute",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["filePath"] = err.FilePath,
+                ["memberName"] = m.Groups["memberName"].Value
+            }
+        });
+
+        // --- CS0234: Generic sub-namespace removal ---
+        // When a sub-namespace (e.g., .Models.Channels, .Models.Batch) no longer exists after migration,
+        // the using directive referencing it should be removed.
+        // NOTE: Must come AFTER the specific Rest and Autorest CS0234 rules.
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0234",
+            MessagePattern = new Regex(
+                @"type or namespace name '(?<subns>\w+)' does not exist in the namespace '(?<parentns>[^']+)'",
+                RegexOptions.Compiled),
+            ToolName = "remove_using_directive",
+            Description = "Remove using directive for namespace that no longer exists after migration",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["filePath"] = err.FilePath,
+                ["namespacePattern"] = $@"{Regex.Escape(m.Groups["parentns"].Value)}\.{Regex.Escape(m.Groups["subns"].Value)}"
+            }
+        });
+
+        // --- CS8618: Non-nullable field/property must have non-null value when exiting constructor ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS8618",
+            MessagePattern = new Regex(
+                @"Non-nullable (?:field|property|variable) '(?<name>\w+)' must contain a non-null value",
+                RegexOptions.Compiled),
+            ToolName = "nullable_annotation_fix",
+            Description = "Fix CS8618 by adding ? nullable annotation to the field or property",
+            ExtractArgs = (err, _) => new Dictionary<string, string>
+            {
+                ["filePath"] = err.FilePath,
+                ["line"] = err.Line.ToString()
+            }
+        });
+
+        // --- CS0115: No suitable method found to override ---
+        // Common when a generated base class removes or renames a virtual/abstract method.
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0115",
+            MessagePattern = new Regex(
+                @"'(?<typeName>[^']+)\.(?<methodName>\w+)\([^)]*\)': no suitable method found to override",
+                RegexOptions.Compiled),
+            ToolName = "regex_replacement",
+            Description = "Remove 'override' keyword: no suitable base method to override",
+            ExtractArgs = (err, _) => new Dictionary<string, string>
+            {
+                ["filePath"] = err.FilePath,
+                ["pattern"] = @"\boverride\s+",
+                ["replacement"] = "",
+                ["singleLine"] = err.Line.ToString()
+            }
+        });
+
+        // --- CS0506: Cannot override because it is not marked virtual, abstract, or override ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0506",
+            MessagePattern = new Regex(
+                @"'(?<member>[^']+)': cannot override .* member .* because it is not marked virtual, abstract, or override",
+                RegexOptions.Compiled),
+            ToolName = "regex_replacement",
+            Description = "Remove 'override' keyword: base member is not virtual/abstract",
+            ExtractArgs = (err, _) => new Dictionary<string, string>
+            {
+                ["filePath"] = err.FilePath,
+                ["pattern"] = @"\boverride\s+",
+                ["replacement"] = "",
+                ["singleLine"] = err.Line.ToString()
+            }
+        });
+
+        // --- CS0433: Type exists in both assemblies ---
+        // Common when shared source includes conflict with framework types.
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0433",
+            MessagePattern = new Regex(
+                @"type '(?<type>[^']+)' exists in both '(?<asm1>[^']+)' and '(?<asm2>[^']+)'",
+                RegexOptions.Compiled),
+            ToolName = "regex_replacement",
+            Description = "Resolve type conflict between assemblies by fully qualifying the type reference",
+            ExtractArgs = (err, m) =>
+            {
+                var fullType = m.Groups["type"].Value;
+                var shortName = fullType.Contains('.') ? fullType[(fullType.LastIndexOf('.') + 1)..] : fullType;
+                return new Dictionary<string, string>
+                {
+                    ["filePath"] = err.FilePath,
+                    ["pattern"] = $@"(?<![.\w]){Regex.Escape(shortName)}(?!\w)",
+                    ["replacement"] = fullType
+                };
+            }
+        });
+
+        // --- CS0029: Cannot implicitly convert type 'A' to 'B' ---
+        // Non-deterministic hint with extracted types for LLM reasoning.
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0029",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"Cannot implicitly convert type '(?<fromType>[^']+)' to '(?<toType>[^']+)'",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "Type conversion mismatch. The return type or variable type may have changed after migration. " +
+                          "Add an explicit cast, update the variable type, or use a conversion helper.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["fromType"] = m.Groups["fromType"].Value,
+                ["toType"] = m.Groups["toType"].Value
+            }
+        });
+
+        // --- CS0266: Cannot implicitly convert type (explicit conversion exists) ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0266",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"Cannot implicitly convert type '(?<fromType>[^']+)' to '(?<toType>[^']+)'\. An explicit conversion exists",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "Explicit conversion required. Cast the value or update the type. " +
+                          "This often happens when return types change from concrete to interface types after migration.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["fromType"] = m.Groups["fromType"].Value,
+                ["toType"] = m.Groups["toType"].Value
+            }
+        });
+
+        // --- CS7036: No argument given that corresponds to the required parameter ---
+        // Constructor or method signature changed.
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS7036",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"There is no argument given that corresponds to the required parameter '(?<paramName>\w+)' of '(?<member>[^']+)'",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "Constructor or method signature changed — a new required parameter was added. " +
+                          "Add the missing argument, or if this is a constructor in a custom partial class, " +
+                          "update to match the generated constructor signature.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["paramName"] = m.Groups["paramName"].Value,
+                ["member"] = m.Groups["member"].Value
+            }
+        });
+
+        // --- CS1501: No overload for method takes N arguments ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS1501",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"No overload for method '(?<methodName>\w+)' takes (?<argCount>\d+) arguments",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "Method signature changed — the number of parameters has changed after migration. " +
+                          "Check the generated method signature and update the call site.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["methodName"] = m.Groups["methodName"].Value,
+                ["argCount"] = m.Groups["argCount"].Value
+            }
+        });
+
+        // --- CS0535: Does not implement interface member ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0535",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"'(?<typeName>[^']+)' does not implement interface member '(?<member>[^']+)'",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "Interface member not implemented. The generated interface may have changed. " +
+                          "Implement the missing member in a custom partial class, or update the interface reference.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["typeName"] = m.Groups["typeName"].Value,
+                ["member"] = m.Groups["member"].Value
+            }
+        });
+
+        // --- CS0534: Does not implement inherited abstract member ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0534",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"'(?<typeName>[^']+)' does not implement inherited abstract member '(?<member>[^']+)'",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "Abstract member not implemented. The generated base class added a new abstract member. " +
+                          "Implement it in a custom partial class.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["typeName"] = m.Groups["typeName"].Value,
+                ["member"] = m.Groups["member"].Value
+            }
+        });
+
+        // --- CS0012: Type defined in assembly that is not referenced ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0012",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"type '(?<typeName>[^']+)' is defined in an assembly that is not referenced\. You must add a reference to assembly '(?<assembly>[^']+)'",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "Missing assembly reference. Add the assembly reference to the .csproj file, " +
+                          "or if this is a shared source type (e.g., AzureKeyCredentialPolicy), " +
+                          "add a <Compile Include> for the shared source file.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["typeName"] = m.Groups["typeName"].Value,
+                ["assembly"] = m.Groups["assembly"].Value
+            }
+        });
+
+        // --- NU1100: Unable to resolve package ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "NU1100",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"Unable to resolve '(?<package>[^']+)'",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "Missing NuGet package. Add the package reference to the .csproj and ensure " +
+                          "a version entry exists in eng/Packages.Data.props.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["package"] = m.Groups["package"].Value
+            }
+        });
+
+        // --- CS0117: 'Type' does not contain a definition for 'Member' (static member access) ---
+        // Catch-all for static member references that don't match more specific rules.
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0117",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"'(?<typeName>[^']+)' does not contain a definition for '(?<memberName>[^']+)'",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "Static member not found. The member may have been renamed or removed in the generated code. " +
+                          "Check the generated type for the new member name.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["typeName"] = m.Groups["typeName"].Value,
+                ["memberName"] = m.Groups["memberName"].Value
+            }
+        });
+
+        // --- CS0308: Non-generic type used with type arguments ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0308",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"non-generic (?:type|method) '(?<name>[^']+)' cannot be used with type arguments",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "Type or method lost its generic parameters after migration. " +
+                          "Remove the type arguments from the reference.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["name"] = m.Groups["name"].Value
+            }
+        });
+
+        // --- CS0305: Using generic type requires N type arguments ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0305",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"Using the generic type '(?<name>[^']+)' requires '?(?<count>\d+)'? type arguments",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "Generic type requires type arguments that are missing. " +
+                          "Add the required type arguments to the reference.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["name"] = m.Groups["name"].Value,
+                ["count"] = m.Groups["count"].Value
+            }
+        });
+
+        // =====================================================================
+        // ApiCompat rules — classified as non-deterministic with actionable hints
+        // These errors come from Microsoft.DotNet.ApiCompat.targets and appear
+        // as codeless MSBuild errors (e.g., "error : CannotSealType : ...").
+        // The BuildOutputParser extracts the rule name as the error code.
+        // =====================================================================
+
+        // --- CannotSealType + MembersMustExist: protected constructor removed ---
+        // The new generator uses private protected ctors where the old used protected.
+        // Fix: add a custom partial class with a protected ctor delegating to the generated one.
+        rules.Add(new FixRule
+        {
+            ErrorCode = "MembersMustExist",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"Member '(?<fullType>[^']+)\.\.ctor\((?<params>[^)]*)\)' does not exist in the implementation",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "ApiCompat: protected constructor missing. The new generator uses 'private protected' constructors. " +
+                          "Add a custom partial class with a 'protected' constructor that delegates to the generated 'private protected' one, " +
+                          "passing 'default' for any additional discriminator parameter. " +
+                          "If the generated code has a conflicting parameterless 'internal' ctor (in .Serialization.cs), " +
+                          "add [CodeGenSuppress(\"TypeName\")] to suppress it.",
+            ExtractArgs = (err, m) =>
+            {
+                var fullType = m.Groups["fullType"].Value;
+                var typeName = fullType.Contains('.') ? fullType[(fullType.LastIndexOf('.') + 1)..] : fullType;
+                return new Dictionary<string, string>
+                {
+                    ["typeName"] = typeName,
+                    ["fullTypeName"] = fullType,
+                    ["missingCtorParams"] = m.Groups["params"].Value
+                };
+            }
+        });
+
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CannotSealType",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"Type '(?<fullType>[^']+)' is effectively sealed",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "ApiCompat: type is effectively sealed (private constructor). Usually paired with a MembersMustExist error " +
+                          "for a missing protected constructor. Fix both together by adding a protected constructor shim " +
+                          "in a custom partial class.",
+            ExtractArgs = (err, m) =>
+            {
+                var fullType = m.Groups["fullType"].Value;
+                var typeName = fullType.Contains('.') ? fullType[(fullType.LastIndexOf('.') + 1)..] : fullType;
+                return new Dictionary<string, string>
+                {
+                    ["typeName"] = typeName,
+                    ["fullTypeName"] = fullType
+                };
+            }
+        });
+
+        // --- CannotRemoveAttribute: attribute present in contract but not in implementation ---
+        // Most commonly [Obsolete], [EditorBrowsable], or [CodeGenSerialization].
+        // Fix: try adding the attribute back via customization. If that causes CS0618 in generated code,
+        // add an ApiCompatBaseline.txt entry instead.
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CannotRemoveAttribute",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"Attribute '(?<attribute>[^']+)' exists on '(?<member>[^']+)' in the contract but not the implementation",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "ApiCompat: attribute was removed. Try re-adding via a custom partial class. " +
+                          "If the attribute (e.g., [Obsolete]) causes CS0618 in generated code that references the type, " +
+                          "add an ApiCompatBaseline.txt entry instead (see Azure.Identity/src/ApiCompatBaseline.txt for an example).",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["attribute"] = m.Groups["attribute"].Value,
+                ["member"] = m.Groups["member"].Value,
+                ["baselineEntry"] = err.Message
+            }
+        });
+
+        // --- CannotChangeAttribute: attribute value differs between contract and implementation ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CannotChangeAttribute",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"Attribute '(?<attribute>[^']+)'.*has changed",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "ApiCompat: attribute value changed. Update the attribute via customization to match the contract, " +
+                          "or add an ApiCompatBaseline.txt entry if the change is intentional.",
+            ExtractArgs = (err, _) => new Dictionary<string, string>
+            {
+                ["baselineEntry"] = err.Message
+            }
+        });
+
+        // --- TypesMustExist: type was removed entirely ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "TypesMustExist",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"Type '(?<fullType>[^']+)' does not exist in the implementation",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "ApiCompat: type was removed. This usually means a model or enum was renamed in the TypeSpec. " +
+                          "Add a [CodeGenType(\"NewName\")] customization to preserve the old public type name, " +
+                          "or add an ApiCompatBaseline.txt entry if the removal is intentional.",
+            ExtractArgs = (err, m) =>
+            {
+                var fullType = m.Groups["fullType"].Value;
+                var typeName = fullType.Contains('.') ? fullType[(fullType.LastIndexOf('.') + 1)..] : fullType;
+                return new Dictionary<string, string>
+                {
+                    ["typeName"] = typeName,
+                    ["fullTypeName"] = fullType
+                };
+            }
+        });
+
+        // --- Generic ApiCompat fallback for any unmatched ApiCompat error codes ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "ApiCompat",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @".+",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "ApiCompat error. Review the error message and either fix via customization " +
+                          "or add an ApiCompatBaseline.txt entry if the change is intentional.",
+            ExtractArgs = (err, _) => new Dictionary<string, string>
+            {
+                ["baselineEntry"] = err.Message
             }
         });
 

@@ -288,8 +288,8 @@ public class DeterministicFixRegistryTests
         {
             FilePath = @"C:\src\Client.cs",
             Line = 100,
-            Code = "CS0535",
-            Message = "'MyClass' does not implement interface member 'IFoo.Bar()'",
+            Code = "CS0019",
+            Message = "Operator '+' cannot be applied to operands of type 'Foo' and 'Bar'",
             Severity = "error"
         };
 
@@ -772,6 +772,765 @@ public class DeterministicFixRegistryTests
             Assert.That(mapping, Does.ContainKey("CodeGenVisibility"));
             Assert.That(mapping, Does.ContainKey("ModelSerializationExtensions"));
             Assert.That(mapping, Does.ContainKey("ModelReaderWriterOptions"));
+        });
+    }
+
+    // --- ApiCompat classification rules ---
+
+    [Test]
+    public void Classify_MembersMustExist_ProtectedCtor_IsClassified()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\nuget\Microsoft.DotNet.ApiCompat.targets",
+            Line = 82,
+            Code = "MembersMustExist",
+            Message = "MembersMustExist : Member 'Azure.SomeService.Models.SomeBaseType..ctor(System.Guid, System.Collections.Generic.IEnumerable<System.String>)' does not exist in the implementation but it does exist in the contract.",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.ToolName, Is.Null);
+            Assert.That(result.Reason, Does.Contain("ApiCompat"));
+            Assert.That(result.Reason, Does.Contain("protected constructor"));
+            Assert.That(result.ToolArgs, Does.ContainKey("typeName"));
+            Assert.That(result.ToolArgs!["typeName"], Is.EqualTo("SomeBaseType"));
+            Assert.That(result.ToolArgs, Does.ContainKey("missingCtorParams"));
+            Assert.That(result.ToolArgs["missingCtorParams"], Does.Contain("System.Guid"));
+        });
+    }
+
+    [Test]
+    public void Classify_MembersMustExist_ParameterlessCtor_IsClassified()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\nuget\Microsoft.DotNet.ApiCompat.targets",
+            Line = 82,
+            Code = "MembersMustExist",
+            Message = "MembersMustExist : Member 'Azure.SomeService.Models.SomeBaseType..ctor()' does not exist in the implementation but it does exist in the contract.",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.ToolArgs!["typeName"], Is.EqualTo("SomeBaseType"));
+            Assert.That(result.ToolArgs["missingCtorParams"], Is.Empty);
+        });
+    }
+
+    [Test]
+    public void Classify_CannotSealType_IsClassified()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\nuget\Microsoft.DotNet.ApiCompat.targets",
+            Line = 82,
+            Code = "CannotSealType",
+            Message = "CannotSealType : Type 'Azure.SomeService.Models.SomeBaseModel' is effectively sealed in the implementation but not in the contract.",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.ToolName, Is.Null);
+            Assert.That(result.Reason, Does.Contain("ApiCompat"));
+            Assert.That(result.Reason, Does.Contain("effectively sealed"));
+            Assert.That(result.ToolArgs!["typeName"], Is.EqualTo("SomeBaseModel"));
+            Assert.That(result.ToolArgs["fullTypeName"], Is.EqualTo("Azure.SomeService.Models.SomeBaseModel"));
+        });
+    }
+
+    [Test]
+    public void Classify_CannotRemoveAttribute_ObsoleteAttribute_IsClassified()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\nuget\Microsoft.DotNet.ApiCompat.targets",
+            Line = 82,
+            Code = "CannotRemoveAttribute",
+            Message = "CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.SomeService.Models.DeprecatedModel' in the contract but not the implementation.",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.ToolName, Is.Null);
+            Assert.That(result.Reason, Does.Contain("ApiCompat"));
+            Assert.That(result.Reason, Does.Contain("attribute was removed"));
+            Assert.That(result.ToolArgs!["attribute"], Is.EqualTo("System.ObsoleteAttribute"));
+            Assert.That(result.ToolArgs["member"], Is.EqualTo("Azure.SomeService.Models.DeprecatedModel"));
+            Assert.That(result.ToolArgs, Does.ContainKey("baselineEntry"));
+        });
+    }
+
+    [Test]
+    public void Classify_CannotRemoveAttribute_EditorBrowsable_IsClassified()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\nuget\Microsoft.DotNet.ApiCompat.targets",
+            Line = 82,
+            Code = "CannotRemoveAttribute",
+            Message = "CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.SomeService.SomeFactory.SomeMethod(System.String)' in the contract but not the implementation.",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.ToolArgs!["attribute"], Is.EqualTo("System.ComponentModel.EditorBrowsableAttribute"));
+        });
+    }
+
+    [Test]
+    public void Classify_TypesMustExist_IsClassified()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\nuget\Microsoft.DotNet.ApiCompat.targets",
+            Line = 82,
+            Code = "TypesMustExist",
+            Message = "TypesMustExist : Type 'Azure.SomeService.Models.SomeRemovedModel' does not exist in the implementation but it does exist in the contract.",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.ToolName, Is.Null);
+            Assert.That(result.Reason, Does.Contain("ApiCompat"));
+            Assert.That(result.Reason, Does.Contain("type was removed"));
+            Assert.That(result.ToolArgs!["typeName"], Is.EqualTo("SomeRemovedModel"));
+            Assert.That(result.ToolArgs["fullTypeName"], Is.EqualTo("Azure.SomeService.Models.SomeRemovedModel"));
+        });
+    }
+
+    [Test]
+    public void Classify_ApiCompat_GenericFallback_IsClassified()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\nuget\Microsoft.DotNet.ApiCompat.targets",
+            Line = 82,
+            Code = "ApiCompat",
+            Message = "SomeNewRule : Something unexpected happened.",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.ToolName, Is.Null);
+            Assert.That(result.Reason, Does.Contain("ApiCompat error"));
+            Assert.That(result.ToolArgs, Does.ContainKey("baselineEntry"));
+        });
+    }
+
+    [Test]
+    public void Classify_CannotChangeAttribute_IsClassified()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\nuget\Microsoft.DotNet.ApiCompat.targets",
+            Line = 82,
+            Code = "CannotChangeAttribute",
+            Message = "CannotChangeAttribute : Attribute 'System.ObsoleteAttribute' on 'SomeType.SomeMember' has changed in the implementation.",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.ToolName, Is.Null);
+            Assert.That(result.Reason, Does.Contain("ApiCompat"));
+            Assert.That(result.Reason, Does.Contain("attribute value changed"));
+        });
+    }
+
+    // --- CS0111 duplicate member ---
+
+    [Test]
+    public void Classify_CS0111_DuplicateMember_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Custom\MyModel.cs",
+            Line = 15,
+            Code = "CS0111",
+            Message = "Type 'MyModel' already defines a member called 'MyModel' with the same parameter types",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("add_codegen_suppress"));
+            Assert.That(result.ToolArgs, Does.ContainKey("filePath"));
+            Assert.That(result.ToolArgs, Does.ContainKey("memberName"));
+            Assert.That(result.ToolArgs!["memberName"], Is.EqualTo("MyModel"));
+        });
+    }
+
+    [Test]
+    public void Classify_CS0111_DuplicateMethod_ExtractsMemberName()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Custom\MyClient.cs",
+            Line = 30,
+            Code = "CS0111",
+            Message = "Type 'MyClient' already defines a member called 'DoSomethingAsync' with the same parameter types",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("add_codegen_suppress"));
+            Assert.That(result.ToolArgs!["memberName"], Is.EqualTo("DoSomethingAsync"));
+        });
+    }
+
+    // --- TypeToNamespace additional entries ---
+
+    [TestCase("Argument", "Azure.Core")]
+    [TestCase("ConnectionString", "Azure.Core")]
+    [TestCase("ResourceType", "Azure.Core")]
+    [TestCase("ContentType", "Azure.Core")]
+    [TestCase("SubResource", "Azure.ResourceManager.Models")]
+    [TestCase("TrackedResource", "Azure.ResourceManager.Models")]
+    [TestCase("ManagedServiceIdentity", "Azure.ResourceManager.Models")]
+    [TestCase("UserAssignedIdentity", "Azure.ResourceManager.Models")]
+    [TestCase("SystemData", "Azure.ResourceManager.Models")]
+    public void TypeToNamespace_ContainsNewlyAddedTypes(string typeName, string expectedNamespace)
+    {
+        Assert.That(DeterministicFixRegistry.TypeToNamespace, Does.ContainKey(typeName));
+        Assert.That(DeterministicFixRegistry.TypeToNamespace[typeName], Is.EqualTo(expectedNamespace));
+    }
+
+    // --- New TypeToNamespace entries: GeoJson, Serialization, DataFactory, etc. ---
+
+    [TestCase("GeoPosition", "Azure.Core.GeoJson")]
+    [TestCase("GeoPoint", "Azure.Core.GeoJson")]
+    [TestCase("GeoPolygon", "Azure.Core.GeoJson")]
+    [TestCase("GeoLineString", "Azure.Core.GeoJson")]
+    [TestCase("GeoBoundingBox", "Azure.Core.GeoJson")]
+    [TestCase("GeoObject", "Azure.Core.GeoJson")]
+    [TestCase("GeoCollection", "Azure.Core.GeoJson")]
+    [TestCase("DynamicData", "Azure.Core.Serialization")]
+    [TestCase("JsonObjectSerializer", "Azure.Core.Serialization")]
+    [TestCase("ObjectSerializer", "Azure.Core.Serialization")]
+    [TestCase("DataFactoryElement", "Azure.Core.Expressions.DataFactory")]
+    [TestCase("DataFactoryExpression", "Azure.Core.Expressions.DataFactory")]
+    [TestCase("RequestConditions", "Azure.Core")]
+    [TestCase("MatchConditions", "Azure.Core")]
+    [TestCase("RetryOptions", "Azure.Core")]
+    [TestCase("HttpAuthorization", "Azure.Core")]
+    [TestCase("HttpRange", "Azure.Core")]
+    [TestCase("AzureSasCredential", "Azure")]
+    [TestCase("ResponseError", "Azure")]
+    [TestCase("ArmEnvironment", "Azure.ResourceManager")]
+    [TestCase("GenericResource", "Azure.ResourceManager")]
+    public void TypeToNamespace_ContainsExpandedTypes(string typeName, string expectedNamespace)
+    {
+        Assert.That(DeterministicFixRegistry.TypeToNamespace, Does.ContainKey(typeName));
+        Assert.That(DeterministicFixRegistry.TypeToNamespace[typeName], Is.EqualTo(expectedNamespace));
+    }
+
+    // --- New FieldRenames entries ---
+
+    [TestCase("_tokenCredential", "TokenCredential")]
+    [TestCase("_keyCredential", "KeyCredential")]
+    [TestCase("_cachedPipeline", "Pipeline")]
+    public void FieldRenames_ContainsNewEntries(string oldName, string expectedNewName)
+    {
+        Assert.That(DeterministicFixRegistry.FieldRenames, Does.ContainKey(oldName));
+        Assert.That(DeterministicFixRegistry.FieldRenames[oldName], Is.EqualTo(expectedNewName));
+    }
+
+    // --- CS0234: Generic sub-namespace removal ---
+
+    [Test]
+    public void Classify_CS0234_SubNamespaceRemoved_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 3,
+            Code = "CS0234",
+            Message = "The type or namespace name 'Channels' does not exist in the namespace 'Azure.Communication.Messages.Models' (are you missing an assembly reference?)",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("remove_using_directive"));
+            Assert.That(result.ToolArgs, Does.ContainKey("namespacePattern"));
+            Assert.That(result.ToolArgs!["namespacePattern"], Does.Contain("Channels"));
+        });
+    }
+
+    [Test]
+    public void Classify_CS0234_SubNamespaceRemoved_BatchVariant_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 4,
+            Code = "CS0234",
+            Message = "The type or namespace name 'Batch' does not exist in the namespace 'Azure.Storage.Blobs.Models' (are you missing an assembly reference?)",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("remove_using_directive"));
+        });
+    }
+
+    // --- CS8618: Non-nullable field/property ---
+
+    [Test]
+    public void Classify_CS8618_NonNullableProperty_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Models\MyModel.cs",
+            Line = 15,
+            Code = "CS8618",
+            Message = "Non-nullable property 'Name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+            Severity = "warning"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("nullable_annotation_fix"));
+            Assert.That(result.ToolArgs!["line"], Is.EqualTo("15"));
+        });
+    }
+
+    [Test]
+    public void Classify_CS8618_NonNullableField_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Models\MyModel.cs",
+            Line = 20,
+            Code = "CS8618",
+            Message = "Non-nullable field '_name' must contain a non-null value when exiting constructor.",
+            Severity = "warning"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("nullable_annotation_fix"));
+        });
+    }
+
+    // --- CS0115: No suitable method to override ---
+
+    [Test]
+    public void Classify_CS0115_NoSuitableOverride_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Customizations\MyModel.cs",
+            Line = 25,
+            Code = "CS0115",
+            Message = "'MyModel.Serialize(Utf8JsonWriter)': no suitable method found to override",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("regex_replacement"));
+            Assert.That(result.ToolArgs!["pattern"], Does.Contain("override"));
+            Assert.That(result.ToolArgs!["replacement"], Is.EqualTo(""));
+        });
+    }
+
+    // --- CS0506: Cannot override non-virtual member ---
+
+    [Test]
+    public void Classify_CS0506_CannotOverride_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Customizations\MyModel.cs",
+            Line = 30,
+            Code = "CS0506",
+            Message = "'MyModel.GetHashCode()': cannot override inherited member 'object.GetHashCode()' because it is not marked virtual, abstract, or override",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("regex_replacement"));
+            Assert.That(result.ToolArgs!["pattern"], Does.Contain("override"));
+        });
+    }
+
+    // --- ClientOptions mismatch ---
+
+    [Test]
+    public void Classify_ClientOptions_Mismatch_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\CommunicationMessagesClientOptions.cs",
+            Line = 10,
+            Code = "CS0246",
+            Message = "The type or namespace name 'CommunicationMessagesClientOptions' could not be found",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("rename_codegen_type"));
+            Assert.That(result.ToolArgs!["typeSuffix"], Is.EqualTo("ClientOptions"));
+        });
+    }
+
+    // --- CS0433: Type in multiple assemblies ---
+
+    [Test]
+    public void Classify_CS0433_TypeConflict_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 12,
+            Code = "CS0433",
+            Message = "The type 'Azure.Core.Pipeline.AzureKeyCredentialPolicy' exists in both 'Azure.Core, Version=1.0.0.0' and 'Azure.Communication.Messages, Version=1.0.0.0'",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("regex_replacement"));
+            Assert.That(result.ToolArgs!["replacement"], Is.EqualTo("Azure.Core.Pipeline.AzureKeyCredentialPolicy"));
+        });
+    }
+
+    // --- CS0029: Cannot implicitly convert type ---
+
+    [Test]
+    public void Classify_CS0029_CannotConvert_IsHinted()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 45,
+            Code = "CS0029",
+            Message = "Cannot implicitly convert type 'string' to 'System.Uri'",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.Reason, Does.Contain("Type conversion mismatch"));
+            Assert.That(result.ToolArgs!["fromType"], Is.EqualTo("string"));
+            Assert.That(result.ToolArgs!["toType"], Is.EqualTo("System.Uri"));
+        });
+    }
+
+    // --- CS0266: Explicit conversion exists ---
+
+    [Test]
+    public void Classify_CS0266_ExplicitConversion_IsHinted()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 50,
+            Code = "CS0266",
+            Message = "Cannot implicitly convert type 'Azure.Response' to 'Azure.Response<MyModel>'. An explicit conversion exists (are you missing a cast?)",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.Reason, Does.Contain("Explicit conversion required"));
+            Assert.That(result.ToolArgs!["fromType"], Is.EqualTo("Azure.Response"));
+            Assert.That(result.ToolArgs!["toType"], Is.EqualTo("Azure.Response<MyModel>"));
+        });
+    }
+
+    // --- CS7036: Missing required parameter ---
+
+    [Test]
+    public void Classify_CS7036_MissingParam_IsHinted()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Customizations\MyModel.cs",
+            Line = 18,
+            Code = "CS7036",
+            Message = "There is no argument given that corresponds to the required parameter 'kind' of 'NotificationContent.NotificationContent(string, string, string)'",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.Reason, Does.Contain("Constructor or method signature changed"));
+            Assert.That(result.ToolArgs!["paramName"], Is.EqualTo("kind"));
+            Assert.That(result.ToolArgs!["member"], Is.EqualTo("NotificationContent.NotificationContent(string, string, string)"));
+        });
+    }
+
+    // --- CS1501: No overload ---
+
+    [Test]
+    public void Classify_CS1501_NoOverload_IsHinted()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 55,
+            Code = "CS1501",
+            Message = "No overload for method 'SendAsync' takes 3 arguments",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.Reason, Does.Contain("Method signature changed"));
+            Assert.That(result.ToolArgs!["methodName"], Is.EqualTo("SendAsync"));
+            Assert.That(result.ToolArgs!["argCount"], Is.EqualTo("3"));
+        });
+    }
+
+    // --- CS0535: Interface not implemented ---
+
+    [Test]
+    public void Classify_CS0535_InterfaceNotImplemented_IsHinted()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Models\MyModel.cs",
+            Line = 5,
+            Code = "CS0535",
+            Message = "'MyModel' does not implement interface member 'IJsonModel<MyModel>.Create(ref Utf8JsonReader, ModelReaderWriterOptions)'",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.Reason, Does.Contain("Interface member not implemented"));
+            Assert.That(result.ToolArgs!["typeName"], Is.EqualTo("MyModel"));
+        });
+    }
+
+    // --- CS0534: Abstract member not implemented ---
+
+    [Test]
+    public void Classify_CS0534_AbstractNotImplemented_IsHinted()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Models\MyModel.cs",
+            Line = 5,
+            Code = "CS0534",
+            Message = "'MyModel' does not implement inherited abstract member 'BaseModel.Kind.get'",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.Reason, Does.Contain("Abstract member not implemented"));
+            Assert.That(result.ToolArgs!["typeName"], Is.EqualTo("MyModel"));
+            Assert.That(result.ToolArgs!["member"], Is.EqualTo("BaseModel.Kind.get"));
+        });
+    }
+
+    // --- CS0012: Unreferenced assembly ---
+
+    [Test]
+    public void Classify_CS0012_UnreferencedAssembly_IsHinted()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 22,
+            Code = "CS0012",
+            Message = "The type 'AzureKeyCredentialPolicy' is defined in an assembly that is not referenced. You must add a reference to assembly 'Azure.Core, Version=1.0.0.0'",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.Reason, Does.Contain("Missing assembly reference"));
+            Assert.That(result.ToolArgs!["typeName"], Is.EqualTo("AzureKeyCredentialPolicy"));
+            Assert.That(result.ToolArgs!["assembly"], Is.EqualTo("Azure.Core, Version=1.0.0.0"));
+        });
+    }
+
+    // --- NU1100: Missing NuGet package ---
+
+    [Test]
+    public void Classify_NU1100_MissingPackage_IsHinted()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\project.csproj",
+            Line = 0,
+            Code = "NU1100",
+            Message = "Unable to resolve 'Azure.Core (>= 1.40.0)' for 'net8.0'.",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.Reason, Does.Contain("Missing NuGet package"));
+            Assert.That(result.ToolArgs!["package"], Is.EqualTo("Azure.Core (>= 1.40.0)"));
+        });
+    }
+
+    // --- CS0117: Static member not found ---
+
+    [Test]
+    public void Classify_CS0117_StaticMemberNotFound_IsHinted()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 40,
+            Code = "CS0117",
+            Message = "'SomeHelper' does not contain a definition for 'DoWork'",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.Reason, Does.Contain("Static member not found"));
+            Assert.That(result.ToolArgs!["typeName"], Is.EqualTo("SomeHelper"));
+            Assert.That(result.ToolArgs!["memberName"], Is.EqualTo("DoWork"));
+        });
+    }
+
+    // --- CS0308: Non-generic type with type arguments ---
+
+    [Test]
+    public void Classify_CS0308_NonGenericType_IsHinted()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 35,
+            Code = "CS0308",
+            Message = "The non-generic type 'Operation' cannot be used with type arguments",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.Reason, Does.Contain("lost its generic parameters"));
+            Assert.That(result.ToolArgs!["name"], Is.EqualTo("Operation"));
+        });
+    }
+
+    // --- CS0305: Generic type requires N type arguments ---
+
+    [Test]
+    public void Classify_CS0305_GenericRequiresArgs_IsHinted()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 36,
+            Code = "CS0305",
+            Message = "Using the generic type 'Response<T>' requires 1 type arguments",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.Reason, Does.Contain("Generic type requires type arguments"));
+            Assert.That(result.ToolArgs!["name"], Is.EqualTo("Response<T>"));
+            Assert.That(result.ToolArgs!["count"], Is.EqualTo("1"));
         });
     }
 }
