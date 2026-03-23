@@ -793,31 +793,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="status"> The status of the webhook at the time the operation was called. </param>
-        /// <param name="scope"> The scope of repositories where the event can be triggered. For example, 'foo:*' means events for all tags under repository 'foo'. 'foo:bar' means events for 'foo:bar' only. 'foo' is equivalent to 'foo:latest'. Empty means all events. </param>
-        /// <param name="actions"> The list of actions that trigger the webhook to post notifications. </param>
-        /// <param name="provisioningState"> The provisioning state of the webhook at the time the operation was called. </param>
-        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryWebhookData"/> instance for mocking. </returns>
-        public static ContainerRegistryWebhookData ContainerRegistryWebhookData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerRegistryWebhookStatus? status = default, string scope = default, IEnumerable<ContainerRegistryWebhookAction> actions = default, ContainerRegistryProvisioningState? provisioningState = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ContainerRegistryWebhookData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                status is null && scope is null && actions is null && provisioningState is null ? default : new WebhookProperties(status, scope, (actions ?? new ChangeTrackingList<ContainerRegistryWebhookAction>()).ToList(), provisioningState, null));
-        }
+        // Manually removed: ContainerRegistryWebhookData method that exposed internal WebhookProperties.
+        // A backward-compatible version with flat parameters is provided in Custom/ArmContainerRegistryModelFactory.Compat.cs.
 
         /// <param name="tags"> The tags for the webhook. </param>
         /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
@@ -1139,6 +1116,35 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryPrivateLinkResourceData ContainerRegistryPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IEnumerable<string> requiredMembers, IEnumerable<string> requiredZoneNames)
         {
             return ContainerRegistryPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers, requiredZoneNames, groupName: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryWebhookData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="status"> The status of the webhook at the time the operation was called. </param>
+        /// <param name="scope"> The scope of repositories where the event can be triggered. For example, 'foo:*' means events for all tags under repository 'foo'. 'foo:bar' means events for 'foo:bar' only. 'foo' is equivalent to 'foo:latest'. Empty means all events. </param>
+        /// <param name="actions"> The list of actions that trigger the webhook to post notifications. </param>
+        /// <param name="provisioningState"> The provisioning state of the webhook at the time the operation was called. </param>
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryWebhookData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContainerRegistryWebhookData ContainerRegistryWebhookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistryWebhookStatus? status, string scope, IEnumerable<ContainerRegistryWebhookAction> actions, ContainerRegistryProvisioningState? provisioningState)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            actions ??= new ChangeTrackingList<ContainerRegistryWebhookAction>();
+
+            return new ContainerRegistryWebhookData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryWebhookCreateOrUpdateContent"/>. </summary>

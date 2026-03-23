@@ -33,29 +33,5 @@ namespace Azure.ResourceManager.ContainerRegistry
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
-
-        /// <summary> The properties of the webhook. </summary>
-        [WirePath("properties")]
-        internal WebhookProperties Properties { get; }
-
-        /// <summary> The list of actions that trigger the webhook to post notifications. </summary>
-        [WirePath("properties.actions")]
-        public IList<ContainerRegistryWebhookAction> Actions
-        {
-            get
-            {
-                return Properties.Actions;
-            }
-        }
-
-        /// <summary> The provisioning state of the webhook at the time the operation was called. </summary>
-        [WirePath("properties.provisioningState")]
-        public ContainerRegistryProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties.ProvisioningState;
-            }
-        }
     }
 }

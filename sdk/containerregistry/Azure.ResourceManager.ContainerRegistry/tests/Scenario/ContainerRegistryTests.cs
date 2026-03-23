@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
 
             // Check valid name
             string registryName = Recording.GenerateAssetName("acrregistry");
-            ContainerRegistryNameAvailabilityContent content = new ContainerRegistryNameAvailabilityContent(registryName);
+            ContainerRegistryNameAvailabilityContent content = new ContainerRegistryNameAvailabilityContent(registryName, ContainerRegistryResourceType.MicrosoftContainerRegistryRegistries);
             ContainerRegistryNameAvailableResult result = await Subscription.CheckContainerRegistryNameAvailabilityAsync(content);
             Assert.True(result.IsNameAvailable);
             Assert.Null(result.Reason);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
 
             // Check disallowed name
             registryName = "Microsoft";
-            content = new ContainerRegistryNameAvailabilityContent(registryName);
+            content = new ContainerRegistryNameAvailabilityContent(registryName, ContainerRegistryResourceType.MicrosoftContainerRegistryRegistries);
             result = await Subscription.CheckContainerRegistryNameAvailabilityAsync(content);
             Assert.False(result.IsNameAvailable);
             Assert.AreEqual("Invalid", result.Reason);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             // Check name of container registry that already exists
             registryName = Recording.GenerateAssetName("acrregistry");
             ContainerRegistryResource registry = await CreateContainerRegistryAsync(rg, registryName);
-            content = new ContainerRegistryNameAvailabilityContent(registryName);
+            content = new ContainerRegistryNameAvailabilityContent(registryName, ContainerRegistryResourceType.MicrosoftContainerRegistryRegistries);
             result = await Subscription.CheckContainerRegistryNameAvailabilityAsync(content);
             Assert.False(result.IsNameAvailable);
             Assert.AreEqual("AlreadyExists", result.Reason);

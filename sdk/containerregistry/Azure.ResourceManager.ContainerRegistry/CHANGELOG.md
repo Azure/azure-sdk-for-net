@@ -11,6 +11,8 @@
 
 ### Other Changes
 
+- Added missing `[Obsolete]` attribute to `ContainerRegistryAgentPoolPatch` for consistency with other deprecated RegistryTasks types.
+
 ## 1.5.0-beta.2 (2026-03-19)
 
 ### Features Added

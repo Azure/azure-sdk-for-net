@@ -12,9 +12,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     // This partial class restores that constructor so existing callers are not broken.
     public partial class ContainerRegistrySyncResult
     {
-        // Initializes a new instance of ContainerRegistrySyncResult.
-        // syncTrigger: The action that triggered the most recent registry sync.
-        // syncState: The status of the connected registry's most recent sync.
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySyncResult"/>. </summary>
+        /// <param name="syncTrigger"> The action that triggered the most recent registry sync. </param>
+        /// <param name="syncState"> The status of the connected registry's most recent sync. </param>
         public ContainerRegistrySyncResult(ContainerRegistrySyncTrigger syncTrigger, ContainerRegistrySyncState syncState)
         {
             SyncTrigger = syncTrigger;

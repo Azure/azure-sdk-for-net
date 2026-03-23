@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
+    [Obsolete("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ContainerRegistryAgentPoolPatch : IJsonModel<ContainerRegistryAgentPoolPatch>, IPersistableModel<ContainerRegistryAgentPoolPatch>
     {

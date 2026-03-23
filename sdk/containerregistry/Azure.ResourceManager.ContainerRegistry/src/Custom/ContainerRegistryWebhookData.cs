@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry.Models;
@@ -14,6 +15,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     // Backward compatibility: suppress generated Scope/Status (no setters) and re-expose with setters.
     // The old autorest SDK exposed Scope and Status as get/set on the data class.
     [CodeGenSuppress("ContainerRegistryWebhookData", typeof(AzureLocation))]
+    [CodeGenSuppress("Properties")]
     [CodeGenSuppress("Scope")]
     [CodeGenSuppress("Status")]
     public partial class ContainerRegistryWebhookData
@@ -27,6 +29,10 @@ namespace Azure.ResourceManager.ContainerRegistry
             Properties = new WebhookProperties(Array.Empty<ContainerRegistryWebhookAction>());
         }
 
+        /// <summary> The properties of the webhook. </summary>
+        [WirePath("properties")]
+        internal WebhookProperties Properties { get; set; }
+
         /// <summary> The scope of repositories where the event can be triggered. </summary>
         [WirePath("properties.scope")]
         public string Scope
@@ -34,8 +40,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             get => Properties?.Scope;
             set
             {
-                if (Properties != null)
-                    Properties.Scope = value;
+                if (Properties is null)
+                    Properties = new WebhookProperties(Array.Empty<ContainerRegistryWebhookAction>());
+                Properties.Scope = value;
             }
         }
 
@@ -46,9 +53,24 @@ namespace Azure.ResourceManager.ContainerRegistry
             get => Properties?.Status;
             set
             {
-                if (Properties != null)
-                    Properties.Status = value;
+                if (Properties is null)
+                    Properties = new WebhookProperties(Array.Empty<ContainerRegistryWebhookAction>());
+                Properties.Status = value;
             }
+        }
+
+        /// <summary> The list of actions that trigger the webhook to post notifications. </summary>
+        [WirePath("properties.actions")]
+        public IList<ContainerRegistryWebhookAction> Actions
+        {
+            get => Properties?.Actions;
+        }
+
+        /// <summary> The provisioning state of the webhook at the time the operation was called. </summary>
+        [WirePath("properties.provisioningState")]
+        public ContainerRegistryProvisioningState? ProvisioningState
+        {
+            get => Properties?.ProvisioningState;
         }
     }
 }

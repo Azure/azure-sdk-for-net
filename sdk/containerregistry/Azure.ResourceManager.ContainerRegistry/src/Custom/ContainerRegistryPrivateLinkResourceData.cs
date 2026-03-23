@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     // instantiation are not broken.
     public partial class ContainerRegistryPrivateLinkResourceData
     {
-        // Initializes a new instance of ContainerRegistryPrivateLinkResourceData.
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkResourceData"/>. </summary>
         public ContainerRegistryPrivateLinkResourceData()
         { }
     }
