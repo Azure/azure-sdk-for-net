@@ -79,14 +79,14 @@ foreach ($section in $Sections) {
 
   Write-Host "Exporting section '$section' from before file..."
   & $AzsdkCliPath config codeowners export-section --codeowners-path $beforePath --section $section --output-file $beforeSection
-  if ($LASTEXITCODE -ne 0) {
+  if ($LASTEXITCODE) {
     Write-Host "##vso[task.LogIssue type=warning;]Failed to export section '$section' from before file (exit code $LASTEXITCODE). Skipping this section."
     continue
   }
 
   Write-Host "Exporting section '$section' from after file..."
   & $AzsdkCliPath config codeowners export-section --codeowners-path $afterPath --section $section --output-file $afterSection
-  if ($LASTEXITCODE -ne 0) {
+  if ($LASTEXITCODE) {
     Write-Host "##vso[task.LogIssue type=warning;]Failed to export section '$section' from after file (exit code $LASTEXITCODE). Skipping this section."
     continue
   }
@@ -97,8 +97,8 @@ foreach ($section in $Sections) {
   if ($beforeContent -ne $afterContent) {
     Write-Host "##vso[task.LogIssue type=error;]Protected CODEOWNERS section '$section' has been modified. Changes to this section are not allowed through normal PRs."
     Write-Host "--- Diff for section '$section' ---"
-    $diffResult = git diff --no-index -- $beforeSection $afterSection 2>&1
-    Write-Host $diffResult
+    Write-Host ""
+    git diff --no-index -- $beforeSection $afterSection
     $failed = $true
   } else {
     Write-Host "Section '$section' is unchanged."

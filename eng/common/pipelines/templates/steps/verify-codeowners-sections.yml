@@ -11,12 +11,13 @@ steps:
     # 1. Check if CODEOWNERS changed; skip everything if it hasn't
     - pwsh: |
         $diffOutput = git diff --name-only HEAD~1 HEAD -- ".github/CODEOWNERS" 2>&1
-        if ($LASTEXITCODE -ne 0) {
+        if ($LASTEXITCODE) {
           Write-Host "Unable to compute diff (exit code $LASTEXITCODE). Skipping CODEOWNERS section check."
           Write-Host "##vso[task.setvariable variable=CodeownersChanged]false"
           exit 0
         }
-        if ([string]::IsNullOrWhiteSpace($diffOutput)) {
+
+        if (!$diffOutput) {
           Write-Host "CODEOWNERS file has not changed."
           Write-Host "##vso[task.setvariable variable=CodeownersChanged]false"
         } else {
@@ -47,10 +48,10 @@ steps:
         Write-Host "Copied current CODEOWNERS to $afterFile"
 
         # Extract parent commit version
-        git show "HEAD~1:.github/CODEOWNERS" > $beforeFile 2>&1
+        git show "HEAD~1:.github/CODEOWNERS" > $beforeFile
         Write-Host "Retrieved parent commit CODEOWNERS to $beforeFile"
         Get-Content $beforeFile | Select-Object -First 20 | Write-Host
-        if ($LASTEXITCODE -ne 0) {
+        if ($LASTEXITCODE) {
           Write-Host "Could not retrieve CODEOWNERS from HEAD~1. The file may be newly added. Skipping."
           Write-Host "##vso[task.setvariable variable=CodeownersChanged]false"
           exit 0
