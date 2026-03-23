@@ -69,8 +69,20 @@ namespace Azure.ResourceManager.ContainerRegistry
         public virtual Task<Response<ContainerRegistryRunResource>> GetAsync(CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
         public virtual ArmOperation Cancel(WaitUntil waitUntil, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
         public virtual Task<ArmOperation> CancelAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the Cancel(WaitUntil, CancellationToken) overload instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response Cancel(CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the CancelAsync(WaitUntil, CancellationToken) overload instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response> CancelAsync(CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
         public virtual ArmOperation<ContainerRegistryRunResource> Update(WaitUntil waitUntil, ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
         public virtual Task<ArmOperation<ContainerRegistryRunResource>> UpdateAsync(WaitUntil waitUntil, ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the Update(WaitUntil, ContainerRegistryRunPatch, CancellationToken) overload instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ContainerRegistryRunResource> Update(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the UpdateAsync(WaitUntil, ContainerRegistryRunPatch, CancellationToken) overload instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<ContainerRegistryRunResource>> UpdateAsync(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
         public virtual Response<ContainerRegistryRunGetLogResult> GetLogSasUrl(CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
         public virtual Task<Response<ContainerRegistryRunGetLogResult>> GetLogSasUrlAsync(CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
     }

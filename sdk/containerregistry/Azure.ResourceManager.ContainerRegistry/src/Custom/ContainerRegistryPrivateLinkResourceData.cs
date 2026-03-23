@@ -5,10 +5,15 @@
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    // Manually add it back to ensure backward compatibility
+    // Backward-compatibility shim: the TypeSpec-based generator only emits an
+    // internal constructor with 7 parameters (id, name, resourceType, systemData,
+    // additionalBinaryDataProperties, properties, groupName).  The previous
+    // AutoRest-generated SDK (≤ 1.4.0) exposed a public parameterless constructor.
+    // This partial class restores it so existing callers and reflection-based
+    // instantiation are not broken.
     public partial class ContainerRegistryPrivateLinkResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkResourceData"/>. </summary>
+        // Initializes a new instance of ContainerRegistryPrivateLinkResourceData.
         public ContainerRegistryPrivateLinkResourceData()
         { }
     }

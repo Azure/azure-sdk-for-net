@@ -73,6 +73,12 @@ namespace Azure.ResourceManager.ContainerRegistry
         public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
         public virtual ArmOperation<ContainerRegistryTaskResource> Update(WaitUntil waitUntil, ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
         public virtual Task<ArmOperation<ContainerRegistryTaskResource>> UpdateAsync(WaitUntil waitUntil, ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the Update(WaitUntil, ContainerRegistryTaskPatch, CancellationToken) overload instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ContainerRegistryTaskResource> Update(ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the UpdateAsync(WaitUntil, ContainerRegistryTaskPatch, CancellationToken) overload instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<ContainerRegistryTaskResource>> UpdateAsync(ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
         public virtual Response<ContainerRegistryTaskResource> AddTag(string key, string value, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
         public virtual Task<Response<ContainerRegistryTaskResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
         public virtual Response<ContainerRegistryTaskResource> RemoveTag(string key, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
