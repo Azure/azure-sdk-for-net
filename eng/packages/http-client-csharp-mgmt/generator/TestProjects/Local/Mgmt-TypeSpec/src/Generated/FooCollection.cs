@@ -28,6 +28,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     {
         private readonly ClientDiagnostics _foosClientDiagnostics;
         private readonly Foos _foosRestClient;
+        private readonly ClientDiagnostics _entityResourceReproClientDiagnostics;
+        private readonly EntityResourceRepro _entityResourceReproRestClient;
 
         /// <summary> Initializes a new instance of FooCollection for mocking. </summary>
         protected FooCollection()
@@ -42,6 +44,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             TryGetApiVersion(FooResource.ResourceType, out string fooApiVersion);
             _foosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", FooResource.ResourceType.Namespace, Diagnostics);
             _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _entityResourceReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", FooResource.ResourceType.Namespace, Diagnostics);
+            _entityResourceReproRestClient = new EntityResourceRepro(_entityResourceReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
