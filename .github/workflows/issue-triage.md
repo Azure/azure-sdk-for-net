@@ -33,9 +33,10 @@ tools:
   bash: true
   github:
     toolsets: [issues]
-    # Setting lockdown: false allows reading issues, pull requests
-    # and comments from 3rd-parties in public repos
-    lockdown: false
+    # Triage must read issues from all users, including external
+    # customers with NONE author_association; without this, the
+    # auto-applied "approved" policy filters them out via DIFC
+    min-integrity: none
 
 timeout-minutes: 10
 ---
