@@ -55,7 +55,6 @@ public partial class VpnServerConfiguration : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -238,7 +237,7 @@ public partial class VpnServerConfiguration : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _aadAuthenticationParameters = DefineModelProperty<AadAuthenticationParameters>("AadAuthenticationParameters", ["properties", "aadAuthenticationParameters"]);
         _configurationPolicyGroups = DefineListProperty<VpnServerConfigurationPolicyGroup>("ConfigurationPolicyGroups", ["properties", "configurationPolicyGroups"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _radiusClientRootCertificates = DefineListProperty<VpnServerConfigRadiusClientRootCertificate>("RadiusClientRootCertificates", ["properties", "radiusClientRootCertificates"]);
         _radiusServerAddress = DefineProperty<string>("RadiusServerAddress", ["properties", "radiusServerAddress"]);

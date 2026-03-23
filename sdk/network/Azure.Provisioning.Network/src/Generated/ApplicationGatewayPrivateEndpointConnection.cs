@@ -47,7 +47,6 @@ public partial class ApplicationGatewayPrivateEndpointConnection : Provisionable
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -123,7 +122,7 @@ public partial class ApplicationGatewayPrivateEndpointConnection : Provisionable
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _connectionState = DefineModelProperty<NetworkPrivateLinkServiceConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _linkIdentifier = DefineProperty<string>("LinkIdentifier", ["properties", "linkIdentifier"], isOutput: true);
         _privateEndpoint = DefineModelProperty<PrivateEndpoint>("PrivateEndpoint", ["properties", "privateEndpoint"], new PrivateEndpoint("privateEndpoint"), isOutput: true);

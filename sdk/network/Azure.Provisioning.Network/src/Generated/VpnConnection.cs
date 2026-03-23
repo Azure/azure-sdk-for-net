@@ -85,7 +85,6 @@ public partial class VpnConnection : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -272,7 +271,7 @@ public partial class VpnConnection : ProvisionableResource
         _enableBgp = DefineProperty<bool>("EnableBgp", ["properties", "enableBgp"]);
         _enableInternetSecurity = DefineProperty<bool>("EnableInternetSecurity", ["properties", "enableInternetSecurity"]);
         _enableRateLimiting = DefineProperty<bool>("EnableRateLimiting", ["properties", "enableRateLimiting"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _iPsecPolicies = DefineListProperty<IPsecPolicy>("IPsecPolicies", ["properties", "ipsecPolicies"]);
         _remoteVpnSiteId = DefineProperty<ResourceIdentifier>("RemoteVpnSiteId", ["properties", "remoteVpnSite", "id"]);
         _routingConfiguration = DefineModelProperty<RoutingConfiguration>("RoutingConfiguration", ["properties", "routingConfiguration"]);

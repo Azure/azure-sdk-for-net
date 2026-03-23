@@ -46,7 +46,6 @@ public partial class VirtualNetworkAppliance : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -139,7 +138,7 @@ public partial class VirtualNetworkAppliance : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _bandwidthInGbps = DefineProperty<string>("BandwidthInGbps", ["properties", "bandwidthInGbps"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _subnet = DefineModelProperty<SubnetResource>("Subnet", ["properties", "subnet"], new SubnetResource("subnetResource"));
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);

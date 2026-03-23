@@ -46,7 +46,6 @@ public partial class NetworkProfile : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -129,7 +128,7 @@ public partial class NetworkProfile : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _containerNetworkInterfaceConfigurations = DefineListProperty<ContainerNetworkInterfaceConfiguration>("ContainerNetworkInterfaceConfigurations", ["properties", "containerNetworkInterfaceConfigurations"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _containerNetworkInterfaces = DefineListProperty<ContainerNetworkInterface>("ContainerNetworkInterfaces", ["properties", "containerNetworkInterfaces"], isOutput: true);

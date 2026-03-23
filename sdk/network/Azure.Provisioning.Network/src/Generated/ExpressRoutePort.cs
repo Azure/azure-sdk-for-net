@@ -65,7 +65,6 @@ public partial class ExpressRoutePort : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -219,7 +218,7 @@ public partial class ExpressRoutePort : ProvisionableResource
         _bandwidthInGbps = DefineProperty<int>("BandwidthInGbps", ["properties", "bandwidthInGbps"]);
         _billingType = DefineProperty<ExpressRoutePortsBillingType>("BillingType", ["properties", "billingType"]);
         _encapsulation = DefineProperty<ExpressRoutePortsEncapsulation>("Encapsulation", ["properties", "encapsulation"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _links = DefineListProperty<ExpressRouteLinkData>("Links", ["properties", "links"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);

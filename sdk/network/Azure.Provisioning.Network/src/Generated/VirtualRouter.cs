@@ -55,7 +55,6 @@ public partial class VirtualRouter : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -150,7 +149,7 @@ public partial class VirtualRouter : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _hostedGatewayId = DefineProperty<ResourceIdentifier>("HostedGatewayId", ["properties", "hostedGateway", "id"]);
         _hostedSubnetId = DefineProperty<ResourceIdentifier>("HostedSubnetId", ["properties", "hostedSubnet", "id"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _virtualRouterAsn = DefineProperty<long>("VirtualRouterAsn", ["properties", "virtualRouterAsn"]);

@@ -55,7 +55,6 @@ public partial class RouteFilterRule : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -131,7 +130,7 @@ public partial class RouteFilterRule : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _access = DefineProperty<NetworkAccess>("Access", ["properties", "access"]);
         _communities = DefineListProperty<string>("Communities", ["properties", "communities"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _routeFilterRuleType = DefineProperty<RouteFilterRuleType>("RouteFilterRuleType", ["properties", "routeFilterRuleType"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);

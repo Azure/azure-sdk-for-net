@@ -65,7 +65,6 @@ public partial class VpnGateway : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -182,7 +181,7 @@ public partial class VpnGateway : ProvisionableResource
         _bgpSettings = DefineModelProperty<BgpSettings>("BgpSettings", ["properties", "bgpSettings"]);
         _connections = DefineListProperty<VpnConnection>("Connections", ["properties", "connections"]);
         _enableBgpRouteTranslationForNat = DefineProperty<bool>("EnableBgpRouteTranslationForNat", ["properties", "enableBgpRouteTranslationForNat"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _isRoutingPreferenceInternet = DefineProperty<bool>("IsRoutingPreferenceInternet", ["properties", "isRoutingPreferenceInternet"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _natRules = DefineListProperty<VpnGatewayNatRule>("NatRules", ["properties", "natRules"]);

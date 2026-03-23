@@ -226,7 +226,6 @@ public partial class ApplicationGateway : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -528,7 +527,7 @@ public partial class ApplicationGateway : ProvisionableResource
         _gatewayIPConfigurations = DefineListProperty<ApplicationGatewayIPConfiguration>("GatewayIPConfigurations", ["properties", "gatewayIPConfigurations"]);
         _globalConfiguration = DefineModelProperty<ApplicationGatewayGlobalConfiguration>("GlobalConfiguration", ["properties", "globalConfiguration"]);
         _httpListeners = DefineListProperty<ApplicationGatewayHttpListener>("HttpListeners", ["properties", "httpListeners"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _listeners = DefineListProperty<ApplicationGatewayListener>("Listeners", ["properties", "listeners"]);
         _loadDistributionPolicies = DefineListProperty<ApplicationGatewayLoadDistributionPolicy>("LoadDistributionPolicies", ["properties", "loadDistributionPolicies"]);

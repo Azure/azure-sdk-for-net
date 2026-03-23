@@ -126,7 +126,6 @@ public partial class ExpressRouteCircuit : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -277,7 +276,7 @@ public partial class ExpressRouteCircuit : ProvisionableResource
         _expressRoutePortId = DefineProperty<ResourceIdentifier>("ExpressRoutePortId", ["properties", "expressRoutePort", "id"]);
         _gatewayManagerETag = DefineProperty<string>("GatewayManagerETag", ["properties", "gatewayManagerEtag"]);
         _globalReachEnabled = DefineProperty<bool>("GlobalReachEnabled", ["properties", "globalReachEnabled"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _peerings = DefineListProperty<ExpressRouteCircuitPeering>("Peerings", ["properties", "peerings"]);
         _serviceKey = DefineProperty<string>("ServiceKey", ["properties", "serviceKey"]);

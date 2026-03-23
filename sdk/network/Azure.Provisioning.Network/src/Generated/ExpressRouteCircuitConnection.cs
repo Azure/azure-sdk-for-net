@@ -63,7 +63,6 @@ public partial class ExpressRouteCircuitConnection : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -150,7 +149,7 @@ public partial class ExpressRouteCircuitConnection : ProvisionableResource
         _addressPrefix = DefineProperty<string>("AddressPrefix", ["properties", "addressPrefix"]);
         _authorizationKey = DefineProperty<string>("AuthorizationKey", ["properties", "authorizationKey"]);
         _expressRouteCircuitPeeringId = DefineProperty<ResourceIdentifier>("ExpressRouteCircuitPeeringId", ["properties", "expressRouteCircuitPeering", "id"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _iPv6CircuitConnectionConfig = DefineModelProperty<IPv6CircuitConnectionConfig>("IPv6CircuitConnectionConfig", ["properties", "ipv6CircuitConnectionConfig"]);
         _peerExpressRouteCircuitPeeringId = DefineProperty<ResourceIdentifier>("PeerExpressRouteCircuitPeeringId", ["properties", "peerExpressRouteCircuitPeering", "id"]);
         _circuitConnectionStatus = DefineProperty<CircuitConnectionStatus>("CircuitConnectionStatus", ["properties", "circuitConnectionStatus"], isOutput: true);

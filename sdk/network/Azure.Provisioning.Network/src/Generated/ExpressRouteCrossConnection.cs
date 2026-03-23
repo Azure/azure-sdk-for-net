@@ -44,7 +44,6 @@ public partial class ExpressRouteCrossConnection : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -185,7 +184,7 @@ public partial class ExpressRouteCrossConnection : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _expressRouteCircuitId = DefineProperty<ResourceIdentifier>("ExpressRouteCircuitId", ["properties", "expressRouteCircuit", "id"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _peerings = DefineListProperty<ExpressRouteCrossConnectionPeering>("Peerings", ["properties", "peerings"]);
         _serviceProviderNotes = DefineProperty<string>("ServiceProviderNotes", ["properties", "serviceProviderNotes"]);

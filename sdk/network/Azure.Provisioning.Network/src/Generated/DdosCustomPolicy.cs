@@ -56,7 +56,6 @@ public partial class DdosCustomPolicy : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -133,7 +132,7 @@ public partial class DdosCustomPolicy : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _detectionRules = DefineListProperty<DdosDetectionRule>("DetectionRules", ["properties", "detectionRules"]);
         _frontEndIPConfiguration = DefineListProperty<WritableSubResource>("FrontEndIPConfiguration", ["properties", "frontEndIpConfiguration"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);

@@ -44,7 +44,6 @@ public partial class VirtualHubRouteTableV2 : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -109,7 +108,7 @@ public partial class VirtualHubRouteTableV2 : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _attachedConnections = DefineListProperty<string>("AttachedConnections", ["properties", "attachedConnections"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _routes = DefineListProperty<VirtualHubRouteV2>("Routes", ["properties", "routes"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);

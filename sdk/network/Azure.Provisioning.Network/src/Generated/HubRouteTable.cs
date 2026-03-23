@@ -34,7 +34,6 @@ public partial class HubRouteTable : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -126,7 +125,7 @@ public partial class HubRouteTable : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _labels = DefineListProperty<string>("Labels", ["properties", "labels"]);
         _routes = DefineListProperty<HubRoute>("Routes", ["properties", "routes"]);
         _associatedConnections = DefineListProperty<string>("AssociatedConnections", ["properties", "associatedConnections"], isOutput: true);

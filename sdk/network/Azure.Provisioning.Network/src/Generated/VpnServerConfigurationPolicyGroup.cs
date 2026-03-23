@@ -35,7 +35,6 @@ public partial class VpnServerConfigurationPolicyGroup : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -130,7 +129,7 @@ public partial class VpnServerConfigurationPolicyGroup : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _isDefault = DefineProperty<bool>("IsDefault", ["properties", "isDefault"]);
         _policyMembers = DefineListProperty<VpnServerConfigurationPolicyGroupMember>("PolicyMembers", ["properties", "policyMembers"]);
         _priority = DefineProperty<int>("Priority", ["properties", "priority"]);

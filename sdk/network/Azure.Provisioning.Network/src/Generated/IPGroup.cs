@@ -35,7 +35,6 @@ public partial class IPGroup : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -129,7 +128,7 @@ public partial class IPGroup : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _iPAddresses = DefineListProperty<string>("IPAddresses", ["properties", "ipAddresses"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);

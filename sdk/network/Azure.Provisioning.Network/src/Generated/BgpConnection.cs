@@ -43,7 +43,6 @@ public partial class BgpConnection : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -127,7 +126,7 @@ public partial class BgpConnection : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _hubVirtualNetworkConnectionId = DefineProperty<ResourceIdentifier>("HubVirtualNetworkConnectionId", ["properties", "hubVirtualNetworkConnection", "id"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _peerAsn = DefineProperty<long>("PeerAsn", ["properties", "peerAsn"]);
         _peerIP = DefineProperty<string>("PeerIP", ["properties", "peerIp"]);
         _connectionState = DefineProperty<HubBgpConnectionStatus>("ConnectionState", ["properties", "connectionState"], isOutput: true);

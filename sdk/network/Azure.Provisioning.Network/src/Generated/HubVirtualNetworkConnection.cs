@@ -65,7 +65,6 @@ public partial class HubVirtualNetworkConnection : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -143,7 +142,7 @@ public partial class HubVirtualNetworkConnection : ProvisionableResource
         _allowHubToRemoteVnetTransit = DefineProperty<bool>("AllowHubToRemoteVnetTransit", ["properties", "allowHubToRemoteVnetTransit"]);
         _allowRemoteVnetToUseHubVnetGateways = DefineProperty<bool>("AllowRemoteVnetToUseHubVnetGateways", ["properties", "allowRemoteVnetToUseHubVnetGateways"]);
         _enableInternetSecurity = DefineProperty<bool>("EnableInternetSecurity", ["properties", "enableInternetSecurity"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _remoteVirtualNetworkId = DefineProperty<ResourceIdentifier>("RemoteVirtualNetworkId", ["properties", "remoteVirtualNetwork", "id"]);
         _routingConfiguration = DefineModelProperty<RoutingConfiguration>("RoutingConfiguration", ["properties", "routingConfiguration"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);

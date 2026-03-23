@@ -45,7 +45,6 @@ public partial class VpnGatewayNatRule : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -158,7 +157,7 @@ public partial class VpnGatewayNatRule : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _externalMappings = DefineListProperty<VpnNatRuleMapping>("ExternalMappings", ["properties", "externalMappings"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _internalMappings = DefineListProperty<VpnNatRuleMapping>("InternalMappings", ["properties", "internalMappings"]);
         _iPConfigurationId = DefineProperty<string>("IPConfigurationId", ["properties", "ipConfigurationId"]);
         _mode = DefineProperty<VpnNatRuleMode>("Mode", ["properties", "mode"]);

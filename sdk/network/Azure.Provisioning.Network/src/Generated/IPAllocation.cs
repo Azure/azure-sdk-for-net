@@ -44,7 +44,6 @@ public partial class IPAllocation : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -168,7 +167,7 @@ public partial class IPAllocation : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _allocationTags = DefineDictionaryProperty<string>("AllocationTags", ["properties", "allocationTags"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _iPAllocationType = DefineProperty<NetworkIPAllocationType>("IPAllocationType", ["properties", "type"]);
         _ipamAllocationId = DefineProperty<string>("IpamAllocationId", ["properties", "ipamAllocationId"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);

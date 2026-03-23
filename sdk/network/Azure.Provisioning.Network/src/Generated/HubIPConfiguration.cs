@@ -36,7 +36,6 @@ public partial class HubIPConfiguration : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -130,7 +129,7 @@ public partial class HubIPConfiguration : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["properties", "privateIPAddress"]);
         _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["properties", "privateIPAllocationMethod"]);
         _publicIPAddress = DefineModelProperty<PublicIPAddress>("PublicIPAddress", ["properties", "publicIPAddress"], new PublicIPAddress("publicIPAddress"));

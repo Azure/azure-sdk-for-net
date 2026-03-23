@@ -43,7 +43,6 @@ public partial class VirtualApplianceSite : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -108,7 +107,7 @@ public partial class VirtualApplianceSite : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _addressPrefix = DefineProperty<string>("AddressPrefix", ["properties", "addressPrefix"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _o365BreakOutCategories = DefineModelProperty<BreakOutCategoryPolicies>("O365BreakOutCategories", ["properties", "o365Policy", "breakOutCategories"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);

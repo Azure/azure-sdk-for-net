@@ -75,7 +75,6 @@ public partial class NetworkVirtualApplianceConnection : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -146,7 +145,7 @@ public partial class NetworkVirtualApplianceConnection : ProvisionableResource
         _bgpPeerAddress = DefineListProperty<string>("BgpPeerAddress", ["properties", "bgpPeerAddress"]);
         _connectionRoutingConfiguration = DefineModelProperty<RoutingConfiguration>("ConnectionRoutingConfiguration", ["properties", "routingConfiguration"]);
         _enableInternetSecurity = DefineProperty<bool>("EnableInternetSecurity", ["properties", "enableInternetSecurity"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _namePropertiesName = DefineProperty<string>("NamePropertiesName", ["properties", "name"]);
         _tunnelIdentifier = DefineProperty<long>("TunnelIdentifier", ["properties", "tunnelIdentifier"]);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);

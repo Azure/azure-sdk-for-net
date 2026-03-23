@@ -64,7 +64,6 @@ public partial class VpnSite : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -191,7 +190,7 @@ public partial class VpnSite : ProvisionableResource
         _addressSpace = DefineModelProperty<VirtualNetworkAddressSpace>("AddressSpace", ["properties", "addressSpace"]);
         _bgpProperties = DefineModelProperty<BgpSettings>("BgpProperties", ["properties", "bgpProperties"]);
         _deviceProperties = DefineModelProperty<DeviceProperties>("DeviceProperties", ["properties", "deviceProperties"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _iPAddress = DefineProperty<string>("IPAddress", ["properties", "ipAddress"]);
         _isSecuritySite = DefineProperty<bool>("IsSecuritySite", ["properties", "isSecuritySite"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);

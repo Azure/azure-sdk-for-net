@@ -87,7 +87,6 @@ public partial class NetworkVirtualAppliance : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -313,7 +312,7 @@ public partial class NetworkVirtualAppliance : ProvisionableResource
         _cloudInitConfiguration = DefineProperty<string>("CloudInitConfiguration", ["properties", "cloudInitConfiguration"]);
         _cloudInitConfigurationBlobs = DefineListProperty<string>("CloudInitConfigurationBlobs", ["properties", "cloudInitConfigurationBlobs"]);
         _delegation = DefineModelProperty<VirtualApplianceDelegationProperties>("Delegation", ["properties", "delegation"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _internetIngressPublicIPs = DefineListProperty<WritableSubResource>("InternetIngressPublicIPs", ["properties", "internetIngressPublicIps"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);

@@ -65,7 +65,6 @@ public partial class ExpressRouteGateway : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -142,7 +141,7 @@ public partial class ExpressRouteGateway : ProvisionableResource
         _allowNonVirtualWanTraffic = DefineProperty<bool>("AllowNonVirtualWanTraffic", ["properties", "allowNonVirtualWanTraffic"]);
         _autoScaleBounds = DefineModelProperty<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>("AutoScaleBounds", ["properties", "autoScaleConfiguration", "bounds"]);
         _expressRouteConnectionList = DefineListProperty<ExpressRouteConnection>("ExpressRouteConnectionList", ["properties", "expressRouteConnections"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _virtualHubId = DefineProperty<ResourceIdentifier>("VirtualHubId", ["properties", "virtualHub", "id"]);

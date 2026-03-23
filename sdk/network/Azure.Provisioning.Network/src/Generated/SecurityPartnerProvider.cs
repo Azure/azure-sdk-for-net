@@ -34,7 +34,6 @@ public partial class SecurityPartnerProvider : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -127,7 +126,7 @@ public partial class SecurityPartnerProvider : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _securityProviderName = DefineProperty<SecurityProviderName>("SecurityProviderName", ["properties", "securityProviderName"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);

@@ -85,7 +85,6 @@ public partial class VirtualHub : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -320,7 +319,7 @@ public partial class VirtualHub : ProvisionableResource
         _azureFirewallId = DefineProperty<ResourceIdentifier>("AzureFirewallId", ["properties", "azureFirewall", "id"]);
         _expressRouteGatewayId = DefineProperty<ResourceIdentifier>("ExpressRouteGatewayId", ["properties", "expressRouteGateway", "id"]);
         _hubRoutingPreference = DefineProperty<HubRoutingPreference>("HubRoutingPreference", ["properties", "hubRoutingPreference"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _p2SVpnGatewayId = DefineProperty<ResourceIdentifier>("P2SVpnGatewayId", ["properties", "p2SVpnGateway", "id"]);
         _preferredRoutingGateway = DefineProperty<PreferredRoutingGateway>("PreferredRoutingGateway", ["properties", "preferredRoutingGateway"]);

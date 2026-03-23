@@ -202,7 +202,6 @@ public partial class VirtualNetworkGateway : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -419,7 +418,7 @@ public partial class VirtualNetworkGateway : ProvisionableResource
         _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
         _gatewayDefaultSiteId = DefineProperty<ResourceIdentifier>("GatewayDefaultSiteId", ["properties", "gatewayDefaultSite", "id"]);
         _gatewayType = DefineProperty<VirtualNetworkGatewayType>("GatewayType", ["properties", "gatewayType"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _iPConfigurations = DefineListProperty<VirtualNetworkGatewayIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);

@@ -23,6 +23,7 @@ public partial class FirewallPolicyDraft : ProvisionableResource
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -73,7 +74,6 @@ public partial class FirewallPolicyDraft : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -178,12 +178,12 @@ public partial class FirewallPolicyDraft : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _allowSqlRedirect = DefineProperty<bool>("AllowSqlRedirect", ["properties", "sql", "allowSqlRedirect"]);
         _basePolicyId = DefineProperty<ResourceIdentifier>("BasePolicyId", ["properties", "basePolicy", "id"]);
         _dnsSettings = DefineModelProperty<DnsSettings>("DnsSettings", ["properties", "dnsSettings"]);
         _explicitProxy = DefineModelProperty<FirewallPolicyExplicitProxy>("ExplicitProxy", ["properties", "explicitProxy"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _insights = DefineModelProperty<FirewallPolicyInsights>("Insights", ["properties", "insights"]);
         _intrusionDetection = DefineModelProperty<FirewallPolicyIntrusionDetection>("IntrusionDetection", ["properties", "intrusionDetection"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);

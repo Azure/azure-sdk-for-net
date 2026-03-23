@@ -53,7 +53,6 @@ public partial class ExpressRouteCircuitAuthorization : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -120,7 +119,7 @@ public partial class ExpressRouteCircuitAuthorization : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _authorizationKey = DefineProperty<string>("AuthorizationKey", ["properties", "authorizationKey"]);
         _authorizationUseStatus = DefineProperty<AuthorizationUseStatus>("AuthorizationUseStatus", ["properties", "authorizationUseStatus"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _connectionResourceUri = DefineProperty<Uri>("ConnectionResourceUri", ["properties", "connectionResourceUri"], isOutput: true);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);

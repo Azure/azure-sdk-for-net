@@ -168,7 +168,6 @@ public partial class VirtualNetworkGatewayConnection : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -403,7 +402,7 @@ public partial class VirtualNetworkGatewayConnection : ProvisionableResource
         _enablePrivateLinkFastPath = DefineProperty<bool>("EnablePrivateLinkFastPath", ["properties", "enablePrivateLinkFastPath"]);
         _expressRouteGatewayBypass = DefineProperty<bool>("ExpressRouteGatewayBypass", ["properties", "expressRouteGatewayBypass"]);
         _gatewayCustomBgpIPAddresses = DefineListProperty<GatewayCustomBgpIPAddressIPConfiguration>("GatewayCustomBgpIPAddresses", ["properties", "gatewayCustomBgpIpAddresses"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _ingressNatRules = DefineListProperty<WritableSubResource>("IngressNatRules", ["properties", "ingressNatRules"]);
         _iPsecPolicies = DefineListProperty<IPsecPolicy>("IPsecPolicies", ["properties", "ipsecPolicies"]);
         _localNetworkGateway2 = DefineModelProperty<LocalNetworkGateway>("LocalNetworkGateway2", ["properties", "localNetworkGateway2"], new LocalNetworkGateway("localNetworkGateway"));

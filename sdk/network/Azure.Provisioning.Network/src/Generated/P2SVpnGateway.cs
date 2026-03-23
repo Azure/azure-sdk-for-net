@@ -45,7 +45,6 @@ public partial class P2SVpnGateway : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -170,7 +169,7 @@ public partial class P2SVpnGateway : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _customDnsServers = DefineListProperty<string>("CustomDnsServers", ["properties", "customDnsServers"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _isRoutingPreferenceInternet = DefineProperty<bool>("IsRoutingPreferenceInternet", ["properties", "isRoutingPreferenceInternet"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _p2SConnectionConfigurations = DefineListProperty<P2SConnectionConfiguration>("P2SConnectionConfigurations", ["properties", "p2SConnectionConfigurations"]);

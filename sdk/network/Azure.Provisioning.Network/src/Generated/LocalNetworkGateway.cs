@@ -64,7 +64,6 @@ public partial class LocalNetworkGateway : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -150,7 +149,7 @@ public partial class LocalNetworkGateway : ProvisionableResource
         _bgpSettings = DefineModelProperty<BgpSettings>("BgpSettings", ["properties", "bgpSettings"]);
         _fqdn = DefineProperty<string>("Fqdn", ["properties", "fqdn"]);
         _gatewayIPAddress = DefineProperty<string>("GatewayIPAddress", ["properties", "gatewayIpAddress"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _localNetworkAddressSpace = DefineModelProperty<VirtualNetworkAddressSpace>("LocalNetworkAddressSpace", ["properties", "localNetworkAddressSpace"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);

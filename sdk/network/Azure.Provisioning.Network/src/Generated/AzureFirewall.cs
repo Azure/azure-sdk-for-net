@@ -96,7 +96,6 @@ public partial class AzureFirewall : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -256,7 +255,7 @@ public partial class AzureFirewall : ProvisionableResource
         _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
         _firewallPolicyId = DefineProperty<ResourceIdentifier>("FirewallPolicyId", ["properties", "firewallPolicy", "id"]);
         _hubIPAddresses = DefineModelProperty<HubIPAddresses>("HubIPAddresses", ["properties", "hubIPAddresses"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _iPConfigurations = DefineListProperty<AzureFirewallIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _managementIPConfiguration = DefineModelProperty<AzureFirewallIPConfiguration>("ManagementIPConfiguration", ["properties", "managementIpConfiguration"]);

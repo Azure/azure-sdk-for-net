@@ -85,7 +85,6 @@ public partial class ExpressRouteConnection : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -156,7 +155,7 @@ public partial class ExpressRouteConnection : ProvisionableResource
         _enablePrivateLinkFastPath = DefineProperty<bool>("EnablePrivateLinkFastPath", ["properties", "enablePrivateLinkFastPath"]);
         _expressRouteCircuitPeeringId = DefineProperty<ResourceIdentifier>("ExpressRouteCircuitPeeringId", ["properties", "expressRouteCircuitPeering", "id"]);
         _expressRouteGatewayBypass = DefineProperty<bool>("ExpressRouteGatewayBypass", ["properties", "expressRouteGatewayBypass"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _routingConfiguration = DefineModelProperty<RoutingConfiguration>("RoutingConfiguration", ["properties", "routingConfiguration"]);
         _routingWeight = DefineProperty<int>("RoutingWeight", ["properties", "routingWeight"]);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);

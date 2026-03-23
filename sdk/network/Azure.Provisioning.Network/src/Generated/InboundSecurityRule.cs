@@ -34,7 +34,6 @@ public partial class InboundSecurityRule : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -110,7 +109,7 @@ public partial class InboundSecurityRule : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _rules = DefineListProperty<InboundSecurityRules>("Rules", ["properties", "rules"]);
         _ruleType = DefineProperty<InboundSecurityRuleType>("RuleType", ["properties", "ruleType"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);

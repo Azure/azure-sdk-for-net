@@ -34,7 +34,6 @@ public partial class RoutingIntent : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -98,7 +97,7 @@ public partial class RoutingIntent : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _routingPolicies = DefineListProperty<RoutingPolicy>("RoutingPolicies", ["properties", "routingPolicies"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);

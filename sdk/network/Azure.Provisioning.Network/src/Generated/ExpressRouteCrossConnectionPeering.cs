@@ -44,7 +44,6 @@ public partial class ExpressRouteCrossConnectionPeering : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -227,7 +226,7 @@ public partial class ExpressRouteCrossConnectionPeering : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _gatewayManagerETag = DefineProperty<string>("GatewayManagerETag", ["properties", "gatewayManagerEtag"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _iPv6PeeringConfig = DefineModelProperty<IPv6ExpressRouteCircuitPeeringConfig>("IPv6PeeringConfig", ["properties", "ipv6PeeringConfig"]);
         _microsoftPeeringConfig = DefineModelProperty<ExpressRouteCircuitPeeringConfig>("MicrosoftPeeringConfig", ["properties", "microsoftPeeringConfig"]);
         _peerASN = DefineProperty<long>("PeerASN", ["properties", "peerASN"]);

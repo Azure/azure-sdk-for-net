@@ -56,7 +56,6 @@ public partial class DscpConfiguration : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -199,7 +198,7 @@ public partial class DscpConfiguration : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _destinationIPRanges = DefineListProperty<QosIPRange>("DestinationIPRanges", ["properties", "destinationIpRanges"]);
         _destinationPortRanges = DefineListProperty<QosPortRange>("DestinationPortRanges", ["properties", "destinationPortRanges"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _markings = DefineListProperty<int>("Markings", ["properties", "markings"]);
         _protocol = DefineProperty<ProtocolType>("Protocol", ["properties", "protocol"]);

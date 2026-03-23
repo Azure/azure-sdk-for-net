@@ -33,7 +33,6 @@ public partial class VirtualRouterPeering : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -107,7 +106,7 @@ public partial class VirtualRouterPeering : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _peerAsn = DefineProperty<long>("PeerAsn", ["properties", "peerAsn"]);
         _peerIP = DefineProperty<string>("PeerIP", ["properties", "peerIp"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);

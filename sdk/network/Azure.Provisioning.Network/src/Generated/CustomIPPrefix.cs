@@ -106,7 +106,6 @@ public partial class CustomIPPrefix : ProvisionableResource
     public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _id;
 
@@ -264,7 +263,7 @@ public partial class CustomIPPrefix : ProvisionableResource
         _expressRouteAdvertise = DefineProperty<bool>("ExpressRouteAdvertise", ["properties", "expressRouteAdvertise"]);
         _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
         _geo = DefineProperty<CidrAdvertisingGeoCode>("Geo", ["properties", "geo"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _noInternetAdvertise = DefineProperty<bool>("NoInternetAdvertise", ["properties", "noInternetAdvertise"]);
         _parentCustomIPPrefixId = DefineProperty<ResourceIdentifier>("ParentCustomIPPrefixId", ["properties", "customIpPrefixParent", "id"]);
