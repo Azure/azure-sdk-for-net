@@ -19,7 +19,7 @@ public class DeploymentTest : ProjectsClientTestBase
     [RecordedTest]
     public async Task AIDeploymentTest()
     {
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 
         AIProjectClient projectClient = GetTestProjectClient();

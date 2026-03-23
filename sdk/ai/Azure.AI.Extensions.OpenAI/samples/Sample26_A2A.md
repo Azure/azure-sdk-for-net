@@ -37,8 +37,8 @@ To enable your Agent communication to the A2A endpoint, use `A2APreviewTool`.
 1. First, create an Agent client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_AgentToAgent
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var a2aConnectionName = System.Environment.GetEnvironmentVariable("A2A_CONNECTION_NAME");
 var a2aBaseUri = System.Environment.GetEnvironmentVariable("A2A_BASE_URI");
 
@@ -62,7 +62,7 @@ if (!string.Equals(a2aConnection.Type.ToString(), "RemoteA2A"))
     }
     a2aTool.BaseUri = new Uri(a2aBaseUri);
 }
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { a2aTool }
@@ -87,7 +87,7 @@ if (!string.Equals(a2aConnection.Type.ToString(), "RemoteA2A"))
     }
     a2aTool.BaseUri = new Uri(a2aBaseUri);
 }
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { a2aTool }

@@ -20,11 +20,11 @@ public class Sample_Agents_Tracing : SamplesBase
     public async Task AgentTracingToConsoleAsync()
     {
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
 
         #region Snippet:Sample_Agents_EnableGenAITracing
@@ -40,14 +40,9 @@ public class Sample_Agents_Tracing : SamplesBase
                         .AddConsoleExporter() // Export traces to the console
                         .Build();
         #endregion
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
-
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -65,11 +60,11 @@ public class Sample_Agents_Tracing : SamplesBase
     public void AgentTelemetryToConsole()
     {
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
 
         AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
@@ -82,13 +77,9 @@ public class Sample_Agents_Tracing : SamplesBase
 
         using (tracerProvider)
         {
-            AgentsClientOptions options = new()
-            {
-                Endpoint = new Uri(projectEndpoint)
-            };
-            AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+            AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };
@@ -107,19 +98,15 @@ public class Sample_Agents_Tracing : SamplesBase
     public async Task AgentTracingToAzureMonitorAsync()
     {
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var connectionString = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var connectionString = TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING;
 #endif
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
         AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
@@ -132,7 +119,7 @@ public class Sample_Agents_Tracing : SamplesBase
 
         using (tracerProvider)
         {
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };
@@ -151,19 +138,15 @@ public class Sample_Agents_Tracing : SamplesBase
     public void AgentTelemetryToAzureMonitor()
     {
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var connectionString = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var connectionString = TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING;
 #endif
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         Console.WriteLine("Assign the retrieved string to the required environment variable.");
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", connectionString);
@@ -177,7 +160,7 @@ public class Sample_Agents_Tracing : SamplesBase
 
         using (tracerProvider)
         {
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };

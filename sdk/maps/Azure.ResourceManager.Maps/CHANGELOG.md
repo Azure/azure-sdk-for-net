@@ -4,6 +4,11 @@
 
 ### Features Added
 
+- Upgraded API version to `2025-10-01-preview`.
+- Added support for `PrivateEndpointConnection` and `PrivateLinkResource` resource types.
+- Added support for operation status and operation result queries.
+- Added `CorsRules` property on `MapsAccountProperties` and `MapsAccountPatch` as the preferred way to access CORS rules.
+
 ### Breaking Changes
 
 ### Bugs Fixed

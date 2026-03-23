@@ -26,8 +26,8 @@ To work with fine-tuning, we need to create several clients. The `AIProjectClien
 ```C# Snippet:AI_Projects_FineTuning_CreateClientsAsync
 string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/sft_validation_set.jsonl";
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
@@ -39,8 +39,8 @@ FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 ```C# Snippet:AI_Projects_FineTuning_CreateClients
 string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/sft_validation_set.jsonl";
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
@@ -539,7 +539,7 @@ Once a fine-tuning job succeeds, you need to deploy the resulting model before i
 
 ```C# Snippet:AI_Projects_FineTuning_DeployModelAsync
 // Get the completed fine-tuning job
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 FineTuningClient fineTuningClient = projectClient.OpenAI.GetFineTuningClient();
 
@@ -591,7 +591,7 @@ Console.WriteLine($"Deployment '{deploymentName}' completed successfully");
 
 ```C# Snippet:AI_Projects_FineTuning_DeployModel
 // Get the completed fine-tuning job
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 FineTuningClient fineTuningClient = projectClient.OpenAI.GetFineTuningClient();
 
@@ -649,7 +649,7 @@ After deploying your fine-tuned model, you can use it for inference. The `GetPro
 // Get the deployed fine-tuned model
 string deploymentName = "your-deployment-name";
 
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 // Get responses client for the specific deployment
@@ -675,7 +675,7 @@ Console.WriteLine($"Response: {messageItem.Content[0].Text}");
 // Get the deployed fine-tuned model
 string deploymentName = "your-deployment-name";
 
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 // Get responses client for the specific deployment

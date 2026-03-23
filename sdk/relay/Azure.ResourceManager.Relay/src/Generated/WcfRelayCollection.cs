@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Relay
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Relay
     /// </summary>
     public partial class WcfRelayCollection : ArmCollection, IEnumerable<WcfRelayResource>, IAsyncEnumerable<WcfRelayResource>
     {
-        private readonly ClientDiagnostics _wcfRelayWCFRelaysClientDiagnostics;
-        private readonly WCFRelaysRestOperations _wcfRelayWCFRelaysRestClient;
+        private readonly ClientDiagnostics _wcfRelaysClientDiagnostics;
+        private readonly WCFRelays _wcfRelaysRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WcfRelayCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WcfRelayCollection for mocking. </summary>
         protected WcfRelayCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WcfRelayCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WcfRelayCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WcfRelayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _wcfRelayWCFRelaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", WcfRelayResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WcfRelayResource.ResourceType, out string wcfRelayWCFRelaysApiVersion);
-            _wcfRelayWCFRelaysRestClient = new WCFRelaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, wcfRelayWCFRelaysApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(WcfRelayResource.ResourceType, out string wcfRelayApiVersion);
+            _wcfRelaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", WcfRelayResource.ResourceType.Namespace, Diagnostics);
+            _wcfRelaysRestClient = new WCFRelays(_wcfRelaysClientDiagnostics, Pipeline, Endpoint, wcfRelayApiVersion ?? "2024-01-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != RelayNamespaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, RelayNamespaceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RelayNamespaceResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates or updates a WCF relay. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WCFRelays_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WcfRelaysOps_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WcfRelayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.Relay
         /// <param name="relayName"> The relay name. </param>
         /// <param name="data"> Parameters supplied to create a WCF relay. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<WcfRelayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relayName, WcfRelayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _wcfRelayWCFRelaysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _wcfRelayWCFRelaysRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new RelayArmOperation<WcfRelayResource>(Response.FromValue(new WcfRelayResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _wcfRelaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, WcfRelayData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WcfRelayData> response = Response.FromValue(WcfRelayData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                RelayArmOperation<WcfRelayResource> operation = new RelayArmOperation<WcfRelayResource>(Response.FromValue(new WcfRelayResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.Relay
         /// Creates or updates a WCF relay. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WCFRelays_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WcfRelaysOps_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WcfRelayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.Relay
         /// <param name="relayName"> The relay name. </param>
         /// <param name="data"> Parameters supplied to create a WCF relay. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<WcfRelayResource> CreateOrUpdate(WaitUntil waitUntil, string relayName, WcfRelayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _wcfRelayWCFRelaysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, data, cancellationToken);
-                var uri = _wcfRelayWCFRelaysRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new RelayArmOperation<WcfRelayResource>(Response.FromValue(new WcfRelayResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _wcfRelaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, WcfRelayData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WcfRelayData> response = Response.FromValue(WcfRelayData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                RelayArmOperation<WcfRelayResource> operation = new RelayArmOperation<WcfRelayResource>(Response.FromValue(new WcfRelayResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.Relay
         /// Returns the description for the specified WCF relay.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WCFRelays_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WcfRelaysOps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WcfRelayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="relayName"> The relay name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<WcfRelayResource>> GetAsync(string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
 
-            using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.Get");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayCollection.Get");
             scope.Start();
             try
             {
-                var response = await _wcfRelayWCFRelaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WcfRelayData> response = Response.FromValue(WcfRelayData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WcfRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.Relay
         /// Returns the description for the specified WCF relay.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WCFRelays_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WcfRelaysOps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WcfRelayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="relayName"> The relay name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<WcfRelayResource> Get(string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
 
-            using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.Get");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayCollection.Get");
             scope.Start();
             try
             {
-                var response = _wcfRelayWCFRelaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WcfRelayData> response = Response.FromValue(WcfRelayData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WcfRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +266,44 @@ namespace Azure.ResourceManager.Relay
         /// Lists the WCF relays within the namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WCFRelays_ListByNamespace</description>
+        /// <term> Operation Id. </term>
+        /// <description> WcfRelaysOps_ListByNamespace. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WcfRelayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WcfRelayResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WcfRelayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WcfRelayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WcfRelayResource(Client, WcfRelayData.DeserializeWcfRelayData(e)), _wcfRelayWCFRelaysClientDiagnostics, Pipeline, "WcfRelayCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<WcfRelayData, WcfRelayResource>(new WCFRelaysGetByNamespaceAsyncCollectionResultOfT(_wcfRelaysRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new WcfRelayResource(Client, data));
         }
 
         /// <summary>
         /// Lists the WCF relays within the namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WCFRelays_ListByNamespace</description>
+        /// <term> Operation Id. </term>
+        /// <description> WcfRelaysOps_ListByNamespace. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WcfRelayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +311,61 @@ namespace Azure.ResourceManager.Relay
         /// <returns> A collection of <see cref="WcfRelayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WcfRelayResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WcfRelayResource(Client, WcfRelayData.DeserializeWcfRelayData(e)), _wcfRelayWCFRelaysClientDiagnostics, Pipeline, "WcfRelayCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<WcfRelayData, WcfRelayResource>(new WCFRelaysGetByNamespaceCollectionResultOfT(_wcfRelaysRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new WcfRelayResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WCFRelays_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WcfRelaysOps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WcfRelayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="relayName"> The relay name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
 
-            using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.Exists");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _wcfRelayWCFRelaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WcfRelayData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WcfRelayData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WcfRelayData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +379,50 @@ namespace Azure.ResourceManager.Relay
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WCFRelays_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WcfRelaysOps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WcfRelayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="relayName"> The relay name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
 
-            using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.Exists");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayCollection.Exists");
             scope.Start();
             try
             {
-                var response = _wcfRelayWCFRelaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WcfRelayData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WcfRelayData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WcfRelayData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +436,54 @@ namespace Azure.ResourceManager.Relay
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WCFRelays_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WcfRelaysOps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WcfRelayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="relayName"> The relay name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<WcfRelayResource>> GetIfExistsAsync(string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
 
-            using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.GetIfExists");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _wcfRelayWCFRelaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WcfRelayData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WcfRelayData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WcfRelayData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WcfRelayResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WcfRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +497,54 @@ namespace Azure.ResourceManager.Relay
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WCFRelays_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WcfRelaysOps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WcfRelayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="relayName"> The relay name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<WcfRelayResource> GetIfExists(string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
 
-            using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.GetIfExists");
+            using DiagnosticScope scope = _wcfRelaysClientDiagnostics.CreateScope("WcfRelayCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _wcfRelayWCFRelaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WcfRelayData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WcfRelayData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WcfRelayData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WcfRelayResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WcfRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +564,7 @@ namespace Azure.ResourceManager.Relay
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<WcfRelayResource> IAsyncEnumerable<WcfRelayResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

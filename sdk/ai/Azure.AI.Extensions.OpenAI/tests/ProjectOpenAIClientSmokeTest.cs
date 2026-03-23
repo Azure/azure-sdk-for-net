@@ -5,18 +5,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.ClientModel.TestFramework;
-using NUnit.Framework;
-using OpenAI.Responses;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
+using Microsoft.ClientModel.TestFramework;
+using NUnit.Framework;
+using OpenAI.Files;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 
 [Category("Smoke")]
 public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
 {
-    private static readonly string AGENT_NAME = "MyAgentOAI";
+    private static readonly string FOUNDRY_AGENT_NAME = "MyAgentOAI";
     public ProjectOpenAIClientSmokeTest(bool isAsync) : base(isAsync)
     {
     }
@@ -56,12 +57,12 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         }
 
         AIProjectClient projectClientWithoutApp = new(
-            endpoint: new Uri(TestEnvironment.PROJECT_ENDPOINT),
+            endpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
             options: WithExtraPolicy(new AIProjectClientOptions()));
 
         AIProjectClient projectClientWithApp = new(
-            endpoint: new Uri(TestEnvironment.PROJECT_ENDPOINT),
+            endpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
             options: WithExtraPolicy(new AIProjectClientOptions()
             {
@@ -69,28 +70,28 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
             }));
 
         ProjectOpenAIClient openAIClientWithoutApp = new(
-            projectEndpoint: new Uri(TestEnvironment.PROJECT_ENDPOINT),
+            projectEndpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
             options: WithExtraPolicy(new ProjectResponsesClientOptions()));
 
         ProjectOpenAIClient openAIClientWithApp = new(
-            projectEndpoint: new Uri(TestEnvironment.PROJECT_ENDPOINT),
+            projectEndpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
             options: WithExtraPolicy(new ProjectResponsesClientOptions()
             {
                 UserAgentApplicationId = "MyOtherApplication",
             }));
 
-        async Task DoCreateAgentAsync(AgentsClient agentsClient)
+        async Task DoCreateAgentAsync(AgentAdministrationClient agentsClient)
         {
             await agentsClient.CreateAgentVersionAsync(
                 agentName: "foobar",
                 options: new AgentVersionCreationOptions(
-                    definition: new PromptAgentDefinition("mock-model")));
+                    definition: new DeclarativeAgentDefinition("mock-model")));
         }
 
         ProjectResponsesClient responsesClientWithoutApp = new(
-            projectEndpoint: new(TestEnvironment.PROJECT_ENDPOINT),
+            projectEndpoint: new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
             options: WithExtraPolicy(new ProjectResponsesClientOptions()));
 
@@ -112,15 +113,29 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         VerifyCall(DoResponseAsync(responsesClientWithoutApp), "AIProjectClient.*");
     }
 
+    [RecordedTest]
+    public async Task TestFileUpload()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        string filePath = "sample_file_for_upload.txt";
+        System.IO.File.WriteAllText(
+            path: filePath,
+            contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
+        OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+        OpenAIFile uploadedFile = await fileClient.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
+        FileDeletionResult deletion = await fileClient.DeleteFileAsync(fileId: uploadedFile.Id);
+        Assert.That(deletion.Deleted, Is.True);
+    }
+
     [TearDown]
     public override void Cleanup()
     {
         if (Mode == RecordedTestMode.Playback)
             return;
-        Uri connectionString = new(TestEnvironment.PROJECT_ENDPOINT);
+        Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
         // Remove Agents.
-        foreach (AgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME))
+        foreach (AgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: FOUNDRY_AGENT_NAME))
         {
             projectClient.Agents.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }

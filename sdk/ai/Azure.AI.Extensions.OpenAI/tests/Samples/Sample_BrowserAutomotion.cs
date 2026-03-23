@@ -43,12 +43,12 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         IgnoreSampleMayBe();
         #region Snippet:Sample_CreateProjectClient_BrowserAutomotion
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_CONNECTION_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var playwrightConnectionName = TestEnvironment.PLAYWRIGHT_CONNECTION_NAME;
 #endif
         AIProjectClientOptions options = new()
@@ -61,11 +61,11 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_BrowserAutomotion_Async
         AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
         BrowserAutomationPreviewTool playwrightTool = new(
-            new BrowserAutomationToolParameters(
+            new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
             ));
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are an Agent helping with browser automation tasks.\n" +
             "You can answer questions, provide information, and assist with various tasks\n" +
@@ -109,12 +109,12 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
     {
         IgnoreSampleMayBe();
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_CONNECTION_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var playwrightConnectionName = TestEnvironment.PLAYWRIGHT_CONNECTION_NAME;
 #endif
         AIProjectClientOptions options = new()
@@ -125,11 +125,11 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
         AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
         BrowserAutomationPreviewTool playwrightTool = new(
-            new BrowserAutomationToolParameters(
+            new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
             ));
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are an Agent helping with browser automation tasks.\n" +
             "You can answer questions, provide information, and assist with various tasks\n" +

@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(signalRSharedPrivateLinkResourceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(signalRSharedPrivateLinkResourceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SignalRSharedPrivateLinkResourceData"/> from. </param>

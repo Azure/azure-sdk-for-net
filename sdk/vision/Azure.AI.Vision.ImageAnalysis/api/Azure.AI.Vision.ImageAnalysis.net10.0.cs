@@ -182,6 +182,8 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class ImageAnalysisClient
     {
         protected ImageAnalysisClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public ImageAnalysisClient(Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientSettings settings) { }
         public ImageAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ImageAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions options) { }
         public ImageAnalysisClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -199,6 +201,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         {
             V2023_10_01 = 1,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class ImageAnalysisClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ImageAnalysisClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ImageAnalysisOptions

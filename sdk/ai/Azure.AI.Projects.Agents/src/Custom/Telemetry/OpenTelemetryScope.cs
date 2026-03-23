@@ -233,7 +233,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
             scope.SetTagMaybe(GenAiAgentType, agentType);
             scope.SetTagMaybe(GenAiAgentNameKey, agentName);
 
-            if (agentDefinition is PromptAgentDefinition promptAgentDefinition)
+            if (agentDefinition is DeclarativeAgentDefinition promptAgentDefinition)
             {
                 scope.SetTagMaybe(GenAiRequestModelKey, promptAgentDefinition.Model);
                 scope.SetTagMaybe(GenAiRequestTemperatureKey, promptAgentDefinition.Temperature);
@@ -316,10 +316,10 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 scope.SetTagMaybe(GenAiAgentHostedImage, imageBasedHostedAgentDefinition.Image);
 
                 // Extract protocol and version from ContainerProtocolVersions if available
-                if (imageBasedHostedAgentDefinition.ContainerProtocolVersions != null &&
-                    imageBasedHostedAgentDefinition.ContainerProtocolVersions.Count > 0)
+                if (imageBasedHostedAgentDefinition.Versions != null &&
+                    imageBasedHostedAgentDefinition.Versions.Count > 0)
                 {
-                    var protocolVersion = imageBasedHostedAgentDefinition.ContainerProtocolVersions[0];
+                    var protocolVersion = imageBasedHostedAgentDefinition.Versions[0];
 
                     // Set protocol name (convert enum to lowercase string for consistency with Python)
                     string protocolName = protocolVersion.Protocol.ToString().ToLowerInvariant();
@@ -335,10 +335,10 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 scope.SetTagMaybe(GenAiAgentHostedImage, hostedAgentDefinition.Image);
 
                 // Extract protocol and version from ContainerProtocolVersions if available
-                if (hostedAgentDefinition.ContainerProtocolVersions != null &&
-                    hostedAgentDefinition.ContainerProtocolVersions.Count > 0)
+                if (hostedAgentDefinition.Versions != null &&
+                    hostedAgentDefinition.Versions.Count > 0)
                 {
-                    var protocolVersion = hostedAgentDefinition.ContainerProtocolVersions[0];
+                    var protocolVersion = hostedAgentDefinition.Versions[0];
 
                     // Set protocol name (convert enum to lowercase string for consistency with Python)
                     string protocolName = protocolVersion.Protocol.ToString().ToLowerInvariant();
@@ -373,7 +373,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
             }
 
             // Check for prompt agent
-            if (agentDefinition is PromptAgentDefinition)
+            if (agentDefinition is DeclarativeAgentDefinition)
             {
                 return AgentTypePrompt;
             }

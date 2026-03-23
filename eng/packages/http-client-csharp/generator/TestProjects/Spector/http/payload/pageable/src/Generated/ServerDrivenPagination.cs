@@ -18,6 +18,8 @@ namespace Payload.Pageable._ServerDrivenPagination
     {
         protected ServerDrivenPagination() => throw null;
 
+        internal ServerDrivenPagination(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Pageable<BinaryData> Link(RequestContext context) => throw null;

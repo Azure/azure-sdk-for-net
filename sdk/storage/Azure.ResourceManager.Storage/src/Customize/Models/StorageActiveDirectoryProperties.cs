@@ -5,9 +5,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
+    [CodeGenSerialization(nameof(ActiveDirectoryDomainGuid), DeserializationValueHook = nameof(DeserializeNullableGuid))]
     public partial class StorageActiveDirectoryProperties
     {
         /// <summary> Initializes a new instance of <see cref="StorageActiveDirectoryProperties"/>. </summary>
@@ -32,6 +36,20 @@ namespace Azure.ResourceManager.Storage.Models
         {
             get => ActiveDirectoryDomainGuid ?? Guid.Empty;
             set => ActiveDirectoryDomainGuid = value == Guid.Empty ? null : value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DeserializeNullableGuid(JsonProperty property, ref Guid? domainGuid)
+        {
+            string guidString = property.Value.GetString();
+            if (!string.IsNullOrWhiteSpace(guidString) && Guid.TryParse(guidString, out Guid parsedGuid))
+            {
+                domainGuid = parsedGuid;
+            }
+            else
+            {
+                domainGuid = null;
+            }
         }
     }
 }

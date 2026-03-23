@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<MySqlFlexibleServerBackupV2Resource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupName, MySqlFlexibleServerBackupV2Data data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MySqlFlexibleServerBackupV2Resource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupName, MySqlFlexibleServerBackupV2Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<MySqlFlexibleServerBackupV2Resource> CreateOrUpdate(WaitUntil waitUntil, string backupName, MySqlFlexibleServerBackupV2Data data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MySqlFlexibleServerBackupV2Resource> CreateOrUpdate(WaitUntil waitUntil, string backupName, MySqlFlexibleServerBackupV2Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 

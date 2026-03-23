@@ -4,25 +4,20 @@
 using System;
 using System.ClientModel.Primitives;
 
-using Azure.AI.Projects.Agents;
-
 namespace Azure.AI.Projects.Agents;
 
 public static partial class ClientConnectionProviderExtensions
 {
     extension(ClientConnectionProvider connectionProvider)
     {
-        public AgentsClient GetProjectAgentsClient(AgentsClientOptions options=null)
+        public AgentAdministrationClient GetProjectAgentsClient(Uri endpoint=null, AgentAdministrationClientOptions options=null)
         {
             ClientConnection pipelineConnection = connectionProvider.GetConnection("Internal.AgentsPipelinePassthrough");
             ClientPipeline smuggledPipeline = pipelineConnection.Credential as ClientPipeline;
-            options ??= new()
-            {
-                Endpoint = new Uri(pipelineConnection.Locator),
-            };
+            options ??= new();
             // If the option without endpoint were provided, make sure, we still set it.
-            options.Endpoint ??= new(pipelineConnection.Locator);
-            return new AgentsClient(smuggledPipeline, options.Endpoint, options.ApiVersion);
+            endpoint ??= new(pipelineConnection.Locator);
+            return new AgentAdministrationClient(smuggledPipeline, endpoint, options.Version);
         }
     }
 }

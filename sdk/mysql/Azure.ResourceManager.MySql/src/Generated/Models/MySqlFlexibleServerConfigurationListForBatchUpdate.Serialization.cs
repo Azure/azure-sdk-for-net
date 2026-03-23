@@ -65,9 +65,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mySqlFlexibleServerConfigurationListForBatchUpdate, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(mySqlFlexibleServerConfigurationListForBatchUpdate, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

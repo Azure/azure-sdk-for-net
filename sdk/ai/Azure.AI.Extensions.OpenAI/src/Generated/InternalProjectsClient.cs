@@ -13,10 +13,8 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalProjectsClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential provider used to authenticate to the service. </summary>
-        private readonly AuthenticationTokenProvider _tokenProvider;
         /// <summary> The OAuth2 flows supported by the service. </summary>
-        private readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
+        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
         {
             new Dictionary<string, object>
             {
@@ -39,16 +37,32 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Initializes a new instance of InternalProjectsClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, InternalProjectsClientOptions options)
+        internal InternalProjectsClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, InternalProjectsClientOptions options)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
             options ??= new InternalProjectsClientOptions();
 
             _endpoint = endpoint;
-            _tokenProvider = tokenProvider;
-            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
+            if (authenticationPolicy != null)
+            {
+                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+            }
+            else
+            {
+                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly) }, Array.Empty<PipelinePolicy>());
+            }
+        }
+
+        /// <summary> Initializes a new instance of InternalProjectsClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, InternalProjectsClientOptions options) : this(new BearerTokenPolicy(tokenProvider, _flows), endpoint, options)
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
