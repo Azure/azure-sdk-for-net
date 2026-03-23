@@ -700,6 +700,8 @@ namespace Azure.Search.Documents.Indexes.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AzureOpenAIModelName(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName Gpt54Mini { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName Gpt54Nano { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName Gpt5Mini { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName Gpt5Nano { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName TextEmbedding3Large { get { throw null; } }
@@ -3921,7 +3923,6 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         public SearchIndexerDataUserAssignedIdentity(Azure.Core.ResourceIdentifier userAssignedIdentity) { }
         public SearchIndexerDataUserAssignedIdentity(string resourceId) { }
-        public string FederatedIdentityClientId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
         protected override Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6531,7 +6532,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity SearchIndexerDataIdentity(string odataType = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerDataNoneIdentity SearchIndexerDataNoneIdentity() { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection SearchIndexerDataSourceConnection(string name = null, string description = null, Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType type = default(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType), string connectionString = null, Azure.Search.Documents.Indexes.Models.SearchIndexerDataContainer container = null, Azure.Search.Documents.Indexes.Models.DataChangeDetectionPolicy dataChangeDetectionPolicy = null, Azure.Search.Documents.Indexes.Models.DataDeletionDetectionPolicy dataDeletionDetectionPolicy = null, string etag = null, Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey encryptionKey = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalBinaryDataProperties = null) { throw null; }
-        public static Azure.Search.Documents.Indexes.Models.SearchIndexerDataUserAssignedIdentity SearchIndexerDataUserAssignedIdentity(string resourceId = null, string federatedIdentityClientId = null) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.SearchIndexerDataUserAssignedIdentity SearchIndexerDataUserAssignedIdentity(string resourceId = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerError SearchIndexerError(string key, string errorMessage, int statusCode, string name, string details, string documentationLink) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerIndexProjection SearchIndexerIndexProjection(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerIndexProjectionSelector> selectors = null, Azure.Search.Documents.Indexes.Models.SearchIndexerIndexProjectionsParameters parameters = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerIndexProjectionSelector SearchIndexerIndexProjectionSelector(string targetIndexName = null, string parentKeyFieldName = null, string sourceContext = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> mappings = null) { throw null; }

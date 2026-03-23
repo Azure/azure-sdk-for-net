@@ -4,8 +4,6 @@ This document covers how to apply, update, and remove customizations on top of t
 
 **Related docs:**
 - [architecture.md](./architecture.md) — full source layout and code generation workflow  
-- [troubleshooting.md](./troubleshooting.md) — main phase-based issue diagnosis and fixes  
-- [journal/](./journal/) — versioned run logs keyed by API version (`<api-version>.md`)  
 - [TypeSpec Customization Reference](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/.tspd/docs/customization.md) — upstream attribute documentation
 
 ---

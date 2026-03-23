@@ -388,11 +388,10 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Specifies the identity for a datasource to use. </summary>
         /// <param name="resourceId"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form "/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId" that should have been assigned to the search service. </param>
-        /// <param name="federatedIdentityClientId"> Multi-tenant User-Assigned Managed Identity Support: The client id of the multi-tenant App that has been configured to federate with the user-assigned managed identity. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexerDataUserAssignedIdentity"/> instance for mocking. </returns>
-        public static SearchIndexerDataUserAssignedIdentity SearchIndexerDataUserAssignedIdentity(string resourceId = default, string federatedIdentityClientId = default)
+        public static SearchIndexerDataUserAssignedIdentity SearchIndexerDataUserAssignedIdentity(string resourceId = default)
         {
-            return new SearchIndexerDataUserAssignedIdentity("#Microsoft.Azure.Search.DataUserAssignedIdentity", additionalBinaryDataProperties: null, resourceId, federatedIdentityClientId);
+            return new SearchIndexerDataUserAssignedIdentity("#Microsoft.Azure.Search.DataUserAssignedIdentity", additionalBinaryDataProperties: null, resourceId);
         }
 
         /// <summary> Represents a search index definition, which describes the fields and search behavior of an index. </summary>

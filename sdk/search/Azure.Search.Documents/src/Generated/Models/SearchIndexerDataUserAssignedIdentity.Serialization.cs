@@ -82,11 +82,6 @@ namespace Azure.Search.Documents.Indexes.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("userAssignedIdentity"u8);
             writer.WriteStringValue(ResourceId);
-            if (Optional.IsDefined(FederatedIdentityClientId))
-            {
-                writer.WritePropertyName("federatedIdentityClientId"u8);
-                writer.WriteStringValue(FederatedIdentityClientId);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -117,7 +112,6 @@ namespace Azure.Search.Documents.Indexes.Models
             string odataType = "#Microsoft.Azure.Search.DataUserAssignedIdentity";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string resourceId = default;
-            string federatedIdentityClientId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -130,17 +124,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     resourceId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("federatedIdentityClientId"u8))
-                {
-                    federatedIdentityClientId = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SearchIndexerDataUserAssignedIdentity(odataType, additionalBinaryDataProperties, resourceId, federatedIdentityClientId);
+            return new SearchIndexerDataUserAssignedIdentity(odataType, additionalBinaryDataProperties, resourceId);
         }
     }
 }
