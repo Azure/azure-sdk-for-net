@@ -81,6 +81,8 @@
 # Client Libraries
 ####################
 
+# An update that will block PR
+
 # PRLabel: %AI Model Inference %AI Projects
 /sdk/ai/                                                           @dargilco @glharper @nick863 @trangevi @trrwilson
 
