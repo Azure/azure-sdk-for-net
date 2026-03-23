@@ -10,321 +10,51 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    /// <summary> Operations for nested default -&gt; individually and parent multiple parameters. </summary>
     public partial class IndividuallyParentNestedWithMultipleClient
     {
-        private readonly Uri _endpoint;
-        private readonly string _name;
-        private readonly string _region;
+        protected IndividuallyParentNestedWithMultipleClient() => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMultipleClient for mocking. </summary>
-        protected IndividuallyParentNestedWithMultipleClient()
-        {
-        }
+        internal IndividuallyParentNestedWithMultipleClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string name, string region) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMultipleClient. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="name"></param>
-        /// <param name="region"></param>
-        internal IndividuallyParentNestedWithMultipleClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string name, string region)
-        {
-            ClientDiagnostics = clientDiagnostics;
-            _endpoint = endpoint;
-            Pipeline = pipeline;
-            _name = name;
-            _region = region;
-        }
+        public IndividuallyParentNestedWithMultipleClient(string name, string region) : this(new Uri("http://localhost:3000"), name, region, new IndividuallyParentClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMultipleClient. </summary>
-        /// <param name="name"> The name to use for operations. </param>
-        /// <param name="region"> The region to use for operations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        public IndividuallyParentNestedWithMultipleClient(string name, string region) : this(new Uri("http://localhost:3000"), name, region, new IndividuallyParentClientOptions())
-        {
-        }
+        public IndividuallyParentNestedWithMultipleClient(string name, string region, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), name, region, options) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMultipleClient. </summary>
-        /// <param name="name"> The name to use for operations. </param>
-        /// <param name="region"> The region to use for operations. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        public IndividuallyParentNestedWithMultipleClient(string name, string region, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), name, region, options)
-        {
-        }
+        internal IndividuallyParentNestedWithMultipleClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, string region, IndividuallyParentClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMultipleClient. </summary>
-        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="name"> The name to use for operations. </param>
-        /// <param name="region"> The region to use for operations. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        internal IndividuallyParentNestedWithMultipleClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, string region, IndividuallyParentClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
+        public IndividuallyParentNestedWithMultipleClient(Uri endpoint, string name, string region, IndividuallyParentClientOptions options) : this(null, endpoint, name, region, options) => throw null;
 
-            options ??= new IndividuallyParentClientOptions();
-
-            _endpoint = endpoint;
-            _name = name;
-            _region = region;
-            if (authenticationPolicy != null)
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
-            }
-            else
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            }
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMultipleClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="name"> The name to use for operations. </param>
-        /// <param name="region"> The region to use for operations. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="name"/> or <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        public IndividuallyParentNestedWithMultipleClient(Uri endpoint, string name, string region, IndividuallyParentClientOptions options) : this(null, endpoint, name, region, options)
-        {
-        }
-
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMultipleClient from a <see cref="IndividuallyParentNestedWithMultipleClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for IndividuallyParentNestedWithMultipleClient. </param>
         [Experimental("SCME0002")]
-        public IndividuallyParentNestedWithMultipleClient(IndividuallyParentNestedWithMultipleClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Region, settings?.Options)
-        {
-        }
+        public IndividuallyParentNestedWithMultipleClient(IndividuallyParentNestedWithMultipleClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Region, settings?.Options) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Response WithQuery(string format, RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] WithQuery
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="format"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response WithQuery(string format, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithMultipleClient.WithQuery");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateWithQueryRequest(format, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> WithQueryAsync(string format, RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] WithQuery
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="format"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> WithQueryAsync(string format, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithMultipleClient.WithQuery");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateWithQueryRequest(format, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response WithQuery(string format = default, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> WithQuery. </summary>
-        /// <param name="format"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response WithQuery(string format = default, CancellationToken cancellationToken = default)
-        {
-            return WithQuery(format, cancellationToken.ToRequestContext());
-        }
+        public virtual Task<Response> WithQueryAsync(string format = default, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> WithQuery. </summary>
-        /// <param name="format"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> WithQueryAsync(string format = default, CancellationToken cancellationToken = default)
-        {
-            return await WithQueryAsync(format, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
+        public virtual Response GetStandalone(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] GetStandalone
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetStandalone(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithMultipleClient.GetStandalone");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetStandaloneRequest(context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> GetStandaloneAsync(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] GetStandalone
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetStandaloneAsync(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithMultipleClient.GetStandalone");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetStandaloneRequest(context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response GetStandalone(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> GetStandalone. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response GetStandalone(CancellationToken cancellationToken = default)
-        {
-            return GetStandalone(cancellationToken.ToRequestContext());
-        }
+        public virtual Task<Response> GetStandaloneAsync(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> GetStandalone. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> GetStandaloneAsync(CancellationToken cancellationToken = default)
-        {
-            return await GetStandaloneAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
+        public virtual Response DeleteStandalone(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] DeleteStandalone
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteStandalone(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithMultipleClient.DeleteStandalone");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteStandaloneRequest(context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> DeleteStandaloneAsync(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] DeleteStandalone
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteStandaloneAsync(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithMultipleClient.DeleteStandalone");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteStandaloneRequest(context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response DeleteStandalone(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> DeleteStandalone. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteStandalone(CancellationToken cancellationToken = default)
-        {
-            return DeleteStandalone(cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> DeleteStandalone. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteStandaloneAsync(CancellationToken cancellationToken = default)
-        {
-            return await DeleteStandaloneAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
+        public virtual Task<Response> DeleteStandaloneAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

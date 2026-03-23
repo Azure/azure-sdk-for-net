@@ -11,28 +11,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    /// <summary> Client options for <see cref="IndividuallyParentClient"/>. </summary>
     public partial class IndividuallyParentClientOptions : ClientOptions
     {
-        /// <summary> Initializes a new instance of IndividuallyParentClientOptions. </summary>
-        public IndividuallyParentClientOptions()
-        {
-            ConfigureLogging();
-        }
+        public IndividuallyParentClientOptions() => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentClientOptions from configuration. </summary>
-        /// <param name="section"> The configuration section. </param>
         [Experimental("SCME0002")]
-        internal IndividuallyParentClientOptions(IConfigurationSection section) : base(section, null)
-        {
-            if (section is null || !section.Exists())
-            {
-                return;
-            }
-            ConfigureLogging();
-        }
-
-        /// <summary> Configures logging for the client options. </summary>
-        partial void ConfigureLogging();
+        internal IndividuallyParentClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

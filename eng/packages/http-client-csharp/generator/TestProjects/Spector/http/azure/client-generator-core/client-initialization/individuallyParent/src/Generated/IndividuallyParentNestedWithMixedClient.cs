@@ -10,372 +10,51 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    /// <summary> Operations for nested default -&gt; individually and parent mixed parameters. </summary>
     public partial class IndividuallyParentNestedWithMixedClient
     {
-        private readonly Uri _endpoint;
-        private readonly string _name;
+        protected IndividuallyParentNestedWithMixedClient() => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMixedClient for mocking. </summary>
-        protected IndividuallyParentNestedWithMixedClient()
-        {
-        }
+        internal IndividuallyParentNestedWithMixedClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string name) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMixedClient. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="name"></param>
-        internal IndividuallyParentNestedWithMixedClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string name)
-        {
-            ClientDiagnostics = clientDiagnostics;
-            _endpoint = endpoint;
-            Pipeline = pipeline;
-            _name = name;
-        }
+        public IndividuallyParentNestedWithMixedClient(string name) : this(new Uri("http://localhost:3000"), name, new IndividuallyParentClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMixedClient. </summary>
-        /// <param name="name"> The name to use for operations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public IndividuallyParentNestedWithMixedClient(string name) : this(new Uri("http://localhost:3000"), name, new IndividuallyParentClientOptions())
-        {
-        }
+        public IndividuallyParentNestedWithMixedClient(string name, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), name, options) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMixedClient. </summary>
-        /// <param name="name"> The name to use for operations. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public IndividuallyParentNestedWithMixedClient(string name, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), name, options)
-        {
-        }
+        internal IndividuallyParentNestedWithMixedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, IndividuallyParentClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMixedClient. </summary>
-        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="name"> The name to use for operations. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        internal IndividuallyParentNestedWithMixedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, IndividuallyParentClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+        public IndividuallyParentNestedWithMixedClient(Uri endpoint, string name, IndividuallyParentClientOptions options) : this(null, endpoint, name, options) => throw null;
 
-            options ??= new IndividuallyParentClientOptions();
-
-            _endpoint = endpoint;
-            _name = name;
-            if (authenticationPolicy != null)
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
-            }
-            else
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            }
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMixedClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="name"> The name to use for operations. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public IndividuallyParentNestedWithMixedClient(Uri endpoint, string name, IndividuallyParentClientOptions options) : this(null, endpoint, name, options)
-        {
-        }
-
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMixedClient from a <see cref="IndividuallyParentNestedWithMixedClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for IndividuallyParentNestedWithMixedClient. </param>
         [Experimental("SCME0002")]
-        public IndividuallyParentNestedWithMixedClient(IndividuallyParentNestedWithMixedClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Options)
-        {
-        }
+        public IndividuallyParentNestedWithMixedClient(IndividuallyParentNestedWithMixedClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Options) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Response WithQuery(string region, string format, RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] WithQuery
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="region"></param>
-        /// <param name="format"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response WithQuery(string region, string format, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithMixedClient.WithQuery");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(region, nameof(region));
+        public virtual Task<Response> WithQueryAsync(string region, string format, RequestContext context) => throw null;
 
-                using HttpMessage message = CreateWithQueryRequest(region, format, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response WithQuery(string region, string format = default, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] WithQuery
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="region"></param>
-        /// <param name="format"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> WithQueryAsync(string region, string format, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithMixedClient.WithQuery");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(region, nameof(region));
+        public virtual Task<Response> WithQueryAsync(string region, string format = default, CancellationToken cancellationToken = default) => throw null;
 
-                using HttpMessage message = CreateWithQueryRequest(region, format, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response GetStandalone(string region, RequestContext context) => throw null;
 
-        /// <summary> WithQuery. </summary>
-        /// <param name="region"></param>
-        /// <param name="format"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response WithQuery(string region, string format = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
+        public virtual Task<Response> GetStandaloneAsync(string region, RequestContext context) => throw null;
 
-            return WithQuery(region, format, cancellationToken.ToRequestContext());
-        }
+        public virtual Response GetStandalone(string region, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> WithQuery. </summary>
-        /// <param name="region"></param>
-        /// <param name="format"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> WithQueryAsync(string region, string format = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
+        public virtual Task<Response> GetStandaloneAsync(string region, CancellationToken cancellationToken = default) => throw null;
 
-            return await WithQueryAsync(region, format, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
+        public virtual Response DeleteStandalone(string region, RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] GetStandalone
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="region"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetStandalone(string region, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithMixedClient.GetStandalone");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(region, nameof(region));
+        public virtual Task<Response> DeleteStandaloneAsync(string region, RequestContext context) => throw null;
 
-                using HttpMessage message = CreateGetStandaloneRequest(region, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response DeleteStandalone(string region, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] GetStandalone
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="region"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetStandaloneAsync(string region, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithMixedClient.GetStandalone");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(region, nameof(region));
-
-                using HttpMessage message = CreateGetStandaloneRequest(region, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> GetStandalone. </summary>
-        /// <param name="region"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response GetStandalone(string region, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
-
-            return GetStandalone(region, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> GetStandalone. </summary>
-        /// <param name="region"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> GetStandaloneAsync(string region, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
-
-            return await GetStandaloneAsync(region, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] DeleteStandalone
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="region"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteStandalone(string region, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithMixedClient.DeleteStandalone");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(region, nameof(region));
-
-                using HttpMessage message = CreateDeleteStandaloneRequest(region, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] DeleteStandalone
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="region"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteStandaloneAsync(string region, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithMixedClient.DeleteStandalone");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(region, nameof(region));
-
-                using HttpMessage message = CreateDeleteStandaloneRequest(region, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> DeleteStandalone. </summary>
-        /// <param name="region"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteStandalone(string region, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
-
-            return DeleteStandalone(region, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> DeleteStandalone. </summary>
-        /// <param name="region"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteStandaloneAsync(string region, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
-
-            return await DeleteStandaloneAsync(region, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
+        public virtual Task<Response> DeleteStandaloneAsync(string region, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -10,238 +10,43 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    /// <summary> Operations for nested default -&gt; individually and parent param alias. </summary>
     public partial class IndividuallyParentNestedWithParamAliasClient
     {
-        private readonly Uri _endpoint;
-        private readonly string _blobName;
+        protected IndividuallyParentNestedWithParamAliasClient() => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithParamAliasClient for mocking. </summary>
-        protected IndividuallyParentNestedWithParamAliasClient()
-        {
-        }
+        internal IndividuallyParentNestedWithParamAliasClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string blobName) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithParamAliasClient. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="blobName"></param>
-        internal IndividuallyParentNestedWithParamAliasClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string blobName)
-        {
-            ClientDiagnostics = clientDiagnostics;
-            _endpoint = endpoint;
-            Pipeline = pipeline;
-            _blobName = blobName;
-        }
+        public IndividuallyParentNestedWithParamAliasClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new IndividuallyParentClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithParamAliasClient. </summary>
-        /// <param name="blobName"> Blob name for the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="blobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public IndividuallyParentNestedWithParamAliasClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new IndividuallyParentClientOptions())
-        {
-        }
+        public IndividuallyParentNestedWithParamAliasClient(string blobName, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithParamAliasClient. </summary>
-        /// <param name="blobName"> Blob name for the client. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="blobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public IndividuallyParentNestedWithParamAliasClient(string blobName, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options)
-        {
-        }
+        internal IndividuallyParentNestedWithParamAliasClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, IndividuallyParentClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithParamAliasClient. </summary>
-        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="blobName"> Blob name for the client. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        internal IndividuallyParentNestedWithParamAliasClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, IndividuallyParentClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(blobName, nameof(blobName));
+        public IndividuallyParentNestedWithParamAliasClient(Uri endpoint, string blobName, IndividuallyParentClientOptions options) : this(null, endpoint, blobName, options) => throw null;
 
-            options ??= new IndividuallyParentClientOptions();
-
-            _endpoint = endpoint;
-            _blobName = blobName;
-            if (authenticationPolicy != null)
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
-            }
-            else
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            }
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithParamAliasClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="blobName"> Blob name for the client. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="blobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="blobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public IndividuallyParentNestedWithParamAliasClient(Uri endpoint, string blobName, IndividuallyParentClientOptions options) : this(null, endpoint, blobName, options)
-        {
-        }
-
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithParamAliasClient from a <see cref="IndividuallyParentNestedWithParamAliasClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for IndividuallyParentNestedWithParamAliasClient. </param>
         [Experimental("SCME0002")]
-        public IndividuallyParentNestedWithParamAliasClient(IndividuallyParentNestedWithParamAliasClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options)
-        {
-        }
+        public IndividuallyParentNestedWithParamAliasClient(IndividuallyParentNestedWithParamAliasClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Response WithAliasedName(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] WithAliasedName
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response WithAliasedName(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithParamAliasClient.WithAliasedName");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateWithAliasedNameRequest(context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> WithAliasedNameAsync(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] WithAliasedName
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> WithAliasedNameAsync(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithParamAliasClient.WithAliasedName");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateWithAliasedNameRequest(context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response WithAliasedName(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> WithAliasedName. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response WithAliasedName(CancellationToken cancellationToken = default)
-        {
-            return WithAliasedName(cancellationToken.ToRequestContext());
-        }
+        public virtual Task<Response> WithAliasedNameAsync(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> WithAliasedName. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> WithAliasedNameAsync(CancellationToken cancellationToken = default)
-        {
-            return await WithAliasedNameAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
+        public virtual Response WithOriginalName(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] WithOriginalName
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response WithOriginalName(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithParamAliasClient.WithOriginalName");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateWithOriginalNameRequest(context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> WithOriginalNameAsync(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] WithOriginalName
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> WithOriginalNameAsync(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithParamAliasClient.WithOriginalName");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateWithOriginalNameRequest(context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response WithOriginalName(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> WithOriginalName. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response WithOriginalName(CancellationToken cancellationToken = default)
-        {
-            return WithOriginalName(cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> WithOriginalName. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> WithOriginalNameAsync(CancellationToken cancellationToken = default)
-        {
-            return await WithOriginalNameAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
+        public virtual Task<Response> WithOriginalNameAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

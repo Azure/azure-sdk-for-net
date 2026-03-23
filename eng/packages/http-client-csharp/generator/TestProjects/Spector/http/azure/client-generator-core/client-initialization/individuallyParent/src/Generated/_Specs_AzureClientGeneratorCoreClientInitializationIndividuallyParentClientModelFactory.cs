@@ -9,18 +9,8 @@ using System;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class _Specs_AzureClientGeneratorCoreClientInitializationIndividuallyParentClientModelFactory
     {
-        /// <summary> Properties of a blob. </summary>
-        /// <param name="name"></param>
-        /// <param name="size"></param>
-        /// <param name="contentType"></param>
-        /// <param name="createdOn"></param>
-        /// <returns> A new <see cref="_IndividuallyParentClient.BlobProperties"/> instance for mocking. </returns>
-        public static BlobProperties BlobProperties(string name = default, long size = default, string contentType = default, DateTimeOffset createdOn = default)
-        {
-            return new BlobProperties(name, size, contentType, createdOn, additionalBinaryDataProperties: null);
-        }
+        public static BlobProperties BlobProperties(string name = default, long size = default, string contentType = default, DateTimeOffset createdOn = default) => throw null;
     }
 }

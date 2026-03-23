@@ -6,54 +6,17 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    /// <summary> Properties of a blob. </summary>
     public partial class BlobProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public string Name => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="BlobProperties"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="size"></param>
-        /// <param name="contentType"></param>
-        /// <param name="createdOn"></param>
-        internal BlobProperties(string name, long size, string contentType, DateTimeOffset createdOn)
-        {
-            Name = name;
-            Size = size;
-            ContentType = contentType;
-            CreatedOn = createdOn;
-        }
+        public long Size => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="BlobProperties"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="size"></param>
-        /// <param name="contentType"></param>
-        /// <param name="createdOn"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobProperties(string name, long size, string contentType, DateTimeOffset createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            Size = size;
-            ContentType = contentType;
-            CreatedOn = createdOn;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
+        public string ContentType => throw null;
 
-        /// <summary> Gets the Name. </summary>
-        public string Name { get; }
-
-        /// <summary> Gets the Size. </summary>
-        public long Size { get; }
-
-        /// <summary> Gets the ContentType. </summary>
-        public string ContentType { get; }
-
-        /// <summary> Gets the CreatedOn. </summary>
-        public DateTimeOffset CreatedOn { get; }
+        public DateTimeOffset CreatedOn => throw null;
     }
 }

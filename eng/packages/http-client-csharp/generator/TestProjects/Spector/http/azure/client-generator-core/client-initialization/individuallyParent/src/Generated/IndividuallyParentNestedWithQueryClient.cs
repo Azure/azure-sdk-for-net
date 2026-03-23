@@ -10,314 +10,51 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    /// <summary> Operations for nested default -&gt; individually and parent with query parameters. </summary>
     public partial class IndividuallyParentNestedWithQueryClient
     {
-        private readonly Uri _endpoint;
-        private readonly string _blobName;
+        protected IndividuallyParentNestedWithQueryClient() => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithQueryClient for mocking. </summary>
-        protected IndividuallyParentNestedWithQueryClient()
-        {
-        }
+        internal IndividuallyParentNestedWithQueryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string blobName) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithQueryClient. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="blobName"></param>
-        internal IndividuallyParentNestedWithQueryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string blobName)
-        {
-            ClientDiagnostics = clientDiagnostics;
-            _endpoint = endpoint;
-            Pipeline = pipeline;
-            _blobName = blobName;
-        }
+        public IndividuallyParentNestedWithQueryClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new IndividuallyParentClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithQueryClient. </summary>
-        /// <param name="blobName"> The blob name to use for operations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="blobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public IndividuallyParentNestedWithQueryClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new IndividuallyParentClientOptions())
-        {
-        }
+        public IndividuallyParentNestedWithQueryClient(string blobName, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithQueryClient. </summary>
-        /// <param name="blobName"> The blob name to use for operations. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="blobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public IndividuallyParentNestedWithQueryClient(string blobName, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options)
-        {
-        }
+        internal IndividuallyParentNestedWithQueryClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, IndividuallyParentClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithQueryClient. </summary>
-        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="blobName"> The blob name to use for operations. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        internal IndividuallyParentNestedWithQueryClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, IndividuallyParentClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(blobName, nameof(blobName));
+        public IndividuallyParentNestedWithQueryClient(Uri endpoint, string blobName, IndividuallyParentClientOptions options) : this(null, endpoint, blobName, options) => throw null;
 
-            options ??= new IndividuallyParentClientOptions();
-
-            _endpoint = endpoint;
-            _blobName = blobName;
-            if (authenticationPolicy != null)
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
-            }
-            else
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            }
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithQueryClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="blobName"> The blob name to use for operations. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="blobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="blobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public IndividuallyParentNestedWithQueryClient(Uri endpoint, string blobName, IndividuallyParentClientOptions options) : this(null, endpoint, blobName, options)
-        {
-        }
-
-        /// <summary> Initializes a new instance of IndividuallyParentNestedWithQueryClient from a <see cref="IndividuallyParentNestedWithQueryClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for IndividuallyParentNestedWithQueryClient. </param>
         [Experimental("SCME0002")]
-        public IndividuallyParentNestedWithQueryClient(IndividuallyParentNestedWithQueryClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options)
-        {
-        }
+        public IndividuallyParentNestedWithQueryClient(IndividuallyParentNestedWithQueryClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Response WithQuery(string format, RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] WithQuery
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="format"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response WithQuery(string format, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithQueryClient.WithQuery");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateWithQueryRequest(format, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> WithQueryAsync(string format, RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] WithQuery
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="format"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> WithQueryAsync(string format, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithQueryClient.WithQuery");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateWithQueryRequest(format, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response WithQuery(string format = default, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> WithQuery. </summary>
-        /// <param name="format"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response WithQuery(string format = default, CancellationToken cancellationToken = default)
-        {
-            return WithQuery(format, cancellationToken.ToRequestContext());
-        }
+        public virtual Task<Response> WithQueryAsync(string format = default, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> WithQuery. </summary>
-        /// <param name="format"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> WithQueryAsync(string format = default, CancellationToken cancellationToken = default)
-        {
-            return await WithQueryAsync(format, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
+        public virtual Response GetStandalone(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] GetStandalone
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetStandalone(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithQueryClient.GetStandalone");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetStandaloneRequest(context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> GetStandaloneAsync(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] GetStandalone
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetStandaloneAsync(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithQueryClient.GetStandalone");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetStandaloneRequest(context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response<BlobProperties> GetStandalone(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> GetStandalone. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BlobProperties> GetStandalone(CancellationToken cancellationToken = default)
-        {
-            Response result = GetStandalone(cancellationToken.ToRequestContext());
-            return Response.FromValue((BlobProperties)result, result);
-        }
+        public virtual Task<Response<BlobProperties>> GetStandaloneAsync(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> GetStandalone. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BlobProperties>> GetStandaloneAsync(CancellationToken cancellationToken = default)
-        {
-            Response result = await GetStandaloneAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((BlobProperties)result, result);
-        }
+        public virtual Response DeleteStandalone(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] DeleteStandalone
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteStandalone(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithQueryClient.DeleteStandalone");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteStandaloneRequest(context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> DeleteStandaloneAsync(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] DeleteStandalone
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteStandaloneAsync(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IndividuallyParentNestedWithQueryClient.DeleteStandalone");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteStandaloneRequest(context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response DeleteStandalone(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> DeleteStandalone. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteStandalone(CancellationToken cancellationToken = default)
-        {
-            return DeleteStandalone(cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> DeleteStandalone. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteStandaloneAsync(CancellationToken cancellationToken = default)
-        {
-            return await DeleteStandaloneAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
+        public virtual Task<Response> DeleteStandaloneAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

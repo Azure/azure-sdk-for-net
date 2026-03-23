@@ -12,37 +12,27 @@ using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    /// <summary> Represents the settings used to configure a <see cref="IndividuallyParentNestedWithParamAliasClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
     [Experimental("SCME0002")]
     public partial class IndividuallyParentNestedWithParamAliasClientSettings : ClientSettings
     {
-        /// <summary> Gets or sets the Endpoint. </summary>
-        public Uri Endpoint { get; set; }
-
-        /// <summary> Gets or sets the BlobName. </summary>
-        public string BlobName { get; set; }
-
-        /// <summary> Gets or sets the Options. </summary>
-        public IndividuallyParentClientOptions Options { get; set; }
-
-        /// <summary> Binds configuration values from the given section. </summary>
-        /// <param name="section"> The configuration section. </param>
-        protected override void BindCore(IConfigurationSection section)
+        public Uri Endpoint
         {
-            if (Uri.TryCreate(section["Endpoint"], UriKind.Absolute, out Uri endpoint))
-            {
-                Endpoint = endpoint;
-            }
-            string blobName = section["BlobName"];
-            if (!string.IsNullOrEmpty(blobName))
-            {
-                BlobName = blobName;
-            }
-            IConfigurationSection optionsSection = section.GetSection("Options");
-            if (optionsSection.Exists())
-            {
-                Options = new IndividuallyParentClientOptions(optionsSection);
-            }
+            get => throw null;
+            set => throw null;
         }
+
+        public string BlobName
+        {
+            get => throw null;
+            set => throw null;
+        }
+
+        public IndividuallyParentClientOptions Options
+        {
+            get => throw null;
+            set => throw null;
+        }
+
+        protected override void BindCore(IConfigurationSection section) => throw null;
     }
 }
