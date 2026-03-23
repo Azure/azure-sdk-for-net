@@ -22,10 +22,6 @@
 ### Breaking Changes
 - Model AzureDatabricksDeltaLakeLinkedService parameter access_token is no longer required in constructor
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-preview.22 (2025-09-05)
 
 ### Features Added
