@@ -126,29 +126,32 @@ internal sealed class ResponseOrchestrator
     /// <param name="responseId">The response ID to look up.</param>
     /// <returns>The Response snapshot.</returns>
     /// <exception cref="ResourceNotFoundException">If the response cannot be retrieved.</exception>
-    public Task<Response> GetAsync(string responseId)
+    public async Task<Response> GetAsync(string responseId)
     {
-        if (!_tracker.TryGet(responseId, out var execution) || execution is null)
+        // If the response is in-flight, apply in-flight guards and return a snapshot.
+        if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
-            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            // Guard: store=false responses are not retrievable (FR-014)
+            if (!execution.Store)
+            {
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+
+            // Non-background responses are only visible after completion with a non-cancelled terminal state
+            if (!execution.IsBackground
+                && (execution.Response is null
+                    || execution.CompletedAt is null
+                    || execution.Response.Status == ResponseStatus.Cancelled))
+            {
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+
+            return execution.Response!.Snapshot();
         }
 
-        // Guard: store=false responses are not retrievable (FR-014)
-        if (!execution.Store)
-        {
-            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
-        }
-
-        // Non-background responses are only visible after completion with a non-cancelled terminal state
-        if (!execution.IsBackground
-            && (execution.Response is null
-                || execution.CompletedAt is null
-                || execution.Response.Status == ResponseStatus.Cancelled))
-        {
-            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
-        }
-
-        return Task.FromResult(execution.Response!.Snapshot());
+        // Not in-flight — fall through to the durable store.
+        // Provider throws ResourceNotFoundException if the ID doesn't exist.
+        return await _provider.GetResponseAsync(responseId);
     }
 
     /// <summary>
@@ -164,7 +167,20 @@ internal sealed class ResponseOrchestrator
     {
         if (!_tracker.TryGet(responseId, out var execution) || execution is null)
         {
-            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            // Not in-flight — check durable store for terminal state.
+            // If it exists and is already terminal, return as-is (idempotent).
+            // If it doesn't exist, provider throws ResourceNotFoundException.
+            var persisted = await _provider.GetResponseAsync(responseId);
+
+            // Already completed / failed / cancelled / incomplete — not cancellable.
+            return persisted.Status switch
+            {
+                ResponseStatus.Cancelled => persisted,
+                ResponseStatus.Completed => throw new BadRequestException("Cannot cancel a completed response."),
+                ResponseStatus.Failed => throw new BadRequestException("Cannot cancel a failed response."),
+                ResponseStatus.Incomplete => throw new BadRequestException("Cannot cancel an incomplete response."),
+                _ => throw new BadRequestException("Cannot cancel a response that is not in progress."),
+            };
         }
 
         // B1: non-background responses cannot be cancelled
