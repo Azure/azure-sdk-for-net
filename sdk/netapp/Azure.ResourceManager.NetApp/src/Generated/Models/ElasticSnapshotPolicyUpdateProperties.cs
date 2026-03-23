@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
         /// <param name="policyStatus"> Configures if the snapshot policy is enabled on the volumes connected to the policy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSnapshotPolicyUpdateProperties(ElasticSnapshotPolicyHourlySchedule hourlySchedule, ElasticSnapshotPolicyDailySchedule dailySchedule, ElasticSnapshotPolicyWeeklySchedule weeklySchedule, ElasticSnapshotPolicyMonthlySchedule monthlySchedule, PolicyStatus? policyStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSnapshotPolicyUpdateProperties(ElasticSnapshotPolicyHourlySchedule hourlySchedule, ElasticSnapshotPolicyDailySchedule dailySchedule, ElasticSnapshotPolicyWeeklySchedule weeklySchedule, ElasticSnapshotPolicyMonthlySchedule monthlySchedule, NetAppPolicyStatus? policyStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HourlySchedule = hourlySchedule;
             DailySchedule = dailySchedule;
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Schedule for monthly snapshots. </summary>
         public ElasticSnapshotPolicyMonthlySchedule MonthlySchedule { get; set; }
         /// <summary> Configures if the snapshot policy is enabled on the volumes connected to the policy. </summary>
-        public PolicyStatus? PolicyStatus { get; set; }
+        public NetAppPolicyStatus? PolicyStatus { get; set; }
     }
 }

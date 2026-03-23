@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Possible values include: 'Update', 'Fail'
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BucketServerProperties(string fqdn, string certificateCommonName, DateTimeOffset? certificateExpiryOn, string ipAddress, string certificateObject, OnCertificateConflictAction? onCertificateConflictAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BucketServerProperties(string fqdn, string certificateCommonName, DateTimeOffset? certificateExpiryOn, string ipAddress, string certificateObject, NetAppOnCertificateConflictAction? onCertificateConflictAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fqdn = fqdn;
             CertificateCommonName = certificateCommonName;
@@ -92,6 +92,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Action to take when there is a certificate conflict.
         /// Possible values include: 'Update', 'Fail'
         /// </summary>
-        public OnCertificateConflictAction? OnCertificateConflictAction { get; set; }
+        public NetAppOnCertificateConflictAction? OnCertificateConflictAction { get; set; }
     }
 }

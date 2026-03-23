@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckElasticResourceAvailabilityResponseResult>> CheckVolumeFilePathAvailabilityAsync(CheckElasticVolumeFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckElasticResourceAvailabilityResult>> CheckVolumeFilePathAvailabilityAsync(CheckElasticVolumeFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckElasticResourceAvailabilityResponseResult> CheckVolumeFilePathAvailability(CheckElasticVolumeFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckElasticResourceAvailabilityResult> CheckVolumeFilePathAvailability(CheckElasticVolumeFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

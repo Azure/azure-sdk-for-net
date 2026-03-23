@@ -78,10 +78,14 @@ request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
 
 prepend-rp-prefix:
+  - ActiveDirectoryConfig
   - Backup
   - BackupType
   - BackupPolicy
+  - Bucket
+  - Cache
   - EndpointType
+  - LdapConfiguration
   - Volume
   - VolumeQuotaRule
   - Vault
@@ -95,6 +99,7 @@ prepend-rp-prefix:
   - ProvisioningState
   - ReplicationObject
   - ReplicationSchedule
+  - SecretPassword
   - VolumeStorageToNetworkProximity
   - AccountEncryption
   - KeySource
@@ -269,7 +274,36 @@ rename-mapping:
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
-  CheckElasticResourceAvailabilityResponse: CheckElasticResourceAvailabilityResponseResult
+  CheckElasticResourceAvailabilityResponse: CheckElasticResourceAvailabilityResult
+  BreakthroughMode: NetAppBreakthroughMode
+  ChangeZoneContent: NetAppChangeZoneContent
+  CertificateAkvDetails: CertificateKeyVaultDetails
+  CifsChangeNotifyState: NetAppCifsChangeNotifyState
+  CredentialsAkvDetails: CredentialsKeyVaultDetails
+  CredentialsStatus: NetAppCredentialsStatus
+  DayOfWeek: NetAppDayOfWeek
+  EnableWriteBackState: NetAppEnableWriteBackState
+  EncryptionState: NetAppEncryptionState
+  EntraIdAkvConfig: EntraIdKeyVaultConfig
+  EntraIdAkvConfigPatch: EntraIdKeyVaultConfigPatch
+  ExternalReplicationSetupStatus: NetAppExternalReplicationSetupStatus
+  FileSystemUser: NetAppFileSystemUser
+  GlobalFileLockingState: NetAppGlobalFileLockingState
+  KerberosState: NetAppKerberosState
+  LargeVolumeType: NetAppLargeVolumeType
+  LdapServerType: NetAppLdapServerType
+  LdapState: NetAppLdapState
+  NfsUser: NetAppNfsUser
+  OnCertificateConflictAction: NetAppOnCertificateConflictAction
+  OriginClusterInformation: NetAppOriginClusterInformation
+  PeeringPassphrases: NetAppPeeringPassphrases
+  PolicyStatus: NetAppPolicyStatus
+  SmbEncryptionState: NetAppSmbEncryptionState
+  SmbSettings: NetAppSmbSettings
+  SnapshotDirectoryVisibility: NetAppSnapshotDirectoryVisibility
+  SnapshotUsage: NetAppSnapshotUsage
+  VolumeSize: NetAppVolumeSize
+  BucketGenerateCredentials.keyPairExpiry: KeyPairExpiresOn
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            CertificateAkvDetails certificateAkvDetails = default;
-            CredentialsAkvDetails credentialsAkvDetails = default;
+            CertificateKeyVaultDetails certificateAkvDetails = default;
+            CredentialsKeyVaultDetails credentialsAkvDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    certificateAkvDetails = CertificateAkvDetails.DeserializeCertificateAkvDetails(property.Value, options);
+                    certificateAkvDetails = CertificateKeyVaultDetails.DeserializeCertificateKeyVaultDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("credentialsAkvDetails"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    credentialsAkvDetails = CredentialsAkvDetails.DeserializeCredentialsAkvDetails(property.Value, options);
+                    credentialsAkvDetails = CredentialsKeyVaultDetails.DeserializeCredentialsKeyVaultDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

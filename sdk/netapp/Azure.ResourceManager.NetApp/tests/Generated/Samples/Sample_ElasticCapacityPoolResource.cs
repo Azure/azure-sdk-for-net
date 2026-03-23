@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation
             CheckElasticVolumeFilePathAvailabilityContent content = new CheckElasticVolumeFilePathAvailabilityContent("my-exact-filepath");
-            CheckElasticResourceAvailabilityResponseResult result = await elasticCapacityPool.CheckVolumeFilePathAvailabilityAsync(content);
+            CheckElasticResourceAvailabilityResult result = await elasticCapacityPool.CheckVolumeFilePathAvailabilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

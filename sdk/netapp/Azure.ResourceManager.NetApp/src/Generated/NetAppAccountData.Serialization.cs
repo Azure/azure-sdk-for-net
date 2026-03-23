@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetApp
             bool? disableShowmount = default;
             string nfsV4IdDomain = default;
             MultiAdStatus? multiAdStatus = default;
-            LdapConfiguration ldapConfiguration = default;
+            NetAppLdapConfiguration ldapConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            ldapConfiguration = LdapConfiguration.DeserializeLdapConfiguration(property0.Value, options);
+                            ldapConfiguration = NetAppLdapConfiguration.DeserializeNetAppLdapConfiguration(property0.Value, options);
                             continue;
                         }
                     }

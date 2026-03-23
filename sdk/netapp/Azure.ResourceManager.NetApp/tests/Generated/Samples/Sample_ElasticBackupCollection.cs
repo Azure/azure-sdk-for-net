@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp.Samples
                 Properties = new ElasticBackupProperties(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.NetApp/elasticAccounts/account1/elasticCapacityPools/pool1/elasticVolumes/volume1"))
                 {
                     Label = "myLabel",
-                    SnapshotUsage = SnapshotUsage.UseExistingSnapshot,
+                    SnapshotUsage = NetAppSnapshotUsage.UseExistingSnapshot,
                     ElasticSnapshotResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.NetApp/elasticAccounts/account1/elasticCapacityPools/pool1/elasticVolumes/volume1/elasticSnapshots/snap1"),
                 },
             };

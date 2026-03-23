@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="snapshotDirectoryVisibility"> Controls the visibility of the volume's read-only snapshot directory, which provides access to each of the volume's snapshots. </param>
         /// <param name="smbProperties"> SMB Properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticVolumeUpdateProperties(long? size, ElasticExportPolicy exportPolicy, ElasticVolumeDataProtectionPatchProperties dataProtection, SnapshotDirectoryVisibility? snapshotDirectoryVisibility, ElasticSmbPatchProperties smbProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticVolumeUpdateProperties(long? size, ElasticExportPolicy exportPolicy, ElasticVolumeDataProtectionPatchProperties dataProtection, NetAppSnapshotDirectoryVisibility? snapshotDirectoryVisibility, ElasticSmbPatchProperties smbProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Size = size;
             ExportPolicy = exportPolicy;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Data protection configuration option for the volume, including snapshot policies and backup. </summary>
         public ElasticVolumeDataProtectionPatchProperties DataProtection { get; set; }
         /// <summary> Controls the visibility of the volume's read-only snapshot directory, which provides access to each of the volume's snapshots. </summary>
-        public SnapshotDirectoryVisibility? SnapshotDirectoryVisibility { get; set; }
+        public NetAppSnapshotDirectoryVisibility? SnapshotDirectoryVisibility { get; set; }
         /// <summary> SMB Properties. </summary>
         internal ElasticSmbPatchProperties SmbProperties { get; set; }
         /// <summary> Used to enable or disable encryption for in-flight SMB data volume. This flag can be modified during Elastic volume update operation as well. Only applicable for SMB protocol Elastic volumes. </summary>

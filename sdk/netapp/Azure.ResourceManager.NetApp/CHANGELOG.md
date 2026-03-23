@@ -1,9 +1,22 @@
 # Release History
 
-## 1.16.0-beta.1 (2026-03-23)
+## 1.16.0-beta.1 (Unreleased)
 
 ### Features Added
 - Upgraded api-version tag from 'package-2025-12-01' to 'package-2025-12-15-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/31c0f92613ba340053694ed55714a6f40f4fd7de/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+
+### Breaking Changes
+- Renamed `CheckElasticResourceAvailabilityResponseResult` to `CheckElasticResourceAvailabilityResult`.
+- Renamed `CacheResource`, `CacheData`, `CacheCollection` to `NetAppCacheResource`, `NetAppCacheData`, `NetAppCacheCollection` (and all related Cache* types).
+- Renamed `BucketResource`, `BucketData`, `BucketCollection` to `NetAppBucketResource`, `NetAppBucketData`, `NetAppBucketCollection` (and all related Bucket* types).
+- Renamed `ActiveDirectoryConfigResource`, `ActiveDirectoryConfigData` to `NetAppActiveDirectoryConfigResource`, `NetAppActiveDirectoryConfigData` (and all related ActiveDirectoryConfig* types).
+- Renamed `SecretPassword`, `SecretPasswordIdentity`, `SecretPasswordUpdate` to `NetAppSecretPassword`, `NetAppSecretPasswordIdentity`, `NetAppSecretPasswordUpdate` (and all related SecretPassword* types).
+- Renamed `LdapConfiguration` and `LdapConfigurationPatch` to `NetAppLdapConfiguration` and `NetAppLdapConfigurationPatch`.
+- Renamed `DayOfWeek` to `NetAppDayOfWeek` to avoid conflict with `System.DayOfWeek`.
+- Renamed generic enums to include service context: `PolicyStatus` → `NetAppPolicyStatus`, `EncryptionState` → `NetAppEncryptionState`, `CredentialsStatus` → `NetAppCredentialsStatus`, `BreakthroughMode` → `NetAppBreakthroughMode`, `VolumeSize` → `NetAppVolumeSize`, `SnapshotUsage` → `NetAppSnapshotUsage`, `KerberosState` → `NetAppKerberosState`, `GlobalFileLockingState` → `NetAppGlobalFileLockingState`, `LargeVolumeType` → `NetAppLargeVolumeType`, `SmbEncryptionState` → `NetAppSmbEncryptionState`, `CifsChangeNotifyState` → `NetAppCifsChangeNotifyState`, `EnableWriteBackState` → `NetAppEnableWriteBackState`, `LdapServerType` → `NetAppLdapServerType`, `LdapState` → `NetAppLdapState`, `OnCertificateConflictAction` → `NetAppOnCertificateConflictAction`, `SnapshotDirectoryVisibility` → `NetAppSnapshotDirectoryVisibility`, `ExternalReplicationSetupStatus` → `NetAppExternalReplicationSetupStatus`, `SnapshotUsage` → `NetAppSnapshotUsage`.
+- Renamed generic models: `FileSystemUser` → `NetAppFileSystemUser`, `NfsUser` → `NetAppNfsUser`, `SmbSettings` → `NetAppSmbSettings`, `PeeringPassphrases` → `NetAppPeeringPassphrases`, `OriginClusterInformation` → `NetAppOriginClusterInformation`, `ChangeZoneContent` → `NetAppChangeZoneContent`.
+- Renamed `CertificateAkvDetails` → `CertificateKeyVaultDetails`, `CredentialsAkvDetails` → `CredentialsKeyVaultDetails`, `EntraIdAkvConfig` → `EntraIdKeyVaultConfig`, `EntraIdAkvConfigPatch` → `EntraIdKeyVaultConfigPatch`.
+- Renamed `KeyPairExpiry` property to `KeyPairExpiresOn` in `BucketGenerateCredentials`.
 
 ## 1.15.0 (2026-03-03)
 

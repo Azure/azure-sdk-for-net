@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string applicationId = default;
             string domain = default;
             string serverNamePrefix = default;
-            EntraIdAkvConfigPatch entraIdAkvConfig = default;
+            EntraIdKeyVaultConfigPatch entraIdAkvConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    entraIdAkvConfig = EntraIdAkvConfigPatch.DeserializeEntraIdAkvConfigPatch(property.Value, options);
+                    entraIdAkvConfig = EntraIdKeyVaultConfigPatch.DeserializeEntraIdKeyVaultConfigPatch(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

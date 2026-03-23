@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetApp.Samples
                     WeeklySchedule = new ElasticSnapshotPolicyWeeklySchedule
                     {
                         SnapshotsToKeep = 3,
-                        Days = { Models.DayOfWeek.Wednesday },
+                        Days = { NetAppDayOfWeek.Wednesday },
                         Hour = 14,
                         Minute = 45,
                     },
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetApp.Samples
                         Hour = 14,
                         Minute = 15,
                     },
-                    PolicyStatus = PolicyStatus.Enabled,
+                    PolicyStatus = NetAppPolicyStatus.Enabled,
                 },
             };
             ArmOperation<ElasticSnapshotPolicyResource> lro = await elasticSnapshotPolicy.UpdateAsync(WaitUntil.Completed, patch);

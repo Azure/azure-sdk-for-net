@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="encryptionKeySource"> Source of key used to encrypt data in the cache. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </param>
         /// <param name="originClusterInformation"> Origin cluster information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/>, <paramref name="cacheSubnetResourceId"/>, <paramref name="peeringSubnetResourceId"/> or <paramref name="originClusterInformation"/> is null. </exception>
-        public CacheProperties(string filePath, long size, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, NetAppEncryptionKeySource encryptionKeySource, OriginClusterInformation originClusterInformation)
+        public CacheProperties(string filePath, long size, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, NetAppEncryptionKeySource encryptionKeySource, NetAppOriginClusterInformation originClusterInformation)
         {
             Argument.AssertNotNull(filePath, nameof(filePath));
             Argument.AssertNotNull(cacheSubnetResourceId, nameof(cacheSubnetResourceId));
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="globalFileLocking"> Flag indicating whether the global file lock is enabled for the cache. </param>
         /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CacheProperties(string filePath, long size, CachePropertiesExportPolicy exportPolicy, IList<ProtocolType> protocolTypes, CacheProvisioningState? provisioningState, CacheLifeCycleState? cacheState, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, IReadOnlyList<CacheMountTargetProperties> mountTargets, KerberosState? kerberos, SmbSettings smbSettings, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, long? maximumNumberOfFiles, EncryptionState? encryption, NetAppVolumeLanguage? language, LdapState? ldap, LdapServerType? ldapServerType, OriginClusterInformation originClusterInformation, CifsChangeNotifyState? cifsChangeNotifications, GlobalFileLockingState? globalFileLocking, EnableWriteBackState? writeBack, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CacheProperties(string filePath, long size, CachePropertiesExportPolicy exportPolicy, IList<ProtocolType> protocolTypes, CacheProvisioningState? provisioningState, CacheLifeCycleState? cacheState, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, IReadOnlyList<CacheMountTargetProperties> mountTargets, NetAppKerberosState? kerberos, NetAppSmbSettings smbSettings, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, long? maximumNumberOfFiles, NetAppEncryptionState? encryption, NetAppVolumeLanguage? language, NetAppLdapState? ldap, NetAppLdapServerType? ldapServerType, NetAppOriginClusterInformation originClusterInformation, NetAppCifsChangeNotifyState? cifsChangeNotifications, NetAppGlobalFileLockingState? globalFileLocking, NetAppEnableWriteBackState? writeBack, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FilePath = filePath;
             Size = size;
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> List of mount targets that can be used to mount this cache. </summary>
         public IReadOnlyList<CacheMountTargetProperties> MountTargets { get; }
         /// <summary> Describe if a cache is Kerberos enabled. </summary>
-        public KerberosState? Kerberos { get; set; }
+        public NetAppKerberosState? Kerberos { get; set; }
         /// <summary> SMB information for the cache. </summary>
-        public SmbSettings SmbSettings { get; set; }
+        public NetAppSmbSettings SmbSettings { get; set; }
         /// <summary> Maximum throughput in MiB/s that can be achieved by this cache volume and this will be accepted as input only for manual qosType cache. </summary>
         public float? ThroughputMibps { get; set; }
         /// <summary> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </summary>
@@ -175,20 +175,20 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Maximum number of files allowed. </summary>
         public long? MaximumNumberOfFiles { get; }
         /// <summary> Specifies if the cache is encryption or not. </summary>
-        public EncryptionState? Encryption { get; }
+        public NetAppEncryptionState? Encryption { get; }
         /// <summary> Language supported for volume. </summary>
         public NetAppVolumeLanguage? Language { get; }
         /// <summary> Specifies whether LDAP is enabled or not for flexcache volume. </summary>
-        public LdapState? Ldap { get; set; }
+        public NetAppLdapState? Ldap { get; set; }
         /// <summary> Specifies the type of LDAP server for flexcache volume. </summary>
-        public LdapServerType? LdapServerType { get; set; }
+        public NetAppLdapServerType? LdapServerType { get; set; }
         /// <summary> Origin cluster information. </summary>
-        public OriginClusterInformation OriginClusterInformation { get; set; }
+        public NetAppOriginClusterInformation OriginClusterInformation { get; set; }
         /// <summary> Flag indicating whether a CIFS change notification is enabled for the cache. </summary>
-        public CifsChangeNotifyState? CifsChangeNotifications { get; set; }
+        public NetAppCifsChangeNotifyState? CifsChangeNotifications { get; set; }
         /// <summary> Flag indicating whether the global file lock is enabled for the cache. </summary>
-        public GlobalFileLockingState? GlobalFileLocking { get; set; }
+        public NetAppGlobalFileLockingState? GlobalFileLocking { get; set; }
         /// <summary> Flag indicating whether writeback is enabled for the cache. </summary>
-        public EnableWriteBackState? WriteBack { get; set; }
+        public NetAppEnableWriteBackState? WriteBack { get; set; }
     }
 }

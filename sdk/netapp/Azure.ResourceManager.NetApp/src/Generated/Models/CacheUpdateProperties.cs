@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="cifsChangeNotifications"> Flag indicating whether a CIFS change notification is enabled for the cache. </param>
         /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CacheUpdateProperties(long? size, CachePropertiesExportPolicy exportPolicy, IList<ProtocolType> protocolTypes, SmbSettings smbSettings, float? throughputMibps, ResourceIdentifier keyVaultPrivateEndpointResourceId, CifsChangeNotifyState? cifsChangeNotifications, EnableWriteBackState? writeBack, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CacheUpdateProperties(long? size, CachePropertiesExportPolicy exportPolicy, IList<ProtocolType> protocolTypes, NetAppSmbSettings smbSettings, float? throughputMibps, ResourceIdentifier keyVaultPrivateEndpointResourceId, NetAppCifsChangeNotifyState? cifsChangeNotifications, NetAppEnableWriteBackState? writeBack, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Size = size;
             ExportPolicy = exportPolicy;
@@ -93,14 +93,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol. </summary>
         public IList<ProtocolType> ProtocolTypes { get; }
         /// <summary> SMB information for the cache. </summary>
-        public SmbSettings SmbSettings { get; set; }
+        public NetAppSmbSettings SmbSettings { get; set; }
         /// <summary> Maximum throughput in MiB/s that can be achieved by this cache volume and this will be accepted as input only for manual qosType cache. </summary>
         public float? ThroughputMibps { get; set; }
         /// <summary> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </summary>
         public ResourceIdentifier KeyVaultPrivateEndpointResourceId { get; set; }
         /// <summary> Flag indicating whether a CIFS change notification is enabled for the cache. </summary>
-        public CifsChangeNotifyState? CifsChangeNotifications { get; set; }
+        public NetAppCifsChangeNotifyState? CifsChangeNotifications { get; set; }
         /// <summary> Flag indicating whether writeback is enabled for the cache. </summary>
-        public EnableWriteBackState? WriteBack { get; set; }
+        public NetAppEnableWriteBackState? WriteBack { get; set; }
     }
 }

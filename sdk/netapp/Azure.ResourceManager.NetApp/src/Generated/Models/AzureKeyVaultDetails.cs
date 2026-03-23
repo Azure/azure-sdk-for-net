@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="certificateAkvDetails"> Specifies the Azure Key Vault settings for retrieving the bucket server certificate. </param>
         /// <param name="credentialsAkvDetails"> Specifies the Azure Key Vault settings for storing the bucket credentials. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureKeyVaultDetails(CertificateAkvDetails certificateAkvDetails, CredentialsAkvDetails credentialsAkvDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureKeyVaultDetails(CertificateKeyVaultDetails certificateAkvDetails, CredentialsKeyVaultDetails credentialsAkvDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CertificateAkvDetails = certificateAkvDetails;
             CredentialsAkvDetails = credentialsAkvDetails;
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Specifies the Azure Key Vault settings for retrieving the bucket server certificate. </summary>
-        public CertificateAkvDetails CertificateAkvDetails { get; set; }
+        public CertificateKeyVaultDetails CertificateAkvDetails { get; set; }
         /// <summary> Specifies the Azure Key Vault settings for storing the bucket credentials. </summary>
-        public CredentialsAkvDetails CredentialsAkvDetails { get; set; }
+        public CredentialsKeyVaultDetails CredentialsAkvDetails { get; set; }
     }
 }

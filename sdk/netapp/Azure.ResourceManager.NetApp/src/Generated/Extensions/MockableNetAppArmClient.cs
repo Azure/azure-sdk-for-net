@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ActiveDirectoryConfigResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ActiveDirectoryConfigResource.CreateResourceIdentifier" /> to create an <see cref="ActiveDirectoryConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetAppActiveDirectoryConfigResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppActiveDirectoryConfigResource.CreateResourceIdentifier" /> to create a <see cref="NetAppActiveDirectoryConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ActiveDirectoryConfigResource"/> object. </returns>
-        public virtual ActiveDirectoryConfigResource GetActiveDirectoryConfigResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppActiveDirectoryConfigResource"/> object. </returns>
+        public virtual NetAppActiveDirectoryConfigResource GetNetAppActiveDirectoryConfigResource(ResourceIdentifier id)
         {
-            ActiveDirectoryConfigResource.ValidateResourceId(id);
-            return new ActiveDirectoryConfigResource(Client, id);
+            NetAppActiveDirectoryConfigResource.ValidateResourceId(id);
+            return new NetAppActiveDirectoryConfigResource(Client, id);
         }
 
         /// <summary>
@@ -215,15 +215,15 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CacheResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CacheResource.CreateResourceIdentifier" /> to create a <see cref="CacheResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetAppCacheResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppCacheResource.CreateResourceIdentifier" /> to create a <see cref="NetAppCacheResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CacheResource"/> object. </returns>
-        public virtual CacheResource GetCacheResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppCacheResource"/> object. </returns>
+        public virtual NetAppCacheResource GetNetAppCacheResource(ResourceIdentifier id)
         {
-            CacheResource.ValidateResourceId(id);
-            return new CacheResource(Client, id);
+            NetAppCacheResource.ValidateResourceId(id);
+            return new NetAppCacheResource(Client, id);
         }
 
         /// <summary>
@@ -239,15 +239,15 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BucketResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BucketResource.CreateResourceIdentifier" /> to create a <see cref="BucketResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetAppBucketResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppBucketResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBucketResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BucketResource"/> object. </returns>
-        public virtual BucketResource GetBucketResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppBucketResource"/> object. </returns>
+        public virtual NetAppBucketResource GetNetAppBucketResource(ResourceIdentifier id)
         {
-            BucketResource.ValidateResourceId(id);
-            return new BucketResource(Client, id);
+            NetAppBucketResource.ValidateResourceId(id);
+            return new NetAppBucketResource(Client, id);
         }
 
         /// <summary>

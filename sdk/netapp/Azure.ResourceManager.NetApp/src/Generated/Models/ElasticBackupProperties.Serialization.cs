@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.NetApp.Models
             ElasticBackupType? backupType = default;
             string failureReason = default;
             ResourceIdentifier elasticVolumeResourceId = default;
-            SnapshotUsage? snapshotUsage = default;
+            NetAppSnapshotUsage? snapshotUsage = default;
             ResourceIdentifier elasticSnapshotResourceId = default;
             ResourceIdentifier elasticBackupPolicyResourceId = default;
-            VolumeSize? volumeSize = default;
+            NetAppVolumeSize? volumeSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    snapshotUsage = new SnapshotUsage(property.Value.GetString());
+                    snapshotUsage = new NetAppSnapshotUsage(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("elasticSnapshotResourceId"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    volumeSize = new VolumeSize(property.Value.GetString());
+                    volumeSize = new NetAppVolumeSize(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

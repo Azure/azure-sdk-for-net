@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="domain"> Name of the Active Directory domain. </param>
         /// <param name="secretPassword"> Access password from Azure KeyVault Secrets to connect Active Directory. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/> or <paramref name="secretPassword"/> is null. </exception>
-        public ActiveDirectoryConfigProperties(string domain, SecretPassword secretPassword)
+        public ActiveDirectoryConfigProperties(string domain, NetAppSecretPassword secretPassword)
         {
             Argument.AssertNotNull(domain, nameof(domain));
             Argument.AssertNotNull(secretPassword, nameof(secretPassword));
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="domain"> Name of the Active Directory domain. </param>
         /// <param name="secretPassword"> Access password from Azure KeyVault Secrets to connect Active Directory. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ActiveDirectoryConfigProperties(string userName, IList<string> dns, string smbServerName, string organizationalUnit, string site, IList<string> backupOperators, IList<string> administrators, IList<string> securityOperators, NetAppAccountActiveDirectoryStatus? activeDirectoryStatus, NetAppVolumeQuotaRuleProvisioningState? provisioningState, string domain, SecretPassword secretPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ActiveDirectoryConfigProperties(string userName, IList<string> dns, string smbServerName, string organizationalUnit, string site, IList<string> backupOperators, IList<string> administrators, IList<string> securityOperators, NetAppAccountActiveDirectoryStatus? activeDirectoryStatus, NetAppVolumeQuotaRuleProvisioningState? provisioningState, string domain, NetAppSecretPassword secretPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserName = userName;
             Dns = dns;
@@ -121,6 +121,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Name of the Active Directory domain. </summary>
         public string Domain { get; set; }
         /// <summary> Access password from Azure KeyVault Secrets to connect Active Directory. </summary>
-        public SecretPassword SecretPassword { get; set; }
+        public NetAppSecretPassword SecretPassword { get; set; }
     }
 }

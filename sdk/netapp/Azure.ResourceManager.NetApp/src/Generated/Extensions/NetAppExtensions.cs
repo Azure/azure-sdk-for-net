@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ActiveDirectoryConfigResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ActiveDirectoryConfigResource.CreateResourceIdentifier" /> to create an <see cref="ActiveDirectoryConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppActiveDirectoryConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppActiveDirectoryConfigResource.CreateResourceIdentifier" /> to create a <see cref="NetAppActiveDirectoryConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetActiveDirectoryConfigResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppActiveDirectoryConfigResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ActiveDirectoryConfigResource"/> object. </returns>
-        public static ActiveDirectoryConfigResource GetActiveDirectoryConfigResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppActiveDirectoryConfigResource"/> object. </returns>
+        public static NetAppActiveDirectoryConfigResource GetNetAppActiveDirectoryConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetActiveDirectoryConfigResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppActiveDirectoryConfigResource(id);
         }
 
         /// <summary>
@@ -319,22 +319,22 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CacheResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CacheResource.CreateResourceIdentifier" /> to create a <see cref="CacheResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppCacheResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppCacheResource.CreateResourceIdentifier" /> to create a <see cref="NetAppCacheResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetCacheResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppCacheResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CacheResource"/> object. </returns>
-        public static CacheResource GetCacheResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppCacheResource"/> object. </returns>
+        public static NetAppCacheResource GetNetAppCacheResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetCacheResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppCacheResource(id);
         }
 
         /// <summary>
@@ -357,22 +357,22 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BucketResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BucketResource.CreateResourceIdentifier" /> to create a <see cref="BucketResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppBucketResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppBucketResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBucketResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetBucketResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppBucketResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BucketResource"/> object. </returns>
-        public static BucketResource GetBucketResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppBucketResource"/> object. </returns>
+        public static NetAppBucketResource GetNetAppBucketResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetBucketResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppBucketResource(id);
         }
 
         /// <summary>
@@ -509,20 +509,20 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets a collection of ActiveDirectoryConfigResources in the ResourceGroupResource.
+        /// Gets a collection of NetAppActiveDirectoryConfigResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetActiveDirectoryConfigs()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetNetAppActiveDirectoryConfigs()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ActiveDirectoryConfigResources and their operations over a ActiveDirectoryConfigResource. </returns>
-        public static ActiveDirectoryConfigCollection GetActiveDirectoryConfigs(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetAppActiveDirectoryConfigResources and their operations over a NetAppActiveDirectoryConfigResource. </returns>
+        public static NetAppActiveDirectoryConfigCollection GetNetAppActiveDirectoryConfigs(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetActiveDirectoryConfigs();
+            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetNetAppActiveDirectoryConfigs();
         }
 
         /// <summary>
@@ -542,12 +542,12 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ActiveDirectoryConfigResource"/></description>
+        /// <description><see cref="NetAppActiveDirectoryConfigResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetActiveDirectoryConfigAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetNetAppActiveDirectoryConfigAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -556,11 +556,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="activeDirectoryConfigName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="activeDirectoryConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ActiveDirectoryConfigResource>> GetActiveDirectoryConfigAsync(this ResourceGroupResource resourceGroupResource, string activeDirectoryConfigName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetAppActiveDirectoryConfigResource>> GetNetAppActiveDirectoryConfigAsync(this ResourceGroupResource resourceGroupResource, string activeDirectoryConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableNetAppResourceGroupResource(resourceGroupResource).GetActiveDirectoryConfigAsync(activeDirectoryConfigName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppResourceGroupResource(resourceGroupResource).GetNetAppActiveDirectoryConfigAsync(activeDirectoryConfigName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -580,12 +580,12 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ActiveDirectoryConfigResource"/></description>
+        /// <description><see cref="NetAppActiveDirectoryConfigResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetActiveDirectoryConfig(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetNetAppActiveDirectoryConfig(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -594,11 +594,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="activeDirectoryConfigName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="activeDirectoryConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<ActiveDirectoryConfigResource> GetActiveDirectoryConfig(this ResourceGroupResource resourceGroupResource, string activeDirectoryConfigName, CancellationToken cancellationToken = default)
+        public static Response<NetAppActiveDirectoryConfigResource> GetNetAppActiveDirectoryConfig(this ResourceGroupResource resourceGroupResource, string activeDirectoryConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetActiveDirectoryConfig(activeDirectoryConfigName, cancellationToken);
+            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetNetAppActiveDirectoryConfig(activeDirectoryConfigName, cancellationToken);
         }
 
         /// <summary>
@@ -896,23 +896,23 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ActiveDirectoryConfigResource"/></description>
+        /// <description><see cref="NetAppActiveDirectoryConfigResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetActiveDirectoryConfigs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppActiveDirectoryConfigs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ActiveDirectoryConfigResource> GetActiveDirectoryConfigsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetAppActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetAppActiveDirectoryConfigResource> GetNetAppActiveDirectoryConfigsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetActiveDirectoryConfigsAsync(cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppActiveDirectoryConfigsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -932,23 +932,23 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ActiveDirectoryConfigResource"/></description>
+        /// <description><see cref="NetAppActiveDirectoryConfigResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetActiveDirectoryConfigs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppActiveDirectoryConfigs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ActiveDirectoryConfigResource> GetActiveDirectoryConfigs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetAppActiveDirectoryConfigResource> GetNetAppActiveDirectoryConfigs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetActiveDirectoryConfigs(cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppActiveDirectoryConfigs(cancellationToken);
         }
 
         /// <summary>

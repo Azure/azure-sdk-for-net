@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.NetApp.Models
             long? size = default;
             CachePropertiesExportPolicy exportPolicy = default;
             IList<ProtocolType> protocolTypes = default;
-            SmbSettings smbSettings = default;
+            NetAppSmbSettings smbSettings = default;
             float? throughputMibps = default;
             ResourceIdentifier keyVaultPrivateEndpointResourceId = default;
-            CifsChangeNotifyState? cifsChangeNotifications = default;
-            EnableWriteBackState? writeBack = default;
+            NetAppCifsChangeNotifyState? cifsChangeNotifications = default;
+            NetAppEnableWriteBackState? writeBack = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    smbSettings = SmbSettings.DeserializeSmbSettings(property.Value, options);
+                    smbSettings = NetAppSmbSettings.DeserializeNetAppSmbSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("throughputMibps"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    cifsChangeNotifications = new CifsChangeNotifyState(property.Value.GetString());
+                    cifsChangeNotifications = new NetAppCifsChangeNotifyState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("writeBack"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    writeBack = new EnableWriteBackState(property.Value.GetString());
+                    writeBack = new NetAppEnableWriteBackState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

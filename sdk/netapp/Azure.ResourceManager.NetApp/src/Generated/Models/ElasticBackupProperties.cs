@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="elasticBackupPolicyResourceId"> ResourceId used to identify the elastic backup policy. </param>
         /// <param name="volumeSize"> Specifies if the backup is for a large volume. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticBackupProperties(DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, NetAppVolumeQuotaRuleProvisioningState? provisioningState, long? size, string label, ElasticBackupType? backupType, string failureReason, ResourceIdentifier elasticVolumeResourceId, SnapshotUsage? snapshotUsage, ResourceIdentifier elasticSnapshotResourceId, ResourceIdentifier elasticBackupPolicyResourceId, VolumeSize? volumeSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticBackupProperties(DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, NetAppVolumeQuotaRuleProvisioningState? provisioningState, long? size, string label, ElasticBackupType? backupType, string failureReason, ResourceIdentifier elasticVolumeResourceId, NetAppSnapshotUsage? snapshotUsage, ResourceIdentifier elasticSnapshotResourceId, ResourceIdentifier elasticBackupPolicyResourceId, NetAppVolumeSize? volumeSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedOn = createdOn;
             SnapshotCreationOn = snapshotCreationOn;
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> ResourceId used to identify the Elastic Volume. </summary>
         public ResourceIdentifier ElasticVolumeResourceId { get; set; }
         /// <summary> Manual backup using an already existing snapshot. This will always be CreateNewSnapshot for scheduled backups and UseExistingSnapshot/CreateNewSnapshot for manual backups. </summary>
-        public SnapshotUsage? SnapshotUsage { get; set; }
+        public NetAppSnapshotUsage? SnapshotUsage { get; set; }
         /// <summary> ResourceId used to identify the elastic snapshot resource. This is required when an existing snapshot needs to be used for creating a manual backup. </summary>
         public ResourceIdentifier ElasticSnapshotResourceId { get; set; }
         /// <summary> ResourceId used to identify the elastic backup policy. </summary>
         public ResourceIdentifier ElasticBackupPolicyResourceId { get; }
         /// <summary> Specifies if the backup is for a large volume. </summary>
-        public VolumeSize? VolumeSize { get; }
+        public NetAppVolumeSize? VolumeSize { get; }
     }
 }

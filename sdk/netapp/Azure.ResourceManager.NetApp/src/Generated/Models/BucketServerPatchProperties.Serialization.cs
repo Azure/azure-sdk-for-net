@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             string fqdn = default;
             string certificateObject = default;
-            OnCertificateConflictAction? onCertificateConflictAction = default;
+            NetAppOnCertificateConflictAction? onCertificateConflictAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    onCertificateConflictAction = new OnCertificateConflictAction(property.Value.GetString());
+                    onCertificateConflictAction = new NetAppOnCertificateConflictAction(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

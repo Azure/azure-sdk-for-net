@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             string accountName = "account1";
             NetAppAccountData data = new NetAppAccountData(new AzureLocation("eastus"))
             {
-                LdapConfiguration = new LdapConfiguration
+                LdapConfiguration = new NetAppLdapConfiguration
                 {
                     Domain = "example.com",
                     LdapServers = { "192.0.2.1", "192.0.2.2" },

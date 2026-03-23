@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="backupResourceId"> Resource identifier used to identify the Elastic Backup. </param>
         /// <param name="restorationState"> The current state of the restoration process. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticVolumeProperties(string filePath, long size, ElasticExportPolicy exportPolicy, IList<ElasticProtocolType> protocolTypes, NetAppVolumeQuotaRuleProvisioningState? provisioningState, ElasticResourceAvailabilityStatus? availabilityStatus, ResourceIdentifier snapshotResourceId, IReadOnlyList<ElasticMountTargetProperties> mountTargets, ElasticVolumeDataProtectionProperties dataProtection, SnapshotDirectoryVisibility? snapshotDirectoryVisibility, ElasticSmbProperties smbProperties, ResourceIdentifier backupResourceId, ElasticVolumeRestorationState? restorationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticVolumeProperties(string filePath, long size, ElasticExportPolicy exportPolicy, IList<ElasticProtocolType> protocolTypes, NetAppVolumeQuotaRuleProvisioningState? provisioningState, ElasticResourceAvailabilityStatus? availabilityStatus, ResourceIdentifier snapshotResourceId, IReadOnlyList<ElasticMountTargetProperties> mountTargets, ElasticVolumeDataProtectionProperties dataProtection, NetAppSnapshotDirectoryVisibility? snapshotDirectoryVisibility, ElasticSmbProperties smbProperties, ResourceIdentifier backupResourceId, ElasticVolumeRestorationState? restorationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FilePath = filePath;
             Size = size;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Data protection configuration option for the volume, including snapshot policies and backup. </summary>
         public ElasticVolumeDataProtectionProperties DataProtection { get; set; }
         /// <summary> Controls the visibility of the volume's read-only snapshot directory, which provides access to each of the volume's snapshots. </summary>
-        public SnapshotDirectoryVisibility? SnapshotDirectoryVisibility { get; set; }
+        public NetAppSnapshotDirectoryVisibility? SnapshotDirectoryVisibility { get; set; }
         /// <summary> SMB Properties. </summary>
         internal ElasticSmbProperties SmbProperties { get; set; }
         /// <summary> Used to enable or disable encryption for in-flight SMB data volume. This flag can be modified during Elastic volume update operation as well. Only applicable for SMB protocol Elastic volumes. </summary>

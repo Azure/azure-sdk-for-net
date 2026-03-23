@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Models
             long? size = default;
             ElasticExportPolicy exportPolicy = default;
             ElasticVolumeDataProtectionPatchProperties dataProtection = default;
-            SnapshotDirectoryVisibility? snapshotDirectoryVisibility = default;
+            NetAppSnapshotDirectoryVisibility? snapshotDirectoryVisibility = default;
             ElasticSmbPatchProperties smbProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    snapshotDirectoryVisibility = new SnapshotDirectoryVisibility(property.Value.GetString());
+                    snapshotDirectoryVisibility = new NetAppSnapshotDirectoryVisibility(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("smbProperties"u8))

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier snapshotResourceId = default;
             IReadOnlyList<ElasticMountTargetProperties> mountTargets = default;
             ElasticVolumeDataProtectionProperties dataProtection = default;
-            SnapshotDirectoryVisibility? snapshotDirectoryVisibility = default;
+            NetAppSnapshotDirectoryVisibility? snapshotDirectoryVisibility = default;
             ElasticSmbProperties smbProperties = default;
             ResourceIdentifier backupResourceId = default;
             ElasticVolumeRestorationState? restorationState = default;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    snapshotDirectoryVisibility = new SnapshotDirectoryVisibility(property.Value.GetString());
+                    snapshotDirectoryVisibility = new NetAppSnapshotDirectoryVisibility(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("smbProperties"u8))

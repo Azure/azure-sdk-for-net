@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.NetApp.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ActiveDirectoryConfigResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ActiveDirectoryConfigResources and their operations over a ActiveDirectoryConfigResource. </returns>
-        public virtual ActiveDirectoryConfigCollection GetActiveDirectoryConfigs()
+        /// <summary> Gets a collection of NetAppActiveDirectoryConfigResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetAppActiveDirectoryConfigResources and their operations over a NetAppActiveDirectoryConfigResource. </returns>
+        public virtual NetAppActiveDirectoryConfigCollection GetNetAppActiveDirectoryConfigs()
         {
-            return GetCachedClient(client => new ActiveDirectoryConfigCollection(client, Id));
+            return GetCachedClient(client => new NetAppActiveDirectoryConfigCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ActiveDirectoryConfigResource"/></description>
+        /// <description><see cref="NetAppActiveDirectoryConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="activeDirectoryConfigName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="activeDirectoryConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ActiveDirectoryConfigResource>> GetActiveDirectoryConfigAsync(string activeDirectoryConfigName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppActiveDirectoryConfigResource>> GetNetAppActiveDirectoryConfigAsync(string activeDirectoryConfigName, CancellationToken cancellationToken = default)
         {
-            return await GetActiveDirectoryConfigs().GetAsync(activeDirectoryConfigName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppActiveDirectoryConfigs().GetAsync(activeDirectoryConfigName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ActiveDirectoryConfigResource"/></description>
+        /// <description><see cref="NetAppActiveDirectoryConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="activeDirectoryConfigName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="activeDirectoryConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ActiveDirectoryConfigResource> GetActiveDirectoryConfig(string activeDirectoryConfigName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppActiveDirectoryConfigResource> GetNetAppActiveDirectoryConfig(string activeDirectoryConfigName, CancellationToken cancellationToken = default)
         {
-            return GetActiveDirectoryConfigs().Get(activeDirectoryConfigName, cancellationToken);
+            return GetNetAppActiveDirectoryConfigs().Get(activeDirectoryConfigName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ElasticAccountResources in the ResourceGroupResource. </summary>

@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppAccountActiveDirectoryStatus? activeDirectoryStatus = default;
             NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
             string domain = default;
-            SecretPassword secretPassword = default;
+            NetAppSecretPassword secretPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (property.NameEquals("secretPassword"u8))
                 {
-                    secretPassword = SecretPassword.DeserializeSecretPassword(property.Value, options);
+                    secretPassword = NetAppSecretPassword.DeserializeNetAppSecretPassword(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
