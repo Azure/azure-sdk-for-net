@@ -1273,6 +1273,7 @@ namespace Azure.Analytics.Defender.Easm
     public partial class EasmClient
     {
         protected EasmClient() { }
+        public EasmClient(Azure.Analytics.Defender.Easm.EasmClientSettings settings) { }
         public EasmClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public EasmClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Defender.Easm.EasmClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -1454,6 +1455,13 @@ namespace Azure.Analytics.Defender.Easm
             V2024_03_01_Preview = 2,
             V2024_10_01_Preview = 3,
         }
+    }
+    public partial class EasmClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public EasmClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Analytics.Defender.Easm.EasmClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class EasmPolicy : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.EasmPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.EasmPolicy>
     {

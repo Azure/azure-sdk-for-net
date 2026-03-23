@@ -49,10 +49,15 @@ import {
   ParentResourceLookupContext,
   assignNonResourceMethodsToResources,
   calculateResourceTypeFromPath,
-  resolveResourceApiVersions
+  resolveResourceApiVersions,
+  extractRbacRoles
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
-import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
+import {
+  getCrossLanguageDefinitionId,
+  getClientType,
+  SdkModelType
+} from "@azure-tools/typespec-client-generator-core";
 import {
   isVariableSegment,
   isPrefix,
@@ -422,6 +427,13 @@ function convertResolvedResourceToMetadata(
   // API versions will be computed after post-processing when methods are finalized
   const apiVersions: string[] = [];
 
+  // Extract RBAC roles from @@clientOption decorator
+  const sdkModel = getClientType(
+    sdkContext,
+    resolvedResource.type
+  ) as SdkModelType;
+  const rbacRoles = extractRbacRoles(sdkModel);
+
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
     resourceIdPattern: resourceIdPattern,
@@ -437,7 +449,8 @@ function convertResolvedResourceToMetadata(
     ),
     resourceName: resourceName,
     nameConstraints,
-    apiVersions
+    apiVersions,
+    rbacRoles
   };
 }
 

@@ -63,13 +63,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Initializes a new instance of TextAuthoringModel. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="keyCredential"> The key credential to copy. </param>
-        /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="trainedModelLabel"> The new trained model label. </param>
-        internal TextAuthoringTrainedModel(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion, string projectName, string trainedModelLabel)
+        internal TextAuthoringTrainedModel(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion, string projectName, string trainedModelLabel)
         {
             ClientDiagnostics = clientDiagnostics;
             Pipeline = pipeline;

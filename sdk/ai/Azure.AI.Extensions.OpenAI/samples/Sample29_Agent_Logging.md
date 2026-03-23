@@ -101,7 +101,7 @@ AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new A
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_AgentsLogging_Sync
-PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a physics teacher with a sense of humor.",
 };
@@ -113,7 +113,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_AgentsLogging_Async
-PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a physics teacher with a sense of humor.",
 };

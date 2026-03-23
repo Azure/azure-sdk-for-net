@@ -18,7 +18,7 @@ AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCr
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_MemoryTool_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
@@ -29,7 +29,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_MemoryTool_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };

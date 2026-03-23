@@ -31,7 +31,10 @@ namespace Azure.ResourceManager.BotService
         public Azure.ResourceManager.BotService.Models.BotChannelProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServiceSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.BotChannelData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.BotChannelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.BotChannelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.BotChannelData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.BotChannelData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -51,6 +54,8 @@ namespace Azure.ResourceManager.BotService
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BotService.BotChannelResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotChannelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotChannelResource> GetBotChannelWithRegenerateKeys(Azure.ResourceManager.BotService.Models.BotChannelRegenerateKeysContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotChannelResource>> GetBotChannelWithRegenerateKeysAsync(Azure.ResourceManager.BotService.Models.BotChannelRegenerateKeysContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BotService.Models.BotChannelGetWithKeysResult> GetChannelWithKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.BotChannelGetWithKeysResult>> GetChannelWithKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BotService.BotChannelResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -107,7 +112,10 @@ namespace Azure.ResourceManager.BotService
         public Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServiceSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.BotConnectionSettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.BotConnectionSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.BotConnectionSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.BotConnectionSettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.BotConnectionSettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -149,7 +157,10 @@ namespace Azure.ResourceManager.BotService
         public Azure.ResourceManager.BotService.Models.BotProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServiceSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.BotData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.BotData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.BotData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.BotData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.BotData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -179,6 +190,9 @@ namespace Azure.ResourceManager.BotService
         public virtual Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource> GetBotConnectionSetting(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource>> GetBotConnectionSettingAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.BotService.BotConnectionSettingCollection GetBotConnectionSettings() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource> GetBotServiceNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource>> GetBotServiceNetworkSecurityPerimeterConfigurationAsync(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationCollection GetBotServiceNetworkSecurityPerimeterConfigurations() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource> GetBotServicePrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource>> GetBotServicePrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionCollection GetBotServicePrivateEndpointConnections() { throw null; }
@@ -212,9 +226,56 @@ namespace Azure.ResourceManager.BotService
         public static Azure.AsyncPageable<Azure.ResourceManager.BotService.BotResource> GetBotsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult> GetBotServiceHostSettings(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult>> GetBotServiceHostSettingsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource GetBotServiceNetworkSecurityPerimeterConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource GetBotServicePrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult> GetBotServiceQnAMakerEndpointKey(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult>> GetBotServiceQnAMakerEndpointKeyAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class BotServiceNetworkSecurityPerimeterConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource>, System.Collections.IEnumerable
+    {
+        protected BotServiceNetworkSecurityPerimeterConfigurationCollection() { }
+        public virtual Azure.Response<bool> Exists(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource> Get(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource>> GetAsync(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource> GetIfExists(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource>> GetIfExistsAsync(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class BotServiceNetworkSecurityPerimeterConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData>
+    {
+        internal BotServiceNetworkSecurityPerimeterConfigurationData() { }
+        public Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BotServiceNetworkSecurityPerimeterConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected BotServiceNetworkSecurityPerimeterConfigurationResource() { }
+        public virtual Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string networkSecurityPerimeterConfigurationName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource> Reconcile(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource>> ReconcileAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class BotServicePrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -240,7 +301,10 @@ namespace Azure.ResourceManager.BotService
         public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -275,6 +339,7 @@ namespace Azure.ResourceManager.BotService.Mocking
         public virtual Azure.ResourceManager.BotService.BotChannelResource GetBotChannelResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.BotService.BotConnectionSettingResource GetBotConnectionSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.BotService.BotResource GetBotResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationResource GetBotServiceNetworkSecurityPerimeterConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource GetBotServicePrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableBotServiceResourceGroupResource : Azure.ResourceManager.ArmResource
@@ -308,7 +373,10 @@ namespace Azure.ResourceManager.BotService.Models
     public partial class AcsChatChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.AcsChatChannel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.AcsChatChannel>
     {
         public AcsChatChannel() { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.AcsChatChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.AcsChatChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.AcsChatChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.AcsChatChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.AcsChatChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -319,7 +387,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public AlexaChannel() { }
         public Azure.ResourceManager.BotService.Models.AlexaChannelProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.AlexaChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.AlexaChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.AlexaChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.AlexaChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.AlexaChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -333,7 +404,10 @@ namespace Azure.ResourceManager.BotService.Models
         public bool IsEnabled { get { throw null; } set { } }
         public System.Uri ServiceEndpointUri { get { throw null; } }
         public string UriFragment { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.AlexaChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.AlexaChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.AlexaChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.AlexaChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.AlexaChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.AlexaChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.AlexaChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -348,21 +422,30 @@ namespace Azure.ResourceManager.BotService.Models
         public static Azure.ResourceManager.BotService.BotChannelData BotChannelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.BotService.Models.BotChannelProperties properties = null, Azure.ResourceManager.BotService.Models.BotServiceSku sku = null, Azure.ResourceManager.BotService.Models.BotServiceKind? kind = default(Azure.ResourceManager.BotService.Models.BotServiceKind?), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.BotChannelGetWithKeysResult BotChannelGetWithKeysResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.BotService.Models.BotChannelProperties resource = null, Azure.ResourceManager.BotService.Models.BotChannelSettings setting = null, string provisioningState = null, string entityTag = null, string changedTime = null, Azure.ResourceManager.BotService.Models.BotChannelProperties properties = null, Azure.ResourceManager.BotService.Models.BotServiceSku sku = null, Azure.ResourceManager.BotService.Models.BotServiceKind? kind = default(Azure.ResourceManager.BotService.Models.BotServiceKind?), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.BotChannelProperties BotChannelProperties(string channelName = null, Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotChannelRegenerateKeysContent BotChannelRegenerateKeysContent(string siteName = null, Azure.ResourceManager.BotService.Models.BotServiceKey key = Azure.ResourceManager.BotService.Models.BotServiceKey.Key1) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotChannelSettings BotChannelSettings(string extensionKey1 = null, string extensionKey2 = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.Models.BotChannelSite> sites = null, string channelId = null, string channelDisplayName = null, string botId = null, System.Uri botIconUri = null, bool? isEnabled = default(bool?), bool? disableLocalAuth = default(bool?), bool? requireTermsAgreement = default(bool?)) { throw null; }
         public static Azure.ResourceManager.BotService.Models.BotChannelSite BotChannelSite(System.Guid? tenantId = default(System.Guid?), string siteId = null, string siteName = null, string key = null, string key2 = null, bool isEnabled = false, bool? isTokenEnabled = default(bool?), bool? isEndpointParametersEnabled = default(bool?), bool? isDetailedLoggingEnabled = default(bool?), bool? isBlockUserUploadEnabled = default(bool?), bool? isNoStorageEnabled = default(bool?), Azure.ETag? etag = default(Azure.ETag?), string appId = null, bool? isV1Enabled = default(bool?), bool? isV3Enabled = default(bool?), bool? isSecureSiteEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> trustedOrigins = null, bool? isWebChatSpeechEnabled = default(bool?), bool? isWebchatPreviewEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.BotService.BotConnectionSettingData BotConnectionSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties properties = null, Azure.ResourceManager.BotService.Models.BotServiceSku sku = null, Azure.ResourceManager.BotService.Models.BotServiceKind? kind = default(Azure.ResourceManager.BotService.Models.BotServiceKind?), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
-        public static Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties BotConnectionSettingProperties(string clientId = null, string settingId = null, string clientSecret = null, string scopes = null, string serviceProviderId = null, string serviceProviderDisplayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.Models.BotConnectionSettingParameter> parameters = null, string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties BotConnectionSettingProperties(string clientId, string settingId, string clientSecret, string scopes, string serviceProviderId, string serviceProviderDisplayName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.Models.BotConnectionSettingParameter> parameters, string provisioningState) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties BotConnectionSettingProperties(string id = null, string name = null, string clientId = null, string settingId = null, string clientSecret = null, string scopes = null, string serviceProviderId = null, string serviceProviderDisplayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.Models.BotConnectionSettingParameter> parameters = null, string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.BotCreateEmailSignInUriResult BotCreateEmailSignInUriResult(Azure.Core.ResourceIdentifier id = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Uri createEmailSignInUrlResponseUri = null) { throw null; }
         public static Azure.ResourceManager.BotService.BotData BotData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.BotService.Models.BotProperties properties = null, Azure.ResourceManager.BotService.Models.BotServiceSku sku = null, Azure.ResourceManager.BotService.Models.BotServiceKind? kind = default(Azure.ResourceManager.BotService.Models.BotServiceKind?), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
-        public static Azure.ResourceManager.BotService.Models.BotProperties BotProperties(string displayName = null, string description = null, System.Uri iconUri = null, System.Uri endpoint = null, string endpointVersion = null, System.Collections.Generic.IDictionary<string, string> allSettings = null, System.Collections.Generic.IDictionary<string, string> parameters = null, System.Uri manifestUri = null, Azure.ResourceManager.BotService.Models.BotMsaAppType? msaAppType = default(Azure.ResourceManager.BotService.Models.BotMsaAppType?), string msaAppId = null, string msaAppTenantId = null, Azure.Core.ResourceIdentifier msaAppMSIResourceId = null, System.Collections.Generic.IEnumerable<string> configuredChannels = null, System.Collections.Generic.IEnumerable<string> enabledChannels = null, string developerAppInsightKey = null, string developerAppInsightsApiKey = null, string developerAppInsightsApplicationId = null, System.Collections.Generic.IEnumerable<string> luisAppIds = null, string luisKey = null, bool? isCmekEnabled = default(bool?), System.Uri cmekKeyVaultUri = null, string cmekEncryptionStatus = null, System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess?), bool? isStreamingSupported = default(bool?), bool? isDeveloperAppInsightsApiKeySet = default(bool?), string migrationToken = null, bool? isLocalAuthDisabled = default(bool?), string schemaTransformationVersion = null, Azure.Core.ResourceIdentifier storageResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionData> privateEndpointConnections = null, string openWithHint = null, string appPasswordHint = null, string provisioningState = null, string publishingCredentials = null) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotProperties BotProperties(string displayName = null, string description = null, System.Uri iconUri = null, System.Uri endpoint = null, string endpointVersion = null, System.Collections.Generic.IDictionary<string, string> allSettings = null, System.Collections.Generic.IDictionary<string, string> parameters = null, System.Uri manifestUri = null, Azure.ResourceManager.BotService.Models.BotMsaAppType? msaAppType = default(Azure.ResourceManager.BotService.Models.BotMsaAppType?), string msaAppId = null, string msaAppTenantId = null, Azure.Core.ResourceIdentifier msaAppMSIResourceId = null, System.Collections.Generic.IEnumerable<string> configuredChannels = null, System.Collections.Generic.IEnumerable<string> enabledChannels = null, string developerAppInsightKey = null, string developerAppInsightsApiKey = null, string developerAppInsightsApplicationId = null, System.Collections.Generic.IEnumerable<string> luisAppIds = null, string luisKey = null, bool? isCmekEnabled = default(bool?), System.Uri cmekKeyVaultUri = null, string cmekEncryptionStatus = null, System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess?), bool? isStreamingSupported = default(bool?), bool? isDeveloperAppInsightsApiKeySet = default(bool?), string migrationToken = null, bool? isLocalAuthDisabled = default(bool?), string schemaTransformationVersion = null, Azure.Core.ResourceIdentifier storageResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionData> privateEndpointConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData> networkSecurityPerimeterConfigurations = null, string openWithHint = null, string appPasswordHint = null, string provisioningState = null, string publishingCredentials = null) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotProperties BotProperties(string displayName, string description, System.Uri iconUri, System.Uri endpoint, string endpointVersion, System.Collections.Generic.IDictionary<string, string> allSettings, System.Collections.Generic.IDictionary<string, string> parameters, System.Uri manifestUri, Azure.ResourceManager.BotService.Models.BotMsaAppType? msaAppType, string msaAppId, string msaAppTenantId, Azure.Core.ResourceIdentifier msaAppMSIResourceId, System.Collections.Generic.IEnumerable<string> configuredChannels, System.Collections.Generic.IEnumerable<string> enabledChannels, string developerAppInsightKey, string developerAppInsightsApiKey, string developerAppInsightsApplicationId, System.Collections.Generic.IEnumerable<string> luisAppIds, string luisKey, bool? isCmekEnabled, System.Uri cmekKeyVaultUri, string cmekEncryptionStatus, System.Guid? tenantId, Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess? publicNetworkAccess, bool? isStreamingSupported, bool? isDeveloperAppInsightsApiKeySet, string migrationToken, bool? isLocalAuthDisabled, string schemaTransformationVersion, Azure.Core.ResourceIdentifier storageResourceId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionData> privateEndpointConnections, string openWithHint, string appPasswordHint, string provisioningState, string publishingCredentials) { throw null; }
         public static Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult BotServiceHostSettingsResult(System.Uri oAuthUri = null, System.Uri toBotFromChannelOpenIdMetadataUri = null, string toBotFromChannelTokenIssuer = null, System.Uri toBotFromEmulatorOpenIdMetadataUri = null, System.Uri toChannelFromBotLoginUri = null, string toChannelFromBotOAuthScope = null, bool? validateAuthority = default(bool?), string botOpenIdMetadata = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult BotServiceNameAvailabilityResult(bool? isValid = default(bool?), string message = null, string absCode = null) { throw null; }
+        public static Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData BotServiceNetworkSecurityPerimeterConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeterConfigurationProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotServiceNetworkSecurityPerimeterProfile BotServiceNetworkSecurityPerimeterProfile(string name = null, long? accessRulesVersion = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.Models.NspAccessRule> accessRules = null, long? diagnosticSettingsVersion = default(long?), System.Collections.Generic.IEnumerable<string> enabledLogCategories = null) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotServiceNspAccessRuleSubscription BotServiceNspAccessRuleSubscription(string id = null) { throw null; }
         public static Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionData BotServicePrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.BotService.Models.BotServicePrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState?), System.Collections.Generic.IEnumerable<string> groupIds = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.BotServicePrivateLinkResourceData BotServicePrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.BotServiceProvider BotServiceProvider(Azure.ResourceManager.BotService.Models.BotServiceProviderProperties properties = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.BotServiceProviderParameter BotServiceProviderParameter(string name = null, string serviceProviderParameterType = null, string displayName = null, string description = null, System.Uri helpUri = null, string @default = null, bool? isRequired = default(bool?)) { throw null; }
         public static Azure.ResourceManager.BotService.Models.BotServiceProviderProperties BotServiceProviderProperties(string id = null, string displayName = null, string serviceProviderName = null, System.Uri devPortalUri = null, System.Uri iconUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.Models.BotServiceProviderParameter> parameters = null) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotServiceResourceAssociation BotServiceResourceAssociation(string name = null, Azure.ResourceManager.BotService.Models.BotServiceAccessMode? accessMode = default(Azure.ResourceManager.BotService.Models.BotServiceAccessMode?)) { throw null; }
         public static Azure.ResourceManager.BotService.Models.BotServiceSku BotServiceSku(Azure.ResourceManager.BotService.Models.BotServiceSkuName name = default(Azure.ResourceManager.BotService.Models.BotServiceSkuName), Azure.ResourceManager.BotService.Models.BotServiceSkuTier? tier = default(Azure.ResourceManager.BotService.Models.BotServiceSkuTier?)) { throw null; }
         public static Azure.ResourceManager.BotService.Models.DirectLineChannel DirectLineChannel(Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.BotService.Models.DirectLineChannelProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.DirectLineChannelProperties DirectLineChannelProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.Models.DirectLineSite> sites = null, string extensionKey1 = null, string extensionKey2 = null, string directLineEmbedCode = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.DirectLineSite DirectLineSite(System.Guid? tenantId = default(System.Guid?), string siteId = null, string siteName = null, string key = null, string key2 = null, bool isEnabled = false, bool? isTokenEnabled = default(bool?), bool? isEndpointParametersEnabled = default(bool?), bool? isDetailedLoggingEnabled = default(bool?), bool? isBlockUserUploadEnabled = default(bool?), bool? isNoStorageEnabled = default(bool?), Azure.ETag? etag = default(Azure.ETag?), string appId = null, bool? isV1Enabled = default(bool?), bool? isV3Enabled = default(bool?), bool? isSecureSiteEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> trustedOrigins = null, bool? isWebChatSpeechEnabled = default(bool?), bool? isWebchatPreviewEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.BotService.Models.DirectLineSpeechChannel DirectLineSpeechChannel(Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.BotService.Models.DirectLineSpeechChannelProperties properties = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.EmailChannel EmailChannel(Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.BotService.Models.EmailChannelProperties properties = null) { throw null; }
@@ -375,8 +458,14 @@ namespace Azure.ResourceManager.BotService.Models
         public static Azure.ResourceManager.BotService.Models.LineRegistration LineRegistration(string generatedId = null, string channelSecret = null, string channelAccessToken = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.M365Extensions M365Extensions(Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.BotService.Models.MsTeamsChannel MsTeamsChannel(Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.BotService.Models.MsTeamsChannelProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter(Azure.Core.ResourceIdentifier id = null, string perimeterGuid = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(Azure.ResourceManager.BotService.Models.BotServiceProvisioningState? provisioningState = default(Azure.ResourceManager.BotService.Models.BotServiceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.Models.ProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.BotService.Models.BotServiceResourceAssociation resourceAssociation = null, Azure.ResourceManager.BotService.Models.BotServiceNetworkSecurityPerimeterProfile profile = null) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.NspAccessRule NspAccessRule(string name = null, Azure.ResourceManager.BotService.Models.NspAccessRuleProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.NspAccessRuleProperties NspAccessRuleProperties(Azure.ResourceManager.BotService.Models.NspAccessRuleDirection? direction = default(Azure.ResourceManager.BotService.Models.NspAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.Models.BotServiceNspAccessRuleSubscription> subscriptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter> networkSecurityPerimeters = null, System.Collections.Generic.IEnumerable<string> fullyQualifiedDomainNames = null, System.Collections.Generic.IEnumerable<string> emailAddresses = null, System.Collections.Generic.IEnumerable<string> phoneNumbers = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.Omnichannel Omnichannel(Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.BotService.Models.OutlookChannel OutlookChannel(Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.ProvisioningIssue ProvisioningIssue(string name = null, Azure.ResourceManager.BotService.Models.ProvisioningIssueProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.ProvisioningIssueProperties ProvisioningIssueProperties(string issueType = null, Azure.ResourceManager.BotService.Models.BotServiceSeverity? severity = default(Azure.ResourceManager.BotService.Models.BotServiceSeverity?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.Models.NspAccessRule> suggestedAccessRules = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.SearchAssistant SearchAssistant(Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.BotService.Models.SkypeChannel SkypeChannel(Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.BotService.Models.SkypeChannelProperties properties = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.SlackChannel SlackChannel(Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.BotService.Models.SlackChannelProperties properties = null) { throw null; }
@@ -384,6 +473,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static Azure.ResourceManager.BotService.Models.SmsChannel SmsChannel(Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.BotService.Models.SmsChannelProperties properties = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.TelegramChannel TelegramChannel(Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.BotService.Models.TelegramChannelProperties properties = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.TelephonyChannel TelephonyChannel(Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.BotService.Models.TelephonyChannelProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.TelephonyChannelProperties TelephonyChannelProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.Models.TelephonyPhoneNumbers> phoneNumbers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.Models.TelephonyChannelResourceApiConfiguration> apiConfigurations = null, string cognitiveServiceSubscriptionKey = null, string cognitiveServiceRegion = null, string defaultLocale = null, string premiumSku = null, bool? isEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.BotService.Models.WebChatChannel WebChatChannel(Azure.ETag? etag = default(Azure.ETag?), string provisioningState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.BotService.Models.WebChatChannelProperties properties = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.WebChatChannelProperties WebChatChannelProperties(string webChatEmbedCode = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.Models.WebChatSite> sites = null) { throw null; }
         public static Azure.ResourceManager.BotService.Models.WebChatSite WebChatSite(System.Guid? tenantId = default(System.Guid?), string siteId = null, string siteName = null, string key = null, string key2 = null, bool isEnabled = false, bool? isTokenEnabled = default(bool?), bool? isEndpointParametersEnabled = default(bool?), bool? isDetailedLoggingEnabled = default(bool?), bool? isBlockUserUploadEnabled = default(bool?), bool? isNoStorageEnabled = default(bool?), Azure.ETag? etag = default(Azure.ETag?), string appId = null, bool? isV1Enabled = default(bool?), bool? isV3Enabled = default(bool?), bool? isSecureSiteEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> trustedOrigins = null, bool? isWebChatSpeechEnabled = default(bool?), bool? isWebchatPreviewEnabled = default(bool?)) { throw null; }
@@ -401,7 +491,10 @@ namespace Azure.ResourceManager.BotService.Models
         public Azure.ResourceManager.BotService.Models.BotChannelSettings Setting { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServiceSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotChannelGetWithKeysResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotChannelGetWithKeysResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotChannelGetWithKeysResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotChannelGetWithKeysResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotChannelGetWithKeysResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -438,6 +531,7 @@ namespace Azure.ResourceManager.BotService.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotChannelName left, Azure.ResourceManager.BotService.Models.BotChannelName right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotChannelName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotChannelName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.BotService.Models.BotChannelName left, Azure.ResourceManager.BotService.Models.BotChannelName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -447,7 +541,10 @@ namespace Azure.ResourceManager.BotService.Models
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -459,7 +556,10 @@ namespace Azure.ResourceManager.BotService.Models
         public BotChannelRegenerateKeysContent(string siteName, Azure.ResourceManager.BotService.Models.BotServiceKey key) { }
         public Azure.ResourceManager.BotService.Models.BotServiceKey Key { get { throw null; } }
         public string SiteName { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotChannelRegenerateKeysContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotChannelRegenerateKeysContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotChannelRegenerateKeysContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotChannelRegenerateKeysContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotChannelRegenerateKeysContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotChannelRegenerateKeysContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotChannelRegenerateKeysContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -479,7 +579,10 @@ namespace Azure.ResourceManager.BotService.Models
         public bool? IsEnabled { get { throw null; } set { } }
         public bool? RequireTermsAgreement { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.BotChannelSite> Sites { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotChannelSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotChannelSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotChannelSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotChannelSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotChannelSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotChannelSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotChannelSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -508,7 +611,10 @@ namespace Azure.ResourceManager.BotService.Models
         public string SiteName { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> TrustedOrigins { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotChannelSite JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotChannelSite PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotChannelSite System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotChannelSite>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotChannelSite>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotChannelSite System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotChannelSite>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -520,7 +626,10 @@ namespace Azure.ResourceManager.BotService.Models
         public BotConnectionSettingParameter() { }
         public string Key { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotConnectionSettingParameter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotConnectionSettingParameter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotConnectionSettingParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotConnectionSettingParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotConnectionSettingParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotConnectionSettingParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotConnectionSettingParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -532,13 +641,18 @@ namespace Azure.ResourceManager.BotService.Models
         public BotConnectionSettingProperties() { }
         public string ClientId { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.BotConnectionSettingParameter> Parameters { get { throw null; } }
         public string ProvisioningState { get { throw null; } set { } }
         public string Scopes { get { throw null; } set { } }
         public string ServiceProviderDisplayName { get { throw null; } set { } }
         public string ServiceProviderId { get { throw null; } set { } }
         public string SettingId { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -551,7 +665,10 @@ namespace Azure.ResourceManager.BotService.Models
         public System.Uri CreateEmailSignInUrlResponseUri { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotCreateEmailSignInUriResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotCreateEmailSignInUriResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotCreateEmailSignInUriResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotCreateEmailSignInUriResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotCreateEmailSignInUriResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotCreateEmailSignInUriResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotCreateEmailSignInUriResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -572,6 +689,7 @@ namespace Azure.ResourceManager.BotService.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotMsaAppType left, Azure.ResourceManager.BotService.Models.BotMsaAppType right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotMsaAppType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotMsaAppType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.BotService.Models.BotMsaAppType left, Azure.ResourceManager.BotService.Models.BotMsaAppType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -604,6 +722,7 @@ namespace Azure.ResourceManager.BotService.Models
         public Azure.Core.ResourceIdentifier MsaAppMSIResourceId { get { throw null; } set { } }
         public string MsaAppTenantId { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotMsaAppType? MsaAppType { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.BotService.BotServiceNetworkSecurityPerimeterConfigurationData> NetworkSecurityPerimeterConfigurations { get { throw null; } }
         public string OpenWithHint { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
@@ -613,12 +732,33 @@ namespace Azure.ResourceManager.BotService.Models
         public string SchemaTransformationVersion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageResourceId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BotServiceAccessMode : System.IEquatable<Azure.ResourceManager.BotService.Models.BotServiceAccessMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BotServiceAccessMode(string value) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotServiceAccessMode Audit { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotServiceAccessMode Enforced { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotServiceAccessMode Learning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.BotService.Models.BotServiceAccessMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServiceAccessMode left, Azure.ResourceManager.BotService.Models.BotServiceAccessMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceAccessMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceAccessMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.BotService.Models.BotServiceAccessMode left, Azure.ResourceManager.BotService.Models.BotServiceAccessMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class BotServiceHostSettingsResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult>
     {
@@ -631,7 +771,10 @@ namespace Azure.ResourceManager.BotService.Models
         public System.Uri ToChannelFromBotLoginUri { get { throw null; } }
         public string ToChannelFromBotOAuthScope { get { throw null; } }
         public bool? ValidateAuthority { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -659,6 +802,7 @@ namespace Azure.ResourceManager.BotService.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServiceKind left, Azure.ResourceManager.BotService.Models.BotServiceKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.BotService.Models.BotServiceKind left, Azure.ResourceManager.BotService.Models.BotServiceKind right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -667,7 +811,10 @@ namespace Azure.ResourceManager.BotService.Models
         public BotServiceNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -680,12 +827,47 @@ namespace Azure.ResourceManager.BotService.Models
         public string AbsCode { get { throw null; } }
         public bool? IsValid { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BotServiceNetworkSecurityPerimeterProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceNetworkSecurityPerimeterProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceNetworkSecurityPerimeterProfile>
+    {
+        internal BotServiceNetworkSecurityPerimeterProfile() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.NspAccessRule> AccessRules { get { throw null; } }
+        public long? AccessRulesVersion { get { throw null; } }
+        public long? DiagnosticSettingsVersion { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> EnabledLogCategories { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceNetworkSecurityPerimeterProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceNetworkSecurityPerimeterProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.BotService.Models.BotServiceNetworkSecurityPerimeterProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceNetworkSecurityPerimeterProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceNetworkSecurityPerimeterProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BotService.Models.BotServiceNetworkSecurityPerimeterProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceNetworkSecurityPerimeterProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceNetworkSecurityPerimeterProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceNetworkSecurityPerimeterProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BotServiceNspAccessRuleSubscription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceNspAccessRuleSubscription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceNspAccessRuleSubscription>
+    {
+        internal BotServiceNspAccessRuleSubscription() { }
+        public string Id { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceNspAccessRuleSubscription JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceNspAccessRuleSubscription PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.BotService.Models.BotServiceNspAccessRuleSubscription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceNspAccessRuleSubscription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceNspAccessRuleSubscription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BotService.Models.BotServiceNspAccessRuleSubscription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceNspAccessRuleSubscription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceNspAccessRuleSubscription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceNspAccessRuleSubscription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BotServicePrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState>
@@ -702,6 +884,7 @@ namespace Azure.ResourceManager.BotService.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -719,6 +902,7 @@ namespace Azure.ResourceManager.BotService.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -728,7 +912,10 @@ namespace Azure.ResourceManager.BotService.Models
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotServicePrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServicePrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServicePrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotServicePrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServicePrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -741,7 +928,10 @@ namespace Azure.ResourceManager.BotService.Models
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServicePrivateLinkServiceConnectionState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServicePrivateLinkServiceConnectionState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotServicePrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServicePrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServicePrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotServicePrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServicePrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -752,7 +942,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal BotServiceProvider() { }
         public Azure.ResourceManager.BotService.Models.BotServiceProviderProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceProvider JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceProvider PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotServiceProvider System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceProvider>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceProvider>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotServiceProvider System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceProvider>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -761,7 +954,7 @@ namespace Azure.ResourceManager.BotService.Models
     }
     public partial class BotServiceProviderParameter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceProviderParameter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceProviderParameter>
     {
-        internal BotServiceProviderParameter() { }
+        public BotServiceProviderParameter() { }
         public string Default { get { throw null; } }
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
@@ -769,7 +962,10 @@ namespace Azure.ResourceManager.BotService.Models
         public bool? IsRequired { get { throw null; } }
         public string Name { get { throw null; } }
         public string ServiceProviderParameterType { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceProviderParameter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceProviderParameter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotServiceProviderParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceProviderParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceProviderParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotServiceProviderParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceProviderParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -778,19 +974,43 @@ namespace Azure.ResourceManager.BotService.Models
     }
     public partial class BotServiceProviderProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceProviderProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceProviderProperties>
     {
-        internal BotServiceProviderProperties() { }
+        public BotServiceProviderProperties() { }
         public System.Uri DevPortalUri { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public System.Uri IconUri { get { throw null; } }
+        public System.Uri IconUri { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.BotService.Models.BotServiceProviderParameter> Parameters { get { throw null; } }
         public string ServiceProviderName { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceProviderProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceProviderProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotServiceProviderProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceProviderProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceProviderProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotServiceProviderProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceProviderProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceProviderProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceProviderProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BotServiceProvisioningState : System.IEquatable<Azure.ResourceManager.BotService.Models.BotServiceProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BotServiceProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotServiceProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotServiceProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotServiceProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotServiceProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotServiceProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotServiceProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.BotService.Models.BotServiceProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServiceProvisioningState left, Azure.ResourceManager.BotService.Models.BotServiceProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.BotService.Models.BotServiceProvisioningState left, Azure.ResourceManager.BotService.Models.BotServiceProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BotServicePublicNetworkAccess : System.IEquatable<Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess>
@@ -800,12 +1020,46 @@ namespace Azure.ResourceManager.BotService.Models
         public BotServicePublicNetworkAccess(string value) { throw null; }
         public static Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess Enabled { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess SecuredByPerimeter { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess left, Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess left, Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class BotServiceResourceAssociation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceResourceAssociation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceResourceAssociation>
+    {
+        internal BotServiceResourceAssociation() { }
+        public Azure.ResourceManager.BotService.Models.BotServiceAccessMode? AccessMode { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceResourceAssociation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceResourceAssociation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.BotService.Models.BotServiceResourceAssociation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceResourceAssociation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceResourceAssociation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BotService.Models.BotServiceResourceAssociation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceResourceAssociation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceResourceAssociation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceResourceAssociation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BotServiceSeverity : System.IEquatable<Azure.ResourceManager.BotService.Models.BotServiceSeverity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BotServiceSeverity(string value) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotServiceSeverity Error { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotServiceSeverity Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.BotService.Models.BotServiceSeverity other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServiceSeverity left, Azure.ResourceManager.BotService.Models.BotServiceSeverity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceSeverity (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceSeverity? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.BotService.Models.BotServiceSeverity left, Azure.ResourceManager.BotService.Models.BotServiceSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class BotServiceSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceSku>
@@ -813,7 +1067,10 @@ namespace Azure.ResourceManager.BotService.Models
         public BotServiceSku(Azure.ResourceManager.BotService.Models.BotServiceSkuName name) { }
         public Azure.ResourceManager.BotService.Models.BotServiceSkuName Name { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServiceSkuTier? Tier { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.BotServiceSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.BotServiceSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.BotServiceSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.BotServiceSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.BotServiceSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -833,6 +1090,7 @@ namespace Azure.ResourceManager.BotService.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServiceSkuName left, Azure.ResourceManager.BotService.Models.BotServiceSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceSkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceSkuName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.BotService.Models.BotServiceSkuName left, Azure.ResourceManager.BotService.Models.BotServiceSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -849,6 +1107,7 @@ namespace Azure.ResourceManager.BotService.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServiceSkuTier left, Azure.ResourceManager.BotService.Models.BotServiceSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceSkuTier (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceSkuTier? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.BotService.Models.BotServiceSkuTier left, Azure.ResourceManager.BotService.Models.BotServiceSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -856,7 +1115,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public DirectLineChannel() { }
         public Azure.ResourceManager.BotService.Models.DirectLineChannelProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.DirectLineChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.DirectLineChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.DirectLineChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.DirectLineChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.DirectLineChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -870,7 +1132,10 @@ namespace Azure.ResourceManager.BotService.Models
         public string ExtensionKey1 { get { throw null; } set { } }
         public string ExtensionKey2 { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.DirectLineSite> Sites { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.DirectLineChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.DirectLineChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.DirectLineChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.DirectLineChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.DirectLineChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.DirectLineChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.DirectLineChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -880,7 +1145,10 @@ namespace Azure.ResourceManager.BotService.Models
     public partial class DirectLineSite : Azure.ResourceManager.BotService.Models.BotChannelSite, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.DirectLineSite>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.DirectLineSite>
     {
         public DirectLineSite(string siteName, bool isEnabled) : base (default(string), default(bool)) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelSite JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelSite PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.DirectLineSite System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.DirectLineSite>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.DirectLineSite>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.DirectLineSite System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.DirectLineSite>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -891,7 +1159,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public DirectLineSpeechChannel() { }
         public Azure.ResourceManager.BotService.Models.DirectLineSpeechChannelProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.DirectLineSpeechChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.DirectLineSpeechChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.DirectLineSpeechChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.DirectLineSpeechChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.DirectLineSpeechChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -908,7 +1179,10 @@ namespace Azure.ResourceManager.BotService.Models
         public string CustomVoiceDeploymentId { get { throw null; } set { } }
         public bool? IsDefaultBotForCogSvcAccount { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.DirectLineSpeechChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.DirectLineSpeechChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.DirectLineSpeechChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.DirectLineSpeechChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.DirectLineSpeechChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.DirectLineSpeechChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.DirectLineSpeechChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -919,7 +1193,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public EmailChannel() { }
         public Azure.ResourceManager.BotService.Models.EmailChannelProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.EmailChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.EmailChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.EmailChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.EmailChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.EmailChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -939,6 +1216,10 @@ namespace Azure.ResourceManager.BotService.Models
         public bool IsEnabled { get { throw null; } set { } }
         public string MagicCode { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.EmailChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.EmailChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.EmailChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.EmailChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.EmailChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.EmailChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.EmailChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -949,7 +1230,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public FacebookChannel() { }
         public Azure.ResourceManager.BotService.Models.FacebookChannelProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.FacebookChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.FacebookChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.FacebookChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.FacebookChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.FacebookChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -965,7 +1249,10 @@ namespace Azure.ResourceManager.BotService.Models
         public bool IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.FacebookPage> Pages { get { throw null; } }
         public string VerifyToken { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.FacebookChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.FacebookChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.FacebookChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.FacebookChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.FacebookChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.FacebookChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.FacebookChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -977,7 +1264,10 @@ namespace Azure.ResourceManager.BotService.Models
         public FacebookPage(string id) { }
         public string AccessToken { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.FacebookPage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.FacebookPage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.FacebookPage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.FacebookPage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.FacebookPage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.FacebookPage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.FacebookPage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -989,7 +1279,10 @@ namespace Azure.ResourceManager.BotService.Models
         public GetBotServiceQnAMakerEndpointKeyContent() { }
         public string Authkey { get { throw null; } set { } }
         public string Hostname { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1003,7 +1296,10 @@ namespace Azure.ResourceManager.BotService.Models
         public string LastStableVersion { get { throw null; } }
         public string PrimaryEndpointKey { get { throw null; } }
         public string SecondaryEndpointKey { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1014,7 +1310,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public KikChannel() { }
         public Azure.ResourceManager.BotService.Models.KikChannelProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.KikChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.KikChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.KikChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.KikChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.KikChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1028,7 +1327,10 @@ namespace Azure.ResourceManager.BotService.Models
         public bool IsEnabled { get { throw null; } set { } }
         public bool? IsValidated { get { throw null; } set { } }
         public string UserName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.KikChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.KikChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.KikChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.KikChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.KikChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.KikChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.KikChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1039,7 +1341,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public LineChannel() { }
         public Azure.ResourceManager.BotService.Models.LineChannelProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.LineChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.LineChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.LineChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.LineChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.LineChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1052,7 +1357,10 @@ namespace Azure.ResourceManager.BotService.Models
         public System.Uri CallbackUri { get { throw null; } }
         public bool? IsValidated { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.LineRegistration> LineRegistrations { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.LineChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.LineChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.LineChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.LineChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.LineChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.LineChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.LineChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1065,7 +1373,10 @@ namespace Azure.ResourceManager.BotService.Models
         public string ChannelAccessToken { get { throw null; } set { } }
         public string ChannelSecret { get { throw null; } set { } }
         public string GeneratedId { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.LineRegistration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.LineRegistration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.LineRegistration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.LineRegistration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.LineRegistration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.LineRegistration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.LineRegistration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1075,7 +1386,10 @@ namespace Azure.ResourceManager.BotService.Models
     public partial class M365Extensions : Azure.ResourceManager.BotService.Models.BotChannelProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.M365Extensions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.M365Extensions>
     {
         public M365Extensions() { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.M365Extensions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.M365Extensions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.M365Extensions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.M365Extensions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.M365Extensions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1086,7 +1400,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public MsTeamsChannel() { }
         public Azure.ResourceManager.BotService.Models.MsTeamsChannelProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.MsTeamsChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.MsTeamsChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.MsTeamsChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.MsTeamsChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.MsTeamsChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1102,17 +1419,109 @@ namespace Azure.ResourceManager.BotService.Models
         public string IncomingCallRoute { get { throw null; } set { } }
         public bool? IsCallingEnabled { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.MsTeamsChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.MsTeamsChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.MsTeamsChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.MsTeamsChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.MsTeamsChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.MsTeamsChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.MsTeamsChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.MsTeamsChannelProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.MsTeamsChannelProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class NetworkSecurityPerimeter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter>
+    {
+        internal NetworkSecurityPerimeter() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public string PerimeterGuid { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetworkSecurityPerimeterConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeterConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeterConfigurationProperties>
+    {
+        internal NetworkSecurityPerimeterConfigurationProperties() { }
+        public Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } }
+        public Azure.ResourceManager.BotService.Models.BotServiceNetworkSecurityPerimeterProfile Profile { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.ProvisioningIssue> ProvisioningIssues { get { throw null; } }
+        public Azure.ResourceManager.BotService.Models.BotServiceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.BotService.Models.BotServiceResourceAssociation ResourceAssociation { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeterConfigurationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeterConfigurationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeterConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeterConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeterConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeterConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeterConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeterConfigurationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeterConfigurationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NspAccessRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.NspAccessRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NspAccessRule>
+    {
+        internal NspAccessRule() { }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.BotService.Models.NspAccessRuleProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.NspAccessRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.NspAccessRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.BotService.Models.NspAccessRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.NspAccessRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.NspAccessRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BotService.Models.NspAccessRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NspAccessRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NspAccessRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NspAccessRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NspAccessRuleDirection : System.IEquatable<Azure.ResourceManager.BotService.Models.NspAccessRuleDirection>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NspAccessRuleDirection(string value) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.NspAccessRuleDirection Inbound { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.NspAccessRuleDirection Outbound { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.BotService.Models.NspAccessRuleDirection other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.BotService.Models.NspAccessRuleDirection left, Azure.ResourceManager.BotService.Models.NspAccessRuleDirection right) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.NspAccessRuleDirection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.NspAccessRuleDirection? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.BotService.Models.NspAccessRuleDirection left, Azure.ResourceManager.BotService.Models.NspAccessRuleDirection right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NspAccessRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.NspAccessRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NspAccessRuleProperties>
+    {
+        internal NspAccessRuleProperties() { }
+        public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
+        public Azure.ResourceManager.BotService.Models.NspAccessRuleDirection? Direction { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> EmailAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> FullyQualifiedDomainNames { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.BotService.Models.NetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> PhoneNumbers { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.BotServiceNspAccessRuleSubscription> Subscriptions { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.NspAccessRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.NspAccessRuleProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.BotService.Models.NspAccessRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.NspAccessRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.NspAccessRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BotService.Models.NspAccessRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NspAccessRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NspAccessRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.NspAccessRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class Omnichannel : Azure.ResourceManager.BotService.Models.BotChannelProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.Omnichannel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.Omnichannel>
     {
         public Omnichannel() { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.Omnichannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.Omnichannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.Omnichannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.Omnichannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.Omnichannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1122,12 +1531,48 @@ namespace Azure.ResourceManager.BotService.Models
     public partial class OutlookChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.OutlookChannel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.OutlookChannel>
     {
         public OutlookChannel() { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.OutlookChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.OutlookChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.OutlookChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.OutlookChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.OutlookChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.OutlookChannel>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.OutlookChannel>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProvisioningIssue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.ProvisioningIssue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.ProvisioningIssue>
+    {
+        internal ProvisioningIssue() { }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.BotService.Models.ProvisioningIssueProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.ProvisioningIssue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.ProvisioningIssue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.BotService.Models.ProvisioningIssue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.ProvisioningIssue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.ProvisioningIssue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BotService.Models.ProvisioningIssue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.ProvisioningIssue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.ProvisioningIssue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.ProvisioningIssue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProvisioningIssueProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.ProvisioningIssueProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.ProvisioningIssueProperties>
+    {
+        internal ProvisioningIssueProperties() { }
+        public string Description { get { throw null; } }
+        public string IssueType { get { throw null; } }
+        public Azure.ResourceManager.BotService.Models.BotServiceSeverity? Severity { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.NspAccessRule> SuggestedAccessRules { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> SuggestedResourceIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.ProvisioningIssueProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.ProvisioningIssueProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.BotService.Models.ProvisioningIssueProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.ProvisioningIssueProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.ProvisioningIssueProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BotService.Models.ProvisioningIssueProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.ProvisioningIssueProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.ProvisioningIssueProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.ProvisioningIssueProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum RegenerateKeysBotChannelName
     {
@@ -1137,7 +1582,10 @@ namespace Azure.ResourceManager.BotService.Models
     public partial class SearchAssistant : Azure.ResourceManager.BotService.Models.BotChannelProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SearchAssistant>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.SearchAssistant>
     {
         public SearchAssistant() { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.SearchAssistant System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SearchAssistant>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SearchAssistant>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.SearchAssistant System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.SearchAssistant>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1148,7 +1596,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public SkypeChannel() { }
         public Azure.ResourceManager.BotService.Models.SkypeChannelProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.SkypeChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SkypeChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SkypeChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.SkypeChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.SkypeChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1168,7 +1619,10 @@ namespace Azure.ResourceManager.BotService.Models
         public bool? IsMessagingEnabled { get { throw null; } set { } }
         public bool? IsScreenSharingEnabled { get { throw null; } set { } }
         public bool? IsVideoEnabled { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.SkypeChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.SkypeChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.SkypeChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SkypeChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SkypeChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.SkypeChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.SkypeChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1179,7 +1633,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public SlackChannel() { }
         public Azure.ResourceManager.BotService.Models.SlackChannelProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.SlackChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SlackChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SlackChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.SlackChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.SlackChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1200,7 +1657,10 @@ namespace Azure.ResourceManager.BotService.Models
         public string Scopes { get { throw null; } set { } }
         public string SigningSecret { get { throw null; } set { } }
         public string VerificationToken { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.SlackChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.SlackChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.SlackChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SlackChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SlackChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.SlackChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.SlackChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1211,7 +1671,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public SmsChannel() { }
         public Azure.ResourceManager.BotService.Models.SmsChannelProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.SmsChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SmsChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SmsChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.SmsChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.SmsChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1226,7 +1689,10 @@ namespace Azure.ResourceManager.BotService.Models
         public bool IsEnabled { get { throw null; } set { } }
         public bool? IsValidated { get { throw null; } set { } }
         public string Phone { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.SmsChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.SmsChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.SmsChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SmsChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.SmsChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.SmsChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.SmsChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1237,7 +1703,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public TelegramChannel() { }
         public Azure.ResourceManager.BotService.Models.TelegramChannelProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.TelegramChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.TelegramChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.TelegramChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.TelegramChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.TelegramChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1250,7 +1719,10 @@ namespace Azure.ResourceManager.BotService.Models
         public string AccessToken { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
         public bool? IsValidated { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.TelegramChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.TelegramChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.TelegramChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.TelegramChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.TelegramChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.TelegramChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.TelegramChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1261,7 +1733,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public TelephonyChannel() { }
         public Azure.ResourceManager.BotService.Models.TelephonyChannelProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.TelephonyChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.TelephonyChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.TelephonyChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.TelephonyChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.TelephonyChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1278,7 +1753,10 @@ namespace Azure.ResourceManager.BotService.Models
         public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.TelephonyPhoneNumbers> PhoneNumbers { get { throw null; } }
         public string PremiumSku { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.TelephonyChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.TelephonyChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.TelephonyChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.TelephonyChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.TelephonyChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.TelephonyChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.TelephonyChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1294,7 +1772,10 @@ namespace Azure.ResourceManager.BotService.Models
         public string DefaultLocale { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
         public string ProviderName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.TelephonyChannelResourceApiConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.TelephonyChannelResourceApiConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.TelephonyChannelResourceApiConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.TelephonyChannelResourceApiConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.TelephonyChannelResourceApiConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.TelephonyChannelResourceApiConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.TelephonyChannelResourceApiConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1314,7 +1795,10 @@ namespace Azure.ResourceManager.BotService.Models
         public string Id { get { throw null; } set { } }
         public string OfferType { get { throw null; } set { } }
         public string PhoneNumber { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.BotService.Models.TelephonyPhoneNumbers JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.TelephonyPhoneNumbers PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.TelephonyPhoneNumbers System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.TelephonyPhoneNumbers>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.TelephonyPhoneNumbers>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.TelephonyPhoneNumbers System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.TelephonyPhoneNumbers>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1325,7 +1809,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public WebChatChannel() { }
         public Azure.ResourceManager.BotService.Models.WebChatChannelProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.WebChatChannel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.WebChatChannel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.WebChatChannel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.WebChatChannel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.WebChatChannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1337,7 +1824,10 @@ namespace Azure.ResourceManager.BotService.Models
         public WebChatChannelProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.WebChatSite> Sites { get { throw null; } }
         public string WebChatEmbedCode { get { throw null; } }
+        protected virtual Azure.ResourceManager.BotService.Models.WebChatChannelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.BotService.Models.WebChatChannelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.WebChatChannelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.WebChatChannelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.WebChatChannelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.WebChatChannelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.WebChatChannelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1347,7 +1837,10 @@ namespace Azure.ResourceManager.BotService.Models
     public partial class WebChatSite : Azure.ResourceManager.BotService.Models.BotChannelSite, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.WebChatSite>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.WebChatSite>
     {
         public WebChatSite(string siteName, bool isEnabled) : base (default(string), default(bool)) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelSite JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.BotService.Models.BotChannelSite PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.BotService.Models.WebChatSite System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.WebChatSite>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BotService.Models.WebChatSite>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BotService.Models.WebChatSite System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BotService.Models.WebChatSite>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

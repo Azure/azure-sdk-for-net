@@ -44,7 +44,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         AIProjectClient projectClient = GetTestProjectClient();
         EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
 
-        PromptAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
+        DeclarativeAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a prompt agent."
         };
@@ -371,7 +371,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         AIProjectClient projectClient = GetTestProjectClient();
         EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
 
-        PromptAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
+        DeclarativeAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a prompt agent."
         };

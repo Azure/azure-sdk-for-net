@@ -148,7 +148,7 @@ public class Sample_Function : ProjectsOpenAITestBase
 
         #endregion
         #region Snippet:Sample_CreateAgent_Function_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a weather bot. Use the provided functions to help answer questions. "
                     + "Customize your responses to the user's preferences as much as possible and use friendly "
@@ -234,7 +234,7 @@ public class Sample_Function : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_CreateAgent_Function_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a weather bot. Use the provided functions to help answer questions. "
                     + "Customize your responses to the user's preferences as much as possible and use friendly "

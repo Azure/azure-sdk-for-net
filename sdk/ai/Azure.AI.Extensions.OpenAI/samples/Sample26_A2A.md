@@ -62,7 +62,7 @@ if (!string.Equals(a2aConnection.Type.ToString(), "RemoteA2A"))
     }
     a2aTool.BaseUri = new Uri(a2aBaseUri);
 }
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { a2aTool }
@@ -87,7 +87,7 @@ if (!string.Equals(a2aConnection.Type.ToString(), "RemoteA2A"))
     }
     a2aTool.BaseUri = new Uri(a2aBaseUri);
 }
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { a2aTool }

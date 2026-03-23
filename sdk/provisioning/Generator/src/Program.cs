@@ -34,6 +34,7 @@ internal static class Program
             new AppContainersSpecification(),
             new AppServiceSpecification(),
             new AppConfigurationSpecification(),
+            new ApiManagementSpecification(),
             new ApplicationInsightsSpecification(),
             new CdnSpecification(),
             new CommunicationSpecification(),

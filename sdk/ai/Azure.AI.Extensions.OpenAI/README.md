@@ -91,7 +91,7 @@ To be able to create, update and delete Agents, please install `Azure.AI.Project
 AIProjectClient projectClient = new(
     endpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
     tokenProvider: new AzureCliCredential());
-AgentsClient agentClient = projectClient.Agents;
+AgentAdministrationClient agentClient = projectClient.Agents;
 ```
 
 If you're already using an `AIProjectClient` from `Azure.AI.Projects`, you can initialize an `ProjectOpenAIClient` instance directly via an extension method:
@@ -168,7 +168,7 @@ string FOUNDRY_AGENT_NAME = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_NA
 
 AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential());
 
-AgentDefinition agentDefinition = new PromptAgentDefinition(MODEL_DEPLOYMENT)
+AgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
 {
     Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
 };
@@ -222,7 +222,7 @@ await foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateR
 Responses can be used with the agents. First we need to create an `AgentVersion` object.
 
 ```C# Snippet:CreateAgent_Basic_Async
-PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a physics teacher with a sense of humor.",
 };
@@ -555,7 +555,7 @@ var textOptions = new ResponseTextOptions()
         jsonSchema: s_calendarSchema
     )
 };
-PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a helpful assistant that extracts calendar event information from the input user messages," +
                    "and returns it in the desired structured output format.",
@@ -597,7 +597,7 @@ VectorStore vectorStore = await vctStoreClient.CreateVectorStoreAsync(options);
 Finally, create the tool, aware of the vector store and add it to the Agent.
 
 ```C# Snippet:Sample_CreateAgent_FileSearch_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent that can help fetch data from files you know about.",
     Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
@@ -613,7 +613,7 @@ The `CodeInterpreterTool` allows Agents to run the code in the container. Here a
 Create an Agent:
 
 ```C# Snippet:Sample_CreateAgent_CodeInterpreter_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a personal math tutor. When asked a math question, write and run code using the python tool to answer the question.",
     Tools = {
@@ -683,7 +683,7 @@ Console.WriteLine($"PDF downloaded and saved to: {Path.GetFullPath("results.pdf"
 `ComputerTool` allows Agents to assist customer in computer related tasks. Its constructor is provided with description of an operation system and screen resolution.
 
 ```C# Snippet:Sample_CreateAgent_ComputerUse_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a computer automation assistant.\n\n" +
                    "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
@@ -934,7 +934,7 @@ private static FunctionCallOutputResponseItem GetResolvedToolOutput(FunctionCall
 Create Agent with the `FunctionTool`.
 
 ```C# Snippet:Sample_CreateAgent_Function_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a weather bot. Use the provided functions to help answer questions. "
             + "Customize your responses to the user's preferences as much as possible and use friendly "
@@ -996,7 +996,7 @@ Console.WriteLine(response.GetOutputText());
 The `WebSearchTool` allows the agent to perform web search. To improve the results we can set up the search location. After the agent was created, it can be used as usual. When needed it will use web search to answer the question.
 
 ```C# Snippet:Sample_CreateAgent_WebSearch_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant that can search the web",
     Tools = { ResponseTool.CreateWebSearchTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
@@ -1013,7 +1013,7 @@ The Web search tool also can use the custom Bing instances to perform more speci
 AIProjectConnection bingConnection = projectClient.Connections.GetConnection(connectionName: connectionName);
 WebSearchTool webSearchTool = ResponseTool.CreateWebSearchTool();
 webSearchTool.CustomSearchConfiguration = new(bingConnection.Id, customInstanceName);
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent.",
     Tools = { webSearchTool }
@@ -1041,7 +1041,7 @@ AzureAISearchToolIndex index = new()
     Filter = "category eq 'sleeping bag'",
     QueryType = AzureAISearchQueryType.Simple
 };
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
     Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
@@ -1155,7 +1155,7 @@ BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOption
     searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
     )
 );
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent.",
     Tools = { bingGroundingAgentTool, }
@@ -1224,7 +1224,7 @@ BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearch
     searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent.",
     Tools = { customBingSearchAgentTool, }
@@ -1241,7 +1241,7 @@ The `MCPTool` allows Agent to communicate with third party services using [Model
 To use MCP we need to create agent definition with the `MCPTool`.
 
 ```C# Snippet:Sample_CreateAgent_MCPTool_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
     Tools = { ResponseTool.CreateMcpTool(
@@ -1311,7 +1311,7 @@ McpTool tool = ResponseTool.CreateMcpTool(
         toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
     ));
 tool.ProjectConnectionId = mcpProjectConnectionName;
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
     Tools = { tool }
@@ -1338,7 +1338,7 @@ OpenApiFunctionDefinition toolDefinition = new(
 toolDefinition.Description = "Retrieve weather information for a location.";
 OpenAPITool openapiTool = new(toolDefinition);
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = {openapiTool}
@@ -1378,7 +1378,7 @@ OpenApiFunctionDefinition toolDefinition = new(
 toolDefinition.Description = "Trip Advisor API to get travel information.";
 OpenAPITool openapiTool = new(toolDefinition);
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { openapiTool }
@@ -1448,7 +1448,7 @@ BrowserAutomationPreviewTool playwrightTool = new(
         new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
     ));
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are an Agent helping with browser automation tasks.\n" +
     "You can answer questions, provide information, and assist with various tasks\n" +
@@ -1493,7 +1493,7 @@ SharePointGroundingToolOptions sharepointToolOption = new()
 {
     ProjectConnections = { new ToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
 };
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { new SharepointPreviewTool(sharepointToolOption), }
@@ -1596,7 +1596,7 @@ FabricDataAgentToolOptions fabricToolOption = new()
 {
     ProjectConnections = { new ToolProjectConnection(projectConnectionId: fabricConnection.Id) }
 };
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }
@@ -1654,7 +1654,7 @@ if (!string.Equals(a2aConnection.Type.ToString(), "RemoteA2A"))
     }
     a2aTool.BaseUri = new Uri(a2aBaseUri);
 }
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { a2aTool }
@@ -1822,7 +1822,7 @@ public class Sample_AzureFunction : ProjectsOpenAITestBase
 This tool should be used by `PromptAgentDefinition` so Agent can use the Azure Function when required.
 
 ```C# Snippet:Sample_CreateAgent_AzureFunction_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful support agent. Use the provided function any "
         + "time the prompt contains the string 'What would foo say?'. When you invoke "
