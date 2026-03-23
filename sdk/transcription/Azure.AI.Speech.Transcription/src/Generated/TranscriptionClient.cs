@@ -60,7 +60,14 @@ namespace Azure.AI.Speech.Transcription
             options ??= new TranscriptionClientOptions();
 
             _endpoint = endpoint;
-            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+            if (authenticationPolicy != null)
+            {
+                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+            }
+            else
+            {
+                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly) }, Array.Empty<PipelinePolicy>());
+            }
             _apiVersion = options.Version;
         }
 

@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `TextAnalysisAuthoringClientSettings` to support creating a `TextAnalysisAuthoringClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ### Breaking Changes
 
 ### Bugs Fixed

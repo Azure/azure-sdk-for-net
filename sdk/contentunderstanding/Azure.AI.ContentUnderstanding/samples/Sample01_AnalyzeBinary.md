@@ -65,6 +65,60 @@ Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
 AnalysisResult result = operation.Value;
 ```
 
+## Analyze specific pages with ContentRange
+
+You can restrict analysis to specific pages by passing a `ContentRange` to the `contentRange` parameter. The `ContentRange` struct provides typed factory methods for documents:
+
+- `ContentRange.Page(1)` — single page
+- `ContentRange.Pages(1, 3)` — page range
+- `ContentRange.PagesFrom(9)` — from page 9 onward
+- `ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5), ContentRange.PagesFrom(9))` — combined ranges ("1-3,5,9-")
+
+For more `ContentRange` examples across documents, video, and audio, see [Sample 02: Analyze content from URLs][sample02-analyze-url].
+
+The following example extracts all pages starting from page 3 of a document using `ContentRange.PagesFrom(3)`:
+
+```C# Snippet:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
+// Analyze only pages 3 onward.
+Operation<AnalysisResult> rangeOperation = await client.AnalyzeBinaryAsync(
+    WaitUntil.Completed,
+    "prebuilt-documentSearch",
+    binaryData,
+    contentRange: ContentRange.PagesFrom(3));
+
+AnalysisResult rangeResult = rangeOperation.Value;
+```
+
+The following example uses `ContentRange.Combine` to analyze pages 1–3, page 5, and pages 9 onward in a single call:
+
+```C# Snippet:ContentUnderstandingAnalyzeBinaryWithCombinedContentRangeAsync
+// Analyze pages 1–3, page 5, and pages 9 onward.
+Operation<AnalysisResult> combineRangeOperation = await client.AnalyzeBinaryAsync(
+    WaitUntil.Completed,
+    "prebuilt-documentSearch",
+    binaryData,
+    contentRange: ContentRange.Combine(
+        ContentRange.Pages(1, 3),
+        ContentRange.Page(5),
+        ContentRange.PagesFrom(9)));
+
+AnalysisResult combineRangeResult = combineRangeOperation.Value;
+```
+
+You can also pass a range string directly to the `ContentRange` constructor. This is equivalent to using the factory methods and is useful for dynamically constructed or user-supplied ranges:
+
+```C# Snippet:ContentUnderstandingAnalyzeBinaryWithRawContentRangeAsync
+// Analyze pages 1–3, page 5, and pages 9 onward using a raw range string.
+// This is equivalent to: ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5), ContentRange.PagesFrom(9))
+Operation<AnalysisResult> rawRangeOperation = await client.AnalyzeBinaryAsync(
+    WaitUntil.Completed,
+    "prebuilt-documentSearch",
+    binaryData,
+    contentRange: new ContentRange("1-3,5,9-"));
+
+AnalysisResult rawRangeResult = rawRangeOperation.Value;
+```
+
 ## Extract markdown content
 
 The most common use case for document analysis is extracting markdown content, which is optimized for RAG (Retrieval-Augmented Generation) scenarios. Markdown provides a structured, searchable representation of the document that preserves layout, formatting, and hierarchy while being easily consumable by AI models and search systems.
@@ -78,8 +132,6 @@ Content Understanding generates rich GitHub Flavored Markdown that is ideal for 
 - **Charts and diagrams** with charts converted to Chart.js syntax and diagrams to Mermaid.js syntax, including figure descriptions (requires `enableFigureDescription` and `enableFigureAnalysis` configuration)
 - **Mathematical formulas** encoded in LaTeX (inline and display)
 - **Hyperlinks, barcodes, annotations, and page metadata** for complete document representation (annotations require `returnDetails` configuration)
-
-The `AnalysisResult.Contents` collection holds the extracted content as `AnalysisContent` items. A PDF produces a single `AnalysisContent` entry (even when it has multiple pages), and each `AnalysisContent` exposes a `Markdown` property so you can read the markdown directly.
 
 The `AnalysisResult.Contents` collection holds the extracted content as `AnalysisContent` items. A PDF produces a single `AnalysisContent` entry (even when it has multiple pages), and each `AnalysisContent` exposes a `Markdown` property so you can read the markdown directly.
 

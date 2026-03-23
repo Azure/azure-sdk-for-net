@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct EventHubsTimestampType : IEquatable<EventHubsTimestampType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EventHubsTimestampType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EventHubsTimestampType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string LogAppendValue = "LogAppend";
         private const string CreateValue = "Create";
 
-        /// <summary> LogAppend. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsTimestampType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EventHubsTimestampType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the LogAppend. </summary>
         public static EventHubsTimestampType LogAppend { get; } = new EventHubsTimestampType(LogAppendValue);
-        /// <summary> Create. </summary>
+
+        /// <summary> Gets the Create. </summary>
         public static EventHubsTimestampType Create { get; } = new EventHubsTimestampType(CreateValue);
+
         /// <summary> Determines if two <see cref="EventHubsTimestampType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventHubsTimestampType left, EventHubsTimestampType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventHubsTimestampType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventHubsTimestampType left, EventHubsTimestampType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsTimestampType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventHubsTimestampType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventHubsTimestampType(string value) => new EventHubsTimestampType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventHubsTimestampType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventHubsTimestampType?(string value) => value == null ? null : new EventHubsTimestampType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventHubsTimestampType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventHubsTimestampType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Generator.Specifications;
 // pointing to the local mgmt project before running this generator.
 // After generation, restore the PackageReference and revert the mgmt changes.
 public class DataFactorySpecification() :
-    Specification("DataFactory", typeof(DataFactoryExtensions), ignorePropertiesWithoutPath: true)
+    Specification("DataFactory", typeof(DataFactoryExtensions), ignorePropertiesWithoutPath: true, serviceDirectory: "datafactory")
 {
     protected override IReadOnlyList<Assembly> AdditionalAllowedAssemblies { get; } =
         [typeof(DataFactoryLinkedServiceReference).Assembly];

@@ -20,10 +20,5 @@
   <ItemGroup Condition="'$(SDKType)' == 'compute' Or '$(SDKType)' == 'all'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning\**\*.csproj" />
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning.Deployment\**\*.csproj" />
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning.CloudMachine\**\*.csproj" />
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning.Kubernetes\**\*.csproj" />
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning.KubernetesConfiguration\**\*.csproj" />
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning.Network\**\*.csproj" />
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning.PrivateDns\**\*.csproj" />
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@ using Azure.ResourceManager.Cdn.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class CdnSpecification() :
-    Specification("Cdn", typeof(CdnExtensions))
+    Specification("Cdn", typeof(CdnExtensions), serviceDirectory: "cdn")
 {
     protected override void Customize()
     {
