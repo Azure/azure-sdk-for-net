@@ -96,20 +96,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public string? EndUserPseudoId { get; private set; } = null;
 
-        public string? SessionId { get; private set; } = null;
-
-        public string? DeviceId { get; private set; } = null;
-
-        public string? DeviceModel { get; private set; } = null;
-
-        public string? DeviceType { get; private set; } = null;
-
-        public string? DeviceOsVersion { get; private set; } = null;
-
-        public string? SyntheticSource { get; private set; } = null;
-
-        public string? UserAccountId { get; private set; } = null;
-
         public bool HasOverrideAttributes { get; private set; } = false;
 
         public ActivityTagsProcessor()
@@ -156,26 +142,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             EndUserPseudoId = tag.Value.ToString();
                             continue;
                         case SemanticConventions.AttributeMicrosoftSessionId:
-                            SessionId = tag.Value.ToString();
-                            continue;
                         case SemanticConventions.AttributeAiDeviceId:
-                            DeviceId = tag.Value.ToString();
-                            continue;
                         case SemanticConventions.AttributeAiDeviceModel:
-                            DeviceModel = tag.Value.ToString();
-                            continue;
                         case SemanticConventions.AttributeAiDeviceType:
-                            DeviceType = tag.Value.ToString();
-                            continue;
                         case SemanticConventions.AttributeAiDeviceOsVersion:
-                            DeviceOsVersion = tag.Value.ToString();
-                            continue;
                         case SemanticConventions.AttributeMicrosoftSyntheticSource:
-                            SyntheticSource = tag.Value.ToString();
-                            continue;
                         case SemanticConventions.AttributeMicrosoftUserAccountId:
-                            UserAccountId = tag.Value.ToString();
-                            continue;
                         case SemanticConventions.AttributeMicrosoftDependencyData:
                         case SemanticConventions.AttributeMicrosoftDependencyName:
                         case SemanticConventions.AttributeMicrosoftDependencyTarget:

@@ -89,7 +89,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             SetUserIdAndAuthenticatedUserId(ref activityTagsProcessor);
-            SetOverrideContextTags(ref activityTagsProcessor);
+
+            if (activityTagsProcessor.HasOverrideAttributes)
+            {
+                SetOverrideContextTags(ref activityTagsProcessor);
+            }
+
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
 
             if (sampleRate != 100f)
@@ -104,6 +109,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiOperationParentId.ToString()] = activitySpanId.ToHexString();
             Tags[ContextTagKeys.AiOperationId.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()];
 
+            // Copy user agent from the parent TelemetryItem created by the Activity constructor,
+            // where it was set from ActivityTagsProcessor.MappedTags.
             if (telemetryItem.Tags.TryGetValue("ai.user.userAgent", out string? userAgent))
             {
                 // todo: update swagger to include this key.
@@ -289,39 +296,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetOverrideContextTags(ref ActivityTagsProcessor activityTagsProcessor)
         {
-            if (activityTagsProcessor.SessionId != null)
-            {
-                Tags[ContextTagKeys.AiSessionId.ToString()] = activityTagsProcessor.SessionId.Truncate(SchemaConstants.Tags_AiSessionId_MaxLength);
-            }
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeMicrosoftSessionId, ContextTagKeys.AiSessionId, SchemaConstants.Tags_AiSessionId_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeAiDeviceId, ContextTagKeys.AiDeviceId, SchemaConstants.Tags_AiDeviceId_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeAiDeviceModel, ContextTagKeys.AiDeviceModel, SchemaConstants.Tags_AiDeviceModel_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeAiDeviceType, ContextTagKeys.AiDeviceType, SchemaConstants.Tags_AiDeviceType_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeAiDeviceOsVersion, ContextTagKeys.AiDeviceOSVersion, SchemaConstants.Tags_AiDeviceOsVersion_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeMicrosoftSyntheticSource, ContextTagKeys.AiOperationSyntheticSource, SchemaConstants.Tags_AiOperationSyntheticSource_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeMicrosoftUserAccountId, ContextTagKeys.AiUserAccountId, SchemaConstants.Tags_AiUserAccountId_MaxLength);
+        }
 
-            if (activityTagsProcessor.DeviceId != null)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void SetTagFromMappedTags(ref ActivityTagsProcessor activityTagsProcessor, string attributeKey, ContextTagKeys contextTagKey, int maxLength)
+        {
+            var value = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, attributeKey)?.ToString();
+            if (value != null)
             {
-                Tags[ContextTagKeys.AiDeviceId.ToString()] = activityTagsProcessor.DeviceId.Truncate(SchemaConstants.Tags_AiDeviceId_MaxLength);
-            }
-
-            if (activityTagsProcessor.DeviceModel != null)
-            {
-                Tags[ContextTagKeys.AiDeviceModel.ToString()] = activityTagsProcessor.DeviceModel.Truncate(SchemaConstants.Tags_AiDeviceModel_MaxLength);
-            }
-
-            if (activityTagsProcessor.DeviceType != null)
-            {
-                Tags[ContextTagKeys.AiDeviceType.ToString()] = activityTagsProcessor.DeviceType.Truncate(SchemaConstants.Tags_AiDeviceType_MaxLength);
-            }
-
-            if (activityTagsProcessor.DeviceOsVersion != null)
-            {
-                Tags[ContextTagKeys.AiDeviceOSVersion.ToString()] = activityTagsProcessor.DeviceOsVersion.Truncate(SchemaConstants.Tags_AiDeviceOsVersion_MaxLength);
-            }
-
-            if (activityTagsProcessor.SyntheticSource != null)
-            {
-                Tags[ContextTagKeys.AiOperationSyntheticSource.ToString()] = activityTagsProcessor.SyntheticSource.Truncate(SchemaConstants.Tags_AiOperationSyntheticSource_MaxLength);
-            }
-
-            if (activityTagsProcessor.UserAccountId != null)
-            {
-                Tags[ContextTagKeys.AiUserAccountId.ToString()] = activityTagsProcessor.UserAccountId.Truncate(SchemaConstants.Tags_AiUserAccountId_MaxLength);
+                Tags[contextTagKey.ToString()] = value.Truncate(maxLength);
             }
         }
     }
