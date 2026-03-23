@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Purview
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetDefaultAccountRequest(string scopeTenantId, string scopeType, string scope, RequestContext context)
+        internal HttpMessage CreateGetDefaultAccountRequest(Guid scopeTenantId, string scopeType, string scope, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Purview
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            uri.AppendQuery("scopeTenantId", scopeTenantId, true);
+            uri.AppendQuery("scopeTenantId", TypeFormatters.ConvertToString(scopeTenantId), true);
             uri.AppendQuery("scopeType", scopeType, true);
             if (scope != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Purview
             return message;
         }
 
-        internal HttpMessage CreateRemoveDefaultAccountRequest(string scopeTenantId, string scopeType, string scope, RequestContext context)
+        internal HttpMessage CreateRemoveDefaultAccountRequest(Guid scopeTenantId, string scopeType, string scope, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Purview
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            uri.AppendQuery("scopeTenantId", scopeTenantId, true);
+            uri.AppendQuery("scopeTenantId", TypeFormatters.ConvertToString(scopeTenantId), true);
             uri.AppendQuery("scopeType", scopeType, true);
             if (scope != null)
             {

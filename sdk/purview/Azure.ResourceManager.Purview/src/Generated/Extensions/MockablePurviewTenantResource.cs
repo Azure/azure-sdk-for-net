@@ -61,12 +61,8 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopeTenantId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scopeTenantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeTenantId, nameof(scopeTenantId));
-
             using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.GetDefaultAccount");
             scope0.Start();
             try
@@ -112,12 +108,8 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopeTenantId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scopeTenantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DefaultPurviewAccountPayload> GetDefaultAccount(string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
+        public virtual Response<DefaultPurviewAccountPayload> GetDefaultAccount(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeTenantId, nameof(scopeTenantId));
-
             using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.GetDefaultAccount");
             scope0.Start();
             try
@@ -163,12 +155,8 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopeTenantId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scopeTenantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> RemoveDefaultAccountAsync(string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveDefaultAccountAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeTenantId, nameof(scopeTenantId));
-
             using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.RemoveDefaultAccount");
             scope0.Start();
             try
@@ -209,12 +197,8 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopeTenantId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scopeTenantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response RemoveDefaultAccount(string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
+        public virtual Response RemoveDefaultAccount(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeTenantId, nameof(scopeTenantId));
-
             using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.RemoveDefaultAccount");
             scope0.Start();
             try

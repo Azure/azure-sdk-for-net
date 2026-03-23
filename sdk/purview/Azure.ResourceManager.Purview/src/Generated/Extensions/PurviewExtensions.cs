@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Purview
         /// Get the default account for the scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePurviewTenantResource.GetDefaultAccountAsync(string, PurviewAccountScopeType, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePurviewTenantResource.GetDefaultAccountAsync(Guid, PurviewAccountScopeType, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(this TenantResource tenantResource, string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Purview
         /// Get the default account for the scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePurviewTenantResource.GetDefaultAccount(string, PurviewAccountScopeType, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePurviewTenantResource.GetDefaultAccount(Guid, PurviewAccountScopeType, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<DefaultPurviewAccountPayload> GetDefaultAccount(this TenantResource tenantResource, string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
+        public static Response<DefaultPurviewAccountPayload> GetDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Purview
         /// Removes the default account from the scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePurviewTenantResource.RemoveDefaultAccountAsync(string, PurviewAccountScopeType, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePurviewTenantResource.RemoveDefaultAccountAsync(Guid, PurviewAccountScopeType, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response> RemoveDefaultAccountAsync(this TenantResource tenantResource, string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
+        public static async Task<Response> RemoveDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Purview
         /// Removes the default account from the scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePurviewTenantResource.RemoveDefaultAccount(string, PurviewAccountScopeType, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePurviewTenantResource.RemoveDefaultAccount(Guid, PurviewAccountScopeType, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response RemoveDefaultAccount(this TenantResource tenantResource, string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
+        public static Response RemoveDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
