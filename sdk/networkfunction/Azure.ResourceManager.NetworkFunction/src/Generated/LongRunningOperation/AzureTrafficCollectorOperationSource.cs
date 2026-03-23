@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
-    internal class AzureTrafficCollectorOperationSource : IOperationSource<AzureTrafficCollectorResource>
+    /// <summary></summary>
+    internal partial class AzureTrafficCollectorOperationSource : IOperationSource<AzureTrafficCollectorResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal AzureTrafficCollectorOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         AzureTrafficCollectorResource IOperationSource<AzureTrafficCollectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AzureTrafficCollectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkFunctionContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            AzureTrafficCollectorData data = AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new AzureTrafficCollectorResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<AzureTrafficCollectorResource> IOperationSource<AzureTrafficCollectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AzureTrafficCollectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkFunctionContext.Default);
-            return await Task.FromResult(new AzureTrafficCollectorResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            AzureTrafficCollectorData data = AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AzureTrafficCollectorResource(_client, data);
         }
     }
 }

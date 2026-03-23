@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0-beta.2 (Unreleased)
+## 2.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.2 (2026-03-12)
+
+### Breaking Changes
+* The `Azure.AI.Projects.OpenAI` package was renamed to `Azure.AI.Extensions.OpenAI`
+* The Agents administration was moved to the `Azure.AI.Projects.Agents` package.
+* OpenAI dependency was upgraded to 2.9.1.
 
 ## 2.0.0-beta.1 (2026-02-24)
 

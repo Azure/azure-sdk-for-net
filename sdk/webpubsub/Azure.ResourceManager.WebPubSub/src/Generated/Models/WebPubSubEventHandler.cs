@@ -7,48 +7,22 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Properties of event handler. </summary>
     public partial class WebPubSubEventHandler
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubEventHandler"/>. </summary>
         /// <param name="urlTemplate">
-        /// Gets or sets the EventHandler URL template. You can use a predefined parameter {hub} and {event} inside the template, the value of the EventHandler URL is dynamically calculated when the client request comes in.
-        /// For example, UrlTemplate can be `http://example.com/api/{hub}/{event}`. The host part can't contains parameters.
+        /// Gets or sets the URL template for the event handler. The actual URL is calculated when the corresponding event is triggered.
+        /// The template supports predefined parameters syntax: `{event}`, `{hub}`, and KeyVault reference syntax `{@Microsoft.KeyVault(SecretUri=_your_secret_identifier_)}`
+        /// For example, if the template is `http://example.com/api/{event}`, when `connect` event is triggered, a POST request will be sent to the URL `http://example.com/chat/api/connect`.
+        /// Note: Parameters are not allowed in the hostname of the URL, and curly brackets `{}` are reserved for parameter syntax only. If your URL path contains literal curly brackets, please URL-encode them to ensure proper handling.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="urlTemplate"/> is null. </exception>
         public WebPubSubEventHandler(string urlTemplate)
@@ -61,53 +35,57 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubEventHandler"/>. </summary>
         /// <param name="urlTemplate">
-        /// Gets or sets the EventHandler URL template. You can use a predefined parameter {hub} and {event} inside the template, the value of the EventHandler URL is dynamically calculated when the client request comes in.
-        /// For example, UrlTemplate can be `http://example.com/api/{hub}/{event}`. The host part can't contains parameters.
+        /// Gets or sets the URL template for the event handler. The actual URL is calculated when the corresponding event is triggered.
+        /// The template supports predefined parameters syntax: `{event}`, `{hub}`, and KeyVault reference syntax `{@Microsoft.KeyVault(SecretUri=_your_secret_identifier_)}`
+        /// For example, if the template is `http://example.com/api/{event}`, when `connect` event is triggered, a POST request will be sent to the URL `http://example.com/chat/api/connect`.
+        /// Note: Parameters are not allowed in the hostname of the URL, and curly brackets `{}` are reserved for parameter syntax only. If your URL path contains literal curly brackets, please URL-encode them to ensure proper handling.
         /// </param>
         /// <param name="userEventPattern">
         /// Gets or sets the matching pattern for event names.
-        /// There are 3 kind of patterns supported:
-        ///     1. "*", it to matches any event name
-        ///     2. Combine multiple events with ",", for example "event1,event2", it matches event "event1" and "event2"
-        ///     3. The single event name, for example, "event1", it matches "event1"
+        /// There are 3 kinds of patterns supported:
+        /// <list type="number"><item><description>"*", it matches any event name</description></item><item><description>Combine multiple events with ",", for example "event1,event2", it matches event "event1" and "event2"</description></item><item><description>A single event name, for example, "event1", it matches "event1"</description></item></list>
         /// </param>
-        /// <param name="systemEvents"> Gets ot sets the list of system events. </param>
+        /// <param name="systemEvents"> Gets or sets the list of system events. </param>
         /// <param name="auth"> Upstream auth settings. If not set, no auth is used for upstream messages. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubEventHandler(string urlTemplate, string userEventPattern, IList<string> systemEvents, UpstreamAuthSettings auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="groupPresenceEvents"> The group presence events that this event handler is concerned with. Group presence events are triggered when connections join or leave groups in the hub. If the value is null, no presence events will be sent to this event handler. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubEventHandler(string urlTemplate, string userEventPattern, IList<string> systemEvents, UpstreamAuthSettings auth, WebPubSubGroupPresenceEventFilters groupPresenceEvents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UrlTemplate = urlTemplate;
             UserEventPattern = userEventPattern;
             SystemEvents = systemEvents;
             Auth = auth;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WebPubSubEventHandler"/> for deserialization. </summary>
-        internal WebPubSubEventHandler()
-        {
+            GroupPresenceEvents = groupPresenceEvents;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
-        /// Gets or sets the EventHandler URL template. You can use a predefined parameter {hub} and {event} inside the template, the value of the EventHandler URL is dynamically calculated when the client request comes in.
-        /// For example, UrlTemplate can be `http://example.com/api/{hub}/{event}`. The host part can't contains parameters.
+        /// Gets or sets the URL template for the event handler. The actual URL is calculated when the corresponding event is triggered.
+        /// The template supports predefined parameters syntax: `{event}`, `{hub}`, and KeyVault reference syntax `{@Microsoft.KeyVault(SecretUri=_your_secret_identifier_)}`
+        /// For example, if the template is `http://example.com/api/{event}`, when `connect` event is triggered, a POST request will be sent to the URL `http://example.com/chat/api/connect`.
+        /// Note: Parameters are not allowed in the hostname of the URL, and curly brackets `{}` are reserved for parameter syntax only. If your URL path contains literal curly brackets, please URL-encode them to ensure proper handling.
         /// </summary>
         [WirePath("urlTemplate")]
         public string UrlTemplate { get; set; }
+
         /// <summary>
         /// Gets or sets the matching pattern for event names.
-        /// There are 3 kind of patterns supported:
-        ///     1. "*", it to matches any event name
-        ///     2. Combine multiple events with ",", for example "event1,event2", it matches event "event1" and "event2"
-        ///     3. The single event name, for example, "event1", it matches "event1"
+        /// There are 3 kinds of patterns supported:
+        /// <list type="number"><item><description>"*", it matches any event name</description></item><item><description>Combine multiple events with ",", for example "event1,event2", it matches event "event1" and "event2"</description></item><item><description>A single event name, for example, "event1", it matches "event1"</description></item></list>
         /// </summary>
         [WirePath("userEventPattern")]
         public string UserEventPattern { get; set; }
-        /// <summary> Gets ot sets the list of system events. </summary>
+
+        /// <summary> Gets or sets the list of system events. </summary>
         [WirePath("systemEvents")]
         public IList<string> SystemEvents { get; }
+
         /// <summary> Upstream auth settings. If not set, no auth is used for upstream messages. </summary>
         [WirePath("auth")]
         public UpstreamAuthSettings Auth { get; set; }
+
+        /// <summary> The group presence events that this event handler is concerned with. Group presence events are triggered when connections join or leave groups in the hub. If the value is null, no presence events will be sent to this event handler. </summary>
+        [WirePath("groupPresenceEvents")]
+        public WebPubSubGroupPresenceEventFilters GroupPresenceEvents { get; set; }
     }
 }

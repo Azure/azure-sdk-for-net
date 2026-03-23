@@ -32,7 +32,7 @@ public static class GeneratorAgentProgram
                 appCts.Cancel();
             };
 
-            var projectPath = PreParseProjectPath(args);
+            var (projectPath, localSpecsPath) = PreParsePaths(args);
 
             var builder = Host.CreateApplicationBuilder(args);
 
@@ -40,7 +40,7 @@ public static class GeneratorAgentProgram
             builder.Logging.AddConsole();
             builder.Logging.AddFilter("System.Net.Http", LogLevel.Debug);
 
-            builder.Services.AddApplicationServices(builder.Configuration, projectPath);
+            builder.Services.AddApplicationServices(builder.Configuration, projectPath, localSpecsPath);
 
             using var host = builder.Build();
             var loggerFactory = host.Services.GetRequiredService<ILoggerFactory>();
@@ -96,27 +96,32 @@ public static class GeneratorAgentProgram
     }
 
     /// <summary>
-    /// Extracts the sdk-path argument from <paramref name="args"/> before the host is built.
-    /// Returns null when no path is supplied (e.g. --help).
+    /// Extracts the sdk-path and local-specs-path arguments from <paramref name="args"/> before the host is built.
+    /// Returns nulls when no paths are supplied (e.g. --help).
     /// </summary>
-    private static string? PreParseProjectPath(string[] args)
+    private static (string? ProjectPath, string? LocalSpecsPath) PreParsePaths(string[] args)
     {
         var sdkPathArgument = new Argument<string>("sdk-path") { Arity = ArgumentArity.ZeroOrOne };
+        var localSpecsPathArgument = new Argument<string>("local-specs-path") { Arity = ArgumentArity.ZeroOrOne };
 
-        var migrateCommand = new Command("migrate") { sdkPathArgument };
-        var generateCommand = new Command("generate") { sdkPathArgument };
+        var migrateCommand = new Command("migrate") { sdkPathArgument, localSpecsPathArgument };
+        var generateCommand = new Command("generate") { sdkPathArgument, localSpecsPathArgument };
 
         var rootCommand = new RootCommand { migrateCommand, generateCommand };
 
         string? projectPath = null;
+        string? localSpecsPath = null;
         var parseResult = rootCommand.Parse(args);
 
         if (parseResult.CommandResult.Command == migrateCommand ||
             parseResult.CommandResult.Command == generateCommand)
         {
             projectPath = parseResult.GetValue(sdkPathArgument);
+            localSpecsPath = parseResult.GetValue(localSpecsPathArgument);
         }
 
-        return string.IsNullOrWhiteSpace(projectPath) ? null : projectPath;
+        return (
+            string.IsNullOrWhiteSpace(projectPath) ? null : projectPath,
+            string.IsNullOrWhiteSpace(localSpecsPath) ? null : localSpecsPath);
     }
 }

@@ -1,7 +1,6 @@
 omitted_paths:
   - archive/*
   - common/Perf/*
-  - common/SmokeTests/*
   - common/Stress/*
   - doc/ApiDocGeneration/*
   - Documentation/*

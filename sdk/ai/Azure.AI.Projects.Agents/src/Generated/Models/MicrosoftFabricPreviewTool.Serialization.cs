@@ -78,7 +78,7 @@ namespace Azure.AI.Projects.Agents
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("fabric_dataagent_preview"u8);
-            writer.WriteObjectValue(FabricDataagentPreview, options);
+            writer.WriteObjectValue(ToolOptions, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -108,7 +108,7 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            FabricDataAgentToolOptions fabricDataagentPreview = default;
+            FabricDataAgentToolOptions toolOptions = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("fabric_dataagent_preview"u8))
                 {
-                    fabricDataagentPreview = FabricDataAgentToolOptions.DeserializeFabricDataAgentToolOptions(prop.Value, options);
+                    toolOptions = FabricDataAgentToolOptions.DeserializeFabricDataAgentToolOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MicrosoftFabricPreviewTool(@type, additionalBinaryDataProperties, fabricDataagentPreview);
+            return new MicrosoftFabricPreviewTool(@type, additionalBinaryDataProperties, toolOptions);
         }
     }
 }

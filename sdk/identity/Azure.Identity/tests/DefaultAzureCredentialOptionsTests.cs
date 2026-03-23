@@ -241,16 +241,23 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ConstructorWithCredentialSettings_NullCredentialSourceThrows()
+        public void ConstructorWithCredentialSettings_NullCredentialSourceUsesDefaultChain()
         {
+            var credSourceSection = new Moq.Mock<IConfigurationSection>();
+            credSourceSection.Setup(s => s.GetChildren()).Returns(Array.Empty<IConfigurationSection>());
+
             var mockSection = new Moq.Mock<IConfigurationSection>();
             mockSection.Setup(s => s["CredentialSource"]).Returns((string)null);
             mockSection.Setup(s => s["Key"]).Returns((string)null);
+            mockSection.Setup(s => s.GetSection("CredentialSource")).Returns(credSourceSection.Object);
             mockSection.Setup(s => s.GetSection("AdditionalProperties")).Returns(Moq.Mock.Of<IConfigurationSection>());
+            mockSection.Setup(s => s.GetSection("AdditionallyAllowedTenants")).Returns(Moq.Mock.Of<IConfigurationSection>());
 
             var credentialSettings = new CredentialSettings(mockSection.Object);
-            var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object));
-            Assert.That(ex.Message, Does.Contain("CredentialSource is required"));
+            var options = new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object);
+            // Null CredentialSource means use the default DAC chain
+            Assert.IsNull(options.CredentialSource);
+            Assert.IsNull(options.Sources);
         }
 
         [Test]
@@ -265,7 +272,7 @@ namespace Azure.Identity.Tests
             var credentialSettings = new CredentialSettings(mockSection.Object);
             var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object));
             Assert.That(ex.Message, Does.Contain("Unsupported CredentialSource"));
-            Assert.That(ex.Message, Does.Contain(credentialSource));
+            Assert.That(ex.Message.ToLowerInvariant(), Does.Contain(credentialSource.ToLowerInvariant()));
         }
 
         [TestCase("AzureCliCredential", "azureclicredential")]
@@ -281,6 +288,7 @@ namespace Azure.Identity.Tests
         [TestCase("AzurePipelinesCredential", "azurepipelinescredential")]
         [TestCase("ManagedIdentityAsFederatedIdentityCredential", "managedidentityasfederatedidentitycredential")]
         [TestCase("ApiKeyCredential", "apikeycredential")]
+        [TestCase("ChainedTokenCredential", "chainedtokencredential")]
         // Back-compat short names
         [TestCase("AzureCli", "azureclicredential")]
         [TestCase("VisualStudio", "visualstudiocredential")]
@@ -295,6 +303,7 @@ namespace Azure.Identity.Tests
         [TestCase("AzurePipelines", "azurepipelinescredential")]
         [TestCase("ManagedIdentityAsFederatedIdentity", "managedidentityasfederatedidentitycredential")]
         [TestCase("ApiKey", "apikeycredential")]
+        [TestCase("ChainedToken", "chainedtokencredential")]
         public void CredentialSourceMapping_CorrectlyMapsKnownValues(string input, string expected)
         {
             var mockSection = new Moq.Mock<IConfigurationSection>();

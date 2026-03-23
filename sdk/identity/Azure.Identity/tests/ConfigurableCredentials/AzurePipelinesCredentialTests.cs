@@ -139,12 +139,6 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
             return instrumented;
         }
 
-        public override Task AzurePipelineCredentialWorksInChainedCredential()
-        {
-            Assert.Ignore("Chained credential is not supported by the configurable credential path.");
-            return Task.CompletedTask;
-        }
-
         protected override AzurePipelinesCredential CreateCredentialWithTransport(string tenantId, string clientId, string serviceConnectionId, string systemAccessToken, MockTransport mockTransport, string oidcRequestUri = null)
         {
             // Don't use TestEnvVar here — the calling test already manages env vars.
