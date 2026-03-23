@@ -21,24 +21,11 @@ model ResourceTypeTestProperties {
   status?: string;
 }
 
-@doc("Model with a constant string type mapped to armResourceType via alternateType")
-model ResourceTypeCheckContent {
-  @doc("Name to check")
-  name: string;
-
-  @doc("Type of resource, constant string mapped to armResourceType via alternateType")
-  type: "Microsoft.Storage/storageAccounts";
-}
-
 @armResourceOperations
 interface ResourceTypeTests {
   @doc("Get a test resource with nullable ResourceType")
   get is ArmResourceRead<ResourceTypeTestResource>;
-
+  
   @doc("Create or update a test resource")
   createOrUpdate is ArmResourceCreateOrReplaceSync<ResourceTypeTestResource>;
-
-  @doc("Check name availability - repro for alternateType + armResourceType bug")
-  @action("checkName")
-  checkName is ArmResourceActionSync<ResourceTypeTestResource, ResourceTypeCheckContent, ArmResponse<void>>;
 }

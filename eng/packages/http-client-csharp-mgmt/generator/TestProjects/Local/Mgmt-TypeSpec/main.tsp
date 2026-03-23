@@ -79,8 +79,6 @@ namespace MgmtTypeSpec {
   @@alternateType(ZooAddressListListResult.value, Azure.ResourceManager.Models.SubResource[], "csharp");
   @@alternateType(Azure.ResourceManager.CommonTypes.PrivateEndpointConnectionProperties.privateEndpoint, Azure.ResourceManager.Models.SubResource, "csharp");
   @@alternateType(FooProperties.writableSubResourceProp, Azure.ResourceManager.Models.WritableSubResource, "csharp");
-  @@alternateType(ResourceTypeCheckContent.type, Azure.Core.armResourceType, "csharp");
-  @@clientName(ResourceTypeCheckContent.type, "ResourceType", "csharp");
 
   // Override client names for legacy ARM types to resolve duplicate-client-name errors
   // with their CommonTypes counterparts.
