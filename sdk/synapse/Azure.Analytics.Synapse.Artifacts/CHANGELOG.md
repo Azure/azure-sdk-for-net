@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.23 (Unreleased)
+## 1.0.0-preview.23 (2026-03-23)
 
 ### Features Added
 - Model AzureDatabricksDeltaLakeLinkedService has a new parameter workspace_resource_id
