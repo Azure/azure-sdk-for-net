@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.61 (2026-06-06)
+## 12.0.0-preview.61 (2026-03-24)
 
 ### Features Added
 - Added support for service version 2026-06-06.
