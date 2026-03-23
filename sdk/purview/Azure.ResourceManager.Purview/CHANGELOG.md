@@ -7,10 +7,6 @@
 - Migrated from Swagger to TypeSpec-based generation.
 - Upgraded to API version 2024-04-01-preview.
 
-### Breaking Changes
-
-### Other Changes
-
 ## 1.2.0-beta.2 (2025-03-11)
 
 ### Features Added

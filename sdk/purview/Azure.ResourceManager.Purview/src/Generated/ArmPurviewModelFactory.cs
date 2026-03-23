@@ -391,24 +391,11 @@ namespace Azure.ResourceManager.Purview.Models
             return new PurviewAccountEndpoint(catalog, scan, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Purview.PurviewPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpointId"> The private endpoint information. </param>
-        /// <param name="connectionState"> The private link service connection state. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <returns> A new <see cref="Purview.PurviewPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static PurviewPrivateEndpointConnectionData PurviewPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, PurviewPrivateLinkServiceConnectionState connectionState = default, string provisioningState = default)
-        {
-            return new PurviewPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default);
-        }
+        // Generator bug (https://github.com/Azure/azure-sdk-for-net/issues/57334):
+        // The generated factory method accepted privateEndpointId, connectionState,
+        // and provisioningState parameters but passed `default` for PrivateEndpointConnectionProperties,
+        // discarding all three values.  Moved to ArmPurviewModelFactory.Compat.cs with a correct
+        // implementation that constructs the properties object from the individual parameters.
+        // See also: PurviewAccountData factory which correctly wraps params into PurviewAccountProperties.
     }
 }
