@@ -17,10 +17,24 @@ namespace Azure.Storage.DataMovement.Files.Shares
     internal class ShareFileStorageResource : StorageResourceItemInternal
     {
         internal readonly ShareFileStorageResourceOptions _options;
+        private Uri _uri;
 
         internal ShareFileClient ShareFileClient { get; }
 
-        public override Uri Uri => ShareFileClient.Uri;
+        public override Uri Uri => _uri ??= BuildSanitizedUri();
+
+        private Uri BuildSanitizedUri()
+        {
+            // Strip snapshot and SAS from URI for security
+            // Snapshot is stored separately in checkpoint details
+            // SAS should not be exposed in events/logs
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(ShareFileClient.Uri)
+            {
+                Snapshot = null,
+                Sas = null
+            };
+            return uriBuilder.ToUri();
+        }
 
         public override string ProviderId => "share";
 
@@ -332,9 +346,17 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
+            // Extract snapshot from URI if not provided in options
+            string snapshot = _options?.Snapshot;
+            if (string.IsNullOrEmpty(snapshot))
+            {
+                ShareUriBuilder uriBuilder = new ShareUriBuilder(ShareFileClient.Uri);
+                snapshot = uriBuilder.Snapshot;
+            }
+
             return new ShareFileSourceCheckpointDetails(
                 shareProtocol: _options?.ShareProtocol ?? ShareProtocol.Smb,
-                options: _options);
+                snapshot: snapshot);
         }
 
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()

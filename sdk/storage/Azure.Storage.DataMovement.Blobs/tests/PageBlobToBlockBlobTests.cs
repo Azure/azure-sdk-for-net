@@ -285,6 +285,22 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
         }
 
+        protected override async Task<string> CreateSnapshotAsync(
+            BlobContainerClient containerClient,
+            PageBlobClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            Response<BlobSnapshotInfo> snapshotResponse = await objectClient.CreateSnapshotAsync(cancellationToken: cancellationToken);
+            return snapshotResponse.Value.Snapshot;
+        }
+
+        protected override PageBlobClient GetSnapshotObjectClient(
+            PageBlobClient objectClient,
+            string snapshotId)
+        {
+            return objectClient.WithSnapshot(snapshotId);
+        }
+
         public BlobClientOptions GetOptions()
         {
             var options = new BlobClientOptions(_serviceVersion)

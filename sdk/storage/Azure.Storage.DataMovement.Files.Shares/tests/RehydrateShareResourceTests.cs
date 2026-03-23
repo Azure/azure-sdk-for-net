@@ -473,7 +473,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             Assert.IsNotNull(storageResource);
-            Assert.That(storageResource.Uri.AbsoluteUri, Does.Contain($"sharesnapshot={DefaultSnapshot}"));
             Assert.That(storageResource._options.Snapshot, Is.EqualTo(DefaultSnapshot));
         }
 
@@ -655,7 +654,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.IsNotNull(storageResource);
             Assert.That(storageResource._options.Snapshot, Is.EqualTo(originalSourceCheckpoint.Snapshot));
             Assert.That(storageResource._options.ShareProtocol, Is.EqualTo(originalSourceCheckpoint.ShareProtocol));
-            Assert.That(storageResource.Uri.AbsoluteUri, Does.Contain($"sharesnapshot={DefaultSnapshot}"));
         }
 
         [Test]

@@ -1744,5 +1744,56 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.NotNull(authorization.Scheme);
             Assert.NotNull(authorization.Parameter);
         }
+
+        [Test]
+        public void Uri_StripsSnapshotAndVersion()
+        {
+            // Arrange
+            string baseUrl = "https://storageaccount.blob.core.windows.net/container/blob";
+            string snapshotId = "2024-01-01T00:00:00.0000000Z";
+            string versionId = "2024-01-02T00:00:00.0000000Z";
+
+            // Test with snapshot
+            BlobUriBuilder builderWithSnapshot = new BlobUriBuilder(new Uri(baseUrl))
+            {
+                Snapshot = snapshotId
+            };
+            BlockBlobClient blobWithSnapshot = new BlockBlobClient(builderWithSnapshot.ToUri());
+            BlockBlobStorageResource resourceWithSnapshot = new(blobWithSnapshot);
+
+            // Assert - Uri should strip snapshot
+            Assert.AreEqual(baseUrl, resourceWithSnapshot.Uri.AbsoluteUri);
+            Assert.IsFalse(resourceWithSnapshot.Uri.Query.Contains("snapshot"));
+
+            // Test with version
+            BlobUriBuilder builderWithVersion = new BlobUriBuilder(new Uri(baseUrl))
+            {
+                VersionId = versionId
+            };
+            BlockBlobClient blobWithVersion = new BlockBlobClient(builderWithVersion.ToUri());
+            BlockBlobStorageResource resourceWithVersion = new(blobWithVersion);
+
+            // Assert - Uri should strip version
+            Assert.AreEqual(baseUrl, resourceWithVersion.Uri.AbsoluteUri);
+            Assert.IsFalse(resourceWithVersion.Uri.Query.Contains("versionid"));
+        }
+
+        [Test]
+        public void Uri_StripsSas()
+        {
+            // Arrange
+            string baseUrl = "https://storageaccount.blob.core.windows.net/container/blob";
+            string sasToken = "sv=2023-01-03&ss=b&srt=o&sp=r&se=2024-12-31T23:59:59Z&st=2024-01-01T00:00:00Z&spr=https&sig=fakesignature";
+            Uri uriWithSas = new Uri($"{baseUrl}?{sasToken}");
+
+            // Create client with SAS
+            BlockBlobClient blobClient = new BlockBlobClient(uriWithSas);
+            BlockBlobStorageResource storageResource = new(blobClient);
+
+            // Assert - Uri property should return base URI without SAS
+            Assert.AreEqual(baseUrl, storageResource.Uri.AbsoluteUri);
+            Assert.IsFalse(storageResource.Uri.Query.Contains("sig"));
+            Assert.IsFalse(storageResource.Uri.Query.Contains("sv"));
+        }
     }
 }

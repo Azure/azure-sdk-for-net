@@ -2637,5 +2637,44 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Times.Once());
             mockDestination.VerifyNoOtherCalls();
         }
+
+        [Test]
+        public void Uri_StripsSnapshot()
+        {
+            // Arrange
+            string baseUrl = "https://storageaccount.file.core.windows.net/share/file";
+            string snapshotId = "2024-01-01T00:00:00.0000000Z";
+            ShareUriBuilder builder = new ShareUriBuilder(new Uri(baseUrl))
+            {
+                Snapshot = snapshotId
+            };
+            Uri uriWithSnapshot = builder.ToUri();
+
+            // Create client with snapshot
+            ShareFileClient fileClient = new ShareFileClient(uriWithSnapshot);
+            ShareFileStorageResource storageResource = new(fileClient);
+
+            // Assert - Uri property should return base URI without snapshot
+            Assert.AreEqual(baseUrl, storageResource.Uri.AbsoluteUri);
+            Assert.IsFalse(storageResource.Uri.Query.Contains("snapshot"));
+        }
+
+        [Test]
+        public void Uri_StripsSas()
+        {
+            // Arrange
+            string baseUrl = "https://storageaccount.file.core.windows.net/share/file";
+            string sasToken = "sv=2023-01-03&ss=f&srt=o&sp=r&se=2024-12-31T23:59:59Z&st=2024-01-01T00:00:00Z&spr=https&sig=fakesignature";
+            Uri uriWithSas = new Uri($"{baseUrl}?{sasToken}");
+
+            // Create client with SAS
+            ShareFileClient fileClient = new ShareFileClient(uriWithSas);
+            ShareFileStorageResource storageResource = new(fileClient);
+
+            // Assert - Uri property should return base URI without SAS
+            Assert.AreEqual(baseUrl, storageResource.Uri.AbsoluteUri);
+            Assert.IsFalse(storageResource.Uri.Query.Contains("sig"));
+            Assert.IsFalse(storageResource.Uri.Query.Contains("sv"));
+        }
     }
 }

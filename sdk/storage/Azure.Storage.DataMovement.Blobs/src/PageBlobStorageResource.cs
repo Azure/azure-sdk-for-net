@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 
@@ -19,10 +20,25 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         internal PageBlobClient BlobClient { get; set; }
         internal PageBlobStorageResourceOptions _options;
+        private Uri _uri;
 
         protected override string ResourceId => DataMovementBlobConstants.ResourceId.PageBlob;
 
-        public override Uri Uri => BlobClient.Uri;
+        public override Uri Uri => _uri ??= BuildSanitizedUri();
+
+        private Uri BuildSanitizedUri()
+        {
+            // Strip snapshot, version, and SAS from URI for security
+            // Snapshot/version are stored separately in checkpoint details
+            // SAS should not be exposed in events/logs
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(BlobClient.Uri)
+            {
+                Snapshot = null,
+                VersionId = null,
+                Sas = null
+            };
+            return uriBuilder.ToUri();
+        }
 
         public override string ProviderId => "blob";
 
@@ -324,7 +340,18 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new BlobSourceCheckpointDetails(_options);
+            // Extract snapshot/version from URI if not provided in options
+            string snapshot = _options?.Snapshot;
+            string versionId = _options?.VersionId;
+
+            if (string.IsNullOrEmpty(snapshot) || string.IsNullOrEmpty(versionId))
+            {
+                BlobUriBuilder uriBuilder = new BlobUriBuilder(BlobClient.Uri);
+                snapshot ??= uriBuilder.Snapshot;
+                versionId ??= uriBuilder.VersionId;
+            }
+
+            return new BlobSourceCheckpointDetails(snapshot: snapshot, versionId: versionId);
         }
 
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()

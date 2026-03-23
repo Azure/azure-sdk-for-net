@@ -369,5 +369,21 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 Assert.AreEqual(sourceProperties.CreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
             }
         }
+
+        protected override async Task<string> CreateSnapshotAsync(
+            BlobContainerClient containerClient,
+            PageBlobClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            Response<BlobSnapshotInfo> snapshotResponse = await objectClient.CreateSnapshotAsync(cancellationToken: cancellationToken);
+            return snapshotResponse.Value.Snapshot;
+        }
+
+        protected override PageBlobClient GetSnapshotObjectClient(
+            PageBlobClient objectClient,
+            string snapshotId)
+        {
+            return objectClient.WithSnapshot(snapshotId);
+        }
     }
 }

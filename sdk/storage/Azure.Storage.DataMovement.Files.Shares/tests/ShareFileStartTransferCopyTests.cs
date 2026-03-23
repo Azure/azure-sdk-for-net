@@ -1853,5 +1853,23 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(_defaultMode, destinationProperties.PosixProperties.FileMode.ToOctalFileMode());
             }
         }
+
+        protected override async Task<string> CreateSnapshotAsync(
+            ShareClient shareClient,
+            ShareFileClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            // For Share Files, snapshots are share-level, not file-level
+            ShareClient share = objectClient.GetParentShareClient();
+            Response<ShareSnapshotInfo> snapshotResponse = await share.CreateSnapshotAsync(cancellationToken: cancellationToken);
+            return snapshotResponse.Value.Snapshot;
+        }
+
+        protected override ShareFileClient GetSnapshotObjectClient(
+            ShareFileClient objectClient,
+            string snapshotId)
+        {
+            return objectClient.WithSnapshot(snapshotId);
+        }
     }
 }
