@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,19 +15,19 @@ using Azure.ResourceManager.GuestConfiguration.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
-    internal partial class GuestConfigurationAssignmentsRGListCollectionResultOfT : Pageable<GuestConfigurationAssignmentData>
+    internal partial class GuestConfigurationAssignmentsGetGuestConfigurationAssignmentsAsyncCollectionResultOfT : AsyncPageable<GuestConfigurationAssignmentData>
     {
         private readonly GuestConfigurationAssignments _client;
         private readonly string _resourceGroupName;
         private readonly string _subscriptionId;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentsRGListCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of GuestConfigurationAssignmentsGetGuestConfigurationAssignmentsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The GuestConfigurationAssignments client used to send requests. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GuestConfigurationAssignmentsRGListCollectionResultOfT(GuestConfigurationAssignments client, string resourceGroupName, string subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public GuestConfigurationAssignmentsGetGuestConfigurationAssignmentsAsyncCollectionResultOfT(GuestConfigurationAssignments client, string resourceGroupName, string subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _resourceGroupName = resourceGroupName;
@@ -34,16 +35,16 @@ namespace Azure.ResourceManager.GuestConfiguration
             _context = context;
         }
 
-        /// <summary> Gets the pages of GuestConfigurationAssignmentsRGListCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of GuestConfigurationAssignmentsGetGuestConfigurationAssignmentsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of GuestConfigurationAssignmentsRGListCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<GuestConfigurationAssignmentData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of GuestConfigurationAssignmentsGetGuestConfigurationAssignmentsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<GuestConfigurationAssignmentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -62,14 +63,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextRGListRequest(nextLink, _resourceGroupName, _subscriptionId, _context) : _client.CreateRGListRequest(_resourceGroupName, _subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableGuestConfigurationResourceGroupResource.RGList");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetGuestConfigurationAssignmentsRequest(nextLink, _resourceGroupName, _subscriptionId, _context) : _client.CreateGetGuestConfigurationAssignmentsRequest(_resourceGroupName, _subscriptionId, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationAssignments");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
