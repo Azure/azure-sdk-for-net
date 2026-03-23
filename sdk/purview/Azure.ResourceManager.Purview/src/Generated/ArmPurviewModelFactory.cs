@@ -196,6 +196,25 @@ namespace Azure.ResourceManager.Purview.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="connectionState"> The private link service connection state. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="privateEndpointId"> The private endpoint identifier. </param>
+        /// <returns> A new <see cref="Purview.PurviewPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static PurviewPrivateEndpointConnectionData PurviewPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PurviewPrivateLinkServiceConnectionState connectionState = default, string provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        {
+            return new PurviewPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                connectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, null), connectionState, provisioningState, null));
+        }
+
         /// <summary> The Sku. </summary>
         /// <param name="capacity"> Gets or sets the sku capacity. </param>
         /// <param name="name"> Gets or sets the sku name. </param>
@@ -390,12 +409,5 @@ namespace Azure.ResourceManager.Purview.Models
         {
             return new PurviewAccountEndpoint(catalog, scan, additionalBinaryDataProperties: null);
         }
-
-        // Generator bug (https://github.com/Azure/azure-sdk-for-net/issues/57334):
-        // The generated factory method accepted privateEndpointId, connectionState,
-        // and provisioningState parameters but passed `default` for PrivateEndpointConnectionProperties,
-        // discarding all three values.  Moved to ArmPurviewModelFactory.Compat.cs with a correct
-        // implementation that constructs the properties object from the individual parameters.
-        // See also: PurviewAccountData factory which correctly wraps params into PurviewAccountProperties.
     }
 }
