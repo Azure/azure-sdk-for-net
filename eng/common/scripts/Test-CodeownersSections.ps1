@@ -100,8 +100,7 @@ foreach ($section in $Sections) {
     LogError "Protected CODEOWNERS section '$section' has been modified. Changes to this section are not allowed through normal PRs. To update CODEOWNERS, follow instructions at https://aka.ms/azsdk/codeowners"
     Write-Host "--- Diff for section '$section' ---"
     Write-Host ""
-    # git diff --no-index -- $beforeSection $afterSection
-    Compare-Object $beforeContent $afterContent
+    git diff --no-index -- $beforeSection $afterSection
     $failed = $true
   } else {
     Write-Host "Section '$section' is unchanged."
