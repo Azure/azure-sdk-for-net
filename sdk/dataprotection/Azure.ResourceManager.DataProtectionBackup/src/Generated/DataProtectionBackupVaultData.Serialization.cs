@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, new ModelReaderWriterOptions(options.Format + "|v3"));
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), new ModelReaderWriterOptions(options.Format + "|v3"), AzureResourceManagerDataProtectionBackupContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataProtectionBackupContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("eTag"u8))

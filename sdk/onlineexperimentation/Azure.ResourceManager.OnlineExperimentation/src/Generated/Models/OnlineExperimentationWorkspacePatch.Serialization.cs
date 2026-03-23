@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, new ModelReaderWriterOptions(options.Format + "|v3"));
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), new ModelReaderWriterOptions(options.Format + "|v3"), AzureResourceManagerOnlineExperimentationContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerOnlineExperimentationContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

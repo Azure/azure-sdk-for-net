@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, new ModelReaderWriterOptions(options.Format + "|v3"));
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), new ModelReaderWriterOptions(options.Format + "|v3"), AzureResourceManagerHealthBotContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHealthBotContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
