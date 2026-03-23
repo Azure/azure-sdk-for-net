@@ -697,6 +697,104 @@ priority = 0,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task VirtualMachinesExecuteCreateFlex_ScheduledActionsVirtualMachinesExecuteCreateFlexMaximumSet()
+        {
+            // this example is just showing the usage of "ScheduledActions_VirtualMachinesExecuteCreateFlex" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "0505D8E4-D41A-48FB-9CA5-4AF8D93BE75F";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation locationparameter = new AzureLocation("eastus");
+            ExecuteCreateFlexContent content = new ExecuteCreateFlexContent(
+                new ResourceProvisionFlexPayload(2, new FlexProperties(
+                    new VmSizeProfile[]
+                    {
+                        new VmSizeProfile("Standard_D2ads_v5", 1),
+                        new VmSizeProfile("Standard_D4ads_v5", 2),
+                    },
+                    OsType.Linux,
+                    new PriorityProfile
+                    {
+                        Type = PriorityType.Spot,
+                        AllocationStrategy = AllocationStrategy.CapacityOptimized,
+                    }))
+                {
+                    BaseProfile =
+                    {
+                        ["location"] = BinaryData.FromObjectAsJson("eastus"),
+                        ["properties"] = BinaryData.FromObjectAsJson(new
+                        {
+                            storageProfile = new
+                            {
+                                imageReference = new
+                                {
+                                    publisher = "Canonical",
+                                    offer = "UbuntuServer",
+                                    sku = "18.04-LTS",
+                                    version = "latest",
+                                },
+                            },
+                        }),
+                    },
+                    ResourcePrefix = "myFlexVm",
+                },
+                new ScheduledActionExecutionParameterDetail
+                {
+                    RetryPolicy = new UserRequestRetryPolicy
+                    {
+                        RetryCount = 5,
+                        RetryWindowInMinutes = 40,
+                    },
+                })
+            {
+                CorrelationId = "dfe927c5-16a6-40b7-a0f7-8524975ed642",
+            };
+            CreateFlexResourceOperationResult result = await subscriptionResource.VirtualMachinesExecuteCreateFlexAsync(locationparameter, content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task VirtualMachinesExecuteCreateFlex_ScheduledActionsVirtualMachinesExecuteCreateFlexMinimumSet()
+        {
+            // this example is just showing the usage of "ScheduledActions_VirtualMachinesExecuteCreateFlex" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "0505D8E4-D41A-48FB-9CA5-4AF8D93BE75F";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation locationparameter = new AzureLocation("eastus");
+            ExecuteCreateFlexContent content = new ExecuteCreateFlexContent(
+                new ResourceProvisionFlexPayload(1, new FlexProperties(
+                    new VmSizeProfile[] { new VmSizeProfile("Standard_D2ads_v5", 1) },
+                    OsType.Linux,
+                    new PriorityProfile())),
+                new ScheduledActionExecutionParameterDetail());
+            CreateFlexResourceOperationResult result = await subscriptionResource.VirtualMachinesExecuteCreateFlexAsync(locationparameter, content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExecuteVirtualMachineDeleteOperation_ScheduledActionsVirtualMachinesExecuteDeleteMaximumSetGenGeneratedByMaximumSetRule()
         {
             // Generated from example definition: 2025-04-15-preview/ScheduledActions_VirtualMachinesExecuteDelete_MaximumSet_Gen.json

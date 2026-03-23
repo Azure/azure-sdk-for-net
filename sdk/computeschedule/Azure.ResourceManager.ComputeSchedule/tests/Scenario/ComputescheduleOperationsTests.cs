@@ -440,5 +440,63 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 Assert.Pass("No operations to process.");
             }
         }
+
+        [TestCase, Order(9)]
+        [RecordedTest]
+        public async Task TestVirtualMachinesExecuteCreateFlexOperations()
+        {
+            var subId = DefaultSubscription.Id.Name;
+
+            ScheduledActionExecutionParameterDetail executionParameters = new() { RetryPolicy = new UserRequestRetryPolicy() { RetryCount = 3, RetryWindowInMinutes = 30 } };
+
+            var flexProperties = new FlexProperties(
+                new[] { new VmSizeProfile("Standard_D2ads_v5", 1) },
+                OsType.Linux,
+                new PriorityProfile
+                {
+                    Type = PriorityType.Spot,
+                    AllocationStrategy = AllocationStrategy.CapacityOptimized,
+                });
+
+            var resourceConfigParameters = new ResourceProvisionFlexPayload(1, flexProperties)
+            {
+                ResourcePrefix = "testflex",
+            };
+
+            var executeCreateFlexRequest = new ExecuteCreateFlexContent(resourceConfigParameters, executionParameters)
+            {
+                CorrelationId = Recording.Random.NewGuid().ToString(),
+            };
+
+            // Act
+            // VirtualMachinesExecuteCreateFlex
+            CreateFlexResourceOperationResult executeCreateFlexResult = await TestExecuteCreateFlexAsync(Location, executeCreateFlexRequest, subId, Client);
+
+            HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(executeCreateFlexResult.Results);
+
+            if (validOperationIds.Count > 0)
+            {
+                // Polling
+                GetOperationStatusResult getOperationStatus = PollOperationStatus(1).ExecuteAsync(async () =>
+                {
+                    var getOpsStatusReq = new GetOperationStatusContent(validOperationIds, Recording.Random.NewGuid().ToString());
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                }).GetAwaiter().GetResult();
+
+                // Assert results are returned
+                Assert.NotNull(executeCreateFlexResult);
+                Assert.NotNull(getOperationStatus);
+
+                foreach (ResourceOperationResult result in getOperationStatus.Results)
+                {
+                    Assert.Contains(result.Operation.State, s_terminalList);
+                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                }
+            }
+            else
+            {
+                Assert.Pass("No operations to process.");
+            }
+        }
     }
 }
