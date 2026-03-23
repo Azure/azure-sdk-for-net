@@ -279,6 +279,7 @@ namespace Azure.Developer.LoadTesting
     public partial class LoadTestAdministrationClient
     {
         protected LoadTestAdministrationClient() { }
+        public LoadTestAdministrationClient(Azure.Developer.LoadTesting.LoadTestAdministrationClientSettings settings) { }
         public LoadTestAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public LoadTestAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.LoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -376,6 +377,13 @@ namespace Azure.Developer.LoadTesting
         public virtual Azure.AsyncPageable<System.BinaryData> GetTriggersAsync(string testIds, string states, System.DateTimeOffset? lastModifiedStartTime, System.DateTimeOffset? lastModifiedEndTime, int? maxpagesize, Azure.RequestContext context) { throw null; }
         public virtual Azure.Developer.LoadTesting.FileUploadResultOperation UploadTestFile(Azure.WaitUntil waitUntil, string testId, string fileName, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string fileType = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.FileUploadResultOperation> UploadTestFileAsync(Azure.WaitUntil waitUntil, string testId, string fileName, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string fileType = null, Azure.RequestContext context = null) { throw null; }
+    }
+    public partial class LoadTestAdministrationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public LoadTestAdministrationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Developer.LoadTesting.LoadTestingClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class LoadTestConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.LoadTestConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.LoadTestConfiguration>
     {
@@ -650,6 +658,7 @@ namespace Azure.Developer.LoadTesting
     public partial class LoadTestRunClient
     {
         protected LoadTestRunClient() { }
+        public LoadTestRunClient(Azure.Developer.LoadTesting.LoadTestRunClientSettings settings) { }
         public LoadTestRunClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public LoadTestRunClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.LoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -735,6 +744,13 @@ namespace Azure.Developer.LoadTesting
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Developer.LoadTesting.LoadTestRun>> StopTestRunAsync(string testRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateLatestTestRunInsights(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateLatestTestRunInsightsAsync(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+    }
+    public partial class LoadTestRunClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public LoadTestRunClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Developer.LoadTesting.LoadTestingClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class MetricAvailability : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.MetricAvailability>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.MetricAvailability>
     {
