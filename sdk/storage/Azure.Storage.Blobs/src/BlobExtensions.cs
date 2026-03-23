@@ -803,7 +803,8 @@ namespace Azure.Storage.Blobs
                 rehydratePriority: response.Headers.RehydratePriority,
                 lastAccessed: response.Headers.LastAccessed.GetValueOrDefault(),
                 immutabilityPolicy: immutabilityPolicy,
-                hasLegalHold: response.Headers.LegalHold.GetValueOrDefault());
+                hasLegalHold: response.Headers.LegalHold.GetValueOrDefault(),
+                smartAccessTier: response.Headers.SmartAccessTier);
         }
 
         internal static BlobLayoutInfo ToBlobLayoutInfo(this ResponseWithHeaders<BlobLayout, BlobGetLayoutHeaders> response)
@@ -1378,7 +1379,8 @@ namespace Azure.Storage.Blobs
                 DeletedOn = blobPropertiesInternal.DeletedTime,
                 AccessTierChangedOn = blobPropertiesInternal.AccessTierChangeTime,
                 ImmutabilityPolicy = immutabilityPolicy,
-                HasLegalHold = blobPropertiesInternal.LegalHold.GetValueOrDefault()
+                HasLegalHold = blobPropertiesInternal.LegalHold.GetValueOrDefault(),
+                SmartAccessTier = blobPropertiesInternal.SmartAccessTier
             };
         }
 
