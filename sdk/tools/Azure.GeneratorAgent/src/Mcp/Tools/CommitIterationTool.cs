@@ -72,20 +72,14 @@ public static class CommitIterationTool
             return (false, "No commit field found in tsp-location.yaml");
         }
 
-        // Get newer commits (limited to last 20)
+        // Get newer commits (limited to last 20, in chronological order oldest→newest)
         var newerCommits = await GetNewerCommitsAsync(specsRepoRoot, currentCommit, specsRelativeDirectory, cancellationToken).ConfigureAwait(false);
 
-        // Try latest commit first (most likely to have valid tspconfig), then current, then others
-        var candidates = new List<string>();
-        if (newerCommits.Count > 0)
-        {
-            candidates.Add(newerCommits[^1]);
-        }
-        candidates.Add(currentCommit);
-        foreach (var c in newerCommits.Where(c => !candidates.Contains(c)))
-        {
-            candidates.Add(c);
-        }
+        // Search order: current commit first, then newer commits oldest→newest.
+        // We want the OLDEST commit that has a valid tspconfig (new emitter config),
+        // because that minimizes spec drift from the starting point.
+        var candidates = new List<string> { currentCommit };
+        candidates.AddRange(newerCommits);
 
         // Iterate commits to find one with valid tspconfig
         foreach (var commit in candidates)

@@ -1,27 +1,30 @@
 # Azure Generator Agent client library for .NET
 
-A command-line tool for automating Azure SDK code generation and migration workflows. Features an MCP server with deterministic fix tools that a skill (LLM agent) calls directly to handle rule-based fixes, keeping LLM usage for only non-deterministic reasoning.
-
-<!-- Test comment: Testing new CI separation - only .NET 10.0 should be tested -->
+An MCP (Model Context Protocol) server that exposes deterministic fix tools for automating Azure SDK code generation and migration workflows. A skill (LLM agent) calls these tools directly to handle rule-based fixes, keeping LLM usage for only non-deterministic reasoning.
 
 ## Getting started
-
-### Install the package
-
-Install as a .NET global tool:
-
-```bash
-dotnet tool install --global Azure.GeneratorAgent
-```
 
 ### Prerequisites
 
 - [.NET 10.0](https://dotnet.microsoft.com/download/dotnet/10.0) or later
 - Git (for repository operations)
 
-### Authenticate the client
+### Build and run
 
-Authentication is handled automatically when working within Azure SDK repositories.
+Build from source within the azure-sdk-for-net repository:
+
+```bash
+cd sdk/tools/Azure.GeneratorAgent
+dotnet build
+```
+
+Start the MCP server over stdio transport:
+
+```bash
+dotnet run --project src/Azure.GeneratorAgent.csproj
+```
+
+Any MCP-compatible client (e.g., VS Code with Copilot, Claude Desktop) can connect to the server and invoke tools.
 
 ## Key concepts
 
@@ -31,45 +34,62 @@ The Azure Generator Agent automates SDK code generation workflows, including cod
 
 The agent uses a three-layer architecture:
 
-- **MCP Server** — Exposes deterministic fix tools over the [Model Context Protocol](https://modelcontextprotocol.io/) via stdio transport. Any MCP-compatible client can invoke these tools.
-- **MCP Tools** — Individual tools for regex replacements (field renames, type patterns), adding/removing using directives, nullable annotation fixes, build output parsing, error classification, code generation, commit iteration, and finalization.
-- **Skill-Driven Workflow** — The skill doc (`.github/skills/sdk-migration/SKILL.md`) IS the orchestrator. The LLM reads it, calls MCP tools directly, and reasons about what to do next. No compiled C# orchestrator — the skill drives the build→classify→fix→rebuild loop.
+- **MCP Server** — Exposes deterministic fix tools over the [Model Context Protocol](https://modelcontextprotocol.io/) via stdio transport. Tools are auto-discovered from the assembly at startup.
+- **MCP Tools** — 17 individual tools covering regex replacements (field renames, type patterns), adding/removing using directives, nullable annotation fixes, build output parsing, error classification, code generation, commit iteration, and finalization. Each tool supports both MCP (JSON) and in-process invocation.
+- **Skill-Driven Workflow** — The skill docs ([`sdk-migration`](../../../.github/skills/sdk-migration/SKILL.md) and [`sdk-migration-mcp`](../../../.github/skills/sdk-migration-mcp/SKILL.md)) ARE the orchestrator. The LLM reads them, calls MCP tools directly, and reasons about what to do next. No compiled C# orchestrator — the skill drives the build→classify→fix→rebuild loop.
+
+### MCP Tools
+
+| Tool | Description |
+|------|-------------|
+| `regex_replacement` | Perform regex-based find/replace in source files (field renames, type patterns, namespace fixes) |
+| `add_using_directive` | Add a using directive to a C# file if not already present |
+| `remove_using_directive` | Remove using directives matching a namespace pattern |
+| `nullable_annotation_fix` | Fix CS8625/CS8600 by adding `?` nullable annotation on a specific line |
+| `batch_fix` | Apply multiple deterministic fixes in a single call |
+| `build_and_classify` | Run `dotnet build`, parse output, and classify each error as deterministic or requires-reasoning |
+| `parse_build_output` | Parse raw MSBuild output into structured error objects |
+| `classify_error` | Classify a single build error against the deterministic fix registry |
+| `classify_errors` | Classify a batch of build errors |
+| `run_code_generation` | Run `dotnet build /t:generateCode` for a project |
+| `validate_tsp_config` | Validate that `tspconfig.yaml` has the correct emitter configuration |
+| `commit_iteration` | Iterate through spec repo commits to find one with valid tspconfig |
+| `pregen_cleanup` | Remove `IncludeAutorestDependency` from `.csproj` files before first generation |
+| `migrate_test_samples` | Move test samples from `Generated/Samples/` to `Samples/` |
+| `finalize_migration` | Run `Export-API.ps1` and `Update-Snippets.ps1` after a successful migration |
+| `rename_codegen_type` | Fix mismatched `[CodeGenType]` attributes by matching generated counterparts |
+| `fetch_to_fromlro` | Replace legacy `Fetch(response)` calls with `ResponseModel.FromLroResponse(response)` |
 
 ### Deterministic Fix Registry
 
 The `DeterministicFixRegistry` contains rules that map error codes and message patterns to specific tool invocations. Rules cover:
 
-- **Field renames** — `_pipeline` → `Pipeline`, `_clientDiagnostics` → `ClientDiagnostics`, `_endpoint` → `Endpoint`, etc.
-- **Type pattern replacements** — `ResponseWithHeaders<T,H>` → `Response<T>`, `Rest.TypeName` → `TypeName`, `Models.Models.X` → `Models.X`
-- **Missing using directives** — 45+ type-to-namespace mappings (e.g., `HttpPipeline` → `Azure.Core.Pipeline`, `ClientResult` → `System.ClientModel`)
-- **Obsolete using removal** — Any `using X.Rest;` namespace
+- **Field renames** (9 mappings) — `_pipeline` → `Pipeline`, `_clientDiagnostics` → `ClientDiagnostics`, `_endpoint` → `Endpoint`, `_serializedAdditionalRawData` → `_additionalBinaryDataProperties`, etc.
+- **Type pattern replacements** — `ResponseWithHeaders<T,H>` → `Response<T>`, `Rest.TypeName` → `TypeName`, `Models.Models.X` → `Models.X`, `CodeGenModel` → `CodeGenType`
+- **Missing using directives** — 47 type-to-namespace mappings across `Azure.Core`, `Azure.Core.Pipeline`, `Azure`, `System.ClientModel`, `System.ClientModel.Primitives`, `Azure.ResourceManager`, and `Microsoft.TypeSpec.Generator.Customizations`
+- **Obsolete using removal** — `Autorest.*`, `.Rest` namespaces
 - **Nullable annotations** — CS8625/CS8600 fixes
+- **Method call replacements** — `FromCancellationToken` → `ToRequestContext`, `Fetch(response)` → `FromLroResponse`, obsolete `.ToRequestContent()` removal
 
 See [`.github/skills/sdk-migration-mcp/SKILL.md`](../../../.github/skills/sdk-migration-mcp/SKILL.md) for the full rule list, tool usage guide, and the skill-driven workflow.
 
 ## Examples
 
-### Migrate an SDK
-
-```bash
-azure-generator-agent migrate <sdk-path> <local-specs-path>
-```
-
-### Generate code for an SDK
-
-```bash
-azure-generator-agent generate <sdk-path> <local-specs-path>
-```
-
 ### Start as an MCP server
 
 ```bash
-azure-generator-agent --mcp-server
+dotnet run --project src/Azure.GeneratorAgent.csproj
 ```
 
-This starts a stdio-based MCP server that exposes all deterministic fix tools. Connect from any MCP client (e.g., VS Code, Claude Desktop).
+This starts a stdio-based MCP server that exposes all 17 deterministic fix tools. Connect from any MCP-compatible client.
 
-Available tools: `regex_replacement`, `add_using_directive`, `remove_using_directive`, `nullable_annotation_fix`, `batch_fix`, `build_and_classify`, `parse_build_output`, `classify_error`, `classify_errors`, `run_code_generation`, `validate_tsp_config`, `commit_iteration`, `pregen_cleanup`, `migrate_test_samples`, `finalize_migration`, `rename_codegen_type`, `fetch_to_fromlro`.
+### Use with a migration skill
+
+The tools are designed to be called by the [`sdk-migration-mcp`](../../../.github/skills/sdk-migration-mcp/SKILL.md) skill. The typical workflow is:
+
+1. **Setup** — `pregen_cleanup` → `validate_tsp_config` → `commit_iteration` → `run_code_generation`
+2. **Build-fix loop** — `build_and_classify` → `batch_fix` (for deterministic errors) → LLM reasoning (for non-deterministic errors) → rebuild
+3. **Finalize** — `migrate_test_samples` → `finalize_migration`
 
 ## Troubleshooting
 
@@ -96,3 +116,4 @@ This project welcomes contributions and suggestions. Most contributions require 
 - Explore the [Azure SDK for .NET repository](https://github.com/Azure/azure-sdk-for-net)
 - Learn about [Azure SDK design guidelines](https://azure.github.io/azure-sdk/)
 - Read the [MCP migration skill](../../../.github/skills/sdk-migration-mcp/SKILL.md) for the tool-driven workflow
+- Read the [SDK migration skill](../../../.github/skills/sdk-migration/SKILL.md) for the full migration process
