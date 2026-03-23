@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Communication
 {
+    /// <summary></summary>
     public partial class CommunicationSmtpUsernameResource : IJsonModel<CommunicationSmtpUsernameData>
     {
-        private static CommunicationSmtpUsernameData s_dataDeserializationInstance;
-        private static CommunicationSmtpUsernameData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CommunicationSmtpUsernameData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CommunicationSmtpUsernameData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CommunicationSmtpUsernameData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CommunicationSmtpUsernameData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CommunicationSmtpUsernameData>)Data).Write(writer, options);
 
-        CommunicationSmtpUsernameData IJsonModel<CommunicationSmtpUsernameData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommunicationSmtpUsernameData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CommunicationSmtpUsernameData IJsonModel<CommunicationSmtpUsernameData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CommunicationSmtpUsernameData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommunicationSmtpUsernameData>(Data, options, AzureResourceManagerCommunicationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CommunicationSmtpUsernameData IPersistableModel<CommunicationSmtpUsernameData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommunicationSmtpUsernameData>(data, options, AzureResourceManagerCommunicationContext.Default);
 
-        string IPersistableModel<CommunicationSmtpUsernameData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommunicationSmtpUsernameData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CommunicationSmtpUsernameData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

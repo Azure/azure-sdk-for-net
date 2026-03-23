@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -118,11 +120,21 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         /// <summary> Define additional provisionable properties for KeyValue that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
+        /// <summary> Get the requirements for naming this resource. </summary>
+        /// <returns> Naming requirements. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 24, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
+
         /// <summary></summary>
         public static partial class ResourceVersions
         {
             /// <summary> API version "2024-05-01". </summary>
             public static readonly string V2024_05_01 = "2024-05-01";
+            /// <summary> API version "2024-04-01". </summary>
+            public static readonly string V2024_04_01 = "2024-04-01";
+            /// <summary> API version "2024-01-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2024_01_01_PREVIEW = "2024-01-01-preview";
         }
     }
 }

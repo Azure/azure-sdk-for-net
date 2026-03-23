@@ -18,21 +18,17 @@ public class Sample_agents_CRUD : SamplesBase
     {
         #region Snippet:Sample_Agents_CreateAgentClientCRUD
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
 
         #region Snippet:Sample_Agents_CreateAgentVersionCRUD_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -71,20 +67,16 @@ public class Sample_agents_CRUD : SamplesBase
     public void AgentCRUD()
     {
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_Agents_CreateAgentVersionCRUD_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -122,19 +114,15 @@ public class Sample_agents_CRUD : SamplesBase
     public void VersionSelection()
     {
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         #region Snippet:Sample_Agents_API_version
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint),
-            ApiVersion = "2025-11-15-preview"
-        };
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClientOptions options = new(version: AgentAdministrationClientOptions.ServiceVersion.V1);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         #endregion
     }
 
@@ -143,17 +131,13 @@ public class Sample_agents_CRUD : SamplesBase
     public async Task ErrorHandling()
     {
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_Agent_ErrorHandling
         try
         {

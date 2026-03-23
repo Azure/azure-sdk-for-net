@@ -15,13 +15,15 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     public partial class ConfigurationStoreProperties : ProvisionableConstruct
     {
         private BicepValue<ConfigurationStoreProvisioningState> _provisioningState;
-        private BicepValue<DateTimeOffset> _creationDate;
+        private BicepValue<DateTimeOffset> _createdOn;
         private BicepValue<string> _endpoint;
         private ConfigurationStoreSku _sku;
         private BicepValue<int> _softDeleteRetentionInDays;
         private BicepValue<bool> _disableLocalAuth;
         private BackupPolicy _backupPolicy;
         private BicepValue<PublicNetworkAccess> _publicNetworkAccess;
+        private BicepValue<ConfigurationStoreSkuTier> _skuTier;
+        private BicepValue<ConfigurationStoreCreateMode> _createMode;
 
         /// <summary> Creates a new ConfigurationStoreProperties. </summary>
         public ConfigurationStoreProperties()
@@ -38,13 +40,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets the CreationDate. </summary>
-        public BicepValue<DateTimeOffset> CreationDate
+        /// <summary> Gets the CreatedOn. </summary>
+        public BicepValue<DateTimeOffset> CreatedOn
         {
             get
             {
                 Initialize();
-                return _creationDate;
+                return _createdOn;
             }
         }
 
@@ -133,6 +135,36 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the SkuTier. </summary>
+        public BicepValue<ConfigurationStoreSkuTier> SkuTier
+        {
+            get
+            {
+                Initialize();
+                return _skuTier;
+            }
+            set
+            {
+                Initialize();
+                _skuTier.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the CreateMode. </summary>
+        public BicepValue<ConfigurationStoreCreateMode> CreateMode
+        {
+            get
+            {
+                Initialize();
+                return _createMode;
+            }
+            set
+            {
+                Initialize();
+                _createMode.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> SkuName
         {
@@ -155,13 +187,15 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<ConfigurationStoreProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _creationDate = DefineProperty<DateTimeOffset>(nameof(CreationDate), new string[] { "creationDate" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true);
             _endpoint = DefineProperty<string>(nameof(Endpoint), new string[] { "endpoint" }, isOutput: true);
             _sku = DefineModelProperty<ConfigurationStoreSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
             _softDeleteRetentionInDays = DefineProperty<int>(nameof(SoftDeleteRetentionInDays), new string[] { "softDeleteRetentionInDays" });
             _disableLocalAuth = DefineProperty<bool>(nameof(DisableLocalAuth), new string[] { "disableLocalAuth" });
             _backupPolicy = DefineModelProperty<BackupPolicy>(nameof(BackupPolicy), new string[] { "backupPolicy" });
             _publicNetworkAccess = DefineProperty<PublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
+            _skuTier = DefineProperty<ConfigurationStoreSkuTier>(nameof(SkuTier), new string[] { "skuTier" });
+            _createMode = DefineProperty<ConfigurationStoreCreateMode>(nameof(CreateMode), new string[] { "createMode" });
         }
     }
 }

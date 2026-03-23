@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsRegenerateAccessKeyContent : IUtf8JsonSerializable, IJsonModel<EventHubsRegenerateAccessKeyContent>
+    /// <summary> Parameters supplied to the Regenerate Authorization Rule operation, specifies which key needs to be reset. </summary>
+    public partial class EventHubsRegenerateAccessKeyContent : IJsonModel<EventHubsRegenerateAccessKeyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsRegenerateAccessKeyContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="EventHubsRegenerateAccessKeyContent"/> for deserialization. </summary>
+        internal EventHubsRegenerateAccessKeyContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EventHubsRegenerateAccessKeyContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsRegenerateAccessKeyContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEventHubsRegenerateAccessKeyContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventHubsRegenerateAccessKeyContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsRegenerateAccessKeyContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EventHubsRegenerateAccessKeyContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EventHubsRegenerateAccessKeyContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventHubsRegenerateAccessKeyContent IPersistableModel<EventHubsRegenerateAccessKeyContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EventHubsRegenerateAccessKeyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="eventHubsRegenerateAccessKeyContent"> The <see cref="EventHubsRegenerateAccessKeyContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EventHubsRegenerateAccessKeyContent eventHubsRegenerateAccessKeyContent)
+        {
+            if (eventHubsRegenerateAccessKeyContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(eventHubsRegenerateAccessKeyContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventHubsRegenerateAccessKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +85,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubsRegenerateAccessKeyContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsRegenerateAccessKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventHubsRegenerateAccessKeyContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToString());
             if (Optional.IsDefined(Key))
@@ -41,15 +97,15 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -58,80 +114,52 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
         }
 
-        EventHubsRegenerateAccessKeyContent IJsonModel<EventHubsRegenerateAccessKeyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventHubsRegenerateAccessKeyContent IJsonModel<EventHubsRegenerateAccessKeyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EventHubsRegenerateAccessKeyContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubsRegenerateAccessKeyContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsRegenerateAccessKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventHubsRegenerateAccessKeyContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEventHubsRegenerateAccessKeyContent(document.RootElement, options);
         }
 
-        internal static EventHubsRegenerateAccessKeyContent DeserializeEventHubsRegenerateAccessKeyContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EventHubsRegenerateAccessKeyContent DeserializeEventHubsRegenerateAccessKeyContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             EventHubsAccessKeyType keyType = default;
             string key = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("keyType"u8))
+                if (prop.NameEquals("keyType"u8))
                 {
-                    keyType = new EventHubsAccessKeyType(property.Value.GetString());
+                    keyType = new EventHubsAccessKeyType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("key"u8))
+                if (prop.NameEquals("key"u8))
                 {
-                    key = property.Value.GetString();
+                    key = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new EventHubsRegenerateAccessKeyContent(keyType, key, serializedAdditionalRawData);
+            return new EventHubsRegenerateAccessKeyContent(keyType, key, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<EventHubsRegenerateAccessKeyContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubsRegenerateAccessKeyContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EventHubsRegenerateAccessKeyContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EventHubsRegenerateAccessKeyContent IPersistableModel<EventHubsRegenerateAccessKeyContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubsRegenerateAccessKeyContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEventHubsRegenerateAccessKeyContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EventHubsRegenerateAccessKeyContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EventHubsRegenerateAccessKeyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

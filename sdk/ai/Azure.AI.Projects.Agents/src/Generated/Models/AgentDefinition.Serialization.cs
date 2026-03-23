@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The AgentDefinition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PromptAgentDefinition"/>, <see cref="WorkflowAgentDefinition"/>, and <see cref="HostedAgentDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeclarativeAgentDefinition"/>, <see cref="WorkflowAgentDefinition"/>, and <see cref="HostedAgentDefinition"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAgentDefinition))]
     public abstract partial class AgentDefinition : IJsonModel<AgentDefinition>
@@ -132,7 +132,7 @@ namespace Azure.AI.Projects.Agents
                 switch (discriminator.GetString())
                 {
                     case "prompt":
-                        return PromptAgentDefinition.DeserializePromptAgentDefinition(element, options);
+                        return DeclarativeAgentDefinition.DeserializeDeclarativeAgentDefinition(element, options);
                     case "workflow":
                         return WorkflowAgentDefinition.DeserializeWorkflowAgentDefinition(element, options);
                     case "hosted":

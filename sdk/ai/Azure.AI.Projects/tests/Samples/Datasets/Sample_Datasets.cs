@@ -73,7 +73,7 @@ public class Sample_Datasets : SamplesBase
 
         #region Snippet:AI_Projects_DatasetsExampleSync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
         var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
         var datasetVersion1 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_1") ?? "1.0";
@@ -83,7 +83,7 @@ public class Sample_Datasets : SamplesBase
 
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
         var datasetName = String.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
         var filePath = TestEnvironment.SAMPLEFILEPATH;
@@ -182,7 +182,7 @@ public class Sample_Datasets : SamplesBase
 
         #region Snippet:AI_Projects_DatasetsExampleAsync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
         var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
         var datasetVersion1 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_1") ?? "1.0";
@@ -192,7 +192,7 @@ public class Sample_Datasets : SamplesBase
 
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
         var datasetName = String.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
         var filePath = TestEnvironment.SAMPLEFILEPATH;
@@ -289,14 +289,14 @@ public class Sample_Datasets : SamplesBase
     {
         #region Snippet:AI_Projects_DatasetRoundTripSample_ClientSetup
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
         var datasetVersion = System.Environment.GetEnvironmentVariable("DATASET_VERSION") ?? "1.0";
         var filePath = System.Environment.GetEnvironmentVariable("SAMPLE_FILE_PATH") ?? "sample_folder/sample_file1.txt";
 
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var datasetName = String.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
         var filePath = TestEnvironment.SAMPLEFILEPATH;
         var folderPath = TestEnvironment.SAMPLEFOLDERPATH;

@@ -5,8 +5,8 @@ In this example we will create the local file, upload it to Azure and will use i
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_FileSearch
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
@@ -62,7 +62,7 @@ VectorStore vectorStore = await vctStoreClient.CreateVectorStoreAsync(options);
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_FileSearch_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent that can help fetch data from files you know about.",
     Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
@@ -74,7 +74,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_FileSearch_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent that can help fetch data from files you know about.",
     Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }

@@ -17,7 +17,7 @@ public class AgentsTests : AgentsTestBase
     [RecordedTest]
     public async Task ErrorsGiveGoodExceptionMessages()
     {
-        AgentsClient agentsClient = GetTestClient();
+        AgentAdministrationClient agentsClient = GetTestClient();
 
         ClientResultException exception = null;
         try
@@ -35,8 +35,8 @@ public class AgentsTests : AgentsTestBase
     [RecordedTest]
     public async Task TestAgentCRUD()
     {
-        AgentsClient agentsClient = GetTestClient();
-        AgentDefinition emptyAgentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME);
+        AgentAdministrationClient agentsClient = GetTestClient();
+        AgentDefinition emptyAgentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
 
         const string emptyPromptAgentName = "TestNoVersionAgentFromDotnetTests";
         try

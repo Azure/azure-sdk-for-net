@@ -33,7 +33,7 @@ namespace Azure.Generator.Management.Providers
     /// </summary>
     internal sealed class ResourceClientProvider : TypeProvider
     {
-        internal static ResourceClientProvider Create(ResourceMetadata resourceMetadata, IReadOnlyList<ResourceMethod> methodsInResource, IReadOnlyList<ResourceMethod> methodsInCollection)
+        internal static ResourceClientProvider Create(ArmResourceMetadata resourceMetadata, IReadOnlyList<ResourceMethod> methodsInResource, IReadOnlyList<ResourceMethod> methodsInCollection)
         {
             // Create a resource that supports multiple clients, using ResourceName from metadata
             var resource = new ResourceClientProvider(resourceMetadata.ResourceName, resourceMetadata.ResourceModel, methodsInResource, resourceMetadata);
@@ -52,7 +52,7 @@ namespace Azure.Generator.Management.Providers
         private readonly FieldProvider _resourceTypeField;
         private readonly InputModelType _inputModel;
 
-        private readonly ResourceMetadata _resourceMetadata;
+        private readonly ArmResourceMetadata _resourceMetadata;
 
         private readonly OperationContext _operationContext;
 
@@ -61,7 +61,7 @@ namespace Azure.Generator.Management.Providers
 
         private readonly ResourceMethod _readMethod;
 
-        private ResourceClientProvider(string resourceName, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ResourceMetadata resourceMetadata)
+        private ResourceClientProvider(string resourceName, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ArmResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
             _operationContext = OperationContext.Create(new RequestPathPattern(resourceMetadata.ResourceIdPattern));
@@ -477,7 +477,20 @@ namespace Azure.Generator.Management.Providers
                 {
                     Debug.Assert(childResource.ResourceCollection is not null, "Child resource collection should not be null for non-singleton resources.");
                     var signature = childResource.FactoryMethodSignature;
-                    var bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(childResource.ResourceCollection.Type, client, thisResource.Id())));
+                    MethodBodyStatement bodyStatement;
+                    if (signature.Parameters.Count > 0)
+                    {
+                        // When the collection getter has path parameters (e.g. nestedTypeName),
+                        // we must NOT use GetCachedClient because its cache key is only typeof(T),
+                        // which means different parameter values would return the same stale instance.
+                        bodyStatement = Return(New.Instance(childResource.ResourceCollection.Type,
+                            [thisResource.Client(), thisResource.Id(), .. signature.Parameters]));
+                    }
+                    else
+                    {
+                        bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"),
+                            client => New.Instance(childResource.ResourceCollection.Type, client, thisResource.Id())));
+                    }
                     methods.Add(new MethodProvider(signature, bodyStatement, this));
                     // Add Get methods backed by collection's Get and GetAsync methods
                     if (childResource.ResourceCollection.GetSyncMethodProvider is not null && childResource.ResourceCollection.GetAsyncMethodProvider is not null)
@@ -500,12 +513,12 @@ namespace Azure.Generator.Management.Providers
                                 collectionSignature.Modifiers,
                                 collectionSignature.ReturnType,
                                 collectionSignature.ReturnDescription,
-                                collectionSignature.Parameters,
+                                [.. signature.Parameters, .. collectionSignature.Parameters],
                                 [new AttributeStatement(typeof(ForwardsClientCallsAttribute))],
                                 collectionSignature.GenericArguments);
 
                             var getBodyStatement = Return(
-                                thisResource.Invoke(signature.Name)
+                                thisResource.Invoke(signature.Name, signature.Parameters.Select(p => p.AsArgument()).ToArray())
                                     .Invoke(collectionSignature.Name, collectionSignature.Parameters.Select(p => p.AsArgument()).ToArray(), null, isAsync));
 
                             methods.Add(new MethodProvider(getSignature, getBodyStatement, this));

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Support
 {
+    /// <summary></summary>
     public partial class SupportTicketNoSubCommunicationResource : IJsonModel<SupportTicketCommunicationData>
     {
-        private static SupportTicketCommunicationData s_dataDeserializationInstance;
-        private static SupportTicketCommunicationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SupportTicketCommunicationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SupportTicketCommunicationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SupportTicketCommunicationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SupportTicketCommunicationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SupportTicketCommunicationData>)Data).Write(writer, options);
 
-        SupportTicketCommunicationData IJsonModel<SupportTicketCommunicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SupportTicketCommunicationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SupportTicketCommunicationData IJsonModel<SupportTicketCommunicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SupportTicketCommunicationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SupportTicketCommunicationData>(Data, options, AzureResourceManagerSupportContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SupportTicketCommunicationData IPersistableModel<SupportTicketCommunicationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SupportTicketCommunicationData>(data, options, AzureResourceManagerSupportContext.Default);
 
-        string IPersistableModel<SupportTicketCommunicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SupportTicketCommunicationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SupportTicketCommunicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

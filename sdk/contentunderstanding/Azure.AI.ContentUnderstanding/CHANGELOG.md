@@ -1,5 +1,17 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Added `ContentUnderstandingClientSettings` to support creating a `ContentUnderstandingClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.2 (2026-03-11)
 
 ### Bugs Fixed

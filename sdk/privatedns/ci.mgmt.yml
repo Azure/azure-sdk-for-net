@@ -10,3 +10,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.PrivateDns
       safeName: AzureResourceManagerPrivateDns
+    - name: Azure.Provisioning.PrivateDns
+      safeName: AzureProvisioningPrivateDns

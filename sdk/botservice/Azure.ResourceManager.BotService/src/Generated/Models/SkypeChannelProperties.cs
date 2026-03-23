@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Microsoft Teams channel. </summary>
     public partial class SkypeChannelProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SkypeChannelProperties"/>. </summary>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
@@ -63,8 +34,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="callingWebHook"> Calling web hook for Skype channel. </param>
         /// <param name="incomingCallRoute"> Incoming call route for Skype channel. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SkypeChannelProperties(bool? isMessagingEnabled, bool? isMediaCardsEnabled, bool? isVideoEnabled, bool? isCallingEnabled, bool? isScreenSharingEnabled, bool? isGroupsEnabled, string groupsMode, string callingWebHook, string incomingCallRoute, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SkypeChannelProperties(bool? isMessagingEnabled, bool? isMediaCardsEnabled, bool? isVideoEnabled, bool? isCallingEnabled, bool? isScreenSharingEnabled, bool? isGroupsEnabled, string groupsMode, string callingWebHook, string incomingCallRoute, bool isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsMessagingEnabled = isMessagingEnabled;
             IsMediaCardsEnabled = isMediaCardsEnabled;
@@ -76,32 +47,36 @@ namespace Azure.ResourceManager.BotService.Models
             CallingWebHook = callingWebHook;
             IncomingCallRoute = incomingCallRoute;
             IsEnabled = isEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SkypeChannelProperties"/> for deserialization. </summary>
-        internal SkypeChannelProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enable messaging for Skype channel. </summary>
         public bool? IsMessagingEnabled { get; set; }
+
         /// <summary> Enable media cards for Skype channel. </summary>
         public bool? IsMediaCardsEnabled { get; set; }
+
         /// <summary> Enable video for Skype channel. </summary>
         public bool? IsVideoEnabled { get; set; }
+
         /// <summary> Enable calling for Skype channel. </summary>
         public bool? IsCallingEnabled { get; set; }
+
         /// <summary> Enable screen sharing for Skype channel. </summary>
         public bool? IsScreenSharingEnabled { get; set; }
+
         /// <summary> Enable groups for Skype channel. </summary>
         public bool? IsGroupsEnabled { get; set; }
+
         /// <summary> Group mode for Skype channel. </summary>
         public string GroupsMode { get; set; }
+
         /// <summary> Calling web hook for Skype channel. </summary>
         public string CallingWebHook { get; set; }
+
         /// <summary> Incoming call route for Skype channel. </summary>
         public string IncomingCallRoute { get; set; }
+
         /// <summary> Whether this channel is enabled for the bot. </summary>
         public bool IsEnabled { get; set; }
     }

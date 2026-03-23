@@ -45,9 +45,6 @@
 # PRLabel: %EngSys
 /sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
 
-# Smoke tests
-/common/SmokeTests/                                                @jsquire @m-redding
-
 #########
 # SDK
 #########
@@ -898,7 +895,10 @@
 /**/*Management*/                                                  @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Mgmt
-/**/Azure.ResourceManager*/                                        @ArcturusZhang @ArthurMa1978
+/**/Azure.ResourceManager*/                                        @ArcturusZhang @ArthurMa1978 @live1206
+
+# PRLabel: %Provisioning
+/**/Azure.Provisioning*/                                           @ArcturusZhang @ArthurMa1978 @m-nash
 
 # -----------------------------------------------------------------
 # IMPORTANT NOTE:
@@ -986,6 +986,9 @@
 
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @atastrophic @rohankhandelwal
+
+# PRLabel: %App Services %Mgmt
+/sdk/domainregistration/Azure.ResourceManager.*/                   @antcp @AzureAppServiceCLI
 
 # PRLabel: %Durable Task Scheduler %Mgmt
 /sdk/durabletask/Azure.ResourceManager.*/                          @berndverst @kaibocai @torosent @philliphoff @cgillum

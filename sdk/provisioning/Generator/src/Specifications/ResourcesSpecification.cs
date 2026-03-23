@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Generator.Specifications;
 public class ResourcesSpecification : Specification
 {
     public ResourcesSpecification() :
-        base("Resources", typeof(ResourcesExtensions))
+        base("Resources", typeof(ResourcesExtensions), serviceDirectory: "provisioning")
     {
         SkipCleaning = true;
     }
