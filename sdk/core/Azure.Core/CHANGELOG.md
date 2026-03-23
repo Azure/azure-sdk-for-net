@@ -5,11 +5,13 @@
 ### Features Added
 
 - Added `IndonesiaCentral`, `NewZealandNorth`, and `MalaysiaWest` locations to `AzureLocation` struct.
+- Added a JSON schema segment to the NuGet package that provides IntelliSense and validation for `AzureClients` configuration in `appsettings.json`, including `Retry` and `Diagnostics` options.
 
 ### Bugs Fixed
 
 - Fixed implicit conversion operators to not throw exceptions on null inputs per Framework Design Guidelines. Operators now return safe defaults: `null` for reference types, `default` for value types.
 - Fixed `RequestContent.Dispose()` to be idempotent and thread-safe, preventing `ArrayPool` buffers from being returned multiple times when disposed concurrently or repeatedly.
+- Fixed `HttpClientTransport` to correctly set the `Host` header on outgoing requests when explicitly specified, rather than falling through to `TryAddWithoutValidation`.
 
 ### Other Changes
 

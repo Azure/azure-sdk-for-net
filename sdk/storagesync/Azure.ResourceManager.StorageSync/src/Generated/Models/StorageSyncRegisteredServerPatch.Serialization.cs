@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(storageSyncRegisteredServerPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(storageSyncRegisteredServerPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

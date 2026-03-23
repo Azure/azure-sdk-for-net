@@ -57,10 +57,13 @@ namespace Azure.Identity
                 return;
             }
 
-            CredentialSource = settings.CredentialSource;
+            if (settings.CredentialSource is not null)
+            {
+                CredentialSource = settings.CredentialSource;
+            }
             ApiKey = settings.Key;
 
-            if (section is null)
+            if (section is null || !section.Exists())
             {
                 return;
             }
@@ -209,6 +212,19 @@ namespace Azure.Identity
             {
                 IsLegacyMsaPassthroughEnabled = isLegacyMsaPassthroughEnabled;
             }
+
+            // Parse Sources array for ChainedTokenCredential configuration — each child is a credential config object
+            var sourcesSection = section.GetSection(nameof(Sources));
+            if (sourcesSection != null)
+            {
+                var children = sourcesSection.GetChildren().ToArray();
+                if (children.Length > 0)
+                {
+                    Sources = children
+                        .Select(child => new DefaultAzureCredentialOptions(new CredentialSettings(child), child))
+                        .ToArray();
+                }
+            }
         }
 
         private UpdateTracker<string> _tenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
@@ -230,6 +246,13 @@ namespace Azure.Identity
         }
 
         internal string ApiKey { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the array of credential source configurations for ChainedTokenCredential.
+        /// Used when CredentialSource is "ChainedTokenCredential". Each element is a full credential
+        /// configuration with its own CredentialSource and properties.
+        /// </summary>
+        internal DefaultAzureCredentialOptions[] Sources { get; private set; }
 
         internal static string ConvertCredentialSource(string value)
         {
@@ -261,7 +284,9 @@ namespace Azure.Identity
                 Constants.AzurePipelinesCredential => Constants.AzurePipelinesCredential,
                 Constants.ManagedIdentityAsFederatedIdentityCredential => Constants.ManagedIdentityAsFederatedIdentityCredential,
                 Constants.ApiKeyCredential => Constants.ApiKeyCredential,
+                Constants.ChainedTokenCredential => Constants.ChainedTokenCredential,
                 // Short names (back-compat)
+                "chainedtoken" => Constants.ChainedTokenCredential,
                 "visualstudio" => Constants.VisualStudioCredential,
                 "visualstudiocode" => Constants.VisualStudioCodeCredential,
                 "azurecli" => Constants.AzureCliCredential,
@@ -671,6 +696,7 @@ namespace Azure.Identity
                 {
                     dacClone.CredentialSource = CredentialSource;
                 }
+                dacClone.Sources = Sources;
                 dacClone.ApiKey = ApiKey;
                 if (!string.IsNullOrEmpty(Subscription))
                 {

@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> A resource Api configuration for the Telephony channel. </summary>
     public partial class TelephonyChannelResourceApiConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TelephonyChannelResourceApiConfiguration"/>. </summary>
         public TelephonyChannelResourceApiConfiguration()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="cognitiveServiceRegion"> The cognitive service region. </param>
         /// <param name="cognitiveServiceResourceId"> The cognitive service resourceId. </param>
         /// <param name="defaultLocale"> The default locale. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyChannelResourceApiConfiguration(string id, string providerName, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, ResourceIdentifier cognitiveServiceResourceId, string defaultLocale, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TelephonyChannelResourceApiConfiguration(string id, string providerName, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, ResourceIdentifier cognitiveServiceResourceId, string defaultLocale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ProviderName = providerName;
@@ -67,19 +38,24 @@ namespace Azure.ResourceManager.BotService.Models
             CognitiveServiceRegion = cognitiveServiceRegion;
             CognitiveServiceResourceId = cognitiveServiceResourceId;
             DefaultLocale = defaultLocale;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The id of config. </summary>
         public string Id { get; set; }
+
         /// <summary> The provider name. </summary>
         public string ProviderName { get; set; }
+
         /// <summary> The cognitive service subscription key. </summary>
         public string CognitiveServiceSubscriptionKey { get; set; }
+
         /// <summary> The cognitive service region. </summary>
         public string CognitiveServiceRegion { get; set; }
+
         /// <summary> The cognitive service resourceId. </summary>
         public ResourceIdentifier CognitiveServiceResourceId { get; set; }
+
         /// <summary> The default locale. </summary>
         public string DefaultLocale { get; set; }
     }

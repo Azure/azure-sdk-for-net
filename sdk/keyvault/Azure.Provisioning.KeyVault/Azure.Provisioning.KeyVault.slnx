@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.Provisioning.KeyVault.csproj" />
+  <Project Path="tests/Azure.Provisioning.KeyVault.Tests.csproj" />
+</Solution>

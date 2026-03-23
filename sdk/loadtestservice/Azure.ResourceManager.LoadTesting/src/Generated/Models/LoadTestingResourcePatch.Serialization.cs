@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(loadTestingResourcePatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(loadTestingResourcePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

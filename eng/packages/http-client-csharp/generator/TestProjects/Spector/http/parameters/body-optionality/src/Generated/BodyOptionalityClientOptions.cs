@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Parameters.BodyOptionality
 {
     public partial class BodyOptionalityClientOptions : ClientOptions
     {
+        public BodyOptionalityClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal BodyOptionalityClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

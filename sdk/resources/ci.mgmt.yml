@@ -15,3 +15,5 @@ extends:
       safeName: AzureResourceManagerResourcesDeployments
     - name: Azure.ResourceManager.Resources.DeploymentStacks
       safeName: AzureResourceManagerResourcesDeploymentStacks
+    - name: Azure.ResourceManager.Resources.Policy
+      safeName: AzureResourceManagerResourcesPolicy

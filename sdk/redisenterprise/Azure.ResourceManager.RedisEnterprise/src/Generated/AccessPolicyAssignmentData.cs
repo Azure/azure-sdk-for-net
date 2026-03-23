@@ -13,43 +13,11 @@ using Azure.ResourceManager.RedisEnterprise.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
-    /// <summary>
-    /// A class representing the AccessPolicyAssignment data model.
-    /// Describes the access policy assignment of Redis Enterprise database
-    /// </summary>
+    /// <summary> Describes the access policy assignment of Redis Enterprise database. </summary>
     public partial class AccessPolicyAssignmentData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AccessPolicyAssignmentData"/>. </summary>
         public AccessPolicyAssignmentData()
@@ -57,40 +25,65 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessPolicyAssignmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Current provisioning status of the access policy assignment. </param>
-        /// <param name="accessPolicyName"> Name of access policy under specific access policy assignment. Only "default" policy is supported for now. </param>
-        /// <param name="user"> The user associated with the access policy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RedisEnterpriseProvisioningStatus? provisioningState, string accessPolicyName, AccessPolicyAssignmentPropertiesUser user, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the access policy assignment. </param>
+        internal AccessPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AccessPolicyAssignmentProperties properties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            AccessPolicyName = accessPolicyName;
-            User = user;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the access policy assignment. </summary>
+        [WirePath("properties")]
+        internal AccessPolicyAssignmentProperties Properties { get; set; }
 
         /// <summary> Current provisioning status of the access policy assignment. </summary>
         [WirePath("properties.provisioningState")]
-        public RedisEnterpriseProvisioningStatus? ProvisioningState { get; }
+        public RedisEnterpriseProvisioningStatus? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Name of access policy under specific access policy assignment. Only "default" policy is supported for now. </summary>
         [WirePath("properties.accessPolicyName")]
-        public string AccessPolicyName { get; set; }
-        /// <summary> The user associated with the access policy. </summary>
-        internal AccessPolicyAssignmentPropertiesUser User { get; set; }
+        public string AccessPolicyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessPolicyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessPolicyAssignmentProperties();
+                }
+                Properties.AccessPolicyName = value;
+            }
+        }
+
         /// <summary> The object ID of the user. </summary>
         [WirePath("properties.user.objectId")]
         public Guid? UserObjectId
         {
-            get => User is null ? default : User.ObjectId;
+            get
+            {
+                return Properties is null ? default : Properties.UserObjectId;
+            }
             set
             {
-                if (User is null)
-                    User = new AccessPolicyAssignmentPropertiesUser();
-                User.ObjectId = value;
+                if (Properties is null)
+                {
+                    Properties = new AccessPolicyAssignmentProperties();
+                }
+                Properties.UserObjectId = value.Value;
             }
         }
     }

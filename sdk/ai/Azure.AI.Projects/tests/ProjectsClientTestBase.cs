@@ -166,7 +166,7 @@ namespace Azure.AI.Projects.Tests
         protected AIProjectClient GetTestProjectClient(Dictionary<string, string> headers = default, bool useDefaultEndpoint = false)
         {
             AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions(headers: headers);
-            Uri endpoint = new(TestEnvironment.PROJECT_ENDPOINT);
+            Uri endpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
             if (useDefaultEndpoint)
             {
                 string[] segments = endpoint.Segments;
@@ -179,7 +179,7 @@ namespace Azure.AI.Projects.Tests
         protected AIProjectClient GetTestProjectClientForLegacyAgents(Dictionary<string, string> headers = default)
         {
             AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions(headers: headers);
-            return CreateProxyFromClient(new AIProjectClient(new(TestEnvironment.PROJECT_ENDPOINT), GetTestTokenProvider(), projectClientOptions));
+            return CreateProxyFromClient(new AIProjectClient(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider(), projectClientOptions));
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Azure.AI.Projects.Tests
         {
             options ??= new AIProjectClientOptions();
 
-            var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+            var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
             var credential = TestEnvironment.Credential;
 
             var client = new AIProjectClient(new Uri(endpoint), credential, options);

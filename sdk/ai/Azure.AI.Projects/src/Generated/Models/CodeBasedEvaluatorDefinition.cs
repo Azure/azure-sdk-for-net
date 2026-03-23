@@ -11,8 +11,13 @@ namespace Azure.AI.Projects
     public partial class CodeBasedEvaluatorDefinition : EvaluatorDefinition
     {
         /// <summary> Initializes a new instance of <see cref="CodeBasedEvaluatorDefinition"/>. </summary>
-        public CodeBasedEvaluatorDefinition() : base(EvaluatorDefinitionType.Code)
+        /// <param name="codeText"> Inline code text for the evaluator. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="codeText"/> is null. </exception>
+        public CodeBasedEvaluatorDefinition(string codeText) : base(EvaluatorDefinitionType.Code)
         {
+            Argument.AssertNotNull(codeText, nameof(codeText));
+
+            CodeText = codeText;
         }
 
         /// <summary> Initializes a new instance of <see cref="CodeBasedEvaluatorDefinition"/>. </summary>
@@ -22,22 +27,12 @@ namespace Azure.AI.Projects
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="codeText"> Inline code text for the evaluator. </param>
-        /// <param name="entryPoint"> The entry point Python file name for the uploaded evaluator code (e.g. 'answer_length_evaluator.py'). </param>
-        /// <param name="imageTag"> The container image tag to use for evaluator code execution. </param>
-        internal CodeBasedEvaluatorDefinition(EvaluatorDefinitionType @type, BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties, string codeText, string entryPoint, string imageTag) : base(@type, initParameters, dataSchema, metrics, additionalBinaryDataProperties)
+        internal CodeBasedEvaluatorDefinition(EvaluatorDefinitionType @type, BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties, string codeText) : base(@type, initParameters, dataSchema, metrics, additionalBinaryDataProperties)
         {
             CodeText = codeText;
-            EntryPoint = entryPoint;
-            ImageTag = imageTag;
         }
 
         /// <summary> Inline code text for the evaluator. </summary>
         public string CodeText { get; set; }
-
-        /// <summary> The entry point Python file name for the uploaded evaluator code (e.g. 'answer_length_evaluator.py'). </summary>
-        public string EntryPoint { get; set; }
-
-        /// <summary> The container image tag to use for evaluator code execution. </summary>
-        public string ImageTag { get; set; }
     }
 }

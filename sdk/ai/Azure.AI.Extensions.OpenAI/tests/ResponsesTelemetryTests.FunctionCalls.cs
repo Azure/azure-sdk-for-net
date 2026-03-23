@@ -67,7 +67,7 @@ public partial class ResponsesTelemetryTests
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 
         // First call: user message with tools → model should issue function_call(s)
@@ -149,7 +149,7 @@ public partial class ResponsesTelemetryTests
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 
         CreateResponseOptions options = new()
@@ -233,7 +233,7 @@ public partial class ResponsesTelemetryTests
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 
         CreateResponseOptions options = new()
@@ -331,7 +331,7 @@ public partial class ResponsesTelemetryTests
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 
         CreateResponseOptions options = new()

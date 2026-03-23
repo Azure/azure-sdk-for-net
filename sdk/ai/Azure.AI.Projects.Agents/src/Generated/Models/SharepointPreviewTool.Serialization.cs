@@ -78,7 +78,7 @@ namespace Azure.AI.Projects.Agents
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sharepoint_grounding_preview"u8);
-            writer.WriteObjectValue(SharepointGroundingPreview, options);
+            writer.WriteObjectValue(ToolOptions, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -108,7 +108,7 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SharePointGroundingToolOptions sharepointGroundingPreview = default;
+            SharePointGroundingToolOptions toolOptions = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("sharepoint_grounding_preview"u8))
                 {
-                    sharepointGroundingPreview = SharePointGroundingToolOptions.DeserializeSharePointGroundingToolOptions(prop.Value, options);
+                    toolOptions = SharePointGroundingToolOptions.DeserializeSharePointGroundingToolOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SharepointPreviewTool(@type, additionalBinaryDataProperties, sharepointGroundingPreview);
+            return new SharepointPreviewTool(@type, additionalBinaryDataProperties, toolOptions);
         }
     }
 }

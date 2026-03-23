@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.HealthBot
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(healthBotData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(healthBotData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HealthBotData"/> from. </param>

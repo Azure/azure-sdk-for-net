@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Nginx
         {
             TryGetApiVersion(NginxCertificateResource.ResourceType, out string nginxCertificateApiVersion);
             _nginxCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", NginxCertificateResource.ResourceType.Namespace, Diagnostics);
-            _nginxCertificatesRestClient = new NginxCertificates(_nginxCertificatesClientDiagnostics, Pipeline, Endpoint, nginxCertificateApiVersion ?? "2025-03-01-preview");
+            _nginxCertificatesRestClient = new NginxCertificates(_nginxCertificatesClientDiagnostics, Pipeline, Endpoint, nginxCertificateApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<NginxCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, NginxCertificateData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NginxCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, NginxCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<NginxCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, NginxCertificateData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NginxCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, NginxCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>

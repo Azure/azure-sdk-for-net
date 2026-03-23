@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(chaosCapabilityData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(chaosCapabilityData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ChaosCapabilityData"/> from. </param>

@@ -51,6 +51,8 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected abstract StorageResourceProvider GetStorageResourceProvider();
 
+        protected abstract StorageResourceProvider GetContainerSasStorageResourceProvider(TContainerClient sourceContainer, TContainerClient destinationContainer);
+
         protected abstract Task<StorageResource> CreateSourceStorageResourceItemAsync(
             long size,
             string name,
@@ -80,6 +82,8 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected abstract StorageResource CreateDestinationStorageResourceContainer(
             TContainerClient container);
+
+        protected abstract TServiceClient GetAzureSasCredentialServiceClient();
         #endregion
 
         #region Helper Methods
@@ -1613,5 +1617,140 @@ namespace Azure.Storage.DataMovement.Tests
             AssertCheckpointerFilesAreAccessible(checkpointerDirectory.DirectoryPath, transferId);
         }
         #endregion Checkpointer File Access Tests
+
+        #region AzureSasCredential Tests
+        [Test]
+        [LiveOnly]
+        public async Task TransferResume_ContainerAzureSasCredential()
+        {
+            // Arrange
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+
+            string sourceContainerName = $"source-{Guid.NewGuid().ToString()}";
+            string destinationContainerName = $"dest-{Guid.NewGuid().ToString()}";
+            await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync(sourceContainerName);
+            await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync(destinationContainerName);
+            // Create providers with SAS scoped down to each container
+            StorageResourceProvider provider = GetContainerSasStorageResourceProvider(sourceContainer.Container, destinationContainer.Container);
+
+            TransferManagerOptions options = new TransferManagerOptions()
+            {
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
+            };
+            TransferOptions transferOptions = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
+            TransferManager transferManager = new TransferManager(options);
+            long size = DataMovementTestConstants.KB * 100;
+
+            (StorageResource sResource, StorageResource dResource) = await CreateStorageResourcesAsync(
+                transferType: TransferDirection.Copy, // x-ms-copy-source is only used in Service to Service Copy
+                size: size,
+                localDirectory: default,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container);
+
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            TransferOperation transfer = await CreateSingleLongTransferAsync(
+                manager: transferManager,
+                sourceResource: sResource,
+                destinationResource: dResource,
+                transferOptions: transferOptions);
+
+            // Act
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+
+            // Assert
+            await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
+
+            // Act - Resume Job
+            TransferOptions resumeOptions = new();
+            TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
+            TransferOperation resumeTransfer = await transferManager.ResumeTransferAsync(
+                transfer.Id,
+                resumeOptions);
+
+            using CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+
+            await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
+
+            // Assert
+            await testEventRaised2.AssertSingleCompletedCheck();
+            Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
+            Assert.IsTrue(resumeTransfer.HasCompleted);
+
+            //Verify transfer
+            await VerifyTransferContent(sResource, dResource, sourceContainer.Container, destinationContainer.Container, TransferDirection.Copy);
+        }
+
+        [Test]
+        [LiveOnly]
+        public async Task TransferResume_AzureSasCredential()
+        {
+            // Arrange
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            TServiceClient serviceClient = GetAzureSasCredentialServiceClient();
+            await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync(service: serviceClient);
+            await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync(service: serviceClient);
+
+            StorageResourceProvider provider = GetStorageResourceProvider();
+            TransferManagerOptions options = new TransferManagerOptions()
+            {
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
+            };
+            TransferOptions transferOptions = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
+            TransferManager transferManager = new TransferManager(options);
+            long size = DataMovementTestConstants.KB * 100;
+
+            (StorageResource sResource, StorageResource dResource) = await CreateStorageResourcesAsync(
+                transferType: TransferDirection.Copy, // x-ms-copy-source is only used in Service to Service Copy
+                size: size,
+                localDirectory: default,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container);
+
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            TransferOperation transfer = await CreateSingleLongTransferAsync(
+                manager: transferManager,
+                sourceResource: sResource,
+                destinationResource: dResource,
+                transferOptions: transferOptions);
+
+            // Act
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+
+            // Assert
+            await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
+
+            // Act - Resume Job
+            TransferOptions resumeOptions = new();
+            TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
+            TransferOperation resumeTransfer = await transferManager.ResumeTransferAsync(
+                transfer.Id,
+                resumeOptions);
+
+            using CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+
+            await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
+
+            // Assert
+            await testEventRaised2.AssertSingleCompletedCheck();
+            Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
+            Assert.IsTrue(resumeTransfer.HasCompleted);
+
+            //Verify transfer
+            await VerifyTransferContent(sResource, dResource, sourceContainer.Container, destinationContainer.Container, TransferDirection.Copy);
+        }
+        #endregion AzureSasCredential Tests
     }
 }
