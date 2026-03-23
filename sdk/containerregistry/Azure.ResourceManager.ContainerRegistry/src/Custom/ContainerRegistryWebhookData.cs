@@ -5,8 +5,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -26,6 +24,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="location"> The location of the webhook. </param>
         public ContainerRegistryWebhookData(AzureLocation location) : base(default, default, default, default, default, location)
         {
+            Properties = new WebhookProperties(Array.Empty<ContainerRegistryWebhookAction>());
         }
 
         /// <summary> The scope of repositories where the event can be triggered. </summary>
@@ -33,7 +32,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         public string Scope
         {
             get => Properties?.Scope;
-            set { }
+            set
+            {
+                if (Properties != null)
+                    Properties.Scope = value;
+            }
         }
 
         /// <summary> The status of the webhook at the time the operation was called. </summary>
@@ -41,7 +44,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         public ContainerRegistryWebhookStatus? Status
         {
             get => Properties?.Status;
-            set { }
+            set
+            {
+                if (Properties != null)
+                    Properties.Status = value;
+            }
         }
     }
 }

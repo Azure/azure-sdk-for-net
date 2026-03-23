@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The address of the source registry (e.g. 'mcr.microsoft.com'). </summary>
         [Obsolete("RegistryUri is deprecated, use RegistryAddress instead")]
         [WirePath("registryUri")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public Uri RegistryUri { get; set; }
 
         /// <summary> The address of the source registry (e.g. 'mcr.microsoft.com'). </summary>

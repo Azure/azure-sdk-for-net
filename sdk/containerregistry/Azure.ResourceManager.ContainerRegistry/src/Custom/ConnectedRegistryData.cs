@@ -16,20 +16,6 @@ namespace Azure.ResourceManager.ContainerRegistry
     {
         /// <summary> The mode of the connected registry resource that indicates the permissions of the registry. </summary>
         [WirePath("properties.mode")]
-        public ConnectedRegistryMode? Mode
-        {
-            get => Properties is null ? default : Properties.Mode;
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                if (value.HasValue)
-                {
-                    Properties.Mode = value.Value;
-                }
-            }
-        }
+        public ConnectedRegistryMode? Mode { get; set; }
     }
 }

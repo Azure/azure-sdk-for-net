@@ -9,11 +9,6 @@
 - Added support for Archive and ArchiveVersion resources.
 - Added support for ExportPipeline, ImportPipeline and PipelineRun resources.
 
-### Breaking Changes
-
-- RegistryTasks types (AgentPool, Run, Task, TaskRun and related models) have been removed from this package. These will be available in a separate `Azure.ResourceManager.ContainerRegistryTasks` package.
-- `RegistryAddress` property on `ContainerRegistryImportSource` has been deprecated in favor of `RegistryUri`.
-
 ### Other Changes
 
 ## 1.5.0-beta.2 (2026-03-19)
