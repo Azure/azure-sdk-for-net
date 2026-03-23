@@ -151,6 +151,9 @@
 # PRLabel: %Cognitive - Content Understanding
 /sdk/contentunderstanding/                                         @bojunehsu @changjian-wang @chienyuanchang @yungshinlintw
 
+# ServiceLabel: %Cognitive - Content Understanding
+# ServiceOwners:                                                   @bojunehsu @changjian-wang @chienyuanchang @yungshinlintw
+
 # PRLabel: %Cognitive - Custom Vision
 /sdk/cognitiveservices/Vision.CustomVision*/                       @areddish @tburns10
 
