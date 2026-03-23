@@ -70,14 +70,30 @@ public class LoggingPolicy : HttpPipelinePolicy
     public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
     {
         ProcessMessage(message); // for request
-        ProcessNext(message, pipeline);
+        System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        try
+        {
+            ProcessNext(message, pipeline);
+        }
+        finally
+        {
+            Console.WriteLine($"Response time {stopwatch.Elapsed.TotalMilliseconds} ms");
+        }
         ProcessMessage(message); // for response
     }
 
     public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
     {
         ProcessMessage(message); // for request
-        await ProcessNextAsync(message, pipeline);
+        System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        try
+        {
+            await ProcessNextAsync(message, pipeline);
+        }
+        finally
+        {
+            Console.WriteLine($"Response time {stopwatch.Elapsed.TotalMilliseconds} ms");
+        }
         ProcessMessage(message); // for response
     }
 }
