@@ -31,10 +31,6 @@
 - Deprecated `EntityRecognitionSkill.IncludeTypelessEntities` is now obsolete. Use V3 instead. 
 - Deprecated `SentimentSkill.SkillVersion.V1` is now obsolete. Use V3 instead. 
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 11.8.0-beta.1 (2025-11-13)
 
 ### Features Added
