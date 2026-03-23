@@ -6,6 +6,7 @@
 
 - Migrated from Swagger/AutoRest to TypeSpec-based generation using the Azure Management Plane Generator.
 - Updated the Extensions API version from `2022-11-01` to `2024-11-01`.
+- Added `OperationStatusResult` model and `Get`/`GetAsync` methods on `KubernetesClusterExtensionResource` for querying operation status.
 
 ### Breaking Changes
 
