@@ -3928,7 +3928,8 @@
                   "2024-01-01-preview",
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "ProvisioningTypeSpec.KeyValue",
@@ -3978,7 +3979,8 @@
                   "2024-01-01-preview",
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "ProvisioningTypeSpec.Item",
@@ -4020,7 +4022,8 @@
                   "2024-01-01-preview",
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               }
             ],
             "nonResourceMethods": [
