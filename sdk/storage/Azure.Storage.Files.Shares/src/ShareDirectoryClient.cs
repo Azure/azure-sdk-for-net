@@ -569,7 +569,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
-                //filePropertySemantics: options?.PropertySemantics,
+                filePropertySemantics: options?.PropertySemantics,
                 async: false, // async
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -619,7 +619,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: null,
                 posixProperties: null,
-                //filePropertySemantics: null,
+                filePropertySemantics: null,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -658,7 +658,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
-                //filePropertySemantics: options?.PropertySemantics,
+                filePropertySemantics: options?.PropertySemantics,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -708,7 +708,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: null,
                 posixProperties: null,
-                //filePropertySemantics: null,
+                filePropertySemantics: null,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -736,6 +736,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="posixProperties">
         /// Optional NFS properties.
         /// </param>
+        /// <param name="filePropertySemantics">
+        /// Optional, only applicable to SMB files.
+        /// How attributes and permissions should be set on the file.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -762,7 +766,7 @@ namespace Azure.Storage.Files.Shares
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
             FilePosixProperties posixProperties,
-            //FilePropertySemantics? filePropertySemantics,
+            FilePropertySemantics? filePropertySemantics,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -799,7 +803,7 @@ namespace Azure.Storage.Files.Shares
                             owner: posixProperties?.Owner,
                             group: posixProperties?.Group,
                             fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
-                            //filePropertySemantics: filePropertySemantics,
+                            filePropertySemantics: filePropertySemantics,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -817,7 +821,7 @@ namespace Azure.Storage.Files.Shares
                             owner: posixProperties?.Owner,
                             group: posixProperties?.Group,
                             fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
-                            //filePropertySemantics: filePropertySemantics,
+                            filePropertySemantics: filePropertySemantics,
                             cancellationToken: cancellationToken);
                     }
 
@@ -876,7 +880,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
-                //filePropertySemantics: options?.PropertySemantics,
+                filePropertySemantics: options?.PropertySemantics,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -926,7 +930,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: null,
                 posixProperties: null,
-                //filePropertySemantics: null,
+                filePropertySemantics: null,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -965,7 +969,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
-                //filePropertySemantics: null,
+                filePropertySemantics: null,
                 async: true,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -1015,7 +1019,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: null,
                 posixProperties: null,
-                //filePropertySemantics: null,
+                filePropertySemantics: null,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1043,6 +1047,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="posixProperties">
         /// Optional NFS properties.
         /// </param>
+        /// <param name="filePropertySemantics">
+        /// Optional, only applicable to SMB files.
+        /// How attributes and permissions should be set on the file.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1069,7 +1077,7 @@ namespace Azure.Storage.Files.Shares
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
             FilePosixProperties posixProperties,
-            //FilePropertySemantics? filePropertySemantics,
+            FilePropertySemantics? filePropertySemantics,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -1087,7 +1095,7 @@ namespace Azure.Storage.Files.Shares
                         filePermission,
                         filePermissionFormat,
                         posixProperties,
-                        //filePropertySemantics,
+                        filePropertySemantics,
                         async,
                         cancellationToken,
                         operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(CreateIfNotExists)}")
