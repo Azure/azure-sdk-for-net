@@ -54,14 +54,20 @@ namespace Azure.Generator.Visitors
                 UpdateClientOptions(clientProvider.ClientOptions);
             }
 
-            // Mark this client as in-progress before accessing .Constructors to prevent
-            // infinite recursion. Accessing .Constructors triggers GetRootClient/GetSubClients
-            // which can call CreateClient → Visit for parent/child hierarchies.
-            // The re-entrant Visit will skip UpdateClientConstructors for the in-progress client,
-            // but the original caller will update all constructors after the recursion unwinds.
+            // Guard against re-entrant recursion when accessing .Constructors triggers
+            // GetRootClient/GetSubClients → CreateClient → Visit cycles for parent/child
+            // hierarchies. Remove from the set after completion so that subsequent visits
+            // for the same InputClient (on new ClientProvider instances) are also processed.
             if (_inProgressClients.Add(client))
             {
-                UpdateClientConstructors(clientProvider);
+                try
+                {
+                    UpdateClientConstructors(clientProvider);
+                }
+                finally
+                {
+                    _inProgressClients.Remove(client);
+                }
             }
 
             return clientProvider;

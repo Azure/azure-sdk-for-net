@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
@@ -16,12 +15,12 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyPar
     {
         public IndividuallyParentClient() : this(new Uri("http://localhost:3000"), new IndividuallyParentClientOptions()) => throw null;
 
-        internal IndividuallyParentClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, IndividuallyParentClientOptions options) => throw null;
+        internal IndividuallyParentClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, IndividuallyParentClientOptions options) => throw null;
 
         public IndividuallyParentClient(Uri endpoint, IndividuallyParentClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public IndividuallyParentClient(IndividuallyParentClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public IndividuallyParentClient(IndividuallyParentClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
