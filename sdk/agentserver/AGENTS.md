@@ -90,7 +90,41 @@ npm install
 > repo-level emitter packages + `tsp-location.yaml` with `emitterPackageJsonPath`.
 > Alignment is tracked for a future PR.
 
-## 4. Package-Specific Rules
+## 4. Contract Compliance (MANDATORY)
+
+The Responses SDK has three **authoritative contract documents** that define all required behaviour. Any code change to `Azure.AI.AgentServer.Responses/` **must** be verified against these contracts before committing.
+
+### Authoritative trio (read before ANY code change)
+
+| Document | Path | Defines |
+|----------|------|---------|
+| **API Behaviour Contract** | `Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md` | Observable HTTP behaviour, endpoint matrices, error shapes, SSE contract, behavioural rules (B1–B37) |
+| **SDK Behaviour Spec** | `Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md` | Language-agnostic SDK requirements: event processing, state management, terminal authority, cancellation, persistence, observability (S-001–S-046) |
+| **Handler Implementation Guide** | `Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md` | Handler contract, builder pattern, cancellation, error handling, configuration |
+
+### Supporting design docs (.NET-specific)
+
+| Document | Path | Defines |
+|----------|------|---------|
+| Error handling | `Azure.AI.AgentServer.Responses/docs/design/error-handling.md` | Exception hierarchy, error mapping |
+| Provider contract | `Azure.AI.AgentServer.Responses/docs/design/provider-contract.md` | `IResponsesProvider`, `IResponsesCancellationSignalProvider`, `IResponsesStreamProvider` |
+| Orchestration | `Azure.AI.AgentServer.Responses/docs/design/orchestration.md` | `ResponseOrchestrator` pipeline, event processing |
+| Doc ownership matrix | `Azure.AI.AgentServer.Responses/docs/doc-ownership-matrix.md` | Topic-to-document mapping, canonical sources |
+
+### Compliance workflow
+
+1. **Before implementing**: Read the relevant sections of the authoritative trio for the feature/endpoint being changed.
+2. **Key rules to check**: Endpoint behaviour matrices (B1–B37), SDK processing rules (S-001–S-046), terminal event authority (S-018–S-022), cancellation categories (S-023–S-026), persistence timing (S-034–S-036).
+3. **After implementing**: Audit the change against the contracts. Pay special attention to:
+   - **B16**: Non-background in-flight responses are NOT findable (GET/DELETE/Cancel → 404).
+   - **B2**: SSE replay requires `background=true` AND `stream=true` AND `store=true`.
+   - **S-022**: SDK MUST NOT emit `response.incomplete` (handler-driven only).
+   - **S-036**: Non-background cancelled responses are ephemeral (not persisted).
+   - **S-019**: Cancellation winddown — SDK is sole authority on terminal event.
+4. **Tests**: Any behavioural change MUST include protocol tests in `tests/Protocol/`. Unit tests alone are insufficient.
+5. **If in doubt**: The contract document wins over the code. Fix the code, not the contract.
+
+## 5. Package-Specific Rules
 
 ### Dependency isolation
 - **Responses** depends only on **Responses.Contracts** (project reference) plus `Microsoft.AspNetCore.App` (framework reference). No additional NuGet packages in production.
