@@ -11,29 +11,119 @@ using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
+    /// <summary> Test for client initialization decorator - moving parameters from method to client level. </summary>
     public partial class IndividuallyParentClient
     {
-        public IndividuallyParentClient() : this(new Uri("http://localhost:3000"), new IndividuallyParentClientOptions()) => throw null;
+        private readonly Uri _endpoint;
 
-        internal IndividuallyParentClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, IndividuallyParentClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of IndividuallyParentClient. </summary>
+        public IndividuallyParentClient() : this(new Uri("http://localhost:3000"), new IndividuallyParentClientOptions())
+        {
+        }
 
-        public IndividuallyParentClient(Uri endpoint, IndividuallyParentClientOptions options) : this(null, endpoint, options) => throw null;
+        /// <summary> Initializes a new instance of IndividuallyParentClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal IndividuallyParentClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, IndividuallyParentClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
+            options ??= new IndividuallyParentClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of IndividuallyParentClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public IndividuallyParentClient(Uri endpoint, IndividuallyParentClientOptions options) : this(null, endpoint, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of IndividuallyParentClient from a <see cref="IndividuallyParentClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for IndividuallyParentClient. </param>
         [Experimental("SCME0002")]
-        public IndividuallyParentClient(IndividuallyParentClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public IndividuallyParentClient(IndividuallyParentClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual IndividuallyParentNestedWithPathClient GetIndividuallyParentNestedWithPathClient(string blobName) => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        public virtual IndividuallyParentNestedWithQueryClient GetIndividuallyParentNestedWithQueryClient(string blobName) => throw null;
+        /// <summary> Initializes a new instance of IndividuallyParentNestedWithPathClient. </summary>
+        /// <param name="blobName"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobName"/> is null. </exception>
+        public virtual IndividuallyParentNestedWithPathClient GetIndividuallyParentNestedWithPathClient(string blobName)
+        {
+            Argument.AssertNotNull(blobName, nameof(blobName));
 
-        public virtual IndividuallyParentNestedWithHeaderClient GetIndividuallyParentNestedWithHeaderClient(string name) => throw null;
+            return new IndividuallyParentNestedWithPathClient(ClientDiagnostics, Pipeline, _endpoint, blobName);
+        }
 
-        public virtual IndividuallyParentNestedWithMultipleClient GetIndividuallyParentNestedWithMultipleClient(string name, string region) => throw null;
+        /// <summary> Initializes a new instance of IndividuallyParentNestedWithQueryClient. </summary>
+        /// <param name="blobName"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobName"/> is null. </exception>
+        public virtual IndividuallyParentNestedWithQueryClient GetIndividuallyParentNestedWithQueryClient(string blobName)
+        {
+            Argument.AssertNotNull(blobName, nameof(blobName));
 
-        public virtual IndividuallyParentNestedWithMixedClient GetIndividuallyParentNestedWithMixedClient(string name) => throw null;
+            return new IndividuallyParentNestedWithQueryClient(ClientDiagnostics, Pipeline, _endpoint, blobName);
+        }
 
-        public virtual IndividuallyParentNestedWithParamAliasClient GetIndividuallyParentNestedWithParamAliasClient(string blobName) => throw null;
+        /// <summary> Initializes a new instance of IndividuallyParentNestedWithHeaderClient. </summary>
+        /// <param name="name"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual IndividuallyParentNestedWithHeaderClient GetIndividuallyParentNestedWithHeaderClient(string name)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+
+            return new IndividuallyParentNestedWithHeaderClient(ClientDiagnostics, Pipeline, _endpoint, name);
+        }
+
+        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMultipleClient. </summary>
+        /// <param name="name"></param>
+        /// <param name="region"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="region"/> is null. </exception>
+        public virtual IndividuallyParentNestedWithMultipleClient GetIndividuallyParentNestedWithMultipleClient(string name, string region)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(region, nameof(region));
+
+            return new IndividuallyParentNestedWithMultipleClient(ClientDiagnostics, Pipeline, _endpoint, name, region);
+        }
+
+        /// <summary> Initializes a new instance of IndividuallyParentNestedWithMixedClient. </summary>
+        /// <param name="name"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual IndividuallyParentNestedWithMixedClient GetIndividuallyParentNestedWithMixedClient(string name)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+
+            return new IndividuallyParentNestedWithMixedClient(ClientDiagnostics, Pipeline, _endpoint, name);
+        }
+
+        /// <summary> Initializes a new instance of IndividuallyParentNestedWithParamAliasClient. </summary>
+        /// <param name="blobName"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobName"/> is null. </exception>
+        public virtual IndividuallyParentNestedWithParamAliasClient GetIndividuallyParentNestedWithParamAliasClient(string blobName)
+        {
+            Argument.AssertNotNull(blobName, nameof(blobName));
+
+            return new IndividuallyParentNestedWithParamAliasClient(ClientDiagnostics, Pipeline, _endpoint, blobName);
+        }
     }
 }

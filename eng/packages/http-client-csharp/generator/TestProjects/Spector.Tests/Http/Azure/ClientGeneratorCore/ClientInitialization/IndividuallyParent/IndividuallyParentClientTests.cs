@@ -14,10 +14,10 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         public Task Azure_ClientGenerator_Core_ClientInitialization_IndividuallyParentClient_IndividuallyParentNestedWithPathClient() => Test(async (host) =>
         {
             var parentClient = new IndividuallyParentClient(host, null);
-            var childClient = parentClient.GetIndividuallyParentNestedWithPathClient("test-resource");
+            var childClient = parentClient.GetIndividuallyParentNestedWithPathClient("test-blob");
             await PerformPathOperations(childClient);
 
-            var directClient = new IndividuallyParentNestedWithPathClient(host, "test-resource", null);
+            var directClient = new IndividuallyParentNestedWithPathClient(host, "test-blob", null);
             await PerformPathOperations(directClient);
 
             async Task PerformPathOperations(IndividuallyParentNestedWithPathClient client)
@@ -25,10 +25,10 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
                 await client.WithQueryAsync("text");
 
                 var response = await client.GetStandaloneAsync();
-                Assert.AreEqual("test-resource", response.Value.Name);
-                Assert.AreEqual(42, response.Value.Size);
-                Assert.AreEqual("text/plain", response.Value.ContentType);
-                Assert.AreEqual(new DateTimeOffset(2025, 4, 1, 12, 0, 0, TimeSpan.Zero), response.Value.CreatedOn);
+                Assert.AreEqual("test-blob", response.Value.Name);
+                Assert.AreEqual(1024, response.Value.Size);
+                Assert.AreEqual("application/octet-stream", response.Value.ContentType);
+                Assert.AreEqual(new DateTimeOffset(2023, 1, 1, 12, 0, 0, TimeSpan.Zero), response.Value.CreatedOn);
 
                 await client.DeleteStandaloneAsync();
             }
@@ -50,9 +50,9 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
 
                 var response = await client.GetStandaloneAsync();
                 Assert.AreEqual("test-blob", response.Value.Name);
-                Assert.AreEqual(42, response.Value.Size);
-                Assert.AreEqual("text/plain", response.Value.ContentType);
-                Assert.AreEqual(new DateTimeOffset(2025, 4, 1, 12, 0, 0, TimeSpan.Zero), response.Value.CreatedOn);
+                Assert.AreEqual(1024, response.Value.Size);
+                Assert.AreEqual("application/octet-stream", response.Value.ContentType);
+                Assert.AreEqual(new DateTimeOffset(2023, 1, 1, 12, 0, 0, TimeSpan.Zero), response.Value.CreatedOn);
 
                 await client.DeleteStandaloneAsync();
             }
