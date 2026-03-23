@@ -829,6 +829,7 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentIntelligenceAdministrationClient
     {
         protected DocumentIntelligenceAdministrationClient() { }
+        public DocumentIntelligenceAdministrationClient(Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClientSettings settings) { }
         public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions options) { }
         public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -899,9 +900,17 @@ namespace Azure.AI.DocumentIntelligence
         public virtual System.Threading.Tasks.Task<Azure.Response> GetResourceDetailsAsync(Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.DocumentIntelligence.DocumentIntelligenceResourceDetails>> GetResourceDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DocumentIntelligenceAdministrationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DocumentIntelligenceAdministrationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class DocumentIntelligenceClient
     {
         protected DocumentIntelligenceClient() { }
+        public DocumentIntelligenceClient(Azure.AI.DocumentIntelligence.DocumentIntelligenceClientSettings settings) { }
         public DocumentIntelligenceClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public DocumentIntelligenceClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions options) { }
         public DocumentIntelligenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -951,6 +960,13 @@ namespace Azure.AI.DocumentIntelligence
         {
             V2024_11_30 = 1,
         }
+    }
+    public partial class DocumentIntelligenceClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DocumentIntelligenceClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class DocumentIntelligenceError : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceError>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceError>
     {

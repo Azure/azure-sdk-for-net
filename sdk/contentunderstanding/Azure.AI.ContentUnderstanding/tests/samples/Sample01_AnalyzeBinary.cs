@@ -193,6 +193,230 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             Console.WriteLine("All document properties validated successfully");
             #endregion
+
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeBinaryWithPageContentRangesAsync()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+
+            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_invoices.pdf");
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+            BinaryData binaryData = BinaryData.FromBytes(fileBytes);
+
+            // Full analysis for comparison
+            Operation<AnalysisResult> fullOperation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData);
+            DocumentContent fullDoc = (DocumentContent)fullOperation.Value.Contents!.First();
+            Assert.AreEqual(10, fullDoc.Pages!.Count, "Full document should return all 10 pages");
+
+            #region Snippet:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
+            // Analyze only pages 3 onward.
+            Operation<AnalysisResult> rangeOperation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: ContentRange.PagesFrom(3));
+
+            AnalysisResult rangeResult = rangeOperation.Value;
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
+            Assert.IsNotNull(rangeOperation, "Range analysis operation should not be null");
+            Assert.IsTrue(rangeOperation.HasCompleted, "Range operation should be completed");
+            Assert.IsNotNull(rangeResult, "Range analysis result should not be null");
+            Assert.IsNotNull(rangeResult.Contents, "Range result contents should not be null");
+            DocumentContent rangeDoc = (DocumentContent)rangeResult.Contents!.First();
+
+            // Verify the range-limited result returns only pages 3-4
+            Assert.AreEqual(8, rangeDoc.Pages!.Count, "With ContentRange.PagesFrom(3), should return only 8 pages");
+            Assert.AreEqual(3, rangeDoc.StartPageNumber, "PagesFrom(3) should start at page 3");
+            Assert.AreEqual(10, rangeDoc.EndPageNumber, "PagesFrom(3) should end at page 10");
+
+            // Compare full (4 pages) vs range-limited (2 pages): full should have more content
+            Assert.IsTrue(fullDoc.Pages!.Count > rangeDoc.Pages.Count,
+                $"Full document ({fullDoc.Pages.Count} pages) should have more pages than range-limited ({rangeDoc.Pages.Count})");
+            Assert.IsTrue(fullDoc.Markdown!.Length > rangeDoc.Markdown!.Length,
+                $"Full document markdown ({fullDoc.Markdown.Length} chars) should exceed range-limited ({rangeDoc.Markdown.Length} chars)");
+
+            Console.WriteLine($"Full document: {fullDoc.Pages.Count} pages, {fullDoc.Markdown.Length} chars");
+            Console.WriteLine($"Range document: {rangeDoc.Pages.Count} pages, {rangeDoc.Markdown.Length} chars (pages {rangeDoc.StartPageNumber}-{rangeDoc.EndPageNumber})");
+            #endregion
+
+            #region Snippet:ContentUnderstandingAnalyzeBinaryWithCombinedContentRangeAsync
+            // Analyze pages 1–3, page 5, and pages 9 onward.
+            Operation<AnalysisResult> combineRangeOperation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: ContentRange.Combine(
+                    ContentRange.Pages(1, 3),
+                    ContentRange.Page(5),
+                    ContentRange.PagesFrom(9)));
+
+            AnalysisResult combineRangeResult = combineRangeOperation.Value;
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeBinaryWithCombinedContentRangeAsync
+            Assert.IsNotNull(combineRangeOperation, "Combine range operation should not be null");
+            Assert.IsTrue(combineRangeOperation.HasCompleted, "Combine range operation should be completed");
+            Assert.IsNotNull(combineRangeResult, "Combine range result should not be null");
+            Assert.IsNotNull(combineRangeResult.Contents, "Combine range result contents should not be null");
+            DocumentContent combineRangeDoc = (DocumentContent)combineRangeResult.Contents!.First();
+            Assert.AreEqual(6, combineRangeDoc.Pages!.Count,
+                "Combine(Pages(1,3), Page(5), PagesFrom(9)) should return exactly 6 pages");
+            var combineRangePageNumbers = combineRangeDoc.Pages.Select(p => p.PageNumber).OrderBy(n => n).ToList();
+            CollectionAssert.AreEqual(new[] { 1, 2, 3, 5, 9, 10 }, combineRangePageNumbers,
+                "Combine(Pages(1,3), Page(5), PagesFrom(9)) should extract pages 1, 2, 3, 5, 9, 10");
+            Assert.IsTrue(fullDoc.Markdown!.Length >= combineRangeDoc.Markdown!.Length,
+                $"Full document ({fullDoc.Markdown.Length} chars) should be >= Combine ({combineRangeDoc.Markdown.Length} chars)");
+            Console.WriteLine($"Combine(Pages(1,3), Page(5), PagesFrom(9)): {combineRangeDoc.Pages.Count} pages, {combineRangeDoc.Markdown.Length} chars");
+            #endregion
+
+            // ContentRange.Page(2) — single page (wire format: "2")
+            Operation<AnalysisResult> page2Operation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: ContentRange.Page(2));
+            DocumentContent page2Doc = (DocumentContent)page2Operation.Value.Contents!.First();
+            Assert.AreEqual(1, page2Doc.Pages!.Count, "Page(2) should return exactly 1 page");
+            Assert.AreEqual(2, page2Doc.StartPageNumber, "Page(2) should start at page 2");
+            Assert.AreEqual(2, page2Doc.EndPageNumber, "Page(2) should end at page 2");
+            Assert.IsTrue(fullDoc.Markdown!.Length > page2Doc.Markdown!.Length,
+                $"Full document ({fullDoc.Markdown.Length} chars) should exceed Page(2) ({page2Doc.Markdown.Length} chars)");
+
+            // ContentRange.Pages(1, 3) — page range (wire format: "1-3")
+            Operation<AnalysisResult> pages13Operation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: ContentRange.Pages(1, 3));
+            DocumentContent pages13Doc = (DocumentContent)pages13Operation.Value.Contents!.First();
+            Assert.AreEqual(3, pages13Doc.Pages!.Count, "Pages(1,3) should return exactly 3 pages");
+            Assert.AreEqual(1, pages13Doc.StartPageNumber, "Pages(1,3) should start at page 1");
+            Assert.AreEqual(3, pages13Doc.EndPageNumber, "Pages(1,3) should end at page 3");
+            Assert.IsTrue(fullDoc.Markdown!.Length > pages13Doc.Markdown!.Length,
+                $"Full document ({fullDoc.Markdown.Length} chars) should exceed Pages(1,3) ({pages13Doc.Markdown.Length} chars)");
+
+            // ContentRange.Combine(Page(1), Pages(3, 4)) — combined page ranges (wire format: "1,3-4")
+            Operation<AnalysisResult> combineOperation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: ContentRange.Combine(
+                    ContentRange.Page(1),
+                    ContentRange.Pages(3, 4)));
+            DocumentContent combineDoc = (DocumentContent)combineOperation.Value.Contents!.First();
+            Assert.AreEqual(3, combineDoc.Pages!.Count,
+                "Combine(Page(1), Pages(3,4)) should return exactly 3 pages");
+            var combinePageNumbers = combineDoc.Pages.Select(p => p.PageNumber).OrderBy(n => n).ToList();
+            CollectionAssert.AreEqual(new[] { 1, 3, 4 }, combinePageNumbers,
+                "Combine(Page(1), Pages(3,4)) should extract pages 1, 3, 4");
+            Assert.AreEqual(1, combineDoc.StartPageNumber, "Combine should start at page 1");
+            Assert.AreEqual(4, combineDoc.EndPageNumber, "Combine should end at page 4");
+            Assert.IsTrue(fullDoc.Markdown!.Length >= combineDoc.Markdown!.Length,
+                $"Full document ({fullDoc.Markdown.Length} chars) should be >= Combine ({combineDoc.Markdown.Length} chars)");
+
+            Console.WriteLine($"Page(2): {page2Doc.Pages.Count} page, {page2Doc.Markdown.Length} chars");
+            Console.WriteLine($"Pages(1,3): {pages13Doc.Pages.Count} pages, {pages13Doc.Markdown.Length} chars");
+            Console.WriteLine($"Combine(Page(1), Pages(3,4)): {combineDoc.Pages.Count} pages, {combineDoc.Markdown.Length} chars");
+
+            // Raw string "3-" — pages from, equivalent to ContentRange.PagesFrom(3)
+            Operation<AnalysisResult> rawPagesFrom3Operation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: new ContentRange("3-"));
+            DocumentContent rawPagesFrom3Doc = (DocumentContent)rawPagesFrom3Operation.Value.Contents!.First();
+            Assert.AreEqual(8, rawPagesFrom3Doc.Pages!.Count, "Raw ContentRange('3-') should return 8 pages (pages 3-10)");
+            Assert.AreEqual(3, rawPagesFrom3Doc.StartPageNumber, "Raw ContentRange('3-') should start at page 3");
+            Assert.AreEqual(10, rawPagesFrom3Doc.EndPageNumber, "Raw ContentRange('3-') should end at page 10");
+            DocumentContent rangeFromDoc = (DocumentContent)rangeOperation.Value.Contents!.First();
+            Assert.AreEqual(rangeFromDoc.Markdown!.Length, rawPagesFrom3Doc.Markdown!.Length,
+                $"Raw ContentRange('3-') should return same markdown length as PagesFrom(3) ({rangeFromDoc.Markdown.Length})");
+
+            #region Snippet:ContentUnderstandingAnalyzeBinaryWithRawContentRangeAsync
+            // Analyze pages 1–3, page 5, and pages 9 onward using a raw range string.
+            // This is equivalent to: ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5), ContentRange.PagesFrom(9))
+            Operation<AnalysisResult> rawRangeOperation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: new ContentRange("1-3,5,9-"));
+
+            AnalysisResult rawRangeResult = rawRangeOperation.Value;
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeBinaryWithRawContentRangeAsync
+            Assert.IsNotNull(rawRangeOperation, "Raw range operation should not be null");
+            Assert.IsTrue(rawRangeOperation.HasCompleted, "Raw range operation should be completed");
+            Assert.IsNotNull(rawRangeResult, "Raw range result should not be null");
+            Assert.IsNotNull(rawRangeResult.Contents, "Raw range result contents should not be null");
+            DocumentContent rawRangeDoc = (DocumentContent)rawRangeResult.Contents!.First();
+            Assert.AreEqual(6, rawRangeDoc.Pages!.Count, "Raw ContentRange('1-3,5,9-') should return exactly 6 pages");
+
+            // The raw string "1-3,5,9-" should produce identical results to
+            // ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5), ContentRange.PagesFrom(9))
+            Assert.AreEqual(combineRangeDoc.Pages.Count, rawRangeDoc.Pages.Count,
+                $"Raw ContentRange('1-3,5,9-') should return same page count as Combine equivalent ({combineRangeDoc.Pages.Count})");
+            Assert.AreEqual(combineRangeDoc.Markdown!.Length, rawRangeDoc.Markdown!.Length,
+                $"Raw ContentRange('1-3,5,9-') should return same markdown length as Combine equivalent ({combineRangeDoc.Markdown.Length})");
+            Console.WriteLine($"Raw ContentRange('1-3,5,9-'): {rawRangeDoc.Pages.Count} pages, {rawRangeDoc.Markdown.Length} chars");
+            #endregion
+
+            // Raw string "2" — single page, equivalent to ContentRange.Page(2)
+            Operation<AnalysisResult> rawPage2Operation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: new ContentRange("2"));
+            DocumentContent rawPage2Doc = (DocumentContent)rawPage2Operation.Value.Contents!.First();
+            Assert.AreEqual(1, rawPage2Doc.Pages!.Count, "Raw ContentRange('2') should return exactly 1 page");
+            Assert.AreEqual(2, rawPage2Doc.StartPageNumber, "Raw ContentRange('2') should start at page 2");
+            Assert.AreEqual(2, rawPage2Doc.EndPageNumber, "Raw ContentRange('2') should end at page 2");
+            Assert.AreEqual(page2Doc.Markdown!.Length, rawPage2Doc.Markdown!.Length,
+                $"Raw ContentRange('2') should return same markdown length as Page(2) ({page2Doc.Markdown.Length})");
+
+            // Raw string "1-3" — page range, equivalent to ContentRange.Pages(1, 3)
+            Operation<AnalysisResult> rawPages13Operation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: new ContentRange("1-3"));
+            DocumentContent rawPages13Doc = (DocumentContent)rawPages13Operation.Value.Contents!.First();
+            Assert.AreEqual(3, rawPages13Doc.Pages!.Count, "Raw ContentRange('1-3') should return exactly 3 pages");
+            Assert.AreEqual(1, rawPages13Doc.StartPageNumber, "Raw ContentRange('1-3') should start at page 1");
+            Assert.AreEqual(3, rawPages13Doc.EndPageNumber, "Raw ContentRange('1-3') should end at page 3");
+            Assert.AreEqual(pages13Doc.Markdown!.Length, rawPages13Doc.Markdown!.Length,
+                $"Raw ContentRange('1-3') should return same markdown length as Pages(1,3) ({pages13Doc.Markdown.Length})");
+
+            // Raw string "1,3-4" — combined page ranges, equivalent to ContentRange.Combine(Page(1), Pages(3, 4))
+            Operation<AnalysisResult> rawCombineOperation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: new ContentRange("1,3-4"));
+            DocumentContent rawCombineDoc = (DocumentContent)rawCombineOperation.Value.Contents!.First();
+            Assert.AreEqual(3, rawCombineDoc.Pages!.Count,
+                "Raw ContentRange('1,3-4') should return exactly 3 pages");
+            var rawCombinePageNumbers = rawCombineDoc.Pages.Select(p => p.PageNumber).OrderBy(n => n).ToList();
+            CollectionAssert.AreEqual(new[] { 1, 3, 4 }, rawCombinePageNumbers,
+                "Raw ContentRange('1,3-4') should extract pages 1, 3, 4");
+            Assert.AreEqual(combineDoc.Pages.Count, rawCombineDoc.Pages.Count,
+                $"Raw ContentRange('1,3-4') should return same page count as Combine equivalent ({combineDoc.Pages.Count})");
+            Assert.AreEqual(combineDoc.Markdown!.Length, rawCombineDoc.Markdown!.Length,
+                $"Raw ContentRange('1,3-4') should return same markdown length as Combine equivalent ({combineDoc.Markdown.Length})");
+
+            Console.WriteLine($"Raw ContentRange('3-'): {rawPagesFrom3Doc.Pages.Count} pages, {rawPagesFrom3Doc.Markdown.Length} chars");
+            Console.WriteLine($"Raw ContentRange('2'): {rawPage2Doc.Pages.Count} page, {rawPage2Doc.Markdown.Length} chars");
+            Console.WriteLine($"Raw ContentRange('1-3'): {rawPages13Doc.Pages.Count} pages, {rawPages13Doc.Markdown.Length} chars");
+            Console.WriteLine($"Raw ContentRange('1,3-4'): {rawCombineDoc.Pages.Count} pages, {rawCombineDoc.Markdown.Length} chars");
         }
     }
 }

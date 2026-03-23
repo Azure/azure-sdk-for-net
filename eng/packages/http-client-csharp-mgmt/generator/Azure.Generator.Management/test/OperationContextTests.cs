@@ -929,5 +929,97 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(displayString, Does.Contain("RequestContent"));
             Assert.That(displayString, Does.Not.Contain("FromObjectAsJson"));
         }
+
+        [TestCase]
+        public void PopulateArguments_NonNullableFixedEnumToString_UsesToSerialString()
+        {
+            // Set up a pass-through parameter mapping (ContextualParameter is null)
+            var mapping = new ParameterContextMapping("testParam", null);
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping> { mapping });
+
+            // Request parameter expects string type
+            var requestParam = new ParameterProvider("testParam", $"", typeof(string));
+            requestParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            // Method parameter is a non-nullable fixed enum type (IsStruct=false)
+            // Create a CSharpType with IsEnum=true and IsStruct=false to simulate a generated fixed enum
+            var fixedEnumType = CreateFixedEnumCSharpType("TestFixedEnum", "TestNs", isNullable: false);
+            var methodParam = new ParameterProvider("testParam", $"", fixedEnumType);
+            methodParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestParam },
+                contextVariable,
+                new List<ParameterProvider> { methodParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Fixed enums should use ToSerialString() instead of ToString()
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Contain(".ToSerialString()"));
+            Assert.That(displayString, Does.Not.Contain("?.ToSerialString()"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_NullableFixedEnumToString_UsesNullConditionalToSerialString()
+        {
+            // Set up a pass-through parameter mapping (ContextualParameter is null)
+            var mapping = new ParameterContextMapping("testParam", null);
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping> { mapping });
+
+            // Request parameter expects string type with matching serialized name
+            var requestParam = new ParameterProvider("testParam", $"", typeof(string));
+            requestParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            // Method parameter is a nullable fixed enum type (IsStruct=false)
+            var fixedEnumType = CreateFixedEnumCSharpType("TestFixedEnum", "TestNs", isNullable: true);
+            var methodParam = new ParameterProvider("testParam", $"", fixedEnumType);
+            methodParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestParam },
+                contextVariable,
+                new List<ParameterProvider> { methodParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Nullable fixed enums should use null-conditional ToSerialString(): testParam?.ToSerialString()
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("?.ToSerialString()"));
+        }
+
+        /// <summary>
+        /// Creates a CSharpType that simulates a generated fixed enum (IsEnum=true, IsStruct=false).
+        /// Uses reflection because the multi-param CSharpType constructor is internal.
+        /// </summary>
+        private static CSharpType CreateFixedEnumCSharpType(string name, string ns, bool isNullable)
+        {
+            // The internal CSharpType constructor signature:
+            // CSharpType(string name, string ns, bool isValueType, bool isNullable,
+            //            CSharpType declaringType, IReadOnlyList<CSharpType> args,
+            //            bool isPublic, bool isStruct, CSharpType baseType, Type underlyingEnumType)
+            var ctor = typeof(CSharpType).GetConstructor(
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance,
+                null,
+                new[] { typeof(string), typeof(string), typeof(bool), typeof(bool), typeof(CSharpType),
+                        typeof(IReadOnlyList<CSharpType>), typeof(bool), typeof(bool), typeof(CSharpType), typeof(Type) },
+                null);
+
+            bool isValueType = true;
+            CSharpType? declaringType = null;
+            IReadOnlyList<CSharpType> args = Array.Empty<CSharpType>();
+            bool isPublic = true;
+            bool isStruct = false; // false = fixed enum (C# enum), true = extensible enum (readonly struct)
+            CSharpType? baseType = null;
+            Type underlyingEnumType = typeof(string); // non-null marks this as an enum type
+
+            return (CSharpType)ctor!.Invoke(new object?[] {
+                name, ns, isValueType, isNullable, declaringType,
+                args, isPublic, isStruct, baseType, underlyingEnumType
+            });
+        }
     }
 }
