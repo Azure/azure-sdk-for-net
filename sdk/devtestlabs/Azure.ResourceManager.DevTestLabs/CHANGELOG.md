@@ -6,6 +6,10 @@
 
 - Make `Azure.ResourceManager.DevTestLabs` AOT-compatible.
 
+### Bugs Fixed
+
+- Fixed https://github.com/Azure/azure-sdk-for-net/issues/57342 by correctly handling empty string values for URI properties.
+
 ### Other Changes
 
 - Upgraded dependent Azure.Core to 1.51.1.
