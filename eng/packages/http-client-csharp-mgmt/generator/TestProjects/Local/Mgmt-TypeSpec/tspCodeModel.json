@@ -8097,6 +8097,18 @@
         {
           "name": "Azure.ResourceManager.Private.@armResourceInternal",
           "arguments": {}
+        },
+        {
+          "name": "Azure.ClientGenerator.Core.@clientOption",
+          "arguments": {
+            "name": "resource-rbac-roles",
+            "value": {
+              "FooContributor": "00000000-0000-0000-0000-000000000001",
+              "FooReader": "00000000-0000-0000-0000-000000000002",
+              "FooDataOperator": "00000000-0000-0000-0000-000000000003"
+            },
+            "scope": "csharp"
+          }
         }
       ],
       "serializationOptions": {
@@ -21815,7 +21827,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.StorageSyncService",
@@ -21837,7 +21850,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.Foo",
@@ -21915,6 +21929,20 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
+                ],
+                "rbacRoles": [
+                  {
+                    "name": "FooContributor",
+                    "value": "00000000-0000-0000-0000-000000000001"
+                  },
+                  {
+                    "name": "FooReader",
+                    "value": "00000000-0000-0000-0000-000000000002"
+                  },
+                  {
+                    "name": "FooDataOperator",
+                    "value": "00000000-0000-0000-0000-000000000003"
+                  }
                 ]
               },
               {
@@ -21963,7 +21991,8 @@
                 },
                 "apiVersions": [
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.Bar",
@@ -22028,7 +22057,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.BarSettingsResource",
@@ -22062,7 +22092,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.BarQuotaResource",
@@ -22095,7 +22126,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.Baz",
@@ -22157,7 +22189,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.Zoo",
@@ -22235,7 +22268,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.IssueTestResource",
@@ -22282,7 +22316,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.EndpointResource",
@@ -22335,7 +22370,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.SelfHelpResource",
@@ -22357,7 +22393,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.PlaywrightQuota",
@@ -22396,7 +22433,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.JobResource",
@@ -22436,7 +22474,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.HciVmInstance",
@@ -22461,7 +22500,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.GroupQuotaSubscriptionRequestStatus",
@@ -22483,7 +22523,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.GroupQuotaLimitList",
@@ -22521,7 +22562,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.SubscriptionQuotaAllocationsList",
@@ -22543,7 +22585,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.Joo",
@@ -22583,7 +22626,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.SAPVirtualInstance",
@@ -22615,7 +22659,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.BestPractice",
@@ -22668,7 +22713,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.BestPractice",
@@ -22723,7 +22769,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.ResourceTypeTestResource",
@@ -22755,7 +22802,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.SampleData",
@@ -22802,7 +22850,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.WorkloadNetworks",
@@ -22849,7 +22898,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.WorkloadNetworkVmGroup",
@@ -22904,7 +22954,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.WorkloadNetworkSegment",
@@ -22959,7 +23010,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.Target",
@@ -23006,7 +23058,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.Cluster",
@@ -23068,7 +23121,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.DuplicatePropertyTest",
@@ -23115,7 +23169,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.ServiceGroupSite",
@@ -23154,7 +23209,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.TrafficProfile",
@@ -23199,7 +23255,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.TrafficEndpoint",
@@ -23238,7 +23295,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.VmConfigurationAssignment",
@@ -23260,7 +23318,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.HcrpConfigurationAssignment",
@@ -23282,7 +23341,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.MultiFlattenTest",
@@ -23315,7 +23375,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.PolicyAssignment",
@@ -23360,7 +23421,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.PolicyAssignment",
@@ -23405,7 +23467,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.TestCertificate",
@@ -23451,7 +23514,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.SharedConfig",
@@ -23480,7 +23544,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "MgmtTypeSpec.SharedConfig",
@@ -23525,7 +23590,8 @@
                 "apiVersions": [
                   "2024-04-01",
                   "2024-05-01"
-                ]
+                ],
+                "rbacRoles": []
               }
             ],
             "nonResourceMethods": [
