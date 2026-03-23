@@ -3,24 +3,103 @@
 > For general AI agent guidelines, safety boundaries, and repo-wide workflows,
 > see the root [AGENTS.md](../../AGENTS.md).
 
+---
+
+## 0. Core Principles (Constitution)
+
+These principles govern **all** work under `sdk/agentserver/`, across every protocol and project. They are the **supreme governing rules** — they supersede informal practices and ad-hoc decisions. When principles conflict, resolve in this priority order: **Protocol Fidelity > Developer Experience > Minimal API Surface > Simplicity**.
+
+### I. SDK-First (Library, Never Application)
+
+- This project produces **class libraries** distributed via NuGet. It is never a standalone executable.
+- Every public type must be designed for consumption by external developers building their own ASP.NET Core hosts.
+- The SDK owns protocol concerns (request/response models, routing, serialization, error shapes). The consumer owns business logic (tool implementations, agent behaviour).
+- No global state, static mutable singletons, or assumptions about the host process.
+
+### II. Developer Experience Above All
+
+- The primary measure of success is how quickly a developer can go from `dotnet add package` to a working server.
+- Integration follows standard ASP.NET Core conventions: `IServiceCollection` extensions for registration, `IEndpointRouteBuilder` extensions for routing.
+- Provide sensible defaults with progressive disclosure of complexity — simple things must be simple, advanced scenarios must be possible.
+- XML documentation comments are required on **all** `public` and `protected` members.
+
+### III. Minimal Public API Surface
+
+- Default visibility is `internal`. Only promote to `public` when there is a clear, justified consumer need.
+- Every public type, method, and property must earn its place. Prefer fewer, well-designed abstractions over a sprawling API.
+- Use `[EditorBrowsable(EditorBrowsableState.Never)]` for types that must be public for technical reasons but are not intended for direct consumer use.
+- Avoid leaking implementation details into the public API.
+
+### IV. Test-First (NON-NEGOTIABLE)
+
+- **TDD is mandatory.** Write test → see it fail (red) → implement → see it pass (green) → refactor.
+- All public API contracts must have corresponding unit tests.
+- **E2E protocol tests are mandatory for API behaviour changes.** Any change to endpoint logic, SSE event contract, error shapes, status transitions, response headers, or HTTP status codes MUST include protocol tests that exercise the full HTTP pipeline. Unit tests alone are insufficient.
+- **Deterministic synchronization is mandatory.** Never use blind `Task.Delay()` to wait for async state changes. Use `TaskCompletionSource` gates, `WaitAsync(TimeSpan)`, or polling loops with explicit timeout assertions. `Task.Delay` is acceptable only to simulate slow work in handlers.
+- **Transient test failures must be fixed immediately.** A flaky test is a bug. Diagnose the root cause and fix with deterministic synchronization before proceeding.
+
+### V. Protocol Fidelity
+
+- Each protocol SDK must faithfully implement its specification. Deviations from the spec are bugs.
+- API models (request/response shapes, error codes, headers) must match the specification exactly.
+- The authoritative contract documents win over the code. Fix the code, not the contract. Each protocol's AGENTS.md defines its authoritative documents.
+
+### VI. Async-All-the-Way
+
+- The SDK is **async-only**. All public service methods are asynchronous.
+- **AZC0004 exemption**: Azure SDK rule AZC0004 requires both sync and async variants for HTTP/REST client libraries. This SDK is exempt because it is a **server-side hosting library** running on the inherently async ASP.NET Core pipeline (similar to the AMQP exemption for Event Hubs/Service Bus). If an analyzer flags AZC0004, suppress it with justification in `AssemblyInfo.cs`.
+- All async methods MUST accept `CancellationToken cancellationToken = default` as the last parameter.
+- Never block on async code (`Task.Result`, `.Wait()`, `.GetAwaiter().GetResult()`).
+
+### VII. Thread Safety & Immutability
+
+- Public service types must be **thread-safe** — instances may be shared across threads and stored as singletons in DI containers.
+- Service types should be effectively immutable after construction.
+
+### VIII. Designed for Testability & Mocking
+
+- Consumers must be able to mock SDK types in their own test suites without calling real services.
+- Provide `protected` parameterless constructors on public types to enable mocking frameworks.
+- Make all public service methods `virtual` so they can be overridden in mocks.
+- Provide a static model factory for constructing model types that have no public constructors.
+
+### IX. Observability & Security
+
+- Use `Microsoft.Extensions.Logging.ILogger` for all diagnostic output. Never write to `Console`.
+- Use structured logging placeholders (`{RequestId}`, not string interpolation).
+- Instrument key operations with `System.Diagnostics.Activity` for OpenTelemetry-compatible distributed tracing.
+- **Never** log credentials, tokens, keys, or PII. Sanitize error messages exposed to callers.
+
+### X. Simplicity & YAGNI
+
+- Start with the simplest correct implementation. Do not build speculative features.
+- Prefer composition over inheritance. Prefer interfaces over abstract base classes.
+- If a design decision can be deferred without harm, defer it.
+- Code should be readable by an unfamiliar developer within 5 minutes of opening a file.
+
+---
+
 ## 1. Project Architecture
 
 | Project | Path | Description |
 |---|---|---|
-| **Responses.Contracts** | `Azure.AI.AgentServer.Responses.Contracts/src/` | TypeSpec-generated model contracts (all generated models, internal helpers, customizations) |
-| **Responses** | `Azure.AI.AgentServer.Responses/src/` | Hand-written SDK library (builders, hosting extensions, `IResponseHandler`, streaming plumbing). References Contracts. |
-| **Tests** | `Azure.AI.AgentServer.Responses/tests/` | NUnit tests — protocol tests in `Protocol/`, provider tests in `Provider/`, builder tests in `Builder/` |
-| **Core** | `Azure.AI.AgentServer.Core/src/` | Shared core types |
-| **Contracts** | `Azure.AI.AgentServer.Contracts/src/` | Shared contract types |
-| **AgentFramework** | `Azure.AI.AgentServer.AgentFramework/src/` | Agent framework library |
+| **Responses.Contracts** | `Azure.AI.AgentServer.Responses.Contracts/src/` | TypeSpec-generated model contracts for Responses protocol |
+| **Responses** | `Azure.AI.AgentServer.Responses/src/` | Responses protocol SDK (hosting extensions, streaming, handlers) |
+| **Responses Tests** | `Azure.AI.AgentServer.Responses/tests/` | NUnit tests for Responses protocol |
 
-Solution file: `Azure.AI.AgentServer.sln` (includes Contracts, Responses, Tests).
+> **Out of scope**: `Azure.AI.AgentServer.Core`, `Azure.AI.AgentServer.Contracts`, and `Azure.AI.AgentServer.AgentFramework` are legacy projects slated for deprecation. Do not invest effort in them.
 
-### Key namespaces
+Solution file: `Azure.AI.AgentServer.sln`
 
-- `Azure.AI.AgentServer.Responses` — public API surface
-- `Azure.AI.AgentServer.Responses.Models` — model types (from Contracts)
-- `Azure.AI.AgentServer.Responses.Internal` — internal implementation (e.g., `SeekableReplaySubject`)
+### Per-protocol AGENTS.md files
+
+Each protocol has its own `AGENTS.md` with protocol-specific contract compliance, package rules, and implementation details:
+
+| Protocol | AGENTS.md | Status |
+|---|---|---|
+| **Responses** | [Azure.AI.AgentServer.Responses/AGENTS.md](Azure.AI.AgentServer.Responses/AGENTS.md) | Active |
+
+> When adding a new protocol, create an `AGENTS.md` in the protocol project directory following the same structure.
 
 ## 2. Azure SDK Compliance References
 
@@ -90,65 +169,21 @@ npm install
 > repo-level emitter packages + `tsp-location.yaml` with `emitterPackageJsonPath`.
 > Alignment is tracked for a future PR.
 
-## 4. Contract Compliance (MANDATORY)
+## 4. Do NOT
 
-The Responses SDK has three **authoritative contract documents** that define all required behaviour. Any code change to `Azure.AI.AgentServer.Responses/` **must** be verified against these contracts before committing.
+- Expose internal implementation details in the public API.
+- Add NuGet dependencies without justification (see Principle III).
+- Skip tests — TDD is non-negotiable (Principle IV).
+- Skip E2E protocol tests for API behaviour changes (Principle IV).
+- Create standalone executable projects — this is a library SDK (Principle I).
+- Use `Task.Result`, `.Wait()`, or `.GetAwaiter().GetResult()` (Principle VI).
+- Log credentials, tokens, keys, or PII (Principle IX).
+- Modify contract docs to match code — fix the code instead (Principle V).
+- Use blind `Task.Delay()` for test synchronization (Principle IV).
 
-### Authoritative trio (read before ANY code change)
+## 5. Governance
 
-| Document | Path | Defines |
-|----------|------|---------|
-| **API Behaviour Contract** | `Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md` | Observable HTTP behaviour, endpoint matrices, error shapes, SSE contract, behavioural rules (B1–B37) |
-| **SDK Behaviour Spec** | `Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md` | Language-agnostic SDK requirements: event processing, state management, terminal authority, cancellation, persistence, observability (S-001–S-046) |
-| **Handler Implementation Guide** | `Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md` | Handler contract, builder pattern, cancellation, error handling, configuration |
-
-### Supporting design docs (.NET-specific)
-
-| Document | Path | Defines |
-|----------|------|---------|
-| Error handling | `Azure.AI.AgentServer.Responses/docs/design/error-handling.md` | Exception hierarchy, error mapping |
-| Provider contract | `Azure.AI.AgentServer.Responses/docs/design/provider-contract.md` | `IResponsesProvider`, `IResponsesCancellationSignalProvider`, `IResponsesStreamProvider` |
-| Orchestration | `Azure.AI.AgentServer.Responses/docs/design/orchestration.md` | `ResponseOrchestrator` pipeline, event processing |
-| Doc ownership matrix | `Azure.AI.AgentServer.Responses/docs/doc-ownership-matrix.md` | Topic-to-document mapping, canonical sources |
-
-### Compliance workflow
-
-1. **Before implementing**: Read the relevant sections of the authoritative trio for the feature/endpoint being changed.
-2. **Key rules to check**: Endpoint behaviour matrices (B1–B37), SDK processing rules (S-001–S-046), terminal event authority (S-018–S-022), cancellation categories (S-023–S-026), persistence timing (S-034–S-036).
-3. **After implementing**: Audit the change against the contracts. Pay special attention to:
-   - **B16**: Non-background in-flight responses are NOT findable (GET/DELETE/Cancel → 404).
-   - **B2**: SSE replay requires `background=true` AND `stream=true` AND `store=true`.
-   - **S-022**: SDK MUST NOT emit `response.incomplete` (handler-driven only).
-   - **S-036**: Non-background cancelled responses are ephemeral (not persisted).
-   - **S-019**: Cancellation winddown — SDK is sole authority on terminal event.
-4. **Tests**: Any behavioural change MUST include protocol tests in `tests/Protocol/`. Unit tests alone are insufficient.
-5. **If in doubt**: The contract document wins over the code. Fix the code, not the contract.
-
-## 5. Package-Specific Rules
-
-### Dependency isolation
-- **Responses** depends only on **Responses.Contracts** (project reference) plus `Microsoft.AspNetCore.App` (framework reference). No additional NuGet packages in production.
-- **Responses.Contracts** has zero NuGet dependencies.
-- Test dependencies are managed via central package management with overrides in `eng/centralpackagemanagement/overrides/Azure.AI.AgentServer.Responses.Packages.props`.
-
-### ASP.NET target framework
-`Responses` uses `$(RequiredRunnableTargetFrameworks)` (resolves to `net10.0;net8.0`) because it references `Microsoft.AspNetCore.App`. Standard `$(RequiredTargetFrameworks)` is used for Contracts and Tests.
-
-### Generated code suppressions
-Analyzer suppressions for generated code are scoped to `Azure.AI.AgentServer.Responses.Contracts/src/Generated/Directory.Build.props` — **not** in the root `Directory.Build.props`. Do not add blanket suppressions at higher levels.
-
-### Generation pipeline
-The TypeSpec generation pipeline is in `scripts/Generate-Contracts.ps1`:
-1. `npx tsp-client sync` — fetch upstream TypeSpec sources
-2. `npx tsp compile .` — compile TypeSpec → C# models + OpenAPI
-3. Copy `Models/` and `Internal/` into `Contracts/src/Generated/`
-4. `python3 generate-validators.py` — generate validators from OpenAPI spec
-5. Clean intermediate `tsp-output/`
-
-The Python validator generator (`scripts/generate-validators.py`) emits copyright-stamped C# files.
-
-### E2E protocol tests
-Any API behaviour change **must** include protocol tests in `tests/Protocol/`. These test the full HTTP pipeline via `TestWebApplicationFactory`. Unit tests alone are insufficient.
-
-### Deterministic test synchronization
-Never use blind `Task.Delay()` for async synchronization. Use `TaskCompletionSource`, `WaitAsync(TimeSpan)`, or polling loops with explicit timeout assertions. `Task.Delay` is acceptable only to simulate slow work in handlers.
+- This `AGENTS.md` (including Section 0: Core Principles) is the **supreme governing document** for the AgentServer SDK. It supersedes informal practices and ad-hoc decisions.
+- Per-protocol `AGENTS.md` files inherit and extend these principles for their specific protocol. They may add protocol-specific rules but may **not** weaken or override the core principles.
+- All PRs and code reviews must verify compliance with these principles.
+- Amendments require: (1) written proposal with rationale, (2) update to any affected docs for consistency.

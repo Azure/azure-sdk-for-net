@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Tests;
 
 /// <summary>
 /// T017: Validates ResponsesModelFactory existence and basic functionality.
-/// Per constitution Section IX and FR-010.
+/// Per AGENTS.md Principle VIII (Designed for Testability &amp; Mocking) and FR-010.
 /// </summary>
 public class ResponsesModelFactoryTests
 {

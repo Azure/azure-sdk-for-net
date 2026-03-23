@@ -14,7 +14,7 @@ The documentation follows a **4-layer architecture**. The first three layers for
 | **SDK Behaviour** | [sdk-behaviour-spec.md](sdk-behaviour-spec.md) | Multi-language SDK teams, SDK architects | Yes |
 | **Handler** | [handler-implementation-guide.md](handler-implementation-guide.md) | Handler authors (SDK consumers) | Conceptually |
 | **Design (.NET)** | [design/](design/) | .NET SDK contributors | No |
-| **Governance** | This matrix, AGENTS.md, constitution | All contributors | N/A |
+| **Governance** | This matrix, [top-level AGENTS.md](../../AGENTS.md) + [Responses AGENTS.md](../AGENTS.md) | All contributors | N/A |
 
 ---
 
@@ -138,9 +138,14 @@ The documentation follows a **4-layer architecture**. The first three layers for
 
 | Topic | Canonical Document | Section | Audience |
 |-------|-------------------|---------|----------|
-| Project constitution | [constitution.md](../.specify/memory/constitution.md) | (entire document) | Contributors |
-| Build & test commands | [AGENTS.md](../AGENTS.md) | Build & Test | Contributors (human + AI) |
-| Project structure | [AGENTS.md](../AGENTS.md) | Architecture | Contributors (human + AI) |
+| Core principles (constitution) | [AGENTS.md (top-level)](../../AGENTS.md) | [Section 0: Core Principles](../../AGENTS.md#0-core-principles-constitution) | All contributors |
+| Build & test commands | [AGENTS.md (top-level)](../../AGENTS.md) | [Build, Test & Finalize](../../AGENTS.md#3-build-test--finalize) | All contributors |
+| Project structure | [AGENTS.md (top-level)](../../AGENTS.md) | [Architecture](../../AGENTS.md#1-project-architecture) | All contributors |
+| Do NOT (universal prohibitions) | [AGENTS.md (top-level)](../../AGENTS.md) | [Do NOT](../../AGENTS.md#4-do-not) | All contributors |
+| Governance & amendments | [AGENTS.md (top-level)](../../AGENTS.md) | [Governance](../../AGENTS.md#5-governance) | All contributors |
+| Responses contract compliance | [AGENTS.md (Responses)](../AGENTS.md) | [Contract Compliance](../AGENTS.md#1-contract-compliance-mandatory) | Responses contributors |
+| Responses package rules | [AGENTS.md (Responses)](../AGENTS.md) | [Package Rules](../AGENTS.md#3-package-rules) | Responses contributors |
+| Responses testing requirements | [AGENTS.md (Responses)](../AGENTS.md) | [Testing Requirements](../AGENTS.md#4-testing-requirements) | Responses contributors |
 | Doc ownership (this matrix) | [doc-ownership-matrix.md](doc-ownership-matrix.md) | (this document) | Contributors |
 | PR documentation checklist | [pull-request-doc-checklist.md](../.github/pull-request-doc-checklist.md) | (entire document) | Contributors |
 | Getting started (consumer) | [README.md](../README.md) | (entire document) | SDK consumers |
@@ -181,8 +186,9 @@ These 12 topics were duplicated between documents prior to the layer separation.
 - **SDK Spec → Design Doc**: Not linked (SDK spec is language-agnostic — .NET design docs are supplementary)
 - **Design Doc → SDK Spec**: `Implements [S-XXX](../sdk-behaviour-spec.md#section).`
 - **Design Doc → API Contract**: `See [BXX](../api-behaviour-contract.md#section) for observable outcomes.`
-- **Constitution → Docs**: Use relative paths from `.specify/memory/` (e.g., `../../docs/doc-ownership-matrix.md`).
-- **AGENTS.md → Docs**: Use relative paths from repo root (e.g., `docs/api-behaviour-contract.md`).
+- **Core Principles → Docs**: The constitution is in the top-level AGENTS.md Section 0. Cross-link: `../../AGENTS.md#0-core-principles-constitution`.
+- **Responses AGENTS.md → Docs**: Use relative paths from the Responses project root (e.g., `docs/api-behaviour-contract.md`).
+- **Top-level AGENTS.md → Protocol AGENTS.md**: Use relative project paths (e.g., `Azure.AI.AgentServer.Responses/AGENTS.md`).
 
 ---
 
