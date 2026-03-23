@@ -91,6 +91,24 @@ The tools are designed to be called by the [`sdk-migration-mcp`](https://github.
 2. **Build-fix loop** — `build_and_classify` → `batch_fix` (for deterministic errors) → LLM reasoning (for non-deterministic errors) → rebuild
 3. **Finalize** — `migrate_test_samples` → `finalize_migration`
 
+### Use with Copilot Chat
+
+To trigger an MCP-assisted migration in Copilot Chat, use a prompt like:
+
+```
+Use the sdk-migration-mcp skill to migrate <repo-root>/sdk/<service>/<library>
+The local specs repo is at <specs-root>/specification/<service>/<spec-directory>
+```
+
+For example:
+
+```
+Use the sdk-migration-mcp skill to migrate C:\git\azure-sdk-for-net\sdk\communication\Azure.Communication.Messages
+The local specs repo is at C:\git\azure-rest-api-specs\specification\communication\Communication.Messages
+```
+
+The skill will orchestrate the full migration by calling MCP tools automatically.
+
 ## Troubleshooting
 
 ### Common issues
