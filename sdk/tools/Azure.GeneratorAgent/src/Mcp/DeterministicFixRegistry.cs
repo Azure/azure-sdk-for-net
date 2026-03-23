@@ -152,7 +152,14 @@ public static class DeterministicFixRegistry
     /// <summary>
     /// Classifies a build error as deterministic (with tool + args) or requiring LLM reasoning.
     /// </summary>
-    public static ClassifiedError Classify(BuildError error)
+    public static ClassifiedError Classify(BuildError error) => Classify(error, null);
+
+    /// <summary>
+    /// Classifies a build error using both static rules and a dynamic index built from Generated/ code.
+    /// The index allows automatic resolution of CS0246 errors for types discovered in the generated output,
+    /// without needing hardcoded TypeToNamespace entries.
+    /// </summary>
+    public static ClassifiedError Classify(BuildError error, GeneratedCodeIndex? index)
     {
         ArgumentNullException.ThrowIfNull(error);
 
@@ -166,14 +173,38 @@ public static class DeterministicFixRegistry
             var match = rule.MessagePattern.Match(error.Message);
             if (match.Success)
             {
+                var args = rule.ExtractArgs(error, match);
+
+                // If a static rule matched but produced empty args for add_using_directive,
+                // try the dynamic index as a fallback before giving up.
+                if (rule.ToolName == "add_using_directive" && args.Count == 0 && index is not null)
+                {
+                    var resolved = TryResolveFromIndex(error, match, index);
+                    if (resolved is not null)
+                    {
+                        return resolved;
+                    }
+                }
+
                 return new ClassifiedError
                 {
                     Error = error,
                     IsDeterministic = rule.IsDeterministic,
                     ToolName = rule.ToolName,
-                    ToolArgs = rule.ExtractArgs(error, match),
+                    ToolArgs = args,
                     Reason = rule.Description
                 };
+            }
+        }
+
+        // Last resort: if no static rule matched at all, try the dynamic index
+        // for CS0246 errors with unknown types.
+        if (index is not null)
+        {
+            var resolved = TryResolveFromIndex(error, null, index);
+            if (resolved is not null)
+            {
+                return resolved;
             }
         }
 
@@ -184,6 +215,68 @@ public static class DeterministicFixRegistry
             Reason = "No deterministic rule matched; requires LLM reasoning"
         };
     }
+
+    /// <summary>
+    /// Attempts to resolve a type from the generated code index for CS0246/CS0103 errors.
+    /// </summary>
+    private static ClassifiedError? TryResolveFromIndex(BuildError error, Match? match, GeneratedCodeIndex index)
+    {
+        string? typeName = null;
+
+        if (match is not null && match.Groups["typeName"].Success)
+        {
+            typeName = match.Groups["typeName"].Value;
+        }
+        else if (string.Equals(error.Code, "CS0246", StringComparison.OrdinalIgnoreCase))
+        {
+            // Try to extract type name from the message
+            var m = s_typeNameFromMessage.Match(error.Message);
+            if (m.Success)
+            {
+                typeName = m.Groups["typeName"].Value;
+            }
+        }
+        else if (string.Equals(error.Code, "CS0103", StringComparison.OrdinalIgnoreCase))
+        {
+            var m = s_nameFromCS0103.Match(error.Message);
+            if (m.Success)
+            {
+                typeName = m.Groups["typeName"].Value;
+            }
+        }
+
+        if (typeName is null)
+        {
+            return null;
+        }
+
+        var ns = index.ResolveNamespace(typeName);
+        if (ns is null)
+        {
+            return null;
+        }
+
+        return new ClassifiedError
+        {
+            Error = error,
+            IsDeterministic = true,
+            ToolName = "add_using_directive",
+            ToolArgs = new Dictionary<string, string>
+            {
+                ["filePath"] = error.FilePath,
+                ["namespace"] = ns
+            },
+            Reason = $"Add using directive for '{typeName}' (resolved from Generated/ code to namespace '{ns}')"
+        };
+    }
+
+    private static readonly Regex s_typeNameFromMessage = new(
+        @"type or namespace name '(?<typeName>\w+)(?:<[^>]*>)?' could not be found",
+        RegexOptions.Compiled);
+
+    private static readonly Regex s_nameFromCS0103 = new(
+        @"The name '(?<typeName>\w+)' does not exist",
+        RegexOptions.Compiled);
 
     private static List<FixRule> BuildRules()
     {

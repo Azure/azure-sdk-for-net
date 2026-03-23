@@ -53,8 +53,8 @@ public static class FinalizationTool
             var exportScript = Path.Combine(repoRoot, "eng", "scripts", "Export-API.ps1");
             if (File.Exists(exportScript))
             {
-                var (exitCode, output) = await RunPowerShellScriptAsync(
-                    repoRoot, $".\\eng\\scripts\\Export-API.ps1 -ServiceDirectory {serviceDirectory}").ConfigureAwait(false);
+                var (output, exitCode) = await ProcessRunner.RunAsync(
+                    "pwsh", $"-NoProfile -NonInteractive -Command \".\\eng\\scripts\\Export-API.ps1 -ServiceDirectory {serviceDirectory}\"", repoRoot).ConfigureAwait(false);
                 results.Add($"Export-API: exit={exitCode}");
                 if (exitCode != 0)
                 {
@@ -70,8 +70,8 @@ public static class FinalizationTool
             var snippetsScript = Path.Combine(repoRoot, "eng", "scripts", "Update-Snippets.ps1");
             if (File.Exists(snippetsScript))
             {
-                var (exitCode, output) = await RunPowerShellScriptAsync(
-                    repoRoot, $".\\eng\\scripts\\Update-Snippets.ps1 -ServiceDirectory {serviceDirectory}").ConfigureAwait(false);
+                var (output, exitCode) = await ProcessRunner.RunAsync(
+                    "pwsh", $"-NoProfile -NonInteractive -Command \".\\eng\\scripts\\Update-Snippets.ps1 -ServiceDirectory {serviceDirectory}\"", repoRoot).ConfigureAwait(false);
                 results.Add($"Update-Snippets: exit={exitCode}");
                 if (exitCode != 0)
                 {
@@ -129,10 +129,4 @@ public static class FinalizationTool
         return (repoRoot, null);
     }
 
-    private static async Task<(int ExitCode, string Output)> RunPowerShellScriptAsync(string workingDirectory, string command)
-    {
-        var (output, exitCode) = await ProcessRunner.RunAsync(
-            "pwsh", $"-NoProfile -NonInteractive -Command \"{command}\"", workingDirectory).ConfigureAwait(false);
-        return (exitCode, output);
-    }
 }

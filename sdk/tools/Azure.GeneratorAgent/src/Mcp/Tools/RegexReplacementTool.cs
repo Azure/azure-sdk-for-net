@@ -25,25 +25,12 @@ public static class RegexReplacementTool
         try
         {
             var useSingleLine = string.Equals(singleLine, "true", StringComparison.OrdinalIgnoreCase);
-            var normalizedPath = Path.GetFullPath(filePath);
-            if (!File.Exists(normalizedPath))
+            var (success, count, error) = ExecuteInProcess(filePath, pattern, replacement, useSingleLine);
+            if (!success)
             {
-                return JsonSerializer.Serialize(new { success = false, error = $"File not found: {normalizedPath}" });
+                return JsonSerializer.Serialize(new { success = false, error });
             }
-
-            var content = File.ReadAllText(normalizedPath);
-            var options = RegexOptions.Compiled | (useSingleLine ? RegexOptions.Singleline : RegexOptions.None);
-            var regex = new Regex(pattern, options);
-            var matchCount = regex.Matches(content).Count;
-
-            if (matchCount == 0)
-            {
-                return JsonSerializer.Serialize(new { success = true, modified = false, message = "No matches found" });
-            }
-
-            var newContent = regex.Replace(content, replacement);
-            File.WriteAllText(normalizedPath, newContent);
-            return JsonSerializer.Serialize(new { success = true, modified = true, replacements = matchCount });
+            return JsonSerializer.Serialize(new { success = true, modified = count > 0, replacements = count });
         }
         catch (Exception ex)
         {

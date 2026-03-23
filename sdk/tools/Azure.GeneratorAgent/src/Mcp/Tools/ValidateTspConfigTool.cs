@@ -27,7 +27,7 @@ public static class ValidateTspConfigTool
         RegexOptions.Compiled | RegexOptions.Multiline);
 
     private static readonly Regex s_modelNamespaceRegex = new(
-        @"model-namespace\s*:\s*false",
+        @"model-namespace\s*:",
         RegexOptions.Compiled);
 
     [McpServerTool(Name = "validate_tsp_config"), Description("Validate that a tspconfig.yaml has correct @azure-typespec/http-client-csharp emitter configuration.")]
@@ -88,24 +88,15 @@ public static class ValidateTspConfigTool
             }
 
             // Check namespace within the emitter section
-            var nsMatch = s_namespaceRegex.Match(emitterSection);
-            if (!nsMatch.Success)
+            if (!s_namespaceRegex.IsMatch(emitterSection))
             {
                 issues.Add("Missing 'namespace' field");
             }
-            else
-            {
-                var actualNs = nsMatch.Groups["value"].Value.Trim().Trim('"', '\'');
-                if (!string.Equals(actualNs, expectedNamespace, StringComparison.Ordinal))
-                {
-                    issues.Add($"Namespace mismatch: expected '{expectedNamespace}', got '{actualNs}'");
-                }
-            }
 
-            // Check model-namespace: false within the emitter section
+            // Check model-namespace within the emitter section
             if (!s_modelNamespaceRegex.IsMatch(emitterSection))
             {
-                issues.Add("Missing or incorrect 'model-namespace: false' field");
+                issues.Add("Missing 'model-namespace' field");
             }
 
             return new TspConfigValidationResult

@@ -108,12 +108,7 @@ public static class RenameCodeGenTypeTool
                 }
 
                 File.WriteAllText(custom.FilePath, newContent);
-                fixes.Add(new CodeGenTypeFix
-                {
-                    FilePath = custom.FilePath,
-                    CustomTypeName = custom.ClassName,
-                    GeneratedTypeName = generatedMatch
-                });
+                fixes.Add(new CodeGenTypeFix(custom.FilePath, custom.ClassName, generatedMatch));
             }
 
             return (true, fixes, null);

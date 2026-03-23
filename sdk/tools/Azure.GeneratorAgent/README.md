@@ -18,14 +18,6 @@ cd sdk/tools/Azure.GeneratorAgent
 dotnet build
 ```
 
-Start the MCP server over stdio transport:
-
-```bash
-dotnet run --project src/Azure.GeneratorAgent.csproj
-```
-
-Any MCP-compatible client (e.g., VS Code with Copilot, Claude Desktop) can connect to the server and invoke tools.
-
 ## Key concepts
 
 The Azure Generator Agent automates SDK code generation workflows, including code generation from service specifications and migration to new SDK patterns.
@@ -48,9 +40,7 @@ The agent uses a three-layer architecture:
 | `nullable_annotation_fix` | Fix CS8625/CS8600 by adding `?` nullable annotation on a specific line |
 | `batch_fix` | Apply multiple deterministic fixes in a single call |
 | `build_and_classify` | Run `dotnet build`, parse output, and classify each error as deterministic or requires-reasoning |
-| `parse_build_output` | Parse raw MSBuild output into structured error objects |
-| `classify_error` | Classify a single build error against the deterministic fix registry |
-| `classify_errors` | Classify a batch of build errors |
+| `classify_errors` | Classify a batch of build errors against the deterministic fix registry |
 | `run_code_generation` | Run `dotnet build /t:generateCode` for a project |
 | `validate_tsp_config` | Validate that `tspconfig.yaml` has the correct emitter configuration |
 | `commit_iteration` | Iterate through spec repo commits to find one with valid tspconfig |
@@ -75,14 +65,6 @@ See [`.github/skills/sdk-migration-mcp/SKILL.md`](https://github.com/Azure/azure
 
 ## Examples
 
-### Start as an MCP server
-
-```bash
-dotnet run --project src/Azure.GeneratorAgent.csproj
-```
-
-This starts a stdio-based MCP server that exposes all 17 deterministic fix tools. Connect from any MCP-compatible client.
-
 ### Use with a migration skill
 
 The tools are designed to be called by the [`sdk-migration-mcp`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration-mcp/SKILL.md) skill. The typical workflow is:
@@ -105,6 +87,12 @@ For example:
 ```
 Use the sdk-migration-mcp skill to migrate C:\git\azure-sdk-for-net\sdk\communication\Azure.Communication.Messages
 The local specs repo is at C:\git\azure-rest-api-specs\specification\communication\Communication.Messages
+```
+If you wish you use specific commit id for tsp-location.yaml add to the message. For example:
+
+```
+Use the sdk-migration-mcp skill to migrate C:\git\azure-sdk-for-net\sdk\communication\Azure.Communication.Messages
+The local specs repo is at C:\git\azure-rest-api-specs\specification\communication\Communication.Messages with commit id xyz
 ```
 
 The skill will orchestrate the full migration by calling MCP tools automatically.

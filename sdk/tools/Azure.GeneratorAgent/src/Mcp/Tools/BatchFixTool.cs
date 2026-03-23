@@ -75,7 +75,7 @@ public static class BatchFixTool
                         var replacement = fix.Args.GetValueOrDefault("replacement") ?? string.Empty;
                         var singleLine = string.Equals(fix.Args.GetValueOrDefault("singleLine"), "true", StringComparison.OrdinalIgnoreCase);
                         var (success, count, error) = RegexReplacementTool.ExecuteInProcess(filePath, pattern, replacement, singleLine);
-                        return new FixResult { Success = success, Tool = fix.Tool, Message = error ?? $"{count} replacements" };
+                        return new FixResult(success, fix.Tool, error ?? $"{count} replacements");
                     }
                 case "add_using_directive":
                     {
@@ -83,52 +83,52 @@ public static class BatchFixTool
                         var ns = fix.Args.GetValueOrDefault("namespace") ?? string.Empty;
                         if (string.IsNullOrEmpty(ns))
                         {
-                            return new FixResult { Success = false, Tool = fix.Tool, Message = "No namespace mapping found for this type" };
+                            return new FixResult(false, fix.Tool, "No namespace mapping found for this type");
                         }
                         var (success, added, error) = AddUsingDirectiveTool.ExecuteInProcess(filePath, ns);
-                        return new FixResult { Success = success, Tool = fix.Tool, Message = error ?? (added ? "Added" : "Already present") };
+                        return new FixResult(success, fix.Tool, error ?? (added ? "Added" : "Already present"));
                     }
                 case "remove_using_directive":
                     {
                         var filePath = fix.Args.GetValueOrDefault("filePath") ?? string.Empty;
                         var nsPattern = fix.Args.GetValueOrDefault("namespacePattern") ?? string.Empty;
                         var (success, count, error) = RemoveUsingDirectiveTool.ExecuteInProcess(filePath, nsPattern);
-                        return new FixResult { Success = success, Tool = fix.Tool, Message = error ?? $"{count} removed" };
+                        return new FixResult(success, fix.Tool, error ?? $"{count} removed");
                     }
                 case "nullable_annotation_fix":
                     {
                         var filePath = fix.Args.GetValueOrDefault("filePath") ?? string.Empty;
                         var line = fix.Args.GetValueOrDefault("line") ?? "0";
                         var (success, modified, error) = NullableAnnotationFixTool.ExecuteInProcess(filePath, line);
-                        return new FixResult { Success = success, Tool = fix.Tool, Message = error ?? (modified ? "Fixed" : "No change needed") };
+                        return new FixResult(success, fix.Tool, error ?? (modified ? "Fixed" : "No change needed"));
                     }
                 case "fetch_to_fromlro":
                     {
                         var projectPath = fix.Args.GetValueOrDefault("projectPath") ?? string.Empty;
                         var (success, fixCount, error) = FetchToFromLroResponseTool.ExecuteInProcess(projectPath);
-                        return new FixResult { Success = success, Tool = fix.Tool, Message = error ?? $"{fixCount} files fixed" };
+                        return new FixResult(success, fix.Tool, error ?? $"{fixCount} files fixed");
                     }
                 case "rename_codegen_type":
                     {
                         var projectPath = fix.Args.GetValueOrDefault("projectPath") ?? string.Empty;
                         var typeSuffix = fix.Args.GetValueOrDefault("typeSuffix") ?? string.Empty;
                         var (success, fixes, error) = RenameCodeGenTypeTool.ExecuteInProcess(projectPath, typeSuffix);
-                        return new FixResult { Success = success, Tool = fix.Tool, Message = error ?? $"{fixes.Count} types fixed" };
+                        return new FixResult(success, fix.Tool, error ?? $"{fixes.Count} types fixed");
                     }
                 case "add_codegen_suppress":
                     {
                         var filePath = fix.Args.GetValueOrDefault("filePath") ?? string.Empty;
                         var memberName = fix.Args.GetValueOrDefault("memberName") ?? string.Empty;
                         var (success, result, error) = AddCodeGenSuppressTool.ExecuteInProcess(filePath, memberName);
-                        return new FixResult { Success = success, Tool = fix.Tool, Message = error ?? result?.Attribute ?? "No matching member" };
+                        return new FixResult(success, fix.Tool, error ?? result?.Attribute ?? "No matching member");
                     }
                 default:
-                    return new FixResult { Success = false, Tool = fix.Tool, Message = $"Unknown tool: {fix.Tool}" };
+                    return new FixResult(false, fix.Tool, $"Unknown tool: {fix.Tool}");
             }
         }
         catch (Exception ex)
         {
-            return new FixResult { Success = false, Tool = fix.Tool, Message = ex.Message };
+            return new FixResult(false, fix.Tool, ex.Message);
         }
     }
 }

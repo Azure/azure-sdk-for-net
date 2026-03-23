@@ -17,6 +17,12 @@ public sealed class BuildResult
     public bool Success { get; set; }
 
     /// <summary>
+    /// The process exit code.
+    /// </summary>
+    [JsonPropertyName("exitCode")]
+    public int ExitCode { get; set; }
+
+    /// <summary>
     /// The parsed build errors.
     /// </summary>
     [JsonPropertyName("errors")]

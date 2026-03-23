@@ -86,12 +86,12 @@ public static class AddCodeGenSuppressTool
                 var paramlessSuppressAttr = $"[CodeGenSuppress(\"{memberName}\")]";
                 if (content.Contains(paramlessSuppressAttr, StringComparison.Ordinal))
                 {
-                    return (true, new SuppressResult { FilePath = normalizedPath, Attribute = paramlessSuppressAttr, AlreadyPresent = true }, null);
+                    return (true, new SuppressResult(normalizedPath, paramlessSuppressAttr, true), null);
                 }
 
                 var newContent = InsertSuppressAttribute(content, classMatch, paramlessSuppressAttr);
                 File.WriteAllText(normalizedPath, newContent);
-                return (true, new SuppressResult { FilePath = normalizedPath, Attribute = paramlessSuppressAttr, AlreadyPresent = false }, null);
+                return (true, new SuppressResult(normalizedPath, paramlessSuppressAttr, false), null);
             }
 
             // Add [CodeGenSuppress] for each matching signature not already present
@@ -134,12 +134,7 @@ public static class AddCodeGenSuppressTool
                 ? string.Join(Environment.NewLine, addedAttributes)
                 : signatures.Count > 0 ? "All suppress attributes already present" : "No matching signatures found";
 
-            return (true, new SuppressResult
-            {
-                FilePath = normalizedPath,
-                Attribute = resultAttr,
-                AlreadyPresent = addedAttributes.Count == 0
-            }, null);
+            return (true, new SuppressResult(normalizedPath, resultAttr, addedAttributes.Count == 0), null);
         }
         catch (Exception ex)
         {

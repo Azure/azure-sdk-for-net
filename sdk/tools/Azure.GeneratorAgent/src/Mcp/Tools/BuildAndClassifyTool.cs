@@ -20,30 +20,20 @@ public static class BuildAndClassifyTool
     {
         try
         {
-            var normalizedPath = Path.GetFullPath(projectPath);
-            var (buildOutput, exitCode) = await RunBuildAsync(normalizedPath).ConfigureAwait(false);
-            var errors = BuildOutputParser.Parse(buildOutput);
-            var classified = errors.Select(DeterministicFixRegistry.Classify).ToList();
-            var deterministicCount = 0;
-            foreach (var c in classified)
-            {
-                if (c.IsDeterministic)
-                {
-                    deterministicCount++;
-                }
-            }
+            var (buildResult, classified) = await ExecuteInProcessAsync(projectPath).ConfigureAwait(false);
+            var deterministicCount = classified.Count(c => c.IsDeterministic);
 
             return JsonSerializer.Serialize(new
             {
-                success = exitCode == 0,
-                exitCode,
-                totalErrors = errors.Count,
+                success = buildResult.Success,
+                exitCode = buildResult.ExitCode,
+                totalErrors = buildResult.Errors.Count,
                 deterministicCount,
                 requiresReasoningCount = classified.Count - deterministicCount,
                 classifiedErrors = classified,
-                rawOutput = CSharpPatterns.Truncate(buildOutput, 5000),
-                buildFailureHint = exitCode != 0 && errors.Count == 0
-                    ? GetBuildFailureHint(buildOutput, exitCode)
+                rawOutput = CSharpPatterns.Truncate(buildResult.RawOutput, 5000),
+                buildFailureHint = !buildResult.Success && buildResult.Errors.Count == 0
+                    ? GetBuildFailureHint(buildResult.RawOutput)
                     : (string?)null
             });
         }
@@ -61,11 +51,13 @@ public static class BuildAndClassifyTool
         var normalizedPath = Path.GetFullPath(projectPath);
         var (buildOutput, exitCode) = await RunBuildAsync(normalizedPath).ConfigureAwait(false);
         var errors = BuildOutputParser.Parse(buildOutput);
-        var classified = errors.Select(DeterministicFixRegistry.Classify).ToList();
+        var index = GeneratedCodeIndex.Build(normalizedPath);
+        var classified = errors.Select(e => DeterministicFixRegistry.Classify(e, index)).ToList();
 
         var buildResult = new BuildResult
         {
             Success = exitCode == 0,
+            ExitCode = exitCode,
             Errors = errors,
             RawOutput = buildOutput
         };
@@ -79,7 +71,7 @@ public static class BuildAndClassifyTool
         return await ProcessRunner.RunAsync("dotnet", "build /clp:ErrorsOnly", workDir).ConfigureAwait(false);
     }
 
-    private static string GetBuildFailureHint(string buildOutput, int exitCode)
+    private static string GetBuildFailureHint(string buildOutput)
     {
         var lines = buildOutput.Split('\n');
         var relevantLines = lines
@@ -90,7 +82,7 @@ public static class BuildAndClassifyTool
             .Take(20)
             .ToArray();
 
-        var hint = $"Build failed (exit code {exitCode}) but no structured errors were parsed.";
+        var hint = "Build failed but no structured errors were parsed.";
         if (relevantLines.Length > 0)
         {
             hint += " Potentially relevant lines:\n" + string.Join('\n', relevantLines);

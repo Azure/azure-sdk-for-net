@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Text.Json;
 using ModelContextProtocol.Server;
 
@@ -15,12 +14,13 @@ namespace Azure.GeneratorAgent.Mcp.Tools;
 [McpServerToolType]
 public static class CommitIterationTool
 {
-    [McpServerTool(Name = "commit_iteration"), Description("Iterate through spec repo commits to find one with a valid tspconfig.yaml emitter config for the given SDK namespace. Creates a fallback commit if none found.")]
+    [McpServerTool(Name = "commit_iteration"), Description("Iterate through spec repo commits to find one with a valid tspconfig.yaml emitter config for the given SDK namespace. Creates a fallback commit if none found. If commitOverride is provided, skips all iteration and uses that commit directly.")]
     public static async Task<string> Execute(
         [Description("Path to the SDK project directory (e.g., sdk/translation/Azure.AI.Translation.Document)")] string sdkProjectPath,
         [Description("Path to the tsp-location.yaml file")] string tspLocationPath,
         [Description("Relative directory path within the specs repo (from tsp-location.yaml 'directory' field)")] string specsRelativeDirectory,
-        [Description("Full path to the local specs directory (e.g., .../azure-rest-api-specs/specification/translation/...)")] string localSpecsPath)
+        [Description("Full path to the local specs directory (e.g., .../azure-rest-api-specs/specification/translation/...)")] string localSpecsPath,
+        [Description("Optional. If provided, skip all iteration/validation and use this commit SHA directly.")] string? commitOverride = null)
     {
         try
         {
@@ -28,7 +28,7 @@ public static class CommitIterationTool
             tspLocationPath = Path.GetFullPath(tspLocationPath);
             localSpecsPath = Path.GetFullPath(localSpecsPath);
 
-            var (success, message) = await ExecuteInProcessAsync(sdkProjectPath, tspLocationPath, specsRelativeDirectory, localSpecsPath, CancellationToken.None).ConfigureAwait(false);
+            var (success, message) = await ExecuteInProcessAsync(sdkProjectPath, tspLocationPath, specsRelativeDirectory, localSpecsPath, commitOverride, CancellationToken.None).ConfigureAwait(false);
             return JsonSerializer.Serialize(new { success, message });
         }
         catch (Exception ex)
@@ -45,8 +45,16 @@ public static class CommitIterationTool
         string tspLocationPath,
         string specsRelativeDirectory,
         string localSpecsPath,
+        string? commitOverride,
         CancellationToken cancellationToken)
     {
+        // If a commit override is provided, skip all iteration/validation and use it directly
+        if (!string.IsNullOrWhiteSpace(commitOverride))
+        {
+            await WriteYamlFieldAsync(tspLocationPath, "commit", commitOverride.Trim(), cancellationToken).ConfigureAwait(false);
+            return (true, $"Using provided commit override: {commitOverride.Trim()}");
+        }
+
         var sdkNamespace = Path.GetFileName(sdkProjectPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
 
         var specsRepoRoot = FindGitRepoRoot(localSpecsPath);
@@ -189,29 +197,14 @@ public static class CommitIterationTool
         await File.WriteAllLinesAsync(filePath, lines, cancellationToken).ConfigureAwait(false);
     }
 
+    private static readonly Dictionary<string, string> s_gitEnv = new()
+    {
+        ["GIT_TERMINAL_PROMPT"] = "0"
+    };
+
     private static async Task<string> RunGitAsync(string workingDirectory, string arguments, CancellationToken cancellationToken)
     {
-        var psi = new ProcessStartInfo
-        {
-            FileName = "git",
-            Arguments = arguments,
-            WorkingDirectory = workingDirectory,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            RedirectStandardInput = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-        // Prevent git from prompting for credentials/input (would deadlock MCP server)
-        psi.Environment["GIT_TERMINAL_PROMPT"] = "0";
-
-        using var process = Process.Start(psi)!;
-        process.StandardInput.Close();
-        // Read both stdout and stderr concurrently to avoid buffer deadlocks
-        var stdoutTask = process.StandardOutput.ReadToEndAsync(cancellationToken);
-        var stderrTask = process.StandardError.ReadToEndAsync(cancellationToken);
-        await Task.WhenAll(stdoutTask, stderrTask).ConfigureAwait(false);
-        await process.WaitForExitAsync(cancellationToken).ConfigureAwait(false);
-        return stdoutTask.Result;
+        var (output, _) = await ProcessRunner.RunAsync("git", arguments, workingDirectory, s_gitEnv, cancellationToken).ConfigureAwait(false);
+        return output;
     }
 }

@@ -15,8 +15,17 @@ internal static class ProcessRunner
     /// Runs an external process and returns the combined output and exit code.
     /// Reads stdout and stderr concurrently to prevent deadlocks.
     /// </summary>
-    public static async Task<(string Output, int ExitCode)> RunAsync(
+    public static Task<(string Output, int ExitCode)> RunAsync(
         string fileName, string arguments, string workingDirectory)
+        => RunAsync(fileName, arguments, workingDirectory, environmentVariables: null, cancellationToken: default);
+
+    /// <summary>
+    /// Runs an external process with optional environment variables and cancellation support.
+    /// </summary>
+    public static async Task<(string Output, int ExitCode)> RunAsync(
+        string fileName, string arguments, string workingDirectory,
+        IDictionary<string, string>? environmentVariables,
+        CancellationToken cancellationToken)
     {
         var psi = new ProcessStartInfo
         {
@@ -25,15 +34,25 @@ internal static class ProcessRunner
             WorkingDirectory = workingDirectory,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
+            RedirectStandardInput = true,
             UseShellExecute = false,
             CreateNoWindow = true
         };
 
+        if (environmentVariables is not null)
+        {
+            foreach (var (key, value) in environmentVariables)
+            {
+                psi.Environment[key] = value;
+            }
+        }
+
         using var process = Process.Start(psi)!;
-        var stdoutTask = process.StandardOutput.ReadToEndAsync();
-        var stderrTask = process.StandardError.ReadToEndAsync();
+        process.StandardInput.Close();
+        var stdoutTask = process.StandardOutput.ReadToEndAsync(cancellationToken);
+        var stderrTask = process.StandardError.ReadToEndAsync(cancellationToken);
         await Task.WhenAll(stdoutTask, stderrTask).ConfigureAwait(false);
-        await process.WaitForExitAsync().ConfigureAwait(false);
+        await process.WaitForExitAsync(cancellationToken).ConfigureAwait(false);
 
         var output = stdoutTask.Result;
         if (!string.IsNullOrWhiteSpace(stderrTask.Result))

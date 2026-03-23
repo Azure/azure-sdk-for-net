@@ -54,7 +54,7 @@ Also invoke this skill when:
 | Tool | When to Use | What It Does |
 |------|-------------|--------------|
 | `build_and_classify` | **First step of every build-fix iteration.** Call this to build the project and get classified errors. | Runs `dotnet build`, parses output, classifies each error as deterministic or requires-reasoning |
-| `classify_error` / `classify_errors` | When you have error text but didn't use `build_and_classify`, or need to re-classify after partial fixes. | Classifies errors against the deterministic fix registry without building |
+| `classify_errors` | When you have error text but didn't use `build_and_classify`, or need to re-classify after partial fixes. | Classifies a batch of errors against the deterministic fix registry without building |
 | `batch_fix` | **Immediately after `build_and_classify` returns deterministic errors.** Pass all deterministic fixes in one call. | Applies multiple deterministic fixes (regex, using add/remove, nullable) in one atomic call |
 | `regex_replacement` | When `classify_errors` suggests `regex_replacement` tool, or when you identify a pattern substitution. Use for field renames (`_pipeline`→`Pipeline`), type replacements (`ResponseWithHeaders<T,H>`→`Response<T>`), namespace fixes (`Models.Models`→`Models`), `ToRequestContent` removal, `FromResponse` replacement, `FromCancellationToken` replacement. | Regex find/replace in a file |
 | `add_using_directive` | When `classify_errors` suggests `add_using_directive`, or when you see CS0246/CS0103 for a known type. The registry knows 45+ type→namespace mappings (e.g., `HttpPipeline`→`Azure.Core.Pipeline`, `Response`→`Azure`, `ClientResult`→`System.ClientModel`). | Adds a missing `using` directive to a file |
@@ -62,10 +62,10 @@ Also invoke this skill when:
 | `nullable_annotation_fix` | When you see CS8625 or CS8600 errors about null conversions. | Adds `?` nullable annotation to the type on the error line |
 | `rename_codegen_type` | When you see CS0246 for `*ModelFactory` or `*ClientBuilderExtensions` with a mismatch between custom and generated names. | Updates the `[CodeGenType]` attribute to match the generated type |
 | `fetch_to_fromlro` | When you see CS0103/CS1061 for `Fetch` method calls in custom LRO code. | Replaces `Fetch(response)` with `Model.FromLroResponse(response)` |
-| `parse_build_output` | When you have raw build output text and need structured errors. Rarely needed — prefer `build_and_classify`. | Parses raw MSBuild output into structured error objects |
+
 | `run_code_generation` | **After spec/TypeSpec changes or after modifying CodeGen* attributes.** Must regenerate before rebuilding. | Runs `dotnet build /t:generateCode` |
 | `validate_tsp_config` | Before code generation, to ensure `tspconfig.yaml` has the correct emitter. | Validates and optionally fixes `tspconfig.yaml` emitter configuration |
-| `commit_iteration` | At migration start, to find a spec commit with valid tspconfig. Usually called once. | Iterates through spec repo commits to find one with valid emitter config |
+| `commit_iteration` | At migration start, to find a spec commit with valid tspconfig. Usually called once. If the user provides a commit SHA, pass it as `commitOverride` to skip iteration. | Iterates through spec repo commits to find one with valid emitter config |
 | `pregen_cleanup` | Before first code generation. Removes AutoRest artifacts from `.csproj`. | Removes `IncludeAutorestDependency` from `.csproj` files |
 | `migrate_test_samples` | After src builds successfully, before building tests. | Moves test samples from `Generated/Samples/` to `Samples/` |
 | `finalize_migration` | After ALL builds succeed (src and tests). Last step of migration. | Runs `Export-API.ps1` and `Update-Snippets.ps1` |
@@ -118,6 +118,7 @@ This is the complete migration flow using MCP tools. **You (the LLM) are the orc
 
 3. Call `commit_iteration` with SDK path, tsp-location.yaml path, specs dir, and local specs path
    → Finds a spec commit with valid tspconfig (or creates fallback)
+   → If the user provided a specific commit SHA, pass it as `commitOverride` to skip iteration entirely
 
 4. Call `run_code_generation` with the project path
    → Generates code from TypeSpec specs

@@ -13,9 +13,10 @@ namespace Azure.GeneratorAgent.Mcp.Tools;
 [McpServerToolType]
 public static class ClassifyErrorsTool
 {
-    [McpServerTool(Name = "classify_errors"), Description("Classify a batch of build errors. Returns each error classified as deterministic or requires-reasoning.")]
+    [McpServerTool(Name = "classify_errors"), Description("Classify a batch of build errors. Returns each error classified as deterministic or requires-reasoning. Provide projectPath for dynamic type resolution from Generated/ code.")]
     public static string Execute(
-        [Description("JSON array of BuildError objects")] string errorsJson)
+        [Description("JSON array of BuildError objects")] string errorsJson,
+        [Description("Optional: absolute path to the project directory for dynamic type resolution from Generated/ code")] string? projectPath = null)
     {
         try
         {
@@ -25,15 +26,9 @@ public static class ClassifyErrorsTool
                 return JsonSerializer.Serialize(new { success = false, error = "Failed to deserialize error array" });
             }
 
-            var classified = errors.Select(DeterministicFixRegistry.Classify).ToList();
-            var deterministicCount = 0;
-            foreach (var c in classified)
-            {
-                if (c.IsDeterministic)
-                {
-                    deterministicCount++;
-                }
-            }
+            var index = projectPath is not null ? GeneratedCodeIndex.Build(projectPath) : null;
+            var classified = errors.Select(e => DeterministicFixRegistry.Classify(e, index)).ToList();
+            var deterministicCount = classified.Count(c => c.IsDeterministic);
 
             return JsonSerializer.Serialize(new
             {

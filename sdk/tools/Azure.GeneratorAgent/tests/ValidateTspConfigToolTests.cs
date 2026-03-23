@@ -64,7 +64,7 @@ public class ValidateTspConfigToolTests
     }
 
     [Test]
-    public void ValidateInProcess_WrongNamespace_ReturnsInvalid()
+    public void ValidateInProcess_DifferentNamespace_StillValid()
     {
         var configPath = Path.Combine(_tempDir, "tspconfig.yaml");
         File.WriteAllText(configPath, """
@@ -77,11 +77,7 @@ public class ValidateTspConfigToolTests
 
         var result = ValidateTspConfigTool.ValidateInProcess(configPath, "Azure.Test.Service");
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(result.IsValid, Is.False);
-            Assert.That(result.Reason, Does.Contain("Namespace").IgnoreCase);
-        });
+        Assert.That(result.IsValid, Is.True);
     }
 
     [Test]
