@@ -233,7 +233,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         var initializer = signature.Initializer;
         if (initializer is not null)
         {
-            var oldParam = signature.Parameters[ctorParamIndex];
             var updatedArgs = initializer.Arguments.Select(
                 arg => arg is VariableExpression ve && ve.Declaration.RequestedName == RawDataParameterName
                     ? (ValueExpression)newParam
