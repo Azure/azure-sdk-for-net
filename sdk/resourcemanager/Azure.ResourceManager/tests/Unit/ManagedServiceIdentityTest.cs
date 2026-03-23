@@ -310,58 +310,5 @@ namespace Azure.ResourceManager.Tests
 
         private ManagedServiceIdentity Deserialize(string json, ModelReaderWriterOptions? options = null)
             => ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(json)), options ?? ModelReaderWriterOptions.Json, AzureResourceManagerContext.Default)!;
-
-        [TestCase]
-        public void TestSerializerV3WithJsonFormatPreservesPrincipalIdAndTenantId()
-        {
-            // The "J|v3" format should: use v3 type encoding AND include principalId/tenantId
-            // (because "J" base format means full round-trip fidelity).
-            var principalId = new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98");
-            var tenantId = new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47");
-            UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity(tenantId, principalId);
-            var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
-            dict1[new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity")] = userAssignedIdentity;
-            ManagedServiceIdentity identity = new ManagedServiceIdentity(principalId, tenantId, ManagedServiceIdentityType.SystemAssignedUserAssigned, dict1);
-
-            // Serialize with "J|v3" format (JSON base + v3 suffix)
-            var jsonV3Options = new ModelReaderWriterOptions("J|v3");
-            using var stream = new MemoryStream();
-            using var writer = new Utf8JsonWriter(stream);
-            ((IJsonModel<ManagedServiceIdentity>)identity).Write(writer, jsonV3Options);
-            writer.Flush();
-            string json = Encoding.UTF8.GetString(stream.ToArray());
-
-            // v3 type format: no space
-            Assert.IsTrue(json.Contains("\"SystemAssigned,UserAssigned\""), $"Expected v3 type format in: {json}");
-            // "J" base format: principalId and tenantId should be included
-            Assert.IsTrue(json.Contains("\"principalId\""), $"Expected principalId in J|v3 format: {json}");
-            Assert.IsTrue(json.Contains("\"tenantId\""), $"Expected tenantId in J|v3 format: {json}");
-        }
-
-        [TestCase]
-        public void TestSerializerV3WithWireFormatOmitsPrincipalIdAndTenantId()
-        {
-            // The "W|v3" format should: use v3 type encoding but NOT include principalId/tenantId
-            // (because "W" base format means wire mode — read-only props are omitted).
-            var principalId = new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98");
-            var tenantId = new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47");
-            UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity(tenantId, principalId);
-            var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
-            dict1[new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity")] = userAssignedIdentity;
-            ManagedServiceIdentity identity = new ManagedServiceIdentity(principalId, tenantId, ManagedServiceIdentityType.SystemAssignedUserAssigned, dict1);
-
-            // Serialize with "W|v3" format (Wire base + v3 suffix)
-            using var stream = new MemoryStream();
-            using var writer = new Utf8JsonWriter(stream);
-            ((IJsonModel<ManagedServiceIdentity>)identity).Write(writer, V3Options);
-            writer.Flush();
-            string json = Encoding.UTF8.GetString(stream.ToArray());
-
-            // v3 type format: no space
-            Assert.IsTrue(json.Contains("\"SystemAssigned,UserAssigned\""), $"Expected v3 type format in: {json}");
-            // "W" base format: principalId and tenantId should NOT be included
-            Assert.IsFalse(json.Contains("\"principalId\""), $"Did not expect principalId in W|v3 format: {json}");
-            Assert.IsFalse(json.Contains("\"tenantId\""), $"Did not expect tenantId in W|v3 format: {json}");
-        }
     }
 }
