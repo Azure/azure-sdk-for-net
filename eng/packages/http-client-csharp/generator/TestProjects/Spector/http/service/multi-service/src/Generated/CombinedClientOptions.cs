@@ -13,15 +13,15 @@ namespace Service.MultiService.Combined
 {
     public partial class CombinedClientOptions : ClientOptions
     {
-        private const ServiceAVersion LatestServiceAVersion = ServiceAVersion.Vav2;
-        private const ServiceBVersion LatestServiceBVersion = ServiceBVersion.Vbv2;
+        private const ServiceMultiServiceServiceAVersion LatestServiceMultiServiceServiceAVersion = ServiceMultiServiceServiceAVersion.Vav2;
+        private const ServiceMultiServiceServiceBVersion LatestServiceMultiServiceServiceBVersion = ServiceMultiServiceServiceBVersion.Vbv2;
 
-        public CombinedClientOptions(ServiceAVersion serviceAVersion = LatestServiceAVersion, ServiceBVersion serviceBVersion = LatestServiceBVersion) => throw null;
+        public CombinedClientOptions(ServiceMultiServiceServiceAVersion serviceMultiServiceServiceAVersion = LatestServiceMultiServiceServiceAVersion, ServiceMultiServiceServiceBVersion serviceMultiServiceServiceBVersion = LatestServiceMultiServiceServiceBVersion) => throw null;
 
         [Experimental("SCME0002")]
         internal CombinedClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
-        public enum ServiceAVersion
+        public enum ServiceMultiServiceServiceAVersion
         {
             /// <summary> Vav1. </summary>
             Vav1 = 1,
@@ -29,7 +29,7 @@ namespace Service.MultiService.Combined
             Vav2 = 2
         }
 
-        public enum ServiceBVersion
+        public enum ServiceMultiServiceServiceBVersion
         {
             /// <summary> Vbv1. </summary>
             Vbv1 = 1,

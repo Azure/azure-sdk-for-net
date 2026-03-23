@@ -99,7 +99,6 @@ namespace Azure.Search.Documents.Indexes
 
             options ??= new SearchClientOptions();
             _endpoint = endpoint;
-            _keyCredential = credential;
             _serializer = options.Serializer;
             ClientDiagnostics = new ClientDiagnostics(options);
             Pipeline = options.Build(credential);
@@ -128,7 +127,6 @@ namespace Azure.Search.Documents.Indexes
 
             options ??= new SearchClientOptions();
             _endpoint = endpoint;
-            _tokenCredential = tokenCredential;
             _serializer = options.Serializer;
             ClientDiagnostics = new ClientDiagnostics(options);
             Pipeline = options.Build(tokenCredential);
@@ -177,6 +175,22 @@ namespace Azure.Search.Documents.Indexes
             ClientDiagnostics = diagnostics;
             Pipeline = pipeline;
             _apiVersion = version.ToVersionString();
+        }
+
+        /// <summary> Initializes a new instance of SearchIndexClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal SearchIndexClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, SearchClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new SearchClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            _apiVersion = options.Version.ToVersionString();
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary>
