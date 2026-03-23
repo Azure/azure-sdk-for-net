@@ -1,16 +1,15 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.1.2 (2026-03-25)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Make `Azure.ResourceManager.DevTestLabs` AOT-compatible.
 
 ### Other Changes
 
-Migrated to TypeSpec-based code generation.
+- Upgraded dependent Azure.Core to 1.51.1.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.1.1 (2024-12-24)
 
