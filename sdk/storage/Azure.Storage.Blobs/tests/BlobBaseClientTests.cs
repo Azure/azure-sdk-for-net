@@ -9,10 +9,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
@@ -1767,6 +1769,145 @@ namespace Azure.Storage.Blobs.Test
                 AutoValidateChecksum = true
             };
             await blob.DownloadToAsync(resultStream, options);
+        }
+
+        [RecordedTest]
+        public async Task DownloadToAsync_DisableDataLocality()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var data = GetRandomBuffer(20 * Constants.MB);
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            using (var resultStream = new MemoryStream())
+            {
+                BlobDownloadToOptions options = new()
+                {
+                    TransferOptions = new StorageTransferOptions
+                    {
+                        MaximumConcurrency = 10,
+                        InitialTransferSize = 3 * Constants.MB,
+                        MaximumTransferSize = 5 * Constants.MB
+                    },
+                };
+                await blob.DownloadToAsync(resultStream, options);
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+        }
+
+        [RecordedTest]
+        public async Task DownloadToAsync_EnableDataLocality()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var data = GetRandomBuffer(20 * Constants.MB);
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            using (var resultStream = new MemoryStream())
+            {
+                BlobDownloadToOptions options = new()
+                {
+                    EnableDataLocality = true,
+                    TransferOptions = new StorageTransferOptions
+                    {
+                        MaximumConcurrency = 10,
+                        InitialTransferSize = 3 * Constants.MB,
+                        MaximumTransferSize = 5 * Constants.MB
+                    },
+                };
+                await blob.DownloadToAsync(resultStream, options);
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+        }
+
+        [RecordedTest]
+        public async Task DownloadToAsync_EnableDataLocality_WithRequestAsserts()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Add a tracking policy that sits after DataLocalityPolicy in the pipeline
+            // to capture the rewritten host/port and Host header on each request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(blob.Uri, credential, options));
+
+            string originalHost = blob.Uri.Host;
+
+            using (var resultStream = new MemoryStream())
+            {
+                BlobDownloadToOptions downloadOptions = new()
+                {
+                    EnableDataLocality = true,
+                    TransferOptions = new StorageTransferOptions
+                    {
+                        MaximumConcurrency = 10,
+                        InitialTransferSize = 3 * Constants.MB,
+                        MaximumTransferSize = 5 * Constants.MB
+                    },
+                };
+                await downloadBlob.DownloadToAsync(resultStream, downloadOptions);
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+
+            // Filter to requests where DataLocalityPolicy rewrote the host
+            // (indicated by the presence of a Host header).
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests =
+                trackingPolicy.TrackedRequests.Where(r => r.HasHostHeader).ToList();
+
+            // When the service returns a download hint, subsequent chunk requests
+            // should be rewritten. Only assert when rewriting actually occurred
+            // (There is a chance the service may not return a layout hint in all environments).
+            if (rewrittenRequests.Count > 0)
+            {
+                // Given 3MB of initial transfer size and 5MB of max transfer size,
+                // the 20MB blob should be downloaded in 1 + 4 subsequent chunks,
+                // which should 4 rewrites.
+                Assert.AreEqual(4, rewrittenRequests.Count);
+
+                foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
+                {
+                    // The URI host and port should have been rewritten to the ideal endpoint
+                    Assert.AreNotEqual(originalHost, req.RequestHost,
+                        $"Request URI host should be rewritten to ideal endpoint, not '{originalHost}'");
+                    Assert.Greater(req.RequestPort, 0,
+                        "Request URI port should be set by DataLocalityPolicy");
+
+                    // The Host header must preserve the original host
+                    Assert.AreEqual(originalHost, req.HostHeaderValue,
+                        $"Host header should be the original host '{originalHost}', not the ideal endpoint");
+                    Assert.AreNotEqual(req.RequestHost, req.HostHeaderValue,
+                        "Host header should differ from the rewritten URI host");
+                }
+            }
         }
 
         [RecordedTest]
@@ -4318,16 +4459,610 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
 
             // Act
-            HttpRange range = new HttpRange(0, 2048);
-            Response<BlobProperties> response = await blob.GetLayoutAsync(range);
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreNotEqual(default(ETag), blobLayoutInfo.ETag);
+                Assert.AreEqual(size, blobLayoutInfo.BlobContentLength);
+                Assert.AreEqual(BlobType.Block, blobLayoutInfo.BlobType);
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.CreatedOn);
+                Assert.IsTrue(blobLayoutInfo.IsServerEncrypted);
+                Assert.AreEqual(LeaseStatus.Unlocked, blobLayoutInfo.LeaseStatus);
+                Assert.AreEqual(LeaseState.Available, blobLayoutInfo.LeaseState);
+                Assert.NotNull(blobLayoutInfo.Ranges);
+                Assert.NotNull(blobLayoutInfo.Endpoints);
+            }
+        }
 
-            // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+        [RecordedTest]
+        public async Task GetLayoutAsync_EmptyBlob()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 0;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.Null(blobLayoutInfo.Ranges);
+                Assert.Null(blobLayoutInfo.Endpoints);
+                Assert.Null(blobLayoutInfo.Marker);
+                Assert.Null(blobLayoutInfo.NextMarker);
+                Assert.Null(blobLayoutInfo.MaxResults);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_ReturnsRangesAndEndpoints()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.IsNotNull(blobLayoutInfo.Ranges);
+                Assert.IsNotNull(blobLayoutInfo.Endpoints);
+
+                // Verify ranges have valid start/end byte offsets
+                Assert.IsNotEmpty(blobLayoutInfo.Ranges.Range);
+                foreach (BlobLayoutRangesRangeItem rangeItem in blobLayoutInfo.Ranges.Range)
+                {
+                    Assert.GreaterOrEqual(rangeItem.Start, 0);
+                    Assert.Greater(rangeItem.End, rangeItem.Start);
+                }
+
+                // Verify ranges are contiguous and cover byte 0 through size-1
+                Assert.AreEqual(0, blobLayoutInfo.Ranges.Range[0].Start);
+                for (int i = 1; i < blobLayoutInfo.Ranges.Range.Count; i++)
+                {
+                    Assert.AreEqual(blobLayoutInfo.Ranges.Range[i - 1].End + 1, blobLayoutInfo.Ranges.Range[i].Start);
+                }
+                Assert.AreEqual(size - 1, blobLayoutInfo.Ranges.Range[blobLayoutInfo.Ranges.Range.Count - 1].End);
+
+                // Verify endpoints are present and each range's EndpointIndex resolves
+                Assert.IsNotEmpty(blobLayoutInfo.Endpoints.Endpoint);
+                Dictionary<int, string> endpointMap = new Dictionary<int, string>();
+                foreach (BlobLayoutEndpointsEndpointItem ep in blobLayoutInfo.Endpoints.Endpoint)
+                {
+                    Assert.IsNotNull(ep.Value);
+                    Assert.IsNotEmpty(ep.Value);
+                    endpointMap[ep.Index] = ep.Value;
+                }
+                foreach (BlobLayoutRangesRangeItem rangeItem in blobLayoutInfo.Ranges.Range)
+                {
+                    Assert.IsTrue(endpointMap.ContainsKey(rangeItem.EndpointIndex),
+                        $"Range [{rangeItem.Start}-{rangeItem.End}] references EndpointIndex {rangeItem.EndpointIndex} not found in endpoints");
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_MaxPageSize()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Act
+            int maxPageSize = 1;
+            await foreach (Page<BlobLayoutInfo> page in blob.GetLayoutAsync().AsPages(pageSizeHint: maxPageSize))
+            {
+                foreach (BlobLayoutInfo blobLayoutInfo in page.Values)
+                {
+                    // Assert
+                    Assert.AreEqual(maxPageSize, blobLayoutInfo.MaxResults);
+                    Assert.AreEqual(maxPageSize, blobLayoutInfo.Ranges.Range.Count);
+                    Assert.AreEqual(maxPageSize, blobLayoutInfo.Endpoints.Endpoint.Count);
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_ContinuationToken()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Act
+            Page<BlobLayoutInfo> page1 = blob.GetLayoutAsync().AsPages(pageSizeHint: 1).FirstAsync().GetAwaiter().GetResult();
+            BlobLayoutInfo blobLayoutInfo1 = page1.Values.First();
+            Assert.AreEqual(1, blobLayoutInfo1.Ranges.Range.Count);
+
+            string continuationToken = blobLayoutInfo1.NextMarker;
+            ETag prevETag = blobLayoutInfo1.ETag;
+            BlobRequestConditions conditions = new BlobRequestConditions().WithIfMatch(prevETag);
+            Page <BlobLayoutInfo> page2 = blob.GetLayoutAsync(conditions: conditions).AsPages(continuationToken: continuationToken).FirstAsync().GetAwaiter().GetResult();
+            BlobLayoutInfo blobLayoutInfo2 = page2.Values.First();
+            Assert.AreEqual(continuationToken, blobLayoutInfo2.Marker);
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_Ranged_ValidatesRange()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            long rangeOffset = 3 * Constants.MB;
+            long rangeCount = size - rangeOffset;
+            HttpRange range = new HttpRange(rangeOffset, rangeCount);
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(range))
+            {
+                // Assert
+                Assert.IsNotNull(blobLayoutInfo.Ranges);
+                Assert.IsNotEmpty(blobLayoutInfo.Ranges.Range);
+
+                // Verify range coverage is scoped to the requested range
+                Assert.AreEqual(blobLayoutInfo.Ranges.Range[0].Start, rangeOffset);
+                long rangeEnd = rangeOffset + rangeCount - 1;
+                Assert.AreEqual(blobLayoutInfo.Ranges.Range[blobLayoutInfo.Ranges.Range.Count - 1].End, rangeEnd);
+
+                // Verify endpoints are returned and resolvable
+                Assert.IsNotNull(blobLayoutInfo.Endpoints);
+                Assert.IsNotEmpty(blobLayoutInfo.Endpoints.Endpoint);
+                foreach (BlobLayoutEndpointsEndpointItem ep in blobLayoutInfo.Endpoints.Endpoint)
+                {
+                    Assert.IsNotNull(ep.Value);
+                    Assert.IsNotEmpty(ep.Value);
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_Error()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetLayoutAsync().ToListAsync(),
+                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_AccessConditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                long size = 5 * Constants.KB;
+                var data = GetRandomBuffer(size);
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadAsync(stream);
+                }
+
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                BlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(
+                    conditions: accessConditions))
+                {
+                    // Assert
+                    Assert.IsNotNull(blobLayoutInfo.ETag);
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_AccessConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                long size = 5 * Constants.KB;
+                var data = GetRandomBuffer(size);
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadAsync(stream);
+                }
+
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
+
+                // Act
+                await TestHelper.CatchAsync<Exception>(
+                    async () =>
+                    {
+                        await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(
+                            conditions: accessConditions))
+                        {
+                            // intentionally empty
+                        }
+                    });
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetLayoutAsync_IfTags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(
+                conditions: conditions))
+            {
+                // Assert
+                Assert.IsNotNull(blobLayoutInfo.ETag);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetLayoutAsync_IfTagsFailed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetLayoutAsync(conditions: conditions).ToListAsync(),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_Lease()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+            await InstrumentClient(blob.GetBlobLeaseClient(leaseId)).AcquireAsync(duration);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(
+                conditions: conditions))
+            {
+                // Assert
+                Assert.AreEqual(LeaseStatus.Locked, blobLayoutInfo.LeaseStatus);
+                Assert.AreEqual(LeaseState.Leased, blobLayoutInfo.LeaseState);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_LeaseFailed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetLayoutAsync(conditions: conditions).ToListAsync(),
+                e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_Metadata()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            IDictionary<string, string> metadata = BuildMetadata();
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream, metadata: metadata);
+            }
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.CreatedOn);
+                Assert.AreEqual(BlobType.Block, blobLayoutInfo.BlobType);
+                Assert.AreEqual(size, blobLayoutInfo.BlobContentLength);
+                Assert.IsTrue(blobLayoutInfo.IsServerEncrypted);
+                Assert.AreEqual(LeaseStatus.Unlocked, blobLayoutInfo.LeaseStatus);
+                Assert.AreEqual(LeaseState.Available, blobLayoutInfo.LeaseState);
+                Assert.IsNotNull(blobLayoutInfo.Metadata);
+                AssertDictionaryEquality(metadata, blobLayoutInfo.Metadata);
+            }
+        }
+
+        [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
+        public async Task GetLayoutAsync_CPK()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, blobLayoutInfo.EncryptionKeySha256);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task GetLayoutAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreEqual(TestConfigDefault.EncryptionScope, blobLayoutInfo.EncryptionScope);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(null)]
+        [TestCase(RehydratePriority.Standard)]
+        [TestCase(RehydratePriority.High)]
+        public async Task GetLayoutAsync_RehydratePriority(RehydratePriority? rehydratePriority)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            if (rehydratePriority.HasValue)
+            {
+                await blob.SetAccessTierAsync(
+                    AccessTier.Archive);
+
+                await blob.SetAccessTierAsync(
+                    AccessTier.Hot,
+                    rehydratePriority: rehydratePriority.Value);
+            }
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreEqual(rehydratePriority.HasValue ? rehydratePriority.Value.ToString() : null, blobLayoutInfo.RehydratePriority);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetLayoutAsync_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            IDictionary<string, string> tags = BuildTags();
+            await blob.SetTagsAsync(tags);
+
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreEqual(tags.Count, blobLayoutInfo.TagCount);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_BlobSAS()
+        {
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName);
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            BlockBlobClient sasBlob = InstrumentClient(
+                GetServiceClient_BlobServiceSas_Blob(
+                    containerName: containerName,
+                    blobName: blobName)
+                .GetBlobContainerClient(containerName)
+                .GetBlockBlobClient(blobName));
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in sasBlob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.NotNull(blobLayoutInfo.ETag);
+            }
         }
 
         [RecordedTest]
@@ -8774,6 +9509,264 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blobClient.GetAccountInfoAsync(),
                 e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+        }
+
+        [Test]
+        public void ToBlobLayoutSegments_ReturnsNullOrEmpty()
+        {
+            BlobLayoutInfo info1 = null;
+            BlobLayoutSegment[] result1 = info1.ToBlobLayoutSegments();
+            Assert.IsNull(result1);
+
+            BlobLayoutInfo info2 = new BlobLayoutInfo
+            {
+                Ranges = null,
+                Endpoints = null,
+            };
+            BlobLayoutSegment[] result2 = info2.ToBlobLayoutSegments();
+            Assert.IsEmpty(result2);
+
+            BlobLayoutInfo info3 = new BlobLayoutInfo
+            {
+                Ranges = BlobsModelFactory.BlobLayoutRanges(Array.Empty<BlobLayoutRangesRangeItem>()),
+                Endpoints = BlobsModelFactory.BlobLayoutEndpoints(Array.Empty<BlobLayoutEndpointsEndpointItem>()),
+            };
+            BlobLayoutSegment[] result3 = info3.ToBlobLayoutSegments();
+            Assert.IsEmpty(result3);
+        }
+
+        [Test]
+        public void ToBlobLayoutSegments_MultipleRanges()
+        {
+            BlobLayoutInfo info = new BlobLayoutInfo
+            {
+                Ranges = BlobsModelFactory.BlobLayoutRanges(new[]
+                {
+                    BlobsModelFactory.BlobLayoutRangesRangeItem(start: 0, end: 299, endpointIndex: 0),
+                    BlobsModelFactory.BlobLayoutRangesRangeItem(start: 300, end: 499, endpointIndex: 1),
+                    BlobsModelFactory.BlobLayoutRangesRangeItem(start: 500, end: 799, endpointIndex: 2),
+                }),
+                Endpoints = BlobsModelFactory.BlobLayoutEndpoints(new[]
+                {
+                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 2, value: "host-c:443"),
+                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 0, value: "host-a:443"),
+                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 1, value: "host-b:443")
+                }),
+            };
+
+            BlobLayoutSegment[] result = info.ToBlobLayoutSegments();
+
+            Assert.AreEqual(3, result.Length);
+
+            Assert.AreEqual(0, result[0].Start);
+            Assert.AreEqual(299, result[0].End);
+            Assert.AreEqual("host-a:443", result[0].Endpoint);
+
+            Assert.AreEqual(300, result[1].Start);
+            Assert.AreEqual(499, result[1].End);
+            Assert.AreEqual("host-b:443", result[1].Endpoint);
+
+            Assert.AreEqual(500, result[2].Start);
+            Assert.AreEqual(799, result[2].End);
+            Assert.AreEqual("host-c:443", result[2].Endpoint);
+        }
+
+        [Test]
+        public void ToBlobLayoutSegments_SharedEndpoint()
+        {
+            BlobLayoutInfo info = new BlobLayoutInfo
+            {
+                Ranges = BlobsModelFactory.BlobLayoutRanges(new[]
+                {
+                    BlobsModelFactory.BlobLayoutRangesRangeItem(start: 0, end: 999, endpointIndex: 0),
+                    BlobsModelFactory.BlobLayoutRangesRangeItem(start: 1000, end: 1999, endpointIndex: 1),
+                    BlobsModelFactory.BlobLayoutRangesRangeItem(start: 2000, end: 2999, endpointIndex: 0),
+                }),
+                Endpoints = BlobsModelFactory.BlobLayoutEndpoints(new[]
+                {
+                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 0, value: "host-a:443"),
+                    BlobsModelFactory.BlobLayoutEndpointsEndpointItem(index: 1, value: "host-b:443"),
+                }),
+            };
+
+            BlobLayoutSegment[] result = info.ToBlobLayoutSegments();
+
+            Assert.AreEqual(3, result.Length);
+
+            Assert.AreEqual(0, result[0].Start);
+            Assert.AreEqual(999, result[0].End);
+            Assert.AreEqual("host-a:443", result[0].Endpoint);
+
+            Assert.AreEqual(1000, result[1].Start);
+            Assert.AreEqual(1999, result[1].End);
+            Assert.AreEqual("host-b:443", result[1].Endpoint);
+
+            Assert.AreEqual(2000, result[2].Start);
+            Assert.AreEqual(2999, result[2].End);
+            Assert.AreEqual("host-a:443", result[2].Endpoint);
+        }
+
+        [Test]
+        public void GetIdealEndpoint_ReturnsNull()
+        {
+            // Arrange
+            BlobBaseClient client = new BlobBaseClient(new Uri("https://account.blob.core.windows.net/container/blob"));
+
+            // Act
+            string result1 = client.GetIdealEndpoint(new HttpRange(0, 100), layoutSegments: null);
+            string result2 = client.GetIdealEndpoint(new HttpRange(0, 100), layoutSegments: Array.Empty<BlobLayoutSegment>());
+
+            // Assert
+            Assert.IsNull(result1);
+            Assert.IsNull(result2);
+        }
+
+        [Test]
+        public void GetIdealEndpoint_ChunkAlignWithSegment()
+        {
+            // Arrange
+            BlobBaseClient client = new BlobBaseClient(new Uri("https://account.blob.core.windows.net/container/blob"));
+            var segments = new[]
+            {
+                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = "host-a:443" },
+                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = "host-b:443" },
+                new BlobLayoutSegment { Start = 2000, End = 2999, Endpoint = "host-c:443" }
+            };
+
+            // Act
+            string result1 = client.GetIdealEndpoint(new HttpRange(2000, 1000), segments);
+            string result2 = client.GetIdealEndpoint(new HttpRange(0, 1000), segments);
+
+            // Assert
+            Assert.AreEqual("host-c:443", result1);
+            Assert.AreEqual("host-a:443", result2);
+        }
+
+        [Test]
+        public void GetIdealEndpoint_ChunkStartMidSegment()
+        {
+            // Arrange
+            BlobBaseClient client = new BlobBaseClient(new Uri("https://account.blob.core.windows.net/container/blob"));
+            var segments = new[]
+            {
+                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = "host-a:443" },
+                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = "host-b:443" }
+            };
+
+            // Act
+            string result1 = client.GetIdealEndpoint(new HttpRange(500, 200), segments);
+            string result2 = client.GetIdealEndpoint(new HttpRange(1200, 300), segments);
+
+            // Assert
+            Assert.AreEqual("host-a:443", result1);
+            Assert.AreEqual("host-b:443", result2);
+        }
+
+        [Test]
+        public void GetIdealEndpoint_ChunkSpansMultipleSegments()
+        {
+            // Arrange
+            BlobBaseClient client = new BlobBaseClient(new Uri("https://account.blob.core.windows.net/container/blob"));
+            var segments = new[]
+            {
+                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = "host-a:443" },
+                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = "host-b:443" },
+                new BlobLayoutSegment { Start = 2000, End = 2999, Endpoint = "host-c:443" }
+            };
+
+            // Act
+            string result1 = client.GetIdealEndpoint(new HttpRange(1500, 1000), segments);
+            string result2 = client.GetIdealEndpoint(new HttpRange(500, 2000), segments);
+            string result3 = client.GetIdealEndpoint(new HttpRange(1999, 200), segments);
+
+            // Assert
+            Assert.AreEqual("host-b:443", result1);
+            Assert.AreEqual("host-a:443", result2);
+            Assert.AreEqual("host-b:443", result3);
+        }
+
+        [Test]
+        public void DataLocalityPolicy_RewritesHostAndPort_HostHeaderIsOriginal()
+        {
+            // Arrange
+            var transport = new MockTransport(new MockResponse(200));
+            var pipeline = new HttpPipeline(transport, new HttpPipelinePolicy[] { DataLocalityPolicy.Shared });
+
+            // Set HttpMessage property with IdealEndpoint
+            string idealEndpoint = "https://ideal-host.blob.core.windows.net:443";
+            using DisposableBucket disposableBucket = new();
+            disposableBucket.Add(
+                HttpPipeline.CreateHttpMessagePropertiesScope(
+                    new Dictionary<string, object>
+                    {
+                        { DataLocalityPolicy.IdealEndpointKey, idealEndpoint }
+                    }));
+
+            HttpMessage message = pipeline.CreateMessage();
+            message.Request.Uri.Reset(new Uri("https://original-host.blob.core.windows.net/container/blob"));
+
+            // Act
+            pipeline.Send(message, CancellationToken.None);
+
+            // Assert - inspect the request that MockTransport received
+            MockRequest request = transport.Requests[0];
+            Assert.AreEqual("ideal-host.blob.core.windows.net", request.Uri.Host);
+            Assert.AreEqual(443, request.Uri.Port);
+            Assert.IsTrue(request.Headers.TryGetValue("Host", out string hostHeader));
+            // Host header should still be original
+            Assert.AreEqual("original-host.blob.core.windows.net", hostHeader);
+        }
+
+        [Test]
+        public void DataLocalityPolicy_NoOp_WhenPropertyNotSet()
+        {
+            // Arrange
+            var transport = new MockTransport(new MockResponse(200));
+            var pipeline = new HttpPipeline(transport, new HttpPipelinePolicy[] { DataLocalityPolicy.Shared });
+
+            HttpMessage message = pipeline.CreateMessage();
+            message.Request.Uri.Reset(new Uri("https://original-host.blob.core.windows.net/container/blob"));
+
+            // Act - no IdealEndpoint property set
+            pipeline.Send(message, CancellationToken.None);
+
+            // Assert - inspect the request that MockTransport received
+            MockRequest request = transport.Requests[0];
+            Assert.AreEqual("original-host.blob.core.windows.net", request.Uri.Host);
+        }
+
+        /// <summary>
+        /// Pipeline policy that records the host/port and Host header of each
+        /// outgoing request. Added as PerCall after DataLocalityPolicy to observe
+        /// the rewritten values.
+        /// </summary>
+        private class DataLocalityTrackingPolicy : HttpPipelineSynchronousPolicy
+        {
+            public List<RequestInfo> TrackedRequests { get; } = new();
+
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                bool hasHostHeader = message.Request.Headers.TryGetValue("Host", out string hostValue);
+
+                lock (TrackedRequests)
+                {
+                    TrackedRequests.Add(new RequestInfo
+                    {
+                        RequestHost = message.Request.Uri.Host,
+                        RequestPort = message.Request.Uri.Port,
+                        HasHostHeader = hasHostHeader,
+                        HostHeaderValue = hostValue ?? string.Empty,
+                    });
+                }
+            }
+
+            public class RequestInfo
+            {
+                public string RequestHost { get; set; }
+                public int RequestPort { get; set; }
+                public bool HasHostHeader { get; set; }
+                public string HostHeaderValue { get; set; }
+            }
         }
 
         public IEnumerable<AccessConditionParameters> AccessConditions_Data

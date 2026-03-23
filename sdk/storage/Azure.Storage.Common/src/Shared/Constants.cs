@@ -235,6 +235,7 @@ namespace Azure.Storage
             public const int QuickQueryDownloadSize = 4 * Constants.MB;
             public const string MetadataHeaderPrefix = "x-ms-meta-";
             public const string ObjectReplicationRulesHeaderPrefix = "x-ms-or-";
+            public const string DownloadHintLayout = "layout";
 
             internal static class Append
             {

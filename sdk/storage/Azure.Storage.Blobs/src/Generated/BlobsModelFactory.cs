@@ -17,12 +17,13 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Initializes a new instance of <see cref="Models.BlobLayout"/>. </summary>
         /// <param name="ranges"></param>
         /// <param name="endpoints"></param>
+        /// <param name="marker"> The continuation marker used for this request. </param>
         /// <param name="nextMarker"> If the number of ranges exceeds MaxResults, a NextMarker is returned for use in subsequent requests to continue listing. </param>
         /// <param name="maxResults"> The maximum number of ranges to return per request. </param>
         /// <returns> A new <see cref="Models.BlobLayout"/> instance for mocking. </returns>
-        public static BlobLayout BlobLayout(BlobLayoutRanges ranges = null, BlobLayoutEndpoints endpoints = null, string nextMarker = null, int? maxResults = null)
+        public static BlobLayout BlobLayout(BlobLayoutRanges ranges = null, BlobLayoutEndpoints endpoints = null, string marker = null, string nextMarker = null, int? maxResults = null)
         {
-            return new BlobLayout(ranges, endpoints, nextMarker, maxResults);
+            return new BlobLayout(ranges, endpoints, marker, nextMarker, maxResults);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BlobLayoutRanges"/>. </summary>

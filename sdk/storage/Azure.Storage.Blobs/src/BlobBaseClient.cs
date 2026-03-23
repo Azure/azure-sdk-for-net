@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Threading;
@@ -1537,6 +1538,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="cancellationToken">
         /// Cancellation token.
         /// </param>
+        /// <param name="layoutSegments">
+        /// Optional. Layout segments from GetBlobLayout for locality-aware routing.
+        /// When provided, the download chunk is intersected with layout segments
+        /// to determine the optimal endpoint.
+        /// </param>
         /// <returns></returns>
         internal virtual async ValueTask<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             HttpRange range,
@@ -1545,7 +1551,8 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler,
             string operationName,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            IReadOnlyList<BlobLayoutSegment> layoutSegments = null)
         {
             DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
@@ -1571,6 +1578,20 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName: nameof(BlobBaseClient.DownloadStreaming),
                         parameterName: nameof(conditions));
 
+                    // The ideal endpoint from the layout segment that overlaps with the download chunk
+                    string idealEndpoint = GetIdealEndpoint(range, layoutSegments);
+
+                    // Add the ideal endpoint to the Http message properties so DataLocalityPolicy can route the request
+                    if (idealEndpoint != null)
+                    {
+                        disposableBucket.Add(
+                            HttpPipeline.CreateHttpMessagePropertiesScope(
+                                new Dictionary<string, object>
+                                {
+                                    { DataLocalityPolicy.IdealEndpointKey, idealEndpoint }
+                                }));
+                    }
+
                     // Start downloading the blob
                     Response<BlobDownloadStreamingResult> response = await StartDownloadAsync(
                         range,
@@ -1592,14 +1613,30 @@ namespace Azure.Storage.Blobs.Specialized
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
-                    ValueTask<Response<BlobDownloadStreamingResult>> Factory(long offset, bool async, CancellationToken cancellationToken)
-                        => StartDownloadAsync(
+                    async ValueTask<Response<BlobDownloadStreamingResult>> Factory(long offset, bool async, CancellationToken cancellationToken)
+                    {
+                        // Re-establish the ideal endpoint scope for retry requests,
+                        // since the original scope from disposableBucket will have
+                        // been disposed by the time retries occur.
+                        using DisposableBucket retryBucket = new();
+                        if (idealEndpoint != null)
+                        {
+                            retryBucket.Add(
+                                HttpPipeline.CreateHttpMessagePropertiesScope(
+                                    new Dictionary<string, object>
+                                    {
+                                        { DataLocalityPolicy.IdealEndpointKey, idealEndpoint }
+                                    }));
+                        }
+
+                        return await StartDownloadAsync(
                             range,
                             conditionsWithEtag,
                             validationOptions,
                             offset,
                             async,
-                            cancellationToken);
+                            cancellationToken).ConfigureAwait(false);
+                    }
                     async ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)> StructuredMessageFactory(
                         long offset, bool async, CancellationToken cancellationToken)
                     {
@@ -1690,6 +1727,54 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Dispose();
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets the endpoint of the first range within the blob layout that overlaps with the download chunk range.
+        /// Utilizes binary search to speed things up.
+        /// </summary>
+        /// <param name="chunkRange">
+        /// The download chunk range to intersect. Must have <see cref="HttpRange.Length"/> set.
+        /// </param>
+        /// <param name="layoutSegments">
+        /// Non-overlapping sorted layout segments from <see cref="GetLayout"/>. May be null or empty
+        /// when data locality is not in use. If not empty, will always cover chunkRange.
+        /// </param>
+        /// <returns>
+        /// The optimal endpoint for this chunk based on the blob layout.
+        /// </returns>
+        internal string GetIdealEndpoint(
+            HttpRange chunkRange,
+            IReadOnlyList<BlobLayoutSegment> layoutSegments)
+        {
+            if (layoutSegments == null || layoutSegments.Count == 0)
+            {
+                return null;
+            }
+
+            long chunkRangeStart = chunkRange.Offset;
+
+            // Binary search: find the first range layout segment with End >= chunkRangeStart.
+            int lo = 0, hi = layoutSegments.Count - 1;
+            int overlapIndex = layoutSegments.Count;
+            while (lo <= hi)
+            {
+                int mid = lo + (hi - lo) / 2;
+                if (layoutSegments[mid].End >= chunkRangeStart)
+                {
+                    overlapIndex = mid;
+                    hi = mid - 1;
+                }
+                else
+                {
+                    lo = mid + 1;
+                }
+            }
+
+            // Range is guaranteed to exist, return its endpoint
+            return overlapIndex == layoutSegments.Count
+                ? null // should theoretically never return null
+                : layoutSegments[overlapIndex].Endpoint;
         }
 
         /// <summary>
@@ -2628,6 +2713,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
+                options?.EnableDataLocality ?? false,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2669,6 +2755,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
+                options?.EnableDataLocality ?? false,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2709,6 +2796,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
+                options?.EnableDataLocality ?? false,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2750,6 +2838,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
+                options?.EnableDataLocality ?? false,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2980,6 +3069,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="transferValidationOverride">
         /// Override for client options on transfer validation.
         /// </param>
+        /// <param name="enableDataLocality">
+        /// Optional. When true, enables locality-aware routing for parallel downloads.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -3002,12 +3094,13 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             DownloadTransferValidationOptions transferValidationOverride = default,
+            bool enableDataLocality = false,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
             DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
 
-            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, validationOptions, progressHandler);
+            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, validationOptions, progressHandler, enableDataLocality: enableDataLocality);
 
             if (UsingClientSideEncryption)
             {
@@ -5253,8 +5346,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Pageable{BlobLayoutInfo}"/> describing the
+        /// blob's layout and properties.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -5262,16 +5355,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual Response<BlobProperties> GetLayout(
+        public virtual Pageable<BlobLayoutInfo> GetLayout(
             HttpRange range = default,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            GetLayoutInternal(
-                range,
-                conditions,
-                async: false,
-                cancellationToken)
-                .EnsureCompleted();
+            new GetLayoutAsyncCollection(
+                this,
+                range: range,
+                conditions: conditions)
+            .ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetLayoutAsync"/> operation returns all user-defined metadata,
@@ -5291,8 +5383,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="AsyncPageable{BlobLayoutInfo}"/> describing the
+        /// blob's layout and properties.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -5300,16 +5392,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual async Task<Response<BlobProperties>> GetLayoutAsync(
+        public virtual AsyncPageable<BlobLayoutInfo> GetLayoutAsync(
             HttpRange range = default,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await GetLayoutInternal(
-                range,
-                conditions,
-                async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+            new GetLayoutAsyncCollection(
+                this,
+                range: range,
+                conditions: conditions)
+            .ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetLayoutAsync"/> operation returns all user-defined metadata,
@@ -5324,6 +5415,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// listed with the current segment.  The NextMarker value can
         /// be used as the value for the <paramref name="marker"/> parameter
         /// in a subsequent call to request the next segment of list items.
+        /// </param>
+        /// <param name="maxResults">
+        /// Optional. Specifies the maximum number of ranges to return.
         /// </param>
         /// <param name="range">
         /// If provided, returns metadata only for the specified range.
@@ -5341,8 +5435,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
+        /// A <see cref="Response{BlobLayoutInfo}"/> describing the
+        /// blob's layout and properties.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -5350,8 +5444,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        internal async Task<Response<BlobProperties>> GetLayoutInternal(
+        internal async Task<Response<BlobLayoutInfo>> GetLayoutInternal(
             string marker,
+            int? maxResults,
             HttpRange range,
             BlobRequestConditions conditions,
             bool async,
@@ -5378,11 +5473,13 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    Response rawResponse;
+                    ResponseWithHeaders<BlobLayout, BlobGetLayoutHeaders> response;
 
                     if (async)
                     {
-                        rawResponse = await BlobRestClient.GetLayoutAsync(
+                        response = await BlobRestClient.GetLayoutAsync(
+                            marker: marker,
+                            maxresults: maxResults,
                             range: range.ToString(),
                             leaseId: conditions?.LeaseId,
                             ifTags: conditions?.TagConditions,
@@ -5398,7 +5495,9 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        rawResponse = BlobRestClient.GetLayout(
+                        response = BlobRestClient.GetLayout(
+                            marker: marker,
+                            maxresults: maxResults,
                             range: range.ToString(),
                             leaseId: conditions?.LeaseId,
                             ifTags: conditions?.TagConditions,
@@ -5412,11 +5511,8 @@ namespace Azure.Storage.Blobs.Specialized
                             cancellationToken: cancellationToken);
                     }
 
-                    ResponseWithHeaders<BlobGetPropertiesHeaders> response = ResponseWithHeaders.FromValue(
-                        new BlobGetPropertiesHeaders(rawResponse), rawResponse);
-
                     return Response.FromValue(
-                        response.ToBlobProperties(),
+                        response.ToBlobLayoutInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)

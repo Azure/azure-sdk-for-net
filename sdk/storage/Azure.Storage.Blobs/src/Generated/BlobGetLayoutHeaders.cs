@@ -21,6 +21,16 @@ namespace Azure.Storage.Blobs
         }
         /// <summary> Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob. </summary>
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
+        /// <summary> Returns the length of the blob in bytes. </summary>
+        public long? BlobContentLength => _response.Headers.TryGetValue("x-ms-blob-content-length", out long? value) ? value : null;
+        /// <summary> Returns the content type of the blob. </summary>
+        public string BlobContentType => _response.Headers.TryGetValue("x-ms-blob-content-type", out string value) ? value : null;
+        /// <summary> Returns the Content-Encoding of the blob. </summary>
+        public string BlobContentEncoding => _response.Headers.TryGetValue("x-ms-blob-content-encoding", out string value) ? value : null;
+        /// <summary> If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity. </summary>
+        public byte[] BlobContentMD5 => _response.Headers.TryGetValue("x-ms-blob-content-md5", out byte[] value) ? value : null;
+        /// <summary> Returns the date and time the blob was created. </summary>
+        public DateTimeOffset? BlobCreationTime => _response.Headers.TryGetValue("x-ms-blob-creation-time", out DateTimeOffset? value) ? value : null;
         /// <summary> Returns the date and time the blob was created. </summary>
         public DateTimeOffset? CreationTime => _response.Headers.TryGetValue("x-ms-creation-time", out DateTimeOffset? value) ? value : null;
         public IDictionary<string, string> Metadata => _response.Headers.TryGetValue("x-ms-meta-", out IDictionary<string, string> value) ? value : null;

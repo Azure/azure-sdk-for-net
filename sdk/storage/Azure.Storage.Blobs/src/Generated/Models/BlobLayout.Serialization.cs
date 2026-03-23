@@ -15,6 +15,7 @@ namespace Azure.Storage.Blobs.Models
         {
             BlobLayoutRanges ranges = default;
             BlobLayoutEndpoints endpoints = default;
+            string marker = default;
             string nextMarker = default;
             int? maxResults = default;
             if (element.Element("Ranges") is XElement rangesElement)
@@ -25,6 +26,10 @@ namespace Azure.Storage.Blobs.Models
             {
                 endpoints = BlobLayoutEndpoints.DeserializeBlobLayoutEndpoints(endpointsElement);
             }
+            if (element.Element("Marker") is XElement markerElement)
+            {
+                marker = (string)markerElement;
+            }
             if (element.Element("NextMarker") is XElement nextMarkerElement)
             {
                 nextMarker = (string)nextMarkerElement;
@@ -33,7 +38,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 maxResults = (int?)maxResultsElement;
             }
-            return new BlobLayout(ranges, endpoints, nextMarker, maxResults);
+            return new BlobLayout(ranges, endpoints, marker, nextMarker, maxResults);
         }
     }
 }

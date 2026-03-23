@@ -805,6 +805,118 @@ namespace Azure.Storage.Blobs
                 immutabilityPolicy: immutabilityPolicy,
                 hasLegalHold: response.Headers.LegalHold.GetValueOrDefault());
         }
+
+        internal static BlobLayoutInfo ToBlobLayoutInfo(this ResponseWithHeaders<BlobLayout, BlobGetLayoutHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy();
+            immutabilityPolicy.ExpiresOn = response.Headers.ImmutabilityPolicyExpiresOn;
+            immutabilityPolicy.PolicyMode = response.Headers.ImmutabilityPolicyMode;
+
+            return new BlobLayoutInfo
+            {
+                Ranges = response.Value?.Ranges,
+                Endpoints = response.Value?.Endpoints,
+                Marker = response.Value?.Marker,
+                NextMarker = response.Value?.NextMarker,
+                MaxResults = response.Value?.MaxResults,
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                CreatedOn = response.Headers.CreationTime.GetValueOrDefault(),
+                Metadata = response.Headers.Metadata,
+                ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
+                ObjectReplicationSourceProperties =
+                    response.Headers.ObjectReplicationRules?.Count > 0
+                    ? BlobExtensions.ParseObjectReplicationIds(response.Headers.ObjectReplicationRules)
+                    : null,
+                BlobType = response.Headers.BlobType.GetValueOrDefault(),
+                CopyCompletedOn = response.Headers.CopyCompletionTime.GetValueOrDefault(),
+                CopyStatusDescription = response.Headers.CopyStatusDescription,
+                CopyId = response.Headers.CopyId,
+                CopyProgress = response.Headers.CopyProgress,
+                CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
+                BlobCopyStatus = response.Headers.CopyStatus,
+                IsIncrementalCopy = response.Headers.IsIncrementalCopy.GetValueOrDefault(),
+                DestinationSnapshot = response.Headers.DestinationSnapshot,
+                LeaseDuration = response.Headers.LeaseDuration.GetValueOrDefault(),
+                LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
+                LeaseStatus = response.Headers.LeaseStatus.GetValueOrDefault(),
+                ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
+                ContentType = response.Headers.ContentType,
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                ContentHash = response.Headers.ContentMD5,
+                ContentEncoding = response.Headers.ContentEncoding,
+                ContentDisposition = response.Headers.ContentDisposition,
+                ContentLanguage = response.Headers.ContentLanguage,
+                CacheControl = response.Headers.CacheControl,
+                BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault(),
+                AcceptRanges = response.Headers.AcceptRanges,
+                BlobCommittedBlockCount = response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
+                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                EncryptionScope = response.Headers.EncryptionScope,
+                AccessTier = response.Headers.AccessTier,
+                AccessTierInferred = response.Headers.AccessTierInferred.GetValueOrDefault(),
+                ArchiveStatus = response.Headers.ArchiveStatus,
+                AccessTierChangedOn = response.Headers.AccessTierChangeTime.GetValueOrDefault(),
+                VersionId = response.Headers.VersionId,
+                IsLatestVersion = response.Headers.IsCurrentVersion.GetValueOrDefault(),
+                TagCount = response.Headers.TagCount.GetValueOrDefault(),
+                ExpiresOn = response.Headers.ExpiresOn.GetValueOrDefault(),
+                IsSealed = response.Headers.IsSealed.GetValueOrDefault(),
+                RehydratePriority = response.Headers.RehydratePriority,
+                LastAccessed = response.Headers.LastAccessed.GetValueOrDefault(),
+                ImmutabilityPolicy = immutabilityPolicy,
+                HasLegalHold = response.Headers.LegalHold.GetValueOrDefault(),
+                BlobContentLength = response.Headers.BlobContentLength.GetValueOrDefault(),
+                BlobContentType = response.Headers.BlobContentType,
+                BlobContentEncoding = response.Headers.BlobContentType,
+                BlobContentMD5 = response.Headers.BlobContentMD5,
+                BlobCreatedOn = response.Headers.BlobCreationTime.GetValueOrDefault()
+            };
+        }
+
+        internal static BlobLayoutSegment[] ToBlobLayoutSegments(this BlobLayoutInfo blobLayoutInfo)
+        {
+            if (blobLayoutInfo == null)
+            {
+                return null;
+            }
+
+            IReadOnlyList<BlobLayoutRangesRangeItem> ranges = blobLayoutInfo.Ranges?.Range;
+            if (ranges == null || ranges.Count == 0)
+            {
+                return Array.Empty<BlobLayoutSegment>();
+            }
+
+            // Build Dictionary for index → endpoint
+            Dictionary<int, string> indexToEndpoint = new Dictionary<int, string>();
+            if (blobLayoutInfo.Endpoints?.Endpoint != null)
+            {
+                foreach (BlobLayoutEndpointsEndpointItem endpoint in blobLayoutInfo.Endpoints.Endpoint)
+                {
+                    indexToEndpoint[endpoint.Index] = endpoint.Value;
+                }
+            }
+
+            BlobLayoutSegment[] segments = new BlobLayoutSegment[ranges.Count];
+            for (int i = 0; i < ranges.Count; i++)
+            {
+                BlobLayoutRangesRangeItem range = ranges[i];
+                indexToEndpoint.TryGetValue(range.EndpointIndex, out string endpointValue);
+                segments[i] = new BlobLayoutSegment
+                {
+                    Start = range.Start,
+                    End = range.End,
+                    Endpoint = endpointValue,
+                };
+            }
+
+            return segments;
+        }
         #endregion
 
         #region ToBlobCopyInfo
@@ -919,7 +1031,8 @@ namespace Azure.Storage.Blobs
                     LastAccessed = response.Headers.LastAccessed.GetValueOrDefault(),
                     ImmutabilityPolicy = immutabilityPolicy,
                     HasLegalHold = response.Headers.LegalHold.GetValueOrDefault(),
-                    CreatedOn = response.Headers.CreationTime.GetValueOrDefault()
+                    CreatedOn = response.Headers.CreationTime.GetValueOrDefault(),
+                    DownloadHint = response.Headers.DownloadHint
                 }
             };
         }

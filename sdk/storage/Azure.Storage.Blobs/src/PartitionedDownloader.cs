@@ -71,6 +71,11 @@ namespace Azure.Storage.Blobs
 
         private readonly ArrayPool<byte> _arrayPool;
 
+        /// <summary>
+        /// Whether locality-aware routing is enabled for this download.
+        /// </summary>
+        private readonly bool _enableDataLocality;
+
         private readonly int DefaultConcurrentTransfersCount = Math.Min(Math.Max(Environment.ProcessorCount * 2, 8), 32);
 
         public PartitionedDownloader(
@@ -78,10 +83,12 @@ namespace Azure.Storage.Blobs
             StorageTransferOptions transferOptions = default,
             DownloadTransferValidationOptions transferValidation = default,
             IProgress<long> progress = default,
-            ArrayPool<byte> arrayPool = default)
+            ArrayPool<byte> arrayPool = default,
+            bool enableDataLocality = false)
         {
             _client = client;
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
+            _enableDataLocality = enableDataLocality;
 
             // Set _maxWorkerCount
             if (transferOptions.MaximumConcurrency.HasValue
@@ -273,6 +280,23 @@ namespace Azure.Storage.Blobs
                 ETag etag = initialResponse.Value.Details.ETag;
                 BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
+                BlobLayoutSegment[] layoutSegments = null;
+
+                // When data locality is enabled and the service recommends it
+                // via the x-ms-download-hint header, fetch the blob layout so
+                // subsequent range requests can be routed to optimal endpoints.
+                if (_enableDataLocality
+                    && string.Equals(
+                        initialResponse.Value.Details.DownloadHint, Constants.Blob.DownloadHintLayout, StringComparison.InvariantCulture))
+                {
+                    layoutSegments = await FetchLayoutInternal(
+                        initialLength,
+                        totalLength,
+                        conditionsWithEtag,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+                }
+
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 // Rule checker cannot understand this section, but this
                 // massively reduces code duplication.
@@ -310,7 +334,8 @@ namespace Azure.Storage.Blobs
                             _progress,
                             _innerOperationName,
                             async,
-                            cancellationToken);
+                            cancellationToken,
+                            layoutSegments);
                     if (runningTasks != null)
                     {
                         // Add the next Task (which will start the download but
@@ -500,6 +525,60 @@ namespace Azure.Storage.Blobs
             {
                 yield return new HttpRange(offset, Math.Min(totalLength - offset, _rangeSize));
             }
+        }
+
+        /// <summary>
+        /// Fetches the blob layout for the range using
+        /// <see cref="BlobBaseClient.GetLayout"/> or <see cref="BlobBaseClient.GetLayoutAsync"/>.
+        /// Eagerly materializes all layout items into a sorted array.
+        /// If there is no layout, return null.
+        /// </summary>
+        private async Task<BlobLayoutSegment[]> FetchLayoutInternal(
+            long initialLength,
+            long totalLength,
+            BlobRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            HttpRange range = new HttpRange(initialLength, totalLength - initialLength);
+            List<BlobLayoutSegment> allSegments = new();
+            try
+            {
+                if (async)
+                {
+                    await foreach (BlobLayoutInfo layoutInfo in _client.GetLayoutAsync(range, conditions, cancellationToken).ConfigureAwait(false))
+                    {
+                        BlobLayoutSegment[] segments = layoutInfo.ToBlobLayoutSegments();
+                        allSegments.AddRange(segments);
+                    }
+                }
+                else
+                {
+                    foreach (BlobLayoutInfo layoutInfo in _client.GetLayout(range, conditions, cancellationToken))
+                    {
+                        BlobLayoutSegment[] segments = layoutInfo.ToBlobLayoutSegments();
+                        allSegments.AddRange(segments);
+                    }
+                }
+            }
+            catch (RequestFailedException ex)
+                when (ex.Status == 409 || ex.Status == 412 || ex.Status == 404 || ex.Status == 403)
+            {
+                // Fail the download
+                throw;
+            }
+            catch (RequestFailedException)
+            {
+                return null;
+            }
+
+            // 204 returns back no layout
+            if (allSegments.Count == 0)
+            {
+                return null;
+            }
+
+            return allSegments.ToArray();
         }
 
         /// <summary>

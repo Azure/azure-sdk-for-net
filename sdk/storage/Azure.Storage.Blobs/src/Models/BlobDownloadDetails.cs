@@ -214,5 +214,10 @@ namespace Azure.Storage.Blobs.Models
         /// Returns the date and time the blob was created on.
         /// </summary>
         public DateTimeOffset CreatedOn { get; internal set; }
+
+        /// <summary>
+        /// Indicates the download hint for the blob.
+        /// </summary>
+        public string DownloadHint { get; internal set; }
     }
 }
