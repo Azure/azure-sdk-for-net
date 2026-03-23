@@ -4,6 +4,7 @@
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -21,18 +22,41 @@ public class NetworkSpecification() :
         CustomizeResource<ProbeResource>(r => r.Name = "ProbeResource");
         RemoveProperty<VirtualNetworkPeeringResource>("SyncRemoteAddressSpace");
 
+        // BaseAdminRule polymorphic types (discriminator: "kind")
+        CustomizeResource<NetworkAdminRule>(r =>
+        {
+            r.BaseType = GetModel<BaseAdminRuleResource>() as TypeModel;
+            r.DiscriminatorName = "kind";
+            r.DiscriminatorValue = "Custom";
+        });
+        CustomizeResource<NetworkDefaultAdminRule>(r =>
+        {
+            r.BaseType = GetModel<BaseAdminRuleResource>() as TypeModel;
+            r.DiscriminatorName = "kind";
+            r.DiscriminatorValue = "Default";
+        });
+        RemoveProperties<NetworkAdminRule>("Id", "Name", "SystemData", "ETag");
+        RemoveProperties<NetworkDefaultAdminRule>("Id", "Name", "SystemData", "ETag");
+
+        // FirewallPolicyRuleCollectionInfo subtypes (discriminator: "ruleCollectionType")
+        CustomizeSimpleModel<FirewallPolicyFilterRuleCollectionInfo>(m => { m.DiscriminatorName = "ruleCollectionType"; m.DiscriminatorValue = "FirewallPolicyFilterRuleCollection"; });
+        CustomizeSimpleModel<FirewallPolicyNatRuleCollectionInfo>(m => { m.DiscriminatorName = "ruleCollectionType"; m.DiscriminatorValue = "FirewallPolicyNatRuleCollection"; });
+
+        // FirewallPolicyRule subtypes (discriminator: "ruleType")
+        CustomizeSimpleModel<ApplicationRule>(m => { m.DiscriminatorName = "ruleType"; m.DiscriminatorValue = "ApplicationRule"; });
+        CustomizeSimpleModel<NatRule>(m => { m.DiscriminatorName = "ruleType"; m.DiscriminatorValue = "NatRule"; });
+        CustomizeSimpleModel<NetworkRule>(m => { m.DiscriminatorName = "ruleType"; m.DiscriminatorValue = "NetworkRule"; });
+
+        // Fix readonly properties
+        CustomizeProperty<NetworkManagerResource>("Id", p => p.IsReadOnly = true);
+        CustomizeProperty<PolicySignaturesOverridesForIdpsResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
+        CustomizeProperty<PolicySignaturesOverridesForIdpsResource>("Signatures", p => p.IsReadOnly = false);
+
         // Naming requirements
-        //AddNameRequirements<ApplicationGatewayResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<ApplicationSecurityGroupResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<AzureFirewallResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<BastionHostResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<VirtualNetworkGatewayConnectionResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<ExpressRouteCircuitResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<FirewallPolicyResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<FirewallPolicyRuleCollectionGroupDraftResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<LoadBalancerResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<InboundNatRuleResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<LocalNetworkGatewayResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<NetworkInterfaceResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<NetworkSecurityGroupResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<SecurityRuleResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
@@ -42,97 +66,40 @@ public class NetworkSpecification() :
         AddNameRequirements<NetworkPrivateEndpointConnectionResource>(min: 2, max: 64, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<PublicIPAddressResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<PublicIPPrefixResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<RouteFilterResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<RouteFilterRuleResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<RouteTableResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<RouteResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<ServiceEndpointPolicyResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<VirtualNetworkGatewayResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<VirtualNetworkResource>(min: 2, max: 64, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<SubnetResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<VirtualNetworkPeeringResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<VirtualWanResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<VpnGatewayResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<VpnConnectionResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<VpnSiteResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-
-        //// Assign Roles
-        //Roles.Add(new Role("ClassicNetworkContributor", "b34d265f-36f7-4a0d-a4d4-e158ca92e90f", "Lets you manage classic networks, but not access to them."));
-        //Roles.Add(new Role("NetworkContributor", "4d97b98b-1d4f-4787-a291-c67834d212e7", "Lets you manage networks, but not access to them."));
     }
-
-    // NRP is such a large RP, we are using this hash set to only generate those critical resources for now.
-    // More resources could be added later
-    private readonly HashSet<Type> _generatedResources = new()
-    {
-        typeof(VirtualNetworkResource),
-        typeof(BackendAddressPoolResource),
-        typeof(ApplicationSecurityGroupResource),
-        typeof(NetworkInterfaceIPConfigurationResource), // NetworkInterfaceIPConfigurationResource will not be generated because it does not have a createOrUpdate method.
-        typeof(NetworkInterfaceTapConfigurationResource),
-        typeof(NetworkWatcherCollection),
-        typeof(NetworkWatcherResource),
-        typeof(FlowLogResource),
-        typeof(SubnetResource),
-        typeof(FrontendIPConfigurationResource),
-        typeof(InboundNatRuleResource),
-        typeof(NatGatewayResource),
-        typeof(NetworkInterfaceResource),
-        typeof(PublicIPAddressResource),
-        typeof(PublicIPPrefixResource),
-        typeof(NetworkSecurityGroupResource),
-        typeof(NetworkSecurityPerimeterResource),
-        typeof(NetworkSecurityPerimeterAccessRuleResource),
-        typeof(NetworkSecurityPerimeterAssociationResource),
-        typeof(NetworkSecurityPerimeterLinkResource),
-        // NetworkSecurityPerimeterLinkReferenceResource is read-only (no PUT operation)
-        typeof(NetworkSecurityPerimeterLoggingConfigurationResource),
-        typeof(NetworkSecurityPerimeterProfileResource),
-        typeof(RouteResource),
-        typeof(RouteTableResource),
-        typeof(PrivateLinkServiceResource),
-        typeof(NetworkPrivateEndpointConnectionResource),
-        typeof(VirtualNetworkTapResource),
-        typeof(VirtualNetworkPeeringResource),
-        typeof(ServiceEndpointPolicyResource),
-        typeof(ServiceEndpointPolicyDefinitionResource),
-        typeof(SecurityRuleResource),
-        typeof(PrivateEndpointResource),
-        typeof(FirewallPolicyResource),
-        typeof(LoadBalancerResource),
-        typeof(LoadBalancingRuleResource),
-        typeof(ProbeResource),
-        typeof(OutboundRuleResource),
-        typeof(PrivateDnsZoneGroupResource)
-    };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
     {
-        var allResources = base.FindConstructibleResources();
+        var resources = base.FindConstructibleResources();
 
-        var resources = new Dictionary<Type, MethodInfo>();
-        foreach (var (type, creator) in allResources)
-        {
-            if (_generatedResources.Contains(type))
-            {
-                resources.Add(type, creator);
-            }
-        }
-
-        // NetworkInterfaceIPConfigurationResource does not have a creator method, we need to add it here manually.
+        // Resources without a createOrUpdate method need workaround entries.
         resources.Add(typeof(NetworkInterfaceIPConfigurationResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateNetworkInterfaceIPConfiguration), BindingFlags.NonPublic | BindingFlags.Static)!);
         resources.Add(typeof(FrontendIPConfigurationResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateFrontendIPConfiguration), BindingFlags.NonPublic | BindingFlags.Static)!);
         resources.Add(typeof(ProbeResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateProbeResource), BindingFlags.NonPublic | BindingFlags.Static)!);
         resources.Add(typeof(LoadBalancingRuleResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateLoadBalancingRuleResource), BindingFlags.NonPublic | BindingFlags.Static)!);
         resources.Add(typeof(OutboundRuleResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateOutboundRuleResource), BindingFlags.NonPublic | BindingFlags.Static)!);
 
+        // Polymorphic resource types (BaseAdminRule discriminated subtypes)
+        resources.Add(typeof(NetworkAdminRule), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateNetworkAdminRule), BindingFlags.NonPublic | BindingFlags.Static)!);
+        resources.Add(typeof(NetworkDefaultAdminRule), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateNetworkDefaultAdminRule), BindingFlags.NonPublic | BindingFlags.Static)!);
+
         return resources;
     }
 
-    // These methods are here as a workaround to generate those resources without a createOrUpdate method.
+    // Workaround methods for resources without a createOrUpdate method.
     private static ArmOperation<NetworkInterfaceIPConfigurationResource> CreateOrUpdateNetworkInterfaceIPConfiguration() { return null!; }
     private static ArmOperation<FrontendIPConfigurationResource> CreateOrUpdateFrontendIPConfiguration() { return null!; }
     private static ArmOperation<ProbeResource> CreateOrUpdateProbeResource() { return null!; }
     private static ArmOperation<LoadBalancingRuleResource> CreateOrUpdateLoadBalancingRuleResource() { return null!; }
     private static ArmOperation<OutboundRuleResource> CreateOrUpdateOutboundRuleResource() { return null!; }
+
+    // Workaround methods for polymorphic resource subtypes.
+    private static ArmOperation<BaseAdminRuleResource> CreateOrUpdateNetworkAdminRule(NetworkAdminRule content) { return null!; }
+    private static ArmOperation<BaseAdminRuleResource> CreateOrUpdateNetworkDefaultAdminRule(NetworkDefaultAdminRule content) { return null!; }
 }
