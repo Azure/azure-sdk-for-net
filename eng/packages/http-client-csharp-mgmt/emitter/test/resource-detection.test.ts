@@ -3206,4 +3206,107 @@ interface Employees {
     ok(resolvedGadget);
     deepStrictEqual(resolvedGadget.metadata.apiVersions, ["2024-05-01"]);
   });
+
+  it("rbac roles from clientOption decorator", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Widget properties */
+model WidgetProperties {
+  /** Color of widget */
+  color?: string;
+}
+
+/** A Widget resource with RBAC roles */
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles"
+model Widget is TrackedResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Widgets {
+  get is ArmResourceRead<Widget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
+}
+
+@@clientOption(Widget, "resource-rbac-roles", #{
+  WidgetContributor: "00000000-0000-0000-0000-000000000001",
+  WidgetReader: "00000000-0000-0000-0000-000000000002",
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const widgetResource = armProviderSchema.resources[0];
+    ok(widgetResource);
+    deepStrictEqual(widgetResource.metadata.rbacRoles, [
+      {
+        name: "WidgetContributor",
+        value: "00000000-0000-0000-0000-000000000001"
+      },
+      { name: "WidgetReader", value: "00000000-0000-0000-0000-000000000002" }
+    ]);
+
+    // Also validate resolveArmResources produces the same roles
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(
+      resolvedResource.metadata.rbacRoles,
+      widgetResource.metadata.rbacRoles
+    );
+  });
+
+  it("rbac roles empty when no clientOption decorator", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Gadget properties */
+model GadgetProperties {
+  /** Size of gadget */
+  size?: int32;
+}
+
+/** A Gadget resource without RBAC roles */
+model Gadget is TrackedResource<GadgetProperties> {
+  ...ResourceNameParameter<Gadget>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Gadgets {
+  get is ArmResourceRead<Gadget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Gadget>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const gadgetResource = armProviderSchema.resources[0];
+    ok(gadgetResource);
+    deepStrictEqual(gadgetResource.metadata.rbacRoles, []);
+
+    // Also validate resolveArmResources produces empty roles
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.rbacRoles, []);
+  });
 });

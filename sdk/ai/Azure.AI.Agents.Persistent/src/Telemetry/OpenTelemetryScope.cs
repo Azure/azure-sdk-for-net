@@ -8,13 +8,10 @@ using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.IO;
 using System.Linq;
-using System.Net.Mail;
-using System.Reflection;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -1106,6 +1103,66 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             _activity?.AddEvent(new ActivityEvent(eventName, tags: new ActivityTagsCollection(attributes)));
         }
 
+        internal static Dictionary<string, string> DeserializeFunctionArguments(string arguments)
+        {
+            Dictionary<string, string> parsedArguments = [];
+            try
+            {
+                using JsonDocument argumentsJson = JsonDocument.Parse(arguments);
+                JsonElement argumentRoot = argumentsJson.RootElement;
+                if (argumentRoot.ValueKind != JsonValueKind.Object)
+                {
+                    parsedArguments["NonParseableArgument"] = arguments;
+                    return parsedArguments;
+                }
+                foreach (JsonProperty arg in argumentRoot.EnumerateObject())
+                {
+                    if (arg.Value.ValueKind == JsonValueKind.String)
+                    {
+                        parsedArguments[arg.Name] = arg.Value.GetString();
+                    }
+                    else if (arg.Value.ValueKind == JsonValueKind.Number)
+                    {
+                        parsedArguments[arg.Name] = arg.Value.GetDecimal().ToString();
+                    }
+                    else if (arg.Value.ValueKind == JsonValueKind.Array)
+                    {
+                        StringBuilder sbArray = new();
+                        foreach (JsonElement subarg in arg.Value.EnumerateArray())
+                        {
+                            if (subarg.ValueKind == JsonValueKind.String)
+                            {
+                                sbArray.Append(subarg.GetString());
+                            }
+                            else if (subarg.ValueKind == JsonValueKind.Number)
+                            {
+                                sbArray.Append(subarg.GetDecimal());
+                            }
+                            else
+                            {
+                                sbArray.Append(subarg.ToString());
+                            }
+                            sbArray.Append(", ");
+                        }
+                        if (sbArray.Length > 2)
+                        {
+                            sbArray.Remove(sbArray.Length - 2, 2);
+                        }
+                        parsedArguments[arg.Name] = sbArray.ToString();
+                    }
+                    else
+                    {
+                        parsedArguments[arg.Name] = arg.Value.ToString();
+                    }
+                }
+            }
+            catch (JsonException)
+            {
+                parsedArguments["NonParseableArgument"] = arguments;
+            }
+            return parsedArguments;
+        }
+
         /// <summary>
         /// Processes tool calls and returns a list of tool call details.
         /// </summary>
@@ -1144,7 +1201,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                                         type: toolCall.Type,
                                         function: new FunctionCall(
                                             name: functionToolCall.Name,
-                                            arguments: JsonSerializer.Deserialize(functionToolCall.Arguments, jsonTypeInfo: EventsContext.Default.DictionaryStringString)
+                                            arguments: DeserializeFunctionArguments(functionToolCall.Arguments)
                                         )
                                     ),
                                     EventsContext.Default.FunctionToolCallEvent
@@ -1178,7 +1235,18 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                                 )
                             );
                             break;
-
+                        case RunStepOpenAPIToolCall openAPIToolCall:
+                            toolCallObj = ToJsonElement(
+                                JsonSerializer.Serialize(
+                                    new GenericToolCallEvent(
+                                        id: toolCall.Id,
+                                        type: toolCall.Type,
+                                        details: openAPIToolCall.OpenAPI
+                                    ),
+                                    EventsContext.Default.GenericToolCallEvent
+                                )
+                            );
+                            break;
                         default:
                             IReadOnlyDictionary<string, string> toolCallAttributeDetails = GetToolCallAttributes(toolCall);
                             toolCallObj = ToJsonElement(

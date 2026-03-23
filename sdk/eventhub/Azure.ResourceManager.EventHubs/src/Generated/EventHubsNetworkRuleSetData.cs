@@ -13,91 +13,120 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary>
-    /// A class representing the EventHubsNetworkRuleSet data model.
-    /// Description of topic resource.
-    /// </summary>
+    /// <summary> Description of topic resource. </summary>
     public partial class EventHubsNetworkRuleSetData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetData"/>. </summary>
         public EventHubsNetworkRuleSetData()
         {
-            VirtualNetworkRules = new ChangeTrackingList<EventHubsNetworkRuleSetVirtualNetworkRules>();
-            IPRules = new ChangeTrackingList<EventHubsNetworkRuleSetIPRules>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> NetworkRuleSet properties. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="trustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
-        /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
-        /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
-        /// <param name="ipRules"> List of IpRules. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. If value is SecuredByPerimeter then Inbound and Outbound communication is controlled by the network security perimeter and profile's access rules. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, bool? trustedServiceAccessEnabled, EventHubsNetworkRuleSetDefaultAction? defaultAction, IList<EventHubsNetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<EventHubsNetworkRuleSetIPRules> ipRules, EventHubsPublicNetworkAccessFlag? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EventHubsNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkRuleSetProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Location = location;
-            TrustedServiceAccessEnabled = trustedServiceAccessEnabled;
-            DefaultAction = defaultAction;
-            VirtualNetworkRules = virtualNetworkRules;
-            IPRules = ipRules;
-            PublicNetworkAccess = publicNetworkAccess;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> NetworkRuleSet properties. </summary>
+        [WirePath("properties")]
+        internal NetworkRuleSetProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
+
         /// <summary> Value that indicates whether Trusted Service Access is Enabled or not. </summary>
         [WirePath("properties.trustedServiceAccessEnabled")]
-        public bool? TrustedServiceAccessEnabled { get; set; }
+        public bool? TrustedServiceAccessEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TrustedServiceAccessEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkRuleSetProperties();
+                }
+                Properties.TrustedServiceAccessEnabled = value.Value;
+            }
+        }
+
         /// <summary> Default Action for Network Rule Set. </summary>
         [WirePath("properties.defaultAction")]
-        public EventHubsNetworkRuleSetDefaultAction? DefaultAction { get; set; }
+        public EventHubsNetworkRuleSetDefaultAction? DefaultAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultAction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkRuleSetProperties();
+                }
+                Properties.DefaultAction = value.Value;
+            }
+        }
+
         /// <summary> List VirtualNetwork Rules. </summary>
         [WirePath("properties.virtualNetworkRules")]
-        public IList<EventHubsNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get; }
+        public IList<EventHubsNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkRuleSetProperties();
+                }
+                return Properties.VirtualNetworkRules;
+            }
+        }
+
         /// <summary> List of IpRules. </summary>
         [WirePath("properties.ipRules")]
-        public IList<EventHubsNetworkRuleSetIPRules> IPRules { get; }
+        public IList<EventHubsNetworkRuleSetIPRules> IPRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkRuleSetProperties();
+                }
+                return Properties.IPRules;
+            }
+        }
+
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. If value is SecuredByPerimeter then Inbound and Outbound communication is controlled by the network security perimeter and profile's access rules. </summary>
         [WirePath("properties.publicNetworkAccess")]
-        public EventHubsPublicNetworkAccessFlag? PublicNetworkAccess { get; set; }
+        public EventHubsPublicNetworkAccessFlag? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkRuleSetProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,13 +19,41 @@ namespace Azure.Developer.LoadTesting
     public partial class LoadTestAdministrationClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://cnt-prod.loadtesting.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of LoadTestAdministrationClient for mocking. </summary>
         protected LoadTestAdministrationClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of LoadTestAdministrationClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal LoadTestAdministrationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, LoadTestingClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new LoadTestingClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of LoadTestAdministrationClient from a <see cref="LoadTestAdministrationClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for LoadTestAdministrationClient. </param>
+        [Experimental("SCME0002")]
+        public LoadTestAdministrationClient(LoadTestAdministrationClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -2028,7 +2057,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(newTestId, nameof(newTestId));
 
-            CloneTestRequest1 spreadModel = new CloneTestRequest1(newTestId, displayName, description, default);
+            CloneTestRequest spreadModel = new CloneTestRequest(newTestId, displayName, description, default);
             Operation<BinaryData> result = CloneTest(waitUntil, testId, spreadModel, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => (LoadTest)response, ClientDiagnostics, "LoadTestAdministrationClient.CloneTest");
         }
@@ -2047,7 +2076,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(newTestId, nameof(newTestId));
 
-            CloneTestRequest1 spreadModel = new CloneTestRequest1(newTestId, displayName, description, default);
+            CloneTestRequest spreadModel = new CloneTestRequest(newTestId, displayName, description, default);
             Operation<BinaryData> result = await CloneTestAsync(waitUntil, testId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => (LoadTest)response, ClientDiagnostics, "LoadTestAdministrationClient.CloneTestAsync");
         }

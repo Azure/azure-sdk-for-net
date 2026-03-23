@@ -747,6 +747,179 @@ namespace Azure.AI.ContentUnderstanding.Tests
         }
 
         /// <summary>
+        /// Tests analyzing a document with various ContentRange page selections.
+        /// Verifies that specifying a page range limits the returned content to selected pages.
+        /// </summary>
+        [RecordedTest]
+        public async Task AnalyzeUrlAsync_DocumentContentRange()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            Uri documentUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_docs.pdf");
+
+            // Full document analysis (no ContentRange) — baseline for comparison
+            Operation<AnalysisResult> fullOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                inputs: new[] { new AnalysisInput { Uri = documentUrl } });
+
+            var fullDoc = (DocumentContent)fullOperation.Value.Contents!.First();
+
+            // ContentRange.Pages(2, 3) — page range
+            Operation<AnalysisResult> pages23Operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                inputs: new[] { new AnalysisInput { Uri = documentUrl, ContentRange = ContentRange.Pages(2, 3) } });
+
+            var pages23Doc = (DocumentContent)pages23Operation.Value.Contents!.First();
+
+            // ContentRange.PagesFrom(3) — from page 3 onward
+            Operation<AnalysisResult> pagesFrom3Operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                inputs: new[] { new AnalysisInput { Uri = documentUrl, ContentRange = ContentRange.PagesFrom(3) } });
+
+            var pagesFrom3Doc = (DocumentContent)pagesFrom3Operation.Value.Contents!.First();
+
+            // Full document should have 4 pages
+            Assert.AreEqual(4, fullDoc.Pages!.Count, "Full document should have 4 pages");
+
+            // Pages(2,3): exactly 2 pages within range
+            Assert.AreEqual(2, pages23Doc.Pages!.Count, "ContentRange.Pages(2,3) should return 2 pages");
+            Assert.AreEqual(2, pages23Doc.StartPageNumber, "Pages(2,3) should start at page 2");
+            Assert.AreEqual(3, pages23Doc.EndPageNumber, "Pages(2,3) should end at page 3");
+
+            // PagesFrom(3): pages 3 and 4
+            Assert.AreEqual(2, pagesFrom3Doc.Pages!.Count, "ContentRange.PagesFrom(3) should return 2 pages");
+            Assert.AreEqual(3, pagesFrom3Doc.StartPageNumber, "PagesFrom(3) should start at page 3");
+            Assert.AreEqual(4, pagesFrom3Doc.EndPageNumber, "PagesFrom(3) should end at page 4");
+
+            // Full document markdown should be longer than any subset
+            Assert.IsTrue(fullDoc.Markdown!.Length > pages23Doc.Markdown!.Length,
+                $"Full document markdown ({fullDoc.Markdown.Length} chars) should exceed Pages(2,3) ({pages23Doc.Markdown.Length} chars)");
+            Assert.IsTrue(fullDoc.Markdown.Length > pagesFrom3Doc.Markdown!.Length,
+                $"Full document markdown ({fullDoc.Markdown.Length} chars) should exceed PagesFrom(3) ({pagesFrom3Doc.Markdown.Length} chars)");
+        }
+
+        /// <summary>
+        /// Tests analyzing a video with different ContentRange time windows.
+        /// Verifies that the returned content is limited to the specified time range.
+        /// </summary>
+        [LiveOnly]
+        [RecordedTest]
+        public async Task AnalyzeUrlAsync_VideoContentRange()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            Uri videoUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/videos/sdk_samples/FlightSimulator.mp4");
+
+            // Full video analysis — baseline
+            Operation<AnalysisResult> fullOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[] { new AnalysisInput { Uri = videoUrl } });
+
+            var fullSegments = fullOperation.Value.Contents!.Cast<AudioVisualContent>().ToList();
+            Assert.IsTrue(fullSegments.Count > 0, "Full video should return segments");
+            Assert.IsTrue(fullSegments.All(s => s.EndTime > s.StartTime), "Full video segments should have EndTime > StartTime");
+            Assert.AreEqual(TimeSpan.Zero, fullSegments.First().StartTime, "Full video first segment should start at 0 ms");
+            // TODO: Assert exact segment count and total duration after re-recording
+
+            // ContentRange.TimeRange(0, 5s) — first 5 seconds only
+            Operation<AnalysisResult> range0to5Operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[] { new AnalysisInput { Uri = videoUrl, ContentRange = ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(5)) } });
+
+            var range0to5Segments = range0to5Operation.Value.Contents!.Cast<AudioVisualContent>().ToList();
+            Assert.IsTrue(range0to5Segments.Count > 0, "0-5s range should return segments");
+            // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, range0to5Segments.Count, "...");
+            Assert.AreEqual(TimeSpan.Zero, range0to5Segments.First().StartTime,
+                $"TimeRange(0,5s) first segment should start at exactly 0 ms, actual: {range0to5Segments.First().StartTime.TotalMilliseconds} ms");
+            Assert.IsTrue(range0to5Segments.All(s => s.EndTime > s.StartTime), "0-5s segments should have EndTime > StartTime");
+            Assert.IsTrue(range0to5Segments.All(s => !string.IsNullOrEmpty(s.Markdown)), "0-5s segments should have markdown");
+            Assert.IsTrue(range0to5Segments.All(s => s.EndTime <= TimeSpan.FromSeconds(5)),
+                $"Range(0-5s) last segment should end at <= 5000 ms, actual: {range0to5Segments.Max(s => s.EndTime).TotalMilliseconds} ms");
+            // TODO: Assert exact last segment EndTime after re-recording
+
+            // ContentRange.TimeRange(10s, 20s) — middle of the video
+            Operation<AnalysisResult> range10to20Operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[] { new AnalysisInput { Uri = videoUrl, ContentRange = ContentRange.TimeRange(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(20)) } });
+
+            var range10to20Segments = range10to20Operation.Value.Contents!.Cast<AudioVisualContent>().ToList();
+            Assert.IsTrue(range10to20Segments.Count > 0, "10-20s range should return segments");
+            // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, range10to20Segments.Count, "...");
+            Assert.AreEqual(TimeSpan.FromSeconds(10), range10to20Segments.First().StartTime,
+                $"TimeRange(10s,20s) first segment should start at exactly 10000 ms, actual: {range10to20Segments.First().StartTime.TotalMilliseconds} ms");
+            Assert.IsTrue(range10to20Segments.All(s => s.EndTime > s.StartTime), "10-20s segments should have EndTime > StartTime");
+            Assert.IsTrue(range10to20Segments.All(s => !string.IsNullOrEmpty(s.Markdown)), "10-20s segments should have markdown");
+            Assert.IsTrue(range10to20Segments.All(s => s.EndTime <= TimeSpan.FromSeconds(20)),
+                $"Range(10-20s) last segment should end at <= 20000 ms, actual: {range10to20Segments.Max(s => s.EndTime).TotalMilliseconds} ms");
+            // TODO: Assert exact last segment EndTime after re-recording
+        }
+
+        /// <summary>
+        /// Tests analyzing audio with different ContentRange time windows.
+        /// Verifies that the returned content is limited to the specified time range.
+        /// </summary>
+        [LiveOnly]
+        [RecordedTest]
+        public async Task AnalyzeUrlAsync_AudioContentRange()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            Uri audioUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/audio/callCenterRecording.mp3");
+
+            // Full audio analysis — baseline
+            Operation<AnalysisResult> fullOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[] { new AnalysisInput { Uri = audioUrl } });
+
+            Assert.AreEqual(1, fullOperation.Value.Contents!.Count, "Full audio should return exactly 1 content");
+            var fullAudio = (AudioVisualContent)fullOperation.Value.Contents!.First();
+            Assert.IsTrue(fullAudio.EndTime > fullAudio.StartTime, "Full audio should have EndTime > StartTime");
+            Assert.AreEqual(TimeSpan.Zero, fullAudio.StartTime, "Full audio should start at exactly 0 ms");
+            // TODO: Assert exact EndTime after re-recording: Assert.AreEqual(TimeSpan.FromMilliseconds(N), fullAudio.EndTime, "...");
+            Assert.IsNotNull(fullAudio.Markdown, "Full audio should have markdown");
+            Assert.IsTrue(fullAudio.Markdown!.Length > 0, "Full audio markdown should not be empty");
+
+            // ContentRange.TimeRange(0, 10s) — first 10 seconds
+            Operation<AnalysisResult> range0to10Operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[] { new AnalysisInput { Uri = audioUrl, ContentRange = ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(10)) } });
+
+            Assert.AreEqual(1, range0to10Operation.Value.Contents!.Count, "TimeRange(0,10s) audio should return exactly 1 content");
+            var range0to10Audio = (AudioVisualContent)range0to10Operation.Value.Contents!.First();
+            Assert.IsTrue(range0to10Audio.EndTime > range0to10Audio.StartTime, "0-10s range should have EndTime > StartTime");
+            Assert.IsNotNull(range0to10Audio.Markdown, "0-10s range should have markdown");
+            Assert.IsTrue(range0to10Audio.Markdown!.Length > 0, "0-10s range markdown should not be empty");
+            Assert.AreEqual(TimeSpan.Zero, range0to10Audio.StartTime,
+                $"TimeRange(0,10s) audio should start at exactly 0 ms, actual: {range0to10Audio.StartTime.TotalMilliseconds} ms");
+            Assert.IsTrue(range0to10Audio.EndTime <= TimeSpan.FromSeconds(10),
+                $"TimeRange(0,10s) audio EndTime ({range0to10Audio.EndTime.TotalMilliseconds} ms) should be <= 10000 ms");
+            // TODO: Assert exact EndTime after re-recording: Assert.AreEqual(TimeSpan.FromSeconds(10), range0to10Audio.EndTime, "...");
+
+            // ContentRange.TimeRangeFrom(10s) — from 10 seconds onward
+            Operation<AnalysisResult> rangeFrom10Operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[] { new AnalysisInput { Uri = audioUrl, ContentRange = ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(10)) } });
+
+            Assert.AreEqual(1, rangeFrom10Operation.Value.Contents!.Count, "TimeRangeFrom(10s) audio should return exactly 1 content");
+            var rangeFrom10Audio = (AudioVisualContent)rangeFrom10Operation.Value.Contents!.First();
+            Assert.IsTrue(rangeFrom10Audio.EndTime > rangeFrom10Audio.StartTime, "10s-onward range should have EndTime > StartTime");
+            Assert.IsNotNull(rangeFrom10Audio.Markdown, "10s-onward range should have markdown");
+            Assert.IsTrue(rangeFrom10Audio.Markdown!.Length > 0, "10s-onward range markdown should not be empty");
+            Assert.AreEqual(TimeSpan.FromSeconds(10), rangeFrom10Audio.StartTime,
+                $"TimeRangeFrom(10s) audio should start at exactly 10000 ms, actual: {rangeFrom10Audio.StartTime.TotalMilliseconds} ms");
+            // TODO: Assert exact EndTime after re-recording: Assert.AreEqual(TimeSpan.FromMilliseconds(N), rangeFrom10Audio.EndTime, "...");
+        }
+
+        /// <summary>
         /// Tests creating a custom analyzer with field schema.
         /// Verifies that the analyzer is created successfully with the specified configuration and fields.
         /// </summary>

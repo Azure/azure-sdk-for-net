@@ -35,6 +35,7 @@ namespace Azure.Security.KeyVault.Administration
     public partial class KeyVaultAccessControlClient
     {
         protected KeyVaultAccessControlClient() { }
+        public KeyVaultAccessControlClient(Azure.Security.KeyVault.Administration.KeyVaultAccessControlClientSettings settings) { }
         public KeyVaultAccessControlClient(System.Uri vaultUri, Azure.Core.TokenCredential credential) { }
         public KeyVaultAccessControlClient(System.Uri vaultUri, Azure.Core.TokenCredential credential, Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -57,6 +58,13 @@ namespace Azure.Security.KeyVault.Administration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition>> GetRoleDefinitionAsync(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, System.Guid roleDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition> GetRoleDefinitions(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition> GetRoleDefinitionsAsync(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class KeyVaultAccessControlClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public KeyVaultAccessControlClientSettings() { }
+        public Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions Options { get { throw null; } set { } }
+        public System.Uri VaultBaseUrl { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class KeyVaultAdministrationClientOptions : Azure.Core.ClientOptions
     {
