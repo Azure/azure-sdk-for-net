@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public partial class ServiceAlertSummary : AlertsManagementProxyResource
     {
         /// <summary> Initializes a new instance of <see cref="ServiceAlertSummary"/>. </summary>
-        internal ServiceAlertSummary()
+        public ServiceAlertSummary()
         {
         }
 
@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Group the result set. </summary>
-        public ServiceAlertSummaryGroup Properties { get; }
+        public ServiceAlertSummaryGroup Properties { get; set; }
     }
 }

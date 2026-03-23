@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertActionStatus"/>. </summary>
-        internal ServiceAlertActionStatus()
+        public ServiceAlertActionStatus()
         {
         }
 
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Value indicating whether alert is suppressed. </summary>
-        public bool? IsSuppressed { get; }
+        public bool? IsSuppressed { get; set; }
     }
 }

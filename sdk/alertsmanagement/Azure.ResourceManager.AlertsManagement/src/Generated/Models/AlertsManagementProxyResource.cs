@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AlertsManagementProxyResource"/>. </summary>
-        internal AlertsManagementProxyResource()
+        public AlertsManagementProxyResource()
         {
         }
 

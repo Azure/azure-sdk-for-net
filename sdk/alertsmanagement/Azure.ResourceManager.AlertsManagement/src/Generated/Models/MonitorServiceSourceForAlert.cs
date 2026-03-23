@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Platform. </summary>
         private const string PlatformValue = "Platform";
         /// <summary> SCOM. </summary>
-        private const string SCOMValue = "SCOM";
+        private const string ScomValue = "SCOM";
         /// <summary> ServiceHealth. </summary>
         private const string ServiceHealthValue = "ServiceHealth";
         /// <summary> SmartDetector. </summary>
         private const string SmartDetectorValue = "SmartDetector";
         /// <summary> VM Insights. </summary>
-        private const string VMInsightsValue = "VM Insights";
+        private const string VmInsightsValue = "VM Insights";
         /// <summary> Zabbix. </summary>
         private const string ZabbixValue = "Zabbix";
         /// <summary> Resource Health. </summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static MonitorServiceSourceForAlert Platform { get; } = new MonitorServiceSourceForAlert(PlatformValue);
 
         /// <summary> SCOM. </summary>
-        public static MonitorServiceSourceForAlert SCOM { get; } = new MonitorServiceSourceForAlert(SCOMValue);
+        public static MonitorServiceSourceForAlert Scom { get; } = new MonitorServiceSourceForAlert(ScomValue);
 
         /// <summary> ServiceHealth. </summary>
         public static MonitorServiceSourceForAlert ServiceHealth { get; } = new MonitorServiceSourceForAlert(ServiceHealthValue);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static MonitorServiceSourceForAlert SmartDetector { get; } = new MonitorServiceSourceForAlert(SmartDetectorValue);
 
         /// <summary> VM Insights. </summary>
-        public static MonitorServiceSourceForAlert VMInsights { get; } = new MonitorServiceSourceForAlert(VMInsightsValue);
+        public static MonitorServiceSourceForAlert VmInsights { get; } = new MonitorServiceSourceForAlert(VmInsightsValue);
 
         /// <summary> Zabbix. </summary>
         public static MonitorServiceSourceForAlert Zabbix { get; } = new MonitorServiceSourceForAlert(ZabbixValue);

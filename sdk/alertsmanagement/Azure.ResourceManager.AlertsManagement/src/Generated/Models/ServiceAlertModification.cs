@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public partial class ServiceAlertModification : AlertsManagementProxyResource
     {
         /// <summary> Initializes a new instance of <see cref="ServiceAlertModification"/>. </summary>
-        internal ServiceAlertModification()
+        public ServiceAlertModification()
         {
         }
 
@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Alert modification history properties. </summary>
-        public ServiceAlertModificationProperties Properties { get; }
+        public ServiceAlertModificationProperties Properties { get; set; }
     }
 }

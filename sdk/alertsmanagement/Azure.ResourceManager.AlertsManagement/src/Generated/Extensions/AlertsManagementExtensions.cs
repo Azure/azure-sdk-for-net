@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by 'Severity' returns the count of alerts for each severity).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetSummaryAsync(ResourceIdentifier, GetServiceAlertSummaryGroupByField, bool?, string, string, string, MonitorServiceSourceForAlert?, MonitorCondition?, ServiceAlertSeverity?, ServiceAlertState?, string, TimeRangeFilter?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetSummaryAsync(ResourceIdentifier, AlertsSummaryGroupByField, bool?, string, string, string, MonitorServiceSourceForAlert?, MonitorCondition?, ServiceAlertSeverity?, ServiceAlertState?, string, TimeRangeFilter?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<ServiceAlertSummary>> GetSummaryAsync(this ArmClient client, ResourceIdentifier scope, GetServiceAlertSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceAlertSummary>> GetSummaryAsync(this ArmClient client, ResourceIdentifier scope, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by 'Severity' returns the count of alerts for each severity).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetSummary(ResourceIdentifier, GetServiceAlertSummaryGroupByField, bool?, string, string, string, MonitorServiceSourceForAlert?, MonitorCondition?, ServiceAlertSeverity?, ServiceAlertState?, string, TimeRangeFilter?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetSummary(ResourceIdentifier, AlertsSummaryGroupByField, bool?, string, string, string, MonitorServiceSourceForAlert?, MonitorCondition?, ServiceAlertSeverity?, ServiceAlertState?, string, TimeRangeFilter?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<ServiceAlertSummary> GetSummary(this ArmClient client, ResourceIdentifier scope, GetServiceAlertSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
+        public static Response<ServiceAlertSummary> GetSummary(this ArmClient client, ResourceIdentifier scope, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="isSuppressed"> Value indicating whether alert is suppressed. </param>
         /// <param name="description"> Alert description. </param>
         /// <returns> A new <see cref="Models.ServiceAlertEssentials"/> instance for mocking. </returns>
-        public static ServiceAlertEssentials ServiceAlertEssentials(ServiceAlertSeverity? severity = default, ServiceAlertSignalType? signalType = default, ServiceAlertState? alertState = default, MonitorCondition? monitorCondition = default, string targetResource = default, string targetResourceName = default, string targetResourceGroup = default, string targetResourceType = default, MonitorServiceSourceForAlert? monitorService = default, string alertRule = default, string sourceCreatedId = default, string smartGroupId = default, string smartGroupingReason = default, DateTimeOffset? startOn = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? monitorConditionResolvedOn = default, string lastModifiedBy = default, bool? isSuppressed = default, string description = default)
+        public static ServiceAlertEssentials ServiceAlertEssentials(ServiceAlertSeverity? severity = default, ServiceAlertSignalType? signalType = default, ServiceAlertState? alertState = default, MonitorCondition? monitorCondition = default, string targetResource = default, string targetResourceName = default, string targetResourceGroup = default, string targetResourceType = default, MonitorServiceSourceForAlert? monitorService = default, string alertRule = default, string sourceCreatedId = default, Guid? smartGroupId = default, string smartGroupingReason = default, DateTimeOffset? startOn = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? monitorConditionResolvedOn = default, string lastModifiedBy = default, bool? isSuppressed = default, string description = default)
         {
             return new ServiceAlertEssentials(
                 severity,
@@ -110,45 +111,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="alertId"> Unique identifier of the alert. </param>
         /// <param name="modifications"> Array of alert modification events. </param>
         /// <returns> A new <see cref="Models.ServiceAlertModificationProperties"/> instance for mocking. </returns>
-        public static ServiceAlertModificationProperties ServiceAlertModificationProperties(string alertId = default, IEnumerable<ServiceAlertModificationItemInfo> modifications = default)
+        public static ServiceAlertModificationProperties ServiceAlertModificationProperties(Guid? alertId = default, IEnumerable<ServiceAlertModificationItemInfo> modifications = default)
         {
             modifications ??= new ChangeTrackingList<ServiceAlertModificationItemInfo>();
 
             return new ServiceAlertModificationProperties(alertId, modifications.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Alert modification item. </summary>
-        /// <param name="modificationEvent"> Reason for the modification. </param>
-        /// <param name="oldValue"> Old value. </param>
-        /// <param name="newValue"> New value. </param>
-        /// <param name="modifiedAt"> Modified date and time. </param>
-        /// <param name="modifiedBy"> Modified user details (Principal client name). </param>
-        /// <param name="comments"> Modification comments. </param>
-        /// <param name="description"> Description of the modification. </param>
-        /// <param name="details"> Base details class. </param>
-        /// <returns> A new <see cref="Models.ServiceAlertModificationItemInfo"/> instance for mocking. </returns>
-        public static ServiceAlertModificationItemInfo ServiceAlertModificationItemInfo(ServiceAlertModificationEvent? modificationEvent = default, string oldValue = default, string newValue = default, string modifiedAt = default, string modifiedBy = default, string comments = default, string description = default, BaseDetails details = default)
-        {
-            return new ServiceAlertModificationItemInfo(
-                modificationEvent,
-                oldValue,
-                newValue,
-                modifiedAt,
-                modifiedBy,
-                comments,
-                description,
-                details,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The PropertyChangeDetails. </summary>
-        /// <param name="oldValue"> The value before the change. </param>
-        /// <param name="newValue"> The value after the change. </param>
-        /// <param name="comment"> The comment. </param>
-        /// <returns> A new <see cref="Models.PropertyChangeDetails"/> instance for mocking. </returns>
-        public static PropertyChangeDetails PropertyChangeDetails(string oldValue = default, string newValue = default, string comment = default)
-        {
-            return new PropertyChangeDetails(AlertModificationType.PropertyChange, additionalBinaryDataProperties: null, oldValue, newValue, comment);
         }
 
         /// <summary> The ActionSuppressedDetails. </summary>
@@ -161,34 +128,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             suppressedActionGroups ??= new ChangeTrackingList<TriggeredRule>();
 
             return new ActionSuppressedDetails(AlertModificationType.ActionsSuppressed, additionalBinaryDataProperties: null, suppressionActionRules.ToList(), suppressedActionGroups.ToList());
-        }
-
-        /// <summary> The TriggeredRule. </summary>
-        /// <param name="actionGroupId"> The action group ID. </param>
-        /// <param name="ruleId"> The rule ID. </param>
-        /// <param name="ruleType"> The rule type. </param>
-        /// <returns> A new <see cref="Models.TriggeredRule"/> instance for mocking. </returns>
-        public static TriggeredRule TriggeredRule(string actionGroupId = default, string ruleId = default, RuleType? ruleType = default)
-        {
-            return new TriggeredRule(actionGroupId, ruleId, ruleType, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ActionTriggeredDetails. </summary>
-        /// <param name="actionGroup"> The action group that was triggered. </param>
-        /// <param name="notificationResult"> The result of the notification delivery. </param>
-        /// <returns> A new <see cref="Models.ActionTriggeredDetails"/> instance for mocking. </returns>
-        public static ActionTriggeredDetails ActionTriggeredDetails(TriggeredRule actionGroup = default, NotificationResult notificationResult = default)
-        {
-            return new ActionTriggeredDetails(AlertModificationType.ActionsTriggered, additionalBinaryDataProperties: null, actionGroup, notificationResult);
-        }
-
-        /// <summary> The NotificationResult. </summary>
-        /// <param name="statusURL"> URL endpoint for checking notification delivery status. Only populated when status is 'Inline'. </param>
-        /// <param name="status"> The status of the notification. </param>
-        /// <returns> A new <see cref="Models.NotificationResult"/> instance for mocking. </returns>
-        public static NotificationResult NotificationResult(string statusURL = default, ResultStatus? status = default)
-        {
-            return new NotificationResult(statusURL, status, additionalBinaryDataProperties: null);
         }
 
         /// <summary> An azure resource object. </summary>
@@ -358,15 +297,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new MonitorServiceList(ServiceAlertMetadataIdentifier.MonitorServiceList, additionalBinaryDataProperties: null, data.ToList());
         }
 
-        /// <summary> Details of a monitor service. </summary>
-        /// <param name="name"> Monitor service name. </param>
-        /// <param name="displayName"> Monitor service display name. </param>
-        /// <returns> A new <see cref="Models.MonitorServiceDetails"/> instance for mocking. </returns>
-        public static MonitorServiceDetails MonitorServiceDetails(string name = default, string displayName = default)
-        {
-            return new MonitorServiceDetails(name, displayName, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Summary of alerts based on the input filters and 'groupby' parameters. </summary>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="type"> Azure resource type. </param>
@@ -381,27 +311,74 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Group the result set. </summary>
         /// <param name="total"> Total count of the result set. </param>
         /// <param name="smartGroupsCount"> Total count of the smart groups. </param>
-        /// <param name="groupedby"> Name of the field aggregated. </param>
+        /// <param name="groupedBy"> Name of the field aggregated. </param>
         /// <param name="values"> List of the items. </param>
         /// <returns> A new <see cref="Models.ServiceAlertSummaryGroup"/> instance for mocking. </returns>
-        public static ServiceAlertSummaryGroup ServiceAlertSummaryGroup(long? total = default, long? smartGroupsCount = default, string groupedby = default, IEnumerable<ServiceAlertSummaryGroupItemInfo> values = default)
+        public static ServiceAlertSummaryGroup ServiceAlertSummaryGroup(long? total = default, long? smartGroupsCount = default, string groupedBy = default, IEnumerable<ServiceAlertSummaryGroupItemInfo> values = default)
         {
             values ??= new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
 
-            return new ServiceAlertSummaryGroup(total, smartGroupsCount, groupedby, values.ToList(), additionalBinaryDataProperties: null);
+            return new ServiceAlertSummaryGroup(total, smartGroupsCount, groupedBy, values.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Alerts summary group item. </summary>
         /// <param name="name"> Value of the aggregated field. </param>
         /// <param name="count"> Count of the aggregated field. </param>
-        /// <param name="groupedby"> Name of the field aggregated. </param>
+        /// <param name="groupedBy"> Name of the field aggregated. </param>
         /// <param name="values"> List of the items. </param>
         /// <returns> A new <see cref="Models.ServiceAlertSummaryGroupItemInfo"/> instance for mocking. </returns>
-        public static ServiceAlertSummaryGroupItemInfo ServiceAlertSummaryGroupItemInfo(string name = default, long? count = default, string groupedby = default, IEnumerable<ServiceAlertSummaryGroupItemInfo> values = default)
+        public static ServiceAlertSummaryGroupItemInfo ServiceAlertSummaryGroupItemInfo(string name = default, long? count = default, string groupedBy = default, IEnumerable<ServiceAlertSummaryGroupItemInfo> values = default)
         {
             values ??= new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
 
-            return new ServiceAlertSummaryGroupItemInfo(name, count, groupedby, values.ToList(), additionalBinaryDataProperties: null);
+            return new ServiceAlertSummaryGroupItemInfo(name, count, groupedBy, values.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertProperties"/>. </summary>
+        /// <param name="essentials"> This object contains consistent fields across different monitor services. </param>
+        /// <param name="context"> Information specific to the monitor service that gives more contextual details about the alert. </param>
+        /// <param name="egressConfig"> Config which would be used for displaying the data in portal. </param>
+        /// <returns> A new <see cref="Models.ServiceAlertProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceAlertProperties ServiceAlertProperties(ServiceAlertEssentials essentials, BinaryData context, BinaryData egressConfig)
+        {
+            return ServiceAlertProperties(essentials, context, egressConfig, customProperties: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertModification"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Properties of the alert modification item. </param>
+        /// <returns> A new <see cref="Models.ServiceAlertModification"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceAlertModification ServiceAlertModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceAlertModificationProperties properties)
+        {
+            return new ServiceAlertModification(id, default, name, additionalBinaryDataProperties: null, properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertSummary"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Group the result set. </param>
+        /// <returns> A new <see cref="Models.ServiceAlertSummary"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceAlertSummary ServiceAlertSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceAlertSummaryGroup properties)
+        {
+            return new ServiceAlertSummary(id, default, name, additionalBinaryDataProperties: null, properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorServiceDetails"/>. </summary>
+        /// <param name="name"> Monitor service name. </param>
+        /// <param name="displayName"> Monitor service display name. </param>
+        /// <returns> A new <see cref="Models.MonitorServiceDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MonitorServiceDetails MonitorServiceDetails(string name, string displayName)
+        {
+            return new MonitorServiceDetails(name, displayName, additionalBinaryDataProperties: null);
         }
     }
 }

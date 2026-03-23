@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("smartGroupsCount"u8);
                 writer.WriteNumberValue(SmartGroupsCount.Value);
             }
-            if (Optional.IsDefined(Groupedby))
+            if (Optional.IsDefined(GroupedBy))
             {
                 writer.WritePropertyName("groupedby"u8);
-                writer.WriteStringValue(Groupedby);
+                writer.WriteStringValue(GroupedBy);
             }
             if (Optional.IsCollectionDefined(Values))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             long? total = default;
             long? smartGroupsCount = default;
-            string groupedby = default;
+            string groupedBy = default;
             IList<ServiceAlertSummaryGroupItemInfo> values = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (prop.NameEquals("groupedby"u8))
                 {
-                    groupedby = prop.Value.GetString();
+                    groupedBy = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("values"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServiceAlertSummaryGroup(total, smartGroupsCount, groupedby, values ?? new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>(), additionalBinaryDataProperties);
+            return new ServiceAlertSummaryGroup(total, smartGroupsCount, groupedBy, values ?? new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>(), additionalBinaryDataProperties);
         }
     }
 }

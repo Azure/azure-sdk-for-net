@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationProperties"/>. </summary>
-        internal ServiceAlertModificationProperties()
+        public ServiceAlertModificationProperties()
         {
             Modifications = new ChangeTrackingList<ServiceAlertModificationItemInfo>();
         }
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="alertId"> Unique identifier of the alert. </param>
         /// <param name="modifications"> Array of alert modification events. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAlertModificationProperties(string alertId, IList<ServiceAlertModificationItemInfo> modifications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAlertModificationProperties(Guid? alertId, IList<ServiceAlertModificationItemInfo> modifications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertId = alertId;
             Modifications = modifications;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Unique identifier of the alert. </summary>
-        public string AlertId { get; }
+        public Guid? AlertId { get; }
 
         /// <summary> Array of alert modification events. </summary>
         public IList<ServiceAlertModificationItemInfo> Modifications { get; }

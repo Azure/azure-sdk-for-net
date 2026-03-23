@@ -8,12 +8,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     // Backward-compatible wrapper over the generated summary parameter overload.
     public partial class SubscriptionResourceGetServiceAlertSummaryOptions
     {
-        public SubscriptionResourceGetServiceAlertSummaryOptions(GetServiceAlertSummaryGroupByField groupby)
+        public SubscriptionResourceGetServiceAlertSummaryOptions(AlertsSummaryGroupByField groupby)
         {
             Groupby = groupby;
         }
 
-        public GetServiceAlertSummaryGroupByField Groupby { get; }
+        public AlertsSummaryGroupByField Groupby { get; }
         public bool? IncludeSmartGroupsCount { get; set; }
         public string TargetResource { get; set; }
         public string TargetResourceType { get; set; }
@@ -28,3 +28,4 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     }
 }
 #pragma warning restore CS1591
+

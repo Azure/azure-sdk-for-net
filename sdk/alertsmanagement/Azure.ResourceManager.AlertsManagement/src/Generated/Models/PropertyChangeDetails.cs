@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public partial class PropertyChangeDetails : BaseDetails
     {
         /// <summary> Initializes a new instance of <see cref="PropertyChangeDetails"/>. </summary>
-        internal PropertyChangeDetails() : base(AlertModificationType.PropertyChange)
+        public PropertyChangeDetails() : base(AlertModificationType.PropertyChange)
         {
         }
 
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> The value before the change. </summary>
-        public string OldValue { get; }
+        public string OldValue { get; set; }
 
         /// <summary> The value after the change. </summary>
-        public string NewValue { get; }
+        public string NewValue { get; set; }
 
         /// <summary> The comment. </summary>
-        public string Comment { get; }
+        public string Comment { get; set; }
     }
 }

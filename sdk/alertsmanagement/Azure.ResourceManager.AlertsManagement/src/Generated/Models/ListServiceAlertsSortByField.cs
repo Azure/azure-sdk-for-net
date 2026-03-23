@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> targetResourceType. </summary>
         private const string TargetResourceTypeValue = "targetResourceType";
         /// <summary> startDateTime. </summary>
-        private const string StartDateTimeValue = "startDateTime";
+        private const string StartOnValue = "startDateTime";
         /// <summary> lastModifiedDateTime. </summary>
-        private const string LastModifiedDateTimeValue = "lastModifiedDateTime";
+        private const string LastModifiedOnValue = "lastModifiedDateTime";
 
         /// <summary> Initializes a new instance of <see cref="ListServiceAlertsSortByField"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static ListServiceAlertsSortByField TargetResourceType { get; } = new ListServiceAlertsSortByField(TargetResourceTypeValue);
 
         /// <summary> startDateTime. </summary>
-        public static ListServiceAlertsSortByField StartDateTime { get; } = new ListServiceAlertsSortByField(StartDateTimeValue);
+        public static ListServiceAlertsSortByField StartOn { get; } = new ListServiceAlertsSortByField(StartOnValue);
 
         /// <summary> lastModifiedDateTime. </summary>
-        public static ListServiceAlertsSortByField LastModifiedDateTime { get; } = new ListServiceAlertsSortByField(LastModifiedDateTimeValue);
+        public static ListServiceAlertsSortByField LastModifiedOn { get; } = new ListServiceAlertsSortByField(LastModifiedOnValue);
 
         /// <summary> Determines if two <see cref="ListServiceAlertsSortByField"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

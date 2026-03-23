@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public partial class ActionSuppressedDetails : BaseDetails
     {
         /// <summary> Initializes a new instance of <see cref="ActionSuppressedDetails"/>. </summary>
-        internal ActionSuppressedDetails() : base(AlertModificationType.ActionsSuppressed)
+        public ActionSuppressedDetails() : base(AlertModificationType.ActionsSuppressed)
         {
             SuppressionActionRules = new ChangeTrackingList<string>();
             SuppressedActionGroups = new ChangeTrackingList<TriggeredRule>();

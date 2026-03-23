@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertProperties"/>. </summary>
-        internal ServiceAlertProperties()
+        public ServiceAlertProperties()
         {
             CustomProperties = new ChangeTrackingDictionary<string, string>();
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> This object contains consistent fields across different monitor services. </summary>
-        public ServiceAlertEssentials Essentials { get; }
+        public ServiceAlertEssentials Essentials { get; set; }
 
         /// <summary>
         /// Information specific to the monitor service that gives more contextual details about the alert.

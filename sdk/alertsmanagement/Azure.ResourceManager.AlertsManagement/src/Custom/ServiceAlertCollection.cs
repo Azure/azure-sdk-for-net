@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.ResourceManager.AlertsManagement.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -32,6 +35,21 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             options ??= new ServiceAlertCollectionGetAllOptions();
             return GetAll(options.TargetResource, options.TargetResourceType, options.TargetResourceGroup, options.MonitorService, options.MonitorCondition, options.Severity, options.AlertState, options.AlertRule, options.SmartGroupId, options.IncludeContext, options.IncludeEgressConfig, options.PageCount, options.SortBy, options.SortOrder, options.Select, options.TimeRange, options.CustomTimeRange, cancellationToken);
+        }
+
+        // Backward compatibility: old SDK used Guid parameter, new SDK uses string.
+        /// <summary> Check if an alert exists. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<bool> Exists(Guid alertId, CancellationToken cancellationToken = default)
+        {
+            return Exists(alertId.ToString(), cancellationToken);
+        }
+
+        /// <summary> Check if an alert exists. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<bool>> ExistsAsync(Guid alertId, CancellationToken cancellationToken = default)
+        {
+            return await ExistsAsync(alertId.ToString(), cancellationToken).ConfigureAwait(false);
         }
     }
 }

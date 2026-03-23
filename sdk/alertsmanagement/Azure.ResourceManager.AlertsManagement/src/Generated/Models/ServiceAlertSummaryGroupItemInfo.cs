@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertSummaryGroupItemInfo"/>. </summary>
-        internal ServiceAlertSummaryGroupItemInfo()
+        public ServiceAlertSummaryGroupItemInfo()
         {
             Values = new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
         }
@@ -26,26 +26,26 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of <see cref="ServiceAlertSummaryGroupItemInfo"/>. </summary>
         /// <param name="name"> Value of the aggregated field. </param>
         /// <param name="count"> Count of the aggregated field. </param>
-        /// <param name="groupedby"> Name of the field aggregated. </param>
+        /// <param name="groupedBy"> Name of the field aggregated. </param>
         /// <param name="values"> List of the items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAlertSummaryGroupItemInfo(string name, long? count, string groupedby, IList<ServiceAlertSummaryGroupItemInfo> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAlertSummaryGroupItemInfo(string name, long? count, string groupedBy, IList<ServiceAlertSummaryGroupItemInfo> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Count = count;
-            Groupedby = groupedby;
+            GroupedBy = groupedBy;
             Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Value of the aggregated field. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Count of the aggregated field. </summary>
-        public long? Count { get; }
+        public long? Count { get; set; }
 
         /// <summary> Name of the field aggregated. </summary>
-        public string Groupedby { get; }
+        public string GroupedBy { get; set; }
 
         /// <summary> List of the items. </summary>
         public IList<ServiceAlertSummaryGroupItemInfo> Values { get; }

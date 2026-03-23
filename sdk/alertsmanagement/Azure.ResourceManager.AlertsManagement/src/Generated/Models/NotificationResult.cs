@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NotificationResult"/>. </summary>
-        internal NotificationResult()
+        public NotificationResult()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> URL endpoint for checking notification delivery status. Only populated when status is 'Inline'. </summary>
-        public string StatusURL { get; }
+        public string StatusURL { get; set; }
 
         /// <summary> The status of the notification. </summary>
-        public ResultStatus? Status { get; }
+        public ResultStatus? Status { get; set; }
     }
 }

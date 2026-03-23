@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             ServiceAlertMetadataIdentifier metadataIdentifier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<MonitorServiceDetails> data = default;
+            IReadOnlyList<MonitorServiceDetails> data = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("metadataIdentifier"u8))

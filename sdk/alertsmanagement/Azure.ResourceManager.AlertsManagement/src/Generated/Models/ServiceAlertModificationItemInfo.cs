@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationItemInfo"/>. </summary>
-        internal ServiceAlertModificationItemInfo()
+        public ServiceAlertModificationItemInfo()
         {
         }
 
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Reason for the modification. </summary>
-        public ServiceAlertModificationEvent? ModificationEvent { get; }
+        public ServiceAlertModificationEvent? ModificationEvent { get; set; }
 
         /// <summary> Old value. </summary>
-        public string OldValue { get; }
+        public string OldValue { get; set; }
 
         /// <summary> New value. </summary>
-        public string NewValue { get; }
+        public string NewValue { get; set; }
 
         /// <summary> Modified date and time. </summary>
-        public string ModifiedAt { get; }
+        public string ModifiedAt { get; set; }
 
         /// <summary> Modified user details (Principal client name). </summary>
-        public string ModifiedBy { get; }
+        public string ModifiedBy { get; set; }
 
         /// <summary> Modification comments. </summary>
-        public string Comments { get; }
+        public string Comments { get; set; }
 
         /// <summary> Description of the modification. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Base details class. </summary>
-        public BaseDetails Details { get; }
+        public BaseDetails Details { get; set; }
     }
 }

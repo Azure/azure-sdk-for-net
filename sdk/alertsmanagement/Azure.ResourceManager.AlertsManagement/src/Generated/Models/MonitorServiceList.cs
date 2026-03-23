@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -16,8 +17,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         /// <summary> Initializes a new instance of <see cref="MonitorServiceList"/>. </summary>
         /// <param name="data"> Array of operations. </param>
-        internal MonitorServiceList(IEnumerable<MonitorServiceDetails> data) : base(ServiceAlertMetadataIdentifier.MonitorServiceList)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public MonitorServiceList(IEnumerable<MonitorServiceDetails> data) : base(ServiceAlertMetadataIdentifier.MonitorServiceList)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             Data = data.ToList();
         }
 
@@ -25,12 +29,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="metadataIdentifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="data"> Array of operations. </param>
-        internal MonitorServiceList(ServiceAlertMetadataIdentifier metadataIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<MonitorServiceDetails> data) : base(metadataIdentifier, additionalBinaryDataProperties)
+        internal MonitorServiceList(ServiceAlertMetadataIdentifier metadataIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<MonitorServiceDetails> data) : base(metadataIdentifier, additionalBinaryDataProperties)
         {
             Data = data;
         }
 
         /// <summary> Array of operations. </summary>
-        public IList<MonitorServiceDetails> Data { get; }
+        public IReadOnlyList<MonitorServiceDetails> Data { get; }
     }
 }

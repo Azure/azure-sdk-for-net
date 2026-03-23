@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TriggeredRule"/>. </summary>
-        internal TriggeredRule()
+        public TriggeredRule()
         {
         }
 
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> The action group ID. </summary>
-        public string ActionGroupId { get; }
+        public string ActionGroupId { get; set; }
 
         /// <summary> The rule ID. </summary>
-        public string RuleId { get; }
+        public string RuleId { get; set; }
 
         /// <summary> The rule type. </summary>
-        public RuleType? RuleType { get; }
+        public RuleType? RuleType { get; set; }
     }
 }

@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ServiceAlertSummary>> GetSummaryAsync(ResourceIdentifier scope, GetServiceAlertSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertSummary>> GetSummaryAsync(ResourceIdentifier scope, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ServiceAlertSummary> GetSummary(ResourceIdentifier scope, GetServiceAlertSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertSummary> GetSummary(ResourceIdentifier scope, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 

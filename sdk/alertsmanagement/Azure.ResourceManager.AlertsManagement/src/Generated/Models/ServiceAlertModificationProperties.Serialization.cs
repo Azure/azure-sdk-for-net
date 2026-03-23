@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (options.Format != "W" && Optional.IsDefined(AlertId))
             {
                 writer.WritePropertyName("alertId"u8);
-                writer.WriteStringValue(AlertId);
+                writer.WriteStringValue(AlertId.Value);
             }
             if (Optional.IsCollectionDefined(Modifications))
             {
@@ -131,14 +131,18 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            string alertId = default;
+            Guid? alertId = default;
             IList<ServiceAlertModificationItemInfo> modifications = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("alertId"u8))
                 {
-                    alertId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    alertId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("modifications"u8))

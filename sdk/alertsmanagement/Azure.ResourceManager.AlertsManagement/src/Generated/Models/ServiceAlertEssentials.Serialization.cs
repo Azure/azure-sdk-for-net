@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (options.Format != "W" && Optional.IsDefined(SmartGroupId))
             {
                 writer.WritePropertyName("smartGroupId"u8);
-                writer.WriteStringValue(SmartGroupId);
+                writer.WriteStringValue(SmartGroupId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(SmartGroupingReason))
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             MonitorServiceSourceForAlert? monitorService = default;
             string alertRule = default;
             string sourceCreatedId = default;
-            string smartGroupId = default;
+            Guid? smartGroupId = default;
             string smartGroupingReason = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? lastModifiedOn = default;
@@ -310,7 +310,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (prop.NameEquals("smartGroupId"u8))
                 {
-                    smartGroupId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    smartGroupId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("smartGroupingReason"u8))

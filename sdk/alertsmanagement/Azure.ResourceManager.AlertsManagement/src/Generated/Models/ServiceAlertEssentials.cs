@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertEssentials"/>. </summary>
-        internal ServiceAlertEssentials()
+        public ServiceAlertEssentials()
         {
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="actionStatus"> Action status. </param>
         /// <param name="description"> Alert description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAlertEssentials(ServiceAlertSeverity? severity, ServiceAlertSignalType? signalType, ServiceAlertState? alertState, MonitorCondition? monitorCondition, string targetResource, string targetResourceName, string targetResourceGroup, string targetResourceType, MonitorServiceSourceForAlert? monitorService, string alertRule, string sourceCreatedId, string smartGroupId, string smartGroupingReason, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? monitorConditionResolvedOn, string lastModifiedBy, ServiceAlertActionStatus actionStatus, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAlertEssentials(ServiceAlertSeverity? severity, ServiceAlertSignalType? signalType, ServiceAlertState? alertState, MonitorCondition? monitorCondition, string targetResource, string targetResourceName, string targetResourceGroup, string targetResourceType, MonitorServiceSourceForAlert? monitorService, string alertRule, string sourceCreatedId, Guid? smartGroupId, string smartGroupingReason, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? monitorConditionResolvedOn, string lastModifiedBy, ServiceAlertActionStatus actionStatus, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Severity = severity;
             SignalType = signalType;
@@ -79,16 +79,16 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public MonitorCondition? MonitorCondition { get; }
 
         /// <summary> Target ARM resource, on which alert got created. </summary>
-        public string TargetResource { get; }
+        public string TargetResource { get; set; }
 
         /// <summary> Name of the target ARM resource name, on which alert got created. </summary>
-        public string TargetResourceName { get; }
+        public string TargetResourceName { get; set; }
 
         /// <summary> Resource group of target ARM resource, on which alert got created. </summary>
-        public string TargetResourceGroup { get; }
+        public string TargetResourceGroup { get; set; }
 
         /// <summary> Resource type of target ARM resource, on which alert got created. </summary>
-        public string TargetResourceType { get; }
+        public string TargetResourceType { get; set; }
 
         /// <summary> Monitor service on which the rule(monitor) is set. </summary>
         public MonitorServiceSourceForAlert? MonitorService { get; }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string SourceCreatedId { get; }
 
         /// <summary> Unique Id of the smart group. </summary>
-        public string SmartGroupId { get; }
+        public Guid? SmartGroupId { get; }
 
         /// <summary> Verbose reason describing the reason why this alert instance is added to a smart group. </summary>
         public string SmartGroupingReason { get; }
@@ -118,17 +118,25 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string LastModifiedBy { get; }
 
         /// <summary> Action status. </summary>
-        internal ServiceAlertActionStatus ActionStatus { get; }
+        internal ServiceAlertActionStatus ActionStatus { get; set; }
 
         /// <summary> Alert description. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Value indicating whether alert is suppressed. </summary>
         public bool? IsSuppressed
         {
             get
             {
-                return ActionStatus.IsSuppressed;
+                return ActionStatus is null ? default : ActionStatus.IsSuppressed;
+            }
+            set
+            {
+                if (ActionStatus is null)
+                {
+                    ActionStatus = new ServiceAlertActionStatus();
+                }
+                ActionStatus.IsSuppressed = value;
             }
         }
     }

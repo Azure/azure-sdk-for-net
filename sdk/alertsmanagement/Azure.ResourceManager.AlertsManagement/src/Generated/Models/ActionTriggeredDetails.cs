@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public partial class ActionTriggeredDetails : BaseDetails
     {
         /// <summary> Initializes a new instance of <see cref="ActionTriggeredDetails"/>. </summary>
-        internal ActionTriggeredDetails() : base(AlertModificationType.ActionsTriggered)
+        public ActionTriggeredDetails() : base(AlertModificationType.ActionsTriggered)
         {
         }
 
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> The action group that was triggered. </summary>
-        public TriggeredRule ActionGroup { get; }
+        public TriggeredRule ActionGroup { get; set; }
 
         /// <summary> The result of the notification delivery. </summary>
-        public NotificationResult NotificationResult { get; }
+        public NotificationResult NotificationResult { get; set; }
     }
 }
