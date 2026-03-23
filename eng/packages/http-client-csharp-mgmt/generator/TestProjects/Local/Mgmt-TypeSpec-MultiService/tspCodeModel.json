@@ -2836,7 +2836,8 @@
                 },
                 "apiVersions": [
                   "2024-01-01"
-                ]
+                ],
+                "rbacRoles": []
               },
               {
                 "resourceModelId": "ServiceTwo.Bar",
@@ -2882,7 +2883,8 @@
                 },
                 "apiVersions": [
                   "2024-06-01"
-                ]
+                ],
+                "rbacRoles": []
               }
             ],
             "nonResourceMethods": [
