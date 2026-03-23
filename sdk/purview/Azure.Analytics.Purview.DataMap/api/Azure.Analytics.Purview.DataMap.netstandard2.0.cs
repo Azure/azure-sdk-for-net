@@ -1247,6 +1247,7 @@ namespace Azure.Analytics.Purview.DataMap
     public partial class DataMapClient
     {
         protected DataMapClient() { }
+        public DataMapClient(Azure.Analytics.Purview.DataMap.DataMapClientSettings settings) { }
         public DataMapClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public DataMapClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.DataMap.DataMapClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -1264,6 +1265,13 @@ namespace Azure.Analytics.Purview.DataMap
         {
             V2023_09_01 = 1,
         }
+    }
+    public partial class DataMapClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DataMapClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Analytics.Purview.DataMap.DataMapClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class Discovery
     {

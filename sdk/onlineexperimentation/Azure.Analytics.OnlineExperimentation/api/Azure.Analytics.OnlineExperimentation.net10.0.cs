@@ -213,6 +213,8 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class OnlineExperimentationClient
     {
         protected OnlineExperimentationClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public OnlineExperimentationClient(Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientSettings settings) { }
         public OnlineExperimentationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public OnlineExperimentationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -252,6 +254,14 @@ namespace Azure.Analytics.OnlineExperimentation
         {
             V2025_05_31_Preview = 1,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class OnlineExperimentationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public OnlineExperimentationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class OnlineExperimentationModelFactory
     {

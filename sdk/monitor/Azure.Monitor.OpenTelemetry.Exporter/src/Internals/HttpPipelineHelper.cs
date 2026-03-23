@@ -62,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             using (JsonDocument document = JsonDocument.Parse(message.Response.ContentStream, default))
             {
-                var value = TrackResponse.DeserializeTrackResponse(document.RootElement);
+                var value = TrackResponse.DeserializeTrackResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
                 trackResponse = Response.FromValue(value, message.Response);
                 return true;
             }

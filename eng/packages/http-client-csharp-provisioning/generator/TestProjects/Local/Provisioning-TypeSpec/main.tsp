@@ -3,6 +3,7 @@ import "@azure-tools/typespec-client-generator-core";
 import "./configurationStore.tsp";
 import "./keyValue.tsp";
 import "./backupPolicy.tsp";
+import "./item.tsp";
 
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
@@ -20,6 +21,8 @@ namespace ProvisioningTypeSpec {
 
   /** The available API versions. */
   enum Versions {
+    v2024_01_01_preview: "2024-01-01-preview",
+    v2024_04_01: "2024-04-01",
     v2024_05_01: "2024-05-01",
   }
 }

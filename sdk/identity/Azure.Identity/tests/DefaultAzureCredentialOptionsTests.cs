@@ -272,7 +272,7 @@ namespace Azure.Identity.Tests
             var credentialSettings = new CredentialSettings(mockSection.Object);
             var ex = Assert.Throws<InvalidOperationException>(() => new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object));
             Assert.That(ex.Message, Does.Contain("Unsupported CredentialSource"));
-            Assert.That(ex.Message, Does.Contain(credentialSource));
+            Assert.That(ex.Message.ToLowerInvariant(), Does.Contain(credentialSource.ToLowerInvariant()));
         }
 
         [TestCase("AzureCliCredential", "azureclicredential")]

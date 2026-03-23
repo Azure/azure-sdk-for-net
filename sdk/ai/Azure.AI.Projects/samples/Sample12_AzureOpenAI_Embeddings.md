@@ -13,8 +13,8 @@ This sample demonstrates how to use the synchronous and asynchronous `Azure Open
 ## Synchronous Sample
 
 ```C# Snippet:AI_Projects_AzureOpenAIEmbeddingsSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI embedding client");
 var credential = new DefaultAzureCredential();
@@ -38,8 +38,8 @@ Console.WriteLine($"Generated embedding with {result.ToFloats().Length} dimensio
 
 ## Asynchronous Sample
 ```C# Snippet:AI_Projects_AzureOpenAIEmbeddingsAsync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI embedding client");
 var credential = new DefaultAzureCredential();
