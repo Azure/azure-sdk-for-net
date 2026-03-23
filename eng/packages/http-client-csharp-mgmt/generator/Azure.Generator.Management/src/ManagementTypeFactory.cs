@@ -35,8 +35,8 @@ namespace Azure.Generator.Management
 
         /// <summary>
         /// Indicates whether the ManagedServiceIdentityType enum uses v3 format
-        /// (no space in "SystemAssigned,UserAssigned"), which requires WireV3Options
-        /// for correct serialization of ManagedServiceIdentity.
+        /// (no space in "SystemAssigned,UserAssigned"), which requires appending "|v3"
+        /// to the format for correct serialization of ManagedServiceIdentity.
         /// </summary>
         internal bool UseManagedServiceIdentityV3 => _useManagedServiceIdentityV3 ??= DetectManagedServiceIdentityV3();
 
@@ -144,10 +144,12 @@ namespace Azure.Generator.Management
 
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
-                // Use WireV3Options for ManagedServiceIdentity when v3 format is detected
-                // (v3/v5/v6 use "SystemAssigned,UserAssigned" without space)
+                // For ManagedServiceIdentity with v3 format, append "|v3" to the caller's format
+                // to preserve the base format ("W" → "W|v3", "J" → "J|v3") instead of
+                // hardcoding WireV3Options which would always force wire mode and omit
+                // read-only properties like principalId/tenantId when the caller uses "J" format.
                 ValueExpression optionsArg = valueType.AreNamesEqual(_managedServiceIdentityCSharpType) && UseManagedServiceIdentityV3
-                    ? (ValueExpression)ModelSerializationExtensionsSnippets.WireV3
+                    ? New.Instance(typeof(ModelReaderWriterOptions), new BinaryOperatorExpression("+", mrwOptionsParameter.Property("Format"), Literal("|v3")))
                     : mrwOptionsParameter;
                 return value.CastTo(new CSharpType(typeof(IJsonModel<>), valueType)).Invoke(nameof(IJsonModel<object>.Write), [utf8JsonWriter, optionsArg]).Terminate();
             }
@@ -172,9 +174,10 @@ namespace Azure.Generator.Management
 
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
-                // Use WireV3Options for ManagedServiceIdentity when v3 format is detected
-                var wireOptions = valueType.AreNamesEqual(_managedServiceIdentityCSharpType) && UseManagedServiceIdentityV3
-                    ? ModelSerializationExtensionsSnippets.WireV3
+                // For ManagedServiceIdentity with v3 format, append "|v3" to the caller's format
+                // to preserve the base format while signaling v3 wire encoding.
+                ValueExpression wireOptions = valueType.AreNamesEqual(_managedServiceIdentityCSharpType) && UseManagedServiceIdentityV3
+                    ? New.Instance(typeof(ModelReaderWriterOptions), new BinaryOperatorExpression("+", mrwOptionsParameter.Property("Format"), Literal("|v3")))
                     : ModelSerializationExtensionsSnippets.Wire;
 
                 IReadOnlyList<ValueExpression> readBody =

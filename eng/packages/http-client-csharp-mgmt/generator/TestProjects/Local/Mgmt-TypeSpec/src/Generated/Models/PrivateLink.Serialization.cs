@@ -86,7 +86,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, new ModelReaderWriterOptions(options.Format + "|v3"));
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), new ModelReaderWriterOptions(options.Format + "|v3"), AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

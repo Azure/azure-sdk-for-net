@@ -91,7 +91,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
             writer.WritePropertyName("something"u8);
-            ((IJsonModel<ManagedServiceIdentity>)Something).Write(writer, ModelSerializationExtensions.WireV3Options);
+            ((IJsonModel<ManagedServiceIdentity>)Something).Write(writer, new ModelReaderWriterOptions(options.Format + "|v3"));
             if (Optional.IsDefined(BoolValue))
             {
                 writer.WritePropertyName("boolValue"u8);
@@ -225,7 +225,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 }
                 if (prop.NameEquals("something"u8))
                 {
-                    something = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    something = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), new ModelReaderWriterOptions(options.Format + "|v3"), AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("boolValue"u8))

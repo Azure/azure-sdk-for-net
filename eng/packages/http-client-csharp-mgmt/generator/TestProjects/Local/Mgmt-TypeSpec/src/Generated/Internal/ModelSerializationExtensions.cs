@@ -22,8 +22,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             MaxDepth = 256
         };
-        /// <summary> The wire v3 options for model serialization. </summary>
-        internal static readonly ModelReaderWriterOptions WireV3Options = new ModelReaderWriterOptions("W|v3");
 
         public static object GetObject(this JsonElement element)
         {
