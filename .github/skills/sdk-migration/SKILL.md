@@ -84,21 +84,23 @@ Example: `sdk/apimanagement/Azure.ResourceManager.ApiManagement/migration-status
 
 ## Phase Tracker
 
+**Status legend:** ✅ Done | 🔄 In Progress | ❌ Blocked | ⏭️ Not Started
+
 | Phase | Status | Notes |
 |-------|--------|-------|
-| Phase 0 — Sync Repos | {✅/❌/⏭️} | |
-| Phase 1 — Discovery | {✅/❌/⏭️} | |
-| Phase 2 — tsp-location.yaml | {✅/❌/⏭️} | |
-| Phase 3 — Legacy config removed | {✅/❌/⏭️} | |
-| Phase 4 — Custom code updated | {✅/❌/⏭️} | |
-| Phase 5 — Code generation | {✅/❌/⏭️} | |
-| Phase 6 — Build-Fix Cycle | {✅/❌/⏭️} | |
-| Phase 7 — CI & Changelog | {✅/❌/⏭️} | |
-| Phase 8 — Test project build | {✅/❌/⏭️} | |
-| Phase 9 — Test execution | {✅/❌/⏭️} | |
-| Phase 10 — Finalization | {✅/❌/⏭️} | |
-| Phase 11 — Create PRs | {✅/❌/⏭️} | |
-| Phase 12 — Verify | {✅/❌/⏭️} | |
+| Phase 0 — Sync & Resume | {status} | |
+| Phase 1 — Discovery | {status} | |
+| Phase 2 — tsp-location.yaml | {status} | |
+| Phase 3 — Legacy config removed | {status} | |
+| Phase 4 — Custom code updated | {status} | |
+| Phase 5 — Code generation | {status} | |
+| Phase 6 — Build-Fix Cycle | {status} | |
+| Phase 7 — CI & Changelog | {status} | |
+| Phase 8 — Test project build | {status} | |
+| Phase 9 — Test execution | {status} | |
+| Phase 10 — Finalization | {status} | |
+| Phase 11 — Create PRs | {status} | |
+| Phase 12 — Verify | {status} | |
 
 ## ApiCompat Baseline Summary
 
@@ -121,7 +123,7 @@ Example: `sdk/apimanagement/Azure.ResourceManager.ApiManagement/migration-status
 ### When to Save
 
 Commit and push `migration-status.md` to the migration branch at these points:
-1. **After Phase 1** — initial status file created
+1. **After Phase 0** — create the initial `migration-status.md` (or update if resuming)
 2. **After any phase completes** — update phase status
 3. **Before ending a session** — always save current progress
 4. **After creating PRs** — update PR links
@@ -129,10 +131,9 @@ Commit and push `migration-status.md` to the migration branch at these points:
 ### Save Command
 
 ```bash
-cd {REPO_ROOT}
 git add {LIBRARY_PATH}/migration-status.md
 git commit -m "Update migration status for {PACKAGE_NAME}"
-git push {FORK_REMOTE} {BRANCH}
+git push
 ```
 
 ### When to Delete
@@ -154,7 +155,7 @@ Before any migration work:
 Merge the latest `main` branch into all repos.
 
 ### Save Status
-After sync, create or update `migration-status.md` with current progress.
+Create `migration-status.md` with all phases marked ⏭️ (or update existing with Phase 0 marked ✅). Commit and push to the migration branch.
 
 ---
 
@@ -172,7 +173,7 @@ Use **explore** agents in parallel:
 
 Present a summary plan and **ask the user** to confirm.
 
-After confirmation, create `migration-status.md` with all phases marked pending and save it to the branch.
+After confirmation, update `migration-status.md` to mark Phase 1 as ✅ and save.
 
 ---
 
@@ -715,6 +716,7 @@ After all PRs are created:
    ```bash
    git rm {LIBRARY_PATH}/migration-status.md
    git commit -m "Remove migration status file — migration complete"
+   git push
    ```
 
 ---
