@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.NetApp.Mocking
             return GetNetAppActiveDirectoryConfigs().Get(activeDirectoryConfigName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ElasticAccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ElasticAccountResources and their operations over a ElasticAccountResource. </returns>
-        public virtual ElasticAccountCollection GetElasticAccounts()
+        /// <summary> Gets a collection of NetAppElasticAccountResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetAppElasticAccountResources and their operations over a NetAppElasticAccountResource. </returns>
+        public virtual NetAppElasticAccountCollection GetNetAppElasticAccounts()
         {
-            return GetCachedClient(client => new ElasticAccountCollection(client, Id));
+            return GetCachedClient(client => new NetAppElasticAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ElasticAccountResource"/></description>
+        /// <description><see cref="NetAppElasticAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ElasticAccountResource>> GetElasticAccountAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppElasticAccountResource>> GetNetAppElasticAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetElasticAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppElasticAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ElasticAccountResource"/></description>
+        /// <description><see cref="NetAppElasticAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ElasticAccountResource> GetElasticAccount(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppElasticAccountResource> GetNetAppElasticAccount(string accountName, CancellationToken cancellationToken = default)
         {
-            return GetElasticAccounts().Get(accountName, cancellationToken);
+            return GetNetAppElasticAccounts().Get(accountName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetAppAccountResources in the ResourceGroupResource. </summary>

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             NetAppActiveDirectoryConfigPatch patch = new NetAppActiveDirectoryConfigPatch
             {
-                Properties = new ActiveDirectoryConfigUpdateProperties
+                Properties = new NetAppActiveDirectoryConfigPatchProperties
                 {
                     SmbServerName = "smbServer2",
                 },

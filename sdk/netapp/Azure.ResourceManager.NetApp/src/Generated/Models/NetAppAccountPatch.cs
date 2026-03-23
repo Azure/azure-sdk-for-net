@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IList<NetAppAccountActiveDirectory> activeDirectories, EntraIdConfigPatch entraIdConfig, NetAppAccountEncryption encryption, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfigurationPatch ldapConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppEntraIdConfigPatch entraIdConfig, NetAppAccountEncryption encryption, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, NetAppLdapConfigurationPatch ldapConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ActiveDirectories = activeDirectories;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Active Directories. </summary>
         public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
         /// <summary> Entra ID configuration for the account. </summary>
-        public EntraIdConfigPatch EntraIdConfig { get; set; }
+        public NetAppEntraIdConfigPatch EntraIdConfig { get; set; }
         /// <summary> Encryption settings. </summary>
         public NetAppAccountEncryption Encryption { get; set; }
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
@@ -99,6 +99,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> MultiAD Status for the account. </summary>
         public MultiAdStatus? MultiAdStatus { get; set; }
         /// <summary> LDAP Configuration for the account. </summary>
-        public LdapConfigurationPatch LdapConfiguration { get; set; }
+        public NetAppLdapConfigurationPatch LdapConfiguration { get; set; }
     }
 }

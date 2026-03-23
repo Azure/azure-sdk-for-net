@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            CacheUpdateProperties properties = default;
+            NetAppCachePatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    properties = CacheUpdateProperties.DeserializeCacheUpdateProperties(property.Value, options);
+                    properties = NetAppCachePatchProperties.DeserializeNetAppCachePatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

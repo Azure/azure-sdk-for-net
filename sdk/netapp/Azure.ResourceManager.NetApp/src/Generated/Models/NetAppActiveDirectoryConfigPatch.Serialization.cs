@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            AzureResourceManagerCommonTypesManagedServiceIdentityUpdate identity = default;
+            NetAppManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
-            ActiveDirectoryConfigUpdateProperties properties = default;
+            NetAppActiveDirectoryConfigPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    identity = AzureResourceManagerCommonTypesManagedServiceIdentityUpdate.DeserializeAzureResourceManagerCommonTypesManagedServiceIdentityUpdate(property.Value, options);
+                    identity = NetAppManagedServiceIdentityPatch.DeserializeNetAppManagedServiceIdentityPatch(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    properties = ActiveDirectoryConfigUpdateProperties.DeserializeActiveDirectoryConfigUpdateProperties(property.Value, options);
+                    properties = NetAppActiveDirectoryConfigPatchProperties.DeserializeNetAppActiveDirectoryConfigPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

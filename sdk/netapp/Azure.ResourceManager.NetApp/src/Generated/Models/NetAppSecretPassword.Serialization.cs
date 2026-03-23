@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            SecretPasswordKeyVaultProperties keyVaultProperties = default;
-            SecretPasswordIdentity identity = default;
+            NetAppSecretPasswordKeyVaultProperties keyVaultProperties = default;
+            NetAppSecretPasswordIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = SecretPasswordKeyVaultProperties.DeserializeSecretPasswordKeyVaultProperties(property.Value, options);
+                    keyVaultProperties = NetAppSecretPasswordKeyVaultProperties.DeserializeNetAppSecretPasswordKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    identity = SecretPasswordIdentity.DeserializeSecretPasswordIdentity(property.Value, options);
+                    identity = NetAppSecretPasswordIdentity.DeserializeNetAppSecretPasswordIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

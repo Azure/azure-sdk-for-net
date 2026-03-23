@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.NetApp.Models
             SystemData systemData = default;
             NetAppFileSystemUser fileSystemUser = default;
             NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
-            BucketServerPatchProperties server = default;
-            BucketPatchPermission? permissions = default;
-            AzureKeyVaultDetails akvDetails = default;
+            NetAppBucketServerPatchProperties server = default;
+            NetAppBucketPatchPermission? permissions = default;
+            NetAppKeyVaultDetails akvDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            server = BucketServerPatchProperties.DeserializeBucketServerPatchProperties(property0.Value, options);
+                            server = NetAppBucketServerPatchProperties.DeserializeNetAppBucketServerPatchProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("permissions"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            permissions = new BucketPatchPermission(property0.Value.GetString());
+                            permissions = new NetAppBucketPatchPermission(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("akvDetails"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            akvDetails = AzureKeyVaultDetails.DeserializeAzureKeyVaultDetails(property0.Value, options);
+                            akvDetails = NetAppKeyVaultDetails.DeserializeNetAppKeyVaultDetails(property0.Value, options);
                             continue;
                         }
                     }

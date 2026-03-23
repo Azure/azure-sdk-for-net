@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             string activeDirectoryConfigName = "adconfig1";
             NetAppActiveDirectoryConfigData data = new NetAppActiveDirectoryConfigData(new AzureLocation("eastus"))
             {
-                Properties = new ActiveDirectoryConfigProperties("example.net", new NetAppSecretPassword
+                Properties = new NetAppActiveDirectoryConfigProperties("example.net", new NetAppSecretPassword
                 {
-                    KeyVaultProperties = new SecretPasswordKeyVaultProperties(new Uri("https://example.vault.azure.net/"), "activeDirectoryPassword"),
-                    Identity = new SecretPasswordIdentity
+                    KeyVaultProperties = new NetAppSecretPasswordKeyVaultProperties(new Uri("https://example.vault.azure.net/"), "activeDirectoryPassword"),
+                    Identity = new NetAppSecretPasswordIdentity
                     {
                         UserAssignedIdentity = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userAssignedIdentity1",
                     },

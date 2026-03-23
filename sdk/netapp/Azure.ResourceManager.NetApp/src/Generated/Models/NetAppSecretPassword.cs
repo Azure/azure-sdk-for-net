@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="keyVaultProperties"> Properties provided by KeyVault. </param>
         /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppSecretPassword(SecretPasswordKeyVaultProperties keyVaultProperties, SecretPasswordIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppSecretPassword(NetAppSecretPasswordKeyVaultProperties keyVaultProperties, NetAppSecretPasswordIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultProperties = keyVaultProperties;
             Identity = identity;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Properties provided by KeyVault. </summary>
-        public SecretPasswordKeyVaultProperties KeyVaultProperties { get; set; }
+        public NetAppSecretPasswordKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </summary>
-        public SecretPasswordIdentity Identity { get; set; }
+        public NetAppSecretPasswordIdentity Identity { get; set; }
     }
 }

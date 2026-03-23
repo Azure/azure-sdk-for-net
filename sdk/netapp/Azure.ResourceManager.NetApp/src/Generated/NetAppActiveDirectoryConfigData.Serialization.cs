@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            ActiveDirectoryConfigProperties properties = default;
+            NetAppActiveDirectoryConfigProperties properties = default;
             ETag? etag = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         continue;
                     }
-                    properties = ActiveDirectoryConfigProperties.DeserializeActiveDirectoryConfigProperties(property.Value, options);
+                    properties = NetAppActiveDirectoryConfigProperties.DeserializeNetAppActiveDirectoryConfigProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

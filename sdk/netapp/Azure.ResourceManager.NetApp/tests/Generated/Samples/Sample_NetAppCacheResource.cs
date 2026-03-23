@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             NetAppCachePatch patch = new NetAppCachePatch
             {
-                Properties = new CacheUpdateProperties
+                Properties = new NetAppCachePatchProperties
                 {
                     Size = 214748364800L,
                 },

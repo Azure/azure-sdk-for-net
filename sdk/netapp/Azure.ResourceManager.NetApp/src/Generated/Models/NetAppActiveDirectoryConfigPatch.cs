@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppActiveDirectoryConfigPatch(AzureResourceManagerCommonTypesManagedServiceIdentityUpdate identity, IDictionary<string, string> tags, ActiveDirectoryConfigUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppActiveDirectoryConfigPatch(NetAppManagedServiceIdentityPatch identity, IDictionary<string, string> tags, NetAppActiveDirectoryConfigPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Tags = tags;
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public AzureResourceManagerCommonTypesManagedServiceIdentityUpdate Identity { get; set; }
+        public NetAppManagedServiceIdentityPatch Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The resource-specific properties for this resource. </summary>
-        public ActiveDirectoryConfigUpdateProperties Properties { get; set; }
+        public NetAppActiveDirectoryConfigPatchProperties Properties { get; set; }
     }
 }

@@ -70,19 +70,47 @@ override-operation-name:
   NetAppResourceQuotaLimits_List: GetNetAppQuotaLimits
   Volumes_ReplicationStatus: GetReplicationStatus
   VolumeGroups_ListByNetAppAccount: GetVolumeGroups
+  ElasticCapacityPools_CheckVolumeFilePathAvailability: CheckElasticVolumeFilePathAvailability
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
 
 prepend-rp-prefix:
   - ActiveDirectoryConfig
+  - ActiveDirectoryConfigProperties
   - Backup
   - BackupType
   - BackupPolicy
   - Bucket
+  - BucketPermissions
+  - BucketPatchPermissions
+  - BucketServerProperties
+  - BucketServerPatchProperties
   - Cache
+  - CacheProperties
+  - CacheProvisioningState
   - EndpointType
+  - ElasticAccount
+  - ElasticAccountProperties
+  - ElasticBackup
+  - ElasticBackupProperties
+  - ElasticBackupPolicy
+  - ElasticBackupPolicyProperties
+  - ElasticBackupType
+  - ElasticBackupVault
+  - ElasticBackupVaultProperties
+  - ElasticCapacityPool
+  - ElasticCapacityPoolProperties
+  - ElasticSnapshot
+  - ElasticSnapshotProperties
+  - ElasticSnapshotPolicy
+  - ElasticSnapshotPolicyProperties
+  - ElasticVolume
+  - ElasticVolumeProperties
+  - EntraIdConfig
+  - EntraIdConfigPatch
   - LdapConfiguration
+  - LdapConfigurationPatch
   - Volume
   - VolumeQuotaRule
   - RestoreStatus
@@ -94,6 +122,8 @@ prepend-rp-prefix:
   - ReplicationObject
   - ReplicationSchedule
   - SecretPassword
+  - SecretPasswordIdentity
+  - SecretPasswordKeyVaultProperties
   - VolumeStorageToNetworkProximity
   - AccountEncryption
   - KeySource
@@ -108,8 +138,11 @@ prepend-rp-prefix:
   - KeyVaultPrivateEndpoint
   - ReplicationType
   - VolumeLanguage
+  - ElasticEncryption
+  - ManagedServiceIdentityType
 
 rename-mapping:
+  AzureKeyVaultDetails: NetAppKeyVaultDetails
   CapacityPool.properties.poolId: -|uuid
   FilePathAvailabilityRequest.subnetId: -|arm-id
   MountTargetProperties.mountTargetId: -|uuid
@@ -264,7 +297,11 @@ rename-mapping:
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
-  CheckElasticResourceAvailabilityResponse: CheckElasticResourceAvailabilityResult
+  ElasticResourceAvailabilityStatus: NetAppElasticResourceAvailabilityState
+  CheckElasticVolumeFilePathAvailabilityRequest: ElasticVolumeFilePathAvailabilityContent
+  CheckElasticResourceAvailabilityResponse: ElasticResourceAvailabilityResult
+  CheckElasticResourceAvailabilityStatus: ElasticResourceAvailabilityStatus
+  CheckElasticResourceAvailabilityReason: ElasticResourceAvailabilityReason
   BreakthroughMode: NetAppBreakthroughMode
   CertificateAkvDetails: CertificateKeyVaultDetails
   CifsChangeNotifyState: NetAppCifsChangeNotifyState
@@ -291,8 +328,18 @@ rename-mapping:
   SmbSettings: NetAppSmbSettings
   SnapshotDirectoryVisibility: NetAppSnapshotDirectoryVisibility
   SnapshotUsage: NetAppSnapshotUsage
-  VolumeSize: NetAppVolumeSize
+  VolumeSize: NetAppBackupVolumeSize
   BucketGenerateCredentials.keyPairExpiry: KeyPairExpiresOn
+  ChangeZoneRequest: ElasticCapacityPoolChangeZoneContent
+  ElasticProtocolType: NetAppElasticProtocolType
+  ElasticProtocolType.NFSv3: Nfsv3
+  ElasticProtocolType.NFSv4: Nfsv4
+  ElasticProtocolType.SMB: Smb
+  ProtocolTypes: NetAppProtocolType
+  ProtocolTypes.NFSv3: Nfsv3
+  ProtocolTypes.NFSv4: Nfsv4
+  ProtocolTypes.SMB: Smb
+  SecretPasswordUpdate: NetAppSecretPasswordPatch
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

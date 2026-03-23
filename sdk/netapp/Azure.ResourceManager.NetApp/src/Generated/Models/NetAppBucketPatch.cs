@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// 2. These properties are mutually exclusive with the server.certificateObject property.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppBucketPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetAppFileSystemUser fileSystemUser, NetAppVolumeQuotaRuleProvisioningState? provisioningState, BucketServerPatchProperties server, BucketPatchPermission? permissions, AzureKeyVaultDetails akvDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetAppBucketPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetAppFileSystemUser fileSystemUser, NetAppVolumeQuotaRuleProvisioningState? provisioningState, NetAppBucketServerPatchProperties server, NetAppBucketPatchPermission? permissions, NetAppKeyVaultDetails akvDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             FileSystemUser = fileSystemUser;
             ProvisioningState = provisioningState;
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Provisioning state of the resource. </summary>
         public NetAppVolumeQuotaRuleProvisioningState? ProvisioningState { get; }
         /// <summary> Properties of the server managing the lifecycle of volume buckets. </summary>
-        public BucketServerPatchProperties Server { get; set; }
+        public NetAppBucketServerPatchProperties Server { get; set; }
         /// <summary> Access permissions for the bucket. Either ReadOnly or ReadWrite. </summary>
-        public BucketPatchPermission? Permissions { get; set; }
+        public NetAppBucketPatchPermission? Permissions { get; set; }
         /// <summary>
         /// Specifies the Azure Key Vault settings. These are used when
         /// a) retrieving the bucket server certificate, and
@@ -100,6 +100,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// 1. If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.
         /// 2. These properties are mutually exclusive with the server.certificateObject property.
         /// </summary>
-        public AzureKeyVaultDetails AkvDetails { get; set; }
+        public NetAppKeyVaultDetails AkvDetails { get; set; }
     }
 }

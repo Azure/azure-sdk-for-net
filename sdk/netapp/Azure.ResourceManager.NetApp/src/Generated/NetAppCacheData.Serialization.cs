@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            CacheProperties properties = default;
+            NetAppCacheProperties properties = default;
             ETag? etag = default;
             IList<string> zones = default;
             IDictionary<string, string> tags = default;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = CacheProperties.DeserializeCacheProperties(property.Value, options);
+                    properties = NetAppCacheProperties.DeserializeNetAppCacheProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

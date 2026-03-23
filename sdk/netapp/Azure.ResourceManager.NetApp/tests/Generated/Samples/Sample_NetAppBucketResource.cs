@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             NetAppBucketPatch patch = new NetAppBucketPatch
             {
-                Server = new BucketServerPatchProperties
+                Server = new NetAppBucketServerPatchProperties
                 {
                     Fqdn = "fullyqualified.domainname.com",
                     CertificateObject = "<REDACTED>",
                     OnCertificateConflictAction = NetAppOnCertificateConflictAction.Update,
                 },
-                Permissions = BucketPatchPermission.ReadWrite,
+                Permissions = NetAppBucketPatchPermission.ReadWrite,
             };
             ArmOperation<NetAppBucketResource> lro = await netAppBucket.UpdateAsync(WaitUntil.Completed, patch);
             NetAppBucketResource result = lro.Value;
@@ -148,13 +148,13 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             NetAppBucketPatch patch = new NetAppBucketPatch
             {
-                Server = new BucketServerPatchProperties
+                Server = new NetAppBucketServerPatchProperties
                 {
                     Fqdn = "fullyqualified.domainname.com",
                     OnCertificateConflictAction = NetAppOnCertificateConflictAction.Fail,
                 },
-                Permissions = BucketPatchPermission.ReadOnly,
-                AkvDetails = new AzureKeyVaultDetails
+                Permissions = NetAppBucketPatchPermission.ReadOnly,
+                AkvDetails = new NetAppKeyVaultDetails
                 {
                     CertificateAkvDetails = new CertificateKeyVaultDetails
                     {
