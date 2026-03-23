@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure;
 using Azure.Core;
@@ -17,11 +18,7 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAnalysisAuthoringClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
 
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClient for mocking. </summary>
@@ -46,21 +43,41 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TextAnalysisAuthoringClient(Uri endpoint, TokenCredential credential, TextAnalysisAuthoringClientOptions options)
+        internal TextAnalysisAuthoringClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, TextAnalysisAuthoringClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new TextAnalysisAuthoringClientOptions();
 
             _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of TextAnalysisAuthoringClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TextAnalysisAuthoringClient(Uri endpoint, TokenCredential credential, TextAnalysisAuthoringClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of TextAnalysisAuthoringClient from a <see cref="TextAnalysisAuthoringClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for TextAnalysisAuthoringClient. </param>
+        [Experimental("SCME0002")]
+        public TextAnalysisAuthoringClient(TextAnalysisAuthoringClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>

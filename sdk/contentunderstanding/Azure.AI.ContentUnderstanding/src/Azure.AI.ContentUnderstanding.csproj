@@ -36,6 +36,7 @@
     <Compile Include="$(AzureCoreSharedSources)SequentialDelayStrategy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)VoidValue.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <ItemGroup>
