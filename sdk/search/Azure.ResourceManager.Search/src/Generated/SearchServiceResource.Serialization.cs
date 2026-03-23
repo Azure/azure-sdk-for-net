@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Search
 {
     /// <summary></summary>
-    public partial class SearchServiceResource : ArmResource, IJsonModel<SearchServiceData>
+    public partial class SearchServiceResource : IJsonModel<SearchServiceData>
     {
         private static IJsonModel<SearchServiceData> s_dataDeserializationInstance;
 

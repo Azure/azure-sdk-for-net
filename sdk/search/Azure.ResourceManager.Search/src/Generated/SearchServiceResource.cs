@@ -874,6 +874,106 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
+        /// Regenerates either the primary or secondary admin API key. You can only regenerate one key at a time.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/regenerateAdminKey/{keyKind}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SearchServices_Regenerate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SearchServiceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="keyKind"> Specifies which key to regenerate. Valid values include 'primary' and 'secondary'. </param>
+        /// <param name="searchManagementRequestOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SearchServiceAdminKeyResult>> RegenerateAdminKeyAsync(SearchServiceAdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _adminKeysClientDiagnostics.CreateScope("SearchServiceResource.RegenerateAdminKey");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _adminKeysRestClient.CreateRegenerateAdminKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyKind.ToSerialString(), default, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SearchServiceAdminKeyResult> response = Response.FromValue(SearchServiceAdminKeyResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerates either the primary or secondary admin API key. You can only regenerate one key at a time.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/regenerateAdminKey/{keyKind}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SearchServices_Regenerate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SearchServiceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="keyKind"> Specifies which key to regenerate. Valid values include 'primary' and 'secondary'. </param>
+        /// <param name="searchManagementRequestOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SearchServiceAdminKeyResult> RegenerateAdminKey(SearchServiceAdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _adminKeysClientDiagnostics.CreateScope("SearchServiceResource.RegenerateAdminKey");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _adminKeysRestClient.CreateRegenerateAdminKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyKind.ToSerialString(), default, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SearchServiceAdminKeyResult> response = Response.FromValue(SearchServiceAdminKeyResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Upgrades the Azure AI Search service to the latest version available.
         /// <list type="bullet">
         /// <item>
