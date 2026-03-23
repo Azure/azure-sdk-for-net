@@ -36,7 +36,7 @@ The agent uses a three-layer architecture:
 
 - **MCP Server** — Exposes deterministic fix tools over the [Model Context Protocol](https://modelcontextprotocol.io/) via stdio transport. Tools are auto-discovered from the assembly at startup.
 - **MCP Tools** — 17 individual tools covering regex replacements (field renames, type patterns), adding/removing using directives, nullable annotation fixes, build output parsing, error classification, code generation, commit iteration, and finalization. Each tool supports both MCP (JSON) and in-process invocation.
-- **Skill-Driven Workflow** — The skill docs ([`sdk-migration`](../../../.github/skills/sdk-migration/SKILL.md) and [`sdk-migration-mcp`](../../../.github/skills/sdk-migration-mcp/SKILL.md)) ARE the orchestrator. The LLM reads them, calls MCP tools directly, and reasons about what to do next. No compiled C# orchestrator — the skill drives the build→classify→fix→rebuild loop.
+- **Skill-Driven Workflow** — The skill docs ([`sdk-migration`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration/SKILL.md) and [`sdk-migration-mcp`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration-mcp/SKILL.md)) ARE the orchestrator. The LLM reads them, calls MCP tools directly, and reasons about what to do next. No compiled C# orchestrator — the skill drives the build→classify→fix→rebuild loop.
 
 ### MCP Tools
 
@@ -71,7 +71,7 @@ The `DeterministicFixRegistry` contains rules that map error codes and message p
 - **Nullable annotations** — CS8625/CS8600 fixes
 - **Method call replacements** — `FromCancellationToken` → `ToRequestContext`, `Fetch(response)` → `FromLroResponse`, obsolete `.ToRequestContent()` removal
 
-See [`.github/skills/sdk-migration-mcp/SKILL.md`](../../../.github/skills/sdk-migration-mcp/SKILL.md) for the full rule list, tool usage guide, and the skill-driven workflow.
+See [`.github/skills/sdk-migration-mcp/SKILL.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration-mcp/SKILL.md) for the full rule list, tool usage guide, and the skill-driven workflow.
 
 ## Examples
 
@@ -85,7 +85,7 @@ This starts a stdio-based MCP server that exposes all 17 deterministic fix tools
 
 ### Use with a migration skill
 
-The tools are designed to be called by the [`sdk-migration-mcp`](../../../.github/skills/sdk-migration-mcp/SKILL.md) skill. The typical workflow is:
+The tools are designed to be called by the [`sdk-migration-mcp`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration-mcp/SKILL.md) skill. The typical workflow is:
 
 1. **Setup** — `pregen_cleanup` → `validate_tsp_config` → `commit_iteration` → `run_code_generation`
 2. **Build-fix loop** — `build_and_classify` → `batch_fix` (for deterministic errors) → LLM reasoning (for non-deterministic errors) → rebuild
@@ -115,5 +115,5 @@ This project welcomes contributions and suggestions. Most contributions require 
 
 - Explore the [Azure SDK for .NET repository](https://github.com/Azure/azure-sdk-for-net)
 - Learn about [Azure SDK design guidelines](https://azure.github.io/azure-sdk/)
-- Read the [MCP migration skill](../../../.github/skills/sdk-migration-mcp/SKILL.md) for the tool-driven workflow
-- Read the [SDK migration skill](../../../.github/skills/sdk-migration/SKILL.md) for the full migration process
+- Read the [MCP migration skill](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration-mcp/SKILL.md) for the tool-driven workflow
+- Read the [SDK migration skill](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration/SKILL.md) for the full migration process
