@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Azure.Contoso.WidgetManager": "2022-12-01"
+  }
+}
