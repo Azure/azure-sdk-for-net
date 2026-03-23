@@ -169,6 +169,10 @@ jobs:
             SourceDirectory: $(Build.SourcesDirectory)
 
         - template: /eng/common/pipelines/templates/steps/verify-codeowners-sections.yml
+          parameters:
+            Sections:
+              - 'Client Libraries'
+              - 'Management Libraries'
 
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
