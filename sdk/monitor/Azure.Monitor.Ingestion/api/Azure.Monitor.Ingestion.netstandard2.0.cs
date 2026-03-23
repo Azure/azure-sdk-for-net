@@ -24,6 +24,7 @@ namespace Azure.Monitor.Ingestion
     public partial class LogsIngestionClient
     {
         protected LogsIngestionClient() { }
+        public LogsIngestionClient(Azure.Monitor.Ingestion.LogsIngestionClientSettings settings) { }
         public LogsIngestionClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public LogsIngestionClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Ingestion.LogsIngestionClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -42,6 +43,13 @@ namespace Azure.Monitor.Ingestion
         {
             V2023_01_01 = 1,
         }
+    }
+    public partial class LogsIngestionClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public LogsIngestionClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Monitor.Ingestion.LogsIngestionClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class LogsUploadFailedEventArgs : Azure.SyncAsyncEventArgs
     {

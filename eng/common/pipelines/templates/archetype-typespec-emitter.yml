@@ -247,7 +247,7 @@ extends:
                 - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
                   parameters:
                     npmrcPath: $(buildArtifactsPath)/packages/.npmrc
-                    registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/
+                    registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry/
         
                 # publish to devops feed
                 - pwsh: |

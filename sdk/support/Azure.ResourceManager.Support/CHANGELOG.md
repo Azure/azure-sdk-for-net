@@ -4,11 +4,16 @@
 
 ### Features Added
 
+- Upgraded API version to `2025-06-01-preview`
+- Migrated from Swagger to TypeSpec-based generation
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Upgraded Azure.ResourceManager dependency
 
 ## 1.1.1 (2025-03-11)
 

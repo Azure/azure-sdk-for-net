@@ -56,6 +56,26 @@ namespace Azure.Search.Documents
         internal ObjectSerializer Serializer { get; private set; }
 
         #region ctors
+
+        /// <summary> Initializes a new instance of SearchClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="indexName"> The name of the index. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal SearchClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string indexName, SearchClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+
+            options ??= new SearchClientOptions();
+
+            _endpoint = endpoint;
+            _indexName = indexName;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            _apiVersion = options.Version.ToVersionString();
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
         /// <summary>
         /// Initializes a new instance of the SearchClient class for
         /// mocking.
@@ -177,7 +197,6 @@ namespace Azure.Search.Documents
 
             options ??= new SearchClientOptions();
             _endpoint = endpoint;
-            _keyCredential = credential;
             _indexName = indexName;
             Serializer = options.Serializer;
             _apiVersion = options.Version.ToVersionString();
@@ -229,7 +248,6 @@ namespace Azure.Search.Documents
             options ??= new SearchClientOptions();
             _endpoint = endpoint;
             _indexName = indexName;
-            _tokenCredential = tokenCredential;
             Pipeline = options.Build(tokenCredential);
             Serializer = options.Serializer;
             _apiVersion = options.Version.ToVersionString();
