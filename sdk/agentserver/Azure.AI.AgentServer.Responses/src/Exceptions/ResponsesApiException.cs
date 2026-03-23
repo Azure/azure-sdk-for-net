@@ -40,6 +40,20 @@ public class ResponsesApiException : Exception
     }
 
     /// <summary>
+    /// Initializes a new instance of <see cref="ResponsesApiException"/> with an
+    /// error message and HTTP status code. A structured <see cref="Models.Error"/> is
+    /// created automatically with a <c>server_error</c> type and code.
+    /// </summary>
+    /// <param name="message">A description of the error.</param>
+    /// <param name="statusCode">The HTTP status code to return.</param>
+    public ResponsesApiException(string message, int statusCode)
+        : base(message)
+    {
+        Error = new Error("server_error", message, null!, "server_error", null!, null!, null!, null!);
+        StatusCode = statusCode;
+    }
+
+    /// <summary>
     /// Gets the structured error model to serialize in the API response body.
     /// </summary>
     public Error Error { get; }

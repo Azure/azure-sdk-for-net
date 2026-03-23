@@ -84,6 +84,13 @@ public static class ResponsesServerServiceCollectionExtensions
         services.AddScoped<ResponseEndpointHandler>();
         services.AddScoped<ResponsesExceptionFilter>();
 
+        // Auto-detect hosted environment: if the FOUNDRY_AGENT_STORAGE_CALLBACK_URL
+        // env var is set, replace the in-memory provider with the FoundryStorage provider.
+        if (FoundryStorageExtensions.IsHostedEnvironment())
+        {
+            services.AddFoundryStorageProvider();
+        }
+
         return services;
     }
 }

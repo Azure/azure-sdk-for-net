@@ -15,7 +15,7 @@ namespace Azure.AI.AgentServer.Responses;
 public class ResponseEventStream
 {
     private readonly IResponseContext _context;
-    private readonly Response _response;
+    private readonly Models.Response _response;
     private long _sequenceNumber;
     private long _outputIndex;
 
@@ -30,7 +30,7 @@ public class ResponseEventStream
         ArgumentNullException.ThrowIfNull(request);
 
         var conversationId = request.GetConversationId();
-        _response = new Response(context.ResponseId, request.Model ?? string.Empty)
+        _response = new Models.Response(context.ResponseId, request.Model ?? string.Empty)
         {
             Metadata = request.Metadata!,
             AgentReference = request.AgentReference,
@@ -52,12 +52,12 @@ public class ResponseEventStream
     // ── Public Properties ──────────────────────────────────────
 
     /// <summary>
-    /// Gets the <see cref="Models.Response"/> object being constructed.
-    /// Allows the handler to set any <see cref="Models.Response"/> property
+    /// Gets the <see cref="Response"/> object being constructed.
+    /// Allows the handler to set any <see cref="Response"/> property
     /// (e.g. <c>Metadata</c>, <c>Instructions</c>, <c>Temperature</c>)
     /// before calling <see cref="EmitCreated"/>.
     /// </summary>
-    public Response Response => _response;
+    public Models.Response Response => _response;
 
     // ── Internal Properties (used by auto-stamping) ───────────
 
@@ -67,7 +67,7 @@ public class ResponseEventStream
     /// <summary>Gets the agent reference for auto-stamping output items.</summary>
     internal AgentReference? AgentReference => _response.AgentReference;
 
-    // ── Response Lifecycle Events ──────────────────────────────
+    // ── Models.Response Lifecycle Events ──────────────────────────────
 
     /// <summary>
     /// Produces a <c>response.queued</c> event.

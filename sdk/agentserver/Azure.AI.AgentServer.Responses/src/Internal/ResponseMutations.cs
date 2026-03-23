@@ -15,7 +15,7 @@ internal static class ResponseMutations
     /// Transitions the response to <see cref="ResponseStatus.Completed"/>.
     /// Sets <c>CompletedAt</c>, <c>Usage</c> (if provided), and computes <c>OutputText</c>.
     /// </summary>
-    internal static void SetCompleted(this Response response, ResponseUsage? usage = null)
+    internal static void SetCompleted(this Models.Response response, ResponseUsage? usage = null)
     {
         response.Status = ResponseStatus.Completed;
         response.CompletedAt = DateTimeOffset.UtcNow;
@@ -33,7 +33,7 @@ internal static class ResponseMutations
     /// Clears <c>Output</c> to an empty list, sets <c>OutputText</c> to empty string.
     /// Does NOT set <c>CompletedAt</c> (cancelled responses have no completion timestamp).
     /// </summary>
-    internal static void SetCancelled(this Response response, ResponseUsage? usage = null)
+    internal static void SetCancelled(this Models.Response response, ResponseUsage? usage = null)
     {
         response.Status = ResponseStatus.Cancelled;
         response.Output.Clear();
@@ -51,13 +51,13 @@ internal static class ResponseMutations
     /// <c>Usage</c> (if provided), and computes <c>OutputText</c>.
     /// </summary>
     internal static void SetFailed(
-        this Response response,
+        this Models.Response response,
         ResponseErrorCode code = ResponseErrorCode.ServerError,
         string message = ApiErrorFactory.GenericServerErrorMessage,
         ResponseUsage? usage = null)
     {
         response.Status = ResponseStatus.Failed;
-        response.Error = new ResponseError(code, message);
+        response.Error = new Models.ResponseError(code, message);
 
         if (usage is not null)
         {
@@ -72,7 +72,7 @@ internal static class ResponseMutations
     /// error details from the given exception. Delegates to
     /// <see cref="ApiErrorFactory.ToResponseError"/> for exception → error mapping.
     /// </summary>
-    internal static void SetFailed(this Response response, Exception exception, ResponseUsage? usage = null)
+    internal static void SetFailed(this Models.Response response, Exception exception, ResponseUsage? usage = null)
     {
         response.Status = ResponseStatus.Failed;
         response.Error = ApiErrorFactory.ToResponseError(exception);
@@ -91,7 +91,7 @@ internal static class ResponseMutations
     /// <c>Usage</c> (if provided), and computes <c>OutputText</c>.
     /// </summary>
     internal static void SetIncomplete(
-        this Response response,
+        this Models.Response response,
         ResponseIncompleteDetailsReason? reason = null,
         ResponseUsage? usage = null)
     {
@@ -114,7 +114,7 @@ internal static class ResponseMutations
     /// Computes <c>OutputText</c> by concatenating text from all
     /// <see cref="OutputItemOutputMessage"/> items in <c>Response.Output</c>.
     /// </summary>
-    internal static string ComputeOutputText(this Response response)
+    internal static string ComputeOutputText(this Models.Response response)
     {
         var texts = response.Output
             .OfType<OutputItemOutputMessage>()
@@ -135,7 +135,7 @@ internal static class ResponseMutations
     /// <see cref="ReplaceResponse"/> (full replacement — B37). Terminal status
     /// consistency is enforced by validation in the orchestrator pipeline.
     /// </remarks>
-    internal static void UpdateFromEvent(this Response response, ResponseStreamEvent evt)
+    internal static void UpdateFromEvent(this Models.Response response, ResponseStreamEvent evt)
     {
         switch (evt)
         {
@@ -158,7 +158,7 @@ internal static class ResponseMutations
     /// Not used by <see cref="UpdateFromEvent"/> — handler-yielded <c>response.*</c>
     /// events use <see cref="ReplaceResponse"/> for full replacement (B37).
     /// </remarks>
-    internal static void CopyTerminalFields(Response source, Response target)
+    internal static void CopyTerminalFields(Models.Response source, Models.Response target)
     {
         target.CompletedAt = source.CompletedAt;
         target.Error = source.Error;
