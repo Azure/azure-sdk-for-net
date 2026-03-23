@@ -147,6 +147,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
                 return Properties.ConfigurationSettings;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterExtensionProperties();
+                }
+                Properties.ConfigurationSettings.Clear();
+                if (value != null)
+                {
+                    foreach (var kvp in value)
+                    {
+                        Properties.ConfigurationSettings[kvp.Key] = kvp.Value;
+                    }
+                }
+            }
         }
 
         /// <summary> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </summary>
@@ -159,6 +174,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     Properties = new KubernetesClusterExtensionProperties();
                 }
                 return Properties.ConfigurationProtectedSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterExtensionProperties();
+                }
+                Properties.ConfigurationProtectedSettings.Clear();
+                if (value != null)
+                {
+                    foreach (var kvp in value)
+                    {
+                        Properties.ConfigurationProtectedSettings[kvp.Key] = kvp.Value;
+                    }
+                }
             }
         }
 
@@ -191,6 +221,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
                 return Properties.Statuses;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterExtensionProperties();
+                }
+                Properties.Statuses.Clear();
+                if (value != null)
+                {
+                    foreach (var item in value)
+                    {
+                        Properties.Statuses.Add(item);
+                    }
+                }
+            }
         }
 
         /// <summary> Error information from the Agent - e.g. errors during installation. </summary>
@@ -216,7 +261,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         }
 
         /// <summary> Uri of the Helm package. </summary>
-        public string PackageUri
+        public Uri PackageUri
         {
             get
             {
@@ -225,7 +270,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         }
 
         /// <summary> Identity of the Extension resource in an AKS cluster. </summary>
-        public KubernetesClusterExtensionAksAssignedIdentity AksAssignedIdentity
+        public ManagedServiceIdentity AksAssignedIdentity
         {
             get
             {

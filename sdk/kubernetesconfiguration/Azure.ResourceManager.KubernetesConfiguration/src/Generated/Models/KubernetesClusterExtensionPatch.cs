@@ -95,6 +95,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
                 return Properties.ConfigurationSettings;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterExtensionPatchProperties();
+                }
+                Properties.ConfigurationSettings.Clear();
+                if (value != null)
+                {
+                    foreach (var kvp in value)
+                    {
+                        Properties.ConfigurationSettings[kvp.Key] = kvp.Value;
+                    }
+                }
+            }
         }
 
         /// <summary> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </summary>
@@ -107,6 +122,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     Properties = new KubernetesClusterExtensionPatchProperties();
                 }
                 return Properties.ConfigurationProtectedSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterExtensionPatchProperties();
+                }
+                Properties.ConfigurationProtectedSettings.Clear();
+                if (value != null)
+                {
+                    foreach (var kvp in value)
+                    {
+                        Properties.ConfigurationProtectedSettings[kvp.Key] = kvp.Value;
+                    }
+                }
             }
         }
     }

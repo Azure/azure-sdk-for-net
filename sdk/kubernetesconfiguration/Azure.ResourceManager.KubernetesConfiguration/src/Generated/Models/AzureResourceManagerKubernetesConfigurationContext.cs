@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(ExtensionsList))]
-    [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionAksAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionData))]
     [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionPatch))]
     [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionPatchProperties))]

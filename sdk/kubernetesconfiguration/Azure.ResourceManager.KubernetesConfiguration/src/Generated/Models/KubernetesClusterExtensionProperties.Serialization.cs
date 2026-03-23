@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.ResourceManager.KubernetesConfiguration;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -177,12 +178,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             if (options.Format != "W" && Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("packageUri"u8);
-                writer.WriteStringValue(PackageUri);
+                writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
             if (Optional.IsDefined(AksAssignedIdentity))
             {
                 writer.WritePropertyName("aksAssignedIdentity"u8);
-                writer.WriteObjectValue(AksAssignedIdentity, options);
+                ((IJsonModel<ManagedServiceIdentity>)AksAssignedIdentity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsSystemExtension))
             {
@@ -243,8 +244,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             IList<KubernetesClusterExtensionStatus> statuses = default;
             ResponseError errorInfo = default;
             IReadOnlyDictionary<string, string> customLocationSettings = default;
-            string packageUri = default;
-            KubernetesClusterExtensionAksAssignedIdentity aksAssignedIdentity = default;
+            Uri packageUri = default;
+            ManagedServiceIdentity aksAssignedIdentity = default;
             bool? isSystemExtension = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -397,20 +398,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        packageUri = null;
                         continue;
                     }
-                    packageUri = prop.Value.GetString();
+                    packageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("aksAssignedIdentity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        aksAssignedIdentity = null;
                         continue;
                     }
-                    aksAssignedIdentity = KubernetesClusterExtensionAksAssignedIdentity.DeserializeKubernetesClusterExtensionAksAssignedIdentity(prop.Value, options);
+                    aksAssignedIdentity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKubernetesConfigurationContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("isSystemExtension"u8))

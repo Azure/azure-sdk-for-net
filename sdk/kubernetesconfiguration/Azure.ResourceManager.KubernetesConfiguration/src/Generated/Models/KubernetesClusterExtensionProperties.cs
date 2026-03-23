@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.ResourceManager.KubernetesConfiguration;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="aksAssignedIdentity"> Identity of the Extension resource in an AKS cluster. </param>
         /// <param name="isSystemExtension"> Flag to note if this extension is a system extension. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesClusterExtensionProperties(string extensionType, bool? autoUpgradeMinorVersion, string releaseTrain, string version, KubernetesClusterExtensionScope scope, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings, string currentVersion, KubernetesConfigurationProvisioningState? provisioningState, IList<KubernetesClusterExtensionStatus> statuses, ResponseError errorInfo, IReadOnlyDictionary<string, string> customLocationSettings, string packageUri, KubernetesClusterExtensionAksAssignedIdentity aksAssignedIdentity, bool? isSystemExtension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesClusterExtensionProperties(string extensionType, bool? autoUpgradeMinorVersion, string releaseTrain, string version, KubernetesClusterExtensionScope scope, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings, string currentVersion, KubernetesConfigurationProvisioningState? provisioningState, IList<KubernetesClusterExtensionStatus> statuses, ResponseError errorInfo, IReadOnlyDictionary<string, string> customLocationSettings, Uri packageUri, ManagedServiceIdentity aksAssignedIdentity, bool? isSystemExtension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExtensionType = extensionType;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
@@ -101,10 +102,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public IReadOnlyDictionary<string, string> CustomLocationSettings { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> Uri of the Helm package. </summary>
-        public string PackageUri { get; }
+        public Uri PackageUri { get; }
 
         /// <summary> Identity of the Extension resource in an AKS cluster. </summary>
-        public KubernetesClusterExtensionAksAssignedIdentity AksAssignedIdentity { get; set; }
+        public ManagedServiceIdentity AksAssignedIdentity { get; set; }
 
         /// <summary> Flag to note if this extension is a system extension. </summary>
         public bool? IsSystemExtension { get; }
