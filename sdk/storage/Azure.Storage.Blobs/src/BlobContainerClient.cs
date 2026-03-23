@@ -2513,7 +2513,7 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         public virtual Response<CreateSessionResponse> CreateSession(
-            CreateSessionOptions options,
+            CreateSessionConfiguration options,
             CancellationToken cancellationToken = default)
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
@@ -2530,7 +2530,7 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
                     Response<CreateSessionResponse> response = ContainerRestClient.CreateSession(
-                        createSessionOptions: options,
+                        createSessionConfiguration: options,
                         cancellationToken: cancellationToken);
 
                     return Response.FromValue(
@@ -2573,7 +2573,7 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<CreateSessionResponse>> CreateSessionAsync(
-            CreateSessionOptions options,
+            CreateSessionConfiguration options,
             CancellationToken cancellationToken = default)
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
@@ -2590,7 +2590,7 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
                     Response<CreateSessionResponse> response = await ContainerRestClient.CreateSessionAsync(
-                        createSessionOptions: options,
+                        createSessionConfiguration: options,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 

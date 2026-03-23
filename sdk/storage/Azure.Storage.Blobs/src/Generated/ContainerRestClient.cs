@@ -1589,7 +1589,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateCreateSessionRequest(CreateSessionOptions createSessionOptions)
+        internal HttpMessage CreateCreateSessionRequest(CreateSessionConfiguration createSessionConfiguration)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1602,23 +1602,23 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
             var content = new XmlWriterContent();
-            content.XmlWriter.WriteObjectValue(createSessionOptions, "CreateSessionRequest");
+            content.XmlWriter.WriteObjectValue(createSessionConfiguration, "CreateSessionRequest");
             request.Content = content;
             return message;
         }
 
         /// <summary> The Create Session operation enables users to create a session scoped to a container. </summary>
-        /// <param name="createSessionOptions"> The <see cref="CreateSessionOptions"/> to use. </param>
+        /// <param name="createSessionConfiguration"> The <see cref="CreateSessionConfiguration"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createSessionOptions"/> is null. </exception>
-        public async Task<Response<CreateSessionResponse>> CreateSessionAsync(CreateSessionOptions createSessionOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="createSessionConfiguration"/> is null. </exception>
+        public async Task<Response<CreateSessionResponse>> CreateSessionAsync(CreateSessionConfiguration createSessionConfiguration, CancellationToken cancellationToken = default)
         {
-            if (createSessionOptions == null)
+            if (createSessionConfiguration == null)
             {
-                throw new ArgumentNullException(nameof(createSessionOptions));
+                throw new ArgumentNullException(nameof(createSessionConfiguration));
             }
 
-            using var message = CreateCreateSessionRequest(createSessionOptions);
+            using var message = CreateCreateSessionRequest(createSessionConfiguration);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1638,17 +1638,17 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> The Create Session operation enables users to create a session scoped to a container. </summary>
-        /// <param name="createSessionOptions"> The <see cref="CreateSessionOptions"/> to use. </param>
+        /// <param name="createSessionConfiguration"> The <see cref="CreateSessionConfiguration"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createSessionOptions"/> is null. </exception>
-        public Response<CreateSessionResponse> CreateSession(CreateSessionOptions createSessionOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="createSessionConfiguration"/> is null. </exception>
+        public Response<CreateSessionResponse> CreateSession(CreateSessionConfiguration createSessionConfiguration, CancellationToken cancellationToken = default)
         {
-            if (createSessionOptions == null)
+            if (createSessionConfiguration == null)
             {
-                throw new ArgumentNullException(nameof(createSessionOptions));
+                throw new ArgumentNullException(nameof(createSessionConfiguration));
             }
 
-            using var message = CreateCreateSessionRequest(createSessionOptions);
+            using var message = CreateCreateSessionRequest(createSessionConfiguration);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
