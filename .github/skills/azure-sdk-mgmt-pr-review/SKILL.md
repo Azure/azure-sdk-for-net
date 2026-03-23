@@ -77,8 +77,8 @@ To determine the review scope:
 - **PUT/POST operation body:** Must be named `[Model]Content` or `[Model]Data`
 
 #### Property Naming
-- **Boolean properties:** Must start with verb prefix: `Is`, `Can`, `Has`
-- **DateTimeOffset properties:** Should end with `On` (e.g., `CreatedOn`, `StartOn`, `EndOn`)
+- **Boolean properties:** Must start with verb prefix: `Is`, `Can`, `Has`, `Does`, `Should`, `Allow`, `Enable`, `Disable`, `Use`, `Support`
+- **DateTimeOffset properties:** Should end with `On` or `At` (e.g., `CreatedOn`, `StartOn`, `ExpiresAt`)
 - **Interval/Duration (integer):** Include units in name (e.g., `MonitoringIntervalInSeconds`)
 - **TTL properties:** Rename to `TimeToLiveIn<Unit>`
 

@@ -158,11 +158,11 @@ for ($i = 0; $i -lt $totalLines; $i++) {
     }
 }
 
-# Helper: check if a type inherits from a given base (simple string search in bases)
+# Helper: check if a type inherits from a given base (word-boundary match in bases)
 function Test-InheritsFrom([string]$typeName, [string]$baseName) {
     $info = $typeInfos[$typeName]
     if (-not $info) { return $false }
-    return $info.Bases -match [regex]::Escape($baseName)
+    return $info.Bases -match "\b$([regex]::Escape($baseName))\b"
 }
 
 # Derive RP prefix from namespace for contextual naming checks
@@ -432,7 +432,7 @@ foreach ($typeName in $typeInfos.Keys) {
     foreach ($acr in $acronymPatterns) {
         # Check if the ALL-CAPS version appears as a substring in the type name
         # but not as the PascalCase version
-        if ($typeName -cmatch "(?<![A-Z])$($acr.AllCaps)(?![a-z])") {
+        if ($typeName -cmatch "(?<![A-Z])$($acr.AllCaps)(?=[A-Z][a-z]|[^a-zA-Z]|$)") {
             $violations.Add([NamingViolation]::new(
                 $acr.Id, 'Error', 'Acronym Casing',
                 $typeName, '',
@@ -467,7 +467,7 @@ for ($i = 0; $i -lt $totalLines; $i++) {
 
     if ($memberName) {
         foreach ($acr in $acronymPatterns) {
-            if ($memberName -cmatch "(?<![A-Z])$($acr.AllCaps)(?![a-z])") {
+            if ($memberName -cmatch "(?<![A-Z])$($acr.AllCaps)(?=[A-Z][a-z]|[^a-zA-Z]|$)") {
                 $violations.Add([NamingViolation]::new(
                     'ACRONYM001', 'Error', 'Acronym Casing',
                     $currentTypeName, $memberName,
@@ -551,7 +551,7 @@ foreach ($typeName in $typeInfos.Keys) {
         $hasFlagsAttr = $true
     }
 
-    if (-not $hasFlagsAttr -and $typeName -match 's$' -and $typeName -notmatch '(ss|us|is|Status|Access|Address)$') {
+    if (-not $hasFlagsAttr -and $typeName -match 's$' -and $typeName -notmatch '(ss|us|is|as|os|Status|Access|Address|Series|Alias|Atlas|Chaos|Canvas)$') {
         $violations.Add([NamingViolation]::new(
             'ENUM001', 'Warning', 'Enum Naming',
             $typeName, '',
