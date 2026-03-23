@@ -40,6 +40,7 @@ namespace Azure.Generator.Visitors
         private static readonly CSharpType AzureKeyCredentialType = typeof(AzureKeyCredential);
         private static readonly CSharpType HttpPipelinePolicyType = typeof(HttpPipelinePolicy);
         private readonly HashSet<ClientOptionsProvider> _visitedOptions = new();
+        private readonly HashSet<InputClient> _inProgressClients = new();
 
         protected override ClientProvider? Visit(InputClient client, ClientProvider? clientProvider)
         {
@@ -53,58 +54,61 @@ namespace Azure.Generator.Visitors
                 UpdateClientOptions(clientProvider.ClientOptions);
             }
 
+            // Mark this client as in-progress before accessing .Constructors to prevent
+            // infinite recursion. Accessing .Constructors triggers GetRootClient/GetSubClients
+            // which can call CreateClient → Visit for parent/child hierarchies.
+            // The re-entrant Visit will skip UpdateClientConstructors for the in-progress client,
+            // but the original caller will update all constructors after the recursion unwinds.
+            if (_inProgressClients.Add(client))
+            {
+                UpdateClientConstructors(clientProvider);
+            }
+
             return clientProvider;
         }
 
-        protected override ConstructorProvider? VisitConstructor(ConstructorProvider constructor)
+        private static void UpdateClientConstructors(ClientProvider clientProvider)
         {
-            if (constructor.EnclosingType is not ClientProvider clientProvider)
-            {
-                return constructor;
-            }
+            var constructors = clientProvider.Constructors;
 
-            UpdateConstructor(constructor, clientProvider);
-
-            return constructor;
-        }
-
-        private static void UpdateConstructor(ConstructorProvider constructor, ClientProvider clientProvider)
-        {
             // Azure clients use HttpPipelinePolicy (from Azure.Core) instead of the base library's
             // AuthenticationPolicy abstraction. Change the parameter type on the internal constructor
             // so that credential constructors can chain to it with Azure-specific policy types
             // (AzureKeyCredentialPolicy, BearerTokenAuthenticationPolicy).
-            if (constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
-                constructor.Signature.Parameters.Any(p => p.Type.Name == nameof(AuthenticationPolicy)))
+            var internalCtor = constructors.FirstOrDefault(c =>
+                c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
+                c.Signature.Parameters.Any(p => p.Type.Name == nameof(AuthenticationPolicy)));
+            if (internalCtor != null)
             {
-                var authPolicyParam = constructor.Signature.Parameters.First(
+                var authPolicyParam = internalCtor.Signature.Parameters.First(
                     p => p.Type.Name == nameof(AuthenticationPolicy));
                 authPolicyParam.Update(type: HttpPipelinePolicyType);
             }
 
             // Modify Settings constructor to chain to the appropriate credential constructor
-            if (constructor.Signature.Parameters.Count == 1 &&
-                constructor.Signature.Parameters[0].Type.Equals(clientProvider.ClientSettings?.Type))
+            foreach (var ctor in constructors)
             {
-                var constructors = clientProvider.Constructors;
-
-                bool hasTokenCredCtor = constructors.Any(c =>
-                    c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
-                    c.Signature.Parameters.Any(p => p.Type.Equals(typeof(TokenCredential))) &&
-                    c.Signature.Parameters.Count >= 3);
-
-                bool hasKeyCredCtor = constructors.Any(c =>
-                    c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
-                    c.Signature.Parameters.Any(p => p.Type.Equals(typeof(AzureKeyCredential))) &&
-                    c.Signature.Parameters.Count >= 3);
-
-                if (hasTokenCredCtor || hasKeyCredCtor)
+                if (ctor.Signature.Parameters.Count == 1 &&
+                    ctor.Signature.Parameters[0].Type.Equals(clientProvider.ClientSettings?.Type))
                 {
-                    UpdateSettingsConstructor(constructor, hasTokenCredCtor, hasKeyCredCtor);
-                }
-                else
-                {
-                    UpdateSettingsConstructorForNoAuth(constructor);
+                    bool hasTokenCredCtor = constructors.Any(c =>
+                        c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                        c.Signature.Parameters.Any(p => p.Type.Equals(typeof(TokenCredential))) &&
+                        c.Signature.Parameters.Count >= 3);
+
+                    bool hasKeyCredCtor = constructors.Any(c =>
+                        c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                        c.Signature.Parameters.Any(p => p.Type.Equals(typeof(AzureKeyCredential))) &&
+                        c.Signature.Parameters.Count >= 3);
+
+                    if (hasTokenCredCtor || hasKeyCredCtor)
+                    {
+                        UpdateSettingsConstructor(ctor, hasTokenCredCtor, hasKeyCredCtor);
+                    }
+                    else
+                    {
+                        UpdateSettingsConstructorForNoAuth(ctor);
+                    }
                 }
             }
         }
