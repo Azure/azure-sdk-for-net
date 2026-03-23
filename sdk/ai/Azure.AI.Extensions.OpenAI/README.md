@@ -402,9 +402,15 @@ public class LoggingPolicy : PipelinePolicy
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         ProcessMessage(message); // for request
-        DateTime start = DateTime.Now;
-        ProcessNext(message, pipeline, currentIndex);
-        Console.WriteLine($"Response time {(DateTime.Now - start).TotalMilliseconds} ms");
+        System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        try
+        {
+            ProcessNext(message, pipeline, currentIndex);
+        }
+        finally
+        {
+            Console.WriteLine($"Response time {stopwatch.Elapsed.TotalMilliseconds} ms");
+        }
         ProcessMessage(message); // for response
     }
 
@@ -412,8 +418,15 @@ public class LoggingPolicy : PipelinePolicy
     {
         ProcessMessage(message); // for request
         DateTime start = DateTime.Now;
-        await ProcessNextAsync(message, pipeline, currentIndex);
-        Console.WriteLine($"Response time {(DateTime.Now - start).TotalMilliseconds} ms");
+        System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        try
+        {
+            await ProcessNextAsync(message, pipeline, currentIndex);
+        }
+        finally
+        {
+            Console.WriteLine($"Response time {stopwatch.Elapsed.TotalMilliseconds} ms");
+        }
         ProcessMessage(message); // for response
     }
 }
