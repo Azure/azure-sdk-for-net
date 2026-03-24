@@ -101,7 +101,6 @@ function Get-ToolInputPath
 $shouldTrack = $false
 $eventType = $null
 $skillName = $null
-$azsdkToolName = $null
 $clientType = $null
 
 # check if hook is triggered from vscode or copilot-cli. Azure sdk tools hook is not considering claude at this point.
@@ -178,7 +177,6 @@ if ($shouldTrack)
     if ($eventType) { $cliArgs += "--event-type"; $cliArgs += $eventType }
     if ($sessionId) { $cliArgs += "--session-id"; $cliArgs += $sessionId }
     if ($skillName) { $cliArgs += "--skill-name"; $cliArgs += $skillName }
-    if ($azsdkToolName) { $cliArgs += "--tool-name"; $cliArgs += $azsdkToolName }
     
     # run azsdk cli to ingest telemetry (non-blocking)
     try
