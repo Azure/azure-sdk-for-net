@@ -266,6 +266,131 @@ The requirement was to add NetworkSecurityPerimeter support. The resources alrea
 4. **Ran pre-commit checks**: No breaking changes (new resources only)
 5. **Updated CHANGELOG**: Documented new NetworkSecurityPerimeter support
 
+## Writing Provisioning Test Cases
+
+Every provisioning library — whether generated via the reflection-based generator or the TypeSpec-based generator — must include test cases that follow the standard Trycep pattern. This section explains the conventions and structure.
+
+### Test File Structure
+
+Each provisioning library needs these files under `tests/`:
+
+| File | Purpose |
+|------|---------|
+| `Basic{Service}Tests.cs` | Unit tests with `#region Snippet:` blocks and `Trycep.Compare()` Bicep validation |
+| `BasicLive{Service}Tests.cs` | Live integration tests calling the same factory methods |
+| `Azure.Provisioning.{Service}.Tests.csproj` | Test project referencing `Azure.Core.TestFramework`, `Azure.Provisioning`, and shared test utilities |
+
+A `.slnx` solution file should also be created at the library root to include both `src` and `tests` projects.
+
+### Basic Tests Pattern
+
+Each test scenario is a **static factory method** returning `Trycep`, with the infrastructure definition wrapped in a `#region Snippet:{SnippetName}` block. The snippet is reused in both the README and the live test.
+
+```csharp
+public class BasicBatchTests
+{
+    internal static Trycep CreateBatchAccountWithPoolTest()
+    {
+        return new Trycep().Define(
+            ctx =>
+            {
+                #region Snippet:BatchAccountBasic
+                Infrastructure infra = new();
+
+                BatchAccount account =
+                    new(nameof(account), BatchAccount.ResourceVersions.V2025_06_01)
+                    {
+                        Tags = { ["environment"] = "test" },
+                    };
+                infra.Add(account);
+
+                // ... add child resources, outputs ...
+                #endregion
+
+                return infra;
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.batch/batchaccount-with-storage/main.bicep")]
+    public async Task CreateBatchAccountWithPool()
+    {
+        await using Trycep test = CreateBatchAccountWithPoolTest();
+        test.Compare("""
+            // Expected Bicep output here
+            """);
+    }
+}
+```
+
+**Key conventions:**
+- The `[Description]` attribute links to the relevant [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts)
+- Use `#region Snippet:{Name}` / `#endregion` so the snippet can be extracted into the README
+- The factory method is `internal static` so the live test class can reuse it
+- Run the test once to see the **actual** Bicep output (printed on failure), then use that as the expected string
+
+### Live Tests Pattern
+
+The live test class calls the same factory methods from the basic tests:
+
+```csharp
+public class BasicLiveBatchTests(bool async)
+    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true */)
+{
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.batch/batchaccount-with-storage/main.bicep")]
+    [LiveOnly]
+    public async Task CreateBatchAccountWithPool()
+    {
+        await using Trycep test = BasicBatchTests.CreateBatchAccountWithPoolTest();
+        await test.SetupLiveCalls(this)
+            .Lint()
+            .ValidateAsync();
+    }
+}
+```
+
+### README Examples Section
+
+The README must include a `Key concepts` section and an `Examples` section. The example code references the `#region Snippet` by name:
+
+````markdown
+## Key concepts
+
+This library allows you to specify your infrastructure in a declarative style using dotnet.
+You can then use azd to deploy your infrastructure to Azure directly without needing to
+write or maintain bicep or arm templates.
+
+## Examples
+
+### Create a Batch Account with Pool and Application
+
+This example demonstrates how to create a Batch account with a pool and application, based
+on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.batch/batchaccount-with-storage/main.bicep).
+
+```C# Snippet:BatchAccountBasic
+// The snippet content is extracted from BasicBatchTests.cs at build time
+```
+````
+
+### Tips for Writing Provisioning Tests
+
+1. **Only use public, settable properties.** Many provisioning resource properties are read-only (get-only). Check the generated code for `set` accessors before using a property in tests. For example, `BatchAccount.AutoStorage` and `BatchAccount.PoolAllocationMode` are read-only, while `BatchAccount.Tags` and `BatchAccount.Location` have setters.
+
+2. **Watch for `internal` types.** Some generated model types are `internal` and cannot be used from the test project. For example, `BatchDeploymentConfiguration` is internal in `Azure.Provisioning.Batch`.
+
+3. **Double-wrapped BicepValue types.** Some properties have `BicepValue<BicepValue<T>>` types due to the provisioning type system. You cannot directly assign an enum or value to these — use proper wrapping or avoid them in basic test scenarios.
+
+4. **Get actual Bicep output first.** Write the test with a placeholder expected string, run it to get the actual Bicep output (printed in the failure message), then update the expected string to match. The output often has different ordering or formatting than expected (e.g., `tags` before `location`, no `properties: {}` when empty, different `take()` length limits for child resources).
+
+5. **Child resource name length.** Top-level resources typically use `take(..., 24)` while child resources use `take(..., 64)` for the name. The exact behavior depends on the resource type definition.
+
+6. **Test project references.** The test `.csproj` should reference:
+   - `Azure.Core.TestFramework`
+   - `Azure.Provisioning` (for `Infrastructure`, `ProvisioningOutput`, `ProvisioningParameter`, etc.)
+   - `Azure.Provisioning.Deployment` (for Trycep deployment support)
+   - Shared test code: `<Compile Include="$(AzureProvisioningTestSharedSources)ProvisioningTestBase.cs" LinkBase="Shared" />`
+
 ## Key Files
 
 | File | Purpose |
@@ -276,6 +401,8 @@ The requirement was to add NetworkSecurityPerimeter support. The resources alrea
 | `sdk/provisioning/Azure.Provisioning.{Service}/src/BackwardCompatible/` | Backward-compatible customizations |
 | `sdk/provisioning/Azure.Provisioning.{Service}/src/ApiCompatBaseline.txt` | API compatibility suppressions (provisioning only) |
 | `sdk/provisioning/cspell.yaml` | Spell check configuration for provisioning |
+| `common/ProvisioningTestShared/Trycep.cs` | Test orchestration framework (Compare, Lint, Validate, Deploy) |
+| `common/ProvisioningTestShared/ProvisioningTestBase.cs` | Base class for live tests |
 
 ## Troubleshooting
 
