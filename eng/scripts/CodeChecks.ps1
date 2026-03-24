@@ -62,8 +62,27 @@ try {
     # only the files that were changed by the code checks, not pre-existing changes.
     $preExistingChanges = @()
     if ($PreparePr) {
-        $preExistingChanges = @(git diff --name-only)
-        $preExistingChanges += @(git diff --name-only --cached)
+        $statusLines = git status --porcelain
+        foreach ($line in $statusLines) {
+            if ([string]::IsNullOrWhiteSpace($line)) {
+                continue
+            }
+            $trimmed = $line.Trim()
+            if ($trimmed.Length -le 3) {
+                continue
+            }
+            # Skip the two status characters and the following space to get the path portion.
+            $pathPart = $trimmed.Substring(3)
+            # Handle renames of the form "oldpath -> newpath".
+            if ($pathPart -match '(.+?)\s->\s(.+)$') {
+                $preExistingChanges += $matches[1]
+                $preExistingChanges += $matches[2]
+            }
+            else {
+                $preExistingChanges += $pathPart
+            }
+        }
+        $preExistingChanges = $preExistingChanges | Sort-Object -Unique
     }
 
     Write-Host "Restore ./node_modules"
