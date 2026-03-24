@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNotificationHubsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NotificationHubUpdateContent)} does not support '{options.Format}' format.");
             }
