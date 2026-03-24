@@ -1,6 +1,6 @@
-# Azure AI Agent Server Contracts client library for .NET
+# Azure AI Agent Server Responses Contracts library for .NET
 
-Azure.AI.AgentServer.Responses.Contracts contains the TypeSpec-generated model contracts for the Azure AI Responses API. These types are used by [Azure.AI.AgentServer.Responses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/README.md) and can also be consumed directly for serialization, validation, and integration purposes.
+Azure.AI.AgentServer.Responses.Contracts contains the model contracts for the Azure AI Responses API. These types are used by [Azure.AI.AgentServer.Responses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/README.md) and can also be consumed directly for serialization, validation, and integration purposes.
 
 [Source code][source] | [Package (NuGet)][nuget] | [REST API reference][rest_api] | [Product documentation][product_doc]
 
@@ -18,19 +18,14 @@ dotnet add package Azure.AI.AgentServer.Responses.Contracts --prerelease
 
 - [.NET 8.0](https://dotnet.microsoft.com/download) or later
 
-### Authenticate the client
-
-This is a data model package and does not make service calls.
-Authentication is handled by the server library [Azure.AI.AgentServer.Responses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/README.md).
-
 ## Key concepts
 
-This package contains the generated data models for the Azure AI Responses API, including:
+This package contains the data models for the Azure AI Responses API, including:
 
 - **Request/Response models**: `CreateResponse`, `Response`, `ResponseStreamEvent`
 - **Output items**: `OutputItem` and its subtypes (message, function call, web search, etc.)
 - **Content types**: Text, refusal, image, file, and other content parts
-- **Validators**: Schema-driven validators generated from the OpenAPI specification
+- **Validators**: Schema-driven validators for request and response payloads
 
 ### Thread safety
 

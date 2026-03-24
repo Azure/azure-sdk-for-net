@@ -1,4 +1,4 @@
-# Azure AI Agent Server Adapter for .NET
+# Azure AI Agent Server Responses library for .NET
 
 Azure.AI.AgentServer.Responses is a .NET library for building ASP.NET Core servers that implement the [Azure AI Responses API][product_doc]. Add the NuGet package, implement one interface (`IResponseHandler`), and the library handles routing, streaming (SSE), background execution, cancellation, caching, and response lifecycle management.
 
@@ -19,12 +19,6 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 - An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
 - [.NET 8.0](https://dotnet.microsoft.com/download) or later
 - An ASP.NET Core application
-
-### Authenticate the client
-
-This library provides a server-side implementation of the Azure AI Responses API.
-Authentication of incoming requests is the responsibility of the hosting application.
-See the [ASP.NET Core authentication documentation](https://learn.microsoft.com/aspnet/core/security/authentication/) for details.
 
 ### Configure the server
 
