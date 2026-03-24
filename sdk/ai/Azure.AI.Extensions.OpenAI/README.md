@@ -1042,7 +1042,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 ```
 
 ### Web Search Preview
-The `WebSearchPreviewTool` also allows the agent to perform web search. To improve the results we can set up the search location. After the agent was created, it can be used as usual. When needed it will use tool to answer the question.
+The `WebSearchPreviewTool` also allows the agent to perform web search. To improve the results we can set up the search location. After the agent was created, it can be used as usual. When needed, it will use the Web Search Preview tool to answer the question.
 
 ```C# Snippet:Sample_CreateAgent_WebSearchPreviewStreaming_Async
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
