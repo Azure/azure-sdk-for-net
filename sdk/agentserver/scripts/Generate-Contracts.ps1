@@ -101,20 +101,14 @@ try {
         }
         Write-Host "TypeSpec sources synced."
 
-        # Step 1b: Install TypeSpec dependencies (including @typespec/openapi3 for OpenAPI generation)
+        # Step 1b: Install TypeSpec dependencies
+        # Dependencies (including @typespec/openapi3) come from the repo-level emitter
+        # package specified by emitterPackageJsonPath in tsp-location.yaml.
         Write-Host "Installing TypeSpec dependencies..."
         Push-Location $TempTypeSpecDir
         try {
             npm install --silent
             if ($LASTEXITCODE -ne 0) { throw "npm install failed" }
-            # Ensure @typespec/openapi3 emitter is installed (required by tspconfig.yaml)
-            $openapi3Installed = npm ls @typespec/openapi3 2>&1
-            if ($LASTEXITCODE -ne 0) {
-                $compilerVer = (npm ls @typespec/compiler --json 2>$null | ConvertFrom-Json).dependencies.'@typespec/compiler'.version
-                Write-Host "Installing @typespec/openapi3@$compilerVer..."
-                npm install "@typespec/openapi3@$compilerVer" --silent
-                if ($LASTEXITCODE -ne 0) { throw "Failed to install @typespec/openapi3" }
-            }
         } finally {
             Pop-Location
         }

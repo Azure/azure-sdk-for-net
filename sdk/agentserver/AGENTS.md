@@ -157,17 +157,13 @@ eng/scripts/Update-Snippets.ps1 agentserver
 
 ```powershell
 # Prerequisites: Node.js, Python 3 + pyyaml
-# Install npm deps (one-time)
-npm install
-
-# Regenerate
+# Regenerate (deps installed automatically via tsp-client sync + npm install)
 ./scripts/Generate-Contracts.ps1
 ```
 
-> **Note**: The TypeSpec pipeline currently uses a standalone `package.json` with pinned
-> dependencies. This is a known deviation from the repo-standard pattern of
-> repo-level emitter packages + `tsp-location.yaml` with `emitterPackageJsonPath`.
-> Alignment is tracked for a future PR.
+TypeSpec dependencies are resolved from the repo-level emitter package
+(`eng/http-client-csharp-emitter-package.json`) via `emitterPackageJsonPath`
+in `tsp-location.yaml`. There is no standalone `package.json` in this directory.
 
 ## 4. Do NOT
 
