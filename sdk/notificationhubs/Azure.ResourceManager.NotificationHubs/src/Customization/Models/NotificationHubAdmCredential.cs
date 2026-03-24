@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    // Backward-compat: baseline had a public parameterless constructor.
+    /// <summary> Description of a NotificationHub AdmCredential. </summary>
     public partial class NotificationHubAdmCredential
     {
         /// <summary> Initializes a new instance of <see cref="NotificationHubAdmCredential"/>. </summary>

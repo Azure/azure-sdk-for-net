@@ -11,10 +11,6 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    // Backward-compat: the baseline SDK used a separate input type for CreateOrUpdate,
-    // but the generator produces NotificationHubNamespaceData for both input and output.
-    // This hand-written type preserves the baseline API contract. Overloads in
-    // NotificationHubNamespaceCollection bridge this type to the generated Data type.
     /// <summary> Parameters supplied to the CreateOrUpdate Namespace operation. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class NotificationHubNamespaceCreateOrUpdateContent : TrackedResourceData

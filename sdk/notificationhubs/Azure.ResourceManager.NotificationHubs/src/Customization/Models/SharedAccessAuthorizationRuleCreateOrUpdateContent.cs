@@ -9,10 +9,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    // Backward-compat: this model is completely missing from the TypeSpec spec —
-    // the generator produces NotificationHubAuthorizationRuleData instead.
-    // This hand-written type preserves the baseline API contract. Overloads in
-    // the AuthorizationRule Collection classes bridge this type to the generated Data type.
     /// <summary>
     /// Parameters supplied to the CreateOrUpdate Namespace AuthorizationRules.
     /// Serialized Name: SharedAccessAuthorizationRuleCreateOrUpdateParameters
