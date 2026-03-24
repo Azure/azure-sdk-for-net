@@ -82,10 +82,12 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
     }
 
     /// <summary>
-    /// T022: GET after DELETE returns 404.
+    /// T022: GET after DELETE returns 400 (deleted responses are distinguished from never-existed).
+    /// Per API Behaviour Contract Endpoint 5 Post-Deletion Behaviour:
+    /// GET /responses/{id} → HTTP 400 with message indicating the response has been deleted.
     /// </summary>
     [Test]
-    public async Task Get_After_Delete_Returns_404()
+    public async Task Get_After_Delete_Returns_400()
     {
         // Create and then delete a response
         var responseId = await CreateDefaultResponseAsync();
@@ -93,9 +95,9 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
         var deleteResponse = await Client.DeleteAsync($"/responses/{responseId}");
         Assert.AreEqual(HttpStatusCode.OK, deleteResponse.StatusCode);
 
-        // GET should return 404
+        // GET should return 400 (deleted, not 404 = never-existed)
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.AreEqual(HttpStatusCode.BadRequest, getResponse.StatusCode);
     }
 
     /// <summary>

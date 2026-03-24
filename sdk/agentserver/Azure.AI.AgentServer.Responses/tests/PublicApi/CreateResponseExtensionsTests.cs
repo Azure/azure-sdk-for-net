@@ -285,7 +285,7 @@ public class CreateResponseExtensionsTests
         };
 
         var ex = Assert.Throws<FormatException>(() => request.GetInputExpanded());
-        Assert.AreEqual("Failed to convert input items", ex.Message);
+        Assert.AreEqual("Expected a string or array for Input, but got Number.", ex.Message);
     }
 
     [Test]

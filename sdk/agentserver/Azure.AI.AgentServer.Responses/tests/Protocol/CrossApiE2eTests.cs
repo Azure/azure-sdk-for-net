@@ -169,11 +169,11 @@ public class CrossApiE2eTests : ProtocolTestBase
         XAssert.Contains("synchronous", doc.RootElement.GetProperty("error").GetProperty("message").GetString());
     }
 
-    // E5: Create → Cancel API (during in-flight) → 400 (B1: cancel requires bg, checked first)
+    // E5: Create → Cancel API (during in-flight) → 404 (B16: non-bg in-flight not findable)
     [Test]
-    public async Task C1_Create_CancelDuringInFlight_Returns400()
+    public async Task C1_Create_CancelDuringInFlight_Returns404()
     {
-        // Validates: B1 — cancel requires background; non-bg → 400
+        // Validates: B16 — non-background in-flight responses are not findable → 404
         var handlerStarted = new TaskCompletionSource();
         var handlerGate = new TaskCompletionSource();
 
@@ -184,9 +184,7 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         var responseId = Handler.LastContext!.ResponseId;
         var cancelResponse = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
-        using var doc = await ParseJsonAsync(cancelResponse);
-        XAssert.Contains("synchronous", doc.RootElement.GetProperty("error").GetProperty("message").GetString());
+        Assert.AreEqual(HttpStatusCode.NotFound, cancelResponse.StatusCode);
 
         handlerGate.TrySetResult();
         await postTask;
@@ -301,11 +299,11 @@ public class CrossApiE2eTests : ProtocolTestBase
         XAssert.Contains("synchronous", doc.RootElement.GetProperty("error").GetProperty("message").GetString());
     }
 
-    // E11: Create (SSE) → Cancel API (during stream) → 400 (B1: cancel requires bg)
+    // E11: Create (SSE) → Cancel API (during stream) → 404 (B16: non-bg in-flight not findable)
     [Test]
-    public async Task C2_StreamCreate_CancelDuringStream_Returns400()
+    public async Task C2_StreamCreate_CancelDuringStream_Returns404()
     {
-        // Validates: B1 — cancel requires background; non-bg → 400
+        // Validates: B16 — non-background in-flight responses are not findable → 404
         var handlerStarted = new TaskCompletionSource();
         var handlerGate = new TaskCompletionSource();
 
@@ -320,9 +318,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         var responseId = Handler.LastContext!.ResponseId;
 
         var cancelResponse = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
-        using var doc = await ParseJsonAsync(cancelResponse);
-        XAssert.Contains("synchronous", doc.RootElement.GetProperty("error").GetProperty("message").GetString());
+        Assert.AreEqual(HttpStatusCode.NotFound, cancelResponse.StatusCode);
 
         handlerGate.TrySetResult();
         try
