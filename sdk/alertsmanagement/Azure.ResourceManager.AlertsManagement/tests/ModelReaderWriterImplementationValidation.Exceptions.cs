@@ -10,7 +10,8 @@ namespace Azure.ResourceManager.TestFramework
             ExceptionList = new[]
             {
                 "Azure.ResourceManager.AlertsManagement.Models.ServiceAlertCollectionGetAllOptions",
-                "Azure.ResourceManager.AlertsManagement.Models.SubscriptionResourceGetServiceAlertSummaryOptions"
+                "Azure.ResourceManager.AlertsManagement.Models.SubscriptionResourceGetServiceAlertSummaryOptions",
+                "Azure.ResourceManager.AlertsManagement.Models.SmartGroupCollectionGetAllOptions"
             };
         }
     }
