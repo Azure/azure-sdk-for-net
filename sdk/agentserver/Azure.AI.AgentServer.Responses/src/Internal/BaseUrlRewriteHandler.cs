@@ -5,38 +5,38 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
 /// A <see cref="DelegatingHandler"/> that rewrites the outbound request URI
-/// using the <c>FOUNDRY_AGENT_STORAGE_CALLBACK_URL</c> environment variable.
-/// This variable is set by the Azure AI Foundry hosting platform and contains
-/// the storage endpoint URL. If the variable is missing or empty,
+/// using the <c>FOUNDRY_PROJECT_ENDPOINT</c> environment variable.
+/// The storage base URL is constructed by appending <c>/storage</c> to the
+/// project endpoint. If the variable is missing or empty,
 /// an <see cref="InvalidOperationException"/> is thrown.
 /// </summary>
 internal sealed class BaseUrlRewriteHandler : DelegatingHandler
 {
-    internal const string CallbackUrlEnvVar = "FOUNDRY_AGENT_STORAGE_CALLBACK_URL";
+    internal const string ProjectEndpointEnvVar = "FOUNDRY_PROJECT_ENDPOINT";
 
-    private readonly Uri _callbackUri;
+    private readonly Uri _storageBaseUri;
 
     /// <summary>
     /// Initializes a new instance of <see cref="BaseUrlRewriteHandler"/>.
     /// </summary>
     public BaseUrlRewriteHandler()
     {
-        var envValue = Environment.GetEnvironmentVariable(CallbackUrlEnvVar);
+        var envValue = Environment.GetEnvironmentVariable(ProjectEndpointEnvVar);
 
         if (string.IsNullOrEmpty(envValue))
         {
             throw new InvalidOperationException(
-                $"The '{CallbackUrlEnvVar}' environment variable is required. " +
+                $"The '{ProjectEndpointEnvVar}' environment variable is required. " +
                 "In hosted environments, the Azure AI Foundry platform must set this variable.");
         }
 
         if (!Uri.TryCreate(envValue, UriKind.Absolute, out var uri))
         {
             throw new InvalidOperationException(
-                $"The '{CallbackUrlEnvVar}' environment variable contains an invalid absolute URI.");
+                $"The '{ProjectEndpointEnvVar}' environment variable contains an invalid absolute URI.");
         }
 
-        _callbackUri = uri;
+        _storageBaseUri = new Uri(uri.GetLeftPart(UriPartial.Path).TrimEnd('/') + "/storage/");
     }
 
     /// <inheritdoc/>
@@ -46,7 +46,7 @@ internal sealed class BaseUrlRewriteHandler : DelegatingHandler
     {
         var pathAndQuery = request.RequestUri!.PathAndQuery;
         request.RequestUri = new Uri(
-            _callbackUri.GetLeftPart(UriPartial.Path).TrimEnd('/') + pathAndQuery);
+            _storageBaseUri.GetLeftPart(UriPartial.Path).TrimEnd('/') + pathAndQuery);
 
         return base.SendAsync(request, cancellationToken);
     }

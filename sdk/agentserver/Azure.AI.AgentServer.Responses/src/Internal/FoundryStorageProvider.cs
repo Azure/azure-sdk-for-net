@@ -8,17 +8,17 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <summary>
 /// HTTP-backed implementation of <see cref="IResponsesProvider"/> that persists
 /// state to the Azure AI Foundry storage API.
-/// The actual storage URL is provided per-request via the
-/// <c>x-agent-storage-callback-url</c> header (rewritten by <see cref="BaseUrlRewriteHandler"/>).
+/// The storage base URL is derived from <c>FOUNDRY_PROJECT_ENDPOINT</c> + <c>/storage</c>
+/// (rewritten by <see cref="BaseUrlRewriteHandler"/>).
 /// </summary>
 internal sealed class FoundryStorageProvider : IResponsesProvider
 {
     private const string HttpClientName = "FoundryStorage";
-    private const string ApiVersion = "1.0";
+    private const string ApiVersion = "v1";
 
     /// <summary>
     /// Sentinel base URL used as a placeholder in outbound requests.
-    /// <see cref="BaseUrlRewriteHandler"/> replaces this with the per-request header value.
+    /// <see cref="BaseUrlRewriteHandler"/> replaces this with the actual storage base URL.
     /// </summary>
     internal const string PlaceholderBaseUrl = "https://placeholder.invalid/";
 
@@ -35,7 +35,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
 
     /// <summary>
     /// Builds a full URL with the <c>api-version</c> query parameter appended.
-    /// The placeholder base URL is rewritten per-request by <see cref="BaseUrlRewriteHandler"/>.
+    /// The placeholder base URL is rewritten by <see cref="BaseUrlRewriteHandler"/>.
     /// </summary>
     private string Url(string path, string? extraQuery = null)
     {
@@ -51,7 +51,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
     {
         var content = StorageEnvelopeSerializer.SerializeCreateRequest(request);
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        var httpResponse = await http.PostAsync(Url("storage/responses"), content, cancellationToken).ConfigureAwait(false);
+        var httpResponse = await http.PostAsync(Url("responses"), content, cancellationToken).ConfigureAwait(false);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken).ConfigureAwait(false);
     }
 
@@ -62,7 +62,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
     {
         var http = _httpClientFactory.CreateClient(HttpClientName);
         var httpResponse = await http.GetAsync(
-            Url($"storage/responses/{Uri.EscapeDataString(responseId)}"),
+            Url($"responses/{Uri.EscapeDataString(responseId)}"),
             cancellationToken).ConfigureAwait(false);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken).ConfigureAwait(false);
         var body = await httpResponse.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
@@ -77,7 +77,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
         var content = StorageEnvelopeSerializer.SerializeResponse(response);
         var http = _httpClientFactory.CreateClient(HttpClientName);
         var httpResponse = await http.PostAsync(
-            Url($"storage/responses/{Uri.EscapeDataString(response.Id)}"),
+            Url($"responses/{Uri.EscapeDataString(response.Id)}"),
             content, cancellationToken).ConfigureAwait(false);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken).ConfigureAwait(false);
     }
@@ -89,7 +89,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
     {
         var http = _httpClientFactory.CreateClient(HttpClientName);
         var httpResponse = await http.DeleteAsync(
-            Url($"storage/responses/{Uri.EscapeDataString(responseId)}"),
+            Url($"responses/{Uri.EscapeDataString(responseId)}"),
             cancellationToken).ConfigureAwait(false);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken).ConfigureAwait(false);
     }
@@ -110,7 +110,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
 
         var http = _httpClientFactory.CreateClient(HttpClientName);
         var httpResponse = await http.GetAsync(
-            Url($"storage/responses/{Uri.EscapeDataString(responseId)}/input_items", query),
+            Url($"responses/{Uri.EscapeDataString(responseId)}/input_items", query),
             cancellationToken).ConfigureAwait(false);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken).ConfigureAwait(false);
         var body = await httpResponse.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
@@ -125,7 +125,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
         var ids = itemIds.ToList();
         var content = StorageEnvelopeSerializer.SerializeBatchRequest(ids);
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        var httpResponse = await http.PostAsync(Url("storage/items/batch/retrieve"), content, cancellationToken).ConfigureAwait(false);
+        var httpResponse = await http.PostAsync(Url("items/batch/retrieve"), content, cancellationToken).ConfigureAwait(false);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken).ConfigureAwait(false);
         var body = await httpResponse.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
         return StorageEnvelopeSerializer.DeserializeItemsArray(body);
@@ -144,7 +144,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
 
         var http = _httpClientFactory.CreateClient(HttpClientName);
         var httpResponse = await http.GetAsync(
-            Url("storage/history/item_ids", query), cancellationToken).ConfigureAwait(false);
+            Url("history/item_ids", query), cancellationToken).ConfigureAwait(false);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken).ConfigureAwait(false);
         var body = await httpResponse.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
         return StorageEnvelopeSerializer.DeserializeHistoryIds(body);

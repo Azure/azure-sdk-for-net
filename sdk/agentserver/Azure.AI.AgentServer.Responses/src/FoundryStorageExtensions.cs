@@ -15,33 +15,13 @@ namespace Azure.AI.AgentServer.Responses;
 internal static class FoundryStorageExtensions
 {
     /// <summary>
-    /// The environment variable names required for hosted-environment auto-detection.
-    /// All must be non-empty for FoundryStorage to be registered.
-    /// </summary>
-    internal static readonly string[] RequiredEnvVars =
-    [
-        BaseUrlRewriteHandler.CallbackUrlEnvVar,
-        "AZURE_TENANT_ID",
-        "AGENT_SUBSCRIPTION_ID",
-        "AGENT_RESOURCE_GROUP",
-        "AGENT_PROJECT_NAME",
-    ];
-
-    /// <summary>
-    /// Returns <see langword="true"/> when all required hosted-environment variables are set,
-    /// including <c>FOUNDRY_AGENT_STORAGE_CALLBACK_URL</c>.
+    /// Returns <see langword="true"/> when the <c>FOUNDRY_PROJECT_ENDPOINT</c>
+    /// environment variable is set, indicating a hosted Foundry environment.
     /// </summary>
     internal static bool IsHostedEnvironment()
     {
-        foreach (var name in RequiredEnvVars)
-        {
-            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(name)))
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return !string.IsNullOrEmpty(
+            Environment.GetEnvironmentVariable(BaseUrlRewriteHandler.ProjectEndpointEnvVar));
     }
 
     /// <summary>
