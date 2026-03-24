@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 {
     public class DeviceRegistryCredentialsAndPoliciesFlowTest : DeviceRegistryManagementTestBase
     {
-        static DeviceRegistryCredentialsAndPoliciesFlowTest()
-        {
-            var testModeEnvVar = Environment.GetEnvironmentVariable("AZURE_TEST_MODE") ?? "(not set → defaults to Playback)";
-            Console.WriteLine($"\n  AZURE_TEST_MODE = {testModeEnvVar}");
-            // This allows running tests with specified test modes without needing to set env vars locally (e.g. in Visual Studio Test Explorer):
-            //Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "RECORD");
-        }
-
         // Iteration number appended to the suffix for resource name uniqueness.
         // Change this locally when you need fresh resources (e.g., after a failed run).
         // Must match the -Iteration parameter used with the setup/teardown scripts.
@@ -33,6 +26,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
         private readonly string _namespaceName;
         private readonly string _policyName;
         private readonly string _byorPolicyName;
+        private readonly string _deviceName;
 
         // PREREQUISITES
         // =============
@@ -62,6 +56,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             _namespaceName = $"cms-test-namespace-{suffix}";
             _policyName = $"cms-test-policy-{suffix}";
             _byorPolicyName = $"cms-test-byor-policy-{suffix}";
+            _deviceName = $"cms-test-device-{suffix}";
         }
 
         [RecordedTest]
@@ -137,55 +132,63 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(credentialResource.Data.Location, _region);
 
             // Test Policy Flow
-            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 4: Checking if policy '{_policyName}' exists...");
+            // Only 1 policy per credential is supported — always delete any existing policies
+            // before creating a fresh one to ensure a clean state on every run.
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 4: Cleaning up existing policies and creating '{_policyName}'...");
             var policyCollection = credentialResource.GetPolicies();
 
-            PolicyResource policyResource;
-            bool policyExists = await policyCollection.ExistsAsync(_policyName, CancellationToken.None);
-
-            if (!policyExists)
+            // Delete all existing policies (1 policy/credential limit)
+            var existingPolicies = new List<PolicyResource>();
+            await foreach (var p in policyCollection.GetAllAsync())
             {
-                // Create certificate configuration
-                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Creating new policy with ECC certificate (90-day validity)...");
-                var certificateAuthorityConfig = new CertificateAuthorityConfiguration(SupportedKeyType.ECC);
-                var leafCertificateConfig = new LeafCertificateConfiguration(validityPeriodInDays: 90);
-                var certificateConfig = new CertificateConfiguration(
-                    certificateAuthorityConfig,
-                    leafCertificateConfig.ValidityPeriodInDays);
+                existingPolicies.Add(p);
+            }
 
-                // Create policy data with certificate configuration
-                // Note: PolicyData is a proxy resource in 2026-03-01-preview (no Location/Tags)
-                var policyData = new PolicyData()
+            if (existingPolicies.Count > 0)
+            {
+                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Found {existingPolicies.Count} existing policy(ies) — deleting...");
+                foreach (var existingPolicy in existingPolicies)
                 {
-                    Properties = new PolicyProperties()
-                    {
-                        Certificate = certificateConfig
-                    }
-                };
-
-                // Create the policy
-                var policyOperation = await policyCollection.CreateOrUpdateAsync(
-                    WaitUntil.Completed,
-                    _policyName,
-                    policyData,
-                    CancellationToken.None);
-                policyResource = policyOperation.Value;
-                Assert.IsNotNull(policyResource);
-                Assert.AreEqual(policyResource.Data.Name, _policyName);
-                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy created successfully\n");
-
-                // Allow backend propagation after policy creation
-                // await DelayForPropagationAsync(10, "Waiting for policy propagation...", sw);
+                    Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]     Deleting policy '{existingPolicy.Data.Name}'...");
+                    await existingPolicy.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+                    Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]     ✓ Deleted '{existingPolicy.Data.Name}'");
+                }
+                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ All existing policies cleaned up");
             }
             else
             {
-                // Get existing policy
-                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Policy already exists, retrieving...");
-                var policyResponse = await policyCollection.GetAsync(_policyName, CancellationToken.None);
-                policyResource = policyResponse.Value;
-                Assert.IsNotNull(policyResource);
-                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy retrieved successfully\n");
+                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   No existing policies — proceeding with creation");
             }
+
+            // Create certificate configuration
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Creating new policy with ECC certificate (90-day validity)...");
+            var certificateAuthorityConfig = new CertificateAuthorityConfiguration(SupportedKeyType.ECC);
+            var leafCertificateConfig = new LeafCertificateConfiguration(validityPeriodInDays: 90);
+            var certificateConfig = new CertificateConfiguration(
+                certificateAuthorityConfig,
+                leafCertificateConfig.ValidityPeriodInDays);
+
+            // Create policy data with certificate configuration
+            // Note: PolicyData is a proxy resource in 2026-03-01-preview (no Location/Tags)
+            var policyData = new PolicyData()
+            {
+                Properties = new PolicyProperties()
+                {
+                    Certificate = certificateConfig
+                }
+            };
+
+            // Create the policy
+            PolicyResource policyResource;
+            var policyOperation = await policyCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                _policyName,
+                policyData,
+                CancellationToken.None);
+            policyResource = policyOperation.Value;
+            Assert.IsNotNull(policyResource);
+            Assert.AreEqual(policyResource.Data.Name, _policyName);
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy created successfully\n");
 
             // Verify policy was created or retrieved successfully
             Assert.IsNotNull(policyResource.Data);
@@ -276,6 +279,158 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 policyResource.Data.Properties.Certificate.LeafCertificateValidityPeriodInDays);
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy updated successfully, validity now 60 days\n");
 
+            // ============================================================
+            // Device CRUD + Revoke Flow
+            // The namespace has Credential + Policy + IoT Hub sync, so this
+            // tests device operations in a CMS-enabled namespace.
+            // NOTE: Only DPS-provisioned devices have a policy attached and
+            // CMS-issued credentials. ARM-created devices have no policy,
+            // so Device.Revoke will fail (negative test).
+            // ============================================================
+
+            // Step 7c: Create a device in the CMS namespace
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 7c: Creating device '{_deviceName}' in CMS namespace...");
+            var devicesCollection = namespaceResource.GetDeviceRegistryNamespaceDevices();
+
+            var deviceData = new DeviceRegistryNamespaceDeviceData(_region)
+            {
+                Properties = new DeviceRegistryNamespaceDeviceProperties()
+                {
+                    Manufacturer = "Contoso",
+                    Model = "CMS-TestModel-5000",
+                    OperatingSystem = "Linux",
+                    OperatingSystemVersion = "22.04",
+                    Endpoints = new MessagingEndpoints(),
+                }
+            };
+
+            var deviceCreateResponse = await devicesCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                _deviceName,
+                deviceData,
+                CancellationToken.None);
+            var deviceResource = deviceCreateResponse.Value;
+
+            Assert.IsNotNull(deviceResource);
+            Assert.AreEqual(_deviceName, deviceResource.Data.Name);
+            Assert.IsTrue(Guid.TryParse(deviceResource.Data.Properties.Uuid, out _),
+                "Device should have a valid UUID");
+            Assert.AreEqual(deviceResource.Data.Properties.Manufacturer, "Contoso");
+            Assert.AreEqual(deviceResource.Data.Properties.Model, "CMS-TestModel-5000");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ Device created: {deviceResource.Data.Name}");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ UUID: {deviceResource.Data.Properties.Uuid}");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ Version: {deviceResource.Data.Properties.Version}\n");
+
+            // Step 7d: GET device and verify properties + check Policy ResourceId
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 7d: Getting device and verifying properties...");
+            var deviceGetResponse = await devicesCollection.GetAsync(_deviceName, CancellationToken.None);
+            deviceResource = deviceGetResponse.Value;
+
+            Assert.IsNotNull(deviceResource.Data.Properties);
+            Assert.AreEqual("Contoso", deviceResource.Data.Properties.Manufacturer);
+            Assert.AreEqual("CMS-TestModel-5000", deviceResource.Data.Properties.Model);
+            Assert.AreEqual("Linux", deviceResource.Data.Properties.OperatingSystem);
+            Assert.AreEqual("22.04", deviceResource.Data.Properties.OperatingSystemVersion);
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ Device properties verified");
+
+            // Check Policy ResourceId — in a CMS-enabled namespace, this may be populated
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Policy ResourceId: {deviceResource.Data.Properties.ResourceId ?? "(null)"}");
+            if (deviceResource.Data.Properties.ResourceId != null)
+            {
+                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ Device has CMS policy assigned");
+            }
+            else
+            {
+                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ℹ Device has no CMS policy (ARM-created, not DPS-provisioned)");
+            }
+
+            // List devices in namespace
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Listing devices in namespace...");
+            var allDevices = new List<DeviceRegistryNamespaceDeviceResource>();
+            await foreach (var d in devicesCollection.GetAllAsync(CancellationToken.None))
+            {
+                allDevices.Add(d);
+            }
+            Assert.IsTrue(allDevices.Any(d => d.Data.Name == _deviceName));
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ LIST found {allDevices.Count} device(s), including '{_deviceName}'\n");
+
+            // Step 7e: Test Device.Revoke on ARM-created device (no policy attached)
+            //
+            // Known RP bug (see doc/device-revoke-lro-bug.md):
+            //   TypeSpec defines revoke as ArmResourceActionAsync with DeviceCredentialsRevokeResponse
+            //   (required result: string) and LRO headers (Azure-AsyncOperation, Location, Retry-After).
+            //   The RP returns HTTP 200 synchronously instead of 202, omits LRO headers, and the
+            //   response payload is missing the required "result" property.
+            //   The SDK's LRO polling fails → RequestFailedException with status 200.
+            //   Same behavior as device Delete.
+            //
+            // Must use Assert.CatchAsync (not try/catch) because the test framework's
+            // DiagnosticScopeValidatingInterceptor requires exceptions from SDK methods
+            // to propagate — catching them silently causes a "scope not marked as failed" error.
+            //
+            // When the RP fix lands:
+            //   1. Regenerate the SDK (RevokeAsync may return ArmOperation<DeviceCredentialsRevokeResponse>)
+            //   2. Replace Assert.CatchAsync with proper assertion on revokeOp.HasCompleted / revokeOp.Value.Result
+            //   3. Re-record session recordings
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 7e: Testing Device.Revoke (ARM-created device, no policy attached)...");
+            var revokeRequest = new DeviceCredentialsRevokeRequest() { Disable = false };
+
+            // In Record mode: SDK throws RequestFailedException (status 200, ErrorCode 400231).
+            // In Playback mode: DiagnosticScopeValidatingInterceptor wraps the RequestFailedException
+            //   inside an InvalidOperationException ("scope not marked as failed").
+            // Use Assert.CatchAsync<Exception> which catches T or any derived type (unlike
+            // Assert.ThrowsAsync which requires exact type match).
+            var revokeException = Assert.CatchAsync<Exception>(async () =>
+            {
+                await deviceResource.RevokeAsync(
+                    WaitUntil.Completed,
+                    revokeRequest,
+                    CancellationToken.None);
+            });
+
+            Assert.IsNotNull(revokeException, "Revoke should throw (RP LRO bug — see doc/device-revoke-lro-bug.md)");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ Revoke threw {revokeException.GetType().Name} as expected");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Message: {revokeException.Message.Substring(0, Math.Min(150, revokeException.Message.Length))}...");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   See doc/device-revoke-lro-bug.md for details");
+
+            // Step 7f: GET device after revoke attempt and verify state unchanged
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 7f: Verifying device state unchanged after failed revoke...");
+            var deviceAfterRevoke = await devicesCollection.GetAsync(_deviceName, CancellationToken.None);
+            deviceResource = deviceAfterRevoke.Value;
+            Assert.IsNotNull(deviceResource.Data.Properties);
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ Device still exists: {deviceResource.Data.Name}");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ Version: {deviceResource.Data.Properties.Version}");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ Provisioning state: {deviceResource.Data.Properties.ProvisioningState}\n");
+
+            // Step 7g: Delete device (cleanup)
+            // Unlike Revoke, Delete succeeds with 200 against the live RP (the SDK treats
+            // a void 200 as success for delete). Just call directly.
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 7g: Deleting device '{_deviceName}'...");
+            await deviceResource.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ Device deleted successfully\n");
+
+            // Step 7b: Test RevokeIssuer on standard (non-BYOR) policy
+            // RevokeIssuer is supported on standard CA-managed policies. This validates the
+            // operation is reachable and completes successfully.
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 7b: Testing RevokeIssuer on standard policy...");
+
+            var revokeIssuerOperation = await policyResource.RevokeIssuerAsync(
+                WaitUntil.Completed,
+                CancellationToken.None);
+
+            Assert.IsTrue(revokeIssuerOperation.HasCompleted, "RevokeIssuer operation should complete");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ RevokeIssuer completed successfully on standard policy");
+
+            // Verify policy state after RevokeIssuer
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Verifying policy state after RevokeIssuer...");
+            var policyAfterRevoke = await policyCollection.GetAsync(_policyName, CancellationToken.None);
+            policyResource = policyAfterRevoke.Value;
+            Assert.IsNotNull(policyResource.Data.Properties);
+            Assert.AreEqual(DeviceRegistryProvisioningState.Succeeded,
+                policyResource.Data.Properties.ProvisioningState);
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ Policy provisioning state: {policyResource.Data.Properties.ProvisioningState}");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ Policy validity: {policyResource.Data.Properties.Certificate.LeafCertificateValidityPeriodInDays} days\n");
+
             // Clean up: Delete Policy
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 8: Deleting policy '{_policyName}'...");
             var policyDeleteOperation = await policyResource.DeleteAsync(
@@ -331,12 +486,83 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ BYOR enabled: {byorPolicyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.BringYourOwnRoot.Enabled}");
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ BYOR status: {byorPolicyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.BringYourOwnRoot.Status}\n");
 
+            // Step 9b: Verify BYOR status is PendingActivation and CSR is present
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 9b: Verifying BYOR PendingActivation status and CSR...");
+            var byorConfig = byorPolicyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.BringYourOwnRoot;
+            Assert.AreEqual(BringYourOwnRootStatus.PendingActivation, byorConfig.Status,
+                "Newly created BYOR policy should be in PendingActivation status");
+            Assert.IsNotNull(byorConfig.CertificateSigningRequest,
+                "BYOR policy in PendingActivation should have a CSR");
+            Assert.IsTrue(byorConfig.CertificateSigningRequest.Contains("-----BEGIN CERTIFICATE REQUEST-----"),
+                "CSR should be in PEM format");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ BYOR status: PendingActivation");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ CSR present ({byorConfig.CertificateSigningRequest.Length} chars)");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   CSR preview: {byorConfig.CertificateSigningRequest.Substring(0, Math.Min(80, byorConfig.CertificateSigningRequest.Length))}...\n");
+
+            // Step 9c: Test ActivateBringYourOwnRoot with invalid certificate — expect rejection
+            // The API should reject an invalid certificate chain with a 400 or 409 error.
+            // This validates that the ActivateBringYourOwnRoot operation is reachable and
+            // properly validates input before accepting a certificate.
+            //
+            // Same interceptor issue as Device.Revoke: the RP returns HTTP 200 with an error body
+            // instead of a proper 4xx status code. In Record mode the SDK throws RequestFailedException;
+            // in Playback mode the DiagnosticScopeValidatingInterceptor wraps it in InvalidOperationException
+            // ("scope not marked as failed"). Use Assert.CatchAsync<Exception> to handle both.
+            // See: sdk/netapp tests (SnapshotTests.cs:272-273) for the same pattern in another SDK.
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 9c: Testing ActivateBringYourOwnRoot with INVALID certificate (negative test)...");
+            const string fakeCertificateChain =
+                "-----BEGIN CERTIFICATE-----\n" +
+                "MIIBkTCB+wIJALRiMLAhFake0DQYJKoZIhvcNAQELBQAwDzENMAsGA1UEAwwEdGVz\n" +
+                "dDAeFw0yNDAzMjAxMjAwMDBaFw0yNTAzMjAxMjAwMDBaMA8xDTALBgNVBAMMBHRl\n" +
+                "c3QwXDANBgkqhkiG9w0BAQEFAANLADBIAkEA0Z3VS5JJcds3xf0GQGZ/fake+key\n" +
+                "data+that+is+intentionally+invalid+for+testing+purposes+only+AAAAAAAAAA==\n" +
+                "-----END CERTIFICATE-----";
+
+            var activateRequest = new ActivateBringYourOwnRootRequest(fakeCertificateChain);
+
+            var activateException = Assert.CatchAsync<Exception>(async () =>
+            {
+                await byorPolicyResource.ActivateBringYourOwnRootAsync(
+                    WaitUntil.Completed,
+                    activateRequest,
+                    CancellationToken.None);
+            });
+
+            Assert.IsNotNull(activateException, "ActivateBYOR with invalid cert should throw");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ ActivateBYOR correctly rejected invalid certificate");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Exception type: {activateException.GetType().Name}");
+            // Extract RequestFailedException details when available (Record mode);
+            // in Playback mode, the interceptor wraps it in InvalidOperationException.
+            var activateRfe = activateException as RequestFailedException
+                ?? activateException.InnerException as RequestFailedException;
+            if (activateRfe != null)
+            {
+                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Error status: {activateRfe.Status}");
+                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Error code: {activateRfe.ErrorCode}");
+            }
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Message: {activateException.Message.Substring(0, Math.Min(200, activateException.Message.Length))}...\n");
+
+            // Step 9d: Verify BYOR state is unchanged after failed activation
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 9d: Verifying BYOR state unchanged after failed activation...");
+            var byorPolicyAfterFailedActivation = await policyCollection.GetAsync(_byorPolicyName, CancellationToken.None);
+            byorPolicyResource = byorPolicyAfterFailedActivation.Value;
+            var byorConfigAfterFailure = byorPolicyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.BringYourOwnRoot;
+
+            Assert.IsTrue(byorConfigAfterFailure.Enabled, "BYOR should still be enabled after failed activation");
+            Assert.AreEqual(BringYourOwnRootStatus.PendingActivation, byorConfigAfterFailure.Status,
+                "BYOR should still be PendingActivation after failed activation");
+            Assert.IsNotNull(byorConfigAfterFailure.CertificateSigningRequest,
+                "CSR should still be present after failed activation");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ BYOR still enabled: {byorConfigAfterFailure.Enabled}");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ BYOR still PendingActivation: {byorConfigAfterFailure.Status}");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ CSR still present ({byorConfigAfterFailure.CertificateSigningRequest.Length} chars)\n");
+
             // Step 10: Update BYOR policy — change validity period
             // This tests that both keyType AND bringYourOwnRoot are omitted from PATCH.
             // The int-only CertificateConfiguration constructor leaves CertificateAuthorityConfiguration
             // null, and the custom serialization skips it — preventing immutable properties from
             // being sent to the API.
-            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 10: Updating BYOR policy - changing validity from 90 to 45 days...");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 10: Updating BYOR policy - changing validity from {byorPolicyResource.Data.Properties.Certificate.LeafCertificateValidityPeriodInDays} to 45 days...");
 
             var byorPolicyPatch = new PolicyPatch();
             byorPolicyPatch.Properties = new PolicyUpdateProperties()
@@ -366,7 +592,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   ✓ BYOR still enabled: {byorPolicyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration.BringYourOwnRoot.Enabled}\n");
 
             // Step 11: Delete BYOR policy
-            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 11: Deleting BYOR policy '{_byorPolicyName}'...");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 11: Deleting BYOR policy '{_byorPolicyName}'  ...");
             var byorPolicyDeleteOperation = await byorPolicyResource.DeleteAsync(
                 WaitUntil.Completed,
                 CancellationToken.None);
@@ -378,8 +604,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.IsFalse(byorPolicyExistsAfterDelete);
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ BYOR policy deleted successfully\n");
 
+            // Allow RP to fully complete the BYOR policy deletion before deleting the credential.
+            // Without this delay, the RP returns 409 Conflict because the DELETE LRO for the
+            // BYOR policy is still in progress when the credential delete triggers child cleanup.
+            await DelayForPropagationAsync(10, "Waiting for BYOR policy deletion to propagate...", sw);
+
             // Clean up: Delete Credential
-            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 12: Deleting credential...");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 12: Deleting credential  ...");
             var credentialDeleteOperation = await credentialResource.DeleteAsync(
                 WaitUntil.Completed,
                 CancellationToken.None);
