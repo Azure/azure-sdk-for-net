@@ -6,11 +6,12 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient;
 
-namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient
+namespace Specs.Azure.Tcgc.ClientInit.Individually
 {
     [ModelReaderWriterBuildable(typeof(BlobProperties))]
-    public partial class SpecsAzureClientGeneratorCoreClientInitializationIndividuallyClientContext : ModelReaderWriterContext
+    public partial class SpecsAzureTcgcClientInitIndividuallyContext : ModelReaderWriterContext
     {
     }
 }
