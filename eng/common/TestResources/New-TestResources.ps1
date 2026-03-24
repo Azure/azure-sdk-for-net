@@ -709,6 +709,7 @@ $serialized
 # Set global variables that aren't always passed as parameters
 `$ResourceGroupName = `$parameters.ResourceGroupName
 `$AdditionalParameters = `$parameters.AdditionalParameters
+`$ArmTemplateParameters = `$parameters.ArmTemplateParameters
 `$DeploymentOutputs = `$parameters.DeploymentOutputs
 $postDeploymentScript `@parameters
 "@
