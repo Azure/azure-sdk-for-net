@@ -9,7 +9,7 @@
     <Nullable>enable</Nullable>
 
     <ImplicitUsings>enable</ImplicitUsings>
-    <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
+    <EnableClientSdkAnalyzers Condition="'$(IsTestProject)' != 'true'">true</EnableClientSdkAnalyzers>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 </Project>
