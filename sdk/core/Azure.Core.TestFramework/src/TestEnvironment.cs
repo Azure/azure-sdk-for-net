@@ -243,8 +243,11 @@ namespace Azure.Core.TestFramework
                     }
                     else
                     {
-                        _credential = new DefaultAzureCredential(
-                             new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
+                        _credential = new ChainedTokenCredential(
+                            new AzureCliCredential(),
+                            new AzurePowerShellCredential(),
+                            new AzureDeveloperCliCredential(),
+                            new VisualStudioCredential());
                     }
                 }
 
