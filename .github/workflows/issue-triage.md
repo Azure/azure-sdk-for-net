@@ -28,7 +28,7 @@ safe-outputs:
   noop:
     report-as-issue: false
   jobs:
-    mention-owners:
+    mention_owners:
       description: "Post a routing comment @mentioning team owners on the triggering issue; bypasses safe-outputs mention neutralization"
       runs-on: ubuntu-latest
       output: "Owner mention comment posted"
@@ -46,20 +46,66 @@ safe-outputs:
             script: |
               const fs = require('fs');
               const outputFile = process.env.GH_AW_AGENT_OUTPUT;
+              const issueNumber = context.issue.number;
+              const owner = context.repo.owner;
+              const repo = context.repo.repo;
+
+              async function failSafe(reason) {
+                core.error(`mention_owners failed: ${reason}`);
+                try {
+                  await github.rest.issues.addLabels({
+                    owner, repo, issue_number: issueNumber,
+                    labels: ['needs-team-triage']
+                  });
+                  await github.rest.issues.createComment({
+                    owner, repo, issue_number: issueNumber,
+                    body: '⚠️ Automated triage was unable to complete owner notification for this issue. Routing for manual triage'
+                  });
+                } catch (recoveryError) {
+                  core.error(`Recovery also failed: ${recoveryError.message}`);
+                }
+                core.setFailed(reason);
+              }
+
               if (!outputFile) {
-                core.info('No agent output found');
+                await failSafe('No agent output path provided');
                 return;
               }
-              const agentOutput = JSON.parse(fs.readFileSync(outputFile, 'utf8'));
+              if (!fs.existsSync(outputFile)) {
+                await failSafe(`Agent output file not found: ${outputFile}`);
+                return;
+              }
+
+              let agentOutput;
+              try {
+                agentOutput = JSON.parse(fs.readFileSync(outputFile, 'utf8'));
+              } catch (parseError) {
+                await failSafe(`Failed to parse agent output: ${parseError.message}`);
+                return;
+              }
+
+              if (!agentOutput || !Array.isArray(agentOutput.items)) {
+                await failSafe('Agent output missing items array');
+                return;
+              }
+
               const items = agentOutput.items.filter(i => i.type === 'mention_owners');
+              if (items.length === 0) {
+                await failSafe('No mention_owners items in agent output');
+                return;
+              }
+
               for (const item of items) {
-                await github.rest.issues.createComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: context.issue.number,
-                  body: item.message
-                });
-                core.info(`Posted routing comment on #${context.issue.number}`);
+                try {
+                  await github.rest.issues.createComment({
+                    owner, repo, issue_number: issueNumber,
+                    body: item.message
+                  });
+                  core.info(`Posted routing comment on #${issueNumber}`);
+                } catch (apiError) {
+                  await failSafe(`GitHub API error posting comment: ${apiError.message}`);
+                  return;
+                }
               }
 
 tools:
