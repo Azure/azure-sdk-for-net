@@ -11,10 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>
+    // TODO: This model is completely missing from the TypeSpec spec — the generator produces NotificationHubAuthorizationRuleData instead.
+    // The hand-written serialization below is error-prone and not registered in AzureResourceManagerNotificationHubsContext.
+    // Consider throwing NotSupportedException in these interface implementations instead of maintaining hand-written serialization,
+    // since actual API calls go through the generated Data type serialization via ContentToData() in the Collection class.
+    public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent : IJsonModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>, IPersistableModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
         void IJsonModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;

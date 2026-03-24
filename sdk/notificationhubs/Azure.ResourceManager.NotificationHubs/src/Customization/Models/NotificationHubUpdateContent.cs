@@ -10,8 +10,11 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
+    // Backward-compat: the baseline SDK used a separate input type for Update (PATCH),
+    // but this model is completely missing from the TypeSpec spec — the generator does not produce it.
+    // The hand-written model and serialization preserve the baseline API contract.
     /// <summary> Patch parameter for NamespaceResource. </summary>
-    public partial class NotificationHubUpdateContent : IJsonModel<NotificationHubUpdateContent>, IPersistableModel<NotificationHubUpdateContent>
+    public partial class NotificationHubUpdateContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
