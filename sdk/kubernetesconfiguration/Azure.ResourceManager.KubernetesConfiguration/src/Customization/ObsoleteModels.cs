@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Converts a string to a <see cref="KubernetesConfigurationComplianceStateType"/>. </summary>
         public static implicit operator KubernetesConfigurationComplianceStateType(string value) => new(value);
 
-        /// <inheritdoc />
+        /// <summary> Determines if two values are the same. </summary>
         public static bool operator ==(KubernetesConfigurationComplianceStateType left, KubernetesConfigurationComplianceStateType right) => left.Equals(right);
-        /// <inheritdoc />
+        /// <summary> Determines if two values are not the same. </summary>
         public static bool operator !=(KubernetesConfigurationComplianceStateType left, KubernetesConfigurationComplianceStateType right) => !left.Equals(right);
 
         /// <inheritdoc />
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Converts a string to a <see cref="KubernetesConfigurationMesageLevel"/>. </summary>
         public static implicit operator KubernetesConfigurationMesageLevel(string value) => new(value);
 
-        /// <inheritdoc />
+        /// <summary> Determines if two values are the same. </summary>
         public static bool operator ==(KubernetesConfigurationMesageLevel left, KubernetesConfigurationMesageLevel right) => left.Equals(right);
-        /// <inheritdoc />
+        /// <summary> Determines if two values are not the same. </summary>
         public static bool operator !=(KubernetesConfigurationMesageLevel left, KubernetesConfigurationMesageLevel right) => !left.Equals(right);
 
         /// <inheritdoc />
@@ -116,9 +116,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Converts a string to a <see cref="KubernetesConfigurationProvisioningStateType"/>. </summary>
         public static implicit operator KubernetesConfigurationProvisioningStateType(string value) => new(value);
 
-        /// <inheritdoc />
+        /// <summary> Determines if two values are the same. </summary>
         public static bool operator ==(KubernetesConfigurationProvisioningStateType left, KubernetesConfigurationProvisioningStateType right) => left.Equals(right);
-        /// <inheritdoc />
+        /// <summary> Determines if two values are not the same. </summary>
         public static bool operator !=(KubernetesConfigurationProvisioningStateType left, KubernetesConfigurationProvisioningStateType right) => !left.Equals(right);
 
         /// <inheritdoc />
@@ -150,9 +150,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Converts a string to a <see cref="KubernetesConfigurationScope"/>. </summary>
         public static implicit operator KubernetesConfigurationScope(string value) => new(value);
 
-        /// <inheritdoc />
+        /// <summary> Determines if two values are the same. </summary>
         public static bool operator ==(KubernetesConfigurationScope left, KubernetesConfigurationScope right) => left.Equals(right);
-        /// <inheritdoc />
+        /// <summary> Determines if two values are not the same. </summary>
         public static bool operator !=(KubernetesConfigurationScope left, KubernetesConfigurationScope right) => !left.Equals(right);
 
         /// <inheritdoc />
@@ -186,9 +186,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Converts a string to a <see cref="KubernetesConfigurationSourceKind"/>. </summary>
         public static implicit operator KubernetesConfigurationSourceKind(string value) => new(value);
 
-        /// <inheritdoc />
+        /// <summary> Determines if two values are the same. </summary>
         public static bool operator ==(KubernetesConfigurationSourceKind left, KubernetesConfigurationSourceKind right) => left.Equals(right);
-        /// <inheritdoc />
+        /// <summary> Determines if two values are not the same. </summary>
         public static bool operator !=(KubernetesConfigurationSourceKind left, KubernetesConfigurationSourceKind right) => !left.Equals(right);
 
         /// <inheritdoc />
@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Converts a string to a <see cref="KubernetesFluxComplianceState"/>. </summary>
         public static implicit operator KubernetesFluxComplianceState(string value) => new(value);
 
-        /// <inheritdoc />
+        /// <summary> Determines if two values are the same. </summary>
         public static bool operator ==(KubernetesFluxComplianceState left, KubernetesFluxComplianceState right) => left.Equals(right);
-        /// <inheritdoc />
+        /// <summary> Determines if two values are not the same. </summary>
         public static bool operator !=(KubernetesFluxComplianceState left, KubernetesFluxComplianceState right) => !left.Equals(right);
 
         /// <inheritdoc />
@@ -258,9 +258,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Converts a string to a <see cref="KubernetesOperator"/>. </summary>
         public static implicit operator KubernetesOperator(string value) => new(value);
 
-        /// <inheritdoc />
+        /// <summary> Determines if two values are the same. </summary>
         public static bool operator ==(KubernetesOperator left, KubernetesOperator right) => left.Equals(right);
-        /// <inheritdoc />
+        /// <summary> Determines if two values are not the same. </summary>
         public static bool operator !=(KubernetesOperator left, KubernetesOperator right) => !left.Equals(right);
 
         /// <inheritdoc />
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Converts a string to a <see cref="KubernetesOperatorScope"/>. </summary>
         public static implicit operator KubernetesOperatorScope(string value) => new(value);
 
-        /// <inheritdoc />
+        /// <summary> Determines if two values are the same. </summary>
         public static bool operator ==(KubernetesOperatorScope left, KubernetesOperatorScope right) => left.Equals(right);
-        /// <inheritdoc />
+        /// <summary> Determines if two values are not the same. </summary>
         public static bool operator !=(KubernetesOperatorScope left, KubernetesOperatorScope right) => !left.Equals(right);
 
         /// <inheritdoc />

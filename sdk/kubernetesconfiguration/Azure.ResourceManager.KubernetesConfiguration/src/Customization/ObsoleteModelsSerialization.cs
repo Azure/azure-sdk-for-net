@@ -3,6 +3,7 @@
 
 #nullable disable
 #pragma warning disable SA1402 // File may only contain a single type
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
 using System;
 using System.ClientModel.Primitives;
@@ -13,7 +14,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type HelmOperatorProperties.
     public partial class HelmOperatorProperties : IJsonModel<HelmOperatorProperties>, IPersistableModel<HelmOperatorProperties>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         HelmOperatorProperties IJsonModel<HelmOperatorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type HelmReleaseProperties.
     public partial class HelmReleaseProperties : IJsonModel<HelmReleaseProperties>, IPersistableModel<HelmReleaseProperties>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         HelmReleaseProperties IJsonModel<HelmReleaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -47,7 +46,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KubernetesAzureBlob.
     public partial class KubernetesAzureBlob : IJsonModel<KubernetesAzureBlob>, IPersistableModel<KubernetesAzureBlob>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KubernetesAzureBlob IJsonModel<KubernetesAzureBlob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -64,7 +62,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KubernetesAzureBlobUpdateContent.
     public partial class KubernetesAzureBlobUpdateContent : IJsonModel<KubernetesAzureBlobUpdateContent>, IPersistableModel<KubernetesAzureBlobUpdateContent>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KubernetesAzureBlobUpdateContent IJsonModel<KubernetesAzureBlobUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -81,7 +78,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KubernetesBucket.
     public partial class KubernetesBucket : IJsonModel<KubernetesBucket>, IPersistableModel<KubernetesBucket>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KubernetesBucket IJsonModel<KubernetesBucket>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -98,7 +94,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KubernetesBucketUpdateContent.
     public partial class KubernetesBucketUpdateContent : IJsonModel<KubernetesBucketUpdateContent>, IPersistableModel<KubernetesBucketUpdateContent>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KubernetesBucketUpdateContent IJsonModel<KubernetesBucketUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -115,7 +110,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KubernetesConfigurationComplianceStatus.
     public partial class KubernetesConfigurationComplianceStatus : IJsonModel<KubernetesConfigurationComplianceStatus>, IPersistableModel<KubernetesConfigurationComplianceStatus>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KubernetesConfigurationComplianceStatus IJsonModel<KubernetesConfigurationComplianceStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -132,7 +126,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KubernetesFluxConfigurationPatch.
     public partial class KubernetesFluxConfigurationPatch : IJsonModel<KubernetesFluxConfigurationPatch>, IPersistableModel<KubernetesFluxConfigurationPatch>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KubernetesFluxConfigurationPatch IJsonModel<KubernetesFluxConfigurationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -149,7 +142,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KubernetesGitRepository.
     public partial class KubernetesGitRepository : IJsonModel<KubernetesGitRepository>, IPersistableModel<KubernetesGitRepository>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KubernetesGitRepository IJsonModel<KubernetesGitRepository>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -166,7 +158,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KubernetesGitRepositoryRef.
     public partial class KubernetesGitRepositoryRef : IJsonModel<KubernetesGitRepositoryRef>, IPersistableModel<KubernetesGitRepositoryRef>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KubernetesGitRepositoryRef IJsonModel<KubernetesGitRepositoryRef>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -183,7 +174,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KubernetesGitRepositoryUpdateContent.
     public partial class KubernetesGitRepositoryUpdateContent : IJsonModel<KubernetesGitRepositoryUpdateContent>, IPersistableModel<KubernetesGitRepositoryUpdateContent>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KubernetesGitRepositoryUpdateContent IJsonModel<KubernetesGitRepositoryUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -200,7 +190,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KubernetesObjectReference.
     public partial class KubernetesObjectReference : IJsonModel<KubernetesObjectReference>, IPersistableModel<KubernetesObjectReference>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KubernetesObjectReference IJsonModel<KubernetesObjectReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -217,7 +206,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KubernetesObjectStatus.
     public partial class KubernetesObjectStatus : IJsonModel<KubernetesObjectStatus>, IPersistableModel<KubernetesObjectStatus>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KubernetesObjectStatus IJsonModel<KubernetesObjectStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -234,7 +222,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KubernetesObjectStatusCondition.
     public partial class KubernetesObjectStatusCondition : IJsonModel<KubernetesObjectStatusCondition>, IPersistableModel<KubernetesObjectStatusCondition>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KubernetesObjectStatusCondition IJsonModel<KubernetesObjectStatusCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -251,7 +238,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KubernetesServicePrincipal.
     public partial class KubernetesServicePrincipal : IJsonModel<KubernetesServicePrincipal>, IPersistableModel<KubernetesServicePrincipal>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KubernetesServicePrincipal IJsonModel<KubernetesServicePrincipal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -268,7 +254,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KubernetesServicePrincipalUpdateContent.
     public partial class KubernetesServicePrincipalUpdateContent : IJsonModel<KubernetesServicePrincipalUpdateContent>, IPersistableModel<KubernetesServicePrincipalUpdateContent>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KubernetesServicePrincipalUpdateContent IJsonModel<KubernetesServicePrincipalUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -285,7 +270,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type Kustomization.
     public partial class Kustomization : IJsonModel<Kustomization>, IPersistableModel<Kustomization>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         Kustomization IJsonModel<Kustomization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
@@ -302,7 +286,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     // Serialization interfaces preserved for API compatibility on obsolete type KustomizationUpdateContent.
     public partial class KustomizationUpdateContent : IJsonModel<KustomizationUpdateContent>, IPersistableModel<KustomizationUpdateContent>
     {
-        /// <inheritdoc />
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");
 
         KustomizationUpdateContent IJsonModel<KustomizationUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This type is obsolete.");

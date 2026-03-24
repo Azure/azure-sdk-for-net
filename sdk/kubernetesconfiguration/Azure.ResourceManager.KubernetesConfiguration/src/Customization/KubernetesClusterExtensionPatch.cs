@@ -3,25 +3,16 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using Azure.ResourceManager.KubernetesConfiguration.Models;
-using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-namespace Azure.ResourceManager.KubernetesConfiguration
+namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    // Note: The @@alternateType decorator in client.tsp maps AksAssignedIdentity back
-    // to ManagedServiceIdentity for backward compatibility with the old AutoRest SDK (1.2.0).
-    // PackageUri type was also mapped back to Uri via @@alternateType.
-
     // Setters restored for backward API compatibility — the new TypeSpec generator omits
     // setters on collection properties, but the previous GA had them.
     [CodeGenSuppress("ConfigurationSettings")]
     [CodeGenSuppress("ConfigurationProtectedSettings")]
-    [CodeGenSuppress("Statuses")]
-    public partial class KubernetesClusterExtensionData
+    public partial class KubernetesClusterExtensionPatch
     {
         /// <summary> Configuration settings, as name-value pairs for configuring this extension. </summary>
         public IDictionary<string, string> ConfigurationSettings
@@ -30,7 +21,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             {
                 if (Properties is null)
                 {
-                    Properties = new KubernetesClusterExtensionProperties();
+                    Properties = new KubernetesClusterExtensionPatchProperties();
                 }
                 return Properties.ConfigurationSettings;
             }
@@ -38,7 +29,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             {
                 if (Properties is null)
                 {
-                    Properties = new KubernetesClusterExtensionProperties();
+                    Properties = new KubernetesClusterExtensionPatchProperties();
                 }
                 Properties.ConfigurationSettings.Clear();
                 if (value != null)
@@ -58,7 +49,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             {
                 if (Properties is null)
                 {
-                    Properties = new KubernetesClusterExtensionProperties();
+                    Properties = new KubernetesClusterExtensionPatchProperties();
                 }
                 return Properties.ConfigurationProtectedSettings;
             }
@@ -66,7 +57,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             {
                 if (Properties is null)
                 {
-                    Properties = new KubernetesClusterExtensionProperties();
+                    Properties = new KubernetesClusterExtensionPatchProperties();
                 }
                 Properties.ConfigurationProtectedSettings.Clear();
                 if (value != null)
@@ -74,34 +65,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     foreach (var kvp in value)
                     {
                         Properties.ConfigurationProtectedSettings[kvp.Key] = kvp.Value;
-                    }
-                }
-            }
-        }
-
-        /// <summary> Status from this extension. </summary>
-        public IList<KubernetesClusterExtensionStatus> Statuses
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new KubernetesClusterExtensionProperties();
-                }
-                return Properties.Statuses;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new KubernetesClusterExtensionProperties();
-                }
-                Properties.Statuses.Clear();
-                if (value != null)
-                {
-                    foreach (var item in value)
-                    {
-                        Properties.Statuses.Add(item);
                     }
                 }
             }

@@ -136,62 +136,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             }
         }
 
-        /// <summary> Configuration settings, as name-value pairs for configuring this extension. </summary>
-        public IDictionary<string, string> ConfigurationSettings
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new KubernetesClusterExtensionProperties();
-                }
-                return Properties.ConfigurationSettings;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new KubernetesClusterExtensionProperties();
-                }
-                Properties.ConfigurationSettings.Clear();
-                if (value != null)
-                {
-                    foreach (var kvp in value)
-                    {
-                        Properties.ConfigurationSettings[kvp.Key] = kvp.Value;
-                    }
-                }
-            }
-        }
-
-        /// <summary> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </summary>
-        public IDictionary<string, string> ConfigurationProtectedSettings
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new KubernetesClusterExtensionProperties();
-                }
-                return Properties.ConfigurationProtectedSettings;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new KubernetesClusterExtensionProperties();
-                }
-                Properties.ConfigurationProtectedSettings.Clear();
-                if (value != null)
-                {
-                    foreach (var kvp in value)
-                    {
-                        Properties.ConfigurationProtectedSettings[kvp.Key] = kvp.Value;
-                    }
-                }
-            }
-        }
-
         /// <summary> Currently installed version of the extension. </summary>
         public string CurrentVersion
         {
@@ -207,34 +151,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Status from this extension. </summary>
-        public IList<KubernetesClusterExtensionStatus> Statuses
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new KubernetesClusterExtensionProperties();
-                }
-                return Properties.Statuses;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new KubernetesClusterExtensionProperties();
-                }
-                Properties.Statuses.Clear();
-                if (value != null)
-                {
-                    foreach (var item in value)
-                    {
-                        Properties.Statuses.Add(item);
-                    }
-                }
             }
         }
 
