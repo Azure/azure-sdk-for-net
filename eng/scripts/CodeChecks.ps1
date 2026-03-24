@@ -58,6 +58,14 @@ function Invoke-Block([scriptblock]$cmd) {
 }
 
 try {
+    # In PreparePr mode, snapshot the current git state so we can later report
+    # only the files that were changed by the code checks, not pre-existing changes.
+    $preExistingChanges = @()
+    if ($PreparePr) {
+        $preExistingChanges = @(git diff --name-only)
+        $preExistingChanges += @(git diff --name-only --cached)
+    }
+
     Write-Host "Restore ./node_modules"
     Invoke-Block {
         & npm ci --prefix $RepoRoot
@@ -204,9 +212,18 @@ try {
             $status = git status -s | Out-String
             $status = $status -replace "`n","`n    "
             if ($PreparePr) {
-                Write-Host ""
-                Write-Host -f Green "The following files were updated by code checks and should be included in your commit:"
-                Write-Host -f Yellow "    $status"
+                $currentChanges = @(git diff --name-only)
+                $newChanges = $currentChanges | Where-Object { $_ -notin $preExistingChanges }
+                if ($newChanges) {
+                    $newStatus = ($newChanges | ForEach-Object { "    M $_" }) -join "`n"
+                    Write-Host ""
+                    Write-Host -f Green "The following files were updated by code checks and should be included in your commit:"
+                    Write-Host -f Yellow $newStatus
+                }
+                if ($preExistingChanges) {
+                    Write-Host ""
+                    Write-Host -f Cyan "Note: $($preExistingChanges.Count) pre-existing changed file(s) were ignored (not modified by code checks)."
+                }
             }
             else {
                 LogError `
