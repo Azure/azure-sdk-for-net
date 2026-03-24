@@ -11,20 +11,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary>
-    /// Customizations for ServiceBusNamespaceResource:
-    ///
-    /// 1. Update overloads: The previous AutoRest-generated SDK exposed Update as a non-LRO operation.
-    ///    These overloads preserve that API surface for existing consumers.
-    ///
-    /// 2. Suppress misplaced GetAuthorizationRules/GetAuthorizationRulesAsync: Due to a TypeSpec ARM
-    ///    library bug, @segmentOf produces a camelCase segment that doesn't match the explicit @segment
-    ///    on the resource path param, causing the List operation for namespace authorization rules to be
-    ///    incorrectly placed here instead of on ServiceBusNamespaceAuthorizationRuleCollection.
-    ///    See: https://github.com/Azure/azure-sdk-for-net/issues/57216
-    /// </summary>
-    [CodeGenSuppress("GetAuthorizationRulesAsync", typeof(CancellationToken))]
-    [CodeGenSuppress("GetAuthorizationRules", typeof(CancellationToken))]
     public partial class ServiceBusNamespaceResource
     {
         /// <summary>

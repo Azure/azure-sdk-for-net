@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ServiceBus
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/authorizationRules", false);
+            uri.AppendPath("/AuthorizationRules", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

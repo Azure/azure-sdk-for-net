@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,8 +23,11 @@ namespace Azure.ResourceManager.ServiceBus
     /// Each <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource"/>.
     /// To get a <see cref="ServiceBusNamespaceAuthorizationRuleCollection"/> instance call the GetServiceBusNamespaceAuthorizationRules method from an instance of <see cref="ServiceBusNamespaceResource"/>.
     /// </summary>
-    public partial class ServiceBusNamespaceAuthorizationRuleCollection : ArmCollection
+    public partial class ServiceBusNamespaceAuthorizationRuleCollection : ArmCollection, IEnumerable<ServiceBusNamespaceAuthorizationRuleResource>, IAsyncEnumerable<ServiceBusNamespaceAuthorizationRuleResource>
     {
+        private readonly ClientDiagnostics _sbAuthorizationRulesClientDiagnostics;
+        private readonly SBAuthorizationRules _sbAuthorizationRulesRestClient;
+
         /// <summary> Initializes a new instance of ServiceBusNamespaceAuthorizationRuleCollection for mocking. </summary>
         protected ServiceBusNamespaceAuthorizationRuleCollection()
         {
@@ -255,6 +260,62 @@ namespace Azure.ResourceManager.ServiceBus
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets the authorization rules for a namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SBAuthorizationRules_ListAuthorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceBusNamespaceAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusNamespaceAuthorizationRuleResource>(new SBAuthorizationRulesGetAuthorizationRulesAsyncCollectionResultOfT(_sbAuthorizationRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ServiceBusNamespaceAuthorizationRuleResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets the authorization rules for a namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SBAuthorizationRules_ListAuthorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceBusNamespaceAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusNamespaceAuthorizationRuleResource>(new SBAuthorizationRulesGetAuthorizationRulesCollectionResultOfT(_sbAuthorizationRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ServiceBusNamespaceAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -491,6 +552,22 @@ namespace Azure.ResourceManager.ServiceBus
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<ServiceBusNamespaceAuthorizationRuleResource> IEnumerable<ServiceBusNamespaceAuthorizationRuleResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<ServiceBusNamespaceAuthorizationRuleResource> IAsyncEnumerable<ServiceBusNamespaceAuthorizationRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
