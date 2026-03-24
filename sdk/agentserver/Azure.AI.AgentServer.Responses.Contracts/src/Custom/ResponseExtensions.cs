@@ -49,7 +49,7 @@ public static class ResponseExtensions
     {
         Argument.AssertNotNull(response, nameof(response));
         Argument.AssertNotNull(toolChoice, nameof(toolChoice));
-        response.ToolChoice = ModelReaderWriter.Write(toolChoice, ModelReaderWriterOptions.Json);
+        response.ToolChoice = ModelReaderWriter.Write(toolChoice, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
     }
 
     /// <summary>

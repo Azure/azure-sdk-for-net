@@ -20,8 +20,8 @@ public static class ResponseSnapshotExtensions
     /// Mutations to the original do not affect the snapshot and vice versa.
     /// </returns>
     /// <remarks>
-    /// Uses <see cref="ModelReaderWriter.Write(object, ModelReaderWriterOptions?)"/> and
-    /// <see cref="ModelReaderWriter.Read{T}(BinaryData, ModelReaderWriterOptions?)"/>
+    /// Uses <see cref="ModelReaderWriter.Write(object, ModelReaderWriterOptions, ModelReaderWriterContext)"/> and
+    /// <see cref="ModelReaderWriter.Read{T}(BinaryData, ModelReaderWriterOptions, ModelReaderWriterContext)"/>
     /// which leverage the TypeSpec-generated <see cref="IPersistableModel{T}"/> implementation.
     /// This guarantees all properties — including polymorphic <see cref="OutputItem"/> subtypes,
     /// <see cref="BinaryData"/> union fields, and additional binary data properties — are
@@ -29,8 +29,8 @@ public static class ResponseSnapshotExtensions
     /// </remarks>
     public static Response Snapshot(this Response response)
     {
-        BinaryData data = ModelReaderWriter.Write(response);
-        return ModelReaderWriter.Read<Response>(data)!;
+        BinaryData data = ModelReaderWriter.Write(response, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+        return ModelReaderWriter.Read<Response>(data, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default)!;
     }
 
     /// <summary>
