@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LdapOverTls))
+            if (Optional.IsDefined(IsLdapOverTlsEnabled))
             {
                 writer.WritePropertyName("ldapOverTLS"u8);
-                writer.WriteBooleanValue(LdapOverTls.Value);
+                writer.WriteBooleanValue(IsLdapOverTlsEnabled.Value);
             }
             if (Optional.IsDefined(ServerCACertificate))
             {

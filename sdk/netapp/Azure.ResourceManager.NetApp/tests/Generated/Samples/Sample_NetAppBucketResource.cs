@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppBucketResource netAppBucket = client.GetNetAppBucketResource(netAppBucketResourceId);
 
             // invoke the operation
-            BucketCredentialsExpiry body = new BucketCredentialsExpiry
+            NetAppBucketCredentialsExpiry body = new NetAppBucketCredentialsExpiry
             {
                 KeyPairExpiryDays = 3,
             };
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppBucketResource netAppBucket = client.GetNetAppBucketResource(netAppBucketResourceId);
 
             // invoke the operation
-            BucketCredentialsExpiry body = new BucketCredentialsExpiry
+            NetAppBucketCredentialsExpiry body = new NetAppBucketCredentialsExpiry
             {
                 KeyPairExpiryDays = 3,
             };
-            BucketGenerateCredentials result = await netAppBucket.GenerateCredentialsAsync(body);
+            NetAppBucketGenerateCredentials result = await netAppBucket.GenerateCredentialsAsync(body);
 
             Console.WriteLine($"Succeeded: {result}");
         }

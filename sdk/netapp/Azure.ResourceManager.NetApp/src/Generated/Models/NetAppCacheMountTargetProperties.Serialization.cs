@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class CacheMountTargetProperties : IUtf8JsonSerializable, IJsonModel<CacheMountTargetProperties>
+    public partial class NetAppCacheMountTargetProperties : IUtf8JsonSerializable, IJsonModel<NetAppCacheMountTargetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CacheMountTargetProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppCacheMountTargetProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CacheMountTargetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppCacheMountTargetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CacheMountTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppCacheMountTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CacheMountTargetProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppCacheMountTargetProperties)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(MountTargetId))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        CacheMountTargetProperties IJsonModel<CacheMountTargetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppCacheMountTargetProperties IJsonModel<NetAppCacheMountTargetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CacheMountTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppCacheMountTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CacheMountTargetProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppCacheMountTargetProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCacheMountTargetProperties(document.RootElement, options);
+            return DeserializeNetAppCacheMountTargetProperties(document.RootElement, options);
         }
 
-        internal static CacheMountTargetProperties DeserializeCacheMountTargetProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppCacheMountTargetProperties DeserializeNetAppCacheMountTargetProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CacheMountTargetProperties(mountTargetId, ipAddress, smbServerFqdn, serializedAdditionalRawData);
+            return new NetAppCacheMountTargetProperties(mountTargetId, ipAddress, smbServerFqdn, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CacheMountTargetProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppCacheMountTargetProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CacheMountTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppCacheMountTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CacheMountTargetProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppCacheMountTargetProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CacheMountTargetProperties IPersistableModel<CacheMountTargetProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppCacheMountTargetProperties IPersistableModel<NetAppCacheMountTargetProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CacheMountTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppCacheMountTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCacheMountTargetProperties(document.RootElement, options);
+                        return DeserializeNetAppCacheMountTargetProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CacheMountTargetProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppCacheMountTargetProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CacheMountTargetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppCacheMountTargetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

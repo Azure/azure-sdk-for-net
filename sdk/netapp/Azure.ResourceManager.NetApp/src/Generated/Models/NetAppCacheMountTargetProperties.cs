@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Contains all the information needed to mount a cache. </summary>
-    public partial class CacheMountTargetProperties
+    public partial class NetAppCacheMountTargetProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CacheMountTargetProperties"/>. </summary>
-        internal CacheMountTargetProperties()
+        /// <summary> Initializes a new instance of <see cref="NetAppCacheMountTargetProperties"/>. </summary>
+        internal NetAppCacheMountTargetProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CacheMountTargetProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppCacheMountTargetProperties"/>. </summary>
         /// <param name="mountTargetId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="ipAddress"> The mount target's IPv4 address, used to mount the cache. </param>
         /// <param name="smbServerFqdn"> The SMB server's Fully Qualified Domain Name, FQDN. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CacheMountTargetProperties(string mountTargetId, string ipAddress, string smbServerFqdn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppCacheMountTargetProperties(string mountTargetId, string ipAddress, string smbServerFqdn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MountTargetId = mountTargetId;
             IPAddress = ipAddress;

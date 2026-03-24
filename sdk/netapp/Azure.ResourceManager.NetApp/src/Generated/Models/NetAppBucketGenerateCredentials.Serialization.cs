@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class BucketGenerateCredentials : IUtf8JsonSerializable, IJsonModel<BucketGenerateCredentials>
+    public partial class NetAppBucketGenerateCredentials : IUtf8JsonSerializable, IJsonModel<NetAppBucketGenerateCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BucketGenerateCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppBucketGenerateCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BucketGenerateCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppBucketGenerateCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketGenerateCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketGenerateCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BucketGenerateCredentials)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBucketGenerateCredentials)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(AccessKey))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        BucketGenerateCredentials IJsonModel<BucketGenerateCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppBucketGenerateCredentials IJsonModel<NetAppBucketGenerateCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketGenerateCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketGenerateCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BucketGenerateCredentials)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBucketGenerateCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBucketGenerateCredentials(document.RootElement, options);
+            return DeserializeNetAppBucketGenerateCredentials(document.RootElement, options);
         }
 
-        internal static BucketGenerateCredentials DeserializeBucketGenerateCredentials(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppBucketGenerateCredentials DeserializeNetAppBucketGenerateCredentials(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -118,38 +118,38 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BucketGenerateCredentials(accessKey, secretKey, keyPairExpiry, serializedAdditionalRawData);
+            return new NetAppBucketGenerateCredentials(accessKey, secretKey, keyPairExpiry, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BucketGenerateCredentials>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppBucketGenerateCredentials>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketGenerateCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketGenerateCredentials>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BucketGenerateCredentials)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBucketGenerateCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BucketGenerateCredentials IPersistableModel<BucketGenerateCredentials>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppBucketGenerateCredentials IPersistableModel<NetAppBucketGenerateCredentials>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketGenerateCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketGenerateCredentials>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBucketGenerateCredentials(document.RootElement, options);
+                        return DeserializeNetAppBucketGenerateCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BucketGenerateCredentials)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBucketGenerateCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BucketGenerateCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppBucketGenerateCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -140,6 +140,10 @@ prepend-rp-prefix:
   - VolumeLanguage
   - ElasticEncryption
   - ManagedServiceIdentityType
+  - BucketCredentialsExpiry
+  - BucketGenerateCredentials
+  - CacheMountTargetProperties
+  - CacheLifeCycleState
 
 rename-mapping:
   AzureKeyVaultDetails: NetAppKeyVaultDetails
@@ -340,6 +344,8 @@ rename-mapping:
   ProtocolTypes.NFSv4: Nfsv4
   ProtocolTypes.SMB: Smb
   SecretPasswordUpdate: NetAppSecretPasswordPatch
+  LdapConfiguration.ldapOverTLS: IsLdapOverTlsEnabled
+  LdapConfigurationPatch.ldapOverTLS: IsLdapOverTlsEnabled
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

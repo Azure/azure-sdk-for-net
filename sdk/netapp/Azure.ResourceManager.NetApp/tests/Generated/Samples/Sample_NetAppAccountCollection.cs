@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetApp.Samples
                 {
                     Domain = "example.com",
                     LdapServers = { "192.0.2.1", "192.0.2.2" },
-                    LdapOverTls = false,
+                    IsLdapOverTlsEnabled = false,
                 },
             };
             ArmOperation<NetAppAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data);

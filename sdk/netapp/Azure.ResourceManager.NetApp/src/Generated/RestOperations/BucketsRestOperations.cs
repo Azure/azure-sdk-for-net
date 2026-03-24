@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal RequestUriBuilder CreateGenerateAkvCredentialsRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, BucketCredentialsExpiry body)
+        internal RequestUriBuilder CreateGenerateAkvCredentialsRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, NetAppBucketCredentialsExpiry body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.NetApp
             return uri;
         }
 
-        internal HttpMessage CreateGenerateAkvCredentialsRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, BucketCredentialsExpiry body)
+        internal HttpMessage CreateGenerateAkvCredentialsRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, NetAppBucketCredentialsExpiry body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="bucketName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="bucketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GenerateAkvCredentialsAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, BucketCredentialsExpiry body, CancellationToken cancellationToken = default)
+        public async Task<Response> GenerateAkvCredentialsAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, NetAppBucketCredentialsExpiry body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="bucketName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="bucketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GenerateAkvCredentials(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, BucketCredentialsExpiry body, CancellationToken cancellationToken = default)
+        public Response GenerateAkvCredentials(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, NetAppBucketCredentialsExpiry body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal RequestUriBuilder CreateGenerateCredentialsRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, BucketCredentialsExpiry body)
+        internal RequestUriBuilder CreateGenerateCredentialsRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, NetAppBucketCredentialsExpiry body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.NetApp
             return uri;
         }
 
-        internal HttpMessage CreateGenerateCredentialsRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, BucketCredentialsExpiry body)
+        internal HttpMessage CreateGenerateCredentialsRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, NetAppBucketCredentialsExpiry body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="bucketName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="bucketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BucketGenerateCredentials>> GenerateCredentialsAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, BucketCredentialsExpiry body, CancellationToken cancellationToken = default)
+        public async Task<Response<NetAppBucketGenerateCredentials>> GenerateCredentialsAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, NetAppBucketCredentialsExpiry body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -801,9 +801,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        BucketGenerateCredentials value = default;
+                        NetAppBucketGenerateCredentials value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BucketGenerateCredentials.DeserializeBucketGenerateCredentials(document.RootElement);
+                        value = NetAppBucketGenerateCredentials.DeserializeNetAppBucketGenerateCredentials(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="bucketName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="bucketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BucketGenerateCredentials> GenerateCredentials(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, BucketCredentialsExpiry body, CancellationToken cancellationToken = default)
+        public Response<NetAppBucketGenerateCredentials> GenerateCredentials(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string bucketName, NetAppBucketCredentialsExpiry body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -838,9 +838,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        BucketGenerateCredentials value = default;
+                        NetAppBucketGenerateCredentials value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BucketGenerateCredentials.DeserializeBucketGenerateCredentials(document.RootElement);
+                        value = NetAppBucketGenerateCredentials.DeserializeNetAppBucketGenerateCredentials(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

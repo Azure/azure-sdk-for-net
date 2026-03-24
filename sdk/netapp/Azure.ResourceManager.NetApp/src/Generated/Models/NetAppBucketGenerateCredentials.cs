@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Bucket Access Key, Secret Key, and Expiry date and time of the key pair. </summary>
-    public partial class BucketGenerateCredentials
+    public partial class NetAppBucketGenerateCredentials
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BucketGenerateCredentials"/>. </summary>
-        internal BucketGenerateCredentials()
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketGenerateCredentials"/>. </summary>
+        internal NetAppBucketGenerateCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BucketGenerateCredentials"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketGenerateCredentials"/>. </summary>
         /// <param name="accessKey"> The Access Key that is required along with the Secret Key to access the bucket. </param>
         /// <param name="secretKey"> The Secret Key that is required along with the Access Key to access the bucket. </param>
         /// <param name="keyPairExpiresOn"> The bucket's Access and Secret key pair expiry date and time (in UTC). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BucketGenerateCredentials(string accessKey, string secretKey, DateTimeOffset? keyPairExpiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppBucketGenerateCredentials(string accessKey, string secretKey, DateTimeOffset? keyPairExpiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessKey = accessKey;
             SecretKey = secretKey;

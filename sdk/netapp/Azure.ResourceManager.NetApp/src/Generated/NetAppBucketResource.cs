@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> GenerateAkvCredentialsAsync(WaitUntil waitUntil, BucketCredentialsExpiry body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> GenerateAkvCredentialsAsync(WaitUntil waitUntil, NetAppBucketCredentialsExpiry body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation GenerateAkvCredentials(WaitUntil waitUntil, BucketCredentialsExpiry body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation GenerateAkvCredentials(WaitUntil waitUntil, NetAppBucketCredentialsExpiry body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="body"> The bucket's Access and Secret key pair expiry time expressed as the number of days from now. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<BucketGenerateCredentials>> GenerateCredentialsAsync(BucketCredentialsExpiry body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppBucketGenerateCredentials>> GenerateCredentialsAsync(NetAppBucketCredentialsExpiry body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="body"> The bucket's Access and Secret key pair expiry time expressed as the number of days from now. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<BucketGenerateCredentials> GenerateCredentials(BucketCredentialsExpiry body, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppBucketGenerateCredentials> GenerateCredentials(NetAppBucketCredentialsExpiry body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 

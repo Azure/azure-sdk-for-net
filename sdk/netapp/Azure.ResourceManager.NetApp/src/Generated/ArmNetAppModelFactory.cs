@@ -1024,11 +1024,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="globalFileLocking"> Flag indicating whether the global file lock is enabled for the cache. </param>
         /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
         /// <returns> A new <see cref="Models.NetAppCacheProperties"/> instance for mocking. </returns>
-        public static NetAppCacheProperties NetAppCacheProperties(string filePath = null, long size = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = null, IEnumerable<NetAppProtocolType> protocolTypes = null, NetAppCacheProvisioningState? provisioningState = null, CacheLifeCycleState? cacheState = null, ResourceIdentifier cacheSubnetResourceId = null, ResourceIdentifier peeringSubnetResourceId = null, IEnumerable<CacheMountTargetProperties> mountTargets = null, NetAppKerberosState? kerberos = null, NetAppSmbSettings smbSettings = null, float? throughputMibps = null, float? actualThroughputMibps = null, NetAppEncryptionKeySource encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = null, long? maximumNumberOfFiles = null, NetAppEncryptionState? encryption = null, NetAppVolumeLanguage? language = null, NetAppLdapState? ldap = null, NetAppLdapServerType? ldapServerType = null, NetAppOriginClusterInformation originClusterInformation = null, NetAppCifsChangeNotifyState? cifsChangeNotifications = null, NetAppGlobalFileLockingState? globalFileLocking = null, NetAppEnableWriteBackState? writeBack = null)
+        public static NetAppCacheProperties NetAppCacheProperties(string filePath = null, long size = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = null, IEnumerable<NetAppProtocolType> protocolTypes = null, NetAppCacheProvisioningState? provisioningState = null, NetAppCacheLifeCycleState? cacheState = null, ResourceIdentifier cacheSubnetResourceId = null, ResourceIdentifier peeringSubnetResourceId = null, IEnumerable<NetAppCacheMountTargetProperties> mountTargets = null, NetAppKerberosState? kerberos = null, NetAppSmbSettings smbSettings = null, float? throughputMibps = null, float? actualThroughputMibps = null, NetAppEncryptionKeySource encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = null, long? maximumNumberOfFiles = null, NetAppEncryptionState? encryption = null, NetAppVolumeLanguage? language = null, NetAppLdapState? ldap = null, NetAppLdapServerType? ldapServerType = null, NetAppOriginClusterInformation originClusterInformation = null, NetAppCifsChangeNotifyState? cifsChangeNotifications = null, NetAppGlobalFileLockingState? globalFileLocking = null, NetAppEnableWriteBackState? writeBack = null)
         {
             exportRules ??= new List<NetAppVolumeExportPolicyRule>();
             protocolTypes ??= new List<NetAppProtocolType>();
-            mountTargets ??= new List<CacheMountTargetProperties>();
+            mountTargets ??= new List<NetAppCacheMountTargetProperties>();
 
             return new NetAppCacheProperties(
                 filePath,
@@ -1058,14 +1058,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CacheMountTargetProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppCacheMountTargetProperties"/>. </summary>
         /// <param name="mountTargetId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="ipAddress"> The mount target's IPv4 address, used to mount the cache. </param>
         /// <param name="smbServerFqdn"> The SMB server's Fully Qualified Domain Name, FQDN. </param>
-        /// <returns> A new <see cref="Models.CacheMountTargetProperties"/> instance for mocking. </returns>
-        public static CacheMountTargetProperties CacheMountTargetProperties(string mountTargetId = null, string ipAddress = null, string smbServerFqdn = null)
+        /// <returns> A new <see cref="Models.NetAppCacheMountTargetProperties"/> instance for mocking. </returns>
+        public static NetAppCacheMountTargetProperties NetAppCacheMountTargetProperties(string mountTargetId = null, string ipAddress = null, string smbServerFqdn = null)
         {
-            return new CacheMountTargetProperties(mountTargetId, ipAddress, smbServerFqdn, serializedAdditionalRawData: null);
+            return new NetAppCacheMountTargetProperties(mountTargetId, ipAddress, smbServerFqdn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppPeeringPassphrases"/>. </summary>
@@ -1501,14 +1501,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BucketGenerateCredentials"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppBucketGenerateCredentials"/>. </summary>
         /// <param name="accessKey"> The Access Key that is required along with the Secret Key to access the bucket. </param>
         /// <param name="secretKey"> The Secret Key that is required along with the Access Key to access the bucket. </param>
         /// <param name="keyPairExpiresOn"> The bucket's Access and Secret key pair expiry date and time (in UTC). </param>
-        /// <returns> A new <see cref="Models.BucketGenerateCredentials"/> instance for mocking. </returns>
-        public static BucketGenerateCredentials BucketGenerateCredentials(string accessKey = null, string secretKey = null, DateTimeOffset? keyPairExpiresOn = null)
+        /// <returns> A new <see cref="Models.NetAppBucketGenerateCredentials"/> instance for mocking. </returns>
+        public static NetAppBucketGenerateCredentials NetAppBucketGenerateCredentials(string accessKey = null, string secretKey = null, DateTimeOffset? keyPairExpiresOn = null)
         {
-            return new BucketGenerateCredentials(accessKey, secretKey, keyPairExpiresOn, serializedAdditionalRawData: null);
+            return new NetAppBucketGenerateCredentials(accessKey, secretKey, keyPairExpiresOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetGroupIdListForLdapUserResult"/>. </summary>

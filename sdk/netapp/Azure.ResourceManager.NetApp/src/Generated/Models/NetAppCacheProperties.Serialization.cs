@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.NetApp.Models
             CachePropertiesExportPolicy exportPolicy = default;
             IList<NetAppProtocolType> protocolTypes = default;
             NetAppCacheProvisioningState? provisioningState = default;
-            CacheLifeCycleState? cacheState = default;
+            NetAppCacheLifeCycleState? cacheState = default;
             ResourceIdentifier cacheSubnetResourceId = default;
             ResourceIdentifier peeringSubnetResourceId = default;
-            IReadOnlyList<CacheMountTargetProperties> mountTargets = default;
+            IReadOnlyList<NetAppCacheMountTargetProperties> mountTargets = default;
             NetAppKerberosState? kerberos = default;
             NetAppSmbSettings smbSettings = default;
             float? throughputMibps = default;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    cacheState = new CacheLifeCycleState(property.Value.GetString());
+                    cacheState = new NetAppCacheLifeCycleState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cacheSubnetResourceId"u8))
@@ -278,10 +278,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<CacheMountTargetProperties> array = new List<CacheMountTargetProperties>();
+                    List<NetAppCacheMountTargetProperties> array = new List<NetAppCacheMountTargetProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CacheMountTargetProperties.DeserializeCacheMountTargetProperties(item, options));
+                        array.Add(NetAppCacheMountTargetProperties.DeserializeNetAppCacheMountTargetProperties(item, options));
                     }
                     mountTargets = array;
                     continue;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 cacheState,
                 cacheSubnetResourceId,
                 peeringSubnetResourceId,
-                mountTargets ?? new ChangeTrackingList<CacheMountTargetProperties>(),
+                mountTargets ?? new ChangeTrackingList<NetAppCacheMountTargetProperties>(),
                 kerberos,
                 smbSettings,
                 throughputMibps,

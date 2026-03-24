@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ProtocolTypes = new ChangeTrackingList<NetAppProtocolType>();
             CacheSubnetResourceId = cacheSubnetResourceId;
             PeeringSubnetResourceId = peeringSubnetResourceId;
-            MountTargets = new ChangeTrackingList<CacheMountTargetProperties>();
+            MountTargets = new ChangeTrackingList<NetAppCacheMountTargetProperties>();
             EncryptionKeySource = encryptionKeySource;
             OriginClusterInformation = originClusterInformation;
         }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="globalFileLocking"> Flag indicating whether the global file lock is enabled for the cache. </param>
         /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppCacheProperties(string filePath, long size, CachePropertiesExportPolicy exportPolicy, IList<NetAppProtocolType> protocolTypes, NetAppCacheProvisioningState? provisioningState, CacheLifeCycleState? cacheState, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, IReadOnlyList<CacheMountTargetProperties> mountTargets, NetAppKerberosState? kerberos, NetAppSmbSettings smbSettings, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, long? maximumNumberOfFiles, NetAppEncryptionState? encryption, NetAppVolumeLanguage? language, NetAppLdapState? ldap, NetAppLdapServerType? ldapServerType, NetAppOriginClusterInformation originClusterInformation, NetAppCifsChangeNotifyState? cifsChangeNotifications, NetAppGlobalFileLockingState? globalFileLocking, NetAppEnableWriteBackState? writeBack, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppCacheProperties(string filePath, long size, CachePropertiesExportPolicy exportPolicy, IList<NetAppProtocolType> protocolTypes, NetAppCacheProvisioningState? provisioningState, NetAppCacheLifeCycleState? cacheState, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, IReadOnlyList<NetAppCacheMountTargetProperties> mountTargets, NetAppKerberosState? kerberos, NetAppSmbSettings smbSettings, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, long? maximumNumberOfFiles, NetAppEncryptionState? encryption, NetAppVolumeLanguage? language, NetAppLdapState? ldap, NetAppLdapServerType? ldapServerType, NetAppOriginClusterInformation originClusterInformation, NetAppCifsChangeNotifyState? cifsChangeNotifications, NetAppGlobalFileLockingState? globalFileLocking, NetAppEnableWriteBackState? writeBack, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FilePath = filePath;
             Size = size;
@@ -153,13 +153,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Azure lifecycle management. </summary>
         public NetAppCacheProvisioningState? ProvisioningState { get; }
         /// <summary> Azure NetApp Files Cache lifecycle management. </summary>
-        public CacheLifeCycleState? CacheState { get; }
+        public NetAppCacheLifeCycleState? CacheState { get; }
         /// <summary> The Azure Resource URI for a delegated cache subnet that will be used to allocate data IPs. </summary>
         public ResourceIdentifier CacheSubnetResourceId { get; set; }
         /// <summary> The Azure Resource URI for a delegated subnet that will be used for ANF Intercluster Interface IP addresses. </summary>
         public ResourceIdentifier PeeringSubnetResourceId { get; set; }
         /// <summary> List of mount targets that can be used to mount this cache. </summary>
-        public IReadOnlyList<CacheMountTargetProperties> MountTargets { get; }
+        public IReadOnlyList<NetAppCacheMountTargetProperties> MountTargets { get; }
         /// <summary> Describe if a cache is Kerberos enabled. </summary>
         public NetAppKerberosState? Kerberos { get; set; }
         /// <summary> SMB information for the cache. </summary>
