@@ -228,8 +228,6 @@ try {
         # prevent warning related to EOL differences which triggers an exception for some reason
         & git -c core.safecrlf=false diff --ignore-space-at-eol --exit-code
         if ($LastExitCode -ne 0) {
-            $status = git status -s | Out-String
-            $status = $status -replace "`n","`n    "
             if ($PreparePr) {
                 $currentStatusLines = git status --porcelain
                 $newStatusLines = @()
