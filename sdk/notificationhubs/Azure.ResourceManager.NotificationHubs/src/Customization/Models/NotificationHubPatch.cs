@@ -4,13 +4,11 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     // Backward-compat: override AuthorizationRules from IReadOnlyList<T> to IList<T>
     // to match the baseline API contract.
-    [CodeGenSuppress("AuthorizationRules")]
     public partial class NotificationHubPatch
     {
         /// <summary> Gets the AuthorizationRules of the created NotificationHub. </summary>
