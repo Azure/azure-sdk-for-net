@@ -1,6 +1,6 @@
 # Handler Implementation Guide
 
-> Developer guidance for implementing `IResponseHandler` — the single integration point for building Azure AI Responses API servers with this SDK.
+> Developer guidance for implementing `IResponseHandler` — the single integration point for building Azure AI Responses API servers with this library.
 
 ---
 
@@ -41,7 +41,7 @@
 
 ## Overview
 
-The SDK handles all protocol concerns — routing, serialization, SSE framing, `stream`/`background` mode negotiation, status lifecycle, and error shapes. You implement **one interface**: `IResponseHandler`. Your handler receives a `CreateResponse` request and yields SSE events via `IAsyncEnumerable<ResponseStreamEvent>`. The SDK wraps these events into the correct HTTP response format based on the client's requested mode.
+The library handles all protocol concerns — routing, serialization, SSE framing, `stream`/`background` mode negotiation, status lifecycle, and error shapes. You implement **one interface**: `IResponseHandler`. Your handler receives a `CreateResponse` request and yields SSE events via `IAsyncEnumerable<ResponseStreamEvent>`. The library wraps these events into the correct HTTP response format based on the client's requested mode.
 
 You do **not** need to think about:
 - Whether the client requested JSON or SSE streaming
@@ -49,7 +49,7 @@ You do **not** need to think about:
 - HTTP status codes, content types, or error envelopes
 - Sequence numbers or response IDs
 
-The SDK manages all of this. Your handler just yields events.
+The library manages all of this. Your handler just yields events.
 
 ---
 
@@ -105,7 +105,7 @@ app.MapResponsesServer();
 app.Run();
 ```
 
-That's it. The SDK registers all middleware, routes (`POST /responses`, `GET /responses/{id}`, `POST /responses/{id}/cancel`), and protocol plumbing.
+That's it. The library registers all middleware, routes (`POST /responses`, `GET /responses/{id}`, `POST /responses/{id}/cancel`), and protocol plumbing.
 
 ---
 
@@ -129,7 +129,7 @@ public interface IResponseHandler
 | `context` | Provides the response ID and ID generation helpers |
 | `cancellationToken` | Triggered on cancellation (explicit `/cancel` call or client disconnection for non-background) |
 
-Your handler is an `IAsyncEnumerable` — you `yield return` events one at a time. The SDK consumes them, assigns sequence numbers, manages the response lifecycle, and delivers them to the client.
+Your handler is an `IAsyncEnumerable` — you `yield return` events one at a time. The library consumes them, assigns sequence numbers, manages the response lifecycle, and delivers them to the client.
 
 ### ResponseEventStream
 
@@ -167,16 +167,16 @@ stream.Response.Instructions = BinaryData.FromObjectAsJson("You are a helpful as
 yield return stream.EmitCreated();
 ```
 
-If the handler does not set `Metadata` or `Instructions`, the SDK automatically copies them from the original `CreateResponse` request.
+If the handler does not set `Metadata` or `Instructions`, the library automatically copies them from the original `CreateResponse` request.
 
-The SDK also auto-populates `Conversation` and `PreviousResponseId` on the `Response` from the original request:
+The library also auto-populates `Conversation` and `PreviousResponseId` on the `Response` from the original request:
 
 - **`Conversation`** — set to a `ConversationReference` with the request's `conversation_id` (if present), enabling conversation chain tracking.
 - **`PreviousResponseId`** — set to the request's `previous_response_id` (if present), linking responses in a chain.
 
 Handlers do not need to set these — they are populated automatically in the `ResponseEventStream` constructor.
 
-**Important**: Do not add output items directly to `stream.Response.Output`. Use the output builder factories instead — the SDK tracks output items through `output_item.added` events and will detect direct manipulation as a handler error.
+**Important**: Do not add output items directly to `stream.Response.Output`. Use the output builder factories instead — the library tracks output items through `output_item.added` events and will detect direct manipulation as a handler error.
 
 **Every handler must**:
 1. Call `stream.EmitCreated()` first — this creates the `response.created` SSE event. **This is mandatory and must be the first event yielded.** No response is persisted before this event.
@@ -186,7 +186,7 @@ Handlers do not need to set these — they are populated automatically in the `R
 
 **Bad handler consequences** — if the handler violates this contract:
 
-| Violation | SDK Behaviour |
+| Violation | Library Behaviour |
 |-----------|--------------|
 | First event is not `response.created` | HTTP 500 error, handler CT cancelled, no persistence |
 | `Response.Id` doesn't match `IResponseContext.ResponseId` | HTTP 500 error, handler CT cancelled, no persistence (FR-006) |
@@ -194,8 +194,8 @@ Handlers do not need to set these — they are populated automatically in the `R
 | Direct `Response.Output` manipulation detected | Post-created: `response.failed`; pre-created: HTTP 500 (FR-008a) |
 | Empty enumerable (no events) | HTTP 500 error, handler CT cancelled, no persistence |
 | Throws before `response.created` | HTTP 500 error, no persistence |
-| Ends without terminal event or error | SDK emits `response.failed` automatically (FR-009) |
-| Throws after `response.created` | SDK emits `response.failed`, persists failed state |
+| Ends without terminal event or error | The library emits `response.failed` automatically (FR-009) |
+| Throws after `response.created` | The library emits `response.failed`, persists failed state |
 
 All violations are logged with handler type name and request ID for diagnostics.
 
@@ -212,7 +212,7 @@ public interface IResponseContext
 }
 ```
 
-Provides the SDK-generated response ID, shutdown signalling, and access to resolved input and history items.
+Provides the library-generated response ID, shutdown signalling, and access to resolved input and history items.
 
 #### Input Items — `GetInputItemsAsync()`
 
@@ -269,7 +269,7 @@ You typically don't need to call these directly — the builders handle ID gener
 
 ### Sequence Numbers
 
-The server auto-assigns 0-based sequence numbers to every SSE event. Never set them manually — they are injected automatically by the SDK during event serialization.
+The server auto-assigns 0-based sequence numbers to every SSE event. Never set them manually — they are injected automatically by the library during event serialization.
 
 Clients use sequence numbers for stream resumption via the `starting_after` query parameter on SSE replay. See [Sequence Numbers (B9)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the wire format.
 
@@ -325,7 +325,7 @@ yield return message.EmitDone();
 yield return stream.EmitCompleted();
 ```
 
-**Tip**: For streaming, emit small deltas frequently for a responsive feel. For non-streaming mode, the SDK accumulates everything and delivers the final JSON — so delta granularity doesn't affect the JSON response, only SSE streaming UX.
+**Tip**: For streaming, emit small deltas frequently for a responsive feel. For non-streaming mode, the library accumulates everything and delivers the final JSON — so delta granularity doesn't affect the JSON response, only SSE streaming UX.
 
 ### Function Calls (Tool Use)
 
@@ -448,7 +448,7 @@ yield return stream.EmitCompleted();
 
 ### Other Tool Call Types
 
-The SDK provides specialised builders for each tool call type:
+The library provides specialised builders for each tool call type:
 
 | Builder | Factory Method | Key Methods |
 |---|---|---|
@@ -579,7 +579,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 }
 ```
 
-### What the SDK Does on Cancellation
+### What the library Does on Cancellation
 
 Let `OperationCanceledException` propagate — the server handles the winddown automatically. The 10-second grace period, output clearing, and terminal event emission are all automatic. You don't need to emit any terminal event on cancellation.
 
@@ -614,7 +614,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
             yield return stream.EmitIncomplete();
             yield break;
         }
-        throw; // Let SDK handle cancel/disconnect
+        throw; // Let library handle cancel/disconnect
     }
 
     yield return stream.EmitCompleted();
@@ -640,7 +640,7 @@ builder.Services.Configure<HostOptions>(options =>
 });
 ```
 
-Internally, the SDK uses `ResponseExecutionTracker` (registered as an `IHostedService`) to coordinate shutdown. When the host stops, the tracker cancels all in-flight response executions and waits for them to complete within the shutdown timeout. This propagation chain is automatic — `context.IsShutdownRequested` and the handler's `CancellationToken` are both triggered by the tracker.
+Internally, the library uses `ResponseExecutionTracker` (registered as an `IHostedService`) to coordinate shutdown. When the host stops, the tracker cancels all in-flight response executions and waits for them to complete within the shutdown timeout. This propagation chain is automatic — `context.IsShutdownRequested` and the handler's `CancellationToken` are both triggered by the tracker.
 
 **Client-side reconnection**: When a client receives `response.incomplete` (e.g., because the handler chose Option A above), it can resume by creating a new request with `previous_response_id` set to the incomplete response's ID. The new request continues from where the previous one stopped. This works only when `store=true` — ephemeral (`store=false`) responses cannot be resumed because they are not persisted.
 
@@ -650,7 +650,7 @@ Internally, the SDK uses `ResponseExecutionTracker` (registered as an `IHostedSe
 
 ### Handler Exceptions
 
-Throwing an exception is a valid way to terminate your handler — you don't need to emit a terminal event first. The SDK catches the exception, maps it to the appropriate HTTP error response, and emits `response.failed` on your behalf.
+Throwing an exception is a valid way to terminate your handler — you don't need to emit a terminal event first. The library catches the exception, maps it to the appropriate HTTP error response, and emits `response.failed` on your behalf.
 
 **What clients see when your handler throws**:
 
@@ -662,11 +662,11 @@ Throwing an exception is a valid way to terminate your handler — you don't nee
 | Any other exception | 500 | `failed` | `"server_error"` | `"An internal error occurred."` |
 | `OperationCanceledException` | *(special)* | `cancelled` | *(see [Cancellation](#cancellation))* | *(see [Cancellation](#cancellation))* |
 
-The SDK recognises specific exception types and maps them to structured error responses. For unknown exceptions, clients see a generic 500 with `"server_error"` — the actual exception details are logged server-side but never exposed to callers.
+The library recognises specific exception types and maps them to structured error responses. For unknown exceptions, clients see a generic 500 with `"server_error"` — the actual exception details are logged server-side but never exposed to callers.
 
 **The `ResponseError` on the response object** (visible via `GET /responses/{id}` when `store=true`) contains only `code` and `message` — no `type` or `param`. This is a different (smaller) shape than the HTTP error envelope.
 
-> For the complete error-to-status mapping, see [SDK Behavioural Specification — Error Handling Pipeline](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#error-handling-pipeline) (S-027–S-030). For .NET exception class details, see [.NET Design — Error Handling](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/error-handling.md).
+> For the complete error-to-status mapping, see [Library Behavioural Specification — Error Handling Pipeline](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#error-handling-pipeline) (S-027–S-030). For .NET exception class details, see [.NET Design — Error Handling](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/error-handling.md).
 
 ### Explicit Failure
 
@@ -693,7 +693,7 @@ if (request.Model != "my-model")
 }
 ```
 
-The SDK converts this to an HTTP 400 response with the standard error envelope shape.
+The library converts this to an HTTP 400 response with the standard error envelope shape.
 
 ### Validation Pipeline
 
@@ -720,7 +720,7 @@ yield return message.EmitDone();
 yield return stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
 ```
 
-The `incomplete` status is **handler-driven** — the SDK does not automatically detect truncation. Your handler decides when to signal it.
+The `incomplete` status is **handler-driven** — the library does not automatically detect truncation. Your handler decides when to signal it.
 
 ---
 
@@ -729,9 +729,9 @@ The `incomplete` status is **handler-driven** — the SDK does not automatically
 Your handler **must** do one of two things before the `IAsyncEnumerable` completes:
 
 1. **Emit a terminal event** — `EmitCompleted()`, `EmitFailed()`, or `EmitIncomplete()`
-2. **Throw an exception** — the SDK maps it to `response.failed` (see [Handler Exceptions](#handler-exceptions))
+2. **Throw an exception** — the library maps it to `response.failed` (see [Handler Exceptions](#handler-exceptions))
 
-Both are valid ways to end a response. What is **not** valid is silently completing the stream without either — that is a programming error and the SDK treats it as one.
+Both are valid ways to end a response. What is **not** valid is silently completing the stream without either — that is a programming error and the library treats it as one.
 
 ```csharp
 // ✅ Emit a terminal event
@@ -740,16 +740,16 @@ yield return stream.EmitCompleted();
 // ✅ Also good: emit with usage data
 yield return stream.EmitCompleted(usage);
 
-// ✅ Also valid: throw an exception — SDK handles the error response
+// ✅ Also valid: throw an exception — library handles the error response
 throw new BadRequestException("Unsupported model", "model");
 
 // ❌ Bad handler: stopping without a terminal event or exception
-//    → SDK emits response.failed with a diagnostic log (B32)
+//    → library emits response.failed with a diagnostic log (B32)
 ```
 
-**Why the SDK doesn't auto-complete**:
+**Why the library doesn't auto-complete**:
 - A silent completion could mask bugs — the handler may have forgotten to emit output
-- The SDK fails loudly so programming errors surface during development
+- The library fails loudly so programming errors surface during development
 - Allows passing `ResponseUsage` data (see [Token Usage Reporting](#token-usage-reporting) below)
 - Lets you choose the right terminal status (`completed`, `failed`, or `incomplete`)
 - Makes handler intent unambiguous to readers of your code
@@ -843,7 +843,7 @@ The provider contract is split into **three focused interfaces**, each with a si
 | `IResponsesCancellationSignalProvider` | Cancellation signal coordination | `CancelResponseAsync`, `GetResponseCancellationTokenAsync` |
 | `IResponsesStreamProvider` | SSE event streaming (publish/subscribe) | `CreateEventPublisherAsync`, `SubscribeToEventsAsync` |
 
-The default in-memory provider implements all three interfaces. You can override **any subset** — the SDK falls back to the in-memory implementation for unregistered interfaces.
+The default in-memory provider implements all three interfaces. You can override **any subset** — the library falls back to the in-memory implementation for unregistered interfaces.
 
 ```csharp
 // Override only state persistence (e.g., use a database)
@@ -858,7 +858,7 @@ services.AddSingleton<IResponsesCancellationSignalProvider, MyProvider>();
 services.AddSingleton<IResponsesStreamProvider, MyProvider>();
 ```
 
-For multi-instance or durable scenarios, see [SDK Behavioural Specification — Persistence Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#persistence-contract) for the abstract provider contract, and [.NET Design — Provider Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md) for implementation details.
+For multi-instance or durable scenarios, see [Library Behavioural Specification — Persistence Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#persistence-contract) for the abstract provider contract, and [.NET Design — Provider Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md) for implementation details.
 
 ---
 
@@ -878,7 +878,7 @@ For multi-instance or durable scenarios, see [SDK Behavioural Specification — 
 
 ### Model Resolution
 
-The `model` field is optional on `CreateResponse`. When omitted, the SDK resolves it in priority order:
+The `model` field is optional on `CreateResponse`. When omitted, the library resolves it in priority order:
 
 1. **Request-level**: `request.Model` (from the JSON payload)
 2. **Server default**: `ResponsesServerOptions.DefaultModel`
@@ -893,14 +893,14 @@ services.AddResponsesServer(options =>
 
 ### Auto-Stamping
 
-The SDK automatically stamps output items with contextual metadata:
+The library automatically stamps output items with contextual metadata:
 
 - **`ResponseId`**: Every `OutputItem` gets its `ResponseId` set to the current response ID. If you set it explicitly in your handler, your value takes precedence.
 - **`AgentReference`**: When `CreateResponse.AgentReference` is set, it is propagated to every `OutputItem.AgentReference`. If you set it explicitly in your handler, your value takes precedence.
 
 This happens transparently — no handler code is needed.
 
-### SDK Identity Header
+### Library Identity Header
 
 The server automatically adds an `x-platform-server` identity header to all responses. To append custom identity information, use the server options:
 
@@ -920,16 +920,16 @@ The server emits OpenTelemetry-compatible spans for `POST /responses` requests. 
 ```csharp
 builder.Services.AddOpenTelemetry()
     .WithTracing(tracing => tracing
-        .AddSource("Azure.AI.AgentServer.Responses")  // SDK spans
+        .AddSource("Azure.AI.AgentServer.Responses")  // library spans
         .AddAspNetCoreInstrumentation()
         .AddOtlpExporter());
 ```
 
-Handler authors can create child activities using their own `ActivitySource` — they are automatically parented under the SDK's span via `Activity.Current` propagation.
+Handler authors can create child activities using their own `ActivitySource` — they are automatically parented under the library's span via `Activity.Current` propagation.
 
 #### Baggage Items
 
-The SDK sets baggage items on the activity for `POST /responses` requests. Handlers can read these from `Activity.Current`:
+The library sets baggage items on the activity for `POST /responses` requests. Handlers can read these from `Activity.Current`:
 
 ```csharp
 using System.Diagnostics;
@@ -956,7 +956,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 
 | Baggage Key | Description |
 |---|---|
-| `response.id` | The SDK-generated response identifier |
+| `response.id` | The library-generated response identifier |
 | `conversation.id` | Conversation ID from the request (if present) |
 | `streaming` | `"true"` or `"false"` — whether SSE streaming was requested |
 | `agent.name` | Agent name from `agent_reference` (if provided) |
@@ -968,7 +968,7 @@ Baggage items are propagated to child activities and downstream telemetry proces
 
 #### Customizing Tracing with `ResponsesActivitySource`
 
-All distributed tracing behaviour — tags, baggage, activity name — is encapsulated in the virtual method `ResponsesActivitySource.StartCreateResponseActivity`. The SDK registers a default instance via `TryAddSingleton`, so you can replace it entirely by registering your own subclass **before** calling `AddResponsesServer()`.
+All distributed tracing behaviour — tags, baggage, activity name — is encapsulated in the virtual method `ResponsesActivitySource.StartCreateResponseActivity`. The library registers a default instance via `TryAddSingleton`, so you can replace it entirely by registering your own subclass **before** calling `AddResponsesServer()`.
 
 ##### Composition pattern (recommended)
 
@@ -1037,7 +1037,7 @@ builder.Services.AddOpenTelemetry()
 
 If your subclass uses a different source name (via the `protected` constructor), listen for that name instead.
 
-See [SDK Behavioural Specification — Observability Requirements](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#observability-requirements) (S-043–S-045) for the full tracing contract.
+See [Library Behavioural Specification — Observability Requirements](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#observability-requirements) (S-043–S-045) for the full tracing contract.
 
 See [API Behaviour Contract — Distributed Tracing](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#distributed-tracing) for the full list of activity tags and baggage items.
 
@@ -1085,7 +1085,7 @@ See [SSE Keep-Alive (B28)](https://github.com/Azure/azure-sdk-for-net/blob/main/
 
 ### 1. Always Emit Created First, Terminal Last
 
-Every handler must yield `stream.EmitCreated()` followed by `stream.EmitInProgress()` as its first two events, and exactly one terminal event (`EmitCompleted`, `EmitFailed`, or `EmitIncomplete`) as its last. The SDK validates this ordering.
+Every handler must yield `stream.EmitCreated()` followed by `stream.EmitInProgress()` as its first two events, and exactly one terminal event (`EmitCompleted`, `EmitFailed`, or `EmitIncomplete`) as its last. The library validates this ordering.
 
 ### 2. Use Small, Frequent Deltas
 
@@ -1145,9 +1145,9 @@ builder.Services.AddSingleton<IResponseHandler, MyHandler>();
 builder.Services.AddScoped<IResponseHandler, MyStatefulHandler>();
 ```
 
-### 8. Let the SDK Handle Mode Negotiation
+### 8. Let the library Handle Mode Negotiation
 
-Never branch on `request.Stream` or `request.Background` in your handler. The SDK handles these concerns — your handler always produces the same event sequence regardless of mode.
+Never branch on `request.Stream` or `request.Background` in your handler. The library handles these concerns — your handler always produces the same event sequence regardless of mode.
 
 ---
 
@@ -1206,14 +1206,14 @@ catch (OperationCanceledException)
     yield return stream.EmitFailed(ResponseErrorCode.ServerError, "Cancelled");
 }
 
-// ✅ Let it propagate — the SDK handles it correctly
+// ✅ Let it propagate — the library handles it correctly
 // (just don't catch OperationCanceledException)
 ```
 
 ### Branching on Stream/Background Flags
 
 ```csharp
-// ❌ Don't do this — the SDK handles mode negotiation
+// ❌ Don't do this — the library handles mode negotiation
 if (request.Stream == true)
 {
     // streaming path
@@ -1232,7 +1232,7 @@ yield return stream.EmitCompleted();
 
 ### Omitting Output Items from Terminal Response (Raw Events)
 
-When emitting raw events (without `ResponseEventStream` builders), each `response.*` event **fully replaces** the SDK's tracked `Response` with the event's embedded `Response` ([Rule B37](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index)). If the terminal `response.completed` has empty output, accumulated `output_item.added/done` items are lost. Additionally, the handler **must** set the correct `Status` on the `Response` before yielding a terminal event — the SDK validates but never auto-sets terminal status.
+When emitting raw events (without `ResponseEventStream` builders), each `response.*` event **fully replaces** the library's tracked `Response` with the event's embedded `Response` ([Rule B37](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index)). If the terminal `response.completed` has empty output, accumulated `output_item.added/done` items are lost. Additionally, the handler **must** set the correct `Status` on the `Response` before yielding a terminal event — the library validates but never auto-sets terminal status.
 
 ```csharp
 // ❌ Terminal response has empty output — items accumulated via output_item.added are lost
@@ -1241,7 +1241,7 @@ yield return new ResponseCreatedEvent(0, response);
 yield return new ResponseOutputItemAddedEvent(0, 0, msg);
 yield return new ResponseCompletedEvent(0, response); // response.Output is still empty!
 
-// ❌ Status not set — SDK validates and emits response.failed
+// ❌ Status not set — library validates and emits response.failed
 var response = new Response(ctx.ResponseId, "test-model");
 yield return new ResponseCreatedEvent(0, response);
 yield return new ResponseCompletedEvent(0, response); // Status is still null!
@@ -1257,4 +1257,4 @@ completedResponse.SetCompleted();  // Sets Status, CompletedAt, OutputText
 yield return new ResponseCompletedEvent(0, completedResponse);
 ```
 
-**Note**: This only applies to raw event construction. When using `ResponseEventStream` builders (e.g., `stream.EmitCompleted()`), the SDK automatically includes all accumulated output items in the terminal response — no additional work is needed.
+**Note**: This only applies to raw event construction. When using `ResponseEventStream` builders (e.g., `stream.EmitCompleted()`), the library automatically includes all accumulated output items in the terminal response — no additional work is needed.

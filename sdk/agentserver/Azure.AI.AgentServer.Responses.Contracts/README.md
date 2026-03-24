@@ -41,7 +41,7 @@ Model serialization uses `System.ClientModel` conventions. Ensure you use `Model
 
 ## Next steps
 
-- [Azure.AI.AgentServer.Responses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/README.md) — The SDK that builds on these contracts
+- [Azure.AI.AgentServer.Responses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/README.md) — The server library that builds on these contracts
 
 ## Contributing
 

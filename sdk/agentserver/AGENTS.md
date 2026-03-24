@@ -9,11 +9,11 @@
 
 These principles govern **all** work under `sdk/agentserver/`, across every protocol and project. They are the **supreme governing rules** — they supersede informal practices and ad-hoc decisions. When principles conflict, resolve in this priority order: **Protocol Fidelity > Developer Experience > Minimal API Surface > Simplicity**.
 
-### I. SDK-First (Library, Never Application)
+### I. Library-First (Library, Never Application)
 
 - This project produces **class libraries** distributed via NuGet. It is never a standalone executable.
 - Every public type must be designed for consumption by external developers building their own ASP.NET Core hosts.
-- The SDK owns protocol concerns (request/response models, routing, serialization, error shapes). The consumer owns business logic (tool implementations, agent behaviour).
+- The library owns protocol concerns (request/response models, routing, serialization, error shapes). The consumer owns business logic (tool implementations, agent behaviour).
 - No global state, static mutable singletons, or assumptions about the host process.
 
 ### II. Developer Experience Above All
@@ -40,14 +40,14 @@ These principles govern **all** work under `sdk/agentserver/`, across every prot
 
 ### V. Protocol Fidelity
 
-- Each protocol SDK must faithfully implement its specification. Deviations from the spec are bugs.
+- Each protocol library must faithfully implement its specification. Deviations from the spec are bugs.
 - API models (request/response shapes, error codes, headers) must match the specification exactly.
 - The authoritative contract documents win over the code. Fix the code, not the contract. Each protocol's AGENTS.md defines its authoritative documents.
 
 ### VI. Async-All-the-Way
 
-- The SDK is **async-only**. All public service methods are asynchronous.
-- **AZC0004 exemption**: Azure SDK rule AZC0004 requires both sync and async variants for HTTP/REST client libraries. This SDK is exempt because it is a **server-side hosting library** running on the inherently async ASP.NET Core pipeline (similar to the AMQP exemption for Event Hubs/Service Bus). If an analyzer flags AZC0004, suppress it with justification in `AssemblyInfo.cs`.
+- The library is **async-only**. All public service methods are asynchronous.
+- **AZC0004 exemption**: Azure SDK rule AZC0004 requires both sync and async variants for HTTP/REST client libraries. This library is exempt because it is a **server-side hosting library** running on the inherently async ASP.NET Core pipeline (similar to the AMQP exemption for Event Hubs/Service Bus). If an analyzer flags AZC0004, suppress it with justification in `AssemblyInfo.cs`.
 - All async methods MUST accept `CancellationToken cancellationToken = default` as the last parameter.
 - Never block on async code (`Task.Result`, `.Wait()`, `.GetAwaiter().GetResult()`).
 
@@ -58,7 +58,7 @@ These principles govern **all** work under `sdk/agentserver/`, across every prot
 
 ### VIII. Designed for Testability & Mocking
 
-- Consumers must be able to mock SDK types in their own test suites without calling real services.
+- Consumers must be able to mock library types in their own test suites without calling real services.
 - Provide `protected` parameterless constructors on public types to enable mocking frameworks.
 - Make all public service methods `virtual` so they can be overridden in mocks.
 - Provide a static model factory for constructing model types that have no public constructors.
@@ -84,7 +84,7 @@ These principles govern **all** work under `sdk/agentserver/`, across every prot
 | Project | Path | Description |
 |---|---|---|
 | **Responses.Contracts** | `Azure.AI.AgentServer.Responses.Contracts/src/` | TypeSpec-generated model contracts for Responses protocol |
-| **Responses** | `Azure.AI.AgentServer.Responses/src/` | Responses protocol SDK (hosting extensions, streaming, handlers) |
+| **Responses** | `Azure.AI.AgentServer.Responses/src/` | Responses protocol library (hosting extensions, streaming, handlers) |
 | **Responses Tests** | `Azure.AI.AgentServer.Responses/tests/` | NUnit tests for Responses protocol |
 
 > **Out of scope**: `Azure.AI.AgentServer.Core`, `Azure.AI.AgentServer.Contracts`, and `Azure.AI.AgentServer.AgentFramework` are legacy projects slated for deprecation. Do not invest effort in them.
@@ -111,7 +111,7 @@ Do **not** duplicate repo-wide rules here. Instead, consult these canonical sour
 | Code style (StyleCop) | [eng/stylecop.json](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/stylecop.json) |
 | Code analysis rules | [eng/CodeAnalysis.ruleset](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/CodeAnalysis.ruleset) |
 | Target frameworks (`RequiredTargetFrameworks`, etc.) | [eng/Directory.Build.Common.props](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/Directory.Build.Common.props) |
-| SDK project template & conventions | [sdk/template/Azure.Template/](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) |
+| Library project template & conventions | [sdk/template/Azure.Template/](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) |
 | Central package management | [eng/centralpackagemanagement/README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/centralpackagemanagement/README.md) |
 | Pre-commit checks (`dotnet format`, API export, snippets) | [.github/skills/pre-commit-checks/SKILL.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/pre-commit-checks/SKILL.md) |
 | Test framework (recorded tests, mocking) | [sdk/core/Azure.Core.TestFramework/README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md) |
@@ -171,7 +171,7 @@ in `tsp-location.yaml`. There is no standalone `package.json` in this directory.
 - Add NuGet dependencies without justification (see Principle III).
 - Skip tests — TDD is non-negotiable (Principle IV).
 - Skip E2E protocol tests for API behaviour changes (Principle IV).
-- Create standalone executable projects — this is a library SDK (Principle I).
+- Create standalone executable projects — this is a library (Principle I).
 - Use `Task.Result`, `.Wait()`, or `.GetAwaiter().GetResult()` (Principle VI).
 - Log credentials, tokens, keys, or PII (Principle IX).
 - Modify contract docs to match code — fix the code instead (Principle V).
@@ -180,7 +180,7 @@ in `tsp-location.yaml`. There is no standalone `package.json` in this directory.
 
 ## 5. Governance
 
-- This `AGENTS.md` (including Section 0: Core Principles) is the **supreme governing document** for the AgentServer SDK. It supersedes informal practices and ad-hoc decisions.
+- This `AGENTS.md` (including Section 0: Core Principles) is the **supreme governing document** for the AgentServer library. It supersedes informal practices and ad-hoc decisions.
 - Per-protocol `AGENTS.md` files inherit and extend these principles for their specific protocol. They may add protocol-specific rules but may **not** weaken or override the core principles.
 - All PRs and code reviews must verify compliance with these principles.
 - Amendments require: (1) written proposal with rationale, (2) update to any affected docs for consistency.

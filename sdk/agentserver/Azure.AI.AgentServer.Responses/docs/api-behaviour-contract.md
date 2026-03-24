@@ -300,7 +300,7 @@ The response is a paginated list containing:
 
 #### Input Item Auto-Persistence
 
-Input items are automatically resolved and persisted by the SDK during response creation:
+Input items are automatically resolved and persisted by the library during response creation:
 - **Non-background mode**: Items are resolved and stored when the response reaches a terminal state.
 - **Background mode**: Items are resolved and stored at `response.created` time, before processing completes.
 - Items include both the current request's inline input and history items resolved from `previous_response_id` or conversation context.
@@ -626,7 +626,7 @@ These headers ensure correct behaviour across reverse proxies, load balancers, a
 
 ## Distributed Tracing
 
-The SDK emits OpenTelemetry-compatible `Activity` spans for `POST /responses` requests, tagged with [GenAI semantic conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/) and additional SDK-specific attributes.
+The library emits OpenTelemetry-compatible `Activity` spans for `POST /responses` requests, tagged with [GenAI semantic conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/) and additional library-specific attributes.
 
 ### Activity Display Name
 
@@ -638,10 +638,10 @@ These tags align with the OpenTelemetry GenAI semantic conventions:
 
 | Tag | Value | Description |
 |---|---|---|
-| `gen_ai.response.id` | Response ID (`resp_*`) | The SDK-generated response identifier |
+| `gen_ai.response.id` | Response ID (`resp_*`) | The library-generated response identifier |
 | `gen_ai.agent.name` | Agent name from request | The agent name, if provided via `agent_reference` |
 | `gen_ai.agent.id` | `{name}:{version}` | Composite agent identifier combining name and version from `agent_reference` |
-| `gen_ai.provider.name` | `"azure.ai.responses"` | Fixed provider identifier for this SDK |
+| `gen_ai.provider.name` | `"azure.ai.responses"` | Fixed provider identifier for this library |
 | `service.name` | `"azure.ai.responses"` | Service name for trace grouping |
 
 ### Additional OTEL Tags
@@ -660,11 +660,11 @@ The `X-Request-Id` HTTP request header, if present, is propagated as the `reques
 
 ### Baggage Items
 
-The SDK sets the following baggage items on the activity, making them available to downstream telemetry processors and child activities:
+The library sets the following baggage items on the activity, making them available to downstream telemetry processors and child activities:
 
 | Baggage Key | Value | Description |
 |---|---|---|
-| `response.id` | Response ID | The SDK-generated response identifier |
+| `response.id` | Response ID | The library-generated response identifier |
 | `conversation.id` | Conversation ID | From the request, if present |
 | `streaming` | `"true"` or `"false"` | Whether SSE streaming was requested |
 | `agent.name` | Agent name | From `agent_reference`, if provided |
@@ -706,7 +706,7 @@ Quick-reference index of all rules:
 | B22 | Model is optional | `model` can be omitted from the request. Resolution: `request.model → default_model → ""`. The resolved model is propagated to the `Response.model` field |
 | B23 | Snapshot semantics | SSE events embed immutable point-in-time snapshots of the `Response` at emission time. GET returns a snapshot of the current state. Replay events reflect emission-time state, not current state |
 | B24 | Shutdown signal | Host shutdown causes in-flight responses to transition to `failed` |
-| B25 | ~~Pluggable provider~~ | Moved to [SDK Behavioural Specification](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#persistence-contract) |
+| B25 | ~~Pluggable provider~~ | Moved to [Library Behavioural Specification](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#persistence-contract) |
 | B26 | Terminal SSE events | Exactly one terminal event per lifecycle: `response.completed`, `response.failed`, `response.incomplete`, or standalone `error` (pre-creation). No `[DONE]` sentinel |
 | B27 | SSE wire format | Each event: `event: {type}\ndata: {json}\n\n`. No `id:` line. `sequence_number` in JSON payload |
 | B28 | SSE keep-alive | Periodic `: keep-alive\n\n` comments, disabled by default. Opt-in via server configuration |
@@ -715,7 +715,7 @@ Quick-reference index of all rules:
 | B31 | Required response fields | Every `Response` has `id`, `object`, `created_at`, `status`, `output[]`, `model`. Terminal status invariants per B6 |
 | B32 | Terminal event guarantee | Every response lifecycle produces exactly one terminal event. If processing ends without one, the API returns `response.failed` |
 | B33 | Token usage | Terminal events include optional `usage` object with input/output/total token counts |
-| B34 | ~~Distributed tracing~~ | Moved to [SDK Behavioural Specification](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#observability-requirements) |
+| B34 | ~~Distributed tracing~~ | Moved to [Library Behavioural Specification](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#observability-requirements) |
 | B35 | Event stream replay availability | Each SSE event retained for a minimum of 10 minutes from emission (per-event TTL). JSON GET unaffected by replay buffer eviction |
-| B36 | ~~Response persistence timing~~ | Moved to [SDK Behavioural Specification](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#persistence-contract) |
+| B36 | ~~Response persistence timing~~ | Moved to [Library Behavioural Specification](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#persistence-contract) |
 | B37 | Response state in SSE events | Each `response.*` event defines the authoritative `Response` state. `agent_reference` from the request is guaranteed on every response. Terminal events always have matching `status`. The terminal event's `output` array is the definitive output list |

@@ -22,7 +22,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ### Configure the server
 
-Register the SDK services and map the Responses API endpoints in your `Program.cs`:
+Register the library services and map the Responses API endpoints in your `Program.cs`:
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
@@ -39,7 +39,7 @@ app.Run();
 
 ### IResponseHandler
 
-The core abstraction you implement. The SDK calls `CreateAsync` for each incoming request and delivers the returned `IAsyncEnumerable<ResponseStreamEvent>` to clients via SSE:
+The core abstraction you implement. The library calls `CreateAsync` for each incoming request and delivers the returned `IAsyncEnumerable<ResponseStreamEvent>` to clients via SSE:
 
 ```csharp
 public class EchoHandler : IResponseHandler
@@ -79,13 +79,13 @@ Manages `sequenceNumber`, `outputIndex`, `contentIndex`, `itemId`, and the full 
 
 ### Response Lifecycle
 
-The SDK orchestrates the complete response lifecycle: `created` → `in_progress` → `completed` (or `failed` / `cancelled`). Cancellation, error handling, and terminal event guarantees are all managed automatically.
+The library orchestrates the complete response lifecycle: `created` → `in_progress` → `completed` (or `failed` / `cancelled`). Cancellation, error handling, and terminal event guarantees are all managed automatically.
 
 For detailed handler implementation guidance, see [docs/handler-implementation-guide.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md).
 
 ### Thread safety
 
-All SDK service instances registered via `AddResponsesServer()` are thread-safe. Handler instances are scoped per-request.
+All service instances registered via `AddResponsesServer()` are thread-safe. Handler instances are scoped per-request.
 
 
 
@@ -103,7 +103,7 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 ### Logging
 
-The SDK emits OpenTelemetry traces via `Azure.AI.AgentServer.Responses` activity source. Enable logging in your ASP.NET Core application to diagnose issues.
+The library emits OpenTelemetry traces via `Azure.AI.AgentServer.Responses` activity source. Enable logging in your ASP.NET Core application to diagnose issues.
 
 ## Next steps
 

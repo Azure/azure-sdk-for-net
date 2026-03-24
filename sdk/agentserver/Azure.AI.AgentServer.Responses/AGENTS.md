@@ -7,14 +7,14 @@
 
 ## 1. Contract Compliance (MANDATORY)
 
-The Responses SDK has three **authoritative contract documents** that define all required behaviour. Any code change to this project **must** be verified against these contracts before committing.
+The Responses library has three **authoritative contract documents** that define all required behaviour. Any code change to this project **must** be verified against these contracts before committing.
 
 ### Authoritative trio (read before ANY code change)
 
 | Document | Path | Defines |
 |----------|------|---------|
 | **API Behaviour Contract** | `docs/api-behaviour-contract.md` | Observable HTTP behaviour, endpoint matrices, error shapes, SSE contract, behavioural rules (B1–B37) |
-| **SDK Behaviour Spec** | `docs/sdk-behaviour-spec.md` | Language-agnostic SDK requirements: event processing, state management, terminal authority, cancellation, persistence, observability (S-001–S-046) |
+| **Library Behaviour Spec** | `docs/library-behaviour-spec.md` | Language-agnostic library requirements: event processing, state management, terminal authority, cancellation, persistence, observability (S-001–S-046) |
 | **Handler Implementation Guide** | `docs/handler-implementation-guide.md` | Handler contract, builder pattern, cancellation, error handling, configuration |
 
 ### Supporting design docs (.NET-specific)
@@ -29,13 +29,13 @@ The Responses SDK has three **authoritative contract documents** that define all
 ### Compliance workflow
 
 1. **Before implementing**: Read the relevant sections of the authoritative trio for the feature/endpoint being changed.
-2. **Key rules to check**: Endpoint behaviour matrices (B1–B37), SDK processing rules (S-001–S-046), terminal event authority (S-018–S-022), cancellation categories (S-023–S-026), persistence timing (S-034–S-036).
+2. **Key rules to check**: Endpoint behaviour matrices (B1–B37), library processing rules (S-001–S-046), terminal event authority (S-018–S-022), cancellation categories (S-023–S-026), persistence timing (S-034–S-036).
 3. **After implementing**: Audit the change against the contracts. Pay special attention to:
    - **B16**: Non-background in-flight responses are NOT findable (GET/DELETE/Cancel → 404).
    - **B2**: SSE replay requires `background=true` AND `stream=true` AND `store=true`.
-   - **S-022**: SDK MUST NOT emit `response.incomplete` (handler-driven only).
+   - **S-022**: The library MUST NOT emit `response.incomplete` (handler-driven only).
    - **S-036**: Non-background cancelled responses are ephemeral (not persisted).
-   - **S-019**: Cancellation winddown — SDK is sole authority on terminal event.
+   - **S-019**: Cancellation winddown — the library is sole authority on terminal event.
 4. **Tests**: Any behavioural change MUST include protocol tests in `tests/Protocol/`. Unit tests alone are insufficient.
 5. **If in doubt**: The contract document wins over the code. Fix the code, not the contract.
 
@@ -93,5 +93,5 @@ Integration follows standard ASP.NET Core conventions:
 
 - `IServiceCollection` extensions for registration: `AddResponsesServer()`
 - `IEndpointRouteBuilder` extensions for routing: `MapResponsesServer()`
-- The SDK owns protocol concerns (request/response models, routing, serialization, error shapes)
+- The library owns protocol concerns (request/response models, routing, serialization, error shapes)
 - The consumer owns business logic (tool implementations, agent behaviour via `IResponseHandler`)

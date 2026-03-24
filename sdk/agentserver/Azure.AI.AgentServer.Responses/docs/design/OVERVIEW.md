@@ -1,7 +1,7 @@
-# .NET SDK Design Documentation
+# .NET Library Design Documentation
 
-> .NET-specific implementation details for SDK contributors and maintainers.
-> For language-agnostic SDK behavioural rules, see [SDK Behavioural Specification](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md).
+> .NET-specific implementation details for library contributors and maintainers.
+> For language-agnostic library behavioural rules, see [Library Behavioural Specification](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md).
 
 ---
 
