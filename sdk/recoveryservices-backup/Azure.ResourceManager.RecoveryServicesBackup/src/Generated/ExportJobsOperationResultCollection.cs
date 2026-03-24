@@ -300,43 +300,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ExportJobsOperationResultResource>> GetIfExistsAsync(string vaultName, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = _exportJobsOperationResultsClientDiagnostics.CreateScope("ExportJobsOperationResultCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _exportJobsOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<OperationResultInfoBaseResource> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OperationResultInfoBaseResource.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OperationResultInfoBaseResource)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
-                if (response.Value == null)
-                {
-                    return new NoValueResponse<ExportJobsOperationResultResource>(response.GetRawResponse());
-                }
-                return Response.FromValue(new ExportJobsOperationResultResource(Client, ExportJobsOperationResultResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId)), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -363,43 +327,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ExportJobsOperationResultResource> GetIfExists(string vaultName, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = _exportJobsOperationResultsClientDiagnostics.CreateScope("ExportJobsOperationResultCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _exportJobsOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<OperationResultInfoBaseResource> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OperationResultInfoBaseResource.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OperationResultInfoBaseResource)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
-                if (response.Value == null)
-                {
-                    return new NoValueResponse<ExportJobsOperationResultResource>(response.GetRawResponse());
-                }
-                return Response.FromValue(new ExportJobsOperationResultResource(Client, ExportJobsOperationResultResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId)), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotImplementedException();
         }
     }
 }

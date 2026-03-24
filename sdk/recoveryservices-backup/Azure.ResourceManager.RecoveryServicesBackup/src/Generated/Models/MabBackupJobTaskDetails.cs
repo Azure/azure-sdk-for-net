@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MabBackupJobTaskDetails"/>. </summary>
-        public MabBackupJobTaskDetails()
+        internal MabBackupJobTaskDetails()
         {
         }
 
@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> The task display name. </summary>
-        public string TaskId { get; set; }
+        public string TaskId { get; }
 
         /// <summary> The start time. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartOn { get; }
 
         /// <summary> The end time. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndOn { get; }
 
         /// <summary> Time elapsed for task. </summary>
-        public TimeSpan? Duration { get; set; }
+        public TimeSpan? Duration { get; }
 
         /// <summary> The status. </summary>
-        public string Status { get; set; }
+        public string Status { get; }
     }
 }

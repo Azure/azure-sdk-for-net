@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class VmWorkloadProtectableItem : WorkloadProtectableItem
     {
         /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectableItem"/>. </summary>
-        public VmWorkloadProtectableItem() : base("AzureVmWorkloadProtectableItem")
+        internal VmWorkloadProtectableItem() : base("AzureVmWorkloadProtectableItem")
         {
         }
 
@@ -57,33 +57,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Name for instance or AG. </summary>
-        public string ParentName { get; set; }
+        public string ParentName { get; }
 
         /// <summary>
         /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
         /// Only Applicable for data bases where the parent would be either Instance or a SQL AG.
         /// </summary>
-        public string ParentUniqueName { get; set; }
+        public string ParentUniqueName { get; }
 
         /// <summary> Host/Cluster Name for instance or AG. </summary>
-        public string ServerName { get; set; }
+        public string ServerName { get; }
 
         /// <summary> Indicates if protectable item is auto-protectable. </summary>
-        public bool? IsAutoProtectable { get; set; }
+        public bool? IsAutoProtectable { get; }
 
         /// <summary> Indicates if protectable item is auto-protected. </summary>
-        public bool? IsAutoProtected { get; set; }
+        public bool? IsAutoProtected { get; }
 
         /// <summary> For instance or AG, indicates number of DB's present. </summary>
-        public int? SubInquiredItemCount { get; set; }
+        public int? SubInquiredItemCount { get; }
 
         /// <summary> For instance or AG, indicates number of DB's to be protected. </summary>
-        public int? SubProtectableItemCount { get; set; }
+        public int? SubProtectableItemCount { get; }
 
         /// <summary> Pre-backup validation for protectable objects. </summary>
-        public PreBackupValidation PreBackupValidation { get; set; }
+        public PreBackupValidation PreBackupValidation { get; }
 
         /// <summary> Indicates if item is protectable. </summary>
-        public bool? IsProtectable { get; set; }
+        public bool? IsProtectable { get; }
     }
 }

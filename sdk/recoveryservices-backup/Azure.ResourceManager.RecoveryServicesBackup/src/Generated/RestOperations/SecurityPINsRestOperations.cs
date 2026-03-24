@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/backupSecurityPIN", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 request.Headers.SetValue("x-ms-authorization-auxiliary", xMsAuthorizationAuxiliary);
             }
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }

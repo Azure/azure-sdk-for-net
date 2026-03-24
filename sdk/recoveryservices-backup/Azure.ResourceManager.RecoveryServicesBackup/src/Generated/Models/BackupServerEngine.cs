@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class BackupServerEngine : BackupGenericEngine
     {
         /// <summary> Initializes a new instance of <see cref="BackupServerEngine"/>. </summary>
-        public BackupServerEngine() : base(BackupEngineType.AzureBackupServerEngine)
+        internal BackupServerEngine() : base(BackupEngineType.AzureBackupServerEngine)
         {
         }
 

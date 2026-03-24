@@ -262,6 +262,8 @@ namespace Azure.Compute.Batch
     public partial class BatchClient
     {
         protected BatchClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public BatchClient(Azure.Compute.Batch.BatchClientSettings settings) { }
         public BatchClient(System.Uri endpoint, Azure.AzureNamedKeyCredential credential) { }
         public BatchClient(System.Uri endpoint, Azure.AzureNamedKeyCredential credential, Azure.Compute.Batch.BatchClientOptions options) { }
         public BatchClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -529,6 +531,14 @@ namespace Azure.Compute.Batch
         {
             V2025_06_01 = 1,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class BatchClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public BatchClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Compute.Batch.BatchClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class BatchContainerConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchContainerConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchContainerConfiguration>
     {

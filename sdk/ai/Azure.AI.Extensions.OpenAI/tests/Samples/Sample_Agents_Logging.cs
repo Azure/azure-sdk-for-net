@@ -86,14 +86,31 @@ public class LoggingPolicy : PipelinePolicy
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         ProcessMessage(message); // for request
-        ProcessNext(message, pipeline, currentIndex);
+        System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        try
+        {
+            ProcessNext(message, pipeline, currentIndex);
+        }
+        finally
+        {
+            Console.WriteLine($"Response time {stopwatch.Elapsed.TotalMilliseconds} ms");
+        }
         ProcessMessage(message); // for response
     }
 
     public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         ProcessMessage(message); // for request
-        await ProcessNextAsync(message, pipeline, currentIndex);
+        DateTime start = DateTime.Now;
+        System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        try
+        {
+            await ProcessNextAsync(message, pipeline, currentIndex);
+        }
+        finally
+        {
+            Console.WriteLine($"Response time {stopwatch.Elapsed.TotalMilliseconds} ms");
+        }
         ProcessMessage(message); // for response
     }
 }
@@ -121,7 +138,7 @@ public class SampleAgentsLogging : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
         #endregion
         #region Snippet:Sample_CreateAgent_AgentsLogging_Async
-        PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+        DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
@@ -163,7 +180,7 @@ public class SampleAgentsLogging : ProjectsOpenAITestBase
         options.AddPolicy(new LoggingPolicy(), PipelinePosition.PerCall);
         AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
         #region Snippet:Sample_CreateAgent_AgentsLogging_Sync
-        PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+        DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };

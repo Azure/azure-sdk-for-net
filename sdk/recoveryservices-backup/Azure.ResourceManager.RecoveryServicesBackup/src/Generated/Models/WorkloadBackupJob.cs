@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadBackupJob : BackupGenericJob
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadBackupJob"/>. </summary>
-        public WorkloadBackupJob() : base("AzureWorkloadJob")
+        internal WorkloadBackupJob() : base("AzureWorkloadJob")
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
             ErrorDetails = new ChangeTrackingList<WorkloadErrorInfo>();
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Workload type of the job. </summary>
-        public string WorkloadType { get; set; }
+        public string WorkloadType { get; }
 
         /// <summary> Time elapsed during the execution of this job. </summary>
-        public TimeSpan? Duration { get; set; }
+        public TimeSpan? Duration { get; }
 
         /// <summary> Gets or sets the state/actions applicable on this job like cancel/retry. </summary>
         public IList<JobSupportedAction> ActionsInfo { get; }
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<WorkloadErrorInfo> ErrorDetails { get; }
 
         /// <summary> Additional information about the job. </summary>
-        public WorkloadBackupJobExtendedInfo ExtendedInfo { get; set; }
+        public WorkloadBackupJobExtendedInfo ExtendedInfo { get; }
     }
 }

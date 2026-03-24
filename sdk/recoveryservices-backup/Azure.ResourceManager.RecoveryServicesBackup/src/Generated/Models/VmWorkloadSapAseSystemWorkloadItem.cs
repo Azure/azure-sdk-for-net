@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class VmWorkloadSapAseSystemWorkloadItem : VmWorkloadItem
     {
         /// <summary> Initializes a new instance of <see cref="VmWorkloadSapAseSystemWorkloadItem"/>. </summary>
-        public VmWorkloadSapAseSystemWorkloadItem()
+        internal VmWorkloadSapAseSystemWorkloadItem()
         {
         }
 

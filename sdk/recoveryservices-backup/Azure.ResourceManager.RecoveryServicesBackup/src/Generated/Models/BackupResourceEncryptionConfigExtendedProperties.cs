@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class BackupResourceEncryptionConfigExtendedProperties : BackupResourceEncryptionConfig
     {
         /// <summary> Initializes a new instance of <see cref="BackupResourceEncryptionConfigExtendedProperties"/>. </summary>
-        public BackupResourceEncryptionConfigExtendedProperties()
+        internal BackupResourceEncryptionConfigExtendedProperties()
         {
         }
 
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> User Assigned Identity Id. </summary>
-        public string UserAssignedIdentity { get; set; }
+        public string UserAssignedIdentity { get; }
 
         /// <summary> bool to indicate whether to use system Assigned Identity or not. </summary>
-        public bool? UseSystemAssignedIdentity { get; set; }
+        public bool? UseSystemAssignedIdentity { get; }
     }
 }

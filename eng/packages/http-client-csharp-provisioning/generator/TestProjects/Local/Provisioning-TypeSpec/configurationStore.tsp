@@ -51,6 +51,13 @@ model ConfigurationStoreProperties {
 
   /** The create mode for the configuration store. */
   createMode?: ConfigurationStoreCreateMode;
+
+  /** The linked resources of the configuration store. */
+  linkedResources?: LinkedResource[];
+}
+
+/** A linked resource reference. */
+model LinkedResource {
 }
 
 /** The sku of a configuration store. */

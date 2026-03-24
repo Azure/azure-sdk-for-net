@@ -152,15 +152,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             return new JobDetailResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="JobOperationResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobOperationResultResource"/> object. </returns>
-        public virtual JobOperationResultResource GetJobOperationResultResource(ResourceIdentifier id)
-        {
-            JobOperationResultResource.ValidateResourceId(id);
-            return new JobOperationResultResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="ExportJobsOperationResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExportJobsOperationResultResource"/> object. </returns>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class MabBackupJob : BackupGenericJob
     {
         /// <summary> Initializes a new instance of <see cref="MabBackupJob"/>. </summary>
-        public MabBackupJob() : base("MabJob")
+        internal MabBackupJob() : base("MabJob")
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
             ErrorDetails = new ChangeTrackingList<MabErrorInfo>();
@@ -50,24 +50,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Time taken by job to run. </summary>
-        public TimeSpan? Duration { get; set; }
+        public TimeSpan? Duration { get; }
 
         /// <summary> The state/actions applicable on jobs like cancel/retry. </summary>
         public IList<JobSupportedAction> ActionsInfo { get; }
 
         /// <summary> Name of server protecting the DS. </summary>
-        public string MabServerName { get; set; }
+        public string MabServerName { get; }
 
         /// <summary> Server type of MAB container. </summary>
-        public MabServerType? MabServerType { get; set; }
+        public MabServerType? MabServerType { get; }
 
         /// <summary> Workload type of backup item. </summary>
-        public BackupWorkloadType? WorkloadType { get; set; }
+        public BackupWorkloadType? WorkloadType { get; }
 
         /// <summary> The errors. </summary>
         public IList<MabErrorInfo> ErrorDetails { get; }
 
         /// <summary> Additional information on the job. </summary>
-        public MabBackupJobExtendedInfo ExtendedInfo { get; set; }
+        public MabBackupJobExtendedInfo ExtendedInfo { get; }
     }
 }

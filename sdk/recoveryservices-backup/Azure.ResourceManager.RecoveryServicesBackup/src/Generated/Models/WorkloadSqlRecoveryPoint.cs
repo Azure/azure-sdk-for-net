@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadSqlRecoveryPoint : WorkloadRecoveryPoint
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRecoveryPoint"/>. </summary>
-        public WorkloadSqlRecoveryPoint()
+        internal WorkloadSqlRecoveryPoint()
         {
         }
 
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// When a specific recovery point is accessed using GetRecoveryPoint
         /// Or when ListRecoveryPoints is called for Log RP only with ExtendedInfo query filter
         /// </summary>
-        public WorkloadSqlRecoveryPointExtendedInfo ExtendedInfo { get; set; }
+        public WorkloadSqlRecoveryPointExtendedInfo ExtendedInfo { get; }
     }
 }

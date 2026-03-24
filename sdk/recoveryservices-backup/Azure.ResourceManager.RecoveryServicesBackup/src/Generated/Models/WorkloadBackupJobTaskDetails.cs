@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadBackupJobTaskDetails"/>. </summary>
-        public WorkloadBackupJobTaskDetails()
+        internal WorkloadBackupJobTaskDetails()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> The task display name. </summary>
-        public string TaskId { get; set; }
+        public string TaskId { get; }
 
         /// <summary> The status. </summary>
-        public string Status { get; set; }
+        public string Status { get; }
     }
 }

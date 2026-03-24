@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupResourceEncryptionConfig"/>. </summary>
-        public BackupResourceEncryptionConfig()
+        internal BackupResourceEncryptionConfig()
         {
         }
 
@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Encryption At Rest Type. </summary>
-        public BackupEncryptionAtRestType? EncryptionAtRestType { get; set; }
+        public BackupEncryptionAtRestType? EncryptionAtRestType { get; }
 
         /// <summary> Key Vault Key URI. </summary>
-        public string KeyUri { get; set; }
+        public string KeyUri { get; }
 
         /// <summary> Key Vault Subscription Id. </summary>
-        public string SubscriptionId { get; set; }
+        public string SubscriptionId { get; }
 
-        /// <summary> Gets or sets the LastUpdateStatus. </summary>
-        public LastUpdateStatus? LastUpdateStatus { get; set; }
+        /// <summary> Gets the LastUpdateStatus. </summary>
+        public LastUpdateStatus? LastUpdateStatus { get; }
 
-        /// <summary> Gets or sets the InfrastructureEncryptionState. </summary>
-        public InfrastructureEncryptionState? InfrastructureEncryptionState { get; set; }
+        /// <summary> Gets the InfrastructureEncryptionState. </summary>
+        public InfrastructureEncryptionState? InfrastructureEncryptionState { get; }
     }
 }

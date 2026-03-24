@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class DpmContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of <see cref="DpmContainer"/>. </summary>
-        public DpmContainer() : base(ProtectableContainerType.DPMContainer)
+        public DpmContainer()
         {
             DpmServers = new ChangeTrackingList<string>();
         }

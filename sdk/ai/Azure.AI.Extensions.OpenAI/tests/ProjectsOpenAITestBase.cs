@@ -12,7 +12,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Azure.AI.Projects;
-using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Extensions.OpenAI.Tests.Utils;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;

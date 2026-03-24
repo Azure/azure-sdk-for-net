@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadBackupJobExtendedInfo"/>. </summary>
-        public WorkloadBackupJobExtendedInfo()
+        internal WorkloadBackupJobExtendedInfo()
         {
             TasksList = new ChangeTrackingList<WorkloadBackupJobTaskDetails>();
             PropertyBag = new ChangeTrackingDictionary<string, string>();
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IDictionary<string, string> PropertyBag { get; }
 
         /// <summary> Non localized error message on job execution. </summary>
-        public string DynamicErrorMessage { get; set; }
+        public string DynamicErrorMessage { get; }
     }
 }

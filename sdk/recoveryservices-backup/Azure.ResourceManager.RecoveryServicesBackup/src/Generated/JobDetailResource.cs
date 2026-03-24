@@ -283,38 +283,5 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 throw;
             }
         }
-
-        /// <summary> Gets a collection of JobOperationResults in the <see cref="JobDetailResource"/>. </summary>
-        /// <returns> An object representing collection of JobOperationResults and their operations over a JobOperationResultResource. </returns>
-        public virtual JobOperationResultCollection GetJobOperationResults()
-        {
-            return GetCachedClient(client => new JobOperationResultCollection(client, Id));
-        }
-
-        /// <summary> Fetches the result of any operation. </summary>
-        /// <param name="operationId"> The name of the JobResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response> GetJobOperationResultAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetJobOperationResults().GetAsync(operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Fetches the result of any operation. </summary>
-        /// <param name="operationId"> The name of the JobResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response GetJobOperationResult(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetJobOperationResults().Get(operationId, cancellationToken);
-        }
     }
 }

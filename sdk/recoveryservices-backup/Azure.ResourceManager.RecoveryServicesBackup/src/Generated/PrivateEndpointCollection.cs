@@ -288,42 +288,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PrivateEndpointResource>> GetIfExistsAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointRestClient.CreateGetOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<OperationStatus> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OperationStatus.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OperationStatus)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
-                if (response.Value == null)
-                {
-                    return new NoValueResponse<PrivateEndpointResource>(response.GetRawResponse());
-                }
-                return Response.FromValue(new PrivateEndpointResource(Client, PrivateEndpointResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId)), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -349,42 +314,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PrivateEndpointResource> GetIfExists(string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointRestClient.CreateGetOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<OperationStatus> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OperationStatus.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OperationStatus)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
-                if (response.Value == null)
-                {
-                    return new NoValueResponse<PrivateEndpointResource>(response.GetRawResponse());
-                }
-                return Response.FromValue(new PrivateEndpointResource(Client, PrivateEndpointResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId)), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotImplementedException();
         }
     }
 }

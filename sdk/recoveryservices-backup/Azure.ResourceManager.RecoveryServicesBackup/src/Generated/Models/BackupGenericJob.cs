@@ -50,25 +50,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Friendly name of the entity on which the current job is executing. </summary>
-        public string EntityFriendlyName { get; set; }
+        public string EntityFriendlyName { get; }
 
         /// <summary> Backup management type to execute the current job. </summary>
-        public BackupManagementType? BackupManagementType { get; set; }
+        public BackupManagementType? BackupManagementType { get; }
 
         /// <summary> The operation name. </summary>
-        public string Operation { get; set; }
+        public string Operation { get; }
 
         /// <summary> Job status. </summary>
-        public string Status { get; set; }
+        public string Status { get; }
 
         /// <summary> The start time. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartOn { get; }
 
         /// <summary> The end time. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndOn { get; }
 
         /// <summary> ActivityId of job. </summary>
-        public string ActivityId { get; set; }
+        public string ActivityId { get; }
 
         /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
         internal string JobType { get; set; }

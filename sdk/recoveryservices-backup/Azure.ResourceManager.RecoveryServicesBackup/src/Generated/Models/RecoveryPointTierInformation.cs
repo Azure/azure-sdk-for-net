@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPointTierInformation"/>. </summary>
-        public RecoveryPointTierInformation()
+        internal RecoveryPointTierInformation()
         {
             ExtendedInfo = new ChangeTrackingDictionary<string, string>();
         }
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Recovery point tier type. </summary>
-        public RecoveryPointTierType? TierType { get; set; }
+        public RecoveryPointTierType? TierType { get; }
 
         /// <summary> Recovery point tier status. </summary>
-        public RecoveryPointTierStatus? Status { get; set; }
+        public RecoveryPointTierStatus? Status { get; }
 
         /// <summary> Recovery point tier status. </summary>
         public IDictionary<string, string> ExtendedInfo { get; }

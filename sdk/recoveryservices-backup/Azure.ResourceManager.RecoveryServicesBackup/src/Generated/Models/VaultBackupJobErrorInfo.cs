@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VaultBackupJobErrorInfo"/>. </summary>
-        public VaultBackupJobErrorInfo()
+        internal VaultBackupJobErrorInfo()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Error code. </summary>
-        public int? ErrorCode { get; set; }
+        public int? ErrorCode { get; }
 
         /// <summary> Localized error string. </summary>
-        public string ErrorString { get; set; }
+        public string ErrorString { get; }
 
         /// <summary> List of localized recommendations for above error code. </summary>
         public IList<string> Recommendations { get; }

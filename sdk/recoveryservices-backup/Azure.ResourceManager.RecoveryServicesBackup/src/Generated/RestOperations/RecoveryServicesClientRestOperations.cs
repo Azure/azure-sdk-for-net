@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/backupstorageconfig/vaultstorageconfig/prepareDataMove", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -72,7 +75,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/backupstorageconfig/vaultstorageconfig/triggerDataMove", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -94,7 +100,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/backupstorageconfig/vaultstorageconfig/operationStatus/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -122,7 +131,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath("/recoveryPoints/", false);
             uri.AppendPath(recoveryPointId, true);
             uri.AppendPath("/move", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -8,7 +8,7 @@ using Azure.ResourceManager.KeyVault.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class KeyVaultSpecification() :
-    Specification("KeyVault", typeof(KeyVaultExtensions))
+    Specification("KeyVault", typeof(KeyVaultExtensions), serviceDirectory: "keyvault")
 {
     protected override void Customize()
     {

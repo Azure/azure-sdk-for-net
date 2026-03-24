@@ -274,6 +274,46 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 etag);
         }
 
+        /// <summary> The BackupResourceEncryptionConfigExtendedProperties. </summary>
+        /// <param name="encryptionAtRestType"> Encryption At Rest Type. </param>
+        /// <param name="keyUri"> Key Vault Key URI. </param>
+        /// <param name="subscriptionId"> Key Vault Subscription Id. </param>
+        /// <param name="lastUpdateStatus"></param>
+        /// <param name="infrastructureEncryptionState"></param>
+        /// <param name="userAssignedIdentity"> User Assigned Identity Id. </param>
+        /// <param name="useSystemAssignedIdentity"> bool to indicate whether to use system Assigned Identity or not. </param>
+        /// <returns> A new <see cref="Models.BackupResourceEncryptionConfigExtendedProperties"/> instance for mocking. </returns>
+        public static BackupResourceEncryptionConfigExtendedProperties BackupResourceEncryptionConfigExtendedProperties(BackupEncryptionAtRestType? encryptionAtRestType = default, string keyUri = default, string subscriptionId = default, LastUpdateStatus? lastUpdateStatus = default, InfrastructureEncryptionState? infrastructureEncryptionState = default, string userAssignedIdentity = default, bool? useSystemAssignedIdentity = default)
+        {
+            return new BackupResourceEncryptionConfigExtendedProperties(
+                encryptionAtRestType,
+                keyUri,
+                subscriptionId,
+                lastUpdateStatus,
+                infrastructureEncryptionState,
+                additionalBinaryDataProperties: null,
+                userAssignedIdentity,
+                useSystemAssignedIdentity);
+        }
+
+        /// <summary> The BackupResourceEncryptionConfig. </summary>
+        /// <param name="encryptionAtRestType"> Encryption At Rest Type. </param>
+        /// <param name="keyUri"> Key Vault Key URI. </param>
+        /// <param name="subscriptionId"> Key Vault Subscription Id. </param>
+        /// <param name="lastUpdateStatus"></param>
+        /// <param name="infrastructureEncryptionState"></param>
+        /// <returns> A new <see cref="Models.BackupResourceEncryptionConfig"/> instance for mocking. </returns>
+        public static BackupResourceEncryptionConfig BackupResourceEncryptionConfig(BackupEncryptionAtRestType? encryptionAtRestType = default, string keyUri = default, string subscriptionId = default, LastUpdateStatus? lastUpdateStatus = default, InfrastructureEncryptionState? infrastructureEncryptionState = default)
+        {
+            return new BackupResourceEncryptionConfig(
+                encryptionAtRestType,
+                keyUri,
+                subscriptionId,
+                lastUpdateStatus,
+                infrastructureEncryptionState,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1599,6 +1639,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 recoveryPointTierDetails.ToList());
         }
 
+        /// <summary> Properties of Recovery Point. </summary>
+        /// <param name="expireOn"> Expiry time of Recovery Point in UTC. </param>
+        /// <param name="ruleName"> Rule name tagged on Recovery Point that governs life cycle. </param>
+        /// <param name="isSoftDeleted"> Bool to indicate whether RP is in soft delete state or not. </param>
+        /// <returns> A new <see cref="Models.RecoveryPointProperties"/> instance for mocking. </returns>
+        public static RecoveryPointProperties RecoveryPointProperties(string expireOn = default, string ruleName = default, bool? isSoftDeleted = default)
+        {
+            return new RecoveryPointProperties(expireOn, ruleName, isSoftDeleted, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Recovery point tier information. </summary>
         /// <param name="tierType"> Recovery point tier type. </param>
         /// <param name="status"> Recovery point tier status. </param>
@@ -1641,6 +1691,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 timeRanges.ToList());
         }
 
+        /// <summary> Provides details for log ranges. </summary>
+        /// <param name="startOn"> Start time of the time range for log recovery. </param>
+        /// <param name="endOn"> End time of the time range for log recovery. </param>
+        /// <returns> A new <see cref="Models.PointInTimeRange"/> instance for mocking. </returns>
+        public static PointInTimeRange PointInTimeRange(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
+        {
+            return new PointInTimeRange(startOn, endOn, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Workload specific recovery point, specifically encapsulates full/diff recovery point. </summary>
         /// <param name="threatStatus"> Threat status of the recovery point. </param>
         /// <param name="threatInfo"> Recovery point threat information. </param>
@@ -1679,6 +1738,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             extendedInfo ??= new ChangeTrackingDictionary<string, string>();
 
             return new RecoveryPointTierInformationV2(tierType, status, extendedInfo, additionalBinaryDataProperties: null, @type);
+        }
+
+        /// <summary> The RecoveryPointMoveReadinessInfo. </summary>
+        /// <param name="isReadyForMove"></param>
+        /// <param name="additionalInfo"></param>
+        /// <returns> A new <see cref="Models.RecoveryPointMoveReadinessInfo"/> instance for mocking. </returns>
+        public static RecoveryPointMoveReadinessInfo RecoveryPointMoveReadinessInfo(bool? isReadyForMove = default, string additionalInfo = default)
+        {
+            return new RecoveryPointMoveReadinessInfo(isReadyForMove, additionalInfo, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Recovery point specific to PointInTime in SAPHana. </summary>
@@ -1877,6 +1945,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryInfoCapturedOn, dataDirectoryPaths.ToList(), includedDatabases.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Database included in RP. </summary>
+        /// <param name="datasourceId"> Datasource Id for the database. </param>
+        /// <param name="datasourceName"> Datasource name for the database. </param>
+        /// <returns> A new <see cref="Models.DatabaseInRP"/> instance for mocking. </returns>
+        public static DatabaseInRP DatabaseInRP(string datasourceId = default, string datasourceName = default)
+        {
+            return new DatabaseInRP(datasourceId, datasourceName, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Generic backup copy. </summary>
         /// <param name="threatStatus"> Threat status of the recovery point. </param>
         /// <param name="threatInfo"> Recovery point threat information. </param>
@@ -1961,6 +2038,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 extendedLocation);
         }
 
+        /// <summary>
+        /// BEK is bitlocker key.
+        /// KEK is encryption key for BEK
+        /// If the VM was encrypted then we will store following details :
+        /// <list type="number"><item><description>Secret(BEK) - Url + Backup Data + vaultId.</description></item><item><description>Key(KEK) - Url + Backup Data + vaultId.</description></item><item><description>EncryptionMechanism</description></item></list>
+        /// BEK and KEK can potentially have different vault ids.
+        /// </summary>
+        /// <param name="kekDetails"> KEK is encryption key for BEK. </param>
+        /// <param name="bekDetails"> BEK is bitlocker encryption key. </param>
+        /// <param name="encryptionMechanism"> Encryption mechanism: None/ SinglePass/ DoublePass. </param>
+        /// <returns> A new <see cref="Models.KeyAndSecretDetails"/> instance for mocking. </returns>
+        public static KeyAndSecretDetails KeyAndSecretDetails(KekDetails kekDetails = default, BekDetails bekDetails = default, string encryptionMechanism = default)
+        {
+            return new KeyAndSecretDetails(kekDetails, bekDetails, encryptionMechanism, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> KEK is encryption key for BEK. </summary>
+        /// <param name="keyUri"> Key is KEK. </param>
+        /// <param name="keyVaultId"> Key Vault ID where this Key is stored. </param>
+        /// <param name="keyBackupData"> KEK data. </param>
+        /// <returns> A new <see cref="Models.KekDetails"/> instance for mocking. </returns>
+        public static KekDetails KekDetails(string keyUri = default, string keyVaultId = default, string keyBackupData = default)
+        {
+            return new KekDetails(keyUri, keyVaultId, keyBackupData, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> BEK is bitlocker encryption key. </summary>
+        /// <param name="secretUri"> Secret is BEK. </param>
+        /// <param name="secretVaultId"> ID of the Key Vault where this Secret is stored. </param>
+        /// <param name="secretData"> BEK data. </param>
+        /// <returns> A new <see cref="Models.BekDetails"/> instance for mocking. </returns>
+        public static BekDetails BekDetails(string secretUri = default, string secretVaultId = default, string secretData = default)
+        {
+            return new BekDetails(secretUri, secretVaultId, secretData, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Disk configuration. </summary>
         /// <param name="numberOfDisksIncludedInBackup"> Number of disks included in backup. </param>
         /// <param name="numberOfDisksAttachedToVm"> Number of disks attached to the VM. </param>
@@ -1973,6 +2086,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             excludedDiskList ??= new ChangeTrackingList<DiskInformation>();
 
             return new RecoveryPointDiskConfiguration(numberOfDisksIncludedInBackup, numberOfDisksAttachedToVm, includedDiskList.ToList(), excludedDiskList.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Disk information. </summary>
+        /// <param name="lun"></param>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.DiskInformation"/> instance for mocking. </returns>
+        public static DiskInformation DiskInformation(int? lun = default, string name = default)
+        {
+            return new DiskInformation(lun, name, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2203,6 +2325,189 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 etag,
                 properties);
+        }
+
+        /// <summary>
+        /// Base class for backup item. Workload-specific backup items are derived from this class.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VmWorkloadItem"/>, <see cref="Models.VmWorkloadSapAseDatabaseWorkloadItem"/>, <see cref="Models.VmWorkloadSapAseSystemWorkloadItem"/>, <see cref="Models.VmWorkloadSapHanaDatabaseWorkloadItem"/>, <see cref="Models.VmWorkloadSapHanaSystemWorkloadItem"/>, <see cref="Models.VmWorkloadSqlDatabaseWorkloadItem"/>, and <see cref="Models.VmWorkloadSqlInstanceWorkloadItem"/>.
+        /// </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="workloadItemType"> Type of the backup item. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <returns> A new <see cref="Models.WorkloadItem"/> instance for mocking. </returns>
+        public static WorkloadItem WorkloadItem(string backupManagementType = default, string workloadType = default, string workloadItemType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default)
+        {
+            return new UnknownWorkloadItem(
+                backupManagementType,
+                workloadType,
+                workloadItemType,
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Azure VM workload-specific workload item. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if workload item is auto-protectable. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadItem"/> instance for mocking. </returns>
+        public static VmWorkloadItem VmWorkloadItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string serverName = default, bool? isAutoProtectable = default, int? subInquiredItemCount = default, int? subWorkloadItemCount = default)
+        {
+            return new VmWorkloadItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                serverName,
+                isAutoProtectable,
+                subInquiredItemCount,
+                subWorkloadItemCount);
+        }
+
+        /// <summary> Azure VM workload-specific workload item representing SAP ASE Database. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if workload item is auto-protectable. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadSapAseDatabaseWorkloadItem"/> instance for mocking. </returns>
+        public static VmWorkloadSapAseDatabaseWorkloadItem VmWorkloadSapAseDatabaseWorkloadItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string serverName = default, bool? isAutoProtectable = default, int? subInquiredItemCount = default, int? subWorkloadItemCount = default)
+        {
+            return new VmWorkloadSapAseDatabaseWorkloadItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                serverName,
+                isAutoProtectable,
+                subInquiredItemCount,
+                subWorkloadItemCount);
+        }
+
+        /// <summary> Azure VM workload-specific workload item representing SAP ASE System. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if workload item is auto-protectable. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadSapAseSystemWorkloadItem"/> instance for mocking. </returns>
+        public static VmWorkloadSapAseSystemWorkloadItem VmWorkloadSapAseSystemWorkloadItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string serverName = default, bool? isAutoProtectable = default, int? subInquiredItemCount = default, int? subWorkloadItemCount = default)
+        {
+            return new VmWorkloadSapAseSystemWorkloadItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                serverName,
+                isAutoProtectable,
+                subInquiredItemCount,
+                subWorkloadItemCount);
+        }
+
+        /// <summary> Azure VM workload-specific workload item representing SAP HANA Database. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if workload item is auto-protectable. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadSapHanaDatabaseWorkloadItem"/> instance for mocking. </returns>
+        public static VmWorkloadSapHanaDatabaseWorkloadItem VmWorkloadSapHanaDatabaseWorkloadItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string serverName = default, bool? isAutoProtectable = default, int? subInquiredItemCount = default, int? subWorkloadItemCount = default)
+        {
+            return new VmWorkloadSapHanaDatabaseWorkloadItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                serverName,
+                isAutoProtectable,
+                subInquiredItemCount,
+                subWorkloadItemCount);
+        }
+
+        /// <summary> Azure VM workload-specific workload item representing SAP HANA System. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if workload item is auto-protectable. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadSapHanaSystemWorkloadItem"/> instance for mocking. </returns>
+        public static VmWorkloadSapHanaSystemWorkloadItem VmWorkloadSapHanaSystemWorkloadItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string serverName = default, bool? isAutoProtectable = default, int? subInquiredItemCount = default, int? subWorkloadItemCount = default)
+        {
+            return new VmWorkloadSapHanaSystemWorkloadItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                serverName,
+                isAutoProtectable,
+                subInquiredItemCount,
+                subWorkloadItemCount);
+        }
+
+        /// <summary> Azure VM workload-specific workload item representing SQL Database. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if workload item is auto-protectable. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadSqlDatabaseWorkloadItem"/> instance for mocking. </returns>
+        public static VmWorkloadSqlDatabaseWorkloadItem VmWorkloadSqlDatabaseWorkloadItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string serverName = default, bool? isAutoProtectable = default, int? subInquiredItemCount = default, int? subWorkloadItemCount = default)
+        {
+            return new VmWorkloadSqlDatabaseWorkloadItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                serverName,
+                isAutoProtectable,
+                subInquiredItemCount,
+                subWorkloadItemCount);
         }
 
         /// <summary> Azure VM workload-specific workload item representing SQL Instance. </summary>
@@ -3372,6 +3677,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 etag);
         }
 
+        /// <summary>
+        /// Defines workload agnostic properties for a job.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.IaasVmBackupJob"/>, <see cref="Models.IaasVmBackupJobV2"/>, <see cref="Models.StorageBackupJob"/>, <see cref="Models.WorkloadBackupJob"/>, <see cref="Models.DpmBackupJob"/>, <see cref="Models.MabBackupJob"/>, and <see cref="Models.VaultBackupJob"/>.
+        /// </summary>
+        /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
+        /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
+        /// <param name="operation"> The operation name. </param>
+        /// <param name="status"> Job status. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="endOn"> The end time. </param>
+        /// <param name="activityId"> ActivityId of job. </param>
+        /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <returns> A new <see cref="Models.BackupGenericJob"/> instance for mocking. </returns>
+        public static BackupGenericJob BackupGenericJob(string entityFriendlyName = default, BackupManagementType? backupManagementType = default, string operation = default, string status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string activityId = default, string jobType = default)
+        {
+            return new UnknownBackupGenericJob(
+                entityFriendlyName,
+                backupManagementType,
+                operation,
+                status,
+                startOn,
+                endOn,
+                activityId,
+                jobType,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Azure IaaS VM workload-specific job object. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
@@ -3446,6 +3778,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 progressPercentage,
                 estimatedRemainingDurationValue,
                 dynamicErrorMessage,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Azure IaaS VM workload-specific job task details. </summary>
+        /// <param name="taskId"> The task display name. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="endOn"> The end time. </param>
+        /// <param name="instanceId"> The instanceId. </param>
+        /// <param name="duration"> Time elapsed for task. </param>
+        /// <param name="status"> The status. </param>
+        /// <param name="progressPercentage"> Progress of the task. </param>
+        /// <param name="taskExecutionDetails">
+        /// Details about execution of the task.
+        /// eg: number of bytes transferred etc
+        /// </param>
+        /// <returns> A new <see cref="Models.IaasVmBackupJobTaskDetails"/> instance for mocking. </returns>
+        public static IaasVmBackupJobTaskDetails IaasVmBackupJobTaskDetails(string taskId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string instanceId = default, TimeSpan? duration = default, string status = default, double? progressPercentage = default, string taskExecutionDetails = default)
+        {
+            return new IaasVmBackupJobTaskDetails(
+                taskId,
+                startOn,
+                endOn,
+                instanceId,
+                duration,
+                status,
+                progressPercentage,
+                taskExecutionDetails,
                 additionalBinaryDataProperties: null);
         }
 
@@ -3552,6 +3911,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new StorageBackupJobExtendedInfo(tasksList.ToList(), propertyBag, dynamicErrorMessage, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Azure storage workload specific job task details. </summary>
+        /// <param name="taskId"> The task display name. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.StorageBackupJobTaskDetails"/> instance for mocking. </returns>
+        public static StorageBackupJobTaskDetails StorageBackupJobTaskDetails(string taskId = default, string status = default)
+        {
+            return new StorageBackupJobTaskDetails(taskId, status, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Azure storage specific job. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
@@ -3621,6 +3989,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new WorkloadBackupJobExtendedInfo(tasksList.ToList(), propertyBag, dynamicErrorMessage, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Azure VM workload specific job task details. </summary>
+        /// <param name="taskId"> The task display name. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.WorkloadBackupJobTaskDetails"/> instance for mocking. </returns>
+        public static WorkloadBackupJobTaskDetails WorkloadBackupJobTaskDetails(string taskId = default, string status = default)
+        {
+            return new WorkloadBackupJobTaskDetails(taskId, status, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> DPM workload-specific job object. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
@@ -3687,6 +4064,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new DpmBackupJobExtendedInfo(tasksList.ToList(), propertyBag, dynamicErrorMessage, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> DPM workload-specific job task details. </summary>
+        /// <param name="taskId"> The task display name. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="endOn"> The end time. </param>
+        /// <param name="duration"> Time elapsed for task. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.DpmBackupJobTaskDetails"/> instance for mocking. </returns>
+        public static DpmBackupJobTaskDetails DpmBackupJobTaskDetails(string taskId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, string status = default)
+        {
+            return new DpmBackupJobTaskDetails(
+                taskId,
+                startOn,
+                endOn,
+                duration,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> MAB workload-specific job. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
@@ -3749,6 +4144,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             propertyBag ??= new ChangeTrackingDictionary<string, string>();
 
             return new MabBackupJobExtendedInfo(tasksList.ToList(), propertyBag, dynamicErrorMessage, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> MAB workload-specific job task details. </summary>
+        /// <param name="taskId"> The task display name. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="endOn"> The end time. </param>
+        /// <param name="duration"> Time elapsed for task. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.MabBackupJobTaskDetails"/> instance for mocking. </returns>
+        public static MabBackupJobTaskDetails MabBackupJobTaskDetails(string taskId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, string status = default)
+        {
+            return new MabBackupJobTaskDetails(
+                taskId,
+                startOn,
+                endOn,
+                duration,
+                status,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
@@ -3869,6 +4282,133 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 etag);
+        }
+
+        /// <summary>
+        /// The base backup engine class. All workload specific backup engines derive from this class.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BackupServerEngine"/> and <see cref="Models.DpmBackupEngine"/>.
+        /// </summary>
+        /// <param name="friendlyName"> Friendly name of the backup engine. </param>
+        /// <param name="backupManagementType"> Type of backup management for the backup engine. </param>
+        /// <param name="registrationStatus"> Registration status of the backup engine with the Recovery Services Vault. </param>
+        /// <param name="backupEngineState"> Status of the backup engine with the Recovery Services Vault. = {Active/Deleting/DeleteFailed}. </param>
+        /// <param name="healthStatus"> Backup status of the backup engine. </param>
+        /// <param name="backupEngineType"> Type of the backup engine. </param>
+        /// <param name="canReRegister"> Flag indicating if the backup engine be registered, once already registered. </param>
+        /// <param name="backupEngineId"> ID of the backup engine. </param>
+        /// <param name="dpmVersion"> Backup engine version. </param>
+        /// <param name="azureBackupAgentVersion"> Backup agent version. </param>
+        /// <param name="isAzureBackupAgentUpgradeAvailable"> To check if backup agent upgrade available. </param>
+        /// <param name="isDpmUpgradeAvailable"> To check if backup engine upgrade available. </param>
+        /// <param name="extendedInfo"> Extended info of the backupengine. </param>
+        /// <returns> A new <see cref="Models.BackupGenericEngine"/> instance for mocking. </returns>
+        public static BackupGenericEngine BackupGenericEngine(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string backupEngineState = default, string healthStatus = default, string backupEngineType = default, bool? canReRegister = default, string backupEngineId = default, string dpmVersion = default, string azureBackupAgentVersion = default, bool? isAzureBackupAgentUpgradeAvailable = default, bool? isDpmUpgradeAvailable = default, BackupEngineExtendedInfo extendedInfo = default)
+        {
+            return new UnknownBackupGenericEngine(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                backupEngineState,
+                healthStatus,
+                new BackupEngineType(backupEngineType),
+                canReRegister,
+                backupEngineId,
+                dpmVersion,
+                azureBackupAgentVersion,
+                isAzureBackupAgentUpgradeAvailable,
+                isDpmUpgradeAvailable,
+                extendedInfo,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Additional information on backup engine. </summary>
+        /// <param name="databaseName"> Database name of backup engine. </param>
+        /// <param name="protectedItemsCount"> Number of protected items in the backup engine. </param>
+        /// <param name="protectedServersCount"> Number of protected servers in the backup engine. </param>
+        /// <param name="diskCount"> Number of disks in the backup engine. </param>
+        /// <param name="usedDiskSpace"> Disk space used in the backup engine. </param>
+        /// <param name="availableDiskSpace"> Disk space currently available in the backup engine. </param>
+        /// <param name="refreshedOn"> Last refresh time in the backup engine. </param>
+        /// <param name="azureProtectedInstances"> Protected instances in the backup engine. </param>
+        /// <returns> A new <see cref="Models.BackupEngineExtendedInfo"/> instance for mocking. </returns>
+        public static BackupEngineExtendedInfo BackupEngineExtendedInfo(string databaseName = default, int? protectedItemsCount = default, int? protectedServersCount = default, int? diskCount = default, double? usedDiskSpace = default, double? availableDiskSpace = default, DateTimeOffset? refreshedOn = default, int? azureProtectedInstances = default)
+        {
+            return new BackupEngineExtendedInfo(
+                databaseName,
+                protectedItemsCount,
+                protectedServersCount,
+                diskCount,
+                usedDiskSpace,
+                availableDiskSpace,
+                refreshedOn,
+                azureProtectedInstances,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Backup engine type when Azure Backup Server is used to manage the backups. </summary>
+        /// <param name="friendlyName"> Friendly name of the backup engine. </param>
+        /// <param name="backupManagementType"> Type of backup management for the backup engine. </param>
+        /// <param name="registrationStatus"> Registration status of the backup engine with the Recovery Services Vault. </param>
+        /// <param name="backupEngineState"> Status of the backup engine with the Recovery Services Vault. = {Active/Deleting/DeleteFailed}. </param>
+        /// <param name="healthStatus"> Backup status of the backup engine. </param>
+        /// <param name="canReRegister"> Flag indicating if the backup engine be registered, once already registered. </param>
+        /// <param name="backupEngineId"> ID of the backup engine. </param>
+        /// <param name="dpmVersion"> Backup engine version. </param>
+        /// <param name="azureBackupAgentVersion"> Backup agent version. </param>
+        /// <param name="isAzureBackupAgentUpgradeAvailable"> To check if backup agent upgrade available. </param>
+        /// <param name="isDpmUpgradeAvailable"> To check if backup engine upgrade available. </param>
+        /// <param name="extendedInfo"> Extended info of the backupengine. </param>
+        /// <returns> A new <see cref="Models.BackupServerEngine"/> instance for mocking. </returns>
+        public static BackupServerEngine BackupServerEngine(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string backupEngineState = default, string healthStatus = default, bool? canReRegister = default, string backupEngineId = default, string dpmVersion = default, string azureBackupAgentVersion = default, bool? isAzureBackupAgentUpgradeAvailable = default, bool? isDpmUpgradeAvailable = default, BackupEngineExtendedInfo extendedInfo = default)
+        {
+            return new BackupServerEngine(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                backupEngineState,
+                healthStatus,
+                BackupEngineType.AzureBackupServerEngine,
+                canReRegister,
+                backupEngineId,
+                dpmVersion,
+                azureBackupAgentVersion,
+                isAzureBackupAgentUpgradeAvailable,
+                isDpmUpgradeAvailable,
+                extendedInfo,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Data Protection Manager (DPM) specific backup engine. </summary>
+        /// <param name="friendlyName"> Friendly name of the backup engine. </param>
+        /// <param name="backupManagementType"> Type of backup management for the backup engine. </param>
+        /// <param name="registrationStatus"> Registration status of the backup engine with the Recovery Services Vault. </param>
+        /// <param name="backupEngineState"> Status of the backup engine with the Recovery Services Vault. = {Active/Deleting/DeleteFailed}. </param>
+        /// <param name="healthStatus"> Backup status of the backup engine. </param>
+        /// <param name="canReRegister"> Flag indicating if the backup engine be registered, once already registered. </param>
+        /// <param name="backupEngineId"> ID of the backup engine. </param>
+        /// <param name="dpmVersion"> Backup engine version. </param>
+        /// <param name="azureBackupAgentVersion"> Backup agent version. </param>
+        /// <param name="isAzureBackupAgentUpgradeAvailable"> To check if backup agent upgrade available. </param>
+        /// <param name="isDpmUpgradeAvailable"> To check if backup engine upgrade available. </param>
+        /// <param name="extendedInfo"> Extended info of the backupengine. </param>
+        /// <returns> A new <see cref="Models.DpmBackupEngine"/> instance for mocking. </returns>
+        public static DpmBackupEngine DpmBackupEngine(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string backupEngineState = default, string healthStatus = default, bool? canReRegister = default, string backupEngineId = default, string dpmVersion = default, string azureBackupAgentVersion = default, bool? isAzureBackupAgentUpgradeAvailable = default, bool? isDpmUpgradeAvailable = default, BackupEngineExtendedInfo extendedInfo = default)
+        {
+            return new DpmBackupEngine(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                backupEngineState,
+                healthStatus,
+                BackupEngineType.DpmBackupEngine,
+                canReRegister,
+                backupEngineId,
+                dpmVersion,
+                azureBackupAgentVersion,
+                isAzureBackupAgentUpgradeAvailable,
+                isDpmUpgradeAvailable,
+                extendedInfo,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -4059,6 +4599,433 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 properties);
         }
 
+        /// <summary>
+        /// Base class for backup item. Workload-specific backup items are derived from this class.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FileShareProtectableItem"/>, <see cref="Models.IaasClassicComputeVmProtectableItem"/>, <see cref="Models.IaasVmProtectableItem"/>, <see cref="Models.IaasComputeVmProtectableItem"/>, <see cref="Models.VmWorkloadProtectableItem"/>, <see cref="Models.VmWorkloadSapAseDatabaseProtectableItem"/>, <see cref="Models.VmWorkloadSapAseSystemProtectableItem"/>, <see cref="Models.VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="Models.VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="Models.VmWorkloadSapHanaDBInstance"/>, <see cref="Models.VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="Models.AzureVmWorkloadSAPHanaScaleoutProtectableItem"/>, <see cref="Models.VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="Models.VmWorkloadSqlDatabaseProtectableItem"/>, and <see cref="Models.VmWorkloadSqlInstanceProtectableItem"/>.
+        /// </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="protectableItemType"> Type of the backup item. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <returns> A new <see cref="Models.WorkloadProtectableItem"/> instance for mocking. </returns>
+        public static WorkloadProtectableItem WorkloadProtectableItem(string backupManagementType = default, string workloadType = default, string protectableItemType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default)
+        {
+            return new UnknownWorkloadProtectableItem(
+                backupManagementType,
+                workloadType,
+                protectableItemType,
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Protectable item for Azure Fileshare workloads. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentContainerFabricId"> Full Fabric ID of container to which this protectable item belongs. For example, ARM ID. </param>
+        /// <param name="parentContainerFriendlyName"> Friendly name of container to which this protectable item belongs. </param>
+        /// <param name="azureFileShareType"> File Share type XSync or XSMB. </param>
+        /// <returns> A new <see cref="Models.FileShareProtectableItem"/> instance for mocking. </returns>
+        public static FileShareProtectableItem FileShareProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentContainerFabricId = default, string parentContainerFriendlyName = default, BackupFileShareType? azureFileShareType = default)
+        {
+            return new FileShareProtectableItem(
+                backupManagementType,
+                workloadType,
+                "AzureFileShare",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentContainerFabricId,
+                parentContainerFriendlyName,
+                azureFileShareType);
+        }
+
+        /// <summary> IaaS VM workload-specific backup item representing the Classic Compute VM. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine. </param>
+        /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
+        /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
+        /// <returns> A new <see cref="Models.IaasClassicComputeVmProtectableItem"/> instance for mocking. </returns>
+        public static IaasClassicComputeVmProtectableItem IaasClassicComputeVmProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string virtualMachineId = default, string virtualMachineVersion = default, string resourceGroup = default)
+        {
+            return new IaasClassicComputeVmProtectableItem(
+                backupManagementType,
+                workloadType,
+                "IaaSVMProtectableItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                virtualMachineId,
+                virtualMachineVersion,
+                resourceGroup);
+        }
+
+        /// <summary> IaaS VM workload-specific backup item. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine. </param>
+        /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
+        /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
+        /// <returns> A new <see cref="Models.IaasVmProtectableItem"/> instance for mocking. </returns>
+        public static IaasVmProtectableItem IaasVmProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string virtualMachineId = default, string virtualMachineVersion = default, string resourceGroup = default)
+        {
+            return new IaasVmProtectableItem(
+                backupManagementType,
+                workloadType,
+                "IaaSVMProtectableItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                virtualMachineId,
+                virtualMachineVersion,
+                resourceGroup);
+        }
+
+        /// <summary> IaaS VM workload-specific backup item representing the Azure Resource Manager VM. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine. </param>
+        /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
+        /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
+        /// <returns> A new <see cref="Models.IaasComputeVmProtectableItem"/> instance for mocking. </returns>
+        public static IaasComputeVmProtectableItem IaasComputeVmProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string virtualMachineId = default, string virtualMachineVersion = default, string resourceGroup = default)
+        {
+            return new IaasComputeVmProtectableItem(
+                backupManagementType,
+                workloadType,
+                "IaaSVMProtectableItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                virtualMachineId,
+                virtualMachineVersion,
+                resourceGroup);
+        }
+
+        /// <summary> Azure VM workload-specific protectable item. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="parentUniqueName">
+        /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
+        /// Only Applicable for data bases where the parent would be either Instance or a SQL AG.
+        /// </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if protectable item is auto-protectable. </param>
+        /// <param name="isAutoProtected"> Indicates if protectable item is auto-protected. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
+        /// <param name="isProtectable"> Indicates if item is protectable. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadProtectableItem"/> instance for mocking. </returns>
+        public static VmWorkloadProtectableItem VmWorkloadProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string parentUniqueName = default, string serverName = default, bool? isAutoProtectable = default, bool? isAutoProtected = default, int? subInquiredItemCount = default, int? subProtectableItemCount = default, PreBackupValidation preBackupValidation = default, bool? isProtectable = default)
+        {
+            return new VmWorkloadProtectableItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadProtectableItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                parentUniqueName,
+                serverName,
+                isAutoProtectable,
+                isAutoProtected,
+                subInquiredItemCount,
+                subProtectableItemCount,
+                preBackupValidation,
+                isProtectable);
+        }
+
+        /// <summary> Pre-backup validation for Azure VM Workload provider. </summary>
+        /// <param name="status"> Status of protectable item, i.e. InProgress,Succeeded,Failed. </param>
+        /// <param name="code"> Error code of protectable item. </param>
+        /// <param name="message"> Message corresponding to the error code for the protectable item. </param>
+        /// <returns> A new <see cref="Models.PreBackupValidation"/> instance for mocking. </returns>
+        public static PreBackupValidation PreBackupValidation(InquiryStatus? status = default, string code = default, string message = default)
+        {
+            return new PreBackupValidation(status, code, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Azure VM workload-specific protectable item representing SAP ASE Database. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="parentUniqueName">
+        /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
+        /// Only Applicable for data bases where the parent would be either Instance or a SQL AG.
+        /// </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if protectable item is auto-protectable. </param>
+        /// <param name="isAutoProtected"> Indicates if protectable item is auto-protected. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
+        /// <param name="isProtectable"> Indicates if item is protectable. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadSapAseDatabaseProtectableItem"/> instance for mocking. </returns>
+        public static VmWorkloadSapAseDatabaseProtectableItem VmWorkloadSapAseDatabaseProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string parentUniqueName = default, string serverName = default, bool? isAutoProtectable = default, bool? isAutoProtected = default, int? subInquiredItemCount = default, int? subProtectableItemCount = default, PreBackupValidation preBackupValidation = default, bool? isProtectable = default)
+        {
+            return new VmWorkloadSapAseDatabaseProtectableItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadProtectableItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                parentUniqueName,
+                serverName,
+                isAutoProtectable,
+                isAutoProtected,
+                subInquiredItemCount,
+                subProtectableItemCount,
+                preBackupValidation,
+                isProtectable);
+        }
+
+        /// <summary> Azure VM workload-specific protectable item representing SAP ASE System. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="parentUniqueName">
+        /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
+        /// Only Applicable for data bases where the parent would be either Instance or a SQL AG.
+        /// </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if protectable item is auto-protectable. </param>
+        /// <param name="isAutoProtected"> Indicates if protectable item is auto-protected. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
+        /// <param name="isProtectable"> Indicates if item is protectable. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadSapAseSystemProtectableItem"/> instance for mocking. </returns>
+        public static VmWorkloadSapAseSystemProtectableItem VmWorkloadSapAseSystemProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string parentUniqueName = default, string serverName = default, bool? isAutoProtectable = default, bool? isAutoProtected = default, int? subInquiredItemCount = default, int? subProtectableItemCount = default, PreBackupValidation preBackupValidation = default, bool? isProtectable = default)
+        {
+            return new VmWorkloadSapAseSystemProtectableItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadProtectableItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                parentUniqueName,
+                serverName,
+                isAutoProtectable,
+                isAutoProtected,
+                subInquiredItemCount,
+                subProtectableItemCount,
+                preBackupValidation,
+                isProtectable);
+        }
+
+        /// <summary> Azure VM workload-specific protectable item representing SAP HANA Database. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="parentUniqueName">
+        /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
+        /// Only Applicable for data bases where the parent would be either Instance or a SQL AG.
+        /// </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if protectable item is auto-protectable. </param>
+        /// <param name="isAutoProtected"> Indicates if protectable item is auto-protected. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
+        /// <param name="isProtectable"> Indicates if item is protectable. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadSapHanaDatabaseProtectableItem"/> instance for mocking. </returns>
+        public static VmWorkloadSapHanaDatabaseProtectableItem VmWorkloadSapHanaDatabaseProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string parentUniqueName = default, string serverName = default, bool? isAutoProtectable = default, bool? isAutoProtected = default, int? subInquiredItemCount = default, int? subProtectableItemCount = default, PreBackupValidation preBackupValidation = default, bool? isProtectable = default)
+        {
+            return new VmWorkloadSapHanaDatabaseProtectableItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadProtectableItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                parentUniqueName,
+                serverName,
+                isAutoProtectable,
+                isAutoProtected,
+                subInquiredItemCount,
+                subProtectableItemCount,
+                preBackupValidation,
+                isProtectable);
+        }
+
+        /// <summary> Azure VM workload-specific protectable item representing SAP HANA System. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="parentUniqueName">
+        /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
+        /// Only Applicable for data bases where the parent would be either Instance or a SQL AG.
+        /// </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if protectable item is auto-protectable. </param>
+        /// <param name="isAutoProtected"> Indicates if protectable item is auto-protected. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
+        /// <param name="isProtectable"> Indicates if item is protectable. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadSapHanaSystemProtectableItem"/> instance for mocking. </returns>
+        public static VmWorkloadSapHanaSystemProtectableItem VmWorkloadSapHanaSystemProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string parentUniqueName = default, string serverName = default, bool? isAutoProtectable = default, bool? isAutoProtected = default, int? subInquiredItemCount = default, int? subProtectableItemCount = default, PreBackupValidation preBackupValidation = default, bool? isProtectable = default)
+        {
+            return new VmWorkloadSapHanaSystemProtectableItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadProtectableItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                parentUniqueName,
+                serverName,
+                isAutoProtectable,
+                isAutoProtected,
+                subInquiredItemCount,
+                subProtectableItemCount,
+                preBackupValidation,
+                isProtectable);
+        }
+
+        /// <summary> Azure VM workload-specific protectable item representing SAP HANA Dbinstance. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="parentUniqueName">
+        /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
+        /// Only Applicable for data bases where the parent would be either Instance or a SQL AG.
+        /// </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if protectable item is auto-protectable. </param>
+        /// <param name="isAutoProtected"> Indicates if protectable item is auto-protected. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
+        /// <param name="isProtectable"> Indicates if item is protectable. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadSapHanaDBInstance"/> instance for mocking. </returns>
+        public static VmWorkloadSapHanaDBInstance VmWorkloadSapHanaDBInstance(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string parentUniqueName = default, string serverName = default, bool? isAutoProtectable = default, bool? isAutoProtected = default, int? subInquiredItemCount = default, int? subProtectableItemCount = default, PreBackupValidation preBackupValidation = default, bool? isProtectable = default)
+        {
+            return new VmWorkloadSapHanaDBInstance(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadProtectableItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                parentUniqueName,
+                serverName,
+                isAutoProtectable,
+                isAutoProtected,
+                subInquiredItemCount,
+                subProtectableItemCount,
+                preBackupValidation,
+                isProtectable);
+        }
+
+        /// <summary> Azure VM workload-specific protectable item representing HANA HSR. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="parentUniqueName">
+        /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
+        /// Only Applicable for data bases where the parent would be either Instance or a SQL AG.
+        /// </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if protectable item is auto-protectable. </param>
+        /// <param name="isAutoProtected"> Indicates if protectable item is auto-protected. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
+        /// <param name="isProtectable"> Indicates if item is protectable. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadSapHanaHsrProtectableItem"/> instance for mocking. </returns>
+        public static VmWorkloadSapHanaHsrProtectableItem VmWorkloadSapHanaHsrProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string parentUniqueName = default, string serverName = default, bool? isAutoProtectable = default, bool? isAutoProtected = default, int? subInquiredItemCount = default, int? subProtectableItemCount = default, PreBackupValidation preBackupValidation = default, bool? isProtectable = default)
+        {
+            return new VmWorkloadSapHanaHsrProtectableItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadProtectableItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                parentUniqueName,
+                serverName,
+                isAutoProtectable,
+                isAutoProtected,
+                subInquiredItemCount,
+                subProtectableItemCount,
+                preBackupValidation,
+                isProtectable);
+        }
+
+        /// <summary> Azure VM workload-specific protectable item representing HANA scale out. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="parentUniqueName">
+        /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
+        /// Only Applicable for data bases where the parent would be either Instance or a SQL AG.
+        /// </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if protectable item is auto-protectable. </param>
+        /// <param name="isAutoProtected"> Indicates if protectable item is auto-protected. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
+        /// <param name="isProtectable"> Indicates if item is protectable. </param>
+        /// <returns> A new <see cref="Models.AzureVmWorkloadSAPHanaScaleoutProtectableItem"/> instance for mocking. </returns>
+        public static AzureVmWorkloadSAPHanaScaleoutProtectableItem AzureVmWorkloadSAPHanaScaleoutProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string parentUniqueName = default, string serverName = default, bool? isAutoProtectable = default, bool? isAutoProtected = default, int? subInquiredItemCount = default, int? subProtectableItemCount = default, PreBackupValidation preBackupValidation = default, bool? isProtectable = default)
+        {
+            return new AzureVmWorkloadSAPHanaScaleoutProtectableItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadProtectableItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                parentUniqueName,
+                serverName,
+                isAutoProtectable,
+                isAutoProtected,
+                subInquiredItemCount,
+                subProtectableItemCount,
+                preBackupValidation,
+                isProtectable);
+        }
+
         /// <summary> Azure VM workload-specific protectable item representing SQL Availability Group. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
@@ -4099,6 +5066,82 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 preBackupValidation,
                 isProtectable,
                 nodesList.ToList());
+        }
+
+        /// <summary> Azure VM workload-specific protectable item representing SQL Database. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="parentUniqueName">
+        /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
+        /// Only Applicable for data bases where the parent would be either Instance or a SQL AG.
+        /// </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if protectable item is auto-protectable. </param>
+        /// <param name="isAutoProtected"> Indicates if protectable item is auto-protected. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
+        /// <param name="isProtectable"> Indicates if item is protectable. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadSqlDatabaseProtectableItem"/> instance for mocking. </returns>
+        public static VmWorkloadSqlDatabaseProtectableItem VmWorkloadSqlDatabaseProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string parentUniqueName = default, string serverName = default, bool? isAutoProtectable = default, bool? isAutoProtected = default, int? subInquiredItemCount = default, int? subProtectableItemCount = default, PreBackupValidation preBackupValidation = default, bool? isProtectable = default)
+        {
+            return new VmWorkloadSqlDatabaseProtectableItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadProtectableItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                parentUniqueName,
+                serverName,
+                isAutoProtectable,
+                isAutoProtected,
+                subInquiredItemCount,
+                subProtectableItemCount,
+                preBackupValidation,
+                isProtectable);
+        }
+
+        /// <summary> Azure VM workload-specific protectable item representing SQL Instance. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="parentUniqueName">
+        /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
+        /// Only Applicable for data bases where the parent would be either Instance or a SQL AG.
+        /// </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if protectable item is auto-protectable. </param>
+        /// <param name="isAutoProtected"> Indicates if protectable item is auto-protected. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
+        /// <param name="isProtectable"> Indicates if item is protectable. </param>
+        /// <returns> A new <see cref="Models.VmWorkloadSqlInstanceProtectableItem"/> instance for mocking. </returns>
+        public static VmWorkloadSqlInstanceProtectableItem VmWorkloadSqlInstanceProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string parentUniqueName = default, string serverName = default, bool? isAutoProtectable = default, bool? isAutoProtected = default, int? subInquiredItemCount = default, int? subProtectableItemCount = default, PreBackupValidation preBackupValidation = default, bool? isProtectable = default)
+        {
+            return new VmWorkloadSqlInstanceProtectableItem(
+                backupManagementType,
+                workloadType,
+                "AzureVmWorkloadProtectableItem",
+                friendlyName,
+                protectionState,
+                additionalBinaryDataProperties: null,
+                parentName,
+                parentUniqueName,
+                serverName,
+                isAutoProtectable,
+                isAutoProtected,
+                subInquiredItemCount,
+                subProtectableItemCount,
+                preBackupValidation,
+                isProtectable);
         }
 
         /// <summary> Base class for get security pin request body. </summary>
@@ -4276,484 +5319,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             groupIds ??= new ChangeTrackingList<VaultSubResourceType>();
 
             return new BackupPrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), groupIds.ToList(), privateLinkServiceConnectionState, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionIntentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// ProtectionIntentResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , ,  and .
-        /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionIntentData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BackupProtectionIntentData BackupProtectionIntentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericProtectionIntent properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupProtectionIntentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                tags,
-                location,
-                eTag);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BackupManagementUsage"/>. </summary>
-        /// <param name="unit"> Unit of the usage. </param>
-        /// <param name="quotaPeriod"> Quota period of usage. </param>
-        /// <param name="nextResetOn"> Next reset time of usage. </param>
-        /// <param name="currentValue"> Current value of usage. </param>
-        /// <param name="limit"> Limit of usage. </param>
-        /// <param name="name"> Name of usage. </param>
-        /// <returns> A new <see cref="Models.BackupManagementUsage"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BackupManagementUsage BackupManagementUsage(UsagesUnit? unit, string quotaPeriod, DateTimeOffset? nextResetOn, long? currentValue, long? limit, NameInfo name)
-        {
-            return new BackupManagementUsage(
-                unit,
-                quotaPeriod,
-                nextResetOn,
-                currentValue,
-                limit,
-                name,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> PrivateEndpointConnectionResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BackupPrivateEndpointConnectionData BackupPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupPrivateEndpointConnectionProperties properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                tags,
-                location,
-                eTag);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectedItemData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// ProtectedItemResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , , , , , , , , , ,  and .
-        /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectedItemData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BackupProtectedItemData BackupProtectedItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProtectedItem properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupProtectedItemData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                tags,
-                location,
-                eTag);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupRecoveryPointData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// RecoveryPointResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , , , , , , , ,  and .
-        /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupRecoveryPointData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BackupRecoveryPointData BackupRecoveryPointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericRecoveryPoint properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupRecoveryPointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                tags,
-                location,
-                eTag);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TriggerRestoreContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// RestoreRequestResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , , , , , , , , , , , ,  and .
-        /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="Models.TriggerRestoreContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TriggerRestoreContent TriggerRestoreContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RestoreContent properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new TriggerRestoreContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                tags,
-                eTag,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// ProtectionPolicyResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , , ,  and .
-        /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionPolicyData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BackupProtectionPolicyData BackupProtectionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericProtectionPolicy properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupProtectionPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                tags,
-                location,
-                eTag);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// JobResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , , , ,  and .
-        /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupJobData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BackupJobData BackupJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericJob properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                tags,
-                location,
-                eTag);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupEngineData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// BackupEngineBaseResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
-        /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupEngineData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BackupEngineData BackupEngineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericEngine properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupEngineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                tags,
-                location,
-                eTag);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProtectableContainerResource"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// ProtectableContainerResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
-        /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="Models.ProtectableContainerResource"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProtectableContainerResource ProtectableContainerResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProtectableContainer properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ProtectableContainerResource(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                tags,
-                eTag,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionContainerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// ProtectionContainerResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , , , , , , , , ,  and .
-        /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionContainerData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BackupProtectionContainerData BackupProtectionContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericProtectionContainer properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupProtectionContainerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                tags,
-                location,
-                eTag);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadItemResource"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// WorkloadItemResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , , , ,  and .
-        /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="Models.WorkloadItemResource"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static WorkloadItemResource WorkloadItemResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadItem properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new WorkloadItemResource(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                tags,
-                eTag,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TriggerBackupContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// BackupRequestResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include ,  and .
-        /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="Models.TriggerBackupContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TriggerBackupContent TriggerBackupContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupContent properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new TriggerBackupContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                tags,
-                eTag,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisionIlrConnectionContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// ILRRequestResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
-        /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="Models.ProvisionIlrConnectionContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProvisionIlrConnectionContent ProvisionIlrConnectionContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IlrContent properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ProvisionIlrConnectionContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                tags,
-                eTag,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadProtectableItemResource"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// WorkloadProtectableItemResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , , , , , , , , , , ,  and .
-        /// </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="Models.WorkloadProtectableItemResource"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static WorkloadProtectableItemResource WorkloadProtectableItemResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadProtectableItem properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new WorkloadProtectableItemResource(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                tags,
-                eTag,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.ResourceGuardProxyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> ResourceGuardProxyBaseResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.ResourceGuardProxyData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResourceGuardProxyData ResourceGuardProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceGuardProxyBase properties, string eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ResourceGuardProxyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                tags,
-                location,
-                eTag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FileshareProtectedItem"/>. </summary>

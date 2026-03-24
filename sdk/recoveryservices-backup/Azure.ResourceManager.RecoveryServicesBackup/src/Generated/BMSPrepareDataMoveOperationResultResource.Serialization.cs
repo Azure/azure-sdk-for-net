@@ -14,9 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// <summary></summary>
     public partial class BMSPrepareDataMoveOperationResultResource : IJsonModel<BackupResourceConfigResourceData>
     {
-        private static IJsonModel<BackupResourceConfigResourceData> s_dataDeserializationInstance;
-
-        private static IJsonModel<BackupResourceConfigResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BackupResourceConfigResourceData();
+        private static IJsonModel<BackupResourceConfigResourceData> DataDeserializationInstance = null;
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

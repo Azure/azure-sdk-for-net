@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath(fabricName, true);
             uri.AppendPath("/protectionContainers/", false);
             uri.AppendPath(containerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -78,7 +81,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath(fabricName, true);
             uri.AppendPath("/protectionContainers/", false);
             uri.AppendPath(containerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -103,7 +109,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath(fabricName, true);
             uri.AppendPath("/protectionContainers/", false);
             uri.AppendPath(containerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -126,7 +135,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath("/protectionContainers/", false);
             uri.AppendPath(containerName, true);
             uri.AppendPath("/inquire", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -151,7 +163,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath("/backupFabrics/", false);
             uri.AppendPath(fabricName, true);
             uri.AppendPath("/refreshContainers", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);

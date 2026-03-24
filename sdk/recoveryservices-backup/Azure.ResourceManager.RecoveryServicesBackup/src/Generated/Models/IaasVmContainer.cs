@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class IaasVmContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of <see cref="IaasVmContainer"/>. </summary>
-        public IaasVmContainer() : base(ProtectableContainerType.IaasVMContainer)
+        public IaasVmContainer()
         {
         }
 

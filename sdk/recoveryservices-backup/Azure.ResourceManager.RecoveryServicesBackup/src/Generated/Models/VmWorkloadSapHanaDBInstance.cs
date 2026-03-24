@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class VmWorkloadSapHanaDBInstance : VmWorkloadProtectableItem
     {
         /// <summary> Initializes a new instance of <see cref="VmWorkloadSapHanaDBInstance"/>. </summary>
-        public VmWorkloadSapHanaDBInstance()
+        internal VmWorkloadSapHanaDBInstance()
         {
         }
 

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPointMoveReadinessInfo"/>. </summary>
-        public RecoveryPointMoveReadinessInfo()
+        internal RecoveryPointMoveReadinessInfo()
         {
         }
 
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the IsReadyForMove. </summary>
-        public bool? IsReadyForMove { get; set; }
+        /// <summary> Gets the IsReadyForMove. </summary>
+        public bool? IsReadyForMove { get; }
 
-        /// <summary> Gets or sets the AdditionalInfo. </summary>
-        public string AdditionalInfo { get; set; }
+        /// <summary> Gets the AdditionalInfo. </summary>
+        public string AdditionalInfo { get; }
     }
 }

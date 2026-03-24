@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class IaasVmProtectableItem : WorkloadProtectableItem
     {
         /// <summary> Initializes a new instance of <see cref="IaasVmProtectableItem"/>. </summary>
-        public IaasVmProtectableItem() : base("IaaSVMProtectableItem")
+        internal IaasVmProtectableItem() : base("IaaSVMProtectableItem")
         {
         }
 
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Fully qualified ARM ID of the virtual machine. </summary>
-        public string VirtualMachineId { get; set; }
+        public string VirtualMachineId { get; }
 
         /// <summary> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </summary>
-        public string VirtualMachineVersion { get; set; }
+        public string VirtualMachineVersion { get; }
 
         /// <summary> Resource group name of Recovery Services Vault. </summary>
-        public string ResourceGroup { get; set; }
+        public string ResourceGroup { get; }
     }
 }

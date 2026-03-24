@@ -292,42 +292,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ProtectedItemOperationStatusResource>> GetIfExistsAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = _protectedItemOperationStatusesClientDiagnostics.CreateScope("ProtectedItemOperationStatusCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectedItemOperationStatusesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<OperationStatus> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OperationStatus.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OperationStatus)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
-                if (response.Value == null)
-                {
-                    return new NoValueResponse<ProtectedItemOperationStatusResource>(response.GetRawResponse());
-                }
-                return Response.FromValue(new ProtectedItemOperationStatusResource(Client, ProtectedItemOperationStatusResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId)), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -353,42 +318,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ProtectedItemOperationStatusResource> GetIfExists(string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = _protectedItemOperationStatusesClientDiagnostics.CreateScope("ProtectedItemOperationStatusCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectedItemOperationStatusesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<OperationStatus> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OperationStatus.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OperationStatus)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
-                if (response.Value == null)
-                {
-                    return new NoValueResponse<ProtectedItemOperationStatusResource>(response.GetRawResponse());
-                }
-                return Response.FromValue(new ProtectedItemOperationStatusResource(Client, ProtectedItemOperationStatusResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId)), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotImplementedException();
         }
     }
 }

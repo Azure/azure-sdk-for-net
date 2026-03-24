@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Datadog.Models
     public readonly partial struct DatadogSingleSignOnState : IEquatable<DatadogSingleSignOnState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DatadogSingleSignOnState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InitialValue = "Initial";
         private const string EnableValue = "Enable";
         private const string DisableValue = "Disable";
         private const string ExistingValue = "Existing";
 
-        /// <summary> Initial. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DatadogSingleSignOnState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Initial. </summary>
         public static DatadogSingleSignOnState Initial { get; } = new DatadogSingleSignOnState(InitialValue);
-        /// <summary> Enable. </summary>
+
+        /// <summary> Gets the Enable. </summary>
         public static DatadogSingleSignOnState Enable { get; } = new DatadogSingleSignOnState(EnableValue);
-        /// <summary> Disable. </summary>
+
+        /// <summary> Gets the Disable. </summary>
         public static DatadogSingleSignOnState Disable { get; } = new DatadogSingleSignOnState(DisableValue);
-        /// <summary> Existing. </summary>
+
+        /// <summary> Gets the Existing. </summary>
         public static DatadogSingleSignOnState Existing { get; } = new DatadogSingleSignOnState(ExistingValue);
+
         /// <summary> Determines if two <see cref="DatadogSingleSignOnState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatadogSingleSignOnState left, DatadogSingleSignOnState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatadogSingleSignOnState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatadogSingleSignOnState left, DatadogSingleSignOnState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatadogSingleSignOnState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatadogSingleSignOnState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatadogSingleSignOnState(string value) => new DatadogSingleSignOnState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatadogSingleSignOnState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatadogSingleSignOnState?(string value) => value == null ? null : new DatadogSingleSignOnState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatadogSingleSignOnState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatadogSingleSignOnState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

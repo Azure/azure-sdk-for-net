@@ -26,8 +26,8 @@ public abstract partial class Specification : ModelBase
         // If all else fails, just use the current directory
         path ??= Environment.CurrentDirectory;
 
-        // Walk from the root of the repo into the provisioning folder
-        path = Path.Combine(path, "sdk", "provisioning");
+        // Walk from the root of the repo into the service folder
+        path = Path.Combine(path, "sdk", ServiceDirectory);
         if (!Directory.Exists(path))
         {
             throw new InvalidOperationException($"Directory {path} must exist to write {Namespace}!");

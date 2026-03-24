@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class VaultBackupJob : BackupGenericJob
     {
         /// <summary> Initializes a new instance of <see cref="VaultBackupJob"/>. </summary>
-        public VaultBackupJob() : base("VaultJob")
+        internal VaultBackupJob() : base("VaultJob")
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
             ErrorDetails = new ChangeTrackingList<VaultBackupJobErrorInfo>();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Time elapsed during the execution of this job. </summary>
-        public TimeSpan? Duration { get; set; }
+        public TimeSpan? Duration { get; }
 
         /// <summary> Gets or sets the state/actions applicable on this job like cancel/retry. </summary>
         public IList<JobSupportedAction> ActionsInfo { get; }
@@ -53,17 +53,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<VaultBackupJobErrorInfo> ErrorDetails { get; }
 
         /// <summary> Additional information about the job. </summary>
-        internal VaultJobExtendedInfo ExtendedInfo { get; set; }
+        internal VaultJobExtendedInfo ExtendedInfo { get; }
 
         /// <summary> Job properties. </summary>
         public IDictionary<string, string> ExtendedInfoPropertyBag
         {
             get
             {
-                if (ExtendedInfo is null)
-                {
-                    ExtendedInfo = new VaultJobExtendedInfo();
-                }
                 return ExtendedInfo.PropertyBag;
             }
         }

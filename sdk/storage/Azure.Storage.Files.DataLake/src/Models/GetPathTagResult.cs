@@ -8,8 +8,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// The result of DataLakePathClient.GetTags() call.
     /// </summary>
-    // https://github.com/Azure/azure-sdk-for-net/issues/52168
-    internal class GetPathTagResult
+    public class GetPathTagResult
     {
         /// <summary>
         /// Path Tags.

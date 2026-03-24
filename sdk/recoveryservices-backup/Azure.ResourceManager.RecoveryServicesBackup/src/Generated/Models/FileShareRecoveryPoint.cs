@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class FileShareRecoveryPoint : RecoveryPoint
     {
         /// <summary> Initializes a new instance of <see cref="FileShareRecoveryPoint"/>. </summary>
-        public FileShareRecoveryPoint() : base("AzureFileShareRecoveryPoint")
+        internal FileShareRecoveryPoint() : base("AzureFileShareRecoveryPoint")
         {
             RecoveryPointTierDetails = new ChangeTrackingList<RecoveryPointTierInformation>();
         }
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Type of the backup copy. Specifies whether it is a crash consistent backup or app consistent. </summary>
-        public string RecoveryPointType { get; set; }
+        public string RecoveryPointType { get; }
 
         /// <summary> Time at which this backup copy was created. </summary>
-        public DateTimeOffset? RecoveryPointOn { get; set; }
+        public DateTimeOffset? RecoveryPointOn { get; }
 
         /// <summary> Contains Url to the snapshot of fileshare, if applicable. </summary>
-        public string FileShareSnapshotUri { get; set; }
+        public string FileShareSnapshotUri { get; }
 
         /// <summary> Contains recovery point size. </summary>
-        public int? RecoveryPointSizeInGB { get; set; }
+        public int? RecoveryPointSizeInGB { get; }
 
         /// <summary> Properties of Recovery Point. </summary>
-        public RecoveryPointProperties RecoveryPointProperties { get; set; }
+        public RecoveryPointProperties RecoveryPointProperties { get; }
 
         /// <summary> Recovery point tier information. </summary>
         public IList<RecoveryPointTierInformation> RecoveryPointTierDetails { get; }

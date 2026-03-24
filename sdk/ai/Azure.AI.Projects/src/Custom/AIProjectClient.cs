@@ -25,7 +25,7 @@ namespace Azure.AI.Projects
         private readonly AuthenticationTokenProvider _tokenProvider;
         private static readonly string[] AuthorizationScopes = ["https://ai.azure.com/.default"];
         private ProjectOpenAIClient _cachedOpenAIClient;
-        private AgentsClient _cachedAgentsClient;
+        private AgentAdministrationClient _cachedAgentsClient;
         private readonly TelemetryDetails _telemetryDetails;
 
         /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
@@ -81,7 +81,7 @@ namespace Azure.AI.Projects
             _apiVersion = options.Version;
             _endpoint = endpoint;
             _tokenProvider = tokenProvider;
-            _telemetryDetails = new(typeof(AgentsClient).Assembly, options?.UserAgentApplicationId);
+            _telemetryDetails = new(typeof(AgentAdministrationClient).Assembly, options?.UserAgentApplicationId);
 
             PipelinePolicyHelpers.AddQueryParameterPolicyIf(
                 options,
@@ -142,7 +142,7 @@ namespace Azure.AI.Projects
             return Volatile.Read(ref _cachedOpenAIClient) ?? Interlocked.CompareExchange(ref _cachedOpenAIClient, this.GetProjectOpenAIClient(), null) ?? _cachedOpenAIClient;
         }
 
-        internal virtual AgentsClient GetCachedAgentsClient()
+        internal virtual AgentAdministrationClient GetCachedAgentsClient()
         {
             return Volatile.Read(ref _cachedAgentsClient) ?? Interlocked.CompareExchange(ref _cachedAgentsClient, this.GetProjectAgentsClient(), null) ?? _cachedAgentsClient;
         }
@@ -198,7 +198,7 @@ namespace Azure.AI.Projects
         /// <summary> Gets the client for managing indexes. </summary>
         public virtual AIProjectIndexesOperations Indexes { get => GetAIProjectIndexesOperationsClient(); }
         public virtual ProjectOpenAIClient OpenAI => GetCachedOpenAIClient();
-        public virtual AgentsClient Agents => GetCachedAgentsClient();
+        public virtual AgentAdministrationClient Agents => GetCachedAgentsClient();
         public virtual AIProjectMemoryStoresOperations MemoryStores => GetAIProjectMemoryStoresOperationsClient();
         public virtual RedTeams RedTeams => GetRedTeamsClient();
         public virtual EvaluationRules EvaluationRules => GetEvaluationRulesClient();

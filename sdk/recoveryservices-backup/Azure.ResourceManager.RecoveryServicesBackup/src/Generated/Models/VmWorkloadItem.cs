@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class VmWorkloadItem : WorkloadItem
     {
         /// <summary> Initializes a new instance of <see cref="VmWorkloadItem"/>. </summary>
-        public VmWorkloadItem() : base("AzureVmWorkloadItem")
+        internal VmWorkloadItem() : base("AzureVmWorkloadItem")
         {
         }
 
@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Name for instance or AG. </summary>
-        public string ParentName { get; set; }
+        public string ParentName { get; }
 
         /// <summary> Host/Cluster Name for instance or AG. </summary>
-        public string ServerName { get; set; }
+        public string ServerName { get; }
 
         /// <summary> Indicates if workload item is auto-protectable. </summary>
-        public bool? IsAutoProtectable { get; set; }
+        public bool? IsAutoProtectable { get; }
 
         /// <summary> For instance or AG, indicates number of DB's present. </summary>
-        public int? SubInquiredItemCount { get; set; }
+        public int? SubInquiredItemCount { get; }
 
         /// <summary> For instance or AG, indicates number of DB's to be protected. </summary>
-        public int? SubWorkloadItemCount { get; set; }
+        public int? SubWorkloadItemCount { get; }
     }
 }

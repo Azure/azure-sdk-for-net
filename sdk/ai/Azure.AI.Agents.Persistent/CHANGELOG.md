@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.10 (Unreleased)
+## 1.2.0-beta.11 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.10 (2026-03-20)
+
+### Bugs Fixed
+- Improved error reporting during streaming response processing.
+- Fixed issue on streaming event deserialization [issue](https://github.com/Azure/azure-sdk-for-net/issues/55585).
+- Fix OpenAPI tool call serialization during telemetry collection [issue](https://github.com/Azure/azure-sdk-for-net/issues/57183).
+- Fix function arguments serialization [issue](https://github.com/Azure/azure-sdk-for-net/issues/53817).
+
+### Sample updates
+- Added code to show how to force tool use in Azure AI Search with streaming example. Related to [issue](https://github.com/Azure/azure-sdk-for-net/issues/54056).
+- Added sample, demonstrating the logging of network requests.
+- Added sample for generation of structured outputs. Related to [issue](https://github.com/Azure/azure-sdk-for-net/issues/53390)
 
 ## 1.2.0-beta.9 (2026-02-23)
 

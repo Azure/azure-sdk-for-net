@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ThreatInfo"/>. </summary>
-        public ThreatInfo()
+        internal ThreatInfo()
         {
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public DateTimeOffset? LastUpdatedOn { get; }
 
         /// <summary> Threat Status Types. </summary>
-        public ThreatState? ThreatState { get; set; }
+        public ThreatState? ThreatState { get; }
 
         /// <summary> Start timestamp of the threat. </summary>
         public DateTimeOffset? ThreatStartOn { get; }
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public Uri ThreatURI { get; }
 
         /// <summary> Threat Severity Types. </summary>
-        public ThreatSeverity? ThreatSeverity { get; set; }
+        public ThreatSeverity? ThreatSeverity { get; }
     }
 }

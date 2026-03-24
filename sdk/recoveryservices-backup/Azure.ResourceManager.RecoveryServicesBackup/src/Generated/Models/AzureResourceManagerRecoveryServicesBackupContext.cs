@@ -137,7 +137,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(InstantItemRecoveryTarget))]
     [ModelReaderWriterBuildable(typeof(InstantRPAdditionalDetails))]
     [ModelReaderWriterBuildable(typeof(JobDetailResource))]
-    [ModelReaderWriterBuildable(typeof(JobOperationResultResource))]
     [ModelReaderWriterBuildable(typeof(JobResourceList))]
     [ModelReaderWriterBuildable(typeof(KekDetails))]
     [ModelReaderWriterBuildable(typeof(KeyAndSecretDetails))]

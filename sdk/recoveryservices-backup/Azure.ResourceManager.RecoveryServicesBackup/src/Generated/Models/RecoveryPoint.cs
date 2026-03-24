@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal string ObjectType { get; set; }
 
         /// <summary> Threat status of the recovery point. </summary>
-        public ThreatStatus? ThreatStatus { get; set; }
+        public ThreatStatus? ThreatStatus { get; }
 
         /// <summary> Recovery point threat information. </summary>
         public IList<ThreatInfo> ThreatInfo { get; }

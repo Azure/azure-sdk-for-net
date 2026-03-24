@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class AzureVmWorkloadSAPHanaScaleoutProtectableItem : VmWorkloadProtectableItem
     {
         /// <summary> Initializes a new instance of <see cref="AzureVmWorkloadSAPHanaScaleoutProtectableItem"/>. </summary>
-        public AzureVmWorkloadSAPHanaScaleoutProtectableItem()
+        internal AzureVmWorkloadSAPHanaScaleoutProtectableItem()
         {
         }
 

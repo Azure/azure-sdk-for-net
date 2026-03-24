@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRecoveryPointExtendedInfo"/>. </summary>
-        public WorkloadSqlRecoveryPointExtendedInfo()
+        internal WorkloadSqlRecoveryPointExtendedInfo()
         {
             DataDirectoryPaths = new ChangeTrackingList<SqlDataDirectory>();
             IncludedDatabases = new ChangeTrackingList<DatabaseInRP>();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> UTC time at which data directory info was captured. </summary>
-        public DateTimeOffset? DataDirectoryInfoCapturedOn { get; set; }
+        public DateTimeOffset? DataDirectoryInfoCapturedOn { get; }
 
         /// <summary> List of data directory paths during restore operation. </summary>
         public IList<SqlDataDirectory> DataDirectoryPaths { get; }

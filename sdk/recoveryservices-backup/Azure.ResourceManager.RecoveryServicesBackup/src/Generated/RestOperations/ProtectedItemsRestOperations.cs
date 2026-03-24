@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath(containerName, true);
             uri.AppendPath("/protectedItems/", false);
             uri.AppendPath(protectedItemName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -86,7 +89,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath(containerName, true);
             uri.AppendPath("/protectedItems/", false);
             uri.AppendPath(protectedItemName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -117,7 +123,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath(containerName, true);
             uri.AppendPath("/protectedItems/", false);
             uri.AppendPath(protectedItemName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
