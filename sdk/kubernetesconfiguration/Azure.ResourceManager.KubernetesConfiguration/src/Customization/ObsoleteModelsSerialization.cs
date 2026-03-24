@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable SA1402 // File may only contain a single type
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
 using System;
 using System.ClientModel.Primitives;

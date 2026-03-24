@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable SA1402 // File may only contain a single type - grouping obsolete stub types together
 
 using System;
 using System.Collections.Generic;
