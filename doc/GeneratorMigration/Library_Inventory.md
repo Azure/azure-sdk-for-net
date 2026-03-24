@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-03-21 17:47:46 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-03-24 06:45:14 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -16,9 +16,9 @@
 
 ## Summary
 
-- Total libraries: 411
-- Management Plane (MPG): 232
-  - Autorest/Swagger: 118
+- Total libraries: 410
+- Management Plane (MPG): 231
+  - Autorest/Swagger: 117
   - New Emitter (TypeSpec): 114
   - Old TypeSpec: 0
 - Data Plane (DPG): 145
@@ -223,7 +223,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | mongocluster | Azure.ResourceManager.MongoCluster | ✅ |
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas | ✅ |
 | mysql | Azure.ResourceManager.MySql | ✅ |
-| neonpostgres | Azure.ResourceManager.NeonPostgres | ✅ |
 | networkfunction | Azure.ResourceManager.NetworkFunction | ✅ |
 | nginx | Azure.ResourceManager.Nginx | ✅ |
 | onlineexperimentation | Azure.ResourceManager.OnlineExperimentation | ✅ |
@@ -260,6 +259,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | storagediscovery | Azure.ResourceManager.StorageDiscovery | ✅ |
 | storagemover | Azure.ResourceManager.StorageMover | ✅ |
 | storagesync | Azure.ResourceManager.StorageSync | ✅ |
+| support | Azure.ResourceManager.Support | ✅ |
 | terraform | Azure.ResourceManager.Terraform | ✅ |
 | trafficmanager | Azure.ResourceManager.TrafficManager | ✅ |
 | trustedsigning | Azure.ResourceManager.TrustedSigning | ✅ |
@@ -272,7 +272,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 118
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 117
 
 | Service | Library |
 | ------- | ------- |
@@ -388,7 +388,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 11
 | storagepool | Azure.ResourceManager.StoragePool |
 | streamanalytics | Azure.ResourceManager.StreamAnalytics |
 | subscription | Azure.ResourceManager.Subscription |
-| support | Azure.ResourceManager.Support |
 | synapse | Azure.ResourceManager.Synapse |
 | voiceservices | Azure.ResourceManager.VoiceServices |
 | websites | Azure.ResourceManager.AppService |
