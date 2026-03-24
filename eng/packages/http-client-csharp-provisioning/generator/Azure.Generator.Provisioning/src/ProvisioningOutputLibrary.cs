@@ -22,6 +22,13 @@ namespace Azure.Generator.Provisioning
         private Dictionary<string, ProvisioningResourceProvider>? _resourcesByIdPattern;
         private Dictionary<InputModelType, List<ProvisioningResourceProvider>>? _resourcesByModel;
 
+        /// <summary>
+        /// Gets the BuiltInRole type provider if any resources define RBAC roles.
+        /// Set during <see cref="BuildTypeProviders"/> and accessed by resource providers
+        /// to generate CreateRoleAssignment methods.
+        /// </summary>
+        internal BuiltInRoleProvider? BuiltInRole { get; private set; }
+
         private T GetValue<T>(ref T? field) where T : class
         {
             InitializeResources(ref _resources, ref _resourcesByIdPattern, ref _resourcesByModel);
@@ -110,6 +117,16 @@ namespace Azure.Generator.Provisioning
             {
                 providers.Add(resource);
                 ProvisioningGenerator.Instance.AddTypeToKeep(resource.Name);
+            }
+
+            // Add BuiltInRole struct if any resources have RBAC roles defined.
+            var serviceName = ProvisioningGenerator.Instance.TypeFactory.ResourceProviderName;
+            BuiltInRole = BuiltInRoleProvider.TryCreate(
+                serviceName,
+                ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources);
+            if (BuiltInRole != null)
+            {
+                providers.Add(BuiltInRole);
             }
 
             // Build models and enums via TypeFactory — our overridden CreateModel/CreateEnum
