@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PipelineSourceTriggerDescriptor"/>. </summary>
-        /// <param name="timestamp"> The timestamp when the source update happened. </param>
+        /// <param name="triggeredOn"> The timestamp when the source update happened. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineSourceTriggerDescriptor(DateTimeOffset? timestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PipelineSourceTriggerDescriptor(DateTimeOffset? triggeredOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Timestamp = timestamp;
+            TriggeredOn = triggeredOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The timestamp when the source update happened. </summary>
         [WirePath("timestamp")]
-        public DateTimeOffset? Timestamp { get; }
+        public DateTimeOffset? TriggeredOn { get; }
     }
 }

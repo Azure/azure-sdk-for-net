@@ -300,9 +300,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         private readonly string _value;
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTriggerStatus"/>. </summary>
         public ContainerRegistryTriggerStatus(string value) => _value = value ?? throw new ArgumentNullException(nameof(value));
-        /// <summary> Enabled. </summary>
-        public static ContainerRegistryTriggerStatus Disabled { get; } = new ContainerRegistryTriggerStatus("Disabled");
         /// <summary> Disabled. </summary>
+        public static ContainerRegistryTriggerStatus Disabled { get; } = new ContainerRegistryTriggerStatus("Disabled");
+        /// <summary> Enabled. </summary>
         public static ContainerRegistryTriggerStatus Enabled { get; } = new ContainerRegistryTriggerStatus("Enabled");
         /// <inheritdoc />
         public override bool Equals(object obj) => obj is ContainerRegistryTriggerStatus other && Equals(other);

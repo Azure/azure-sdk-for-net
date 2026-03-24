@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         string IPersistableModel<ContainerRegistryCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException();
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         [WirePath("sourceRegistry")]
-        public SourceRegistryCredentials SourceRegistry { get { throw new NotSupportedException(); } set { } }
+        public ContainerRegistrySourceRegistryCredentials SourceRegistry { get { throw new NotSupportedException(); } set { } }
         [WirePath("sourceRegistry.loginMode")]
         public SourceRegistryLoginMode? SourceRegistryLoginMode { get { throw new NotSupportedException(); } set { } }
         [WirePath("customRegistries")]
@@ -375,13 +375,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
     [Obsolete("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class SourceRegistryCredentials : IJsonModel<SourceRegistryCredentials>, IPersistableModel<SourceRegistryCredentials>
+    public partial class ContainerRegistrySourceRegistryCredentials : IJsonModel<ContainerRegistrySourceRegistryCredentials>, IPersistableModel<ContainerRegistrySourceRegistryCredentials>
     {
-        SourceRegistryCredentials IJsonModel<SourceRegistryCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException();
-        void IJsonModel<SourceRegistryCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        BinaryData IPersistableModel<SourceRegistryCredentials>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException();
-        SourceRegistryCredentials IPersistableModel<SourceRegistryCredentials>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException();
-        string IPersistableModel<SourceRegistryCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException();
+        ContainerRegistrySourceRegistryCredentials IJsonModel<ContainerRegistrySourceRegistryCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException();
+        void IJsonModel<ContainerRegistrySourceRegistryCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        BinaryData IPersistableModel<ContainerRegistrySourceRegistryCredentials>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException();
+        ContainerRegistrySourceRegistryCredentials IPersistableModel<ContainerRegistrySourceRegistryCredentials>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException();
+        string IPersistableModel<ContainerRegistrySourceRegistryCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException();
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         /// <summary>
         /// The Entra identity used for source registry login.

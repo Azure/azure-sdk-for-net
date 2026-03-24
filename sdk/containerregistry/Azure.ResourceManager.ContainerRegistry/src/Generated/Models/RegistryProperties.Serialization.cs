@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryEncryption encryption = default;
             bool? isDataEndpointEnabled = default;
             IReadOnlyList<string> dataEndpointHostNames = default;
-            RegionalEndpoint? regionalEndpoints = default;
+            ContainerRegistryRegionalEndpoint? regionalEndpoints = default;
             IReadOnlyList<string> regionalEndpointHostNames = default;
             ContainerRegistryEndpointProtocol? endpointProtocol = default;
             IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections = default;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    regionalEndpoints = new RegionalEndpoint(prop.Value.GetString());
+                    regionalEndpoints = new ContainerRegistryRegionalEndpoint(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("regionalEndpointHostNames"u8))

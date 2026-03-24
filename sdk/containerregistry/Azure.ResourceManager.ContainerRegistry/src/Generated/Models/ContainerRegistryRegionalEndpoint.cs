@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerRegistry;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> Whether or not per-region endpoints are enabled for accessing the registry. </summary>
-    public readonly partial struct RegionalEndpoint : IEquatable<RegionalEndpoint>
+    public readonly partial struct ContainerRegistryRegionalEndpoint : IEquatable<ContainerRegistryRegionalEndpoint>
     {
         private readonly string _value;
         /// <summary> Regional endpoints are enabled. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Regional endpoints are disabled. </summary>
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="RegionalEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRegionalEndpoint"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RegionalEndpoint(string value)
+        public ContainerRegistryRegionalEndpoint(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Regional endpoints are enabled. </summary>
-        public static RegionalEndpoint Enabled { get; } = new RegionalEndpoint(EnabledValue);
+        public static ContainerRegistryRegionalEndpoint Enabled { get; } = new ContainerRegistryRegionalEndpoint(EnabledValue);
 
         /// <summary> Regional endpoints are disabled. </summary>
-        public static RegionalEndpoint Disabled { get; } = new RegionalEndpoint(DisabledValue);
+        public static ContainerRegistryRegionalEndpoint Disabled { get; } = new ContainerRegistryRegionalEndpoint(DisabledValue);
 
-        /// <summary> Determines if two <see cref="RegionalEndpoint"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerRegistryRegionalEndpoint"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RegionalEndpoint left, RegionalEndpoint right) => left.Equals(right);
+        public static bool operator ==(ContainerRegistryRegionalEndpoint left, ContainerRegistryRegionalEndpoint right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RegionalEndpoint"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerRegistryRegionalEndpoint"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RegionalEndpoint left, RegionalEndpoint right) => !left.Equals(right);
+        public static bool operator !=(ContainerRegistryRegionalEndpoint left, ContainerRegistryRegionalEndpoint right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RegionalEndpoint"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerRegistryRegionalEndpoint"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RegionalEndpoint(string value) => new RegionalEndpoint(value);
+        public static implicit operator ContainerRegistryRegionalEndpoint(string value) => new ContainerRegistryRegionalEndpoint(value);
 
-        /// <summary> Converts a string to a <see cref="RegionalEndpoint"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerRegistryRegionalEndpoint"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RegionalEndpoint?(string value) => value == null ? null : new RegionalEndpoint(value);
+        public static implicit operator ContainerRegistryRegionalEndpoint?(string value) => value == null ? null : new ContainerRegistryRegionalEndpoint(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RegionalEndpoint other && Equals(other);
+        public override bool Equals(object obj) => obj is ContainerRegistryRegionalEndpoint other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RegionalEndpoint other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContainerRegistryRegionalEndpoint other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

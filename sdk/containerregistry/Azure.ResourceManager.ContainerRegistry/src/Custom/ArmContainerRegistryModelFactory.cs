@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Backward compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryImportSource ContainerRegistryImportSource(ResourceIdentifier resourceId, string registryAddress, ContainerRegistryImportSourceCredentials credentials, string sourceImage)
-            => GenFactory.ContainerRegistryImportSource(resourceId: resourceId, registryUri: default, credentials: credentials, sourceImage: sourceImage);
+            => GenFactory.ContainerRegistryImportSource(resourceId: resourceId, registryUri: registryAddress == null ? null : new Uri(registryAddress), credentials: credentials, sourceImage: sourceImage);
 
         /// <summary> Backward compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

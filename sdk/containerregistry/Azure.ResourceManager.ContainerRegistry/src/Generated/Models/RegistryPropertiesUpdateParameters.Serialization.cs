@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryPolicies policies = default;
             ContainerRegistryEncryption encryption = default;
             bool? isDataEndpointEnabled = default;
-            RegionalEndpoint? regionalEndpoints = default;
+            ContainerRegistryRegionalEndpoint? regionalEndpoints = default;
             ContainerRegistryEndpointProtocol? endpointProtocol = default;
             ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default;
             ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    regionalEndpoints = new RegionalEndpoint(prop.Value.GetString());
+                    regionalEndpoints = new ContainerRegistryRegionalEndpoint(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("endpointProtocol"u8))

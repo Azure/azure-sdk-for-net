@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 throw new FormatException($"The model {nameof(PipelineTriggerDescriptor)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SourceTrigger))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("sourceTrigger"u8);
-                writer.WriteObjectValue(SourceTrigger, options);
+                writer.WriteObjectValue(Source, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            PipelineSourceTriggerDescriptor sourceTrigger = default;
+            PipelineSourceTriggerDescriptor source = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceTrigger = PipelineSourceTriggerDescriptor.DeserializePipelineSourceTriggerDescriptor(prop.Value, options);
+                    source = PipelineSourceTriggerDescriptor.DeserializePipelineSourceTriggerDescriptor(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PipelineTriggerDescriptor(sourceTrigger, additionalBinaryDataProperties);
+            return new PipelineTriggerDescriptor(source, additionalBinaryDataProperties);
         }
     }
 }
