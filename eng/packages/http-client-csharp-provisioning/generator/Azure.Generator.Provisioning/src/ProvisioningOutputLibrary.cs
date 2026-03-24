@@ -21,16 +21,23 @@ namespace Azure.Generator.Provisioning
         private IReadOnlyList<ProvisioningResourceProvider>? _resources;
         private Dictionary<string, ProvisioningResourceProvider>? _resourcesByIdPattern;
         private Dictionary<InputModelType, List<ProvisioningResourceProvider>>? _resourcesByModel;
+        private BuiltInRoleProvider? _builtInRole;
 
         /// <summary>
         /// Gets the BuiltInRole type provider if any resources define RBAC roles.
         /// </summary>
-        internal BuiltInRoleProvider? BuiltInRole { get; private set; }
+        internal BuiltInRoleProvider? BuiltInRole => GetNullableValue(ref _builtInRole);
 
         private T GetValue<T>(ref T? field) where T : class
         {
-            InitializeResources(ref _resources, ref _resourcesByIdPattern, ref _resourcesByModel);
+            InitializeResources(ref _resources, ref _resourcesByIdPattern, ref _resourcesByModel, ref _builtInRole);
             return field!;
+        }
+
+        private T? GetNullableValue<T>(ref T? field) where T : class
+        {
+            InitializeResources(ref _resources, ref _resourcesByIdPattern, ref _resourcesByModel, ref _builtInRole);
+            return field;
         }
 
         /// <summary>
@@ -41,7 +48,8 @@ namespace Azure.Generator.Provisioning
         private void InitializeResources(
             ref IReadOnlyList<ProvisioningResourceProvider>? resources,
             ref Dictionary<string, ProvisioningResourceProvider>? resourcesByIdPattern,
-            ref Dictionary<InputModelType, List<ProvisioningResourceProvider>>? resourcesByModel)
+            ref Dictionary<InputModelType, List<ProvisioningResourceProvider>>? resourcesByModel,
+            ref BuiltInRoleProvider? builtInRole)
         {
             if (resources != null)
                 return;
@@ -72,7 +80,7 @@ namespace Azure.Generator.Provisioning
             // it's constructed purely from input values, and must be available before any
             // resource provider's methods are materialized.
             var serviceName = ProvisioningGenerator.Instance.TypeFactory.ResourceProviderName;
-            BuiltInRole = BuiltInRoleProvider.TryCreate(serviceName, allMetadata);
+            builtInRole = BuiltInRoleProvider.TryCreate(serviceName, allMetadata);
 
             resources = list;
             resourcesByIdPattern = byIdPattern;
