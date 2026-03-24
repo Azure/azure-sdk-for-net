@@ -26,7 +26,7 @@ language: net
 root_check_enabled: True
 
 required_readme_sections:
-  - "Azure .+ client library for .NET"
+  - "Azure (.+ client library for .NET|AI Agent Server Adapter for .*.NET)"
   - "^Getting started$":
     - Install the [Pp]ackage
     - Prerequisites
