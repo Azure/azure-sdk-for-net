@@ -306,6 +306,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     public partial class QuestionAnsweringClient
     {
         protected QuestionAnsweringClient() { }
+        public QuestionAnsweringClient(Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientSettings settings) { }
         public QuestionAnsweringClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public QuestionAnsweringClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions options) { }
         public QuestionAnsweringClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -345,6 +346,13 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             V2023_04_01 = 1,
             V2025_05_15_Preview = 2,
         }
+    }
+    public partial class QuestionAnsweringClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public QuestionAnsweringClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class QuestionAnsweringModelFactory
     {

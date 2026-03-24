@@ -328,5 +328,17 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppVolumeQuotaRuleProvisioningState? quotaRuleProvisioningState = provisioningState.HasValue ? new NetAppVolumeQuotaRuleProvisioningState(provisioningState.Value.ToString()) : (NetAppVolumeQuotaRuleProvisioningState?)null;
             return NetAppVolumeQuotaRulePatch(tags, quotaRuleProvisioningState, quotaSizeInKiBs, quotaType, quotaTarget);
         }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = null, NetAppAccountEncryption encryption = null, bool? disableShowmount = null, string nfsV4IdDomain = null, MultiAdStatus? multiAdStatus = null)
+        {
+            return NetAppAccountPatch(id, name, resourceType, systemData, tags, location, identity, provisioningState, activeDirectories, encryption, disableShowmount, nfsV4IdDomain, multiAdStatus);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = null, NetAppAccountEncryption encryption = null, bool? disableShowmount = null)
+        {
+            return NetAppAccountPatch(id, name, resourceType, systemData, tags, location, identity, provisioningState, activeDirectories, encryption, disableShowmount);
+        }
     }
 }

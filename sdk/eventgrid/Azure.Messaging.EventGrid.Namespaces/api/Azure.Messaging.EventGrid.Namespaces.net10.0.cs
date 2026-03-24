@@ -54,6 +54,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
     public partial class EventGridReceiverClient
     {
         protected EventGridReceiverClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public EventGridReceiverClient(Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientSettings settings) { }
         public EventGridReceiverClient(System.Uri endpoint, string topicName, string subscriptionName, Azure.AzureKeyCredential credential) { }
         public EventGridReceiverClient(System.Uri endpoint, string topicName, string subscriptionName, Azure.AzureKeyCredential credential, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions options) { }
         public EventGridReceiverClient(System.Uri endpoint, string topicName, string subscriptionName, Azure.Core.TokenCredential credential) { }
@@ -89,9 +91,19 @@ namespace Azure.Messaging.EventGrid.Namespaces
             V2024_06_01 = 2,
         }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class EventGridReceiverClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public EventGridReceiverClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class EventGridSenderClient
     {
         protected EventGridSenderClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public EventGridSenderClient(Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientSettings settings) { }
         public EventGridSenderClient(System.Uri endpoint, string topicName, Azure.AzureKeyCredential credential) { }
         public EventGridSenderClient(System.Uri endpoint, string topicName, Azure.AzureKeyCredential credential, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions options) { }
         public EventGridSenderClient(System.Uri endpoint, string topicName, Azure.Core.TokenCredential credential) { }
@@ -114,6 +126,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
             V2023_11_01 = 1,
             V2024_06_01 = 2,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class EventGridSenderClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public EventGridSenderClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class FailedLockToken : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>
     {

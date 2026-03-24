@@ -1,5 +1,5 @@
 {
-  "package-name": "Specs.Azure.Tcgc.ClientInit.Default",
+  "package-name": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient",
   "license": {
     "name": "MIT License",
     "company": "Microsoft Corporation",

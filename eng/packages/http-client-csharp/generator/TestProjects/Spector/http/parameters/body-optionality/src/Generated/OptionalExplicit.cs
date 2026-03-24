@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,6 +18,8 @@ namespace Parameters.BodyOptionality._OptionalExplicit
     public partial class OptionalExplicit
     {
         protected OptionalExplicit() => throw null;
+
+        internal OptionalExplicit(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Support.Models
 {
     internal static partial class SupportResourceTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SupportResourceType value) => value switch
         {
             SupportResourceType.MicrosoftSupportSupportTickets => "Microsoft.Support/supportTickets",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Support.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SupportResourceType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SupportResourceType ToSupportResourceType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Support/supportTickets")) return SupportResourceType.MicrosoftSupportSupportTickets;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Support/communications")) return SupportResourceType.MicrosoftSupportCommunications;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Support/supportTickets"))
+            {
+                return SupportResourceType.MicrosoftSupportSupportTickets;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Support/communications"))
+            {
+                return SupportResourceType.MicrosoftSupportCommunications;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SupportResourceType value.");
         }
     }

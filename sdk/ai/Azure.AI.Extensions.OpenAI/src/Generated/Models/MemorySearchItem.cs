@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="MemorySearchItem"/>. </summary>
         /// <param name="memoryItem"> Retrieved memory item. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="memoryItem"/> is null. </exception>
-        public MemorySearchItem(MemoryItem memoryItem)
+        public MemorySearchItem(MemoryOutputItem memoryItem)
         {
             Argument.AssertNotNull(memoryItem, nameof(memoryItem));
 
@@ -26,13 +26,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="MemorySearchItem"/>. </summary>
         /// <param name="memoryItem"> Retrieved memory item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemorySearchItem(MemoryItem memoryItem, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemorySearchItem(MemoryOutputItem memoryItem, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MemoryItem = memoryItem;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Retrieved memory item. </summary>
-        public MemoryItem MemoryItem { get; set; }
+        public MemoryOutputItem MemoryItem { get; set; }
     }
 }

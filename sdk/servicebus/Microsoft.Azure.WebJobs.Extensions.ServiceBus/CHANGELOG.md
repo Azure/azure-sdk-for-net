@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- Replaced scaling warning/error log calls with standardized `LogFunctionScaleWarning` extension method to enable Scale Controller App Insights diagnostics.
+
 ## 5.17.0 (2025-06-20)
 
 ### Other Changes

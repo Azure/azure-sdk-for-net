@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>
       The official .NET library for performing CRUD opertations on Agents in Microsoft Foundry.
@@ -7,7 +7,7 @@
       ongoing forward compatibility.
     </Description>
     <AssemblyTitle>Microsoft Azure.AI.Projects.Agents client library</AssemblyTitle>
-    <Version>2.0.0-beta.1</Version>
+    <Version>2.0.0-beta.2</Version>
     <PackageTags>Azure.AI.Projects.Agents</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

@@ -1,5 +1,5 @@
 {
-  "name": "Specs.Azure.Tcgc.ClientInit.Default",
+  "name": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient",
   "apiVersions": [],
   "enums": [],
   "constants": [
@@ -1869,7 +1869,8 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.ParamAliasClientOptions.blobName",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "paramAlias": "blob"
                   }
                 ]
               }

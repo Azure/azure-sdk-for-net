@@ -22,7 +22,7 @@ public class ClientCreationAndAuthenticationSamples : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(
             endpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
             tokenProvider: new AzureCliCredential());
-        AgentsClient agentClient = projectClient.Agents;
+        AgentAdministrationClient agentClient = projectClient.Agents;
         #endregion
     }
 
@@ -45,7 +45,7 @@ public class ClientCreationAndAuthenticationSamples : ProjectsOpenAITestBase
             tokenProvider: new AzureCliCredential());
 
         #region Snippet:GetOpenAIClientsFromProjects
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent("AGENT_NAME");
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent("FOUNDRY_AGENT_NAME");
         OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
         VectorStoreClient vectorStoreClient = projectClient.OpenAI.GetVectorStoreClient();
         #endregion
