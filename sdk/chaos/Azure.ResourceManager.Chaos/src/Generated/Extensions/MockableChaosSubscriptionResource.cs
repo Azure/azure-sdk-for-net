@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -13,6 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Chaos;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Chaos.Mocking
@@ -22,6 +24,8 @@ namespace Azure.ResourceManager.Chaos.Mocking
     {
         private ClientDiagnostics _experimentsClientDiagnostics;
         private Experiments _experimentsRestClient;
+        private ClientDiagnostics _operationStatusesClientDiagnostics;
+        private OperationStatuses _operationStatusesRestClient;
 
         /// <summary> Initializes a new instance of MockableChaosSubscriptionResource for mocking. </summary>
         protected MockableChaosSubscriptionResource()
@@ -38,6 +42,10 @@ namespace Azure.ResourceManager.Chaos.Mocking
         private ClientDiagnostics ExperimentsClientDiagnostics => _experimentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Experiments ExperimentsRestClient => _experimentsRestClient ??= new Experiments(ExperimentsClientDiagnostics, Pipeline, Endpoint, "2025-01-01");
+
+        private ClientDiagnostics OperationStatusesClientDiagnostics => _operationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private OperationStatuses OperationStatusesRestClient => _operationStatusesRestClient ??= new OperationStatuses(OperationStatusesClientDiagnostics, Pipeline, Endpoint, "2025-01-01");
 
         /// <summary> Gets a collection of ChaosTargetMetadata in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -165,6 +173,108 @@ namespace Azure.ResourceManager.Chaos.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetExperimentsCollectionResultOfT(ExperimentsRestClient, Guid.Parse(Id.SubscriptionId), running, continuationToken, context), data => new ChaosExperimentResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns the current status of an async operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/operationStatuses/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<OperationStatusResult>> GetAsync(string location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = OperationStatusesClientDiagnostics.CreateScope("MockableChaosSubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the current status of an async operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/operationStatuses/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<OperationStatusResult> Get(string location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = OperationStatusesClientDiagnostics.CreateScope("MockableChaosSubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
