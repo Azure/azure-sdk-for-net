@@ -20,8 +20,8 @@ public class ExternalConsumerValidationTests
     public void Consumer_CanConstruct_Response_ViaConvenienceConstructor()
     {
         var response = new Models.Response("resp_123", "gpt-4o");
-        Assert.AreEqual("resp_123", response.Id);
-        Assert.AreEqual("gpt-4o", response.Model);
+        Assert.That(response.Id, Is.EqualTo("resp_123"));
+        Assert.That(response.Model, Is.EqualTo("gpt-4o"));
     }
 
     [Test]
@@ -29,8 +29,8 @@ public class ExternalConsumerValidationTests
     {
         var response = new Models.Response("resp_123", "gpt-4o");
         var evt = new ResponseCreatedEvent(sequenceNumber: 0, response: response);
-        Assert.IsNotNull(evt);
-        Assert.AreEqual(response, evt.Response);
+        Assert.That(evt, Is.Not.Null);
+        Assert.That(evt.Response, Is.EqualTo(response));
     }
 
     [Test]
@@ -38,7 +38,7 @@ public class ExternalConsumerValidationTests
     {
         var response = new Models.Response("resp_123", "gpt-4o");
         var evt = new ResponseInProgressEvent(sequenceNumber: 1, response: response);
-        Assert.IsNotNull(evt);
+        Assert.That(evt, Is.Not.Null);
     }
 
     [Test]
@@ -51,8 +51,8 @@ public class ExternalConsumerValidationTests
             contentIndex: 0,
             delta: "Hello ",
             logprobs: Array.Empty<ResponseLogProb>());
-        Assert.IsNotNull(evt);
-        Assert.AreEqual("Hello ", evt.Delta);
+        Assert.That(evt, Is.Not.Null);
+        Assert.That(evt.Delta, Is.EqualTo("Hello "));
     }
 
     [Test]
@@ -65,8 +65,8 @@ public class ExternalConsumerValidationTests
             contentIndex: 0,
             text: "Hello world",
             logprobs: Array.Empty<ResponseLogProb>());
-        Assert.IsNotNull(evt);
-        Assert.AreEqual("Hello world", evt.Text);
+        Assert.That(evt, Is.Not.Null);
+        Assert.That(evt.Text, Is.EqualTo("Hello world"));
     }
 
     [Test]
@@ -74,7 +74,7 @@ public class ExternalConsumerValidationTests
     {
         var response = new Models.Response("resp_123", "gpt-4o");
         var evt = new ResponseCompletedEvent(sequenceNumber: 4, response: response);
-        Assert.IsNotNull(evt);
+        Assert.That(evt, Is.Not.Null);
     }
 
     [Test]
@@ -85,8 +85,8 @@ public class ExternalConsumerValidationTests
         response.Error = error;
         var evt = new ResponseFailedEvent(sequenceNumber: 5, response: response);
 
-        Assert.IsNotNull(evt);
-        Assert.AreEqual("failed", evt.Response.Error.Message);
+        Assert.That(evt, Is.Not.Null);
+        Assert.That(evt.Response.Error.Message, Is.EqualTo("failed"));
     }
 
     [Test]
@@ -96,13 +96,13 @@ public class ExternalConsumerValidationTests
             text: "Hello world",
             annotations: Array.Empty<Annotation>(),
             logprobs: Array.Empty<LogProb>());
-        Assert.IsNotNull(content);
+        Assert.That(content, Is.Not.Null);
 
         var outputMsg = new OutputItemOutputMessage(
             id: "msg_test",
             content: new List<OutputMessageContent> { content },
             status: OutputItemOutputMessageStatus.Completed);
-        Assert.IsNotNull(outputMsg);
+        Assert.That(outputMsg, Is.Not.Null);
     }
 
     [Test]
@@ -121,7 +121,7 @@ public class ExternalConsumerValidationTests
             outputIndex: 0,
             item: outputMsg);
 
-        Assert.IsNotNull(evt);
+        Assert.That(evt, Is.Not.Null);
         XAssert.IsType<OutputItemOutputMessage>(evt.Item);
     }
 
@@ -129,20 +129,20 @@ public class ExternalConsumerValidationTests
     public void Consumer_CanConstruct_ResponseError()
     {
         var error = new Models.ResponseError(ResponseErrorCode.ServerError, "test");
-        Assert.AreEqual(ResponseErrorCode.ServerError, error.Code);
-        Assert.AreEqual("test", error.Message);
+        Assert.That(error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(error.Message, Is.EqualTo("test"));
     }
 
     [Test]
     public void Consumer_CanUse_ResponsesModelFactory()
     {
         var response = ResponsesModelFactory.Response(id: "mock_resp");
-        Assert.IsNotNull(response);
+        Assert.That(response, Is.Not.Null);
 
         var error = ResponsesModelFactory.ResponseError(
             code: ResponseErrorCode.InvalidPrompt,
             message: "bad input");
-        Assert.IsNotNull(error);
+        Assert.That(error, Is.Not.Null);
     }
 
     [Test]
@@ -152,14 +152,14 @@ public class ExternalConsumerValidationTests
         var response = new Models.Response("resp_123", "gpt-4o");
         response.Status = ResponseStatus.Completed;
 
-        Assert.AreEqual(ResponseStatus.Completed, response.Status);
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
     }
 
     [Test]
     public void Consumer_CanConstruct_CreateResponse()
     {
         var request = new CreateResponse();
-        Assert.IsNotNull(request);
+        Assert.That(request, Is.Not.Null);
     }
 
     [Test]
@@ -173,9 +173,9 @@ public class ExternalConsumerValidationTests
             Background = false,
         };
 
-        Assert.AreEqual("gpt-4o", request.Model);
-        Assert.AreEqual("You are a helpful assistant.", request.Instructions);
-        Assert.IsTrue(request.Stream);
-        Assert.IsFalse(request.Background);
+        Assert.That(request.Model, Is.EqualTo("gpt-4o"));
+        Assert.That(request.Instructions, Is.EqualTo("You are a helpful assistant."));
+        Assert.That(request.Stream, Is.True);
+        Assert.That(request.Background, Is.False);
     }
 }

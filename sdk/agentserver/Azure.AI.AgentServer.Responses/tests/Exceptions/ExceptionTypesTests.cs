@@ -12,9 +12,9 @@ public class BadRequestExceptionTests
     {
         var ex = new BadRequestException("Invalid payload");
 
-        Assert.AreEqual("Invalid payload", ex.Message);
-        Assert.IsNull(ex.ParamName);
-        Assert.IsNull(ex.InnerException);
+        Assert.That(ex.Message, Is.EqualTo("Invalid payload"));
+        Assert.That(ex.ParamName, Is.Null);
+        Assert.That(ex.InnerException, Is.Null);
     }
 
     [Test]
@@ -22,8 +22,8 @@ public class BadRequestExceptionTests
     {
         var ex = new BadRequestException("Model is required", "model");
 
-        Assert.AreEqual("Model is required", ex.Message);
-        Assert.AreEqual("model", ex.ParamName);
+        Assert.That(ex.Message, Is.EqualTo("Model is required"));
+        Assert.That(ex.ParamName, Is.EqualTo("model"));
     }
 
     [Test]
@@ -32,16 +32,16 @@ public class BadRequestExceptionTests
         var inner = new InvalidOperationException("inner");
         var ex = new BadRequestException("Invalid payload", inner);
 
-        Assert.AreEqual("Invalid payload", ex.Message);
-        Assert.AreSame(inner, ex.InnerException);
-        Assert.IsNull(ex.ParamName);
+        Assert.That(ex.Message, Is.EqualTo("Invalid payload"));
+        Assert.That(ex.InnerException, Is.SameAs(inner));
+        Assert.That(ex.ParamName, Is.Null);
     }
 
     [Test]
     public void ParamName_IsNullByDefault()
     {
         var ex = new BadRequestException("test");
-        Assert.IsNull(ex.ParamName);
+        Assert.That(ex.ParamName, Is.Null);
     }
 
     [Test]
@@ -59,8 +59,8 @@ public class ResourceNotFoundExceptionTests
     {
         var ex = new ResourceNotFoundException("Response 'resp_123' not found.");
 
-        Assert.AreEqual("Response 'resp_123' not found.", ex.Message);
-        Assert.IsNull(ex.InnerException);
+        Assert.That(ex.Message, Is.EqualTo("Response 'resp_123' not found."));
+        Assert.That(ex.InnerException, Is.Null);
     }
 
     [Test]
@@ -69,8 +69,8 @@ public class ResourceNotFoundExceptionTests
         var inner = new KeyNotFoundException("inner");
         var ex = new ResourceNotFoundException("Not found", inner);
 
-        Assert.AreEqual("Not found", ex.Message);
-        Assert.AreSame(inner, ex.InnerException);
+        Assert.That(ex.Message, Is.EqualTo("Not found"));
+        Assert.That(ex.InnerException, Is.SameAs(inner));
     }
 
     [Test]
@@ -89,10 +89,10 @@ public class ResponsesApiExceptionTests
         var error = new Error("rate_limit_exceeded", "Too many requests");
         var ex = new ResponsesApiException(error, 429);
 
-        Assert.AreSame(error, ex.Error);
-        Assert.AreEqual(429, ex.StatusCode);
-        Assert.AreEqual("Too many requests", ex.Message);
-        Assert.IsNull(ex.InnerException);
+        Assert.That(ex.Error, Is.SameAs(error));
+        Assert.That(ex.StatusCode, Is.EqualTo(429));
+        Assert.That(ex.Message, Is.EqualTo("Too many requests"));
+        Assert.That(ex.InnerException, Is.Null);
     }
 
     [Test]
@@ -102,9 +102,9 @@ public class ResponsesApiExceptionTests
         var inner = new HttpRequestException("upstream error");
         var ex = new ResponsesApiException(error, 429, inner);
 
-        Assert.AreSame(error, ex.Error);
-        Assert.AreEqual(429, ex.StatusCode);
-        Assert.AreSame(inner, ex.InnerException);
+        Assert.That(ex.Error, Is.SameAs(error));
+        Assert.That(ex.StatusCode, Is.EqualTo(429));
+        Assert.That(ex.InnerException, Is.SameAs(inner));
     }
 
     [Test]
@@ -113,7 +113,7 @@ public class ResponsesApiExceptionTests
         var error = new Error("custom_code", "Custom error message");
         var ex = new ResponsesApiException(error, 503);
 
-        Assert.AreEqual("Custom error message", ex.Message);
+        Assert.That(ex.Message, Is.EqualTo("Custom error message"));
     }
 
     [Test]

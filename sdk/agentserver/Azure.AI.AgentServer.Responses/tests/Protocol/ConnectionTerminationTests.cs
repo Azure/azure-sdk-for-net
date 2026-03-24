@@ -67,13 +67,13 @@ public class ConnectionTerminationTests : ProtocolTestBase
         var httpResponse = await PostResponsesAsync(new { model = "test", background = true });
 
         // POST returns immediately with in_progress
-        Assert.AreEqual(HttpStatusCode.OK, httpResponse.StatusCode);
+        Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(httpResponse);
-        Assert.AreEqual("in_progress", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
         var responseId = doc.RootElement.GetProperty("id").GetString()!;
 
         // Handler hasn't completed yet
-        Assert.IsFalse(handlerCompleted.Task.IsCompleted);
+        Assert.That(handlerCompleted.Task.IsCompleted, Is.False);
 
         // Wait for handler to complete
         await handlerCompleted.Task.WaitAsync(TimeSpan.FromSeconds(5));
@@ -81,9 +81,9 @@ public class ConnectionTerminationTests : ProtocolTestBase
 
         // GET should return completed response
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var getDoc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("completed", getDoc.RootElement.GetProperty("status").GetString());
+        Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // ── Helpers ─────────────────────────────────────────────────

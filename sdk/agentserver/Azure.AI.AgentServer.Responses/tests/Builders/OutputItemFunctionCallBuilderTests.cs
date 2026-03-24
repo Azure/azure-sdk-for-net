@@ -23,7 +23,7 @@ public class OutputItemFunctionCallBuilderTests
 
         var fc = stream.AddOutputItemFunctionCall("get_weather", "call_001");
 
-        Assert.IsNotNull(fc);
+        Assert.That(fc, Is.Not.Null);
         XAssert.IsType<OutputItemFunctionCallBuilder>(fc);
     }
 
@@ -34,7 +34,7 @@ public class OutputItemFunctionCallBuilderTests
 
         var fc = stream.AddOutputItemFunctionCall("get_weather", "call_001");
 
-        Assert.AreEqual(0, fc.OutputIndex);
+        Assert.That(fc.OutputIndex, Is.EqualTo(0));
     }
 
     [Test]
@@ -45,8 +45,8 @@ public class OutputItemFunctionCallBuilderTests
         var msg = stream.AddOutputItemMessage();      // index 0
         var fc = stream.AddOutputItemFunctionCall("fn", "c1"); // index 1
 
-        Assert.AreEqual(0, msg.OutputIndex);
-        Assert.AreEqual(1, fc.OutputIndex);
+        Assert.That(msg.OutputIndex, Is.EqualTo(0));
+        Assert.That(fc.OutputIndex, Is.EqualTo(1));
     }
 
     [Test]
@@ -66,8 +66,8 @@ public class OutputItemFunctionCallBuilderTests
 
         var fc = stream.AddOutputItemFunctionCall("get_weather", "call_001");
 
-        Assert.AreEqual("get_weather", fc.Name);
-        Assert.AreEqual("call_001", fc.CallId);
+        Assert.That(fc.Name, Is.EqualTo("get_weather"));
+        Assert.That(fc.CallId, Is.EqualTo("call_001"));
     }
 
     [Test]
@@ -80,7 +80,7 @@ public class OutputItemFunctionCallBuilderTests
         var fc = stream.AddOutputItemFunctionCall("fn", "c1");
         var evt = fc.EmitAdded(); // seq 2
 
-        Assert.AreEqual(2, evt.SequenceNumber);
+        Assert.That(evt.SequenceNumber, Is.EqualTo(2));
     }
 
     // ── T013: EmitAdded ───────────────────────────────────────
@@ -105,11 +105,11 @@ public class OutputItemFunctionCallBuilderTests
         var evt = fc.EmitAdded();
 
         var item = XAssert.IsType<OutputItemFunctionToolCall>(evt.Item);
-        Assert.AreEqual(fc.ItemId, item.Id);
-        Assert.AreEqual("call_001", item.CallId);
-        Assert.AreEqual("get_weather", item.Name);
-        Assert.AreEqual("", item.Arguments);
-        Assert.AreEqual(OutputItemFunctionToolCallStatus.InProgress, item.Status);
+        Assert.That(item.Id, Is.EqualTo(fc.ItemId));
+        Assert.That(item.CallId, Is.EqualTo("call_001"));
+        Assert.That(item.Name, Is.EqualTo("get_weather"));
+        Assert.That(item.Arguments, Is.EqualTo(""));
+        Assert.That(item.Status, Is.EqualTo(OutputItemFunctionToolCallStatus.InProgress));
     }
 
     [Test]
@@ -120,7 +120,7 @@ public class OutputItemFunctionCallBuilderTests
 
         var evt = fc.EmitAdded();
 
-        Assert.AreEqual(0, evt.OutputIndex);
+        Assert.That(evt.OutputIndex, Is.EqualTo(0));
     }
 
     // ── T014: EmitArgumentsDelta + EmitArgumentsDone ──────────
@@ -134,9 +134,9 @@ public class OutputItemFunctionCallBuilderTests
         var evt = fc.EmitArgumentsDelta("{\"loc");
 
         XAssert.IsType<ResponseFunctionCallArgumentsDeltaEvent>(evt);
-        Assert.AreEqual("{\"loc", evt.Delta);
-        Assert.AreEqual(fc.ItemId, evt.ItemId);
-        Assert.AreEqual(fc.OutputIndex, evt.OutputIndex);
+        Assert.That(evt.Delta, Is.EqualTo("{\"loc"));
+        Assert.That(evt.ItemId, Is.EqualTo(fc.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(fc.OutputIndex));
     }
 
     [Test]
@@ -148,10 +148,10 @@ public class OutputItemFunctionCallBuilderTests
         var evt = fc.EmitArgumentsDone("{\"location\":\"Seattle\"}");
 
         XAssert.IsType<ResponseFunctionCallArgumentsDoneEvent>(evt);
-        Assert.AreEqual("{\"location\":\"Seattle\"}", evt.Arguments);
-        Assert.AreEqual(fc.ItemId, evt.ItemId);
-        Assert.AreEqual("get_weather", evt.Name);
-        Assert.AreEqual(fc.OutputIndex, evt.OutputIndex);
+        Assert.That(evt.Arguments, Is.EqualTo("{\"location\":\"Seattle\"}"));
+        Assert.That(evt.ItemId, Is.EqualTo(fc.ItemId));
+        Assert.That(evt.Name, Is.EqualTo("get_weather"));
+        Assert.That(evt.OutputIndex, Is.EqualTo(fc.OutputIndex));
     }
 
     // ── T015: EmitDone ────────────────────────────────────────
@@ -167,7 +167,7 @@ public class OutputItemFunctionCallBuilderTests
         var evt = fc.EmitDone();
 
         XAssert.IsType<ResponseOutputItemDoneEvent>(evt);
-        Assert.AreEqual(fc.OutputIndex, evt.OutputIndex);
+        Assert.That(evt.OutputIndex, Is.EqualTo(fc.OutputIndex));
     }
 
     [Test]
@@ -181,11 +181,11 @@ public class OutputItemFunctionCallBuilderTests
         var evt = fc.EmitDone();
 
         var item = XAssert.IsType<OutputItemFunctionToolCall>(evt.Item);
-        Assert.AreEqual(fc.ItemId, item.Id);
-        Assert.AreEqual("call_001", item.CallId);
-        Assert.AreEqual("get_weather", item.Name);
-        Assert.AreEqual("{\"location\":\"Seattle\"}", item.Arguments);
-        Assert.AreEqual(OutputItemFunctionToolCallStatus.Completed, item.Status);
+        Assert.That(item.Id, Is.EqualTo(fc.ItemId));
+        Assert.That(item.CallId, Is.EqualTo("call_001"));
+        Assert.That(item.Name, Is.EqualTo("get_weather"));
+        Assert.That(item.Arguments, Is.EqualTo("{\"location\":\"Seattle\"}"));
+        Assert.That(item.Status, Is.EqualTo(OutputItemFunctionToolCallStatus.Completed));
     }
 
     [Test]
@@ -200,10 +200,10 @@ public class OutputItemFunctionCallBuilderTests
         var argsDone = fc.EmitArgumentsDone("{}"); // 3
         var done = fc.EmitDone();                  // 4
 
-        Assert.AreEqual(0, added.SequenceNumber);
-        Assert.AreEqual(1, delta1.SequenceNumber);
-        Assert.AreEqual(2, delta2.SequenceNumber);
-        Assert.AreEqual(3, argsDone.SequenceNumber);
-        Assert.AreEqual(4, done.SequenceNumber);
+        Assert.That(added.SequenceNumber, Is.EqualTo(0));
+        Assert.That(delta1.SequenceNumber, Is.EqualTo(1));
+        Assert.That(delta2.SequenceNumber, Is.EqualTo(2));
+        Assert.That(argsDone.SequenceNumber, Is.EqualTo(3));
+        Assert.That(done.SequenceNumber, Is.EqualTo(4));
     }
 }

@@ -39,49 +39,49 @@ public class TypeSpecModelConverterFactoryTests
     public void CanConvert_Response_ReturnsTrue()
     {
         var factory = new TypeSpecModelConverterFactory();
-        Assert.IsTrue(factory.CanConvert(typeof(Models.Response)));
+        Assert.That(factory.CanConvert(typeof(Models.Response)), Is.True);
     }
 
     [Test]
     public void CanConvert_CreateResponse_ReturnsTrue()
     {
         var factory = new TypeSpecModelConverterFactory();
-        Assert.IsTrue(factory.CanConvert(typeof(CreateResponse)));
+        Assert.That(factory.CanConvert(typeof(CreateResponse)), Is.True);
     }
 
     [Test]
     public void CanConvert_ResponseStreamEvent_ReturnsTrue()
     {
         var factory = new TypeSpecModelConverterFactory();
-        Assert.IsTrue(factory.CanConvert(typeof(ResponseStreamEvent)));
+        Assert.That(factory.CanConvert(typeof(ResponseStreamEvent)), Is.True);
     }
 
     [Test]
     public void CanConvert_ResponseCreatedEvent_ReturnsTrue()
     {
         var factory = new TypeSpecModelConverterFactory();
-        Assert.IsTrue(factory.CanConvert(typeof(ResponseCreatedEvent)));
+        Assert.That(factory.CanConvert(typeof(ResponseCreatedEvent)), Is.True);
     }
 
     [Test]
     public void CanConvert_String_ReturnsFalse()
     {
         var factory = new TypeSpecModelConverterFactory();
-        Assert.IsFalse(factory.CanConvert(typeof(string)));
+        Assert.That(factory.CanConvert(typeof(string)), Is.False);
     }
 
     [Test]
     public void CanConvert_Int_ReturnsFalse()
     {
         var factory = new TypeSpecModelConverterFactory();
-        Assert.IsFalse(factory.CanConvert(typeof(int)));
+        Assert.That(factory.CanConvert(typeof(int)), Is.False);
     }
 
     [Test]
     public void CanConvert_PlainObject_ReturnsFalse()
     {
         var factory = new TypeSpecModelConverterFactory();
-        Assert.IsFalse(factory.CanConvert(typeof(object)));
+        Assert.That(factory.CanConvert(typeof(object)), Is.False);
     }
 
     // --- Serialization ---
@@ -95,10 +95,10 @@ public class TypeSpecModelConverterFactoryTests
         var json = JsonSerializer.Serialize(response, options);
         using var doc = JsonDocument.Parse(json);
 
-        Assert.AreEqual("resp_test123", doc.RootElement.GetProperty("id").GetString());
-        Assert.AreEqual("response", doc.RootElement.GetProperty("object").GetString());
-        Assert.AreEqual("gpt-4o", doc.RootElement.GetProperty("model").GetString());
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("id").GetString(), Is.EqualTo("resp_test123"));
+        Assert.That(doc.RootElement.GetProperty("object").GetString(), Is.EqualTo("response"));
+        Assert.That(doc.RootElement.GetProperty("model").GetString(), Is.EqualTo("gpt-4o"));
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     [Test]
@@ -111,8 +111,8 @@ public class TypeSpecModelConverterFactoryTests
         using var doc = JsonDocument.Parse(json);
 
         // TypeSpec serializes DateTimeOffset as Unix timestamp (long)
-        Assert.IsTrue(doc.RootElement.TryGetProperty("created_at", out var createdAt));
-        Assert.IsTrue(createdAt.ValueKind == JsonValueKind.Number);
+        Assert.That(doc.RootElement.TryGetProperty("created_at", out var createdAt), Is.True);
+        Assert.That(createdAt.ValueKind == JsonValueKind.Number, Is.True);
     }
 
     [Test]
@@ -124,8 +124,8 @@ public class TypeSpecModelConverterFactoryTests
         var json = JsonSerializer.Serialize(error, options);
         using var doc = JsonDocument.Parse(json);
 
-        Assert.AreEqual("server_error", doc.RootElement.GetProperty("code").GetString());
-        Assert.AreEqual("Something went wrong", doc.RootElement.GetProperty("message").GetString());
+        Assert.That(doc.RootElement.GetProperty("code").GetString(), Is.EqualTo("server_error"));
+        Assert.That(doc.RootElement.GetProperty("message").GetString(), Is.EqualTo("Something went wrong"));
     }
 
     [Test]
@@ -139,8 +139,8 @@ public class TypeSpecModelConverterFactoryTests
         var json = JsonSerializer.Serialize(metadata, options);
         using var doc = JsonDocument.Parse(json);
 
-        Assert.AreEqual("u123", doc.RootElement.GetProperty("user_id").GetString());
-        Assert.AreEqual("s456", doc.RootElement.GetProperty("session").GetString());
+        Assert.That(doc.RootElement.GetProperty("user_id").GetString(), Is.EqualTo("u123"));
+        Assert.That(doc.RootElement.GetProperty("session").GetString(), Is.EqualTo("s456"));
     }
 
     [Test]
@@ -151,7 +151,7 @@ public class TypeSpecModelConverterFactoryTests
 
         var json = JsonSerializer.Serialize(nullResponse, options);
 
-        Assert.AreEqual("null", json);
+        Assert.That(json, Is.EqualTo("null"));
     }
 
     // --- Deserialization ---
@@ -165,10 +165,10 @@ public class TypeSpecModelConverterFactoryTests
         var json = JsonSerializer.Serialize(response, options);
         var deserialized = JsonSerializer.Deserialize<Models.Response>(json, options);
 
-        Assert.IsNotNull(deserialized);
-        Assert.AreEqual("resp_test123", deserialized!.Id);
-        Assert.AreEqual("gpt-4o", deserialized.Model);
-        Assert.AreEqual(ResponseStatus.Completed, deserialized.Status);
+        Assert.That(deserialized, Is.Not.Null);
+        Assert.That(deserialized!.Id, Is.EqualTo("resp_test123"));
+        Assert.That(deserialized.Model, Is.EqualTo("gpt-4o"));
+        Assert.That(deserialized.Status, Is.EqualTo(ResponseStatus.Completed));
     }
 
     [Test]
@@ -180,9 +180,9 @@ public class TypeSpecModelConverterFactoryTests
         var json = JsonSerializer.Serialize(error, options);
         var deserialized = JsonSerializer.Deserialize<Models.ResponseError>(json, options);
 
-        Assert.IsNotNull(deserialized);
-        Assert.AreEqual(ResponseErrorCode.ServerError, deserialized!.Code);
-        Assert.AreEqual("test error", deserialized.Message);
+        Assert.That(deserialized, Is.Not.Null);
+        Assert.That(deserialized!.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(deserialized.Message, Is.EqualTo("test error"));
     }
 
     [Test]
@@ -190,7 +190,7 @@ public class TypeSpecModelConverterFactoryTests
     {
         var options = CreateOptions();
         var result = JsonSerializer.Deserialize<Models.Response>("null", options);
-        Assert.IsNull(result);
+        Assert.That(result, Is.Null);
     }
 
     [Test]
@@ -207,9 +207,9 @@ public class TypeSpecModelConverterFactoryTests
 
         var request = JsonSerializer.Deserialize<CreateResponse>(json, options);
 
-        Assert.IsNotNull(request);
-        Assert.AreEqual("gpt-4o", request!.Model);
-        Assert.AreEqual("You are a helpful assistant.", request.Instructions);
+        Assert.That(request, Is.Not.Null);
+        Assert.That(request!.Model, Is.EqualTo("gpt-4o"));
+        Assert.That(request.Instructions, Is.EqualTo("You are a helpful assistant."));
     }
 
     // --- Polymorphic deserialization ---
@@ -224,11 +224,11 @@ public class TypeSpecModelConverterFactoryTests
         var json = JsonSerializer.Serialize<ResponseStreamEvent>(evt, options);
         var deserialized = JsonSerializer.Deserialize<ResponseStreamEvent>(json, options);
 
-        Assert.IsNotNull(deserialized);
+        Assert.That(deserialized, Is.Not.Null);
         XAssert.IsType<ResponseCreatedEvent>(deserialized);
         var created = (ResponseCreatedEvent)deserialized!;
-        Assert.AreEqual(42, created.SequenceNumber);
-        Assert.AreEqual("resp_test123", created.Response.Id);
+        Assert.That(created.SequenceNumber, Is.EqualTo(42));
+        Assert.That(created.Response.Id, Is.EqualTo("resp_test123"));
     }
 
     [Test]
@@ -241,10 +241,10 @@ public class TypeSpecModelConverterFactoryTests
         var json = JsonSerializer.Serialize<ResponseStreamEvent>(evt, options);
         var deserialized = JsonSerializer.Deserialize<ResponseStreamEvent>(json, options);
 
-        Assert.IsNotNull(deserialized);
+        Assert.That(deserialized, Is.Not.Null);
         XAssert.IsType<ResponseCompletedEvent>(deserialized);
         var completed = (ResponseCompletedEvent)deserialized!;
-        Assert.AreEqual(99, completed.SequenceNumber);
+        Assert.That(completed.SequenceNumber, Is.EqualTo(99));
     }
 
     // --- Round-trip ---
@@ -263,12 +263,12 @@ public class TypeSpecModelConverterFactoryTests
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<Models.Response>(json, options);
 
-        Assert.IsNotNull(restored);
-        Assert.AreEqual(original.Id, restored!.Id);
-        Assert.AreEqual(original.Model, restored.Model);
-        Assert.AreEqual(original.Status, restored.Status);
-        Assert.AreEqual(original.Error?.Code, restored.Error?.Code);
-        Assert.AreEqual(original.Error?.Message, restored.Error?.Message);
+        Assert.That(restored, Is.Not.Null);
+        Assert.That(restored!.Id, Is.EqualTo(original.Id));
+        Assert.That(restored.Model, Is.EqualTo(original.Model));
+        Assert.That(restored.Status, Is.EqualTo(original.Status));
+        Assert.That(restored.Error?.Code, Is.EqualTo(original.Error?.Code));
+        Assert.That(restored.Error?.Message, Is.EqualTo(original.Error?.Message));
     }
 
     [Test]
@@ -281,10 +281,10 @@ public class TypeSpecModelConverterFactoryTests
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<ResponseCreatedEvent>(json, options);
 
-        Assert.IsNotNull(restored);
-        Assert.AreEqual(7, restored!.SequenceNumber);
-        Assert.AreEqual(response.Id, restored.Response.Id);
-        Assert.AreEqual(response.Model, restored.Response.Model);
+        Assert.That(restored, Is.Not.Null);
+        Assert.That(restored!.SequenceNumber, Is.EqualTo(7));
+        Assert.That(restored.Response.Id, Is.EqualTo(response.Id));
+        Assert.That(restored.Response.Model, Is.EqualTo(response.Model));
     }
 
     [Test]
@@ -298,9 +298,9 @@ public class TypeSpecModelConverterFactoryTests
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<Metadata>(json, options);
 
-        Assert.IsNotNull(restored);
-        Assert.AreEqual("value1", restored!.AdditionalProperties["key1"]);
-        Assert.AreEqual("value2", restored.AdditionalProperties["key2"]);
+        Assert.That(restored, Is.Not.Null);
+        Assert.That(restored!.AdditionalProperties["key1"], Is.EqualTo("value1"));
+        Assert.That(restored.AdditionalProperties["key2"], Is.EqualTo("value2"));
     }
 
     [Test]
@@ -312,7 +312,7 @@ public class TypeSpecModelConverterFactoryTests
         var first = factory.CanConvert(typeof(Models.Response));
         var second = factory.CanConvert(typeof(Models.Response));
 
-        Assert.AreEqual(first, second);
-        Assert.IsTrue(first);
+        Assert.That(second, Is.EqualTo(first));
+        Assert.That(first, Is.True);
     }
 }

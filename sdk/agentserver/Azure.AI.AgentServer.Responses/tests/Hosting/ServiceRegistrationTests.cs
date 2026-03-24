@@ -38,7 +38,7 @@ public class ServiceRegistrationTests
         using var sp = services.BuildServiceProvider();
         var resolved = sp.GetRequiredService<IResponsesProvider>();
 
-        Assert.AreSame(custom, resolved);
+        Assert.That(resolved, Is.SameAs(custom));
     }
 
     [Test]
@@ -53,7 +53,7 @@ public class ServiceRegistrationTests
         using var sp = services.BuildServiceProvider();
         var resolved = sp.GetRequiredService<IResponsesCancellationSignalProvider>();
 
-        Assert.AreSame(custom, resolved);
+        Assert.That(resolved, Is.SameAs(custom));
     }
 
     [Test]
@@ -68,7 +68,7 @@ public class ServiceRegistrationTests
         using var sp = services.BuildServiceProvider();
         var resolved = sp.GetRequiredService<IResponsesStreamProvider>();
 
-        Assert.AreSame(custom, resolved);
+        Assert.That(resolved, Is.SameAs(custom));
     }
 
     [Test]
@@ -84,8 +84,8 @@ public class ServiceRegistrationTests
         var stream = sp.GetRequiredService<IResponsesStreamProvider>();
 
         // All three should resolve to the same InMemoryResponsesProvider instance
-        Assert.AreSame(state, cancel);
-        Assert.AreSame(cancel, stream);
+        Assert.That(cancel, Is.SameAs(state));
+        Assert.That(stream, Is.SameAs(cancel));
     }
 
     [Test]
@@ -103,10 +103,10 @@ public class ServiceRegistrationTests
         var stream = sp.GetRequiredService<IResponsesStreamProvider>();
 
         // Custom state provider
-        Assert.AreSame(customState, state);
+        Assert.That(state, Is.SameAs(customState));
 
         // Cancel and stream should resolve to InMemory (same instance)
-        Assert.AreSame(cancel, stream);
+        Assert.That(stream, Is.SameAs(cancel));
         Assert.That(cancel, Is.Not.TypeOf<StubResponsesProvider>());
     }
 
@@ -136,7 +136,7 @@ public class ServiceRegistrationTests
         var body = JsonSerializer.Serialize(new { model = "test" });
         var response = await client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Verify state provider got state calls
         XAssert.Contains("CreateResponseAsync", stateProvider.Calls);
@@ -188,7 +188,7 @@ public class ServiceRegistrationTests
 
         // Cancel should route to cancellation provider
         var cancelResponse = await client.PostAsync($"/responses/{responseId}/cancel", null);
-        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         XAssert.Contains("CancelResponseAsync", cancelProvider.Calls);
 
         // Wait for background to finish (poll until terminal status)

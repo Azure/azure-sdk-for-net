@@ -21,23 +21,22 @@ public class PayloadValidationProtocolTests : ProtocolTestBase
         // model should be a string, not a number
         var response = await PostResponsesAsync("{\"model\": 42}");
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
 
         // Top-level error shape
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
 
         // B29: details[] array must be present
-        Assert.IsTrue(error.TryGetProperty("details", out var details),
-            "error.details[] must be present for validation errors");
-        Assert.AreEqual(JsonValueKind.Array, details.ValueKind);
-        Assert.IsTrue(details.GetArrayLength() >= 1, "details[] must have at least one entry");
+        Assert.That(error.TryGetProperty("details", out var details), Is.True, "error.details[] must be present for validation errors");
+        Assert.That(details.ValueKind, Is.EqualTo(JsonValueKind.Array));
+        Assert.That(details.GetArrayLength() >= 1, Is.True, "details[] must have at least one entry");
 
         // Each detail has: code, type, param
         var detail = details[0];
-        Assert.AreEqual("invalid_value", detail.GetProperty("code").GetString());
-        Assert.AreEqual("invalid_request_error", detail.GetProperty("type").GetString());
+        Assert.That(detail.GetProperty("code").GetString(), Is.EqualTo("invalid_value"));
+        Assert.That(detail.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     // Validates: B29 — detail param contains JSON path
@@ -46,7 +45,7 @@ public class PayloadValidationProtocolTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync("{\"model\": 42}");
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(response);
         var details = doc.RootElement.GetProperty("error").GetProperty("details");
 
@@ -65,7 +64,7 @@ public class PayloadValidationProtocolTests : ProtocolTestBase
                 }
             }
         }
-        Assert.IsTrue(foundModelParam, "details[] should contain a param referencing 'model'");
+        Assert.That(foundModelParam, Is.True, "details[] should contain a param referencing 'model'");
     }
 
     // Validates: B29 — multiple validation errors produce multiple details[]
@@ -76,13 +75,13 @@ public class PayloadValidationProtocolTests : ProtocolTestBase
         var response = await PostResponsesAsync(
             "{\"model\": 42, \"temperature\": \"hot\"}");
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
 
         var details = error.GetProperty("details");
-        Assert.IsTrue(details.GetArrayLength() >= 2,
+        Assert.That(details.GetArrayLength() >= 2, Is.True,
             "Multiple validation errors should produce multiple details[] entries");
     }
 
@@ -92,6 +91,6 @@ public class PayloadValidationProtocolTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 }

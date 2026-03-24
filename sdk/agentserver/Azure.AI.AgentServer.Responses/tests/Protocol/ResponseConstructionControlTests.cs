@@ -28,14 +28,13 @@ public class ResponseConstructionControlTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(response);
 
         // Handler created its own Metadata with handler_key — should appear in response
-        Assert.IsTrue(doc.RootElement.TryGetProperty("metadata", out var metadata),
-            "Expected 'metadata' property in response");
-        Assert.AreEqual(JsonValueKind.Object, metadata.ValueKind);
-        Assert.AreEqual("from_handler", metadata.GetProperty("handler_key").GetString());
+        Assert.That(doc.RootElement.TryGetProperty("metadata", out var metadata), Is.True, "Expected 'metadata' property in response");
+        Assert.That(metadata.ValueKind, Is.EqualTo(JsonValueKind.Object));
+        Assert.That(metadata.GetProperty("handler_key").GetString(), Is.EqualTo("from_handler"));
     }
 
     [Test]
@@ -51,12 +50,11 @@ public class ResponseConstructionControlTests : ProtocolTestBase
         await WaitForBackgroundCompletionAsync(responseId);
 
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var getDoc = await ParseJsonAsync(getResponse);
 
-        Assert.IsTrue(getDoc.RootElement.TryGetProperty("metadata", out var metadata),
-            "Expected 'metadata' in GET response");
-        Assert.AreEqual("from_handler", metadata.GetProperty("handler_key").GetString());
+        Assert.That(getDoc.RootElement.TryGetProperty("metadata", out var metadata), Is.True, "Expected 'metadata' in GET response");
+        Assert.That(metadata.GetProperty("handler_key").GetString(), Is.EqualTo("from_handler"));
     }
 
     // ── T023: Custom Instructions via events.Response ─────────
@@ -70,7 +68,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var events = await ParseSseAsync(response);
 
         var createdEvent = events.First(e => e.EventType == "response.created");
@@ -78,7 +76,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
         var responseObj = doc.RootElement.GetProperty("response");
 
         var instructions = responseObj.GetProperty("instructions").GetString();
-        Assert.AreEqual("Custom handler instructions", instructions);
+        Assert.That(instructions, Is.EqualTo("Custom handler instructions"));
     }
 
     [Test]
@@ -89,11 +87,11 @@ public class ResponseConstructionControlTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(response);
 
         var instructions = doc.RootElement.GetProperty("instructions").GetString();
-        Assert.AreEqual("Custom handler instructions", instructions);
+        Assert.That(instructions, Is.EqualTo("Custom handler instructions"));
     }
 
     // ── T024: Raw ResponseCreatedEvent with custom fields ─────
@@ -107,12 +105,12 @@ public class ResponseConstructionControlTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(response);
 
         // Handler set raw_key in the raw event's Models.Response — should appear in response
-        Assert.IsTrue(doc.RootElement.TryGetProperty("metadata", out var metadata));
-        Assert.AreEqual("raw_value", metadata.GetProperty("raw_key").GetString());
+        Assert.That(doc.RootElement.TryGetProperty("metadata", out var metadata), Is.True);
+        Assert.That(metadata.GetProperty("raw_key").GetString(), Is.EqualTo("raw_value"));
     }
 
     [Test]
@@ -123,15 +121,15 @@ public class ResponseConstructionControlTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var events = await ParseSseAsync(response);
 
         var createdEvent = events.First(e => e.EventType == "response.created");
         using var doc = JsonDocument.Parse(createdEvent.Data);
         var responseObj = doc.RootElement.GetProperty("response");
 
-        Assert.IsTrue(responseObj.TryGetProperty("metadata", out var metadata));
-        Assert.AreEqual("raw_value", metadata.GetProperty("raw_key").GetString());
+        Assert.That(responseObj.TryGetProperty("metadata", out var metadata), Is.True);
+        Assert.That(metadata.GetProperty("raw_key").GetString(), Is.EqualTo("raw_value"));
     }
 
     // ── Helper event factories ─────────────────────────────────

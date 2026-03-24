@@ -22,9 +22,9 @@ public class ItemConversionTests
 
         var outputMessage = XAssert.IsType<OutputItemMessage>(result);
         XAssert.StartsWith("msg_", outputMessage.Id);
-        Assert.AreEqual(MessageStatus.Completed, outputMessage.Status);
-        Assert.AreEqual(MessageRole.User, outputMessage.Role);
-        Assert.IsNotEmpty(outputMessage.Content);
+        Assert.That(outputMessage.Status, Is.EqualTo(MessageStatus.Completed));
+        Assert.That(outputMessage.Role, Is.EqualTo(MessageRole.User));
+        Assert.That(outputMessage.Content, Is.Not.Empty);
     }
 
     [Test]
@@ -37,7 +37,7 @@ public class ItemConversionTests
 
         var outputMessage = XAssert.IsType<OutputItemMessage>(result);
         XAssert.StartsWith("msg_", outputMessage.Id);
-        Assert.AreEqual(MessageRole.Developer, outputMessage.Role);
+        Assert.That(outputMessage.Role, Is.EqualTo(MessageRole.Developer));
     }
 
     [Test]
@@ -53,7 +53,7 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemOutputMessage>(result);
         XAssert.StartsWith("om_", converted.Id);
-        Assert.AreEqual(OutputItemOutputMessageStatus.Completed, converted.Status);
+        Assert.That(converted.Status, Is.EqualTo(OutputItemOutputMessageStatus.Completed));
         XAssert.Single(converted.Content);
     }
 
@@ -68,10 +68,10 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemFunctionToolCall>(result);
         XAssert.StartsWith("fc_", converted.Id);
-        Assert.AreEqual("call_func", converted.CallId);
-        Assert.AreEqual("get_weather", converted.Name);
-        Assert.AreEqual("{\"city\":\"Seattle\"}", converted.Arguments);
-        Assert.AreEqual(OutputItemFunctionToolCallStatus.Completed, converted.Status);
+        Assert.That(converted.CallId, Is.EqualTo("call_func"));
+        Assert.That(converted.Name, Is.EqualTo("get_weather"));
+        Assert.That(converted.Arguments, Is.EqualTo("{\"city\":\"Seattle\"}"));
+        Assert.That(converted.Status, Is.EqualTo(OutputItemFunctionToolCallStatus.Completed));
     }
 
     [Test]
@@ -84,8 +84,8 @@ public class ItemConversionTests
 
         var outputFunc = XAssert.IsType<FunctionToolCallOutputResource>(result);
         XAssert.StartsWith("fco_", outputFunc.Id);
-        Assert.AreEqual("call_123", outputFunc.CallId);
-        Assert.AreEqual(FunctionToolCallOutputResourceStatus.Completed, outputFunc.Status);
+        Assert.That(outputFunc.CallId, Is.EqualTo("call_123"));
+        Assert.That(outputFunc.Status, Is.EqualTo(FunctionToolCallOutputResourceStatus.Completed));
     }
 
     // ── Custom tool calls ───────────────────────────────────────────────
@@ -99,9 +99,9 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemCustomToolCall>(result);
         XAssert.StartsWith("ctc_", converted.Id);
-        Assert.AreEqual("call_ct", converted.CallId);
-        Assert.AreEqual("my_tool", converted.Name);
-        Assert.AreEqual("some input", converted.Input);
+        Assert.That(converted.CallId, Is.EqualTo("call_ct"));
+        Assert.That(converted.Name, Is.EqualTo("my_tool"));
+        Assert.That(converted.Input, Is.EqualTo("some input"));
     }
 
     [Test]
@@ -114,7 +114,7 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemCustomToolCallOutput>(result);
         XAssert.StartsWith("ctco_", converted.Id);
-        Assert.AreEqual("call_cto", converted.CallId);
+        Assert.That(converted.CallId, Is.EqualTo("call_cto"));
     }
 
     // ── Computer tool calls ─────────────────────────────────────────────
@@ -131,8 +131,8 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemComputerToolCall>(result);
         XAssert.StartsWith("cu_", converted.Id);
-        Assert.AreEqual("call_comp", converted.CallId);
-        Assert.AreEqual(OutputItemComputerToolCallStatus.Completed, converted.Status);
+        Assert.That(converted.CallId, Is.EqualTo("call_comp"));
+        Assert.That(converted.Status, Is.EqualTo(OutputItemComputerToolCallStatus.Completed));
     }
 
     [Test]
@@ -145,8 +145,8 @@ public class ItemConversionTests
 
         var outputComputer = XAssert.IsType<OutputItemComputerToolCallOutputResource>(result);
         XAssert.StartsWith("cuo_", outputComputer.Id);
-        Assert.AreEqual("call_456", outputComputer.CallId);
-        Assert.AreEqual(OutputItemComputerToolCallOutputResourceStatus.Completed, outputComputer.Status);
+        Assert.That(outputComputer.CallId, Is.EqualTo("call_456"));
+        Assert.That(outputComputer.Status, Is.EqualTo(OutputItemComputerToolCallOutputResourceStatus.Completed));
     }
 
     // ── File search ─────────────────────────────────────────────────────
@@ -162,9 +162,9 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemFileSearchToolCall>(result);
         XAssert.StartsWith("fs_", converted.Id);
-        Assert.AreEqual(OutputItemFileSearchToolCallStatus.Completed, converted.Status);
+        Assert.That(converted.Status, Is.EqualTo(OutputItemFileSearchToolCallStatus.Completed));
         XAssert.Single(converted.Queries);
-        Assert.AreEqual("query1", converted.Queries[0]);
+        Assert.That(converted.Queries[0], Is.EqualTo("query1"));
     }
 
     // ── Web search ──────────────────────────────────────────────────────
@@ -180,7 +180,7 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemWebSearchToolCall>(result);
         XAssert.StartsWith("ws_", converted.Id);
-        Assert.AreEqual(OutputItemWebSearchToolCallStatus.Completed, converted.Status);
+        Assert.That(converted.Status, Is.EqualTo(OutputItemWebSearchToolCallStatus.Completed));
     }
 
     // ── Image generation ────────────────────────────────────────────────
@@ -195,8 +195,8 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemImageGenToolCall>(result);
         XAssert.StartsWith("ig_", converted.Id);
-        Assert.AreEqual(OutputItemImageGenToolCallStatus.Completed, converted.Status);
-        Assert.AreEqual("base64data", converted.Result);
+        Assert.That(converted.Status, Is.EqualTo(OutputItemImageGenToolCallStatus.Completed));
+        Assert.That(converted.Result, Is.EqualTo("base64data"));
     }
 
     // ── Code interpreter ────────────────────────────────────────────────
@@ -214,9 +214,9 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemCodeInterpreterToolCall>(result);
         XAssert.StartsWith("ci_", converted.Id);
-        Assert.AreEqual(OutputItemCodeInterpreterToolCallStatus.Completed, converted.Status);
-        Assert.AreEqual("container_1", converted.ContainerId);
-        Assert.AreEqual("print('hello')", converted.Code);
+        Assert.That(converted.Status, Is.EqualTo(OutputItemCodeInterpreterToolCallStatus.Completed));
+        Assert.That(converted.ContainerId, Is.EqualTo("container_1"));
+        Assert.That(converted.Code, Is.EqualTo("print('hello')"));
         XAssert.Single(converted.Outputs);
     }
 
@@ -233,8 +233,8 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemLocalShellToolCall>(result);
         XAssert.StartsWith("lsh_", converted.Id);
-        Assert.AreEqual("call_ls", converted.CallId);
-        Assert.AreEqual(OutputItemLocalShellToolCallStatus.Completed, converted.Status);
+        Assert.That(converted.CallId, Is.EqualTo("call_ls"));
+        Assert.That(converted.Status, Is.EqualTo(OutputItemLocalShellToolCallStatus.Completed));
     }
 
     [Test]
@@ -246,8 +246,8 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemLocalShellToolCallOutput>(result);
         XAssert.StartsWith("lsho_", converted.Id);
-        Assert.AreEqual("some output", converted.Output);
-        Assert.AreEqual(OutputItemLocalShellToolCallOutputStatus.Completed, converted.Status);
+        Assert.That(converted.Output, Is.EqualTo("some output"));
+        Assert.That(converted.Status, Is.EqualTo(OutputItemLocalShellToolCallOutputStatus.Completed));
     }
 
     // ── Function shell ──────────────────────────────────────────────────
@@ -265,8 +265,8 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemFunctionShellCall>(result);
         XAssert.StartsWith("lsh_", converted.Id);
-        Assert.AreEqual("call_sh", converted.CallId);
-        Assert.AreEqual(LocalShellCallStatus.Completed, converted.Status);
+        Assert.That(converted.CallId, Is.EqualTo("call_sh"));
+        Assert.That(converted.Status, Is.EqualTo(LocalShellCallStatus.Completed));
         XAssert.IsType<ContainerReferenceResource>(converted.Environment);
     }
 
@@ -299,12 +299,12 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemFunctionShellCallOutput>(result);
         XAssert.StartsWith("lsho_", converted.Id);
-        Assert.AreEqual("call_sho", converted.CallId);
-        Assert.AreEqual(LocalShellCallOutputStatusEnum.Completed, converted.Status);
+        Assert.That(converted.CallId, Is.EqualTo("call_sho"));
+        Assert.That(converted.Status, Is.EqualTo(LocalShellCallOutputStatusEnum.Completed));
         XAssert.Single(converted.Output);
-        Assert.AreEqual("hello\n", converted.Output[0].Stdout);
+        Assert.That(converted.Output[0].Stdout, Is.EqualTo("hello\n"));
         XAssert.IsType<FunctionShellCallOutputExitOutcome>(converted.Output[0].Outcome);
-        Assert.AreEqual(4096, converted.MaxOutputLength);
+        Assert.That(converted.MaxOutputLength, Is.EqualTo(4096));
     }
 
     [Test]
@@ -332,11 +332,11 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemApplyPatchToolCall>(result);
         XAssert.StartsWith("ap_", converted.Id);
-        Assert.AreEqual("call_ap", converted.CallId);
-        Assert.AreEqual(ApplyPatchCallStatus.Completed, converted.Status);
+        Assert.That(converted.CallId, Is.EqualTo("call_ap"));
+        Assert.That(converted.Status, Is.EqualTo(ApplyPatchCallStatus.Completed));
         var createOp = XAssert.IsType<ApplyPatchCreateFileOperation>(converted.Operation);
-        Assert.AreEqual("src/main.cs", createOp.Path);
-        Assert.AreEqual("+using System;", createOp.Diff);
+        Assert.That(createOp.Path, Is.EqualTo("src/main.cs"));
+        Assert.That(createOp.Diff, Is.EqualTo("+using System;"));
     }
 
     [Test]
@@ -349,7 +349,7 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemApplyPatchToolCall>(result);
         var deleteOp = XAssert.IsType<ApplyPatchDeleteFileOperation>(converted.Operation);
-        Assert.AreEqual("old.txt", deleteOp.Path);
+        Assert.That(deleteOp.Path, Is.EqualTo("old.txt"));
     }
 
     [Test]
@@ -361,9 +361,9 @@ public class ItemConversionTests
         var result = ItemConversion.ToOutputItem(applyPatch, PartitionKeyHint);
 
         var converted = XAssert.IsType<OutputItemApplyPatchToolCall>(result);
-        Assert.AreEqual(ApplyPatchCallStatus.InProgress, converted.Status);
+        Assert.That(converted.Status, Is.EqualTo(ApplyPatchCallStatus.InProgress));
         var updateOp = XAssert.IsType<ApplyPatchUpdateFileOperation>(converted.Operation);
-        Assert.AreEqual("readme.md", updateOp.Path);
+        Assert.That(updateOp.Path, Is.EqualTo("readme.md"));
     }
 
     [Test]
@@ -377,9 +377,9 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemApplyPatchToolCallOutput>(result);
         XAssert.StartsWith("apo_", converted.Id);
-        Assert.AreEqual("call_apo", converted.CallId);
-        Assert.AreEqual(ApplyPatchCallOutputStatus.Completed, converted.Status);
-        Assert.AreEqual("patch applied", converted.Output);
+        Assert.That(converted.CallId, Is.EqualTo("call_apo"));
+        Assert.That(converted.Status, Is.EqualTo(ApplyPatchCallOutputStatus.Completed));
+        Assert.That(converted.Output, Is.EqualTo("patch applied"));
     }
 
     [Test]
@@ -392,7 +392,7 @@ public class ItemConversionTests
         var result = ItemConversion.ToOutputItem(applyPatchOutput, PartitionKeyHint);
 
         var converted = XAssert.IsType<OutputItemApplyPatchToolCallOutput>(result);
-        Assert.AreEqual(ApplyPatchCallOutputStatus.Failed, converted.Status);
+        Assert.That(converted.Status, Is.EqualTo(ApplyPatchCallOutputStatus.Failed));
     }
 
     // ── MCP ─────────────────────────────────────────────────────────────
@@ -407,8 +407,8 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemMcpListTools>(result);
         XAssert.StartsWith("mcpl_", converted.Id);
-        Assert.AreEqual("server_1", converted.ServerLabel);
-        Assert.IsEmpty(converted.Tools);
+        Assert.That(converted.ServerLabel, Is.EqualTo("server_1"));
+        Assert.That(converted.Tools, Is.Empty);
     }
 
     [Test]
@@ -424,12 +424,12 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemMcpToolCall>(result);
         XAssert.StartsWith("mcp_", converted.Id);
-        Assert.AreEqual("server_2", converted.ServerLabel);
-        Assert.AreEqual("tool_name", converted.Name);
-        Assert.AreEqual("{}", converted.Arguments);
-        Assert.AreEqual("result", converted.Output);
-        Assert.AreEqual("ar_1", converted.ApprovalRequestId);
-        Assert.AreEqual(MCPToolCallStatus.Completed, converted.Status);
+        Assert.That(converted.ServerLabel, Is.EqualTo("server_2"));
+        Assert.That(converted.Name, Is.EqualTo("tool_name"));
+        Assert.That(converted.Arguments, Is.EqualTo("{}"));
+        Assert.That(converted.Output, Is.EqualTo("result"));
+        Assert.That(converted.ApprovalRequestId, Is.EqualTo("ar_1"));
+        Assert.That(converted.Status, Is.EqualTo(MCPToolCallStatus.Completed));
     }
 
     [Test]
@@ -441,8 +441,8 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemMcpApprovalRequest>(result);
         XAssert.StartsWith("mcpr_", converted.Id);
-        Assert.AreEqual("server_3", converted.ServerLabel);
-        Assert.AreEqual("dangerous_tool", converted.Name);
+        Assert.That(converted.ServerLabel, Is.EqualTo("server_3"));
+        Assert.That(converted.Name, Is.EqualTo("dangerous_tool"));
     }
 
     [Test]
@@ -454,9 +454,9 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemMcpApprovalResponseResource>(result);
         XAssert.StartsWith("mcpa_", converted.Id);
-        Assert.AreEqual("ar_2", converted.ApprovalRequestId);
-        Assert.IsTrue(converted.Approve);
-        Assert.AreEqual("Looks safe", converted.Reason);
+        Assert.That(converted.ApprovalRequestId, Is.EqualTo("ar_2"));
+        Assert.That(converted.Approve, Is.True);
+        Assert.That(converted.Reason, Is.EqualTo("Looks safe"));
     }
 
     // ── Reasoning ───────────────────────────────────────────────────────
@@ -475,9 +475,9 @@ public class ItemConversionTests
         var converted = XAssert.IsType<OutputItemReasoningItem>(result);
         XAssert.StartsWith("rs_", converted.Id);
         XAssert.Single(converted.Summary);
-        Assert.AreEqual("thinking...", converted.Summary[0].Text);
-        Assert.AreEqual("encrypted_blob", converted.EncryptedContent);
-        Assert.AreEqual(OutputItemReasoningItemStatus.Completed, converted.Status);
+        Assert.That(converted.Summary[0].Text, Is.EqualTo("thinking..."));
+        Assert.That(converted.EncryptedContent, Is.EqualTo("encrypted_blob"));
+        Assert.That(converted.Status, Is.EqualTo(OutputItemReasoningItemStatus.Completed));
     }
 
     // ── Compaction ──────────────────────────────────────────────────────
@@ -491,7 +491,7 @@ public class ItemConversionTests
 
         var converted = XAssert.IsType<OutputItemCompactionBody>(result);
         XAssert.StartsWith("cmp_", converted.Id);
-        Assert.AreEqual("encrypted_data", converted.EncryptedContent);
+        Assert.That(converted.EncryptedContent, Is.EqualTo("encrypted_data"));
     }
 
     // ── Reference & unknown ─────────────────────────────────────────────
@@ -503,7 +503,7 @@ public class ItemConversionTests
 
         var result = ItemConversion.ToOutputItem(reference, PartitionKeyHint);
 
-        Assert.IsNull(result);
+        Assert.That(result, Is.Null);
     }
 
     // ── Batch conversion ────────────────────────────────────────────────
@@ -520,7 +520,7 @@ public class ItemConversionTests
 
         var results = ItemConversion.ToOutputItems(items, PartitionKeyHint).ToList();
 
-        Assert.AreEqual(2, results.Count);
+        Assert.That(results.Count, Is.EqualTo(2));
         var msg = XAssert.IsType<OutputItemMessage>(results[0]);
         XAssert.StartsWith("msg_", msg.Id);
         var fco = XAssert.IsType<FunctionToolCallOutputResource>(results[1]);
@@ -534,7 +534,7 @@ public class ItemConversionTests
 
         var results = ItemConversion.ToOutputItems(items, PartitionKeyHint).ToList();
 
-        Assert.IsEmpty(results);
+        Assert.That(results, Is.Empty);
     }
 
     [Test]
@@ -550,7 +550,7 @@ public class ItemConversionTests
 
         var results = ItemConversion.ToOutputItems(items, PartitionKeyHint).ToList();
 
-        Assert.AreEqual(4, results.Count);
+        Assert.That(results.Count, Is.EqualTo(4));
         var fc = XAssert.IsType<OutputItemFunctionToolCall>(results[0]);
         XAssert.StartsWith("fc_", fc.Id);
         var ctc = XAssert.IsType<OutputItemCustomToolCall>(results[1]);
@@ -572,11 +572,11 @@ public class ItemConversionTests
         var result1 = ItemConversion.ToOutputItem(msg1, PartitionKeyHint);
         var result2 = ItemConversion.ToOutputItem(msg2, PartitionKeyHint);
 
-        Assert.IsNotNull(result1);
-        Assert.IsNotNull(result2);
+        Assert.That(result1, Is.Not.Null);
+        Assert.That(result2, Is.Not.Null);
         var msg1Out = XAssert.IsType<OutputItemMessage>(result1);
         var msg2Out = XAssert.IsType<OutputItemMessage>(result2);
-        Assert.AreNotEqual(msg1Out.Id, msg2Out.Id);
+        Assert.That(msg2Out.Id, Is.Not.EqualTo(msg1Out.Id));
         XAssert.StartsWith("msg_", msg1Out.Id);
         XAssert.StartsWith("msg_", msg2Out.Id);
     }

@@ -38,7 +38,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
         };
 
         using var postResponse = await Client.SendAsync(postRequest, HttpCompletionOption.ResponseHeadersRead);
-        Assert.AreEqual(HttpStatusCode.OK, postResponse.StatusCode);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Read the first event to get response ID
         await using var bodyStream = await postResponse.Content.ReadAsStreamAsync();
@@ -59,7 +59,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
             }
         }
 
-        Assert.IsNotNull(responseId);
+        Assert.That(responseId, Is.Not.Null);
 
         // Issue concurrent GET requests during emission
         var getResults = new List<(string Status, int OutputCount)>();
@@ -84,7 +84,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
             if (status == "completed")
             {
                 // If completed, must have all 10 output items
-                Assert.AreEqual(10, outputCount);
+                Assert.That(outputCount, Is.EqualTo(10));
             }
             // in_progress with any output count is fine — it's a point-in-time snapshot
         }
@@ -105,24 +105,24 @@ public class SnapshotConsistencyTests : ProtocolTestBase
 
         // Find the response.created event — it should have in_progress status and empty/initial output
         var createdEvent = events.FirstOrDefault(e => e.EventType == "response.created");
-        Assert.IsNotNull(createdEvent);
+        Assert.That(createdEvent, Is.Not.Null);
         using var createdDoc = JsonDocument.Parse(createdEvent!.Data);
         var createdStatus = createdDoc.RootElement.GetProperty("response").GetProperty("status").GetString();
-        Assert.AreEqual("in_progress", createdStatus);
+        Assert.That(createdStatus, Is.EqualTo("in_progress"));
 
         // The response.completed event should have completed status with all items
         var completedEvent = events.FirstOrDefault(e => e.EventType == "response.completed");
-        Assert.IsNotNull(completedEvent);
+        Assert.That(completedEvent, Is.Not.Null);
         using var completedDoc = JsonDocument.Parse(completedEvent!.Data);
         var completedStatus = completedDoc.RootElement.GetProperty("response").GetProperty("status").GetString();
-        Assert.AreEqual("completed", completedStatus);
+        Assert.That(completedStatus, Is.EqualTo("completed"));
         var completedOutput = completedDoc.RootElement.GetProperty("response").GetProperty("output");
-        Assert.IsTrue(completedOutput.GetArrayLength() >= 2, "completed should have all output items");
+        Assert.That(completedOutput.GetArrayLength() >= 2, Is.True, "completed should have all output items");
 
         // CRITICAL: response.created should NOT have the same output count as completed
         // (because it was a snapshot taken before output items were added)
         var createdOutput = createdDoc.RootElement.GetProperty("response").GetProperty("output");
-        Assert.IsTrue(createdOutput.GetArrayLength() < completedOutput.GetArrayLength(),
+        Assert.That(createdOutput.GetArrayLength() < completedOutput.GetArrayLength(), Is.True,
             "created event's response should have fewer outputs than completed event's response");
     }
 
@@ -165,7 +165,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
             }
         }
 
-        Assert.IsNotNull(responseId);
+        Assert.That(responseId, Is.Not.Null);
 
         // Signal handler to finish and wait for background completion
         handlerDone.SetResult();
@@ -176,14 +176,14 @@ public class SnapshotConsistencyTests : ProtocolTestBase
         var replayEvents = await ParseSseAsync(replayResponse);
 
         var replayCreated = replayEvents.FirstOrDefault(e => e.EventType == "response.created");
-        Assert.IsNotNull(replayCreated);
+        Assert.That(replayCreated, Is.Not.Null);
         using var replayCreatedDoc = JsonDocument.Parse(replayCreated!.Data);
         var replayCreatedStatus = replayCreatedDoc.RootElement
             .GetProperty("response").GetProperty("status").GetString();
 
         // This is the critical assertion: replayed response.created should show "in_progress",
         // not "completed" (which is the current state of the response)
-        Assert.AreEqual("in_progress", replayCreatedStatus);
+        Assert.That(replayCreatedStatus, Is.EqualTo("in_progress"));
     }
 
     // ── Test helper streams ──────────────────────────────────────

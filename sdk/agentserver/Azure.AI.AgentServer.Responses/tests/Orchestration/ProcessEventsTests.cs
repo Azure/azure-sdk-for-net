@@ -52,8 +52,8 @@ public class ProcessEventsTests : IDisposable
         var ex = Assert.ThrowsAsync<ResponsesApiException>(() =>
             ConsumeProcessedEvents(request, execution, context, publisher));
 
-        Assert.AreEqual(500, ex.StatusCode);
-        Assert.AreEqual("An internal server error occurred.", ex.Message);
+        Assert.That(ex.StatusCode, Is.EqualTo(500));
+        Assert.That(ex.Message, Is.EqualTo("An internal server error occurred."));
     }
 
     [Test]
@@ -69,8 +69,8 @@ public class ProcessEventsTests : IDisposable
         var ex = Assert.ThrowsAsync<ResponsesApiException>(() =>
             ConsumeProcessedEvents(request, execution, context, publisher));
 
-        Assert.AreEqual(500, ex.StatusCode);
-        Assert.AreEqual("An internal server error occurred.", ex.Message);
+        Assert.That(ex.StatusCode, Is.EqualTo(500));
+        Assert.That(ex.Message, Is.EqualTo("An internal server error occurred."));
     }
 
     [Test]
@@ -87,7 +87,7 @@ public class ProcessEventsTests : IDisposable
 
         await ConsumeProcessedEvents(new CreateResponse(), execution, context, publisher);
 
-        Assert.IsNotNull(execution.Response);
+        Assert.That(execution.Response, Is.Not.Null);
     }
 
     [Test]
@@ -112,7 +112,7 @@ public class ProcessEventsTests : IDisposable
         await ConsumeProcessedEvents(new CreateResponse(), execution, context, publisher);
 
         // Full replacement: execution.Response should have the handler's custom model
-        Assert.AreEqual("custom-model", execution.Response.Model);
+        Assert.That(execution.Response.Model, Is.EqualTo("custom-model"));
     }
 
     [Test]
@@ -135,7 +135,7 @@ public class ProcessEventsTests : IDisposable
 
         XAssert.Single(execution.Response.Output);
         var msg = XAssert.IsType<OutputItemOutputMessage>(execution.Response.Output[0]);
-        Assert.AreEqual("item_01", msg.Id);
+        Assert.That(msg.Id, Is.EqualTo("item_01"));
     }
 
     [Test]
@@ -160,7 +160,7 @@ public class ProcessEventsTests : IDisposable
 
         // The ResponseCreatedEvent sent to publisher should have a snapshot, not the mutable reference
         var createdEvt = events.OfType<ResponseCreatedEvent>().First();
-        Assert.AreNotSame(execution.Response, createdEvt.Response);
+        Assert.That(createdEvt.Response, Is.Not.SameAs(execution.Response));
     }
 
     [Test]
@@ -181,7 +181,7 @@ public class ProcessEventsTests : IDisposable
         await publisher.OnCompletedAsync();
         await observer.Completed.WaitAsync(TimeSpan.FromSeconds(5));
 
-        Assert.AreEqual(3, events.Count);
+        Assert.That(events.Count, Is.EqualTo(3));
         XAssert.IsType<ResponseCreatedEvent>(events[0]);
         XAssert.IsType<ResponseInProgressEvent>(events[1]);
         XAssert.IsType<ResponseCompletedEvent>(events[2]);
@@ -204,7 +204,7 @@ public class ProcessEventsTests : IDisposable
 
         // Background + store: should have persisted at response.created time
         var stored = await _provider.GetResponseAsync("resp_proc_08");
-        Assert.IsNotNull(stored);
+        Assert.That(stored, Is.Not.Null);
     }
 
     [Test]
@@ -226,7 +226,7 @@ public class ProcessEventsTests : IDisposable
         await ConsumeProcessedEvents(new CreateResponse(), execution, context, publisher);
 
         // Auto-stamp should have set ResponseId on the output item
-        Assert.AreEqual("resp_proc_09", execution.Response.Output[0].ResponseId);
+        Assert.That(execution.Response.Output[0].ResponseId, Is.EqualTo("resp_proc_09"));
     }
 
     // --- Helpers ---

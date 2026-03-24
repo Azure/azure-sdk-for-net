@@ -21,7 +21,7 @@ public class ResponseEventStreamTests
 
         var stream = new ResponseEventStream(context, request);
 
-        Assert.IsNotNull(stream);
+        Assert.That(stream, Is.Not.Null);
     }
 
     [Test]
@@ -31,7 +31,7 @@ public class ResponseEventStreamTests
 
         var seq = stream.NextSequenceNumber();
 
-        Assert.AreEqual(0, seq);
+        Assert.That(seq, Is.EqualTo(0));
     }
 
     [Test]
@@ -43,9 +43,9 @@ public class ResponseEventStreamTests
         var seq1 = stream.NextSequenceNumber();
         var seq2 = stream.NextSequenceNumber();
 
-        Assert.AreEqual(0, seq0);
-        Assert.AreEqual(1, seq1);
-        Assert.AreEqual(2, seq2);
+        Assert.That(seq0, Is.EqualTo(0));
+        Assert.That(seq1, Is.EqualTo(1));
+        Assert.That(seq2, Is.EqualTo(2));
     }
 
     [Test]
@@ -54,9 +54,9 @@ public class ResponseEventStreamTests
         var stream = CreateStream();
 
         // First call returns current value (0), then increments
-        Assert.AreEqual(0, stream.NextSequenceNumber());
+        Assert.That(stream.NextSequenceNumber(), Is.EqualTo(0));
         // Second call returns current value (1), then increments
-        Assert.AreEqual(1, stream.NextSequenceNumber());
+        Assert.That(stream.NextSequenceNumber(), Is.EqualTo(1));
     }
 
     // ── Lifecycle Emit Methods ────────────────────────────────
@@ -69,8 +69,8 @@ public class ResponseEventStreamTests
         var evt = stream.EmitCreated();
 
         XAssert.IsType<ResponseCreatedEvent>(evt);
-        Assert.AreEqual(0, evt.SequenceNumber);
-        Assert.AreSame(stream.Response, evt.Response);
+        Assert.That(evt.SequenceNumber, Is.EqualTo(0));
+        Assert.That(evt.Response, Is.SameAs(stream.Response));
     }
 
     [Test]
@@ -81,8 +81,8 @@ public class ResponseEventStreamTests
         var evt = stream.EmitInProgress();
 
         XAssert.IsType<ResponseInProgressEvent>(evt);
-        Assert.AreEqual(0, evt.SequenceNumber);
-        Assert.AreSame(stream.Response, evt.Response);
+        Assert.That(evt.SequenceNumber, Is.EqualTo(0));
+        Assert.That(evt.Response, Is.SameAs(stream.Response));
     }
 
     [Test]
@@ -93,8 +93,8 @@ public class ResponseEventStreamTests
         var evt = stream.EmitCompleted();
 
         XAssert.IsType<ResponseCompletedEvent>(evt);
-        Assert.AreEqual(0, evt.SequenceNumber);
-        Assert.AreSame(stream.Response, evt.Response);
+        Assert.That(evt.SequenceNumber, Is.EqualTo(0));
+        Assert.That(evt.Response, Is.SameAs(stream.Response));
     }
 
     [Test]
@@ -105,8 +105,8 @@ public class ResponseEventStreamTests
         var evt = stream.EmitQueued();
 
         XAssert.IsType<ResponseQueuedEvent>(evt);
-        Assert.AreEqual(0, evt.SequenceNumber);
-        Assert.AreSame(stream.Response, evt.Response);
+        Assert.That(evt.SequenceNumber, Is.EqualTo(0));
+        Assert.That(evt.Response, Is.SameAs(stream.Response));
     }
 
     [Test]
@@ -117,8 +117,8 @@ public class ResponseEventStreamTests
         var evt = stream.EmitFailed(ResponseErrorCode.ServerError, "test error");
 
         XAssert.IsType<ResponseFailedEvent>(evt);
-        Assert.AreEqual(0, evt.SequenceNumber);
-        Assert.AreSame(stream.Response, evt.Response);
+        Assert.That(evt.SequenceNumber, Is.EqualTo(0));
+        Assert.That(evt.Response, Is.SameAs(stream.Response));
     }
 
     [Test]
@@ -129,8 +129,8 @@ public class ResponseEventStreamTests
         var evt = stream.EmitIncomplete();
 
         XAssert.IsType<ResponseIncompleteEvent>(evt);
-        Assert.AreEqual(0, evt.SequenceNumber);
-        Assert.AreSame(stream.Response, evt.Response);
+        Assert.That(evt.SequenceNumber, Is.EqualTo(0));
+        Assert.That(evt.Response, Is.SameAs(stream.Response));
     }
 
     [Test]
@@ -142,9 +142,9 @@ public class ResponseEventStreamTests
         var inProgress = stream.EmitInProgress();
         var completed = stream.EmitCompleted();
 
-        Assert.AreEqual(0, created.SequenceNumber);
-        Assert.AreEqual(1, inProgress.SequenceNumber);
-        Assert.AreEqual(2, completed.SequenceNumber);
+        Assert.That(created.SequenceNumber, Is.EqualTo(0));
+        Assert.That(inProgress.SequenceNumber, Is.EqualTo(1));
+        Assert.That(completed.SequenceNumber, Is.EqualTo(2));
     }
 
     [Test]
@@ -155,7 +155,7 @@ public class ResponseEventStreamTests
         var evt = stream.EmitCreated();
 
         // Models.Response is the stream-owned Models.Response
-        Assert.AreSame(stream.Response, evt.Response);
+        Assert.That(evt.Response, Is.SameAs(stream.Response));
     }
 
     // ── T037: Partition key colocation ────────────────────────
@@ -190,7 +190,7 @@ public class ResponseEventStreamTests
         foreach (var itemId in itemIds)
         {
             var pk = IdGenerator.ExtractPartitionKey(itemId);
-            Assert.AreEqual(expectedPk, pk);
+            Assert.That(pk, Is.EqualTo(expectedPk));
         }
     }
 
@@ -205,9 +205,9 @@ public class ResponseEventStreamTests
         var stream = new ResponseEventStream(context, request);
         var created = stream.EmitCreated();
 
-        Assert.AreEqual("resp_t14", created.Response.Id);
-        Assert.AreEqual("gpt-4o", created.Response.Model);
-        Assert.AreEqual(ResponseStatus.InProgress, created.Response.Status);
+        Assert.That(created.Response.Id, Is.EqualTo("resp_t14"));
+        Assert.That(created.Response.Model, Is.EqualTo("gpt-4o"));
+        Assert.That(created.Response.Status, Is.EqualTo(ResponseStatus.InProgress));
     }
 
     [Test]
@@ -217,7 +217,7 @@ public class ResponseEventStreamTests
         var stream = new ResponseEventStream(context, new CreateResponse { Model = "test-model" });
         var created = stream.EmitCreated();
 
-        Assert.AreSame(stream.Response, created.Response);
+        Assert.That(created.Response, Is.SameAs(stream.Response));
     }
 
     [Test]
@@ -231,7 +231,7 @@ public class ResponseEventStreamTests
 
         // The stream builds its own Models.Response — it's not the same as any externally-created instance
         var externalResponse = new Models.Response("resp_ext", "gpt-4o");
-        Assert.AreNotSame(externalResponse, evt.Response);
+        Assert.That(evt.Response, Is.Not.SameAs(externalResponse));
     }
 
     [Test]
@@ -243,7 +243,7 @@ public class ResponseEventStreamTests
         var evt2 = stream.EmitInProgress();
 
         // Both events reference the same stream-owned response
-        Assert.AreSame(evt1.Response, evt2.Response);
+        Assert.That(evt2.Response, Is.SameAs(evt1.Response));
     }
 
     // ── T015: EmitCompleted Tests ─────────────────────────────
@@ -258,10 +258,10 @@ public class ResponseEventStreamTests
         var evt = stream.EmitCompleted(usage);
         var after = DateTimeOffset.UtcNow;
 
-        Assert.AreEqual(ResponseStatus.Completed, evt.Response.Status);
-        Assert.IsNotNull(evt.Response.CompletedAt);
+        Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Completed));
+        Assert.That(evt.Response.CompletedAt, Is.Not.Null);
         XAssert.InRange(evt.Response.CompletedAt.Value, before, after);
-        Assert.AreSame(usage, evt.Response.Usage);
+        Assert.That(evt.Response.Usage, Is.SameAs(usage));
     }
 
     [Test]
@@ -271,9 +271,9 @@ public class ResponseEventStreamTests
 
         var evt = stream.EmitCompleted();
 
-        Assert.AreEqual(ResponseStatus.Completed, evt.Response.Status);
-        Assert.IsNotNull(evt.Response.CompletedAt);
-        Assert.IsNull(evt.Response.Usage);
+        Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Completed));
+        Assert.That(evt.Response.CompletedAt, Is.Not.Null);
+        Assert.That(evt.Response.Usage, Is.Null);
     }
 
     [Test]
@@ -291,7 +291,7 @@ public class ResponseEventStreamTests
 
         var evt = stream.EmitCompleted();
 
-        Assert.AreEqual("Hello world", evt.Response.OutputText);
+        Assert.That(evt.Response.OutputText, Is.EqualTo("Hello world"));
     }
 
     // ── T016: EmitFailed Tests ────────────────────────────────
@@ -303,11 +303,11 @@ public class ResponseEventStreamTests
 
         var evt = stream.EmitFailed(ResponseErrorCode.RateLimitExceeded, "Too many requests");
 
-        Assert.AreEqual(ResponseStatus.Failed, evt.Response.Status);
-        Assert.IsNotNull(evt.Response.Error);
-        Assert.AreEqual(ResponseErrorCode.RateLimitExceeded, evt.Response.Error.Code);
-        Assert.AreEqual("Too many requests", evt.Response.Error.Message);
-        Assert.IsNull(evt.Response.CompletedAt);
+        Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Failed));
+        Assert.That(evt.Response.Error, Is.Not.Null);
+        Assert.That(evt.Response.Error.Code, Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
+        Assert.That(evt.Response.Error.Message, Is.EqualTo("Too many requests"));
+        Assert.That(evt.Response.CompletedAt, Is.Null);
     }
 
     [Test]
@@ -317,10 +317,10 @@ public class ResponseEventStreamTests
 
         var evt = stream.EmitFailed();
 
-        Assert.AreEqual(ResponseStatus.Failed, evt.Response.Status);
-        Assert.IsNotNull(evt.Response.Error);
-        Assert.AreEqual(ResponseErrorCode.ServerError, evt.Response.Error.Code);
-        Assert.AreEqual("An internal server error occurred.", evt.Response.Error.Message);
+        Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Failed));
+        Assert.That(evt.Response.Error, Is.Not.Null);
+        Assert.That(evt.Response.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(evt.Response.Error.Message, Is.EqualTo("An internal server error occurred."));
     }
 
     [Test]
@@ -337,7 +337,7 @@ public class ResponseEventStreamTests
 
         var evt = stream.EmitFailed(ResponseErrorCode.ServerError, "err");
 
-        Assert.AreEqual("partial", evt.Response.OutputText);
+        Assert.That(evt.Response.OutputText, Is.EqualTo("partial"));
     }
 
     // ── T017: EmitIncomplete Tests ────────────────────────────
@@ -349,10 +349,10 @@ public class ResponseEventStreamTests
 
         var evt = stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
 
-        Assert.AreEqual(ResponseStatus.Incomplete, evt.Response.Status);
-        Assert.IsNotNull(evt.Response.IncompleteDetails);
-        Assert.AreEqual(ResponseIncompleteDetailsReason.MaxOutputTokens, evt.Response.IncompleteDetails.Reason);
-        Assert.IsNull(evt.Response.CompletedAt);
+        Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Incomplete));
+        Assert.That(evt.Response.IncompleteDetails, Is.Not.Null);
+        Assert.That(evt.Response.IncompleteDetails.Reason, Is.EqualTo(ResponseIncompleteDetailsReason.MaxOutputTokens));
+        Assert.That(evt.Response.CompletedAt, Is.Null);
     }
 
     [Test]
@@ -362,9 +362,9 @@ public class ResponseEventStreamTests
 
         var evt = stream.EmitIncomplete();
 
-        Assert.AreEqual(ResponseStatus.Incomplete, evt.Response.Status);
-        Assert.IsNull(evt.Response.IncompleteDetails);
-        Assert.IsNull(evt.Response.CompletedAt);
+        Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Incomplete));
+        Assert.That(evt.Response.IncompleteDetails, Is.Null);
+        Assert.That(evt.Response.CompletedAt, Is.Null);
     }
 
     [Test]
@@ -381,6 +381,6 @@ public class ResponseEventStreamTests
 
         var evt = stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
 
-        Assert.AreEqual("so far", evt.Response.OutputText);
+        Assert.That(evt.Response.OutputText, Is.EqualTo("so far"));
     }
 }

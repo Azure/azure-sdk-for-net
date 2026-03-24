@@ -34,8 +34,8 @@ public class InMemoryResponsesProviderTests : IDisposable
         await _provider.CreateResponseAsync(response, null, null);
 
         var retrieved = await _provider.GetResponseAsync("resp_abc");
-        Assert.IsNotNull(retrieved);
-        Assert.AreEqual("resp_abc", retrieved!.Id);
+        Assert.That(retrieved, Is.Not.Null);
+        Assert.That(retrieved!.Id, Is.EqualTo("resp_abc"));
     }
 
     [Test]
@@ -56,8 +56,8 @@ public class InMemoryResponsesProviderTests : IDisposable
         await _provider.UpdateResponseAsync(response);
 
         var retrieved = await _provider.GetResponseAsync("resp_update");
-        Assert.IsNotNull(retrieved);
-        Assert.AreEqual(ResponseStatus.Completed, retrieved.Status);
+        Assert.That(retrieved, Is.Not.Null);
+        Assert.That(retrieved.Status, Is.EqualTo(ResponseStatus.Completed));
     }
 
     [Test]
@@ -80,8 +80,8 @@ public class InMemoryResponsesProviderTests : IDisposable
             var response = new Models.Response(id, "gpt-4o") { Status = ResponseStatus.InProgress };
             await _provider.CreateResponseAsync(response, null, null);
             var retrieved = await _provider.GetResponseAsync(id);
-            Assert.IsNotNull(retrieved);
-            Assert.AreEqual(id, retrieved!.Id);
+            Assert.That(retrieved, Is.Not.Null);
+            Assert.That(retrieved!.Id, Is.EqualTo(id));
         });
 
         await Task.WhenAll(tasks);
@@ -99,7 +99,7 @@ public class InMemoryResponsesProviderTests : IDisposable
 
         var publisher = await _provider.CreateEventPublisherAsync("resp_pub");
 
-        Assert.IsNotNull(publisher);
+        Assert.That(publisher, Is.Not.Null);
     }
 
     private static ResponseOutputItemAddedEvent CreateItemAddedEvent(int index)
@@ -135,7 +135,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         await using var sub = await _provider.SubscribeToEventsAsync("resp_stream", observer);
         await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
-        Assert.AreEqual(10, received.Count);
+        Assert.That(received.Count, Is.EqualTo(10));
     }
 
     [Test]
@@ -161,7 +161,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         await using var sub = await _provider.SubscribeToEventsAsync("resp_cursor", observer, cursor: 4);
         await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
-        Assert.AreEqual(5, received.Count);
+        Assert.That(received.Count, Is.EqualTo(5));
     }
 
     [Test]
@@ -197,7 +197,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         await publisher.OnCompletedAsync();
         await Task.Delay(50); // Brief wait for any stray async deliveries
 
-        Assert.IsTrue(received.Count <= 3, $"Expected at most 3 events after dispose, got {received.Count}");
+        Assert.That(received.Count <= 3, Is.True, $"Expected at most 3 events after dispose, got {received.Count}");
     }
 
     // ---------------------------------------------------------------
@@ -211,11 +211,11 @@ public class InMemoryResponsesProviderTests : IDisposable
         await _provider.CreateResponseAsync(response, null, null);
 
         var ct = await _provider.GetResponseCancellationTokenAsync("resp_cancel");
-        Assert.IsFalse(ct.IsCancellationRequested);
+        Assert.That(ct.IsCancellationRequested, Is.False);
 
         await _provider.CancelResponseAsync("resp_cancel");
 
-        Assert.IsTrue(ct.IsCancellationRequested);
+        Assert.That(ct.IsCancellationRequested, Is.True);
     }
 
     [Test]
@@ -243,7 +243,7 @@ public class InMemoryResponsesProviderTests : IDisposable
 
         // Second cancel — should not throw
         var exception = await Record.ExceptionAsync(() => _provider.CancelResponseAsync("resp_idem"));
-        Assert.IsNull(exception);
+        Assert.That(exception, Is.Null);
     }
 
     [Test]
@@ -251,7 +251,7 @@ public class InMemoryResponsesProviderTests : IDisposable
     {
         var exception = await Record.ExceptionAsync(
             () => _provider.CancelResponseAsync("resp_unknown"));
-        Assert.IsNull(exception);
+        Assert.That(exception, Is.Null);
     }
 
     [Test]
@@ -265,8 +265,8 @@ public class InMemoryResponsesProviderTests : IDisposable
         // Second call returns same
         var ct2 = await _provider.GetResponseCancellationTokenAsync("resp_ct");
 
-        Assert.AreEqual(ct1, ct2);
-        Assert.IsFalse(ct1.IsCancellationRequested);
+        Assert.That(ct2, Is.EqualTo(ct1));
+        Assert.That(ct1.IsCancellationRequested, Is.False);
     }
 
     // ---------------------------------------------------------------
@@ -293,7 +293,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         timeProvider.Advance(TimeSpan.FromMinutes(5).Add(TimeSpan.FromSeconds(1)));
 
         // Models.Response is still retrievable (responses are never evicted)
-        Assert.IsNotNull(await provider.GetResponseAsync("resp_evict"));
+        Assert.That(await provider.GetResponseAsync("resp_evict"), Is.Not.Null);
 
         // Event stream evicted — subscribing throws
         var tcs = new TaskCompletionSource();
@@ -319,7 +319,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         timeProvider.Advance(TimeSpan.FromHours(1));
 
         // Models.Response still retrievable — responses are retained indefinitely
-        Assert.IsNotNull(await provider.GetResponseAsync("resp_persist"));
+        Assert.That(await provider.GetResponseAsync("resp_persist"), Is.Not.Null);
     }
 
     [Test]
@@ -364,7 +364,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         timeProvider.Advance(TimeSpan.FromHours(1));
 
         // Still retrievable since it never reached terminal status
-        Assert.IsNotNull(await provider.GetResponseAsync("resp_progress"));
+        Assert.That(await provider.GetResponseAsync("resp_progress"), Is.Not.Null);
     }
 
     [Test]
@@ -385,7 +385,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         timeProvider.Advance(TimeSpan.FromMinutes(1).Add(TimeSpan.FromSeconds(1)));
 
         // Models.Response still available (never evicted)
-        Assert.IsNotNull(await provider.GetResponseAsync("resp_cleanup"));
+        Assert.That(await provider.GetResponseAsync("resp_cleanup"), Is.Not.Null);
 
         // Event stream evicted
         var tcs = new TaskCompletionSource();
@@ -395,7 +395,7 @@ public class InMemoryResponsesProviderTests : IDisposable
 
         // CancellationTokenSource evicted — new call creates a fresh one
         var newCt = await provider.GetResponseCancellationTokenAsync("resp_cleanup");
-        Assert.AreNotEqual(ct, newCt);
+        Assert.That(newCt, Is.Not.EqualTo(ct));
     }
 
     [Test]
@@ -416,7 +416,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         timeProvider.Advance(TimeSpan.FromMinutes(5).Add(TimeSpan.FromSeconds(1)));
 
         // Models.Response still available
-        Assert.IsNotNull(await provider.GetResponseAsync("resp_nonbg"));
+        Assert.That(await provider.GetResponseAsync("resp_nonbg"), Is.Not.Null);
 
         // Event stream evicted
         var tcs = new TaskCompletionSource();

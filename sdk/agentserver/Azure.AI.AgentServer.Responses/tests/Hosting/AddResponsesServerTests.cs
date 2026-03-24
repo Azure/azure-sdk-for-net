@@ -19,7 +19,7 @@ public class AddResponsesServerTests
         var provider = services.BuildServiceProvider();
         var tracker = provider.GetService<ResponseExecutionTracker>();
 
-        Assert.IsNotNull(tracker);
+        Assert.That(tracker, Is.Not.Null);
     }
 
     [Test]
@@ -32,7 +32,7 @@ public class AddResponsesServerTests
         var provider = services.BuildServiceProvider();
         var options = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value;
 
-        Assert.AreEqual(Timeout.InfiniteTimeSpan, options.SseKeepAliveInterval);
+        Assert.That(options.SseKeepAliveInterval, Is.EqualTo(Timeout.InfiniteTimeSpan));
     }
 
     [Test]
@@ -48,7 +48,7 @@ public class AddResponsesServerTests
         var provider = services.BuildServiceProvider();
         var options = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value;
 
-        Assert.AreEqual(TimeSpan.FromSeconds(30), options.SseKeepAliveInterval);
+        Assert.That(options.SseKeepAliveInterval, Is.EqualTo(TimeSpan.FromSeconds(30)));
     }
 
     [Test]
@@ -59,6 +59,6 @@ public class AddResponsesServerTests
 
         var result = services.AddResponsesServer();
 
-        Assert.AreSame(services, result);
+        Assert.That(result, Is.SameAs(services));
     }
 }

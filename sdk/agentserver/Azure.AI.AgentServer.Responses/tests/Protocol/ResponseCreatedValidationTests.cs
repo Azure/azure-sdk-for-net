@@ -26,11 +26,11 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("server_error", error.GetProperty("type").GetString());
-        Assert.AreEqual("An internal server error occurred.", error.GetProperty("message").GetString()!);
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("server_error"));
+        Assert.That(error.GetProperty("message").GetString()!, Is.EqualTo("An internal server error occurred."));
     }
 
     [Test]
@@ -41,7 +41,7 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var events = await ParseSseAsync(response);
 
         // Should NOT contain a response.created event (rejected before lifecycle starts)
@@ -61,11 +61,11 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("server_error", error.GetProperty("type").GetString());
-        Assert.AreEqual("An internal server error occurred.", error.GetProperty("message").GetString()!);
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("server_error"));
+        Assert.That(error.GetProperty("message").GetString()!, Is.EqualTo("An internal server error occurred."));
     }
 
     // ── B31: Null status auto-stamped as in_progress ──────────
@@ -79,10 +79,10 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(response);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
-        Assert.IsTrue(doc.RootElement.TryGetProperty("output", out _));
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
+        Assert.That(doc.RootElement.TryGetProperty("output", out _), Is.True);
     }
 
     [Test]
@@ -94,10 +94,10 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test", background = true });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(response);
         // The initial response should have "in_progress" or "queued" status (not missing)
-        Assert.IsTrue(doc.RootElement.TryGetProperty("status", out var statusProp));
+        Assert.That(doc.RootElement.TryGetProperty("status", out var statusProp), Is.True);
         var status = statusProp.GetString();
         XAssert.Contains(status, new[] { "in_progress", "queued", "completed" });
     }
@@ -110,7 +110,7 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var events = await ParseSseAsync(response);
 
         XAssert.DoesNotContain(events, e => e.EventType == "response.created");

@@ -21,14 +21,14 @@ public class ResponseExecutionTrackerTests : IDisposable
     {
         var execution = _tracker.Create("resp_001");
 
-        Assert.IsTrue(_tracker.TryGet("resp_001", out var found));
-        Assert.AreSame(execution, found);
+        Assert.That(_tracker.TryGet("resp_001", out var found), Is.True);
+        Assert.That(found, Is.SameAs(execution));
     }
 
     [Test]
     public void TryGet_UnknownId_ReturnsFalse()
     {
-        Assert.IsFalse(_tracker.TryGet("resp_missing", out _));
+        Assert.That(_tracker.TryGet("resp_missing", out _), Is.False);
     }
 
     [Test]
@@ -47,7 +47,7 @@ public class ResponseExecutionTrackerTests : IDisposable
         _tracker.MarkCompleted("resp_002");
 
         _tracker.TryGet("resp_002", out var execution);
-        Assert.IsNotNull(execution!.CompletedAt);
+        Assert.That(execution!.CompletedAt, Is.Not.Null);
     }
 
     [Test]
@@ -58,12 +58,12 @@ public class ResponseExecutionTrackerTests : IDisposable
         var execution = _tracker.Create("resp_stop");
 
         // Verify token is not cancelled yet
-        Assert.IsFalse(execution.CancellationTokenSource.Token.IsCancellationRequested);
+        Assert.That(execution.CancellationTokenSource.Token.IsCancellationRequested, Is.False);
 
         await _tracker.StopAsync(CancellationToken.None);
 
         // After stop, in-flight should be cancelled
-        Assert.IsTrue(execution.CancellationTokenSource.Token.IsCancellationRequested);
+        Assert.That(execution.CancellationTokenSource.Token.IsCancellationRequested, Is.True);
     }
 
     [Test]
@@ -75,13 +75,13 @@ public class ResponseExecutionTrackerTests : IDisposable
         var context = new ResponseContext("resp_shutdown");
         execution.Context = context;
 
-        Assert.IsFalse(execution.ShutdownRequested);
-        Assert.IsFalse(context.IsShutdownRequested);
+        Assert.That(execution.ShutdownRequested, Is.False);
+        Assert.That(context.IsShutdownRequested, Is.False);
 
         await _tracker.StopAsync(CancellationToken.None);
 
-        Assert.IsTrue(execution.ShutdownRequested);
-        Assert.IsTrue(context.IsShutdownRequested);
+        Assert.That(execution.ShutdownRequested, Is.True);
+        Assert.That(context.IsShutdownRequested, Is.True);
     }
 
     public void Dispose()

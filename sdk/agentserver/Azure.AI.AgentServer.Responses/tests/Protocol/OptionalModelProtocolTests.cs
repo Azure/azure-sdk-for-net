@@ -31,10 +31,10 @@ public class OptionalModelProtocolTests : ProtocolTestBase
             new StringContent("""{"instructions":"hello"}""",
                 System.Text.Encoding.UTF8, "application/json"));
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
-        Assert.AreEqual("gpt-4o-default", doc.RootElement.GetProperty("model").GetString());
+        Assert.That(doc.RootElement.GetProperty("model").GetString(), Is.EqualTo("gpt-4o-default"));
     }
 
     // ── T038: Explicit model overrides DefaultModel ─────────────
@@ -52,10 +52,10 @@ public class OptionalModelProtocolTests : ProtocolTestBase
             new StringContent("""{"model":"gpt-4o","instructions":"hello"}""",
                 System.Text.Encoding.UTF8, "application/json"));
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
-        Assert.AreEqual("gpt-4o", doc.RootElement.GetProperty("model").GetString());
+        Assert.That(doc.RootElement.GetProperty("model").GetString(), Is.EqualTo("gpt-4o"));
     }
 
     // ── T039: No model + no DefaultModel → empty string ─────────
@@ -65,10 +65,10 @@ public class OptionalModelProtocolTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync("""{"instructions":"hello"}""");
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var doc = await ParseJsonAsync(response);
-        Assert.AreEqual("", doc.RootElement.GetProperty("model").GetString());
+        Assert.That(doc.RootElement.GetProperty("model").GetString(), Is.EqualTo(""));
     }
 
     // ── T040: Streaming no model + DefaultModel → response.created has default ──
@@ -88,7 +88,7 @@ public class OptionalModelProtocolTests : ProtocolTestBase
             new StringContent("""{"instructions":"hello","stream":true}""",
                 System.Text.Encoding.UTF8, "application/json"));
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var body = await response.Content.ReadAsStringAsync();
         var events = SseParser.Parse(body);
@@ -96,7 +96,7 @@ public class OptionalModelProtocolTests : ProtocolTestBase
         var createdEvent = events.First(e => e.EventType == "response.created");
         using var doc = JsonDocument.Parse(createdEvent.Data);
         var resp = doc.RootElement.GetProperty("response");
-        Assert.AreEqual("gpt-4o-streaming-default", resp.GetProperty("model").GetString());
+        Assert.That(resp.GetProperty("model").GetString(), Is.EqualTo("gpt-4o-streaming-default"));
     }
 
     // ── T041: model: "" (empty string) is valid and accepted ────
@@ -106,10 +106,10 @@ public class OptionalModelProtocolTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync("""{"model":"","instructions":"hello"}""");
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var doc = await ParseJsonAsync(response);
-        Assert.AreEqual("", doc.RootElement.GetProperty("model").GetString());
+        Assert.That(doc.RootElement.GetProperty("model").GetString(), Is.EqualTo(""));
     }
 
     // ── Helper event factories ─────────────────────────────────

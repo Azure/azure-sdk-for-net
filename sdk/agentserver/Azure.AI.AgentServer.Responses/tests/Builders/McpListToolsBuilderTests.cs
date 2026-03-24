@@ -19,7 +19,7 @@ public class McpListToolsBuilderTests
     {
         var stream = CreateStream();
         var builder = stream.AddOutputItemMcpListTools("my-server");
-        Assert.IsNotNull(builder);
+        Assert.That(builder, Is.Not.Null);
         XAssert.IsType<OutputItemMcpListToolsBuilder>(builder);
     }
 
@@ -36,7 +36,7 @@ public class McpListToolsBuilderTests
     {
         var stream = CreateStream();
         var builder = stream.AddOutputItemMcpListTools("my-server");
-        Assert.AreEqual("my-server", builder.ServerLabel);
+        Assert.That(builder.ServerLabel, Is.EqualTo("my-server"));
     }
 
     [Test]
@@ -46,9 +46,9 @@ public class McpListToolsBuilderTests
         var builder = stream.AddOutputItemMcpListTools("my-server");
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemMcpListTools>(evt.Item);
-        Assert.AreEqual(builder.ItemId, item.Id);
-        Assert.AreEqual("my-server", item.ServerLabel);
-        Assert.IsEmpty(item.Tools);
+        Assert.That(item.Id, Is.EqualTo(builder.ItemId));
+        Assert.That(item.ServerLabel, Is.EqualTo("my-server"));
+        Assert.That(item.Tools, Is.Empty);
     }
 
     [Test]
@@ -58,8 +58,8 @@ public class McpListToolsBuilderTests
         var builder = stream.AddOutputItemMcpListTools("srv");
         var evt = builder.EmitInProgress();
         XAssert.IsType<ResponseMCPListToolsInProgressEvent>(evt);
-        Assert.AreEqual(builder.ItemId, evt.ItemId);
-        Assert.AreEqual(builder.OutputIndex, evt.OutputIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
 
     [Test]
@@ -69,7 +69,7 @@ public class McpListToolsBuilderTests
         var builder = stream.AddOutputItemMcpListTools("srv");
         var evt = builder.EmitCompleted();
         XAssert.IsType<ResponseMCPListToolsCompletedEvent>(evt);
-        Assert.AreEqual(builder.ItemId, evt.ItemId);
+        Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
     }
 
     [Test]
@@ -79,7 +79,7 @@ public class McpListToolsBuilderTests
         var builder = stream.AddOutputItemMcpListTools("srv");
         var evt = builder.EmitFailed();
         XAssert.IsType<ResponseMCPListToolsFailedEvent>(evt);
-        Assert.AreEqual(builder.ItemId, evt.ItemId);
+        Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
     }
 
     [Test]
@@ -90,8 +90,8 @@ public class McpListToolsBuilderTests
         builder.EmitAdded();
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemMcpListTools>(evt.Item);
-        Assert.AreEqual(builder.ItemId, item.Id);
-        Assert.AreEqual("my-server", item.ServerLabel);
+        Assert.That(item.Id, Is.EqualTo(builder.ItemId));
+        Assert.That(item.ServerLabel, Is.EqualTo("my-server"));
     }
 
     [Test]
@@ -103,9 +103,9 @@ public class McpListToolsBuilderTests
         var inProg = builder.EmitInProgress();   // 1
         var completed = builder.EmitCompleted(); // 2
         var done = builder.EmitDone();           // 3
-        Assert.AreEqual(0, added.SequenceNumber);
-        Assert.AreEqual(1, inProg.SequenceNumber);
-        Assert.AreEqual(2, completed.SequenceNumber);
-        Assert.AreEqual(3, done.SequenceNumber);
+        Assert.That(added.SequenceNumber, Is.EqualTo(0));
+        Assert.That(inProg.SequenceNumber, Is.EqualTo(1));
+        Assert.That(completed.SequenceNumber, Is.EqualTo(2));
+        Assert.That(done.SequenceNumber, Is.EqualTo(3));
     }
 }

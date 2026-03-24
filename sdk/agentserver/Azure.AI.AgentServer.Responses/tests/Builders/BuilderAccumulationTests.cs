@@ -36,7 +36,7 @@ public class BuilderAccumulationTests
 
         XAssert.Single(response.Output);
         var output = XAssert.IsType<OutputItemOutputMessage>(response.Output[0]);
-        Assert.AreEqual(msg.ItemId, output.Id);
+        Assert.That(output.Id, Is.EqualTo(msg.ItemId));
     }
 
     [Test]
@@ -51,7 +51,7 @@ public class BuilderAccumulationTests
 
         XAssert.Single(response.Output);
         var output = XAssert.IsType<OutputItemFunctionToolCall>(response.Output[0]);
-        Assert.AreEqual(fc.ItemId, output.Id);
+        Assert.That(output.Id, Is.EqualTo(fc.ItemId));
     }
 
     [Test]
@@ -72,7 +72,7 @@ public class BuilderAccumulationTests
         fc.EmitArgumentsDone("{}");
         fc.EmitDone();
 
-        Assert.AreEqual(2, response.Output.Count);
+        Assert.That(response.Output.Count, Is.EqualTo(2));
         XAssert.IsType<OutputItemOutputMessage>(response.Output[0]);
         XAssert.IsType<OutputItemFunctionToolCall>(response.Output[1]);
     }
@@ -119,7 +119,7 @@ public class BuilderAccumulationTests
 
         var completed = stream.EmitCompleted();
 
-        Assert.AreEqual("Hello World", completed.Response.OutputText);
+        Assert.That(completed.Response.OutputText, Is.EqualTo("Hello World"));
     }
 
     [Test]
@@ -143,6 +143,6 @@ public class BuilderAccumulationTests
         var completed = stream.EmitCompleted();
 
         // OutputText comes only from messages, not function calls
-        Assert.AreEqual("Only this", completed.Response.OutputText);
+        Assert.That(completed.Response.OutputText, Is.EqualTo("Only this"));
     }
 }

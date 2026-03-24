@@ -24,11 +24,11 @@ public class RawEventInteropTests
         var seq = stream.NextSequenceNumber();
         var manualEvent = new ResponseCreatedEvent(seq, stream.Response);
 
-        Assert.AreEqual(0, manualEvent.SequenceNumber);
+        Assert.That(manualEvent.SequenceNumber, Is.EqualTo(0));
 
         // Subsequent Emit* calls continue the sequence
         var inProgress = stream.EmitInProgress();
-        Assert.AreEqual(1, inProgress.SequenceNumber);
+        Assert.That(inProgress.SequenceNumber, Is.EqualTo(1));
     }
 
     [Test]
@@ -41,9 +41,9 @@ public class RawEventInteropTests
         var rawSeq = stream.NextSequenceNumber();     // 1
         var inProgress = stream.EmitInProgress();     // 2
 
-        Assert.AreEqual(0, created.SequenceNumber);
-        Assert.AreEqual(1, rawSeq);
-        Assert.AreEqual(2, inProgress.SequenceNumber);
+        Assert.That(created.SequenceNumber, Is.EqualTo(0));
+        Assert.That(rawSeq, Is.EqualTo(1));
+        Assert.That(inProgress.SequenceNumber, Is.EqualTo(2));
     }
 
     // ── T020: Mixed builder + raw events ──────────────────────
@@ -83,10 +83,10 @@ public class RawEventInteropTests
         events.Add(stream.EmitCompleted());    // 9
 
         // Assert: all 10 events with monotonic sequence numbers
-        Assert.AreEqual(10, events.Count);
+        Assert.That(events.Count, Is.EqualTo(10));
         for (int i = 0; i < events.Count; i++)
         {
-            Assert.AreEqual(i, events[i].SequenceNumber);
+            Assert.That(events[i].SequenceNumber, Is.EqualTo(i));
         }
     }
 
@@ -146,7 +146,7 @@ public class RawEventInteropTests
         };
 
         // Assert: all events created successfully
-        Assert.AreEqual(9, events.Count);
+        Assert.That(events.Count, Is.EqualTo(9));
 
         // Assert: types are correct
         XAssert.IsType<ResponseCreatedEvent>(events[0]);
@@ -162,7 +162,7 @@ public class RawEventInteropTests
         // Assert: sequence numbers are as assigned
         for (int i = 0; i < events.Count; i++)
         {
-            Assert.AreEqual(i, events[i].SequenceNumber);
+            Assert.That(events[i].SequenceNumber, Is.EqualTo(i));
         }
     }
 }

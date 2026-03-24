@@ -50,7 +50,7 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
         var getResponse = await PollUntilAsync(
             () => GetResponseAsync(responseId),
             r => r.StatusCode == HttpStatusCode.NotFound);
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -86,7 +86,7 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
         var getResponse = await PollUntilAsync(
             () => GetResponseAsync(responseId),
             r => r.StatusCode == HttpStatusCode.NotFound);
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -98,17 +98,17 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
     {
         // Default handler: response.created → response.completed
         var postResponse = await PostResponsesAsync(new { model = "test" });
-        Assert.AreEqual(HttpStatusCode.OK, postResponse.StatusCode);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var postDoc = await ParseJsonAsync(postResponse);
         var responseId = postDoc.RootElement.GetProperty("id").GetString()!;
-        Assert.AreEqual("completed", postDoc.RootElement.GetProperty("status").GetString());
+        Assert.That(postDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
 
         // Non-bg completed → persisted → GET 200
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var getDoc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("completed", getDoc.RootElement.GetProperty("status").GetString());
+        Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -121,17 +121,17 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => ThrowAfterCreatedStream(ctx);
 
         var postResponse = await PostResponsesAsync(new { model = "test" });
-        Assert.AreEqual(HttpStatusCode.OK, postResponse.StatusCode);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var postDoc = await ParseJsonAsync(postResponse);
         var responseId = postDoc.RootElement.GetProperty("id").GetString()!;
-        Assert.AreEqual("failed", postDoc.RootElement.GetProperty("status").GetString());
+        Assert.That(postDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("failed"));
 
         // Non-bg failed → persisted → GET 200
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var getDoc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("failed", getDoc.RootElement.GetProperty("status").GetString());
+        Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("failed"));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -144,17 +144,17 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => IncompleteStream(ctx);
 
         var postResponse = await PostResponsesAsync(new { model = "test" });
-        Assert.AreEqual(HttpStatusCode.OK, postResponse.StatusCode);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var postDoc = await ParseJsonAsync(postResponse);
         var responseId = postDoc.RootElement.GetProperty("id").GetString()!;
-        Assert.AreEqual("incomplete", postDoc.RootElement.GetProperty("status").GetString());
+        Assert.That(postDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("incomplete"));
 
         // Non-bg incomplete → persisted → GET 200
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var getDoc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("incomplete", getDoc.RootElement.GetProperty("status").GetString());
+        Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("incomplete"));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -168,24 +168,24 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => WaitingStream(ctx, handlerGate.Task, ct);
 
         var postResponse = await PostResponsesAsync(new { model = "test", background = true });
-        Assert.AreEqual(HttpStatusCode.OK, postResponse.StatusCode);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var postDoc = await ParseJsonAsync(postResponse);
         var responseId = postDoc.RootElement.GetProperty("id").GetString()!;
 
         // Handler is in-flight (bg POST returns after response.created is yielded)
         // Cancel the response
         var cancelResponse = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Wait for bg task to complete
         await WaitForBackgroundCompletionAsync(responseId);
 
         // bg cancelled → persisted → GET 200
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var getDoc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("cancelled", getDoc.RootElement.GetProperty("status").GetString());
-        Assert.AreEqual(0, getDoc.RootElement.GetProperty("output").GetArrayLength());
+        Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("cancelled"));
+        Assert.That(getDoc.RootElement.GetProperty("output").GetArrayLength(), Is.EqualTo(0));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -199,23 +199,23 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
         Handler.EventFactory = null; // default: created → completed
         var streamResponse = await PostResponsesAsync(
             new { model = "test", stream = true });
-        Assert.AreEqual(HttpStatusCode.OK, streamResponse.StatusCode);
+        Assert.That(streamResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var events = await ParseSseAsync(streamResponse);
         using var eventDoc = JsonDocument.Parse(events[0].Data);
         var streamResponseId = eventDoc.RootElement.GetProperty("response")
             .GetProperty("id").GetString()!;
 
         var getStreamResponse = await GetResponseAsync(streamResponseId);
-        Assert.AreEqual(HttpStatusCode.OK, getStreamResponse.StatusCode);
+        Assert.That(getStreamResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Non-bg+nostream completes → persisted → GET 200
         var noStreamResponse = await PostResponsesAsync(new { model = "test" });
-        Assert.AreEqual(HttpStatusCode.OK, noStreamResponse.StatusCode);
+        Assert.That(noStreamResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var noStreamDoc = await ParseJsonAsync(noStreamResponse);
         var noStreamResponseId = noStreamDoc.RootElement.GetProperty("id").GetString()!;
 
         var getNoStreamResponse = await GetResponseAsync(noStreamResponseId);
-        Assert.AreEqual(HttpStatusCode.OK, getNoStreamResponse.StatusCode);
+        Assert.That(getNoStreamResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     // ═══════════════════════════════════════════════════════════════════════

@@ -22,7 +22,7 @@ public class IdGeneratorTests
         var id = IdGenerator.NewId("test");
         var body = id[(id.IndexOf('_') + 1)..];
 
-        Assert.AreEqual(50, body.Length);
+        Assert.That(body.Length, Is.EqualTo(50));
     }
 
     [Test]
@@ -43,7 +43,7 @@ public class IdGeneratorTests
         var body = id[(id.IndexOf('_') + 1)..];
         var entropy = body[18..];
 
-        Assert.AreEqual(32, entropy.Length);
+        Assert.That(entropy.Length, Is.EqualTo(32));
         XAssert.Matches("^[A-Za-z0-9]{32}$", entropy);
     }
 
@@ -55,7 +55,7 @@ public class IdGeneratorTests
 
         XAssert.StartsWith("caresp_", id);
         // Total = "caresp_" (7) + 50 body = 57
-        Assert.AreEqual(57, id.Length);
+        Assert.That(id.Length, Is.EqualTo(57));
     }
 
     [Test]
@@ -65,7 +65,7 @@ public class IdGeneratorTests
             .Select(_ => IdGenerator.NewId("test"))
             .ToHashSet();
 
-        Assert.AreEqual(100, ids.Count);
+        Assert.That(ids.Count, Is.EqualTo(100));
     }
 
     [Test]
@@ -89,8 +89,8 @@ public class IdGeneratorTests
 
         var pk = IdGenerator.ExtractPartitionKey(id);
 
-        Assert.AreEqual(expectedPk, pk);
-        Assert.AreEqual(18, pk.Length);
+        Assert.That(pk, Is.EqualTo(expectedPk));
+        Assert.That(pk.Length, Is.EqualTo(18));
     }
 
     [Test]
@@ -100,8 +100,8 @@ public class IdGeneratorTests
         var legacyId = "resp_" + new string('a', 32) + "ff00112233445566";
         var pk = IdGenerator.ExtractPartitionKey(legacyId);
 
-        Assert.AreEqual("ff00112233445566", pk);
-        Assert.AreEqual(16, pk.Length);
+        Assert.That(pk, Is.EqualTo("ff00112233445566"));
+        Assert.That(pk.Length, Is.EqualTo(16));
     }
 
     [Test]
@@ -136,8 +136,8 @@ public class IdGeneratorTests
     {
         var id = IdGenerator.NewId("msg");
 
-        Assert.IsTrue(IdGenerator.IsValid(id, out var error));
-        Assert.IsNull(error);
+        Assert.That(IdGenerator.IsValid(id, out var error), Is.True);
+        Assert.That(error, Is.Null);
     }
 
     [Test]
@@ -145,36 +145,36 @@ public class IdGeneratorTests
     {
         var legacyId = "msg_" + new string('a', 32) + "ff00112233445566";
 
-        Assert.IsTrue(IdGenerator.IsValid(legacyId, out var error));
-        Assert.IsNull(error);
+        Assert.That(IdGenerator.IsValid(legacyId, out var error), Is.True);
+        Assert.That(error, Is.Null);
     }
 
     [Test]
     public void IsValid_Null_ReturnsFalse()
     {
-        Assert.IsFalse(IdGenerator.IsValid(null!, out var error));
-        Assert.IsNotNull(error);
+        Assert.That(IdGenerator.IsValid(null!, out var error), Is.False);
+        Assert.That(error, Is.Not.Null);
     }
 
     [Test]
     public void IsValid_Empty_ReturnsFalse()
     {
-        Assert.IsFalse(IdGenerator.IsValid("", out var error));
-        Assert.IsNotNull(error);
+        Assert.That(IdGenerator.IsValid("", out var error), Is.False);
+        Assert.That(error, Is.Not.Null);
     }
 
     [Test]
     public void IsValid_NoDelimiter_ReturnsFalse()
     {
-        Assert.IsFalse(IdGenerator.IsValid("550e8400-e29b-41d4-a716-446655440000", out var error));
-        Assert.IsNotNull(error);
+        Assert.That(IdGenerator.IsValid("550e8400-e29b-41d4-a716-446655440000", out var error), Is.False);
+        Assert.That(error, Is.Not.Null);
     }
 
     [Test]
     public void IsValid_WrongBodyLength_ReturnsFalse()
     {
-        Assert.IsFalse(IdGenerator.IsValid("msg_12345", out var error));
-        Assert.IsNotNull(error);
+        Assert.That(IdGenerator.IsValid("msg_12345", out var error), Is.False);
+        Assert.That(error, Is.Not.Null);
     }
 
     [Test]
@@ -182,7 +182,7 @@ public class IdGeneratorTests
     {
         var id = IdGenerator.NewId("msg");
 
-        Assert.IsTrue(IdGenerator.IsValid(id, out _, ["msg", "fc"]));
+        Assert.That(IdGenerator.IsValid(id, out _, ["msg", "fc"]), Is.True);
     }
 
     [Test]
@@ -190,8 +190,8 @@ public class IdGeneratorTests
     {
         var id = IdGenerator.NewId("msg");
 
-        Assert.IsFalse(IdGenerator.IsValid(id, out var error, ["fc", "rs"]));
-        Assert.IsNotNull(error);
+        Assert.That(IdGenerator.IsValid(id, out var error, ["fc", "rs"]), Is.False);
+        Assert.That(error, Is.Not.Null);
     }
 
     // ── T009: Hint propagation tests ───────────────────────────────
@@ -205,7 +205,7 @@ public class IdGeneratorTests
         var responsePk = IdGenerator.ExtractPartitionKey(responseId);
         var messagePk = IdGenerator.ExtractPartitionKey(messageId);
 
-        Assert.AreEqual(responsePk, messagePk);
+        Assert.That(messagePk, Is.EqualTo(responsePk));
     }
 
     [Test]
@@ -218,7 +218,7 @@ public class IdGeneratorTests
         var pk1 = IdGenerator.ExtractPartitionKey(id1);
         var pk2 = IdGenerator.ExtractPartitionKey(id2);
 
-        Assert.AreEqual(pk1, pk2);
+        Assert.That(pk2, Is.EqualTo(pk1));
     }
 
     [Test]
@@ -233,7 +233,7 @@ public class IdGeneratorTests
 
         // New format embeds the legacy pk + "00" suffix at the start
         var newPk = newBody[..18];
-        Assert.AreEqual(legacyPk + "00", newPk);
+        Assert.That(newPk, Is.EqualTo(legacyPk + "00"));
     }
 
     [Test]
@@ -246,7 +246,7 @@ public class IdGeneratorTests
         var pk1 = IdGenerator.ExtractPartitionKey(id1);
         var pk2 = IdGenerator.ExtractPartitionKey(id2);
 
-        Assert.AreNotEqual(pk1, pk2);
+        Assert.That(pk2, Is.Not.EqualTo(pk1));
     }
 
     [Test]
@@ -258,7 +258,7 @@ public class IdGeneratorTests
         var pk1 = IdGenerator.ExtractPartitionKey(id1);
         var pk2 = IdGenerator.ExtractPartitionKey(id2);
 
-        Assert.AreNotEqual(pk1, pk2);
+        Assert.That(pk2, Is.Not.EqualTo(pk1));
     }
 
     // ── T011: Thread safety ────────────────────────────────────────
@@ -273,7 +273,7 @@ public class IdGeneratorTests
             ids.Add(IdGenerator.NewId("test"));
         });
 
-        Assert.AreEqual(1000, ids.Distinct().Count());
+        Assert.That(ids.Distinct().Count(), Is.EqualTo(1000));
     }
 
     // ── T012: Prefix validation tests ──────────────────────────────
@@ -298,7 +298,7 @@ public class IdGeneratorTests
         var id = IdGenerator.NewResponseId();
 
         XAssert.StartsWith("caresp_", id);
-        Assert.AreEqual(57, id.Length); // "caresp_" (7) + 50 body
+        Assert.That(id.Length, Is.EqualTo(57)); // "caresp_" (7) + 50 body
     }
 
     [Test]
@@ -307,7 +307,7 @@ public class IdGeneratorTests
         var hint = IdGenerator.NewResponseId();
         var id = IdGenerator.NewResponseId(hint);
 
-        Assert.AreEqual(IdGenerator.ExtractPartitionKey(hint), IdGenerator.ExtractPartitionKey(id));
+        Assert.That(IdGenerator.ExtractPartitionKey(id), Is.EqualTo(IdGenerator.ExtractPartitionKey(hint)));
     }
 
     [Test]
@@ -316,7 +316,7 @@ public class IdGeneratorTests
         var id = IdGenerator.NewMessageItemId();
 
         XAssert.StartsWith("msg_", id);
-        Assert.AreEqual(54, id.Length); // "msg_" (4) + 50
+        Assert.That(id.Length, Is.EqualTo(54)); // "msg_" (4) + 50
     }
 
     [Test]
@@ -325,7 +325,7 @@ public class IdGeneratorTests
         var hint = IdGenerator.NewResponseId();
         var id = IdGenerator.NewMessageItemId(hint);
 
-        Assert.AreEqual(IdGenerator.ExtractPartitionKey(hint), IdGenerator.ExtractPartitionKey(id));
+        Assert.That(IdGenerator.ExtractPartitionKey(id), Is.EqualTo(IdGenerator.ExtractPartitionKey(hint)));
     }
 
     [Test]
@@ -342,7 +342,7 @@ public class IdGeneratorTests
         var hint = IdGenerator.NewResponseId();
         var id = IdGenerator.NewFunctionCallItemId(hint);
 
-        Assert.AreEqual(IdGenerator.ExtractPartitionKey(hint), IdGenerator.ExtractPartitionKey(id));
+        Assert.That(IdGenerator.ExtractPartitionKey(id), Is.EqualTo(IdGenerator.ExtractPartitionKey(hint)));
     }
 
     [TestCase("rs")]
@@ -370,7 +370,7 @@ public class IdGeneratorTests
 
         XAssert.StartsWith($"{expectedPrefix}_", id);
         var body = id[(id.IndexOf('_') + 1)..];
-        Assert.AreEqual(50, body.Length);
+        Assert.That(body.Length, Is.EqualTo(50));
     }
 
     [TestCase("rs")]
@@ -397,6 +397,6 @@ public class IdGeneratorTests
             _ => throw new ArgumentException($"Unknown prefix: {prefix}")
         };
 
-        Assert.AreEqual(IdGenerator.ExtractPartitionKey(hint), IdGenerator.ExtractPartitionKey(id));
+        Assert.That(IdGenerator.ExtractPartitionKey(id), Is.EqualTo(IdGenerator.ExtractPartitionKey(hint)));
     }
 }

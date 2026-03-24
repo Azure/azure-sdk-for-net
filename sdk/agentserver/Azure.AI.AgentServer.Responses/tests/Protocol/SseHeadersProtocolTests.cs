@@ -17,8 +17,7 @@ public sealed class SseHeadersProtocolTests : ProtocolTestBase
         // FR-001: Content-Type: text/event-stream; charset=utf-8
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
-        Assert.AreEqual("text/event-stream; charset=utf-8",
-            response.Content.Headers.ContentType?.ToString());
+        Assert.That(response.Content.Headers.ContentType?.ToString(), Is.EqualTo("text/event-stream; charset=utf-8"));
     }
 
     [Test]
@@ -27,9 +26,7 @@ public sealed class SseHeadersProtocolTests : ProtocolTestBase
         // FR-002: Connection: keep-alive
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
-        Assert.IsTrue(
-            response.Headers.Contains("Connection"),
-            "Response should include Connection header");
+        Assert.That(response.Headers.Contains("Connection"), Is.True, "Response should include Connection header");
         XAssert.Contains("keep-alive",
             response.Headers.GetValues("Connection"));
     }
@@ -40,10 +37,9 @@ public sealed class SseHeadersProtocolTests : ProtocolTestBase
         // Existing behaviour preserved: Cache-Control: no-cache
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
-        Assert.IsTrue(
-            response.Headers.CacheControl?.NoCache == true
+        Assert.That(response.Headers.CacheControl?.NoCache == true
             || (response.Headers.Contains("Cache-Control")
-                && response.Headers.GetValues("Cache-Control").Any(v => v.Contains("no-cache"))),
+                && response.Headers.GetValues("Cache-Control").Any(v => v.Contains("no-cache"))), Is.True,
             "Response should include Cache-Control: no-cache");
     }
 
@@ -58,8 +54,7 @@ public sealed class SseHeadersProtocolTests : ProtocolTestBase
         // Now request the SSE replay
         var replayResponse = await GetResponseStreamAsync(responseId);
 
-        Assert.AreEqual("text/event-stream; charset=utf-8",
-            replayResponse.Content.Headers.ContentType?.ToString());
+        Assert.That(replayResponse.Content.Headers.ContentType?.ToString(), Is.EqualTo("text/event-stream; charset=utf-8"));
     }
 
     [Test]
@@ -72,9 +67,7 @@ public sealed class SseHeadersProtocolTests : ProtocolTestBase
 
         var replayResponse = await GetResponseStreamAsync(responseId);
 
-        Assert.IsTrue(
-            replayResponse.Headers.Contains("Connection"),
-            "Replay response should include Connection header");
+        Assert.That(replayResponse.Headers.Contains("Connection"), Is.True, "Replay response should include Connection header");
         XAssert.Contains("keep-alive",
             replayResponse.Headers.GetValues("Connection"));
     }

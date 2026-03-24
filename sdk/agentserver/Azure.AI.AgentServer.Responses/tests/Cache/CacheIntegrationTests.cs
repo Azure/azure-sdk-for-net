@@ -36,10 +36,10 @@ public class CacheIntegrationTests : IDisposable
         // GET the response within TTL
         var getResponse = await _client.GetAsync($"/responses/{responseId}");
 
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var body = await getResponse.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.AreEqual(responseId, body.GetProperty("id").GetString());
-        Assert.AreEqual("completed", body.GetProperty("status").GetString());
+        Assert.That(body.GetProperty("id").GetString(), Is.EqualTo(responseId));
+        Assert.That(body.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     [Test]
@@ -58,7 +58,7 @@ public class CacheIntegrationTests : IDisposable
         // GET should show in_progress
         var getResponse = await _client.GetAsync($"/responses/{responseId}");
         var body = await getResponse.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.AreEqual("in_progress", body.GetProperty("status").GetString());
+        Assert.That(body.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
 
         // Let the handler complete
         tcs.SetResult();
@@ -74,14 +74,14 @@ public class CacheIntegrationTests : IDisposable
                 break;
             await Task.Delay(50);
         }
-        Assert.AreEqual("completed", body2.GetProperty("status").GetString());
+        Assert.That(body2.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     [Test]
     public async Task Get_UnknownId_Returns404()
     {
         var response = await _client.GetAsync("/responses/resp_unknown_cache_test");
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingEventStream(

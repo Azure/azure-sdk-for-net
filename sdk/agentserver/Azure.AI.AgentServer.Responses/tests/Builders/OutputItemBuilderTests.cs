@@ -27,8 +27,8 @@ public class OutputItemBuilderTests
         var itemId = IdGenerator.NewFunctionCallItemId();
         var builder = new OutputItemBuilder<OutputItemFunctionToolCall>(stream, 3, itemId);
 
-        Assert.AreEqual(3, builder.OutputIndex);
-        Assert.AreEqual(itemId, builder.ItemId);
+        Assert.That(builder.OutputIndex, Is.EqualTo(3));
+        Assert.That(builder.ItemId, Is.EqualTo(itemId));
     }
 
     // ──────────────────────────────────────────────
@@ -56,7 +56,7 @@ public class OutputItemBuilderTests
 
         var ev = builder.EmitAdded(item);
 
-        Assert.AreEqual(5, ev.OutputIndex);
+        Assert.That(ev.OutputIndex, Is.EqualTo(5));
     }
 
     [Test]
@@ -68,7 +68,7 @@ public class OutputItemBuilderTests
 
         var ev = builder.EmitAdded(item);
 
-        Assert.AreSame(item, ev.Item);
+        Assert.That(ev.Item, Is.SameAs(item));
     }
 
     [Test]
@@ -80,7 +80,7 @@ public class OutputItemBuilderTests
 
         var ev = builder.EmitAdded(item);
 
-        Assert.AreEqual(0, ev.SequenceNumber);
+        Assert.That(ev.SequenceNumber, Is.EqualTo(0));
     }
 
     // ──────────────────────────────────────────────
@@ -110,7 +110,7 @@ public class OutputItemBuilderTests
         builder.EmitAdded(item);
         var ev = builder.EmitDone(item);
 
-        Assert.AreEqual(7, ev.OutputIndex);
+        Assert.That(ev.OutputIndex, Is.EqualTo(7));
     }
 
     [Test]
@@ -123,7 +123,7 @@ public class OutputItemBuilderTests
         builder.EmitAdded(item);
         var ev = builder.EmitDone(item);
 
-        Assert.AreSame(item, ev.Item);
+        Assert.That(ev.Item, Is.SameAs(item));
     }
 
     // ──────────────────────────────────────────────
@@ -141,9 +141,9 @@ public class OutputItemBuilderTests
         var added = builder.EmitAdded(addedItem);
         var done = builder.EmitDone(doneItem);
 
-        Assert.AreSame(addedItem, added.Item);
-        Assert.AreSame(doneItem, done.Item);
-        Assert.AreNotSame(addedItem, doneItem);
+        Assert.That(added.Item, Is.SameAs(addedItem));
+        Assert.That(done.Item, Is.SameAs(doneItem));
+        Assert.That(doneItem, Is.Not.SameAs(addedItem));
     }
 
     // ──────────────────────────────────────────────
@@ -161,8 +161,8 @@ public class OutputItemBuilderTests
         var added = builder.EmitAdded(addedItem);
         var done = builder.EmitDone(doneItem);
 
-        Assert.AreEqual(0, added.SequenceNumber);
-        Assert.AreEqual(1, done.SequenceNumber);
+        Assert.That(added.SequenceNumber, Is.EqualTo(0));
+        Assert.That(done.SequenceNumber, Is.EqualTo(1));
     }
 
     // ──────────────────────────────────────────────
@@ -179,8 +179,8 @@ public class OutputItemBuilderTests
         var ev = builder.EmitAdded(item);
 
         XAssert.IsType<ResponseOutputItemAddedEvent>(ev);
-        Assert.AreSame(item, ev.Item);
-        Assert.AreEqual(2, ev.OutputIndex);
+        Assert.That(ev.Item, Is.SameAs(item));
+        Assert.That(ev.OutputIndex, Is.EqualTo(2));
     }
 
     [Test]
@@ -194,7 +194,7 @@ public class OutputItemBuilderTests
         var ev = builder.EmitDone(item);
 
         XAssert.IsType<ResponseOutputItemDoneEvent>(ev);
-        Assert.AreSame(item, ev.Item);
+        Assert.That(ev.Item, Is.SameAs(item));
     }
 
     // ──────────────────────────────────────────────
@@ -209,7 +209,7 @@ public class OutputItemBuilderTests
 
         var builder = stream.AddOutputItem<OutputItemFunctionToolCall>(itemId);
 
-        Assert.AreEqual(0, builder.OutputIndex);
+        Assert.That(builder.OutputIndex, Is.EqualTo(0));
     }
 
     [Test]
@@ -222,8 +222,8 @@ public class OutputItemBuilderTests
         var b1 = stream.AddOutputItem<OutputItemFunctionToolCall>(id1);
         var b2 = stream.AddOutputItem<OutputItemFunctionToolCall>(id2);
 
-        Assert.AreEqual(0, b1.OutputIndex);
-        Assert.AreEqual(1, b2.OutputIndex);
+        Assert.That(b1.OutputIndex, Is.EqualTo(0));
+        Assert.That(b2.OutputIndex, Is.EqualTo(1));
     }
 
     [Test]
@@ -234,7 +234,7 @@ public class OutputItemBuilderTests
 
         var builder = stream.AddOutputItem<OutputItemFunctionToolCall>(itemId);
 
-        Assert.AreEqual(itemId, builder.ItemId);
+        Assert.That(builder.ItemId, Is.EqualTo(itemId));
     }
 
     // ──────────────────────────────────────────────
@@ -249,7 +249,7 @@ public class OutputItemBuilderTests
 
         var builder = stream.AddOutputItem<OutputItemFunctionToolCall>(itemId);
 
-        Assert.AreEqual(itemId, builder.ItemId);
+        Assert.That(builder.ItemId, Is.EqualTo(itemId));
     }
 
     [Test]
@@ -260,7 +260,7 @@ public class OutputItemBuilderTests
 
         var builder = stream.AddOutputItem<OutputItemFunctionToolCall>(itemId);
 
-        Assert.AreEqual(itemId, builder.ItemId);
+        Assert.That(builder.ItemId, Is.EqualTo(itemId));
     }
 
     [Test]
@@ -311,7 +311,7 @@ public class OutputItemBuilderTests
     public void ProtectedConstructor_AllowsSubclassing()
     {
         var builder = new TestableOutputItemBuilder();
-        Assert.IsNotNull(builder);
+        Assert.That(builder, Is.Not.Null);
     }
 
 }

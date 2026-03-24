@@ -58,9 +58,9 @@ public class BgStreamDisconnectTests : ProtocolTestBase
 
         // GET should return completed (handler produced all events)
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -100,10 +100,8 @@ public class BgStreamDisconnectTests : ProtocolTestBase
             Task.Delay(TimeSpan.FromSeconds(3)));
 
         // Handler should have COMPLETED, not been CANCELLED
-        Assert.IsTrue(handlerCompleted.Task.IsCompleted,
-            "Handler should complete normally, not be cancelled by SSE disconnect");
-        Assert.IsFalse(handlerCancelled.Task.IsCompleted,
-            "Handler CT should NOT have been cancelled by SSE disconnect");
+        Assert.That(handlerCompleted.Task.IsCompleted, Is.True, "Handler should complete normally, not be cancelled by SSE disconnect");
+        Assert.That(handlerCancelled.Task.IsCompleted, Is.False, "Handler CT should NOT have been cancelled by SSE disconnect");
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -122,7 +120,7 @@ public class BgStreamDisconnectTests : ProtocolTestBase
             new { model = "test", background = true });
         var content = new StringContent(json, Encoding.UTF8, "application/json");
         var postResponse = await Client.PostAsync("/responses", content);
-        Assert.AreEqual(HttpStatusCode.OK, postResponse.StatusCode);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var postDoc = await ParseJsonAsync(postResponse);
         var responseId = postDoc.RootElement.GetProperty("id").GetString()!;
@@ -135,9 +133,9 @@ public class BgStreamDisconnectTests : ProtocolTestBase
 
         // GET should return completed
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var getDoc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("completed", getDoc.RootElement.GetProperty("status").GetString());
+        Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // ═══════════════════════════════════════════════════════════════════════

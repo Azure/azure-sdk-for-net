@@ -21,13 +21,13 @@ public class CreationConstraintTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync(new { model = "test", background = true, store = false });
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
-        Assert.AreEqual("unsupported_parameter", error.GetProperty("code").GetString());
-        Assert.AreEqual("background", error.GetProperty("param").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("unsupported_parameter"));
+        Assert.That(error.GetProperty("param").GetString(), Is.EqualTo("background"));
     }
 
     // ── T027: Valid stored combinations (C1-C4) → 200 ────────
@@ -40,7 +40,7 @@ public class CreationConstraintTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync(new { model = "test", background, stream, store = true });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     // ── T028: Valid ephemeral combinations (C5-C6) → 200 ─────
@@ -51,7 +51,7 @@ public class CreationConstraintTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync(new { model = "test", background = false, stream, store = false });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     // ── T029: Rejected combinations (C7-C8) → 400 ────────────
@@ -62,12 +62,12 @@ public class CreationConstraintTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync(new { model = "test", background = true, stream, store = false });
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
-        Assert.AreEqual("unsupported_parameter", error.GetProperty("code").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("unsupported_parameter"));
     }
 
     // ── T030: Edge cases ──────────────────────────────────────
@@ -77,11 +77,11 @@ public class CreationConstraintTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync("");
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     [Test]
@@ -89,11 +89,11 @@ public class CreationConstraintTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync("{not-valid-json!");
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     [Test]
@@ -102,7 +102,7 @@ public class CreationConstraintTests : ProtocolTestBase
         // PW-006: model is optional — omitting it should succeed
         var response = await PostResponsesAsync("""{"instructions":"hello"}""");
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     [Test]
@@ -111,6 +111,6 @@ public class CreationConstraintTests : ProtocolTestBase
         // Unknown fields should be ignored, not rejected
         var response = await PostResponsesAsync("""{"model":"test","unknown_field":"value","extra":42}""");
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 }

@@ -28,12 +28,12 @@ public class OutputManipulationDetectionTests : ProtocolTestBase
 
         // Output manipulation detected after response.created (post-created error)
         // → response lifecycle completes as failed
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(response);
-        Assert.AreEqual("failed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("failed"));
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("server_error", error.GetProperty("code").GetString());
-        Assert.AreEqual("An internal server error occurred.", error.GetProperty("message").GetString()!);
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("server_error"));
+        Assert.That(error.GetProperty("message").GetString()!, Is.EqualTo("An internal server error occurred."));
     }
 
     [Test]
@@ -44,7 +44,7 @@ public class OutputManipulationDetectionTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var events = await ParseSseAsync(response);
 
         // Should have response.created (handler emitted it) then response.failed (SDK detected manipulation)

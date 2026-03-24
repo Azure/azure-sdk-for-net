@@ -20,8 +20,8 @@ public class DefaultModeProtocolTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync(new { model = "test-model" });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("application/json", response.Content.Headers.ContentType?.MediaType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("application/json"));
     }
 
     [Test]
@@ -33,18 +33,18 @@ public class DefaultModeProtocolTests : ProtocolTestBase
         var root = doc.RootElement;
 
         // Required top-level fields per the spec
-        Assert.IsTrue(root.TryGetProperty("id", out var id));
-        Assert.IsFalse(string.IsNullOrEmpty(id.GetString()));
+        Assert.That(root.TryGetProperty("id", out var id), Is.True);
+        Assert.That(string.IsNullOrEmpty(id.GetString()), Is.False);
 
-        Assert.AreEqual("response", root.GetProperty("object").GetString());
+        Assert.That(root.GetProperty("object").GetString(), Is.EqualTo("response"));
 
-        Assert.IsTrue(root.TryGetProperty("created_at", out var createdAt));
-        Assert.AreEqual(JsonValueKind.Number, createdAt.ValueKind);
+        Assert.That(root.TryGetProperty("created_at", out var createdAt), Is.True);
+        Assert.That(createdAt.ValueKind, Is.EqualTo(JsonValueKind.Number));
 
-        Assert.IsTrue(root.TryGetProperty("status", out _));
-        Assert.IsTrue(root.TryGetProperty("model", out _));
-        Assert.IsTrue(root.TryGetProperty("output", out var output));
-        Assert.AreEqual(JsonValueKind.Array, output.ValueKind);
+        Assert.That(root.TryGetProperty("status", out _), Is.True);
+        Assert.That(root.TryGetProperty("model", out _), Is.True);
+        Assert.That(root.TryGetProperty("output", out var output), Is.True);
+        Assert.That(output.ValueKind, Is.EqualTo(JsonValueKind.Array));
     }
 
     [Test]
@@ -53,7 +53,7 @@ public class DefaultModeProtocolTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "test-model" });
 
         using var doc = await ParseJsonAsync(response);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     [Test]
@@ -63,7 +63,7 @@ public class DefaultModeProtocolTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "gpt-4.1-nano" });
 
         using var doc = await ParseJsonAsync(response);
-        Assert.AreEqual("gpt-4.1-nano", doc.RootElement.GetProperty("model").GetString());
+        Assert.That(doc.RootElement.GetProperty("model").GetString(), Is.EqualTo("gpt-4.1-nano"));
     }
 
     [Test]
@@ -76,7 +76,7 @@ public class DefaultModeProtocolTests : ProtocolTestBase
 
         using var doc = await ParseJsonAsync(response);
         var outputText = doc.RootElement.GetProperty("output_text").GetString();
-        Assert.AreEqual("Echo: Hello world", outputText);
+        Assert.That(outputText, Is.EqualTo("Echo: Hello world"));
     }
 
     [Test]
@@ -89,8 +89,8 @@ public class DefaultModeProtocolTests : ProtocolTestBase
 
         using var doc = await ParseJsonAsync(response);
         var metadata = doc.RootElement.GetProperty("metadata");
-        Assert.AreEqual("value1", metadata.GetProperty("key1").GetString());
-        Assert.AreEqual("value2", metadata.GetProperty("key2").GetString());
+        Assert.That(metadata.GetProperty("key1").GetString(), Is.EqualTo("value1"));
+        Assert.That(metadata.GetProperty("key2").GetString(), Is.EqualTo("value2"));
     }
 
     [Test]
@@ -100,9 +100,9 @@ public class DefaultModeProtocolTests : ProtocolTestBase
         var response = await PostResponsesAsync(
             "{\"model\":\"test\",\"unknown_future_field\":\"some_value\",\"another_field\":42}");
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(response);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // ── Helper event factories ─────────────────────────────────

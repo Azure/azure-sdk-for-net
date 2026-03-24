@@ -51,7 +51,7 @@ public class ProviderDiIntegrationTests : IDisposable
         var response = await _client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         XAssert.Contains("CreateResponseAsync", _spy.Calls);
     }
 
@@ -102,7 +102,7 @@ public class ProviderDiIntegrationTests : IDisposable
         // Cancel the response
         var cancelResponse = await _client.PostAsync($"/responses/{responseId}/cancel", null);
 
-        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         XAssert.Contains("CancelResponseAsync", _spy.Calls);
 
         // Clean up
@@ -305,11 +305,11 @@ public class DefaultProviderZeroRegressionTests : ProtocolTestBase
         var responseId = await CreateDefaultResponseAsync();
 
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
-        Assert.AreEqual(responseId, doc.RootElement.GetProperty("id").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
+        Assert.That(doc.RootElement.GetProperty("id").GetString(), Is.EqualTo(responseId));
     }
 
     [Test]
@@ -317,16 +317,16 @@ public class DefaultProviderZeroRegressionTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("text/event-stream", response.Content.Headers.ContentType?.MediaType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("text/event-stream"));
 
         var events = await ParseSseAsync(response);
-        Assert.IsTrue(events.Count >= 2, $"Expected at least 2 SSE events, got {events.Count}");
+        Assert.That(events.Count >= 2, Is.True, $"Expected at least 2 SSE events, got {events.Count}");
 
         // First event should be response.created
-        Assert.AreEqual("response.created", events[0].EventType);
+        Assert.That(events[0].EventType, Is.EqualTo("response.created"));
         // Last event should be response.completed
-        Assert.AreEqual("response.completed", events[^1].EventType);
+        Assert.That(events[^1].EventType, Is.EqualTo("response.completed"));
     }
 
     [Test]
@@ -339,7 +339,7 @@ public class DefaultProviderZeroRegressionTests : ProtocolTestBase
 
         var getResponse = await GetResponseAsync(responseId);
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     [Test]
@@ -352,7 +352,7 @@ public class DefaultProviderZeroRegressionTests : ProtocolTestBase
 
         // Cancel
         var cancelResponse = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Let handler unblock (it will see cancellation)
         tcs.SetResult();
@@ -361,7 +361,7 @@ public class DefaultProviderZeroRegressionTests : ProtocolTestBase
         var getResponse = await GetResponseAsync(responseId);
         using var doc = await ParseJsonAsync(getResponse);
         var status = doc.RootElement.GetProperty("status").GetString();
-        Assert.AreEqual("cancelled", status);
+        Assert.That(status, Is.EqualTo("cancelled"));
     }
 
     [Test]
@@ -373,20 +373,20 @@ public class DefaultProviderZeroRegressionTests : ProtocolTestBase
 
         // SSE replay
         var replayResponse = await GetResponseStreamAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, replayResponse.StatusCode);
-        Assert.AreEqual("text/event-stream", replayResponse.Content.Headers.ContentType?.MediaType);
+        Assert.That(replayResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(replayResponse.Content.Headers.ContentType?.MediaType, Is.EqualTo("text/event-stream"));
 
         var events = await ParseSseAsync(replayResponse);
-        Assert.IsTrue(events.Count >= 2, $"Expected at least 2 SSE replay events, got {events.Count}");
-        Assert.AreEqual("response.created", events[0].EventType);
-        Assert.AreEqual("response.completed", events[^1].EventType);
+        Assert.That(events.Count >= 2, Is.True, $"Expected at least 2 SSE replay events, got {events.Count}");
+        Assert.That(events[0].EventType, Is.EqualTo("response.created"));
+        Assert.That(events[^1].EventType, Is.EqualTo("response.completed"));
     }
 
     [Test]
     public async Task Default_Get_Unknown_Returns_404()
     {
         var response = await GetResponseAsync("resp_unknown_provider_test");
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingEventStream(
@@ -435,7 +435,7 @@ public class PartialProviderOverrideTests : IDisposable
         var response = await _client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         XAssert.Contains("CreateResponseAsync", _stateProvider.Calls);
     }
 
@@ -447,7 +447,7 @@ public class PartialProviderOverrideTests : IDisposable
         var response = await _client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Wait for background completion
         var createBody = await response.Content.ReadAsStringAsync();
@@ -469,14 +469,14 @@ public class PartialProviderOverrideTests : IDisposable
         var response = await _client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("text/event-stream", response.Content.Headers.ContentType?.MediaType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("text/event-stream"));
 
         var sseBody = await response.Content.ReadAsStringAsync();
         var events = SseParser.Parse(sseBody);
-        Assert.IsTrue(events.Count >= 2, $"Expected at least 2 SSE events, got {events.Count}");
-        Assert.AreEqual("response.created", events[0].EventType);
-        Assert.AreEqual("response.completed", events[^1].EventType);
+        Assert.That(events.Count >= 2, Is.True, $"Expected at least 2 SSE events, got {events.Count}");
+        Assert.That(events[0].EventType, Is.EqualTo("response.created"));
+        Assert.That(events[^1].EventType, Is.EqualTo("response.completed"));
     }
 
     [Test]
@@ -494,7 +494,7 @@ public class PartialProviderOverrideTests : IDisposable
 
         // Cancel should work via the default InMemory cancellation provider
         var cancelResponse = await _client.PostAsync($"/responses/{responseId}/cancel", null);
-        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Clean up
         tcs.SetResult();
@@ -519,11 +519,11 @@ public class PartialProviderOverrideTests : IDisposable
 
         // SSE replay should work via default InMemory stream provider
         var replayResponse = await _client.GetAsync($"/responses/{responseId}?stream=true");
-        Assert.AreEqual(HttpStatusCode.OK, replayResponse.StatusCode);
-        Assert.AreEqual("text/event-stream", replayResponse.Content.Headers.ContentType?.MediaType);
+        Assert.That(replayResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(replayResponse.Content.Headers.ContentType?.MediaType, Is.EqualTo("text/event-stream"));
 
         var replayEvents = SseParser.Parse(await replayResponse.Content.ReadAsStringAsync());
-        Assert.IsTrue(replayEvents.Count >= 2);
+        Assert.That(replayEvents.Count >= 2, Is.True);
     }
 
     [Test]

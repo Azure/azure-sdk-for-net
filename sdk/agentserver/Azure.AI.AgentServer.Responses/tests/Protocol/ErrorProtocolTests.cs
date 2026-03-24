@@ -21,12 +21,12 @@ public class ErrorProtocolTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync("");
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
-        Assert.IsFalse(string.IsNullOrEmpty(error.GetProperty("message").GetString()));
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(string.IsNullOrEmpty(error.GetProperty("message").GetString()), Is.False);
     }
 
     [Test]
@@ -34,11 +34,11 @@ public class ErrorProtocolTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync("{not valid json");
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     [Test]
@@ -52,10 +52,10 @@ public class ErrorProtocolTests : ProtocolTestBase
         // a response with status: failed and an error object
         using var doc = await ParseJsonAsync(response);
         var status = doc.RootElement.GetProperty("status").GetString();
-        Assert.AreEqual("failed", status);
+        Assert.That(status, Is.EqualTo("failed"));
 
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("server_error", error.GetProperty("code").GetString());
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("server_error"));
     }
 
     [Test]
@@ -63,12 +63,12 @@ public class ErrorProtocolTests : ProtocolTestBase
     {
         var response = await GetResponseAsync("caresp_does_not_exist");
 
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
-        Assert.IsFalse(string.IsNullOrEmpty(error.GetProperty("message").GetString()));
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(string.IsNullOrEmpty(error.GetProperty("message").GetString()), Is.False);
     }
 
     // ── Helper event factories ─────────────────────────────────

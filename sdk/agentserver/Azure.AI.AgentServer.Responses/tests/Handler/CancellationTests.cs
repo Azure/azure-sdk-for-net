@@ -33,9 +33,9 @@ public class CancellationTests : IDisposable
 
         var response = await _client.PostAsync("/responses", content);
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.AreEqual("failed", body.GetProperty("status").GetString());
+        Assert.That(body.GetProperty("status").GetString(), Is.EqualTo("failed"));
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> CancellingEventStream(

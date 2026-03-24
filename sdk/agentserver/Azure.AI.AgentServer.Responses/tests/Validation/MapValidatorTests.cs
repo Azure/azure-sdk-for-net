@@ -29,7 +29,7 @@ public class MapValidatorTests
     {
         var result = ValidateElement("\"not-an-object\"", MetadataValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$" && e.Message.Contains("object"));
     }
 
@@ -39,7 +39,7 @@ public class MapValidatorTests
     {
         var result = ValidateElement("{}", MetadataValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T049: MetadataValidator rejects object with non-string values {"key": 42}
@@ -48,7 +48,7 @@ public class MapValidatorTests
     {
         var result = ValidateElement("""{"key": 42}""", MetadataValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.key" && e.Message.Contains("string"));
     }
 
@@ -58,7 +58,7 @@ public class MapValidatorTests
     {
         var result = ValidateElement("""{"key": "value", "another": "data"}""", MetadataValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // Additional: MetadataValidator accepts null values (map values can be null)
@@ -67,7 +67,7 @@ public class MapValidatorTests
     {
         var result = ValidateElement("""{"key": null}""", MetadataValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // =======================================================================
@@ -80,7 +80,7 @@ public class MapValidatorTests
     {
         var result = ValidateElement("42", ResponsePromptVariablesValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$" && e.Message.Contains("object"));
     }
 
@@ -90,7 +90,7 @@ public class MapValidatorTests
     {
         var result = ValidateElement("""{"var1": "value1"}""", ResponsePromptVariablesValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // Additional: ResponsePromptVariablesValidator accepts object values (InputTextContent etc.)
@@ -99,7 +99,7 @@ public class MapValidatorTests
     {
         var result = ValidateElement("""{"var1": {"type": "input_text", "text": "hello"}}""", ResponsePromptVariablesValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // Additional: ResponsePromptVariablesValidator rejects number value in map
@@ -108,7 +108,7 @@ public class MapValidatorTests
     {
         var result = ValidateElement("""{"var1": 42}""", ResponsePromptVariablesValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.var1");
     }
 
@@ -122,7 +122,7 @@ public class MapValidatorTests
     {
         var result = ValidateElement("\"not-an-object\"", VectorStoreFileAttributesValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$" && e.Message.Contains("object"));
     }
 
@@ -133,7 +133,7 @@ public class MapValidatorTests
         var result = ValidateElement("""{"tag": "important", "score": 0.95, "active": true}""",
             VectorStoreFileAttributesValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // Additional: VectorStoreFileAttributesValidator rejects object with invalid values
@@ -143,7 +143,7 @@ public class MapValidatorTests
         var result = ValidateElement("""{"tags": [1, 2, 3]}""",
             VectorStoreFileAttributesValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.tags");
     }
 
@@ -157,7 +157,7 @@ public class MapValidatorTests
     {
         var result = ValidateElement("[]", MCPListToolsToolAnnotationsValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$" && e.Message.Contains("object"));
     }
 
@@ -167,7 +167,7 @@ public class MapValidatorTests
     {
         var result = ValidateElement("{}", MCPListToolsToolAnnotationsValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // =======================================================================
@@ -180,7 +180,7 @@ public class MapValidatorTests
     {
         var result = ValidateElement("\"not-an-object\"", MCPListToolsToolInputSchemaValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$" && e.Message.Contains("object"));
     }
 
@@ -194,7 +194,7 @@ public class MapValidatorTests
     {
         var result = ValidateElement("123", ResponseFormatJsonSchemaSchemaValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$" && e.Message.Contains("object"));
     }
 
@@ -205,6 +205,6 @@ public class MapValidatorTests
         var result = ValidateElement("""{"type": "object", "properties": {}}""",
             ResponseFormatJsonSchemaSchemaValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 }

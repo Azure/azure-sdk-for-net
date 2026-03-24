@@ -24,7 +24,7 @@ public class CodegenPipelineTests
         using var doc = JsonDocument.Parse(json);
         var result = CreateResponsePayloadValidator.Validate(doc.RootElement);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     [Test]
@@ -33,7 +33,7 @@ public class CodegenPipelineTests
         var bytes = System.Text.Encoding.UTF8.GetBytes("""{"model":"gpt-4o"}""");
         var result = CreateResponsePayloadValidator.Validate(bytes);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // -----------------------------------------------------------------------
@@ -48,7 +48,7 @@ public class CodegenPipelineTests
         using var doc = JsonDocument.Parse(json);
         var result = CreateResponsePayloadValidator.Validate(doc.RootElement);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     [Test]
@@ -58,7 +58,7 @@ public class CodegenPipelineTests
         using var doc = JsonDocument.Parse(json);
         var result = CreateResponsePayloadValidator.Validate(doc.RootElement);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // -----------------------------------------------------------------------
@@ -74,7 +74,7 @@ public class CodegenPipelineTests
         using var doc = JsonDocument.Parse(json);
         var result = CreateResponsePayloadValidator.Validate(doc.RootElement);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path.Contains("truncation"));
     }
 
@@ -85,7 +85,7 @@ public class CodegenPipelineTests
         using var doc = JsonDocument.Parse(json);
         var result = CreateResponsePayloadValidator.Validate(doc.RootElement);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // -----------------------------------------------------------------------
@@ -102,7 +102,7 @@ public class CodegenPipelineTests
         var result = OutputItemValidator.Validate(doc.RootElement);
 
         // Unknown discriminator values should pass (default case returns Success)
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     [Test]
@@ -113,7 +113,7 @@ public class CodegenPipelineTests
         using var doc = JsonDocument.Parse(json);
         var result = OutputItemValidator.Validate(doc.RootElement);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     [Test]
@@ -124,7 +124,7 @@ public class CodegenPipelineTests
         using var doc = JsonDocument.Parse(json);
         var result = CreateResponsePayloadValidator.Validate(doc.RootElement);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     [Test]
@@ -136,6 +136,6 @@ public class CodegenPipelineTests
         var result = ResponseValidator.Validate(doc.RootElement);
 
         // Should at least be able to parse it (may have required fields we're missing)
-        Assert.IsNotNull(result);
+        Assert.That(result, Is.Not.Null);
     }
 }

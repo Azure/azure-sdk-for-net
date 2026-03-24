@@ -40,7 +40,7 @@ public class SimpleTextResponseTests
         events.Add(stream.EmitCompleted());           // 9: response.completed
 
         // Assert: correct number of events
-        Assert.AreEqual(10, events.Count);
+        Assert.That(events.Count, Is.EqualTo(10));
 
         // Assert: event types in order
         XAssert.IsType<ResponseCreatedEvent>(events[0]);
@@ -57,7 +57,7 @@ public class SimpleTextResponseTests
         // Assert: monotonically increasing sequence numbers
         for (int i = 0; i < events.Count; i++)
         {
-            Assert.AreEqual(i, events[i].SequenceNumber);
+            Assert.That(events[i].SequenceNumber, Is.EqualTo(i));
         }
 
         // Assert: consistent item ID across related events
@@ -71,37 +71,37 @@ public class SimpleTextResponseTests
 
         var itemId = message.ItemId;
         var addedItem = XAssert.IsType<OutputItemOutputMessage>(addedEvt.Item);
-        Assert.AreEqual(itemId, addedItem.Id);
-        Assert.AreEqual(itemId, contentAddedEvt.ItemId);
-        Assert.AreEqual(itemId, delta1Evt.ItemId);
-        Assert.AreEqual(itemId, delta2Evt.ItemId);
-        Assert.AreEqual(itemId, textDoneEvt.ItemId);
-        Assert.AreEqual(itemId, contentDoneEvt.ItemId);
+        Assert.That(addedItem.Id, Is.EqualTo(itemId));
+        Assert.That(contentAddedEvt.ItemId, Is.EqualTo(itemId));
+        Assert.That(delta1Evt.ItemId, Is.EqualTo(itemId));
+        Assert.That(delta2Evt.ItemId, Is.EqualTo(itemId));
+        Assert.That(textDoneEvt.ItemId, Is.EqualTo(itemId));
+        Assert.That(contentDoneEvt.ItemId, Is.EqualTo(itemId));
 
         // Assert: output index is 0 throughout
-        Assert.AreEqual(0, addedEvt.OutputIndex);
-        Assert.AreEqual(0, contentAddedEvt.OutputIndex);
-        Assert.AreEqual(0, delta1Evt.OutputIndex);
-        Assert.AreEqual(0, delta2Evt.OutputIndex);
-        Assert.AreEqual(0, textDoneEvt.OutputIndex);
-        Assert.AreEqual(0, contentDoneEvt.OutputIndex);
-        Assert.AreEqual(0, itemDoneEvt.OutputIndex);
+        Assert.That(addedEvt.OutputIndex, Is.EqualTo(0));
+        Assert.That(contentAddedEvt.OutputIndex, Is.EqualTo(0));
+        Assert.That(delta1Evt.OutputIndex, Is.EqualTo(0));
+        Assert.That(delta2Evt.OutputIndex, Is.EqualTo(0));
+        Assert.That(textDoneEvt.OutputIndex, Is.EqualTo(0));
+        Assert.That(contentDoneEvt.OutputIndex, Is.EqualTo(0));
+        Assert.That(itemDoneEvt.OutputIndex, Is.EqualTo(0));
 
         // Assert: content index is 0 throughout
-        Assert.AreEqual(0, contentAddedEvt.ContentIndex);
-        Assert.AreEqual(0, delta1Evt.ContentIndex);
-        Assert.AreEqual(0, delta2Evt.ContentIndex);
-        Assert.AreEqual(0, textDoneEvt.ContentIndex);
-        Assert.AreEqual(0, contentDoneEvt.ContentIndex);
+        Assert.That(contentAddedEvt.ContentIndex, Is.EqualTo(0));
+        Assert.That(delta1Evt.ContentIndex, Is.EqualTo(0));
+        Assert.That(delta2Evt.ContentIndex, Is.EqualTo(0));
+        Assert.That(textDoneEvt.ContentIndex, Is.EqualTo(0));
+        Assert.That(contentDoneEvt.ContentIndex, Is.EqualTo(0));
 
         // Assert: final done message has completed status and accumulated content
         var doneItem = XAssert.IsType<OutputItemOutputMessage>(itemDoneEvt.Item);
-        Assert.AreEqual(itemId, doneItem.Id);
-        Assert.AreEqual(OutputItemOutputMessageStatus.Completed, doneItem.Status);
+        Assert.That(doneItem.Id, Is.EqualTo(itemId));
+        Assert.That(doneItem.Status, Is.EqualTo(OutputItemOutputMessageStatus.Completed));
         XAssert.Single(doneItem.Content);
 
         var finalContent = XAssert.IsType<OutputMessageContentOutputTextContent>(doneItem.Content[0]);
-        Assert.AreEqual("Hello, world!", finalContent.Text);
+        Assert.That(finalContent.Text, Is.EqualTo("Hello, world!"));
     }
 
     [Test]
@@ -112,11 +112,11 @@ public class SimpleTextResponseTests
 
         var events = BuildEvents(context).ToBlockingEnumerable().ToList();
 
-        Assert.AreEqual(10, events.Count);
+        Assert.That(events.Count, Is.EqualTo(10));
         // Verify monotonic sequence
         for (int i = 0; i < events.Count; i++)
         {
-            Assert.AreEqual(i, events[i].SequenceNumber);
+            Assert.That(events[i].SequenceNumber, Is.EqualTo(i));
         }
     }
 

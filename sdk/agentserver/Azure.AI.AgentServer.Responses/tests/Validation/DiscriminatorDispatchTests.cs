@@ -46,7 +46,7 @@ public class DiscriminatorDispatchTests
         }
         """, ToolValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.type" && e.Message.Contains("discriminator"));
     }
 
@@ -59,7 +59,7 @@ public class DiscriminatorDispatchTests
         }
         """, ToolValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Message.Contains("discriminator"));
     }
 
@@ -74,7 +74,7 @@ public class DiscriminatorDispatchTests
         }
         """, ToolValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // -----------------------------------------------------------------------
@@ -107,7 +107,7 @@ public class DiscriminatorDispatchTests
         }
         """, OutputItemValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
     }
 
     [Test]
@@ -119,6 +119,6 @@ public class DiscriminatorDispatchTests
         }
         """, OutputItemValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 }

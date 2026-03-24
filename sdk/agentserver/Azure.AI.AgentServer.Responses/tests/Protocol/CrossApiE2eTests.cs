@@ -35,7 +35,7 @@ public class CrossApiE2eTests : ProtocolTestBase
             : null; // default handler
 
         var createResponse = await PostResponsesAsync(new { model = "test", store = false, stream });
-        Assert.AreEqual(HttpStatusCode.OK, createResponse.StatusCode);
+        Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Extract ID: for non-streaming, from JSON; for streaming, from first SSE event
         string responseId;
@@ -58,7 +58,7 @@ public class CrossApiE2eTests : ProtocolTestBase
             _ => throw new ArgumentException(operation)
         };
 
-        Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
+        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     // E32/E35: store=false + Cancel → 400 (non-bg cancel rejected with "synchronous" error, B1, B14)
@@ -72,7 +72,7 @@ public class CrossApiE2eTests : ProtocolTestBase
             : null;
 
         var createResponse = await PostResponsesAsync(new { model = "test", store = false, stream });
-        Assert.AreEqual(HttpStatusCode.OK, createResponse.StatusCode);
+        Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         string responseId;
         if (stream)
@@ -89,7 +89,7 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         // Cancel on a non-bg response → 400 (checked before store lookup)
         var result = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
+        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 
     // ════════════════════════════════════════════════════════════
@@ -104,9 +104,9 @@ public class CrossApiE2eTests : ProtocolTestBase
         var responseId = await CreateDefaultResponseAsync();
 
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // E2: Create → GET (during in-flight) → 404 (B16)
@@ -131,7 +131,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         // We need the actual response ID — extract from handler context
         var responseId = Handler.LastContext!.ResponseId;
         getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         // Release handler → POST completes
         handlerGate.TrySetResult();
@@ -139,9 +139,9 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         // Now GET succeeds
         var getAfter = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getAfter.StatusCode);
+        Assert.That(getAfter.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(getAfter);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // E3: Create → GET ?stream=true → 400 (B2: non-bg, no SSE replay)
@@ -152,7 +152,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         var responseId = await CreateDefaultResponseAsync();
 
         var getResponse = await GetResponseStreamAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.BadRequest, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 
     // E4: Create → Cancel API (after completion) → 400 (B1, B12)
@@ -163,9 +163,9 @@ public class CrossApiE2eTests : ProtocolTestBase
         var responseId = await CreateDefaultResponseAsync();
 
         var cancelResponse = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
-        Assert.AreEqual("invalid_request_error", doc.RootElement.GetProperty("error").GetProperty("type").GetString());
+        Assert.That(doc.RootElement.GetProperty("error").GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("synchronous", doc.RootElement.GetProperty("error").GetProperty("message").GetString());
     }
 
@@ -184,7 +184,7 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         var responseId = Handler.LastContext!.ResponseId;
         var cancelResponse = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.NotFound, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         handlerGate.TrySetResult();
         await postTask;
@@ -223,7 +223,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         var getResponse = await PollUntilAsync(
             () => GetResponseAsync(responseId),
             r => r.StatusCode == HttpStatusCode.NotFound);
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     // ════════════════════════════════════════════════════════════
@@ -239,9 +239,9 @@ public class CrossApiE2eTests : ProtocolTestBase
         var responseId = await CreateStreamingResponseAsync();
 
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // E8: Create (SSE) → GET JSON (during stream) → 404 (B16)
@@ -264,7 +264,7 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         // GET during stream → 404
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         // Release and cleanup
         handlerGate.TrySetResult();
@@ -282,7 +282,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         var responseId = await CreateStreamingResponseAsync();
 
         var getResponse = await GetResponseStreamAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.BadRequest, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 
     // E10: Create → Cancel API (after stream ends) → 400 (B1, B12)
@@ -294,7 +294,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         var responseId = await CreateStreamingResponseAsync();
 
         var cancelResponse = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
         XAssert.Contains("synchronous", doc.RootElement.GetProperty("error").GetProperty("message").GetString());
     }
@@ -318,7 +318,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         var responseId = Handler.LastContext!.ResponseId;
 
         var cancelResponse = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.NotFound, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         handlerGate.TrySetResult();
         try
@@ -357,7 +357,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         var getResponse = await PollUntilAsync(
             () => GetResponseAsync(responseId),
             r => r.StatusCode == HttpStatusCode.NotFound);
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     // ════════════════════════════════════════════════════════════
@@ -373,17 +373,17 @@ public class CrossApiE2eTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => WaitingStream(ctx, handlerGate.Task, ct);
 
         var createResponse = await PostResponsesAsync(new { model = "test", background = true });
-        Assert.AreEqual(HttpStatusCode.OK, createResponse.StatusCode);
+        Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var createDoc = await ParseJsonAsync(createResponse);
         var responseId = createDoc.RootElement.GetProperty("id").GetString()!;
         var createStatus = createDoc.RootElement.GetProperty("status").GetString();
-        Assert.IsTrue(createStatus is "queued" or "in_progress");
+        Assert.That(createStatus is "queued" or "in_progress", Is.True);
 
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var getDoc = await ParseJsonAsync(getResponse);
         var getStatus = getDoc.RootElement.GetProperty("status").GetString();
-        Assert.IsTrue(getStatus is "queued" or "in_progress");
+        Assert.That(getStatus is "queued" or "in_progress", Is.True);
 
         handlerGate.TrySetResult();
         await WaitForBackgroundCompletionAsync(responseId);
@@ -398,9 +398,9 @@ public class CrossApiE2eTests : ProtocolTestBase
         await WaitForBackgroundCompletionAsync(responseId);
 
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // E15: Create → GET ?stream=true → 400 (B2: stream=false at creation)
@@ -412,7 +412,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         await WaitForBackgroundCompletionAsync(responseId);
 
         var getResponse = await GetResponseStreamAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.BadRequest, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 
     // E16: Create → Cancel → GET → cancelled, 0 output (B7, B11)
@@ -426,16 +426,16 @@ public class CrossApiE2eTests : ProtocolTestBase
         var responseId = await CreateBackgroundResponseAsync();
 
         var cancelResponse = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         handlerGate.TrySetResult();
         await WaitForBackgroundCompletionAsync(responseId);
 
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("cancelled", doc.RootElement.GetProperty("status").GetString());
-        Assert.AreEqual(0, doc.RootElement.GetProperty("output").GetArrayLength());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("cancelled"));
+        Assert.That(doc.RootElement.GetProperty("output").GetArrayLength(), Is.EqualTo(0));
     }
 
     // E17: Create (wait complete) → Cancel → 400 (B12)
@@ -447,7 +447,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         await WaitForBackgroundCompletionAsync(responseId);
 
         var cancelResponse = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
         XAssert.Contains("Cannot cancel a completed response",
             doc.RootElement.GetProperty("error").GetProperty("message").GetString());
@@ -464,10 +464,10 @@ public class CrossApiE2eTests : ProtocolTestBase
         var responseId = await CreateBackgroundResponseAsync();
 
         var cancel1 = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, cancel1.StatusCode);
+        Assert.That(cancel1.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var cancel2 = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, cancel2.StatusCode);
+        Assert.That(cancel2.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         handlerGate.TrySetResult();
         await WaitForBackgroundCompletionAsync(responseId);
@@ -483,9 +483,9 @@ public class CrossApiE2eTests : ProtocolTestBase
         await WaitForBackgroundCompletionAsync(responseId);
 
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // E36: Handler throws → GET → status: failed, error non-null, completed_at null (B5, B6)
@@ -502,15 +502,15 @@ public class CrossApiE2eTests : ProtocolTestBase
         await WaitForBackgroundCompletionAsync(responseId);
 
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("failed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("failed"));
 
         // B6: failed → error non-null, completed_at null
-        Assert.AreNotEqual(JsonValueKind.Null, doc.RootElement.GetProperty("error").ValueKind);
+        Assert.That(doc.RootElement.GetProperty("error").ValueKind, Is.Not.EqualTo(JsonValueKind.Null));
         var error = doc.RootElement.GetProperty("error");
-        Assert.IsTrue(error.TryGetProperty("code", out _), "error must have 'code'");
-        Assert.IsTrue(error.TryGetProperty("message", out _), "error must have 'message'");
+        Assert.That(error.TryGetProperty("code", out _), Is.True, "error must have 'code'");
+        Assert.That(error.TryGetProperty("message", out _), Is.True, "error must have 'message'");
     }
 
     // E37: Handler signals incomplete → GET → status: incomplete, error null (B5, B6)
@@ -527,12 +527,12 @@ public class CrossApiE2eTests : ProtocolTestBase
         await WaitForBackgroundCompletionAsync(responseId);
 
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("incomplete", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("incomplete"));
 
         // B6: incomplete → error null
-        Assert.AreEqual(JsonValueKind.Null, doc.RootElement.GetProperty("error").ValueKind);
+        Assert.That(doc.RootElement.GetProperty("error").ValueKind, Is.EqualTo(JsonValueKind.Null));
     }
 
     // E38: Handler throws → Cancel → 400 (B12: cannot cancel a failed response)
@@ -549,7 +549,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         await WaitForBackgroundCompletionAsync(responseId);
 
         var cancelResponse = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
         XAssert.Contains("Cannot cancel a failed response",
             doc.RootElement.GetProperty("error").GetProperty("message").GetString());
@@ -569,7 +569,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         await WaitForBackgroundCompletionAsync(responseId);
 
         var cancelResponse = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 
     // ════════════════════════════════════════════════════════════
@@ -596,9 +596,9 @@ public class CrossApiE2eTests : ProtocolTestBase
 
             // GET during active stream — should return in_progress
             var getResponse = await GetResponseAsync(responseId);
-            Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+            Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             using var getDoc = await ParseJsonAsync(getResponse);
-            Assert.AreEqual("in_progress", getDoc.RootElement.GetProperty("status").GetString());
+            Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
 
             // Release gate to let handler complete
             handlerGate.TrySetResult();
@@ -620,9 +620,9 @@ public class CrossApiE2eTests : ProtocolTestBase
         await WaitForBackgroundCompletionAsync(responseId);
 
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // E22: Create (SSE, completed) → GET ?stream=true → 200 SSE replay, terminal = response.completed (B4, B9, B26)
@@ -635,13 +635,13 @@ public class CrossApiE2eTests : ProtocolTestBase
         await WaitForBackgroundCompletionAsync(responseId);
 
         var replayResponse = await GetResponseStreamAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, replayResponse.StatusCode);
+        Assert.That(replayResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var events = await ParseSseAsync(replayResponse);
-        Assert.IsTrue(events.Count >= 2, "Replay should have at least 2 events");
+        Assert.That(events.Count >= 2, Is.True, "Replay should have at least 2 events");
 
         // B26: terminal event is response.completed
-        Assert.AreEqual("response.completed", events[^1].EventType);
+        Assert.That(events[^1].EventType, Is.EqualTo("response.completed"));
 
         // B9: sequence numbers monotonically increasing
         var seqNums = events.Select(e =>
@@ -652,7 +652,7 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         for (int i = 1; i < seqNums.Count; i++)
         {
-            Assert.IsTrue(seqNums[i] > seqNums[i - 1]);
+            Assert.That(seqNums[i] > seqNums[i - 1], Is.True);
         }
     }
 
@@ -668,7 +668,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         // Get full replay to find sequence numbers
         var fullReplay = await GetResponseStreamAsync(responseId);
         var fullEvents = await ParseSseAsync(fullReplay);
-        Assert.IsTrue(fullEvents.Count >= 2, "Need at least 2 events for cursor test");
+        Assert.That(fullEvents.Count >= 2, Is.True, "Need at least 2 events for cursor test");
 
         // Get the sequence number of the first event
         using var firstDoc = JsonDocument.Parse(fullEvents[0].Data);
@@ -676,10 +676,10 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         // Replay with starting_after = first sequence → should skip first event
         var cursorReplay = await Client.GetAsync($"/responses/{responseId}?stream=true&starting_after={firstSeq}");
-        Assert.AreEqual(HttpStatusCode.OK, cursorReplay.StatusCode);
+        Assert.That(cursorReplay.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var cursorEvents = await ParseSseAsync(cursorReplay);
-        Assert.AreEqual(fullEvents.Count - 1, cursorEvents.Count);
+        Assert.That(cursorEvents.Count, Is.EqualTo(fullEvents.Count - 1));
     }
 
     // E24: Create (SSE) → Cancel immediate (queued) → GET → cancelled, 0 output (B7, B11, S3b)
@@ -695,7 +695,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         {
             // Cancel immediately
             var cancelResponse = await CancelResponseAsync(responseId);
-            Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+            Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
             handlerGate.TrySetResult();
             await WaitForBackgroundCompletionAsync(responseId);
@@ -707,8 +707,8 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         var getResponse = await GetResponseAsync(responseId);
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("cancelled", doc.RootElement.GetProperty("status").GetString());
-        Assert.AreEqual(0, doc.RootElement.GetProperty("output").GetArrayLength());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("cancelled"));
+        Assert.That(doc.RootElement.GetProperty("output").GetArrayLength(), Is.EqualTo(0));
     }
 
     // E25: Create (SSE) → Cancel (mid-stream) → GET → cancelled, 0 output (B7, B11, S6)
@@ -727,7 +727,7 @@ public class CrossApiE2eTests : ProtocolTestBase
             await deltasEmitted.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
             var cancelResponse = await CancelResponseAsync(responseId);
-            Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+            Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
             handlerGate.TrySetResult();
             await WaitForBackgroundCompletionAsync(responseId);
@@ -739,8 +739,8 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         var getResponse = await GetResponseAsync(responseId);
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("cancelled", doc.RootElement.GetProperty("status").GetString());
-        Assert.AreEqual(0, doc.RootElement.GetProperty("output").GetArrayLength());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("cancelled"));
+        Assert.That(doc.RootElement.GetProperty("output").GetArrayLength(), Is.EqualTo(0));
     }
 
     // E26: Create (SSE) → Cancel → GET ?stream=true → SSE replay with terminal event (B26, B11)
@@ -764,20 +764,20 @@ public class CrossApiE2eTests : ProtocolTestBase
         }
 
         var replayResponse = await GetResponseStreamAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, replayResponse.StatusCode);
+        Assert.That(replayResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var replayEvents = await ParseSseAsync(replayResponse);
-        Assert.IsTrue(replayEvents.Count >= 1, "Replay should have events");
+        Assert.That(replayEvents.Count >= 1, Is.True, "Replay should have events");
 
         // B26: terminal event for cancelled response is response.failed
         var lastEvent = replayEvents[^1];
-        Assert.AreEqual("response.failed", lastEvent.EventType);
+        Assert.That(lastEvent.EventType, Is.EqualTo("response.failed"));
 
         // The response inside should have status: cancelled
         using var lastDoc = JsonDocument.Parse(lastEvent.Data);
         if (lastDoc.RootElement.TryGetProperty("response", out var responseElem))
         {
-            Assert.AreEqual("cancelled", responseElem.GetProperty("status").GetString());
+            Assert.That(responseElem.GetProperty("status").GetString(), Is.EqualTo("cancelled"));
         }
     }
 
@@ -791,7 +791,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         await WaitForBackgroundCompletionAsync(responseId);
 
         var cancelResponse = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
         XAssert.Contains("Cannot cancel a completed response",
             doc.RootElement.GetProperty("error").GetProperty("message").GetString());
@@ -809,10 +809,10 @@ public class CrossApiE2eTests : ProtocolTestBase
         try
         {
             var cancel1 = await CancelResponseAsync(responseId);
-            Assert.AreEqual(HttpStatusCode.OK, cancel1.StatusCode);
+            Assert.That(cancel1.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
             var cancel2 = await CancelResponseAsync(responseId);
-            Assert.AreEqual(HttpStatusCode.OK, cancel2.StatusCode);
+            Assert.That(cancel2.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
             handlerGate.TrySetResult();
             await WaitForBackgroundCompletionAsync(responseId);
@@ -833,9 +833,9 @@ public class CrossApiE2eTests : ProtocolTestBase
         await WaitForBackgroundCompletionAsync(responseId);
 
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // E40: Handler throws → GET → GET ?stream=true → failed + replay terminal = response.failed (B5, B6, B26)
@@ -854,16 +854,16 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         // GET JSON → failed
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var getDoc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("failed", getDoc.RootElement.GetProperty("status").GetString());
-        Assert.AreNotEqual(JsonValueKind.Null, getDoc.RootElement.GetProperty("error").ValueKind);
+        Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("failed"));
+        Assert.That(getDoc.RootElement.GetProperty("error").ValueKind, Is.Not.EqualTo(JsonValueKind.Null));
 
         // SSE replay → terminal = response.failed
         var replayResponse = await GetResponseStreamAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, replayResponse.StatusCode);
+        Assert.That(replayResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var replayEvents = await ParseSseAsync(replayResponse);
-        Assert.AreEqual("response.failed", replayEvents[^1].EventType);
+        Assert.That(replayEvents[^1].EventType, Is.EqualTo("response.failed"));
     }
 
     // E41: Handler signals incomplete → GET → GET ?stream=true → incomplete + replay terminal = response.incomplete (B5, B6, B26)
@@ -882,16 +882,16 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         // GET JSON → incomplete
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var getDoc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("incomplete", getDoc.RootElement.GetProperty("status").GetString());
-        Assert.AreEqual(JsonValueKind.Null, getDoc.RootElement.GetProperty("error").ValueKind);
+        Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("incomplete"));
+        Assert.That(getDoc.RootElement.GetProperty("error").ValueKind, Is.EqualTo(JsonValueKind.Null));
 
         // SSE replay → terminal = response.incomplete
         var replayResponse = await GetResponseStreamAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, replayResponse.StatusCode);
+        Assert.That(replayResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var replayEvents = await ParseSseAsync(replayResponse);
-        Assert.AreEqual("response.incomplete", replayEvents[^1].EventType);
+        Assert.That(replayEvents[^1].EventType, Is.EqualTo("response.incomplete"));
     }
 
     // E42: SSE replay starting_after >= max → 200, 0 events (B4)
@@ -911,11 +911,11 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         // Replay with starting_after = max → empty
         var emptyReplay = await Client.GetAsync($"/responses/{responseId}?stream=true&starting_after={maxSeq}");
-        Assert.AreEqual(HttpStatusCode.OK, emptyReplay.StatusCode);
+        Assert.That(emptyReplay.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var body = await emptyReplay.Content.ReadAsStringAsync();
         var emptyEvents = SseParser.Parse(body);
-        Assert.IsEmpty(emptyEvents);
+        Assert.That(emptyEvents, Is.Empty);
     }
 
     // E43: Background streaming — GET mid-stream returns partial output items (B5, B23)
@@ -945,17 +945,17 @@ public class CrossApiE2eTests : ProtocolTestBase
             await itemAdded.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
             var get1 = await GetResponseAsync(responseId);
-            Assert.AreEqual(HttpStatusCode.OK, get1.StatusCode);
+            Assert.That(get1.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             using var doc1 = await ParseJsonAsync(get1);
-            Assert.AreEqual("in_progress", doc1.RootElement.GetProperty("status").GetString());
+            Assert.That(doc1.RootElement.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
             var output1 = doc1.RootElement.GetProperty("output");
-            Assert.AreEqual(1, output1.GetArrayLength());
+            Assert.That(output1.GetArrayLength(), Is.EqualTo(1));
             var item1Added = output1[0];
-            Assert.AreEqual("output_message", item1Added.GetProperty("type").GetString());
+            Assert.That(item1Added.GetProperty("type").GetString(), Is.EqualTo("output_message"));
             // Item is in_progress — content should be empty
-            Assert.AreEqual("in_progress", item1Added.GetProperty("status").GetString());
+            Assert.That(item1Added.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
             var content1 = item1Added.GetProperty("content");
-            Assert.AreEqual(0, content1.GetArrayLength());
+            Assert.That(content1.GetArrayLength(), Is.EqualTo(0));
 
             itemAddedChecked.TrySetResult();
 
@@ -963,17 +963,17 @@ public class CrossApiE2eTests : ProtocolTestBase
             await itemDone.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
             var get2 = await GetResponseAsync(responseId);
-            Assert.AreEqual(HttpStatusCode.OK, get2.StatusCode);
+            Assert.That(get2.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             using var doc2 = await ParseJsonAsync(get2);
-            Assert.AreEqual("in_progress", doc2.RootElement.GetProperty("status").GetString());
+            Assert.That(doc2.RootElement.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
             var output2 = doc2.RootElement.GetProperty("output");
-            Assert.AreEqual(1, output2.GetArrayLength());
+            Assert.That(output2.GetArrayLength(), Is.EqualTo(1));
             var item1Done = output2[0];
-            Assert.AreEqual("completed", item1Done.GetProperty("status").GetString());
+            Assert.That(item1Done.GetProperty("status").GetString(), Is.EqualTo("completed"));
             var contentDone = item1Done.GetProperty("content");
-            Assert.AreEqual(1, contentDone.GetArrayLength());
-            Assert.AreEqual("output_text", contentDone[0].GetProperty("type").GetString());
-            Assert.AreEqual("Hello", contentDone[0].GetProperty("text").GetString());
+            Assert.That(contentDone.GetArrayLength(), Is.EqualTo(1));
+            Assert.That(contentDone[0].GetProperty("type").GetString(), Is.EqualTo("output_text"));
+            Assert.That(contentDone[0].GetProperty("text").GetString(), Is.EqualTo("Hello"));
 
             itemDoneChecked.TrySetResult();
 
@@ -981,24 +981,24 @@ public class CrossApiE2eTests : ProtocolTestBase
             await item2Done.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
             var get3 = await GetResponseAsync(responseId);
-            Assert.AreEqual(HttpStatusCode.OK, get3.StatusCode);
+            Assert.That(get3.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             using var doc3 = await ParseJsonAsync(get3);
-            Assert.AreEqual("in_progress", doc3.RootElement.GetProperty("status").GetString());
+            Assert.That(doc3.RootElement.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
             var output3 = doc3.RootElement.GetProperty("output");
-            Assert.AreEqual(2, output3.GetArrayLength());
-            Assert.AreEqual("completed", output3[0].GetProperty("status").GetString());
-            Assert.AreEqual("completed", output3[1].GetProperty("status").GetString());
-            Assert.AreEqual("World", output3[1].GetProperty("content")[0].GetProperty("text").GetString());
+            Assert.That(output3.GetArrayLength(), Is.EqualTo(2));
+            Assert.That(output3[0].GetProperty("status").GetString(), Is.EqualTo("completed"));
+            Assert.That(output3[1].GetProperty("status").GetString(), Is.EqualTo("completed"));
+            Assert.That(output3[1].GetProperty("content")[0].GetProperty("text").GetString(), Is.EqualTo("World"));
 
             item2DoneChecked.TrySetResult();
             await WaitForBackgroundCompletionAsync(responseId);
 
             // ── Phase 4: After completion — final snapshot ──
             var getFinal = await GetResponseAsync(responseId);
-            Assert.AreEqual(HttpStatusCode.OK, getFinal.StatusCode);
+            Assert.That(getFinal.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             using var docFinal = await ParseJsonAsync(getFinal);
-            Assert.AreEqual("completed", docFinal.RootElement.GetProperty("status").GetString());
-            Assert.AreEqual(2, docFinal.RootElement.GetProperty("output").GetArrayLength());
+            Assert.That(docFinal.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
+            Assert.That(docFinal.RootElement.GetProperty("output").GetArrayLength(), Is.EqualTo(2));
         }
         finally
         {
@@ -1022,7 +1022,7 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         // Create background non-streaming response
         var createResponse = await PostResponsesAsync(new { model = "test", background = true });
-        Assert.AreEqual(HttpStatusCode.OK, createResponse.StatusCode);
+        Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var createDoc = await ParseJsonAsync(createResponse);
         var responseId = createDoc.RootElement.GetProperty("id").GetString()!;
 
@@ -1031,13 +1031,13 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         // Poll: should see 1 completed output item with text "Hello"
         var poll1 = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, poll1.StatusCode);
+        Assert.That(poll1.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var pollDoc1 = await ParseJsonAsync(poll1);
-        Assert.AreEqual("in_progress", pollDoc1.RootElement.GetProperty("status").GetString());
+        Assert.That(pollDoc1.RootElement.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
         var output1 = pollDoc1.RootElement.GetProperty("output");
-        Assert.AreEqual(1, output1.GetArrayLength());
-        Assert.AreEqual("completed", output1[0].GetProperty("status").GetString());
-        Assert.AreEqual("Hello", output1[0].GetProperty("content")[0].GetProperty("text").GetString());
+        Assert.That(output1.GetArrayLength(), Is.EqualTo(1));
+        Assert.That(output1[0].GetProperty("status").GetString(), Is.EqualTo("completed"));
+        Assert.That(output1[0].GetProperty("content")[0].GetProperty("text").GetString(), Is.EqualTo("Hello"));
 
         // Release gate for second item
         item1GateChecked.TrySetResult();
@@ -1047,15 +1047,15 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         // Poll: should see 2 completed output items
         var poll2 = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, poll2.StatusCode);
+        Assert.That(poll2.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var pollDoc2 = await ParseJsonAsync(poll2);
-        Assert.AreEqual("in_progress", pollDoc2.RootElement.GetProperty("status").GetString());
+        Assert.That(pollDoc2.RootElement.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
         var output2 = pollDoc2.RootElement.GetProperty("output");
-        Assert.AreEqual(2, output2.GetArrayLength());
-        Assert.AreEqual("completed", output2[0].GetProperty("status").GetString());
-        Assert.AreEqual("Hello", output2[0].GetProperty("content")[0].GetProperty("text").GetString());
-        Assert.AreEqual("completed", output2[1].GetProperty("status").GetString());
-        Assert.AreEqual("World", output2[1].GetProperty("content")[0].GetProperty("text").GetString());
+        Assert.That(output2.GetArrayLength(), Is.EqualTo(2));
+        Assert.That(output2[0].GetProperty("status").GetString(), Is.EqualTo("completed"));
+        Assert.That(output2[0].GetProperty("content")[0].GetProperty("text").GetString(), Is.EqualTo("Hello"));
+        Assert.That(output2[1].GetProperty("status").GetString(), Is.EqualTo("completed"));
+        Assert.That(output2[1].GetProperty("content")[0].GetProperty("text").GetString(), Is.EqualTo("World"));
 
         // Release final gate
         item2GateChecked.TrySetResult();
@@ -1063,13 +1063,13 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         // Final poll: completed with 2 items, full content preserved
         var pollFinal = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, pollFinal.StatusCode);
+        Assert.That(pollFinal.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var pollDocFinal = await ParseJsonAsync(pollFinal);
-        Assert.AreEqual("completed", pollDocFinal.RootElement.GetProperty("status").GetString());
+        Assert.That(pollDocFinal.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
         var outputFinal = pollDocFinal.RootElement.GetProperty("output");
-        Assert.AreEqual(2, outputFinal.GetArrayLength());
-        Assert.AreEqual("Hello", outputFinal[0].GetProperty("content")[0].GetProperty("text").GetString());
-        Assert.AreEqual("World", outputFinal[1].GetProperty("content")[0].GetProperty("text").GetString());
+        Assert.That(outputFinal.GetArrayLength(), Is.EqualTo(2));
+        Assert.That(outputFinal[0].GetProperty("content")[0].GetProperty("text").GetString(), Is.EqualTo("Hello"));
+        Assert.That(outputFinal[1].GetProperty("content")[0].GetProperty("text").GetString(), Is.EqualTo("World"));
     }
 
     // ════════════════════════════════════════════════════════════
@@ -1095,7 +1095,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         };
 
         var response = await Client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var bodyStream = await response.Content.ReadAsStreamAsync();
         using var reader = new StreamReader(bodyStream, Encoding.UTF8,

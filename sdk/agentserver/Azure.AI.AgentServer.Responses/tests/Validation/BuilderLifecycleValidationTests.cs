@@ -26,7 +26,7 @@ public class BuilderLifecycleValidationTests
 
         // EmitDone without any content parts should throw
         var ex = Assert.Throws<ResponseValidationException>(() => builder.EmitDone());
-        Assert.IsNotEmpty(ex.Errors);
+        Assert.That(ex.Errors, Is.Not.Empty);
     }
 
     [Test]
@@ -39,7 +39,7 @@ public class BuilderLifecycleValidationTests
 
         // EmitDone with arguments set should succeed
         var evt = builder.EmitDone();
-        Assert.IsNotNull(evt);
+        Assert.That(evt, Is.Not.Null);
     }
 
     // -----------------------------------------------------------------------
@@ -59,7 +59,7 @@ public class BuilderLifecycleValidationTests
 
         // EmitDone with content should succeed
         var evt = builder.EmitDone();
-        Assert.IsNotNull(evt);
+        Assert.That(evt, Is.Not.Null);
     }
 
     [Test]
@@ -70,7 +70,7 @@ public class BuilderLifecycleValidationTests
         builder.EmitAdded();
         builder.EmitArgumentsDone("{}");
         var evt = builder.EmitDone();
-        Assert.IsNotNull(evt);
+        Assert.That(evt, Is.Not.Null);
     }
 
     [Test]

@@ -31,13 +31,13 @@ public class CreateResponseTests : IDisposable
 
         var httpResponse = await _client.PostAsync("/responses", content);
 
-        Assert.AreEqual(HttpStatusCode.OK, httpResponse.StatusCode);
-        Assert.AreEqual("application/json", httpResponse.Content.Headers.ContentType?.MediaType);
+        Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(httpResponse.Content.Headers.ContentType?.MediaType, Is.EqualTo("application/json"));
 
         var body = await httpResponse.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.IsTrue(body.TryGetProperty("id", out var id));
+        Assert.That(body.TryGetProperty("id", out var id), Is.True);
         XAssert.StartsWith("caresp_", id.GetString());
-        Assert.AreEqual("test-model", body.GetProperty("model").GetString());
+        Assert.That(body.GetProperty("model").GetString(), Is.EqualTo("test-model"));
     }
 
     [Test]
@@ -48,9 +48,9 @@ public class CreateResponseTests : IDisposable
 
         await _client.PostAsync("/responses", content);
 
-        Assert.IsNotNull(_handler.LastRequest);
-        Assert.IsFalse(_handler.LastRequest.Stream);
-        Assert.IsFalse(_handler.LastRequest.Background);
+        Assert.That(_handler.LastRequest, Is.Not.Null);
+        Assert.That(_handler.LastRequest.Stream, Is.False);
+        Assert.That(_handler.LastRequest.Background, Is.False);
     }
 
     [Test]
@@ -63,7 +63,7 @@ public class CreateResponseTests : IDisposable
 
         var body = await httpResponse.Content.ReadFromJsonAsync<JsonElement>();
         var status = body.GetProperty("status").GetString();
-        Assert.AreEqual("completed", status);
+        Assert.That(status, Is.EqualTo("completed"));
     }
 
     [Test]
@@ -79,7 +79,7 @@ public class CreateResponseTests : IDisposable
             ids.Add(body.GetProperty("id").GetString()!);
         }
 
-        Assert.AreEqual(5, ids.Count);
+        Assert.That(ids.Count, Is.EqualTo(5));
     }
 
     [Test]
@@ -93,10 +93,10 @@ public class CreateResponseTests : IDisposable
         var httpResponse = await _client.PostAsync("/responses", content);
 
         // Handler exceptions during processing are caught and set response status to failed
-        Assert.AreEqual(HttpStatusCode.OK, httpResponse.StatusCode);
+        Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var body = await httpResponse.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.AreEqual("failed", body.GetProperty("status").GetString());
-        Assert.AreEqual("server_error", body.GetProperty("error").GetProperty("code").GetString());
+        Assert.That(body.GetProperty("status").GetString(), Is.EqualTo("failed"));
+        Assert.That(body.GetProperty("error").GetProperty("code").GetString(), Is.EqualTo("server_error"));
     }
 
     [Test]
@@ -107,7 +107,7 @@ public class CreateResponseTests : IDisposable
 
         await _client.PostAsync("/responses", content);
 
-        Assert.IsNotNull(_handler.LastContext);
+        Assert.That(_handler.LastContext, Is.Not.Null);
         XAssert.StartsWith("caresp_", _handler.LastContext.ResponseId);
     }
 
@@ -119,7 +119,7 @@ public class CreateResponseTests : IDisposable
 
         await _client.PostAsync("/responses", content);
 
-        Assert.AreEqual("gpt-4.1", _handler.LastRequest?.Model);
+        Assert.That(_handler.LastRequest?.Model, Is.EqualTo("gpt-4.1"));
     }
 
     [Test]
@@ -129,7 +129,7 @@ public class CreateResponseTests : IDisposable
 
         var httpResponse = await _client.PostAsync("/responses", content);
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, httpResponse.StatusCode);
+        Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 
     // ── T022: Partition key from previous_response_id propagates ──
@@ -149,7 +149,7 @@ public class CreateResponseTests : IDisposable
         var responseId = _handler.LastContext!.ResponseId;
         var actualPk = IdGenerator.ExtractPartitionKey(responseId);
 
-        Assert.AreEqual(expectedPk, actualPk);
+        Assert.That(actualPk, Is.EqualTo(expectedPk));
         XAssert.StartsWith("caresp_", responseId);
     }
 
@@ -169,7 +169,7 @@ public class CreateResponseTests : IDisposable
         var responseId = _handler.LastContext!.ResponseId;
         var actualPk = IdGenerator.ExtractPartitionKey(responseId);
 
-        Assert.AreEqual(expectedPk, actualPk);
+        Assert.That(actualPk, Is.EqualTo(expectedPk));
     }
 
     // ── T024: No hint → fresh partition key ──
@@ -190,7 +190,7 @@ public class CreateResponseTests : IDisposable
         var pk1 = IdGenerator.ExtractPartitionKey(responseId1);
         var pk2 = IdGenerator.ExtractPartitionKey(responseId2);
 
-        Assert.AreNotEqual(pk1, pk2);
+        Assert.That(pk2, Is.Not.EqualTo(pk1));
         XAssert.StartsWith("caresp_", responseId1);
         XAssert.StartsWith("caresp_", responseId2);
     }

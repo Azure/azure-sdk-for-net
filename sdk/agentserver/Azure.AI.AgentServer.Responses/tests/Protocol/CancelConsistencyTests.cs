@@ -57,7 +57,7 @@ public class CancelConsistencyTests : IDisposable
         var json = JsonSerializer.Serialize(new { model = "test", background = true });
         var postResponse = await _client.PostAsync("/responses",
             new StringContent(json, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, postResponse.StatusCode);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var postDoc = await JsonDocument.ParseAsync(
             await postResponse.Content.ReadAsStreamAsync());
@@ -68,7 +68,7 @@ public class CancelConsistencyTests : IDisposable
 
         // Cancel the response
         var cancelResponse = await _client.PostAsync($"/responses/{responseId}/cancel", null);
-        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Parse the cancel endpoint's return value
         using var cancelDoc = await JsonDocument.ParseAsync(
@@ -76,8 +76,8 @@ public class CancelConsistencyTests : IDisposable
         var returnedStatus = cancelDoc.RootElement.GetProperty("status").GetString();
         var returnedOutput = cancelDoc.RootElement.GetProperty("output");
 
-        Assert.AreEqual("cancelled", returnedStatus);
-        Assert.AreEqual(0, returnedOutput.GetArrayLength());
+        Assert.That(returnedStatus, Is.EqualTo("cancelled"));
+        Assert.That(returnedOutput.GetArrayLength(), Is.EqualTo(0));
 
         // Signal handler to finish (it's already cancelled but let the task complete)
         cancelDone.TrySetResult();
@@ -88,11 +88,11 @@ public class CancelConsistencyTests : IDisposable
         // Verify the persisted state matches:
         // The last UpdateResponseAsync call should have cancelled state
         var updates = _spy.UpdateCalls.ToArray();
-        Assert.IsNotEmpty(updates);
+        Assert.That(updates, Is.Not.Empty);
 
         var lastUpdate = updates[^1];
-        Assert.AreEqual("cancelled", lastUpdate.Status?.ToString().ToLowerInvariant());
-        Assert.IsEmpty(lastUpdate.Output);
+        Assert.That(lastUpdate.Status?.ToString().ToLowerInvariant(), Is.EqualTo("cancelled"));
+        Assert.That(lastUpdate.Output, Is.Empty);
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -124,17 +124,17 @@ public class CancelConsistencyTests : IDisposable
 
         // Get the response ID from the spy provider (response.created triggers CreateResponseAsync)
         var createCalls = _spy.CreateCalls.ToArray();
-        Assert.IsNotEmpty(createCalls);
+        Assert.That(createCalls, Is.Not.Empty);
         var responseId = createCalls[0].Id;
 
         // Cancel the response
         var cancelResponse = await _client.PostAsync($"/responses/{responseId}/cancel", null);
-        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var cancelDoc = await JsonDocument.ParseAsync(
             await cancelResponse.Content.ReadAsStreamAsync());
         var returnedStatus = cancelDoc.RootElement.GetProperty("status").GetString();
-        Assert.AreEqual("cancelled", returnedStatus);
+        Assert.That(returnedStatus, Is.EqualTo("cancelled"));
 
         // Signal handler to finish
         cancelDone.TrySetResult();
@@ -149,11 +149,11 @@ public class CancelConsistencyTests : IDisposable
 
         // Verify UpdateResponseAsync was called with cancelled state
         var updates = _spy.UpdateCalls.ToArray();
-        Assert.IsNotEmpty(updates);
+        Assert.That(updates, Is.Not.Empty);
 
         // The final state persisted should be cancelled
         var lastUpdate = updates[^1];
-        Assert.AreEqual("cancelled", lastUpdate.Status?.ToString().ToLowerInvariant());
+        Assert.That(lastUpdate.Status?.ToString().ToLowerInvariant(), Is.EqualTo("cancelled"));
     }
 
     public void Dispose()

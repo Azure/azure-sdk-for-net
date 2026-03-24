@@ -500,7 +500,7 @@ public class SeekableReplaySubjectTests
         subject.Dispose();
 
         // Assert — no exception on double dispose
-        Assert.DoesNotThrow(() => subject.Dispose());
+        Assert.That(() => subject.Dispose(), Throws.Nothing);
     }
 
     [Test]

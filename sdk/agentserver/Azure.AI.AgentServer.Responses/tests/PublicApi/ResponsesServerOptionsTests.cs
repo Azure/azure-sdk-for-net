@@ -10,7 +10,7 @@ public class ResponsesServerOptionsTests
     {
         var options = new ResponsesServerOptions();
 
-        Assert.AreEqual(Timeout.InfiniteTimeSpan, options.SseKeepAliveInterval);
+        Assert.That(options.SseKeepAliveInterval, Is.EqualTo(Timeout.InfiniteTimeSpan));
     }
 
     [Test]
@@ -21,7 +21,7 @@ public class ResponsesServerOptionsTests
             SseKeepAliveInterval = TimeSpan.FromSeconds(15),
         };
 
-        Assert.AreEqual(TimeSpan.FromSeconds(15), options.SseKeepAliveInterval);
+        Assert.That(options.SseKeepAliveInterval, Is.EqualTo(TimeSpan.FromSeconds(15)));
     }
 }
 
@@ -32,7 +32,7 @@ public class InMemoryProviderOptionsTests
     {
         var options = new InMemoryProviderOptions();
 
-        Assert.AreEqual(TimeSpan.FromMinutes(10), options.EventStreamTtl);
+        Assert.That(options.EventStreamTtl, Is.EqualTo(TimeSpan.FromMinutes(10)));
     }
 
     [Test]
@@ -43,6 +43,6 @@ public class InMemoryProviderOptionsTests
             EventStreamTtl = TimeSpan.FromMinutes(5),
         };
 
-        Assert.AreEqual(TimeSpan.FromMinutes(5), options.EventStreamTtl);
+        Assert.That(options.EventStreamTtl, Is.EqualTo(TimeSpan.FromMinutes(5)));
     }
 }

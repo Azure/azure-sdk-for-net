@@ -25,7 +25,7 @@ public class SentinelRemovalProtocolTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var body = await response.Content.ReadAsStringAsync();
         XAssert.DoesNotContain("data: [DONE]", body);
     }
@@ -37,7 +37,7 @@ public class SentinelRemovalProtocolTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var body = await response.Content.ReadAsStringAsync();
         XAssert.DoesNotContain("data: [DONE]", body);
 
@@ -53,7 +53,7 @@ public class SentinelRemovalProtocolTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var body = await response.Content.ReadAsStringAsync();
         XAssert.DoesNotContain("data: [DONE]", body);
 
@@ -73,7 +73,7 @@ public class SentinelRemovalProtocolTests : ProtocolTestBase
 
         var getResponse = await GetResponseStreamAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var body = await getResponse.Content.ReadAsStringAsync();
         XAssert.DoesNotContain("data: [DONE]", body);
     }

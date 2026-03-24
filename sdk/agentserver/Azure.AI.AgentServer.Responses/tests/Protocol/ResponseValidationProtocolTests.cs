@@ -23,21 +23,21 @@ public class ResponseValidationProtocolTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => ValidationFailingStream(ctx);
 
         var createResponse = await PostResponsesAsync(new { model = "test", background = true });
-        Assert.AreEqual(HttpStatusCode.OK, createResponse.StatusCode);
+        Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var createDoc = await ParseJsonAsync(createResponse);
         var responseId = createDoc.RootElement.GetProperty("id").GetString()!;
 
         await WaitForBackgroundCompletionAsync(responseId);
 
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var getDoc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("failed", getDoc.RootElement.GetProperty("status").GetString());
+        Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("failed"));
 
         // B30: error is present (server_error)
         var error = getDoc.RootElement.GetProperty("error");
-        Assert.AreNotEqual(JsonValueKind.Null, error.ValueKind);
-        Assert.AreEqual("server_error", error.GetProperty("code").GetString());
+        Assert.That(error.ValueKind, Is.Not.EqualTo(JsonValueKind.Null));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("server_error"));
 
         // B30: validation details are NOT exposed to caller
         var errorStr = error.ToString();
@@ -56,22 +56,22 @@ public class ResponseValidationProtocolTests : ProtocolTestBase
             stream = true,
             background = true
         });
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var events = await ParseSseAsync(response);
-        Assert.IsTrue(events.Count >= 2, "Should have at least created + failed events");
+        Assert.That(events.Count >= 2, Is.True, "Should have at least created + failed events");
 
         // B30: terminal event is response.failed
         var lastEvent = events[^1];
-        Assert.AreEqual("response.failed", lastEvent.EventType);
+        Assert.That(lastEvent.EventType, Is.EqualTo("response.failed"));
 
         // Verify the embedded response has server_error
         using var doc = JsonDocument.Parse(lastEvent.Data);
         var responseElem = doc.RootElement.GetProperty("response");
-        Assert.AreEqual("failed", responseElem.GetProperty("status").GetString());
+        Assert.That(responseElem.GetProperty("status").GetString(), Is.EqualTo("failed"));
 
         var error = responseElem.GetProperty("error");
-        Assert.AreEqual("server_error", error.GetProperty("code").GetString());
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("server_error"));
 
         // B30: validation detail paths are NOT exposed
         var errorStr = error.ToString();

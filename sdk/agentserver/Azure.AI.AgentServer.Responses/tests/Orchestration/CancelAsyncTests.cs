@@ -98,8 +98,8 @@ public class CancelAsyncTests : IDisposable
 
         var result = await _orchestrator.CancelAsync("resp_cancel_ac");
 
-        Assert.AreEqual("resp_cancel_ac", result.Id);
-        Assert.AreEqual(ResponseStatus.Cancelled, result.Status);
+        Assert.That(result.Id, Is.EqualTo("resp_cancel_ac"));
+        Assert.That(result.Status, Is.EqualTo(ResponseStatus.Cancelled));
     }
 
     [Test]
@@ -110,7 +110,7 @@ public class CancelAsyncTests : IDisposable
 
         var result = await _orchestrator.CancelAsync("resp_cancel_ip");
 
-        Assert.IsTrue(execution.CancelRequested);
+        Assert.That(execution.CancelRequested, Is.True);
     }
 
     public void Dispose()

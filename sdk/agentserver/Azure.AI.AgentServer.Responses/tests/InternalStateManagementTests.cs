@@ -23,7 +23,7 @@ public class InternalStateManagementTests
         var responseStateType = ContractsAssembly.GetType(
             "Azure.AI.AgentServer.Responses.Internal.ResponseState");
 
-        Assert.IsNull(responseStateType);
+        Assert.That(responseStateType, Is.Null);
     }
 
     [Test]
@@ -34,13 +34,13 @@ public class InternalStateManagementTests
             Status = ResponseStatus.InProgress,
         };
 
-        Assert.AreEqual("resp_test", response.Id);
-        Assert.AreEqual("gpt-4o", response.Model);
-        Assert.AreEqual(ResponseStatus.InProgress, response.Status);
+        Assert.That(response.Id, Is.EqualTo("resp_test"));
+        Assert.That(response.Model, Is.EqualTo("gpt-4o"));
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.InProgress));
 
         // Mutate
         response.Status = ResponseStatus.Completed;
-        Assert.AreEqual(ResponseStatus.Completed, response.Status);
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
     }
 
     [Test]
@@ -49,9 +49,8 @@ public class InternalStateManagementTests
         var handlerType = SdkAssembly.GetType(
             "Azure.AI.AgentServer.Responses.Internal.ResponseEndpointHandler");
 
-        Assert.IsNotNull(handlerType);
-        Assert.IsFalse(handlerType!.IsPublic,
-            "ResponseEndpointHandler should be internal — not part of public API");
+        Assert.That(handlerType, Is.Not.Null);
+        Assert.That(handlerType!.IsPublic, Is.False, "ResponseEndpointHandler should be internal — not part of public API");
     }
 
     [Test]
@@ -60,11 +59,11 @@ public class InternalStateManagementTests
         // R2 confirmed: @@usage generates { get; set; } on all properties.
         // This is accepted as beneficial for consumer construction.
         var statusProp = typeof(Models.Response).GetProperty("Status");
-        Assert.IsNotNull(statusProp);
-        Assert.IsNotNull(statusProp!.GetSetMethod());
+        Assert.That(statusProp, Is.Not.Null);
+        Assert.That(statusProp!.GetSetMethod(), Is.Not.Null);
 
         var errorProp = typeof(Models.Response).GetProperty("Error");
-        Assert.IsNotNull(errorProp);
-        Assert.IsNotNull(errorProp!.GetSetMethod());
+        Assert.That(errorProp, Is.Not.Null);
+        Assert.That(errorProp!.GetSetMethod(), Is.Not.Null);
     }
 }

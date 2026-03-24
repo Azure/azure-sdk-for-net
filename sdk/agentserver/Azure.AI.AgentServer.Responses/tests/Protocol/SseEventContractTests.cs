@@ -36,10 +36,10 @@ public class SseEventContractTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
         var events = await ParseSseAsync(response);
-        Assert.IsTrue(events.Count >= 2, "Expected at least 2 events");
+        Assert.That(events.Count >= 2, Is.True, "Expected at least 2 events");
 
         // First event must be response.created
-        Assert.AreEqual("response.created", events[0].EventType);
+        Assert.That(events[0].EventType, Is.EqualTo("response.created"));
 
         // Last event must be a terminal event
         var lastEvent = events[^1];
@@ -54,10 +54,10 @@ public class SseEventContractTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
         var events = await ParseSseAsync(response);
-        Assert.IsTrue(events.Count >= 3, "Expected at least 3 events");
+        Assert.That(events.Count >= 3, Is.True, "Expected at least 3 events");
 
-        Assert.AreEqual("response.created", events[0].EventType);
-        Assert.AreEqual("response.in_progress", events[1].EventType);
+        Assert.That(events[0].EventType, Is.EqualTo("response.created"));
+        Assert.That(events[1].EventType, Is.EqualTo("response.in_progress"));
         // Last should be terminal
         XAssert.Contains(events[^1].EventType, new[] { "response.completed", "response.failed", "response.incomplete" });
     }
@@ -72,14 +72,14 @@ public class SseEventContractTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
         var events = await ParseSseAsync(response);
-        Assert.IsTrue(events.Count >= 2);
+        Assert.That(events.Count >= 2, Is.True);
 
         long prevSeq = -1;
         foreach (var evt in events)
         {
             using var doc = JsonDocument.Parse(evt.Data);
             var seq = doc.RootElement.GetProperty("sequence_number").GetInt64();
-            Assert.IsTrue(seq > prevSeq, $"sequence_number {seq} is not greater than previous {prevSeq}");
+            Assert.That(seq > prevSeq, Is.True, $"sequence_number {seq} is not greater than previous {prevSeq}");
             prevSeq = seq;
         }
     }
@@ -90,10 +90,10 @@ public class SseEventContractTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
         var events = await ParseSseAsync(response);
-        Assert.IsTrue(events.Count >= 1);
+        Assert.That(events.Count >= 1, Is.True);
 
         using var doc = JsonDocument.Parse(events[0].Data);
-        Assert.AreEqual(0, doc.RootElement.GetProperty("sequence_number").GetInt64());
+        Assert.That(doc.RootElement.GetProperty("sequence_number").GetInt64(), Is.EqualTo(0));
     }
 
     // ── Helper event factories ─────────────────────────────────

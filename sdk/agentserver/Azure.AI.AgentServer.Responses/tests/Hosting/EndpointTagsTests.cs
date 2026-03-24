@@ -49,7 +49,7 @@ public sealed class EndpointTagsTests
             .Where(e => e.RoutePattern.RawText?.Contains("responses") == true)
             .ToList();
 
-        Assert.IsTrue(endpoints.Count >= 5,
+        Assert.That(endpoints.Count >= 5, Is.True,
             $"Expected at least 5 Responses endpoints, found {endpoints.Count}");
 
         foreach (var endpoint in endpoints)

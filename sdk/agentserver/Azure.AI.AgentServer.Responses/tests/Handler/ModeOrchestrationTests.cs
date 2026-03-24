@@ -31,10 +31,10 @@ public class ModeOrchestrationTests : IDisposable
 
         var response = await _client.PostAsync("/responses", content);
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("application/json", response.Content.Headers.ContentType?.MediaType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("application/json"));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.AreEqual("completed", body.GetProperty("status").GetString());
+        Assert.That(body.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     [Test]
@@ -47,8 +47,8 @@ public class ModeOrchestrationTests : IDisposable
 
         var response = await _client.PostAsync("/responses", content);
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("text/event-stream", response.Content.Headers.ContentType?.MediaType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("text/event-stream"));
 
         var body = await response.Content.ReadAsStringAsync();
         XAssert.Contains("event: response.created", body);
@@ -63,7 +63,7 @@ public class ModeOrchestrationTests : IDisposable
 
         var response = await _client.PostAsync("/responses", content);
 
-        Assert.AreEqual("no-cache", response.Headers.CacheControl?.ToString());
+        Assert.That(response.Headers.CacheControl?.ToString(), Is.EqualTo("no-cache"));
     }
 
     [Test]
@@ -85,7 +85,7 @@ public class ModeOrchestrationTests : IDisposable
         // Verify monotonically increasing sequence numbers starting from 0
         for (int i = 0; i < dataLines.Count; i++)
         {
-            Assert.AreEqual(i, dataLines[i].GetProperty("sequence_number").GetInt32());
+            Assert.That(dataLines[i].GetProperty("sequence_number").GetInt32(), Is.EqualTo(i));
         }
     }
 
@@ -101,9 +101,9 @@ public class ModeOrchestrationTests : IDisposable
         var response = await _client.PostAsync("/responses", content);
 
         // Should return immediately with in_progress status
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.AreEqual("in_progress", body.GetProperty("status").GetString());
+        Assert.That(body.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
 
         // Complete the background handler
         tcs.SetResult();
@@ -122,9 +122,9 @@ public class ModeOrchestrationTests : IDisposable
 
         await _client.PostAsync("/responses", content);
 
-        Assert.IsNotNull(_handler.LastRequest);
-        Assert.IsFalse(_handler.LastRequest.Stream);
-        Assert.IsFalse(_handler.LastRequest.Background);
+        Assert.That(_handler.LastRequest, Is.Not.Null);
+        Assert.That(_handler.LastRequest.Stream, Is.False);
+        Assert.That(_handler.LastRequest.Background, Is.False);
     }
 
     [Test]
@@ -138,7 +138,7 @@ public class ModeOrchestrationTests : IDisposable
         requestBody = JsonSerializer.Serialize(new { model = "test", stream = true });
         await _client.PostAsync("/responses", new StringContent(requestBody, Encoding.UTF8, "application/json"));
 
-        Assert.AreEqual(2, _handler.CallCount);
+        Assert.That(_handler.CallCount, Is.EqualTo(2));
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> SimpleEventStream(

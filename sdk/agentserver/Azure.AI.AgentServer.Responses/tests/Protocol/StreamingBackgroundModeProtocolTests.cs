@@ -23,13 +23,13 @@ public class StreamingBackgroundModeProtocolTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test", stream = true, background = true });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("text/event-stream", response.Content.Headers.ContentType?.MediaType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("text/event-stream"));
 
         var events = await ParseSseAsync(response);
-        Assert.IsTrue(events.Count >= 2, "Expected at least 2 SSE events");
-        Assert.AreEqual("response.created", events[0].EventType);
-        Assert.AreEqual("response.completed", events[^1].EventType);
+        Assert.That(events.Count >= 2, Is.True, "Expected at least 2 SSE events");
+        Assert.That(events[0].EventType, Is.EqualTo("response.created"));
+        Assert.That(events[^1].EventType, Is.EqualTo("response.completed"));
     }
 
     [Test]
@@ -72,7 +72,7 @@ public class StreamingBackgroundModeProtocolTests : ProtocolTestBase
             }
         }
 
-        Assert.IsNotNull(responseId);
+        Assert.That(responseId, Is.Not.Null);
 
         // Let the handler finish in background
         tcs.SetResult();
@@ -81,7 +81,7 @@ public class StreamingBackgroundModeProtocolTests : ProtocolTestBase
         // GET should show completed — handler continued after streaming
         var getResponse = await GetResponseAsync(responseId!);
         using var getDoc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("completed", getDoc.RootElement.GetProperty("status").GetString());
+        Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // ── Helper event factories ─────────────────────────────────

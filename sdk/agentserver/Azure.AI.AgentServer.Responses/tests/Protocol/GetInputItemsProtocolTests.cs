@@ -38,13 +38,13 @@ public class GetInputItemsProtocolTests : IDisposable
         // GET input_items
         var response = await _client.GetAsync($"/responses/{responseId}/input_items");
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var body = await response.Content.ReadAsStringAsync();
         using var doc = JsonDocument.Parse(body);
         var data = doc.RootElement.GetProperty("data");
-        Assert.AreEqual(3, data.GetArrayLength());
-        Assert.IsFalse(doc.RootElement.GetProperty("has_more").GetBoolean());
+        Assert.That(data.GetArrayLength(), Is.EqualTo(3));
+        Assert.That(doc.RootElement.GetProperty("has_more").GetBoolean(), Is.False);
     }
 
     /// <summary>
@@ -57,13 +57,13 @@ public class GetInputItemsProtocolTests : IDisposable
 
         var response = await _client.GetAsync($"/responses/{responseId}/input_items");
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var body = await response.Content.ReadAsStringAsync();
         using var doc = JsonDocument.Parse(body);
         var data = doc.RootElement.GetProperty("data");
-        Assert.AreEqual(0, data.GetArrayLength());
-        Assert.IsFalse(doc.RootElement.GetProperty("has_more").GetBoolean());
+        Assert.That(data.GetArrayLength(), Is.EqualTo(0));
+        Assert.That(doc.RootElement.GetProperty("has_more").GetBoolean(), Is.False);
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public class GetInputItemsProtocolTests : IDisposable
     {
         var response = await _client.GetAsync("/responses/resp_nonexistent/input_items");
 
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     /// <summary>
@@ -88,13 +88,13 @@ public class GetInputItemsProtocolTests : IDisposable
 
         var response = await _client.GetAsync($"/responses/{responseId}/input_items?limit=5");
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var body = await response.Content.ReadAsStringAsync();
         using var doc = JsonDocument.Parse(body);
         var data = doc.RootElement.GetProperty("data");
-        Assert.AreEqual(5, data.GetArrayLength());
-        Assert.IsTrue(doc.RootElement.GetProperty("has_more").GetBoolean());
+        Assert.That(data.GetArrayLength(), Is.EqualTo(5));
+        Assert.That(doc.RootElement.GetProperty("has_more").GetBoolean(), Is.True);
     }
 
     /// <summary>
@@ -107,18 +107,18 @@ public class GetInputItemsProtocolTests : IDisposable
 
         var response = await _client.GetAsync($"/responses/{responseId}/input_items?order=asc");
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var body = await response.Content.ReadAsStringAsync();
         using var doc = JsonDocument.Parse(body);
         var data = doc.RootElement.GetProperty("data");
-        Assert.AreEqual(3, data.GetArrayLength());
+        Assert.That(data.GetArrayLength(), Is.EqualTo(3));
 
         // Ascending order: items in insertion order (msg 0, msg 1, msg 2)
         var firstText = GetTextContent(data[0]);
         var lastText = GetTextContent(data[2]);
-        Assert.AreEqual("test message 0", firstText);
-        Assert.AreEqual("test message 2", lastText);
+        Assert.That(firstText, Is.EqualTo("test message 0"));
+        Assert.That(lastText, Is.EqualTo("test message 2"));
     }
 
     /// <summary>
@@ -131,18 +131,18 @@ public class GetInputItemsProtocolTests : IDisposable
 
         var response = await _client.GetAsync($"/responses/{responseId}/input_items?order=desc");
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var body = await response.Content.ReadAsStringAsync();
         using var doc = JsonDocument.Parse(body);
         var data = doc.RootElement.GetProperty("data");
-        Assert.AreEqual(3, data.GetArrayLength());
+        Assert.That(data.GetArrayLength(), Is.EqualTo(3));
 
         // Descending order reverses: last item first
         var firstText = GetTextContent(data[0]);
         var lastText = GetTextContent(data[2]);
-        Assert.AreEqual("test message 2", firstText);
-        Assert.AreEqual("test message 0", lastText);
+        Assert.That(firstText, Is.EqualTo("test message 2"));
+        Assert.That(lastText, Is.EqualTo("test message 0"));
     }
 
     /// <summary>
@@ -155,12 +155,12 @@ public class GetInputItemsProtocolTests : IDisposable
 
         // Delete the response
         var deleteResponse = await _client.DeleteAsync($"/responses/{responseId}");
-        Assert.AreEqual(HttpStatusCode.OK, deleteResponse.StatusCode);
+        Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // GET input_items on deleted response should return 400
         var response = await _client.GetAsync($"/responses/{responseId}/input_items");
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 
     /// <summary>
@@ -172,10 +172,10 @@ public class GetInputItemsProtocolTests : IDisposable
         var responseId = await CreateResponseAsync();
 
         var response = await _client.GetAsync($"/responses/{responseId}/input_items?limit=0");
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
         var response2 = await _client.GetAsync($"/responses/{responseId}/input_items?limit=101");
-        Assert.AreEqual(HttpStatusCode.BadRequest, response2.StatusCode);
+        Assert.That(response2.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -198,7 +198,7 @@ public class GetInputItemsProtocolTests : IDisposable
 
         var postResponse = await _client.PostAsync("/responses",
             new StringContent(json, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, postResponse.StatusCode);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var postBody = await postResponse.Content.ReadAsStringAsync();
         using var postDoc = JsonDocument.Parse(postBody);
@@ -207,12 +207,12 @@ public class GetInputItemsProtocolTests : IDisposable
         // GET input_items — should return the 1 item auto-persisted by orchestrator
         // (string input expands to a single user message)
         var getResponse = await _client.GetAsync($"/responses/{responseId}/input_items?order=asc");
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var getBody = await getResponse.Content.ReadAsStringAsync();
         using var getDoc = JsonDocument.Parse(getBody);
         var data = getDoc.RootElement.GetProperty("data");
-        Assert.AreEqual(1, data.GetArrayLength());
+        Assert.That(data.GetArrayLength(), Is.EqualTo(1));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -235,19 +235,19 @@ public class GetInputItemsProtocolTests : IDisposable
 
         var postResponse = await _client.PostAsync("/responses",
             new StringContent(json, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, postResponse.StatusCode);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var postBody = await postResponse.Content.ReadAsStringAsync();
         using var postDoc = JsonDocument.Parse(postBody);
         var responseId = postDoc.RootElement.GetProperty("id").GetString()!;
 
         var getResponse = await _client.GetAsync($"/responses/{responseId}/input_items?order=asc");
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var getBody = await getResponse.Content.ReadAsStringAsync();
         using var getDoc = JsonDocument.Parse(getBody);
         var data = getDoc.RootElement.GetProperty("data");
-        Assert.AreEqual(1, data.GetArrayLength());
+        Assert.That(data.GetArrayLength(), Is.EqualTo(1));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -271,7 +271,7 @@ public class GetInputItemsProtocolTests : IDisposable
         var postA = await _client.PostAsync("/responses",
             new StringContent(jsonA, Encoding.UTF8, "application/json"));
         var bodyA = await postA.Content.ReadAsStringAsync();
-        Assert.IsTrue(postA.StatusCode == HttpStatusCode.OK, $"POST A failed: {bodyA}");
+        Assert.That(postA.StatusCode == HttpStatusCode.OK, Is.True, $"POST A failed: {bodyA}");
         using var docA = JsonDocument.Parse(bodyA);
         var responseIdA = docA.RootElement.GetProperty("id").GetString()!;
 
@@ -286,20 +286,20 @@ public class GetInputItemsProtocolTests : IDisposable
         var postB = await _client.PostAsync("/responses",
             new StringContent(jsonB, Encoding.UTF8, "application/json"));
         var bodyB = await postB.Content.ReadAsStringAsync();
-        Assert.IsTrue(postB.StatusCode == HttpStatusCode.OK, $"POST B failed: {bodyB}");
+        Assert.That(postB.StatusCode == HttpStatusCode.OK, Is.True, $"POST B failed: {bodyB}");
         using var docB = JsonDocument.Parse(bodyB);
         var responseIdB = docB.RootElement.GetProperty("id").GetString()!;
 
         // Step 3: GET response B's input_items → should have history (from A) + current (from B)
         var getResponse = await _client.GetAsync($"/responses/{responseIdB}/input_items?order=asc");
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var getBody = await getResponse.Content.ReadAsStringAsync();
         using var getDoc = JsonDocument.Parse(getBody);
         var data = getDoc.RootElement.GetProperty("data");
 
         // Models.Response A had 1 input item, response B also has 1 → total 2
-        Assert.AreEqual(2, data.GetArrayLength());
+        Assert.That(data.GetArrayLength(), Is.EqualTo(2));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -325,7 +325,7 @@ public class GetInputItemsProtocolTests : IDisposable
         var postA = await _client.PostAsync("/responses",
             new StringContent(jsonA, Encoding.UTF8, "application/json"));
         var bodyA = await postA.Content.ReadAsStringAsync();
-        Assert.IsTrue(postA.StatusCode == HttpStatusCode.OK, $"POST A failed: {bodyA}");
+        Assert.That(postA.StatusCode == HttpStatusCode.OK, Is.True, $"POST A failed: {bodyA}");
         using var docA = JsonDocument.Parse(bodyA);
         var responseIdA = docA.RootElement.GetProperty("id").GetString()!;
 
@@ -340,36 +340,36 @@ public class GetInputItemsProtocolTests : IDisposable
         var postB = await _client.PostAsync("/responses",
             new StringContent(jsonB, Encoding.UTF8, "application/json"));
         var bodyB = await postB.Content.ReadAsStringAsync();
-        Assert.IsTrue(postB.StatusCode == HttpStatusCode.OK, $"POST B failed: {bodyB}");
+        Assert.That(postB.StatusCode == HttpStatusCode.OK, Is.True, $"POST B failed: {bodyB}");
         using var docB = JsonDocument.Parse(bodyB);
         var responseIdB = docB.RootElement.GetProperty("id").GetString()!;
 
         // Step 3: GET response B's input_items in ascending order
         var getResponse = await _client.GetAsync($"/responses/{responseIdB}/input_items?order=asc");
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var getBody = await getResponse.Content.ReadAsStringAsync();
         using var getDoc = JsonDocument.Parse(getBody);
         var data = getDoc.RootElement.GetProperty("data");
 
         // Must have exactly 2 items: 1 history (from A) + 1 current (from B)
-        Assert.AreEqual(2, data.GetArrayLength());
+        Assert.That(data.GetArrayLength(), Is.EqualTo(2));
 
         // First item (ascending) = history item from response A
         var historyItem = data[0];
-        Assert.AreEqual("message", historyItem.GetProperty("type").GetString());
+        Assert.That(historyItem.GetProperty("type").GetString(), Is.EqualTo("message"));
         var historyContent = historyItem.GetProperty("content");
-        Assert.IsTrue(historyContent.GetArrayLength() > 0, "History item should have content");
+        Assert.That(historyContent.GetArrayLength() > 0, Is.True, "History item should have content");
         var historyText = historyContent[0].GetProperty("text").GetString();
-        Assert.AreEqual("History from response A", historyText);
+        Assert.That(historyText, Is.EqualTo("History from response A"));
 
         // Second item (ascending) = current inline input from response B
         var currentItem = data[1];
-        Assert.AreEqual("message", currentItem.GetProperty("type").GetString());
+        Assert.That(currentItem.GetProperty("type").GetString(), Is.EqualTo("message"));
         var currentContent = currentItem.GetProperty("content");
-        Assert.IsTrue(currentContent.GetArrayLength() > 0, "Current item should have content");
+        Assert.That(currentContent.GetArrayLength() > 0, Is.True, "Current item should have content");
         var currentText = currentContent[0].GetProperty("text").GetString();
-        Assert.AreEqual("Current inline from response B", currentText);
+        Assert.That(currentText, Is.EqualTo("Current inline from response B"));
     }
 
     /// <summary>
@@ -390,7 +390,7 @@ public class GetInputItemsProtocolTests : IDisposable
         var postA = await _client.PostAsync("/responses",
             new StringContent(jsonA, Encoding.UTF8, "application/json"));
         var bodyA = await postA.Content.ReadAsStringAsync();
-        Assert.IsTrue(postA.StatusCode == HttpStatusCode.OK, $"POST A failed: {bodyA}");
+        Assert.That(postA.StatusCode == HttpStatusCode.OK, Is.True, $"POST A failed: {bodyA}");
         using var docA = JsonDocument.Parse(bodyA);
         var responseIdA = docA.RootElement.GetProperty("id").GetString()!;
 
@@ -405,7 +405,7 @@ public class GetInputItemsProtocolTests : IDisposable
         var postB = await _client.PostAsync("/responses",
             new StringContent(jsonB, Encoding.UTF8, "application/json"));
         var bodyB = await postB.Content.ReadAsStringAsync();
-        Assert.IsTrue(postB.StatusCode == HttpStatusCode.OK, $"POST B failed: {bodyB}");
+        Assert.That(postB.StatusCode == HttpStatusCode.OK, Is.True, $"POST B failed: {bodyB}");
         using var docB = JsonDocument.Parse(bodyB);
         var responseIdB = docB.RootElement.GetProperty("id").GetString()!;
 
@@ -420,13 +420,13 @@ public class GetInputItemsProtocolTests : IDisposable
         var postC = await _client.PostAsync("/responses",
             new StringContent(jsonC, Encoding.UTF8, "application/json"));
         var bodyC = await postC.Content.ReadAsStringAsync();
-        Assert.IsTrue(postC.StatusCode == HttpStatusCode.OK, $"POST C failed: {bodyC}");
+        Assert.That(postC.StatusCode == HttpStatusCode.OK, Is.True, $"POST C failed: {bodyC}");
         using var docC = JsonDocument.Parse(bodyC);
         var responseIdC = docC.RootElement.GetProperty("id").GetString()!;
 
         // Step 4: GET response C's input_items in ascending order
         var getResponse = await _client.GetAsync($"/responses/{responseIdC}/input_items?order=asc");
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var getBody = await getResponse.Content.ReadAsStringAsync();
         using var getDoc = JsonDocument.Parse(getBody);
@@ -435,22 +435,22 @@ public class GetInputItemsProtocolTests : IDisposable
         // C's input_items should include history (from B's stored items) + C's own input
         // B's stored items = A's input (history) + B's input (current at that time)
         // So total: A's input + B's input + C's input = 3 items
-        Assert.AreEqual(3, data.GetArrayLength());
+        Assert.That(data.GetArrayLength(), Is.EqualTo(3));
 
         // Verify content ordering and text: history items first, then current
         var texts = new List<string>();
         for (int i = 0; i < data.GetArrayLength(); i++)
         {
             var item = data[i];
-            Assert.AreEqual("message", item.GetProperty("type").GetString());
+            Assert.That(item.GetProperty("type").GetString(), Is.EqualTo("message"));
             var content = item.GetProperty("content");
-            Assert.IsTrue(content.GetArrayLength() > 0);
+            Assert.That(content.GetArrayLength() > 0, Is.True);
             texts.Add(content[0].GetProperty("text").GetString()!);
         }
 
-        Assert.AreEqual("Message from A", texts[0]);
-        Assert.AreEqual("Message from B", texts[1]);
-        Assert.AreEqual("Message from C", texts[2]);
+        Assert.That(texts[0], Is.EqualTo("Message from A"));
+        Assert.That(texts[1], Is.EqualTo("Message from B"));
+        Assert.That(texts[2], Is.EqualTo("Message from C"));
     }
 
     /// <summary>
@@ -470,7 +470,7 @@ public class GetInputItemsProtocolTests : IDisposable
         var postA = await _client.PostAsync("/responses",
             new StringContent(jsonA, Encoding.UTF8, "application/json"));
         var bodyA = await postA.Content.ReadAsStringAsync();
-        Assert.IsTrue(postA.StatusCode == HttpStatusCode.OK, $"POST A failed: {bodyA}");
+        Assert.That(postA.StatusCode == HttpStatusCode.OK, Is.True, $"POST A failed: {bodyA}");
         using var docA = JsonDocument.Parse(bodyA);
         var responseIdA = docA.RootElement.GetProperty("id").GetString()!;
 
@@ -485,32 +485,32 @@ public class GetInputItemsProtocolTests : IDisposable
         var postB = await _client.PostAsync("/responses",
             new StringContent(jsonB, Encoding.UTF8, "application/json"));
         var bodyB = await postB.Content.ReadAsStringAsync();
-        Assert.IsTrue(postB.StatusCode == HttpStatusCode.OK, $"POST B failed: {bodyB}");
+        Assert.That(postB.StatusCode == HttpStatusCode.OK, Is.True, $"POST B failed: {bodyB}");
         using var docB = JsonDocument.Parse(bodyB);
         var responseIdB = docB.RootElement.GetProperty("id").GetString()!;
 
         // Step 3: GET response B's input_items in DESCENDING order (default)
         var getResponse = await _client.GetAsync($"/responses/{responseIdB}/input_items?order=desc");
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var getBody = await getResponse.Content.ReadAsStringAsync();
         using var getDoc = JsonDocument.Parse(getBody);
         var data = getDoc.RootElement.GetProperty("data");
 
         // 1 history + 1 current = 2 items
-        Assert.AreEqual(2, data.GetArrayLength());
+        Assert.That(data.GetArrayLength(), Is.EqualTo(2));
 
         // Descending: current (last added) appears first, history appears second
         var firstContent = data[0].GetProperty("content");
         var secondContent = data[1].GetProperty("content");
-        Assert.IsTrue(firstContent.GetArrayLength() > 0);
-        Assert.IsTrue(secondContent.GetArrayLength() > 0);
+        Assert.That(firstContent.GetArrayLength() > 0, Is.True);
+        Assert.That(secondContent.GetArrayLength() > 0, Is.True);
 
         var firstText = firstContent[0].GetProperty("text").GetString();
         var secondText = secondContent[0].GetProperty("text").GetString();
 
-        Assert.AreEqual("Current inline from B", firstText);
-        Assert.AreEqual("History context from A", secondText);
+        Assert.That(firstText, Is.EqualTo("Current inline from B"));
+        Assert.That(secondText, Is.EqualTo("History context from A"));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -535,7 +535,7 @@ public class GetInputItemsProtocolTests : IDisposable
         var postResponse = await _client.PostAsync("/responses",
             new StringContent(json, Encoding.UTF8, "application/json"));
         var postBody = await postResponse.Content.ReadAsStringAsync();
-        Assert.IsTrue(postResponse.StatusCode == HttpStatusCode.OK, $"POST failed: {postBody}");
+        Assert.That(postResponse.StatusCode == HttpStatusCode.OK, Is.True, $"POST failed: {postBody}");
 
         using var postDoc = JsonDocument.Parse(postBody);
         var responseId = postDoc.RootElement.GetProperty("id").GetString()!;
@@ -543,12 +543,12 @@ public class GetInputItemsProtocolTests : IDisposable
         // GET input_items — items should be available after bg POST returns
         // (persisted at response.created time, before handler completion)
         var getResponse = await _client.GetAsync($"/responses/{responseId}/input_items?order=asc");
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var getBody = await getResponse.Content.ReadAsStringAsync();
         using var getDoc = JsonDocument.Parse(getBody);
         var data = getDoc.RootElement.GetProperty("data");
-        Assert.AreEqual(1, data.GetArrayLength());
+        Assert.That(data.GetArrayLength(), Is.EqualTo(1));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -592,7 +592,7 @@ public class GetInputItemsProtocolTests : IDisposable
         var response = await _client.PostAsync("/responses",
             new StringContent(json, Encoding.UTF8, "application/json"));
         var responseBody = await response.Content.ReadAsStringAsync();
-        Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, $"POST failed: {responseBody}");
+        Assert.That(response.StatusCode == HttpStatusCode.OK, Is.True, $"POST failed: {responseBody}");
         using var doc = JsonDocument.Parse(responseBody);
         return doc.RootElement.GetProperty("id").GetString()!;
     }

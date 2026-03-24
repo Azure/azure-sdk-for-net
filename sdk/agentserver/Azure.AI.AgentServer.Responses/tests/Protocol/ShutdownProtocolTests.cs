@@ -42,7 +42,7 @@ public class ShutdownProtocolTests : IDisposable
         var body = JsonSerializer.Serialize(new { model = "test", background = true });
         var createResponse = await _client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, createResponse.StatusCode);
+        Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var createDoc = JsonDocument.Parse(await createResponse.Content.ReadAsStringAsync());
         var responseId = createDoc.RootElement.GetProperty("id").GetString()!;
@@ -80,10 +80,10 @@ public class ShutdownProtocolTests : IDisposable
             using (getDoc)
             {
                 var status = getDoc.RootElement.GetProperty("status").GetString();
-                Assert.AreEqual("incomplete", status);
+                Assert.That(status, Is.EqualTo("incomplete"));
 
                 // B24: incomplete → error is null (not an error condition)
-                Assert.AreEqual(JsonValueKind.Null, getDoc.RootElement.GetProperty("error").ValueKind);
+                Assert.That(getDoc.RootElement.GetProperty("error").ValueKind, Is.EqualTo(JsonValueKind.Null));
             }
         }
     }
@@ -100,7 +100,7 @@ public class ShutdownProtocolTests : IDisposable
         var body = JsonSerializer.Serialize(new { model = "test", background = true });
         var createResponse = await _client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, createResponse.StatusCode);
+        Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var createDoc = JsonDocument.Parse(await createResponse.Content.ReadAsStringAsync());
         var responseId = createDoc.RootElement.GetProperty("id").GetString()!;
@@ -135,9 +135,9 @@ public class ShutdownProtocolTests : IDisposable
                 var status = getDoc.RootElement.GetProperty("status").GetString();
 
                 // Must NOT be "cancelled" — shutdown is distinct from cancel
-                Assert.AreNotEqual("cancelled", status);
+                Assert.That(status, Is.Not.EqualTo("cancelled"));
                 // Non-cooperative handler on shutdown → SDK emits failed
-                Assert.AreEqual("failed", status);
+                Assert.That(status, Is.EqualTo("failed"));
             }
         }
     }

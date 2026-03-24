@@ -27,12 +27,12 @@ public class ResponseShapeProtocolTests : ProtocolTestBase
         var root = doc.RootElement;
 
         // All required fields per the API spec
-        Assert.IsTrue(root.TryGetProperty("id", out _), "Missing 'id'");
-        Assert.IsTrue(root.TryGetProperty("object", out _), "Missing 'object'");
-        Assert.IsTrue(root.TryGetProperty("created_at", out _), "Missing 'created_at'");
-        Assert.IsTrue(root.TryGetProperty("status", out _), "Missing 'status'");
-        Assert.IsTrue(root.TryGetProperty("model", out _), "Missing 'model'");
-        Assert.IsTrue(root.TryGetProperty("output", out _), "Missing 'output'");
+        Assert.That(root.TryGetProperty("id", out _), Is.True, "Missing 'id'");
+        Assert.That(root.TryGetProperty("object", out _), Is.True, "Missing 'object'");
+        Assert.That(root.TryGetProperty("created_at", out _), Is.True, "Missing 'created_at'");
+        Assert.That(root.TryGetProperty("status", out _), Is.True, "Missing 'status'");
+        Assert.That(root.TryGetProperty("model", out _), Is.True, "Missing 'model'");
+        Assert.That(root.TryGetProperty("output", out _), Is.True, "Missing 'output'");
     }
 
     [Test]
@@ -44,21 +44,21 @@ public class ResponseShapeProtocolTests : ProtocolTestBase
         using var doc = await ParseJsonAsync(response);
 
         var output = doc.RootElement.GetProperty("output");
-        Assert.IsTrue(output.GetArrayLength() > 0, "Expected at least one output item");
+        Assert.That(output.GetArrayLength() > 0, Is.True, "Expected at least one output item");
 
         var firstItem = output[0];
-        Assert.AreEqual("output_message", firstItem.GetProperty("type").GetString());
-        Assert.IsTrue(firstItem.TryGetProperty("id", out _), "Output item missing 'id'");
-        Assert.IsTrue(firstItem.TryGetProperty("role", out _), "Output item missing 'role'");
-        Assert.IsTrue(firstItem.TryGetProperty("content", out _), "Output item missing 'content'");
-        Assert.AreEqual("assistant", firstItem.GetProperty("role").GetString());
+        Assert.That(firstItem.GetProperty("type").GetString(), Is.EqualTo("output_message"));
+        Assert.That(firstItem.TryGetProperty("id", out _), Is.True, "Output item missing 'id'");
+        Assert.That(firstItem.TryGetProperty("role", out _), Is.True, "Output item missing 'role'");
+        Assert.That(firstItem.TryGetProperty("content", out _), Is.True, "Output item missing 'content'");
+        Assert.That(firstItem.GetProperty("role").GetString(), Is.EqualTo("assistant"));
 
         var content = firstItem.GetProperty("content");
-        Assert.IsTrue(content.GetArrayLength() > 0, "Expected at least one content part");
+        Assert.That(content.GetArrayLength() > 0, Is.True, "Expected at least one content part");
 
         var firstContent = content[0];
-        Assert.AreEqual("output_text", firstContent.GetProperty("type").GetString());
-        Assert.IsTrue(firstContent.TryGetProperty("text", out _), "Content part missing 'text'");
+        Assert.That(firstContent.GetProperty("type").GetString(), Is.EqualTo("output_text"));
+        Assert.That(firstContent.TryGetProperty("text", out _), Is.True, "Content part missing 'text'");
     }
 
     [Test]
@@ -70,7 +70,7 @@ public class ResponseShapeProtocolTests : ProtocolTestBase
         using var doc = await ParseJsonAsync(response);
 
         var outputText = doc.RootElement.GetProperty("output_text").GetString();
-        Assert.AreEqual("Hello", outputText);
+        Assert.That(outputText, Is.EqualTo("Hello"));
     }
 
     [Test]
@@ -81,7 +81,7 @@ public class ResponseShapeProtocolTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "any-model" });
         using var doc = await ParseJsonAsync(response);
 
-        Assert.AreEqual("response", doc.RootElement.GetProperty("object").GetString());
+        Assert.That(doc.RootElement.GetProperty("object").GetString(), Is.EqualTo("response"));
     }
 
     [Test]

@@ -33,9 +33,9 @@ public class ReasoningSummaryPartBuilderTests
         var (_, reasoning) = CreateReasoningScope();
         var summary = reasoning.AddSummaryPart();
         var evt = summary.EmitAdded();
-        Assert.AreEqual(reasoning.ItemId, evt.ItemId);
-        Assert.AreEqual(reasoning.OutputIndex, evt.OutputIndex);
-        Assert.AreEqual(summary.SummaryIndex, evt.SummaryIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(reasoning.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(reasoning.OutputIndex));
+        Assert.That(evt.SummaryIndex, Is.EqualTo(summary.SummaryIndex));
     }
 
     [Test]
@@ -44,7 +44,7 @@ public class ReasoningSummaryPartBuilderTests
         var (_, reasoning) = CreateReasoningScope();
         var summary = reasoning.AddSummaryPart();
         var evt = summary.EmitAdded();
-        Assert.AreEqual("", evt.Part.Text);
+        Assert.That(evt.Part.Text, Is.EqualTo(""));
     }
 
     // ── EmitTextDelta ─────────────────────────────────────────
@@ -56,7 +56,7 @@ public class ReasoningSummaryPartBuilderTests
         var summary = reasoning.AddSummaryPart();
         var evt = summary.EmitTextDelta("chunk");
         XAssert.IsType<ResponseReasoningSummaryTextDeltaEvent>(evt);
-        Assert.AreEqual("chunk", evt.Delta);
+        Assert.That(evt.Delta, Is.EqualTo("chunk"));
     }
 
     [Test]
@@ -65,9 +65,9 @@ public class ReasoningSummaryPartBuilderTests
         var (_, reasoning) = CreateReasoningScope();
         var summary = reasoning.AddSummaryPart();
         var evt = summary.EmitTextDelta("chunk");
-        Assert.AreEqual(reasoning.ItemId, evt.ItemId);
-        Assert.AreEqual(reasoning.OutputIndex, evt.OutputIndex);
-        Assert.AreEqual(summary.SummaryIndex, evt.SummaryIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(reasoning.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(reasoning.OutputIndex));
+        Assert.That(evt.SummaryIndex, Is.EqualTo(summary.SummaryIndex));
     }
 
     [Test]
@@ -77,8 +77,8 @@ public class ReasoningSummaryPartBuilderTests
         var summary = reasoning.AddSummaryPart();
         var d1 = summary.EmitTextDelta("Hello, ");
         var d2 = summary.EmitTextDelta("world!");
-        Assert.AreEqual("Hello, ", d1.Delta);
-        Assert.AreEqual("world!", d2.Delta);
+        Assert.That(d1.Delta, Is.EqualTo("Hello, "));
+        Assert.That(d2.Delta, Is.EqualTo("world!"));
     }
 
     // ── EmitTextDone ──────────────────────────────────────────
@@ -90,7 +90,7 @@ public class ReasoningSummaryPartBuilderTests
         var summary = reasoning.AddSummaryPart();
         var evt = summary.EmitTextDone("Final text");
         XAssert.IsType<ResponseReasoningSummaryTextDoneEvent>(evt);
-        Assert.AreEqual("Final text", evt.Text);
+        Assert.That(evt.Text, Is.EqualTo("Final text"));
     }
 
     [Test]
@@ -98,9 +98,9 @@ public class ReasoningSummaryPartBuilderTests
     {
         var (_, reasoning) = CreateReasoningScope();
         var summary = reasoning.AddSummaryPart();
-        Assert.IsNull(summary.FinalText);
+        Assert.That(summary.FinalText, Is.Null);
         summary.EmitTextDone("Final value");
-        Assert.AreEqual("Final value", summary.FinalText);
+        Assert.That(summary.FinalText, Is.EqualTo("Final value"));
     }
 
     [Test]
@@ -109,9 +109,9 @@ public class ReasoningSummaryPartBuilderTests
         var (_, reasoning) = CreateReasoningScope();
         var summary = reasoning.AddSummaryPart();
         var evt = summary.EmitTextDone("done");
-        Assert.AreEqual(reasoning.ItemId, evt.ItemId);
-        Assert.AreEqual(reasoning.OutputIndex, evt.OutputIndex);
-        Assert.AreEqual(summary.SummaryIndex, evt.SummaryIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(reasoning.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(reasoning.OutputIndex));
+        Assert.That(evt.SummaryIndex, Is.EqualTo(summary.SummaryIndex));
     }
 
     // ── EmitDone ──────────────────────────────────────────────
@@ -135,7 +135,7 @@ public class ReasoningSummaryPartBuilderTests
         summary.EmitAdded();
         summary.EmitTextDone("Final text");
         var evt = summary.EmitDone();
-        Assert.AreEqual("Final text", evt.Part.Text);
+        Assert.That(evt.Part.Text, Is.EqualTo("Final text"));
     }
 
     [Test]
@@ -146,9 +146,9 @@ public class ReasoningSummaryPartBuilderTests
         summary.EmitAdded();
         summary.EmitTextDone("done");
         var evt = summary.EmitDone();
-        Assert.AreEqual(reasoning.ItemId, evt.ItemId);
-        Assert.AreEqual(reasoning.OutputIndex, evt.OutputIndex);
-        Assert.AreEqual(summary.SummaryIndex, evt.SummaryIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(reasoning.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(reasoning.OutputIndex));
+        Assert.That(evt.SummaryIndex, Is.EqualTo(summary.SummaryIndex));
     }
 
     // ── Sequence numbers ──────────────────────────────────────
@@ -162,9 +162,9 @@ public class ReasoningSummaryPartBuilderTests
         var delta = summary.EmitTextDelta("Hi");    // seq 1
         var textDone = summary.EmitTextDone("Hi");  // seq 2
         var done = summary.EmitDone();              // seq 3
-        Assert.AreEqual(0, added.SequenceNumber);
-        Assert.AreEqual(1, delta.SequenceNumber);
-        Assert.AreEqual(2, textDone.SequenceNumber);
-        Assert.AreEqual(3, done.SequenceNumber);
+        Assert.That(added.SequenceNumber, Is.EqualTo(0));
+        Assert.That(delta.SequenceNumber, Is.EqualTo(1));
+        Assert.That(textDone.SequenceNumber, Is.EqualTo(2));
+        Assert.That(done.SequenceNumber, Is.EqualTo(3));
     }
 }

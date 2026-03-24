@@ -22,13 +22,13 @@ public class StatusLifecycleTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var doc = await ParseJsonAsync(response);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
         // completed_at MUST be present and non-null for completed responses
-        Assert.IsTrue(doc.RootElement.TryGetProperty("completed_at", out var completedAt));
-        Assert.AreNotEqual(JsonValueKind.Null, completedAt.ValueKind);
+        Assert.That(doc.RootElement.TryGetProperty("completed_at", out var completedAt), Is.True);
+        Assert.That(completedAt.ValueKind, Is.Not.EqualTo(JsonValueKind.Null));
     }
 
     // ── T017: failed → completed_at null ────────────────────────
@@ -41,10 +41,10 @@ public class StatusLifecycleTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.AreEqual(System.Net.HttpStatusCode.InternalServerError, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.InternalServerError));
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.IsNotNull(error.GetProperty("message").GetString());
+        Assert.That(error.GetProperty("message").GetString(), Is.Not.Null);
     }
 
     // ── T017: incomplete → completed_at null ────────────────────
@@ -57,10 +57,10 @@ public class StatusLifecycleTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "test" });
 
         using var doc = await ParseJsonAsync(response);
-        Assert.AreEqual("incomplete", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("incomplete"));
         if (doc.RootElement.TryGetProperty("completed_at", out var completedAt))
         {
-            Assert.AreEqual(JsonValueKind.Null, completedAt.ValueKind);
+            Assert.That(completedAt.ValueKind, Is.EqualTo(JsonValueKind.Null));
         }
     }
 
@@ -78,10 +78,10 @@ public class StatusLifecycleTests : ProtocolTestBase
         // Poll GET while handler is still running
         var getResponse = await GetResponseAsync(responseId);
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("in_progress", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
         if (doc.RootElement.TryGetProperty("completed_at", out var completedAt))
         {
-            Assert.AreEqual(JsonValueKind.Null, completedAt.ValueKind);
+            Assert.That(completedAt.ValueKind, Is.EqualTo(JsonValueKind.Null));
         }
 
         tcs.TrySetResult();
@@ -99,10 +99,10 @@ public class StatusLifecycleTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.AreEqual(System.Net.HttpStatusCode.InternalServerError, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.InternalServerError));
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("An internal server error occurred.", error.GetProperty("message").GetString());
+        Assert.That(error.GetProperty("message").GetString(), Is.EqualTo("An internal server error occurred."));
     }
 
     // ── Helper event factories ─────────────────────────────────

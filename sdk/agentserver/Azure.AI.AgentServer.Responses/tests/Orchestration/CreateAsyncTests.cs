@@ -49,8 +49,8 @@ public class CreateAsyncTests : IDisposable
 
         var result = await _orchestrator.CreateAsync(new CreateResponse(), execution, context, CancellationToken.None);
 
-        Assert.IsFalse(result.IsStreaming);
-        Assert.IsNotNull(result.Response);
+        Assert.That(result.IsStreaming, Is.False);
+        Assert.That(result.Response, Is.Not.Null);
     }
 
     [Test]
@@ -68,8 +68,8 @@ public class CreateAsyncTests : IDisposable
 
         var result = await _orchestrator.CreateAsync(new CreateResponse(), execution, context, CancellationToken.None);
 
-        Assert.IsFalse(result.IsStreaming);
-        Assert.IsNotNull(result.Response);
+        Assert.That(result.IsStreaming, Is.False);
+        Assert.That(result.Response, Is.Not.Null);
     }
 
     [Test]
@@ -87,8 +87,8 @@ public class CreateAsyncTests : IDisposable
 
         var result = await _orchestrator.CreateAsync(new CreateResponse(), execution, context, CancellationToken.None);
 
-        Assert.IsTrue(result.IsStreaming);
-        Assert.IsNotNull(result.Events);
+        Assert.That(result.IsStreaming, Is.True);
+        Assert.That(result.Events, Is.Not.Null);
 
         // Consume the stream to verify events are yielded
         var events = new List<ResponseStreamEvent>();
@@ -97,7 +97,7 @@ public class CreateAsyncTests : IDisposable
             events.Add(evt);
         }
 
-        Assert.AreEqual(2, events.Count);
+        Assert.That(events.Count, Is.EqualTo(2));
         XAssert.IsType<ResponseCreatedEvent>(events[0]);
         XAssert.IsType<ResponseCompletedEvent>(events[1]);
     }
@@ -117,8 +117,8 @@ public class CreateAsyncTests : IDisposable
 
         var result = await _orchestrator.CreateAsync(new CreateResponse(), execution, context, CancellationToken.None);
 
-        Assert.IsTrue(result.IsStreaming);
-        Assert.IsNotNull(result.Events);
+        Assert.That(result.IsStreaming, Is.True);
+        Assert.That(result.Events, Is.Not.Null);
 
         var events = new List<ResponseStreamEvent>();
         await foreach (var evt in result.Events!)
@@ -126,7 +126,7 @@ public class CreateAsyncTests : IDisposable
             events.Add(evt);
         }
 
-        Assert.AreEqual(2, events.Count);
+        Assert.That(events.Count, Is.EqualTo(2));
     }
 
     [Test]
@@ -140,9 +140,9 @@ public class CreateAsyncTests : IDisposable
 
         var result = await _orchestrator.CreateAsync(new CreateResponse(), execution, context, CancellationToken.None);
 
-        Assert.IsFalse(result.IsStreaming);
-        Assert.IsNotNull(result.Response);
-        Assert.AreEqual(ResponseStatus.Failed, result.Response!.Status);
+        Assert.That(result.IsStreaming, Is.False);
+        Assert.That(result.Response, Is.Not.Null);
+        Assert.That(result.Response!.Status, Is.EqualTo(ResponseStatus.Failed));
     }
 
     [Test]
@@ -161,7 +161,7 @@ public class CreateAsyncTests : IDisposable
         await _orchestrator.CreateAsync(new CreateResponse(), execution, context, CancellationToken.None);
 
         // FinalizeExecution should have called MarkCompleted
-        Assert.IsNotNull(execution.CompletedAt);
+        Assert.That(execution.CompletedAt, Is.Not.Null);
     }
 
     [Test]
@@ -180,14 +180,14 @@ public class CreateAsyncTests : IDisposable
         var result = await _orchestrator.CreateAsync(new CreateResponse(), execution, context, CancellationToken.None);
 
         // Before consuming: not finalized yet
-        Assert.IsNull(execution.CompletedAt);
+        Assert.That(execution.CompletedAt, Is.Null);
 
         // Consume the stream
         await foreach (var _ in result.Events!)
         { }
 
         // After consuming: should be finalized
-        Assert.IsNotNull(execution.CompletedAt);
+        Assert.That(execution.CompletedAt, Is.Not.Null);
     }
 
     [Test]
@@ -206,7 +206,7 @@ public class CreateAsyncTests : IDisposable
         var result = await _orchestrator.CreateAsync(new CreateResponse(), execution, context, CancellationToken.None);
 
         // Should detect no terminal event and set failed
-        Assert.AreEqual(ResponseStatus.Failed, result.Response!.Status);
+        Assert.That(result.Response!.Status, Is.EqualTo(ResponseStatus.Failed));
     }
 
     // --- Helpers ---
