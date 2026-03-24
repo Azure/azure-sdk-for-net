@@ -7,8 +7,10 @@
     <Description>TypeSpec-generated model contracts for the Azure AI Agent Server Responses SDK.</Description>
     <PackageTags>Azure.AI.AgentServer.Responses.Contracts</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <!-- Suppressions for TypeSpec-generated and script-generated code -->
-    <NoWarn>$(NoWarn);CS1591;AZC0011;AZC0012;AZC0014;AZC0030;AZC0031;AZC0033;AZC0034;SA1507;SA1649;SA1402;IDT002</NoWarn>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <!-- Generated model names (Response, Error, Item, Metadata) trigger AZC0012;
+         Generated validators expose System.Text.Json types triggering AZC0014. -->
+    <NoWarn>$(NoWarn);AZC0012;AZC0014</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

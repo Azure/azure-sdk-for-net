@@ -126,7 +126,6 @@ public static class OutputItemExtensions
         return TryGetIdFromJson(item, out id);
     }
 
-
     private static bool TryGetIdFromJson(OutputItem item, out string? id)
     {
         id = null;
