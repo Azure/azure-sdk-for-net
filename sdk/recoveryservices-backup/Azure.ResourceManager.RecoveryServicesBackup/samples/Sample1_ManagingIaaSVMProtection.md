@@ -1,6 +1,6 @@
 # Example: Managing IaaS VM Backup Protection
 
->Note: Before getting started with the samples, go through the [prerequisites](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#prerequisites).
+> Note: Before getting started with the samples, go through the [prerequisites](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#prerequisites).
 
 Namespaces for this example:
 ```C# Snippet:Manage_IaaSVM_Protection_Namespaces
