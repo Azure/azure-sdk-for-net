@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             if (Optional.IsDefined(AksAssignedIdentity))
             {
                 writer.WritePropertyName("aksAssignedIdentity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)AksAssignedIdentity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)AksAssignedIdentity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsSystemExtension))
             {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     {
                         continue;
                     }
-                    aksAssignedIdentity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKubernetesConfigurationContext.Default);
+                    aksAssignedIdentity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerKubernetesConfigurationContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("isSystemExtension"u8))
