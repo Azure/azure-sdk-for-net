@@ -44,7 +44,19 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 foreach (var role in resource.RbacRoles)
                 {
-                    rolesByValue.TryAdd(role.Value, role);
+                    if (rolesByValue.TryGetValue(role.Value, out var existingRole))
+                    {
+                        if (!string.Equals(role.Name, existingRole.Name, StringComparison.Ordinal))
+                        {
+                            ProvisioningGenerator.Instance.Emitter.ReportDiagnostic(
+                                "rbac-role-guid-conflict",
+                                $"RBAC role GUID '{role.Value}' has conflicting names: '{existingRole.Name}' and '{role.Name}'. Using '{existingRole.Name}'.");
+                        }
+                    }
+                    else
+                    {
+                        rolesByValue.Add(role.Value, role);
+                    }
                 }
             }
 
