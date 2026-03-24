@@ -1,6 +1,6 @@
 # Error Handling — .NET Implementation
 
-> .NET-specific error handling implementation details. For language-agnostic error rules, see [SDK Behavioural Specification](../sdk-behaviour-spec.md#error-handling-pipeline) (S-027–S-030) and [Cancellation Mechanism](../sdk-behaviour-spec.md#cancellation-mechanism) (S-023–S-026).
+> .NET-specific error handling implementation details. For language-agnostic error rules, see [Library Behavioural Specification](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#error-handling-pipeline) (S-027–S-030) and [Cancellation Mechanism](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#cancellation-mechanism) (S-023–S-026).
 
 ---
 
@@ -21,28 +21,28 @@
 
 ## ApiErrorFactory
 
-`ApiErrorFactory` is a static internal class that maps .NET exception types to the standard HTTP error envelope ([S-027](../sdk-behaviour-spec.md#error-handling-pipeline)).
+`ApiErrorFactory` is a static internal class that maps .NET exception types to the standard HTTP error envelope ([S-027](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#error-handling-pipeline)).
 
 ### Exception-to-Error Mapping
 
 | .NET Exception Type | HTTP Status | `error.type` | `error.code` | Notes |
 |---------------------|-------------|--------------|--------------|-------|
-| `PayloadValidationException` | 400 | `invalid_request_error` | `null` | Includes `details[]` array ([S-031](../sdk-behaviour-spec.md#validation-enforcement)) |
+| `PayloadValidationException` | 400 | `invalid_request_error` | `null` | Includes `details[]` array ([S-031](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#validation-enforcement)) |
 | `BadRequestException` | 400 | `invalid_request_error` | varies | `code` and `param` from exception properties |
 | `ResourceNotFoundException` | 404 | `invalid_request_error` | `null` | Unknown response ID, `store=false` lookup |
 | `ResponsesApiException` | from exception | from exception | from exception | Generic API exception with explicit error fields |
-| `ResponseValidationException` | 500 | `server_error` | `null` | Details logged, not exposed ([S-033](../sdk-behaviour-spec.md#validation-enforcement)) |
+| `ResponseValidationException` | 500 | `server_error` | `null` | Details logged, not exposed ([S-033](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#validation-enforcement)) |
 | Any other `Exception` | 500 | `server_error` | `null` | Generic "An internal error occurred." |
 
 ### ResponseError Population
 
-When the orchestrator transitions a response to `status: "failed"`, `ApiErrorFactory` also populates the `ResponseError` field on the `Response` object ([S-029](../sdk-behaviour-spec.md#error-handling-pipeline)). The `ResponseError` has only `code` and `message` — no `type` or `param`.
+When the orchestrator transitions a response to `status: "failed"`, `ApiErrorFactory` also populates the `ResponseError` field on the `Response` object ([S-029](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#error-handling-pipeline)). The `ResponseError` has only `code` and `message` — no `type` or `param`.
 
 ---
 
 ## OCE Classification Implementation
 
-The `ResponseOrchestrator` classifies `OperationCanceledException` instances by inspecting `ResponseExecution` flags ([S-023](../sdk-behaviour-spec.md#cancellation-mechanism)):
+The `ResponseOrchestrator` classifies `OperationCanceledException` instances by inspecting `ResponseExecution` flags ([S-023](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#cancellation-mechanism)):
 
 ```
 OperationCanceledException caught
@@ -74,7 +74,7 @@ These are linked into a combined `CancellationToken` passed to the handler via `
 - **Visibility**: `public sealed` (extends `BadRequestException`)
 - **Purpose**: Wraps request validation failures from `PayloadValidator`
 - **Properties**: `Errors` — list of `ValidationError` (path + message)
-- **API exposure**: Full `details[]` array in HTTP 400 response ([S-031](../sdk-behaviour-spec.md#validation-enforcement))
+- **API exposure**: Full `details[]` array in HTTP 400 response ([S-031](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#validation-enforcement))
 
 ### ResponseValidationException
 
@@ -82,7 +82,7 @@ These are linked into a combined `CancellationToken` passed to the handler via `
 - **Visibility**: `internal sealed` (extends `Exception`)
 - **Purpose**: Wraps handler output validation failures from builders
 - **Properties**: `Errors` — list of `ValidationError` (path + message)
-- **API exposure**: Details logged at `LogError` level, never exposed to API callers ([S-033](../sdk-behaviour-spec.md#validation-enforcement))
+- **API exposure**: Details logged at `LogError` level, never exposed to API callers ([S-033](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#validation-enforcement))
 
 The separation ensures request validation details help API callers fix their input, while response validation details remain internal (handler bugs should not leak implementation details to clients).
 
@@ -90,7 +90,7 @@ The separation ensures request validation details help API callers fix their inp
 
 ## Cross-References
 
-- [SDK Behavioural Specification — Error Handling Pipeline](../sdk-behaviour-spec.md#error-handling-pipeline) — Abstract error classification rules (S-027–S-030)
-- [SDK Behavioural Specification — Cancellation Mechanism](../sdk-behaviour-spec.md#cancellation-mechanism) — Abstract cancellation categories (S-023–S-026)
-- [API Behaviour Contract — Error Shapes](../api-behaviour-contract.md#error-shapes) — Error envelope format and known error types
-- [Orchestration](orchestration.md) — Where exceptions are caught and classified
+- [Library Behavioural Specification — Error Handling Pipeline](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#error-handling-pipeline) — Abstract error classification rules (S-027–S-030)
+- [Library Behavioural Specification — Cancellation Mechanism](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#cancellation-mechanism) — Abstract cancellation categories (S-023–S-026)
+- [API Behaviour Contract — Error Shapes](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#error-shapes) — Error envelope format and known error types
+- [Orchestration](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/orchestration.md) — Where exceptions are caught and classified

@@ -106,8 +106,7 @@ public class PublicConstructorModelTests
     public void OutputItemSubtype_HasAtLeastOnePublicConstructor(Type type)
     {
         var publicCtors = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsTrue(
-            publicCtors.Length > 0,
+        Assert.That(publicCtors.Length > 0, Is.True,
             $"{type.Name} should have at least one public constructor but has none.");
     }
 
@@ -119,8 +118,7 @@ public class PublicConstructorModelTests
     public void OutputContentSubtype_HasAtLeastOnePublicConstructor(Type type)
     {
         var publicCtors = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsTrue(
-            publicCtors.Length > 0,
+        Assert.That(publicCtors.Length > 0, Is.True,
             $"{type.Name} should have at least one public constructor but has none.");
     }
 
@@ -128,8 +126,7 @@ public class PublicConstructorModelTests
     public void OutputMessageContentSubtype_HasAtLeastOnePublicConstructor(Type type)
     {
         var publicCtors = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsTrue(
-            publicCtors.Length > 0,
+        Assert.That(publicCtors.Length > 0, Is.True,
             $"{type.Name} should have at least one public constructor but has none.");
     }
 
@@ -141,21 +138,21 @@ public class PublicConstructorModelTests
     public void Response_HasAtLeastOnePublicConstructor()
     {
         var publicCtors = typeof(Models.Response).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsTrue(publicCtors.Length > 0, "Response should have at least one public constructor.");
+        Assert.That(publicCtors.Length > 0, Is.True, "Response should have at least one public constructor.");
     }
 
     [Test]
     public void ResponseError_HasAtLeastOnePublicConstructor()
     {
         var publicCtors = typeof(Models.ResponseError).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsTrue(publicCtors.Length > 0, "ResponseError should have at least one public constructor.");
+        Assert.That(publicCtors.Length > 0, Is.True, "ResponseError should have at least one public constructor.");
     }
 
     [Test]
     public void CreateResponse_HasAtLeastOnePublicConstructor()
     {
         var publicCtors = typeof(CreateResponse).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsTrue(publicCtors.Length > 0, "CreateResponse should have at least one public constructor.");
+        Assert.That(publicCtors.Length > 0, Is.True, "CreateResponse should have at least one public constructor.");
     }
 
     // ========================================
@@ -166,39 +163,39 @@ public class PublicConstructorModelTests
     public void OutputItem_HasNoPublicConstructors()
     {
         var publicCtors = typeof(OutputItem).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsEmpty(publicCtors);
+        Assert.That(publicCtors, Is.Empty);
     }
 
     [Test]
     public void OutputItem_IsAbstract()
     {
-        Assert.IsTrue(typeof(OutputItem).IsAbstract);
+        Assert.That(typeof(OutputItem).IsAbstract, Is.True);
     }
 
     [Test]
     public void OutputContent_HasNoPublicConstructors()
     {
         var publicCtors = typeof(OutputContent).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsEmpty(publicCtors);
+        Assert.That(publicCtors, Is.Empty);
     }
 
     [Test]
     public void OutputContent_IsAbstract()
     {
-        Assert.IsTrue(typeof(OutputContent).IsAbstract);
+        Assert.That(typeof(OutputContent).IsAbstract, Is.True);
     }
 
     [Test]
     public void OutputMessageContent_HasNoPublicConstructors()
     {
         var publicCtors = typeof(OutputMessageContent).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsEmpty(publicCtors);
+        Assert.That(publicCtors, Is.Empty);
     }
 
     [Test]
     public void OutputMessageContent_IsAbstract()
     {
-        Assert.IsTrue(typeof(OutputMessageContent).IsAbstract);
+        Assert.That(typeof(OutputMessageContent).IsAbstract, Is.True);
     }
 
     // ========================================
@@ -208,6 +205,6 @@ public class PublicConstructorModelTests
     [Test]
     public void AllOutputItemTypes_Count_Is46()
     {
-        Assert.AreEqual(46, AllOutputItemTypes.Count());
+        Assert.That(AllOutputItemTypes.Count(), Is.EqualTo(46));
     }
 }

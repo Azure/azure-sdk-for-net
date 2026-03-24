@@ -4,10 +4,13 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Responses</RootNamespace>
     <Nullable>enable</Nullable>
-    <Version>1.0.0-beta.1</Version>
     <Description>TypeSpec-generated model contracts for the Azure AI Agent Server Responses SDK.</Description>
     <PackageTags>Azure.AI.AgentServer.Responses.Contracts</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <!-- Generated model names (Response, Error, Item, Metadata) trigger AZC0012;
+         Generated validators expose System.Text.Json types triggering AZC0014. -->
+    <NoWarn>$(NoWarn);AZC0012;AZC0014</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

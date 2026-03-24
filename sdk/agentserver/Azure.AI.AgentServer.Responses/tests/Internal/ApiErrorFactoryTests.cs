@@ -20,10 +20,10 @@ public class ApiErrorFactoryTests
 
         var (statusCode, body) = await ExecuteResultAsync(result);
 
-        Assert.AreEqual(400, statusCode);
+        Assert.That(statusCode, Is.EqualTo(400));
         var error = body.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
-        Assert.AreEqual("Bad input", error.GetProperty("message").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("message").GetString(), Is.EqualTo("Bad input"));
     }
 
     [Test]
@@ -34,8 +34,8 @@ public class ApiErrorFactoryTests
         var (_, body) = await ExecuteResultAsync(result);
 
         var error = body.GetProperty("error");
-        Assert.AreEqual("invalid_value", error.GetProperty("code").GetString());
-        Assert.AreEqual("model", error.GetProperty("param").GetString());
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_value"));
+        Assert.That(error.GetProperty("param").GetString(), Is.EqualTo("model"));
     }
 
     // --- NotFound ---
@@ -47,10 +47,10 @@ public class ApiErrorFactoryTests
 
         var (statusCode, body) = await ExecuteResultAsync(result);
 
-        Assert.AreEqual(404, statusCode);
+        Assert.That(statusCode, Is.EqualTo(404));
         var error = body.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
-        Assert.AreEqual("Not found", error.GetProperty("message").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("message").GetString(), Is.EqualTo("Not found"));
     }
 
     // --- ServerError ---
@@ -62,11 +62,11 @@ public class ApiErrorFactoryTests
 
         var (statusCode, body) = await ExecuteResultAsync(result);
 
-        Assert.AreEqual(500, statusCode);
+        Assert.That(statusCode, Is.EqualTo(500));
         var error = body.GetProperty("error");
-        Assert.AreEqual("server_error", error.GetProperty("type").GetString());
-        Assert.AreEqual("server_error", error.GetProperty("code").GetString());
-        Assert.AreEqual(ApiErrorFactory.GenericServerErrorMessage, error.GetProperty("message").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("server_error"));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("server_error"));
+        Assert.That(error.GetProperty("message").GetString(), Is.EqualTo(ApiErrorFactory.GenericServerErrorMessage));
     }
 
     // --- FromApiException ---
@@ -81,11 +81,11 @@ public class ApiErrorFactoryTests
 
         var (statusCode, body) = await ExecuteResultAsync(result);
 
-        Assert.AreEqual(422, statusCode);
+        Assert.That(statusCode, Is.EqualTo(422));
         var error = body.GetProperty("error");
-        Assert.AreEqual("custom_type", error.GetProperty("type").GetString());
-        Assert.AreEqual("Custom message", error.GetProperty("message").GetString());
-        Assert.AreEqual("custom_code", error.GetProperty("code").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("custom_type"));
+        Assert.That(error.GetProperty("message").GetString(), Is.EqualTo("Custom message"));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("custom_code"));
     }
 
     // --- PayloadValidation ---
@@ -104,17 +104,17 @@ public class ApiErrorFactoryTests
 
         var (statusCode, body) = await ExecuteResultAsync(result);
 
-        Assert.AreEqual(400, statusCode);
+        Assert.That(statusCode, Is.EqualTo(400));
         var error = body.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
 
         var details = error.GetProperty("details");
-        Assert.AreEqual(2, details.GetArrayLength());
+        Assert.That(details.GetArrayLength(), Is.EqualTo(2));
 
         var detail0 = details[0];
-        Assert.AreEqual("invalid_value", detail0.GetProperty("code").GetString());
-        Assert.AreEqual("Input is required.", detail0.GetProperty("message").GetString());
-        Assert.AreEqual("input", detail0.GetProperty("param").GetString());
+        Assert.That(detail0.GetProperty("code").GetString(), Is.EqualTo("invalid_value"));
+        Assert.That(detail0.GetProperty("message").GetString(), Is.EqualTo("Input is required."));
+        Assert.That(detail0.GetProperty("param").GetString(), Is.EqualTo("input"));
     }
 
     // --- NewServerError ---
@@ -124,9 +124,9 @@ public class ApiErrorFactoryTests
     {
         var error = ApiErrorFactory.NewServerError("Something broke");
 
-        Assert.AreEqual("server_error", error.Code);
-        Assert.AreEqual("server_error", error.Type);
-        Assert.AreEqual("Something broke", error.Message);
+        Assert.That(error.Code, Is.EqualTo("server_error"));
+        Assert.That(error.Type, Is.EqualTo("server_error"));
+        Assert.That(error.Message, Is.EqualTo("Something broke"));
     }
 
     // --- ServerException ---
@@ -137,9 +137,9 @@ public class ApiErrorFactoryTests
         var ex = ApiErrorFactory.ServerException();
 
         XAssert.IsType<ResponsesApiException>(ex);
-        Assert.AreEqual(500, ex.StatusCode);
-        Assert.AreEqual(ApiErrorFactory.GenericServerErrorMessage, ex.Message);
-        Assert.AreEqual("server_error", ex.Error.Type);
+        Assert.That(ex.StatusCode, Is.EqualTo(500));
+        Assert.That(ex.Message, Is.EqualTo(ApiErrorFactory.GenericServerErrorMessage));
+        Assert.That(ex.Error.Type, Is.EqualTo("server_error"));
     }
 
     // --- SseErrorEvent ---
@@ -149,9 +149,9 @@ public class ApiErrorFactoryTests
     {
         var evt = ApiErrorFactory.SseErrorEvent();
 
-        Assert.AreEqual("server_error", evt.Code);
-        Assert.AreEqual(ApiErrorFactory.GenericServerErrorMessage, evt.Message);
-        Assert.AreEqual(0, evt.SequenceNumber);
+        Assert.That(evt.Code, Is.EqualTo("server_error"));
+        Assert.That(evt.Message, Is.EqualTo(ApiErrorFactory.GenericServerErrorMessage));
+        Assert.That(evt.SequenceNumber, Is.EqualTo(0));
     }
 
     [Test]
@@ -159,8 +159,8 @@ public class ApiErrorFactoryTests
     {
         var evt = ApiErrorFactory.SseErrorEvent("Custom safe message");
 
-        Assert.AreEqual("Custom safe message", evt.Message);
-        Assert.AreEqual("server_error", evt.Code);
+        Assert.That(evt.Message, Is.EqualTo("Custom safe message"));
+        Assert.That(evt.Code, Is.EqualTo("server_error"));
     }
 
     // --- GenericServerErrorMessage constant ---
@@ -168,8 +168,8 @@ public class ApiErrorFactoryTests
     [Test]
     public void GenericServerErrorMessage_IsNotEmpty()
     {
-        Assert.IsFalse(string.IsNullOrEmpty(ApiErrorFactory.GenericServerErrorMessage));
-        Assert.AreEqual("An internal server error occurred.", ApiErrorFactory.GenericServerErrorMessage);
+        Assert.That(string.IsNullOrEmpty(ApiErrorFactory.GenericServerErrorMessage), Is.False);
+        Assert.That(ApiErrorFactory.GenericServerErrorMessage, Is.EqualTo("An internal server error occurred."));
     }
 
     // --- ToResponseError ---
@@ -182,8 +182,8 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToResponseError(ex);
 
-        Assert.AreEqual(ResponseErrorCode.RateLimitExceeded, result.Code);
-        Assert.AreEqual("Too many requests", result.Message);
+        Assert.That(result.Code, Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
+        Assert.That(result.Message, Is.EqualTo("Too many requests"));
     }
 
     [Test]
@@ -194,8 +194,8 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToResponseError(ex);
 
-        Assert.AreEqual(ResponseErrorCode.ServerError, result.Code);
-        Assert.AreEqual("Something weird", result.Message);
+        Assert.That(result.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(result.Message, Is.EqualTo("Something weird"));
     }
 
     [Test]
@@ -205,8 +205,8 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToResponseError(ex);
 
-        Assert.AreEqual(ResponseErrorCode.ServerError, result.Code);
-        Assert.AreEqual("Model not found", result.Message);
+        Assert.That(result.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(result.Message, Is.EqualTo("Model not found"));
     }
 
     [Test]
@@ -217,8 +217,8 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToResponseError(ex);
 
-        Assert.AreEqual(ResponseErrorCode.ServerError, result.Code);
-        Assert.AreEqual(ApiErrorFactory.GenericServerErrorMessage, result.Message);
+        Assert.That(result.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(result.Message, Is.EqualTo(ApiErrorFactory.GenericServerErrorMessage));
     }
 
     [Test]
@@ -228,8 +228,8 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToResponseError(ex);
 
-        Assert.AreEqual(ResponseErrorCode.ServerError, result.Code);
-        Assert.AreEqual(ApiErrorFactory.GenericServerErrorMessage, result.Message);
+        Assert.That(result.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(result.Message, Is.EqualTo(ApiErrorFactory.GenericServerErrorMessage));
     }
 
     [Test]
@@ -240,7 +240,7 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToResponseError(ex);
 
-        Assert.AreEqual(ResponseErrorCode.ServerError, result.Code);
+        Assert.That(result.Code, Is.EqualTo(ResponseErrorCode.ServerError));
         XAssert.Contains("Input is required", result.Message);
     }
 
@@ -251,8 +251,8 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToResponseError(ex);
 
-        Assert.AreEqual(ResponseErrorCode.ServerError, result.Code);
-        Assert.AreEqual("Response 'resp_abc' not found.", result.Message);
+        Assert.That(result.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(result.Message, Is.EqualTo("Response 'resp_abc' not found."));
     }
 
     // --- ToSseErrorEvent ---
@@ -265,8 +265,8 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToSseErrorEvent(ex);
 
-        Assert.AreEqual("invalid_prompt", result.Code);
-        Assert.AreEqual("Content policy violation", result.Message);
+        Assert.That(result.Code, Is.EqualTo("invalid_prompt"));
+        Assert.That(result.Message, Is.EqualTo("Content policy violation"));
     }
 
     [Test]
@@ -276,8 +276,8 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToSseErrorEvent(ex);
 
-        Assert.AreEqual("server_error", result.Code);
-        Assert.AreEqual("Invalid parameter value", result.Message);
+        Assert.That(result.Code, Is.EqualTo("server_error"));
+        Assert.That(result.Message, Is.EqualTo("Invalid parameter value"));
     }
 
     [Test]
@@ -287,8 +287,8 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToSseErrorEvent(ex);
 
-        Assert.AreEqual("server_error", result.Code);
-        Assert.AreEqual(ApiErrorFactory.GenericServerErrorMessage, result.Message);
+        Assert.That(result.Code, Is.EqualTo("server_error"));
+        Assert.That(result.Message, Is.EqualTo(ApiErrorFactory.GenericServerErrorMessage));
     }
 
     [Test]
@@ -299,7 +299,7 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToSseErrorEvent(ex);
 
-        Assert.AreEqual("server_error", result.Code);
+        Assert.That(result.Code, Is.EqualTo("server_error"));
         XAssert.Contains("Model is invalid", result.Message);
     }
 
@@ -310,8 +310,8 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToSseErrorEvent(ex);
 
-        Assert.AreEqual("server_error", result.Code);
-        Assert.AreEqual("Response 'resp_xyz' not found.", result.Message);
+        Assert.That(result.Code, Is.EqualTo("server_error"));
+        Assert.That(result.Message, Is.EqualTo("Response 'resp_xyz' not found."));
     }
 
     // --- Helpers ---

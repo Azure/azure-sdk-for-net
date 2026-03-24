@@ -77,8 +77,7 @@ public class PublicConstructorEventTests
     {
         var publicCtors = eventType.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
 
-        Assert.IsTrue(
-            publicCtors.Length > 0,
+        Assert.That(publicCtors.Length > 0, Is.True,
             $"{eventType.Name} should have at least one public constructor but has none.");
     }
 
@@ -93,7 +92,7 @@ public class PublicConstructorEventTests
 
         foreach (var ctor in fullCtors)
         {
-            Assert.IsFalse(ctor.IsPublic, $"{eventType.Name} serialization constructor should remain non-public.");
+            Assert.That(ctor.IsPublic, Is.False, $"{eventType.Name} serialization constructor should remain non-public.");
         }
     }
 
@@ -101,18 +100,18 @@ public class PublicConstructorEventTests
     public void AbstractResponseStreamEvent_HasNoPublicConstructors()
     {
         var publicCtors = typeof(ResponseStreamEvent).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsEmpty(publicCtors);
+        Assert.That(publicCtors, Is.Empty);
     }
 
     [Test]
     public void AbstractResponseStreamEvent_RemainsAbstract()
     {
-        Assert.IsTrue(typeof(ResponseStreamEvent).IsAbstract);
+        Assert.That(typeof(ResponseStreamEvent).IsAbstract, Is.True);
     }
 
     [Test]
     public void ConcreteEventTypes_Count_Is53()
     {
-        Assert.AreEqual(53, ConcreteEventTypes.Count());
+        Assert.That(ConcreteEventTypes.Count(), Is.EqualTo(53));
     }
 }

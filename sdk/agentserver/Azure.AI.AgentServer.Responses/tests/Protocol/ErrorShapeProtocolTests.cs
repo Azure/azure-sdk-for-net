@@ -23,12 +23,12 @@ public class ErrorShapeProtocolTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync("");
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
-        Assert.IsTrue(error.TryGetProperty("message", out var msg) && !string.IsNullOrEmpty(msg.GetString()));
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.TryGetProperty("message", out var msg) && !string.IsNullOrEmpty(msg.GetString()), Is.True);
     }
 
     [Test]
@@ -36,11 +36,11 @@ public class ErrorShapeProtocolTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync("{not-valid-json!");
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     [Test]
@@ -49,7 +49,7 @@ public class ErrorShapeProtocolTests : ProtocolTestBase
         // PW-006: model is now optional — omitting it should succeed
         var response = await PostResponsesAsync("""{"instructions":"hello"}""");
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     // ── T014: 404 error envelope shape ────────────────────────
@@ -59,13 +59,13 @@ public class ErrorShapeProtocolTests : ProtocolTestBase
     {
         var response = await GetResponseAsync("caresp_nonexistent_404");
 
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
         // Per API contract, 404 uses type "invalid_request_error" (not "not_found")
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
-        Assert.IsTrue(error.TryGetProperty("message", out var msg) && !string.IsNullOrEmpty(msg.GetString()));
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.TryGetProperty("message", out var msg) && !string.IsNullOrEmpty(msg.GetString()), Is.True);
     }
 
     [Test]
@@ -73,11 +73,11 @@ public class ErrorShapeProtocolTests : ProtocolTestBase
     {
         var response = await CancelResponseAsync("caresp_nonexistent_404");
 
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     // ── T015: Models.Response error shape on failed responses ────────
@@ -90,11 +90,11 @@ public class ErrorShapeProtocolTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.AreEqual(System.Net.HttpStatusCode.InternalServerError, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.InternalServerError));
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.IsTrue(error.TryGetProperty("type", out var type) && !string.IsNullOrEmpty(type.GetString()));
-        Assert.IsTrue(error.TryGetProperty("message", out var msg) && !string.IsNullOrEmpty(msg.GetString()));
+        Assert.That(error.TryGetProperty("type", out var type) && !string.IsNullOrEmpty(type.GetString()), Is.True);
+        Assert.That(error.TryGetProperty("message", out var msg) && !string.IsNullOrEmpty(msg.GetString()), Is.True);
     }
 
     [Test]
@@ -107,15 +107,15 @@ public class ErrorShapeProtocolTests : ProtocolTestBase
         var events = await ParseSseAsync(response);
         // Find the terminal event
         var lastEvent = events.Last();
-        Assert.AreEqual("response.failed", lastEvent.EventType);
+        Assert.That(lastEvent.EventType, Is.EqualTo("response.failed"));
 
         using var doc = JsonDocument.Parse(lastEvent.Data);
         var resp = doc.RootElement.GetProperty("response");
-        Assert.AreEqual("failed", resp.GetProperty("status").GetString());
+        Assert.That(resp.GetProperty("status").GetString(), Is.EqualTo("failed"));
 
         var error = resp.GetProperty("error");
-        Assert.IsTrue(error.TryGetProperty("code", out var code) && !string.IsNullOrEmpty(code.GetString()));
-        Assert.IsTrue(error.TryGetProperty("message", out var msg) && !string.IsNullOrEmpty(msg.GetString()));
+        Assert.That(error.TryGetProperty("code", out var code) && !string.IsNullOrEmpty(code.GetString()), Is.True);
+        Assert.That(error.TryGetProperty("message", out var msg) && !string.IsNullOrEmpty(msg.GetString()), Is.True);
     }
 
     // ── Helper event factories ─────────────────────────────────

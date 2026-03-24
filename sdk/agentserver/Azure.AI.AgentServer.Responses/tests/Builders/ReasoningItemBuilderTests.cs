@@ -21,7 +21,7 @@ public class ReasoningItemBuilderTests
     {
         var stream = CreateStream();
         var builder = stream.AddOutputItemReasoningItem();
-        Assert.IsNotNull(builder);
+        Assert.That(builder, Is.Not.Null);
         XAssert.IsType<OutputItemReasoningItemBuilder>(builder);
     }
 
@@ -30,7 +30,7 @@ public class ReasoningItemBuilderTests
     {
         var stream = CreateStream();
         var builder = stream.AddOutputItemReasoningItem();
-        Assert.AreEqual(0, builder.OutputIndex);
+        Assert.That(builder.OutputIndex, Is.EqualTo(0));
     }
 
     [Test]
@@ -39,8 +39,8 @@ public class ReasoningItemBuilderTests
         var stream = CreateStream();
         var r0 = stream.AddOutputItemReasoningItem();
         var r1 = stream.AddOutputItemReasoningItem();
-        Assert.AreEqual(0, r0.OutputIndex);
-        Assert.AreEqual(1, r1.OutputIndex);
+        Assert.That(r0.OutputIndex, Is.EqualTo(0));
+        Assert.That(r1.OutputIndex, Is.EqualTo(1));
     }
 
     [Test]
@@ -57,8 +57,8 @@ public class ReasoningItemBuilderTests
         var stream = CreateStream();
         var msg = stream.AddOutputItemMessage();
         var reasoning = stream.AddOutputItemReasoningItem();
-        Assert.AreEqual(0, msg.OutputIndex);
-        Assert.AreEqual(1, reasoning.OutputIndex);
+        Assert.That(msg.OutputIndex, Is.EqualTo(0));
+        Assert.That(reasoning.OutputIndex, Is.EqualTo(1));
     }
 
     // ── EmitAdded ─────────────────────────────────────────────
@@ -79,9 +79,9 @@ public class ReasoningItemBuilderTests
         var builder = stream.AddOutputItemReasoningItem();
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemReasoningItem>(evt.Item);
-        Assert.AreEqual(builder.ItemId, item.Id);
-        Assert.AreEqual(OutputItemReasoningItemStatus.InProgress, item.Status);
-        Assert.IsEmpty(item.Summary);
+        Assert.That(item.Id, Is.EqualTo(builder.ItemId));
+        Assert.That(item.Status, Is.EqualTo(OutputItemReasoningItemStatus.InProgress));
+        Assert.That(item.Summary, Is.Empty);
     }
 
     [Test]
@@ -90,7 +90,7 @@ public class ReasoningItemBuilderTests
         var stream = CreateStream();
         var builder = stream.AddOutputItemReasoningItem();
         var evt = builder.EmitAdded();
-        Assert.AreEqual(0, evt.OutputIndex);
+        Assert.That(evt.OutputIndex, Is.EqualTo(0));
     }
 
     // ── AddSummaryPart ────────────────────────────────────────
@@ -101,7 +101,7 @@ public class ReasoningItemBuilderTests
         var stream = CreateStream();
         var builder = stream.AddOutputItemReasoningItem();
         var summary = builder.AddSummaryPart();
-        Assert.IsNotNull(summary);
+        Assert.That(summary, Is.Not.Null);
         XAssert.IsType<ReasoningSummaryPartBuilder>(summary);
     }
 
@@ -111,7 +111,7 @@ public class ReasoningItemBuilderTests
         var stream = CreateStream();
         var builder = stream.AddOutputItemReasoningItem();
         var summary = builder.AddSummaryPart();
-        Assert.AreEqual(0, summary.SummaryIndex);
+        Assert.That(summary.SummaryIndex, Is.EqualTo(0));
     }
 
     [Test]
@@ -121,8 +121,8 @@ public class ReasoningItemBuilderTests
         var builder = stream.AddOutputItemReasoningItem();
         var s0 = builder.AddSummaryPart();
         var s1 = builder.AddSummaryPart();
-        Assert.AreEqual(0, s0.SummaryIndex);
-        Assert.AreEqual(1, s1.SummaryIndex);
+        Assert.That(s0.SummaryIndex, Is.EqualTo(0));
+        Assert.That(s1.SummaryIndex, Is.EqualTo(1));
     }
 
     // ── EmitDone ──────────────────────────────────────────────
@@ -145,8 +145,8 @@ public class ReasoningItemBuilderTests
         builder.EmitAdded();
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemReasoningItem>(evt.Item);
-        Assert.AreEqual(builder.ItemId, item.Id);
-        Assert.AreEqual(OutputItemReasoningItemStatus.Completed, item.Status);
+        Assert.That(item.Id, Is.EqualTo(builder.ItemId));
+        Assert.That(item.Status, Is.EqualTo(OutputItemReasoningItemStatus.Completed));
     }
 
     [Test]
@@ -168,9 +168,9 @@ public class ReasoningItemBuilderTests
 
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemReasoningItem>(evt.Item);
-        Assert.AreEqual(2, item.Summary.Count);
-        Assert.AreEqual("First summary", item.Summary[0].Text);
-        Assert.AreEqual("Second summary", item.Summary[1].Text);
+        Assert.That(item.Summary.Count, Is.EqualTo(2));
+        Assert.That(item.Summary[0].Text, Is.EqualTo("First summary"));
+        Assert.That(item.Summary[1].Text, Is.EqualTo("Second summary"));
     }
 
     [Test]
@@ -181,7 +181,7 @@ public class ReasoningItemBuilderTests
         builder.EmitAdded();
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemReasoningItem>(evt.Item);
-        Assert.IsEmpty(item.Summary);
+        Assert.That(item.Summary, Is.Empty);
     }
 
     // ── Sequence numbers ──────────────────────────────────────
@@ -193,7 +193,7 @@ public class ReasoningItemBuilderTests
         var builder = stream.AddOutputItemReasoningItem();
         var added = builder.EmitAdded();    // seq 0
         var done = builder.EmitDone();      // seq 1
-        Assert.AreEqual(0, added.SequenceNumber);
-        Assert.AreEqual(1, done.SequenceNumber);
+        Assert.That(added.SequenceNumber, Is.EqualTo(0));
+        Assert.That(done.SequenceNumber, Is.EqualTo(1));
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 global using Azure.AI.AgentServer.Responses.Internal;
+global using Azure.AI.AgentServer.Responses.Validators;
 global using NUnit.Framework;
 
 [assembly: FixtureLifeCycle(LifeCycle.InstancePerTestCase)]

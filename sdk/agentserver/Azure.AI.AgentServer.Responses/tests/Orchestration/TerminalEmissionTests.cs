@@ -42,7 +42,7 @@ public class TerminalEmissionTests : IDisposable
 
         await _orchestrator.EmitTerminalFailureAsync(execution, publisher);
 
-        Assert.AreEqual(ResponseStatus.Failed, execution.Response.Status);
+        Assert.That(execution.Response.Status, Is.EqualTo(ResponseStatus.Failed));
     }
 
     [Test]
@@ -66,7 +66,7 @@ public class TerminalEmissionTests : IDisposable
 
         await _orchestrator.EmitTerminalCancellationAsync(execution, publisher);
 
-        Assert.AreEqual(ResponseStatus.Cancelled, execution.Response.Status);
+        Assert.That(execution.Response.Status, Is.EqualTo(ResponseStatus.Cancelled));
     }
 
     [Test]
@@ -96,11 +96,11 @@ public class TerminalEmissionTests : IDisposable
 
         var failedEvt = XAssert.IsType<ResponseFailedEvent>(events[0]);
         // The event should carry a snapshot, not the mutable reference
-        Assert.AreNotSame(execution.Response, failedEvt.Response);
-        Assert.AreEqual(ResponseStatus.Failed, failedEvt.Response.Status);
+        Assert.That(failedEvt.Response, Is.Not.SameAs(execution.Response));
+        Assert.That(failedEvt.Response.Status, Is.EqualTo(ResponseStatus.Failed));
     }
 
-    private async Task<(ResponseExecution execution, IAsyncObserver<ResponseStreamEvent> publisher)>
+    private async Task<(ResponseExecution Execution, IAsyncObserver<ResponseStreamEvent> Publisher)>
         CreateExecutionWithPublisher(string responseId)
     {
         var execution = _tracker.Create(responseId);
@@ -109,7 +109,7 @@ public class TerminalEmissionTests : IDisposable
         return (execution, publisher);
     }
 
-    private async Task<(List<ResponseStreamEvent> events, CollectingObserver observer)>
+    private async Task<(List<ResponseStreamEvent> Events, CollectingObserver Observer)>
         SubscribeToEvents(string responseId)
     {
         var events = new List<ResponseStreamEvent>();

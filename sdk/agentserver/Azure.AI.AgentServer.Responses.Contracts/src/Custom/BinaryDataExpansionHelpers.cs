@@ -155,7 +155,7 @@ internal static class BinaryDataExpansionHelpers
             JsonValueKind.Object => new List<MessageContent>
             {
                 ModelReaderWriter.Read<MessageContent>(
-                    BinaryData.FromString(root.GetRawText()))!,
+                    BinaryData.FromString(root.GetRawText()), ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default)!,
             },
             _ => throw new FormatException("Expected JSON array, object, or string for item content"),
         };

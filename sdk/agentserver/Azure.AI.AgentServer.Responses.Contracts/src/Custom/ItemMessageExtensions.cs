@@ -29,7 +29,7 @@ public static class ItemMessageExtensions
     /// </exception>
     public static List<MessageContent> GetContentExpanded(this ItemMessage message)
     {
-        ArgumentNullException.ThrowIfNull(message);
+        Argument.AssertNotNull(message, nameof(message));
         return BinaryDataExpansionHelpers.ExpandContent(message.Content);
     }
 }

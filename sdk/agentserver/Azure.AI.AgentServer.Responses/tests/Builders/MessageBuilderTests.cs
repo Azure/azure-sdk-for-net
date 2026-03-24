@@ -21,7 +21,7 @@ public class MessageBuilderTests
 
         var builder = stream.AddOutputItemMessage();
 
-        Assert.IsNotNull(builder);
+        Assert.That(builder, Is.Not.Null);
         XAssert.IsType<OutputItemMessageBuilder>(builder);
     }
 
@@ -32,7 +32,7 @@ public class MessageBuilderTests
 
         var msg = stream.AddOutputItemMessage();
 
-        Assert.AreEqual(0, msg.OutputIndex);
+        Assert.That(msg.OutputIndex, Is.EqualTo(0));
     }
 
     [Test]
@@ -44,9 +44,9 @@ public class MessageBuilderTests
         var msg1 = stream.AddOutputItemMessage();
         var msg2 = stream.AddOutputItemMessage();
 
-        Assert.AreEqual(0, msg0.OutputIndex);
-        Assert.AreEqual(1, msg1.OutputIndex);
-        Assert.AreEqual(2, msg2.OutputIndex);
+        Assert.That(msg0.OutputIndex, Is.EqualTo(0));
+        Assert.That(msg1.OutputIndex, Is.EqualTo(1));
+        Assert.That(msg2.OutputIndex, Is.EqualTo(2));
     }
 
     [Test]
@@ -67,7 +67,7 @@ public class MessageBuilderTests
         var msg0 = stream.AddOutputItemMessage();
         var msg1 = stream.AddOutputItemMessage();
 
-        Assert.AreNotEqual(msg0.ItemId, msg1.ItemId);
+        Assert.That(msg1.ItemId, Is.Not.EqualTo(msg0.ItemId));
     }
 
     [Test]
@@ -82,7 +82,7 @@ public class MessageBuilderTests
         var evt = msg.EmitAdded();
 
         // Should use seq 2 (shared counter)
-        Assert.AreEqual(2, evt.SequenceNumber);
+        Assert.That(evt.SequenceNumber, Is.EqualTo(2));
     }
 
     // ── T005: EmitAdded ───────────────────────────────────────
@@ -107,9 +107,9 @@ public class MessageBuilderTests
         var evt = msg.EmitAdded();
 
         var item = XAssert.IsType<OutputItemOutputMessage>(evt.Item);
-        Assert.AreEqual(msg.ItemId, item.Id);
-        Assert.IsEmpty(item.Content);
-        Assert.AreEqual(OutputItemOutputMessageStatus.InProgress, item.Status);
+        Assert.That(item.Id, Is.EqualTo(msg.ItemId));
+        Assert.That(item.Content, Is.Empty);
+        Assert.That(item.Status, Is.EqualTo(OutputItemOutputMessageStatus.InProgress));
     }
 
     [Test]
@@ -120,7 +120,7 @@ public class MessageBuilderTests
 
         var evt = msg.EmitAdded();
 
-        Assert.AreEqual(0, evt.OutputIndex);
+        Assert.That(evt.OutputIndex, Is.EqualTo(0));
     }
 
     // ── T009: EmitContentDone ─────────────────────────────────
@@ -137,9 +137,9 @@ public class MessageBuilderTests
         var evt = msg.EmitContentDone(text);
 
         XAssert.IsType<ResponseContentPartDoneEvent>(evt);
-        Assert.AreEqual(msg.ItemId, evt.ItemId);
-        Assert.AreEqual(msg.OutputIndex, evt.OutputIndex);
-        Assert.AreEqual(text.ContentIndex, evt.ContentIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(msg.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(msg.OutputIndex));
+        Assert.That(evt.ContentIndex, Is.EqualTo(text.ContentIndex));
     }
 
     [Test]
@@ -154,7 +154,7 @@ public class MessageBuilderTests
         var evt = msg.EmitContentDone(text);
 
         var part = XAssert.IsType<OutputContentOutputTextContent>(evt.Part);
-        Assert.AreEqual("Final text here", part.Text);
+        Assert.That(part.Text, Is.EqualTo("Final text here"));
     }
 
     // ── T010: EmitDone ────────────────────────────────────────
@@ -174,7 +174,7 @@ public class MessageBuilderTests
         var evt = msg.EmitDone();
 
         XAssert.IsType<ResponseOutputItemDoneEvent>(evt);
-        Assert.AreEqual(msg.OutputIndex, evt.OutputIndex);
+        Assert.That(evt.OutputIndex, Is.EqualTo(msg.OutputIndex));
     }
 
     [Test]
@@ -192,12 +192,12 @@ public class MessageBuilderTests
         var evt = msg.EmitDone();
 
         var item = XAssert.IsType<OutputItemOutputMessage>(evt.Item);
-        Assert.AreEqual(msg.ItemId, item.Id);
-        Assert.AreEqual(OutputItemOutputMessageStatus.Completed, item.Status);
+        Assert.That(item.Id, Is.EqualTo(msg.ItemId));
+        Assert.That(item.Status, Is.EqualTo(OutputItemOutputMessageStatus.Completed));
         XAssert.Single(item.Content);
 
         var content = XAssert.IsType<OutputMessageContentOutputTextContent>(item.Content[0]);
-        Assert.AreEqual("Hello, world!", content.Text);
+        Assert.That(content.Text, Is.EqualTo("Hello, world!"));
     }
 
     [Test]
@@ -216,6 +216,6 @@ public class MessageBuilderTests
 
         var item = XAssert.IsType<OutputItemOutputMessage>(evt.Item);
         XAssert.Single(item.Content);
-        Assert.AreEqual(OutputItemOutputMessageStatus.Completed, item.Status);
+        Assert.That(item.Status, Is.EqualTo(OutputItemOutputMessageStatus.Completed));
     }
 }

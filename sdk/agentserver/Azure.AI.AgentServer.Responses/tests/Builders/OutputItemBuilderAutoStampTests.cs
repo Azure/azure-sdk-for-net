@@ -24,7 +24,7 @@ public class OutputItemBuilderAutoStampTests
 
         var evt = builder.EmitAdded();
 
-        Assert.AreEqual(responseId, evt.Item.ResponseId);
+        Assert.That(evt.Item.ResponseId, Is.EqualTo(responseId));
     }
 
     [Test]
@@ -44,7 +44,7 @@ public class OutputItemBuilderAutoStampTests
 
         var doneEvt = builder.EmitDone();
 
-        Assert.AreEqual(responseId, doneEvt.Item.ResponseId);
+        Assert.That(doneEvt.Item.ResponseId, Is.EqualTo(responseId));
     }
 
     [Test]
@@ -66,7 +66,7 @@ public class OutputItemBuilderAutoStampTests
         };
         var evt = builder.EmitAdded(item);
 
-        Assert.AreEqual(handlerResponseId, evt.Item.ResponseId);
+        Assert.That(evt.Item.ResponseId, Is.EqualTo(handlerResponseId));
     }
 
     // ── T029: AgentReference stamping ─────────────────────────
@@ -83,9 +83,9 @@ public class OutputItemBuilderAutoStampTests
 
         var evt = builder.EmitAdded();
 
-        Assert.IsNotNull(evt.Item.AgentReference);
-        Assert.AreEqual("my-agent", evt.Item.AgentReference.Name);
-        Assert.AreEqual("1.0", evt.Item.AgentReference.Version);
+        Assert.That(evt.Item.AgentReference, Is.Not.Null);
+        Assert.That(evt.Item.AgentReference.Name, Is.EqualTo("my-agent"));
+        Assert.That(evt.Item.AgentReference.Version, Is.EqualTo("1.0"));
     }
 
     [Test]
@@ -109,8 +109,8 @@ public class OutputItemBuilderAutoStampTests
         var evt = builder.EmitAdded(item);
 
         // Handler-set value takes precedence
-        Assert.AreEqual("handler-agent", evt.Item.AgentReference.Name);
-        Assert.AreEqual("2.0", evt.Item.AgentReference.Version);
+        Assert.That(evt.Item.AgentReference.Name, Is.EqualTo("handler-agent"));
+        Assert.That(evt.Item.AgentReference.Version, Is.EqualTo("2.0"));
     }
 
     [Test]
@@ -123,7 +123,7 @@ public class OutputItemBuilderAutoStampTests
 
         var evt = builder.EmitAdded();
 
-        Assert.IsNull(evt.Item.AgentReference);
+        Assert.That(evt.Item.AgentReference, Is.Null);
     }
 
     // ── Test helpers ──────────────────────────────────────────

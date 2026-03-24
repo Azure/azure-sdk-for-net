@@ -21,7 +21,7 @@ public class OutputItemCodeInterpreterCallBuilderTests
     {
         var stream = CreateStream();
         var builder = stream.AddOutputItemCodeInterpreterCall();
-        Assert.IsNotNull(builder);
+        Assert.That(builder, Is.Not.Null);
         XAssert.IsType<OutputItemCodeInterpreterCallBuilder>(builder);
     }
 
@@ -30,7 +30,7 @@ public class OutputItemCodeInterpreterCallBuilderTests
     {
         var stream = CreateStream();
         var builder = stream.AddOutputItemCodeInterpreterCall();
-        Assert.AreEqual(0, builder.OutputIndex);
+        Assert.That(builder.OutputIndex, Is.EqualTo(0));
     }
 
     [Test]
@@ -59,9 +59,9 @@ public class OutputItemCodeInterpreterCallBuilderTests
         var builder = stream.AddOutputItemCodeInterpreterCall();
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemCodeInterpreterToolCall>(evt.Item);
-        Assert.AreEqual(builder.ItemId, item.Id);
-        Assert.AreEqual(OutputItemCodeInterpreterToolCallStatus.InProgress, item.Status);
-        Assert.AreEqual("", item.Code);
+        Assert.That(item.Id, Is.EqualTo(builder.ItemId));
+        Assert.That(item.Status, Is.EqualTo(OutputItemCodeInterpreterToolCallStatus.InProgress));
+        Assert.That(item.Code, Is.EqualTo(""));
     }
 
     // ── Status events ─────────────────────────────────────────
@@ -73,8 +73,8 @@ public class OutputItemCodeInterpreterCallBuilderTests
         var builder = stream.AddOutputItemCodeInterpreterCall();
         var evt = builder.EmitInProgress();
         XAssert.IsType<ResponseCodeInterpreterCallInProgressEvent>(evt);
-        Assert.AreEqual(builder.ItemId, evt.ItemId);
-        Assert.AreEqual(builder.OutputIndex, evt.OutputIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
 
     [Test]
@@ -84,8 +84,8 @@ public class OutputItemCodeInterpreterCallBuilderTests
         var builder = stream.AddOutputItemCodeInterpreterCall();
         var evt = builder.EmitInterpreting();
         XAssert.IsType<ResponseCodeInterpreterCallInterpretingEvent>(evt);
-        Assert.AreEqual(builder.ItemId, evt.ItemId);
-        Assert.AreEqual(builder.OutputIndex, evt.OutputIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
 
     [Test]
@@ -95,8 +95,8 @@ public class OutputItemCodeInterpreterCallBuilderTests
         var builder = stream.AddOutputItemCodeInterpreterCall();
         var evt = builder.EmitCompleted();
         XAssert.IsType<ResponseCodeInterpreterCallCompletedEvent>(evt);
-        Assert.AreEqual(builder.ItemId, evt.ItemId);
-        Assert.AreEqual(builder.OutputIndex, evt.OutputIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
 
     // ── Code deltas ───────────────────────────────────────────
@@ -108,9 +108,9 @@ public class OutputItemCodeInterpreterCallBuilderTests
         var builder = stream.AddOutputItemCodeInterpreterCall();
         var evt = builder.EmitCodeDelta("import ");
         XAssert.IsType<ResponseCodeInterpreterCallCodeDeltaEvent>(evt);
-        Assert.AreEqual("import ", evt.Delta);
-        Assert.AreEqual(builder.ItemId, evt.ItemId);
-        Assert.AreEqual(builder.OutputIndex, evt.OutputIndex);
+        Assert.That(evt.Delta, Is.EqualTo("import "));
+        Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
 
     [Test]
@@ -120,8 +120,8 @@ public class OutputItemCodeInterpreterCallBuilderTests
         var builder = stream.AddOutputItemCodeInterpreterCall();
         var d1 = builder.EmitCodeDelta("import ");
         var d2 = builder.EmitCodeDelta("math\n");
-        Assert.AreEqual("import ", d1.Delta);
-        Assert.AreEqual("math\n", d2.Delta);
+        Assert.That(d1.Delta, Is.EqualTo("import "));
+        Assert.That(d2.Delta, Is.EqualTo("math\n"));
     }
 
     [Test]
@@ -131,9 +131,9 @@ public class OutputItemCodeInterpreterCallBuilderTests
         var builder = stream.AddOutputItemCodeInterpreterCall();
         var evt = builder.EmitCodeDone("import math\nprint(math.pi)");
         XAssert.IsType<ResponseCodeInterpreterCallCodeDoneEvent>(evt);
-        Assert.AreEqual("import math\nprint(math.pi)", evt.Code);
-        Assert.AreEqual(builder.ItemId, evt.ItemId);
-        Assert.AreEqual(builder.OutputIndex, evt.OutputIndex);
+        Assert.That(evt.Code, Is.EqualTo("import math\nprint(math.pi)"));
+        Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
 
     // ── EmitDone ──────────────────────────────────────────────
@@ -158,9 +158,9 @@ public class OutputItemCodeInterpreterCallBuilderTests
         builder.EmitCodeDone("print('hi')");
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemCodeInterpreterToolCall>(evt.Item);
-        Assert.AreEqual(builder.ItemId, item.Id);
-        Assert.AreEqual(OutputItemCodeInterpreterToolCallStatus.Completed, item.Status);
-        Assert.AreEqual("print('hi')", item.Code);
+        Assert.That(item.Id, Is.EqualTo(builder.ItemId));
+        Assert.That(item.Status, Is.EqualTo(OutputItemCodeInterpreterToolCallStatus.Completed));
+        Assert.That(item.Code, Is.EqualTo("print('hi')"));
     }
 
     // ── Sequence numbers ──────────────────────────────────────
@@ -177,12 +177,12 @@ public class OutputItemCodeInterpreterCallBuilderTests
         var codeDone = builder.EmitCodeDone("x=1");  // 4
         var completed = builder.EmitCompleted();     // 5
         var done = builder.EmitDone();               // 6
-        Assert.AreEqual(0, added.SequenceNumber);
-        Assert.AreEqual(1, inProg.SequenceNumber);
-        Assert.AreEqual(2, interpreting.SequenceNumber);
-        Assert.AreEqual(3, delta1.SequenceNumber);
-        Assert.AreEqual(4, codeDone.SequenceNumber);
-        Assert.AreEqual(5, completed.SequenceNumber);
-        Assert.AreEqual(6, done.SequenceNumber);
+        Assert.That(added.SequenceNumber, Is.EqualTo(0));
+        Assert.That(inProg.SequenceNumber, Is.EqualTo(1));
+        Assert.That(interpreting.SequenceNumber, Is.EqualTo(2));
+        Assert.That(delta1.SequenceNumber, Is.EqualTo(3));
+        Assert.That(codeDone.SequenceNumber, Is.EqualTo(4));
+        Assert.That(completed.SequenceNumber, Is.EqualTo(5));
+        Assert.That(done.SequenceNumber, Is.EqualTo(6));
     }
 }

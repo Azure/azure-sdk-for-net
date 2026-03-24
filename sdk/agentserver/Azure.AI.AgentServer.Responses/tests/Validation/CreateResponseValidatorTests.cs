@@ -27,7 +27,7 @@ public class CreateResponseValidatorTests
         // PW-006: model is optional — payloads without model are valid
         var result = Validate("""{"instructions": "hello" }""");
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     [Test]
@@ -36,7 +36,7 @@ public class CreateResponseValidatorTests
         // PW-006: model is optional — empty object is valid
         var result = Validate("{}");
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // -----------------------------------------------------------------------
@@ -48,7 +48,7 @@ public class CreateResponseValidatorTests
     {
         var result = Validate("""{ "model": 42 }""");
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.model" && e.Message.Contains("string"));
     }
 
@@ -57,7 +57,7 @@ public class CreateResponseValidatorTests
     {
         var result = Validate("""{ "model": "gpt-4o", "temperature": "hot" }""");
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.temperature" && e.Message.Contains("number"));
     }
 
@@ -66,7 +66,7 @@ public class CreateResponseValidatorTests
     {
         var result = Validate("""{ "model": "gpt-4o", "instructions": 123 }""");
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.instructions");
     }
 
@@ -75,7 +75,7 @@ public class CreateResponseValidatorTests
     {
         var result = Validate("""{ "model": "gpt-4o", "parallel_tool_calls": "yes" }""");
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.parallel_tool_calls" && e.Message.Contains("boolean"));
     }
 
@@ -84,7 +84,7 @@ public class CreateResponseValidatorTests
     {
         var result = Validate("""{ "model": "gpt-4o", "max_output_tokens": "big" }""");
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.max_output_tokens" && e.Message.Contains("integer"));
     }
 
@@ -93,7 +93,7 @@ public class CreateResponseValidatorTests
     {
         var result = Validate(""" "just a string" """);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$" && e.Message.Contains("object"));
     }
 
@@ -102,7 +102,7 @@ public class CreateResponseValidatorTests
     {
         var result = Validate("[1, 2, 3]");
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$" && e.Message.Contains("object"));
     }
 
@@ -116,7 +116,7 @@ public class CreateResponseValidatorTests
     public void Temperature_ValidRange_Passes(double temp)
     {
         var result = Validate($$"""{ "model": "gpt-4o", "temperature": {{temp}} }""");
-        Assert.IsTrue(result.IsValid, string.Join("; ", result.Errors.Select(e => e.Message)));
+        Assert.That(result.IsValid, Is.True, string.Join("; ", result.Errors.Select(e => e.Message)));
     }
 
     [TestCase(0.0)]
@@ -125,7 +125,7 @@ public class CreateResponseValidatorTests
     public void TopP_ValidRange_Passes(double topP)
     {
         var result = Validate($$"""{ "model": "gpt-4o", "top_p": {{topP}} }""");
-        Assert.IsTrue(result.IsValid, string.Join("; ", result.Errors.Select(e => e.Message)));
+        Assert.That(result.IsValid, Is.True, string.Join("; ", result.Errors.Select(e => e.Message)));
     }
 
     // -----------------------------------------------------------------------
@@ -136,17 +136,17 @@ public class CreateResponseValidatorTests
     public void Truncation_ClosedEnum_AcceptsValidValues()
     {
         var result = Validate("""{ "model": "gpt-4o", "truncation": "auto" }""");
-        Assert.IsTrue(result.IsValid, string.Join("; ", result.Errors.Select(e => e.Message)));
+        Assert.That(result.IsValid, Is.True, string.Join("; ", result.Errors.Select(e => e.Message)));
 
         var result2 = Validate("""{ "model": "gpt-4o", "truncation": "disabled" }""");
-        Assert.IsTrue(result2.IsValid, string.Join("; ", result2.Errors.Select(e => e.Message)));
+        Assert.That(result2.IsValid, Is.True, string.Join("; ", result2.Errors.Select(e => e.Message)));
     }
 
     [Test]
     public void Truncation_ClosedEnum_RejectsUnknownValues()
     {
         var result = Validate("""{ "model": "gpt-4o", "truncation": "custom_value" }""");
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.truncation");
     }
 
@@ -155,7 +155,7 @@ public class CreateResponseValidatorTests
     {
         var result = Validate("""{ "model": "gpt-4o", "truncation": 42 }""");
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.truncation");
     }
 
@@ -167,7 +167,7 @@ public class CreateResponseValidatorTests
     public void MinimalValidPayload_Passes()
     {
         var result = Validate("""{ "model": "gpt-4o" }""");
-        Assert.IsTrue(result.IsValid, string.Join("; ", result.Errors.Select(e => e.Message)));
+        Assert.That(result.IsValid, Is.True, string.Join("; ", result.Errors.Select(e => e.Message)));
     }
 
     [Test]
@@ -184,7 +184,7 @@ public class CreateResponseValidatorTests
             "stream": true
         }
         """);
-        Assert.IsTrue(result.IsValid, string.Join("; ", result.Errors.Select(e => e.Message)));
+        Assert.That(result.IsValid, Is.True, string.Join("; ", result.Errors.Select(e => e.Message)));
     }
 
     [Test]
@@ -196,7 +196,7 @@ public class CreateResponseValidatorTests
             "input": "What is the meaning of life?"
         }
         """);
-        Assert.IsTrue(result.IsValid, string.Join("; ", result.Errors.Select(e => e.Message)));
+        Assert.That(result.IsValid, Is.True, string.Join("; ", result.Errors.Select(e => e.Message)));
     }
 
     // -----------------------------------------------------------------------
@@ -208,7 +208,7 @@ public class CreateResponseValidatorTests
     {
         var json = """{ "model": "gpt-4o" }"""u8;
         var result = CreateResponsePayloadValidator.Validate(json);
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     [Test]
@@ -217,6 +217,6 @@ public class CreateResponseValidatorTests
         // PW-006: model is optional
         var json = """{ "instructions": "hello" }"""u8;
         var result = CreateResponsePayloadValidator.Validate(json);
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 }

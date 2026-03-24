@@ -39,7 +39,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateElement("\"hello world\"", InputParamValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T015: InputParamValidator accepts array input
@@ -48,7 +48,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateElement("[]", InputParamValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T016: InputParamValidator rejects number input
@@ -57,7 +57,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateElement("42", InputParamValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$");
     }
 
@@ -67,7 +67,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateElement("true", InputParamValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$");
     }
 
@@ -77,7 +77,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateElement("{}", InputParamValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$");
     }
 
@@ -87,7 +87,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateCreateResponse("""{"model": "gpt-4o", "input": 42}""");
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.input");
     }
 
@@ -97,7 +97,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateCreateResponse("""{"model": "gpt-4o", "input": "hello"}""");
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T021: CreateResponsePayloadValidator rejects "input": null (not nullable)
@@ -107,7 +107,7 @@ public class PolymorphicValidatorTests
         // input is not marked nullable in the OpenAPI spec — null is invalid
         var result = ValidateCreateResponse("""{"model": "gpt-4o", "input": null}""");
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.input");
     }
 
@@ -120,7 +120,7 @@ public class PolymorphicValidatorTests
             """[{"type": "function_call_output", "call_id": "call_1", "output": "result"}]""",
             InputParamValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T021c: InputParamValidator validates array items — invalid items produce indexed errors
@@ -132,7 +132,7 @@ public class PolymorphicValidatorTests
             """[42]""",
             InputParamValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         // Error path should contain array index
         XAssert.Contains(result.Errors, e => e.Path.Contains("[0]"));
     }
@@ -144,7 +144,7 @@ public class PolymorphicValidatorTests
         var result = ValidateCreateResponse(
             """{"model": "gpt-4o", "input": [{"type": "message", "role": "user", "content": "ok"}, "not-an-item-object"]}""");
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         // Error should reference the second item in the array
         XAssert.Contains(result.Errors, e => e.Path.Contains("$.input[1]"));
     }
@@ -159,7 +159,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateCreateResponse("""{"model": "gpt-4o", "tool_choice": "auto"}""");
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T024: CreateResponsePayloadValidator accepts "tool_choice": {"type": "function", "name": "foo"} (discriminated object)
@@ -168,7 +168,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateCreateResponse("""{"model": "gpt-4o", "tool_choice": {"type": "function", "name": "foo"}}""");
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T025: CreateResponsePayloadValidator rejects "tool_choice": 42
@@ -177,7 +177,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateCreateResponse("""{"model": "gpt-4o", "tool_choice": 42}""");
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.tool_choice");
     }
 
@@ -188,7 +188,7 @@ public class PolymorphicValidatorTests
         // tool_choice is not marked nullable in the OpenAPI spec — null is invalid
         var result = ValidateCreateResponse("""{"model": "gpt-4o", "tool_choice": null}""");
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.tool_choice");
     }
 
@@ -198,7 +198,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateCreateResponse("""{"model": "gpt-4o", "conversation": "conv_abc123"}""");
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T028: CreateResponsePayloadValidator accepts "conversation": {"id": "conv_abc123"} (object)
@@ -207,7 +207,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateCreateResponse("""{"model": "gpt-4o", "conversation": {"id": "conv_abc123"}}""");
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T029: CreateResponsePayloadValidator rejects "conversation": 42
@@ -216,7 +216,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateCreateResponse("""{"model": "gpt-4o", "conversation": 42}""");
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.conversation");
     }
 
@@ -226,7 +226,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateElement("[]", ConversationParamValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$");
     }
 
@@ -242,7 +242,7 @@ public class PolymorphicValidatorTests
             """{"type": "code_interpreter", "container": "my-id"}""",
             CodeInterpreterToolValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T034: CodeInterpreterToolValidator accepts "container": {"type": "auto"} (object)
@@ -253,7 +253,7 @@ public class PolymorphicValidatorTests
             """{"type": "code_interpreter", "container": {"type": "auto"}}""",
             CodeInterpreterToolValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T035: CodeInterpreterToolValidator rejects "container": 42
@@ -264,7 +264,7 @@ public class PolymorphicValidatorTests
             """{"type": "code_interpreter", "container": 42}""",
             CodeInterpreterToolValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.container");
     }
 
@@ -276,7 +276,7 @@ public class PolymorphicValidatorTests
             """{"type": "mcp", "server_label": "test", "server_url": "https://example.com", "allowed_tools": 42}""",
             MCPToolValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.allowed_tools");
     }
 
@@ -288,7 +288,7 @@ public class PolymorphicValidatorTests
             """{"type": "mcp", "server_label": "test", "server_url": "https://example.com", "require_approval": 42}""",
             MCPToolValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.require_approval");
     }
 
@@ -300,7 +300,7 @@ public class PolymorphicValidatorTests
             """{"type": "file_search", "vector_store_ids": [], "filters": 42}""",
             FileSearchToolValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.filters");
     }
 
@@ -312,7 +312,7 @@ public class PolymorphicValidatorTests
             """{"type": "file_search", "vector_store_ids": [], "filters": null}""",
             FileSearchToolValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T040: FiltersValidator rejects string input (expected object)
@@ -321,7 +321,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateElement("\"not-an-object\"", FiltersValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$" && e.Message.Contains("object"));
     }
 
@@ -335,7 +335,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateElement("\"hello\"", ToolCallOutputContentValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T042: ToolCallOutputContentValidator accepts object
@@ -344,7 +344,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateElement("{}", ToolCallOutputContentValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T043: ToolCallOutputContentValidator accepts array
@@ -353,7 +353,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateElement("[]", ToolCallOutputContentValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 
     // T044: ToolCallOutputContentValidator rejects boolean
@@ -362,7 +362,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateElement("true", ToolCallOutputContentValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$");
     }
 
@@ -372,7 +372,7 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateElement("99", ToolCallOutputContentValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$");
     }
 
@@ -384,7 +384,7 @@ public class PolymorphicValidatorTests
             """{"type": "function_call_output", "call_id": "call_1", "output": true}""",
             FunctionToolCallOutputResourceValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.output");
     }
 
@@ -398,7 +398,7 @@ public class PolymorphicValidatorTests
             """{"type": "function_call_output", "call_id": "call_1", "output": [42]}""",
             FunctionToolCallOutputResourceValidator.Validate);
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path.Contains("$.output[0]"));
     }
 
@@ -410,6 +410,6 @@ public class PolymorphicValidatorTests
             """{"type": "function_call_output", "call_id": "call_1", "output": "result text"}""",
             FunctionToolCallOutputResourceValidator.Validate);
 
-        Assert.IsTrue(result.IsValid);
+        Assert.That(result.IsValid, Is.True);
     }
 }

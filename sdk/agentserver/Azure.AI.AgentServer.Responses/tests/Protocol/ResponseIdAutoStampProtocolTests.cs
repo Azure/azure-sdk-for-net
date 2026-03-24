@@ -35,14 +35,14 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
         var itemAddedEvents = events.Where(e => e.EventType == "response.output_item.added").ToList();
         var itemDoneEvents = events.Where(e => e.EventType == "response.output_item.done").ToList();
 
-        Assert.IsNotEmpty(itemAddedEvents);
-        Assert.IsNotEmpty(itemDoneEvents);
+        Assert.That(itemAddedEvents, Is.Not.Empty);
+        Assert.That(itemDoneEvents, Is.Not.Empty);
 
         foreach (var evt in itemAddedEvents.Concat(itemDoneEvents))
         {
             using var doc = JsonDocument.Parse(evt.Data);
             var item = doc.RootElement.GetProperty("item");
-            Assert.AreEqual(responseId, item.GetProperty("response_id").GetString());
+            Assert.That(item.GetProperty("response_id").GetString(), Is.EqualTo(responseId));
         }
     }
 
@@ -61,7 +61,7 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
         using var doc = JsonDocument.Parse(itemAdded.Data);
         var item = doc.RootElement.GetProperty("item");
 
-        Assert.AreEqual(customResponseId, item.GetProperty("response_id").GetString());
+        Assert.That(item.GetProperty("response_id").GetString(), Is.EqualTo(customResponseId));
     }
 
     // ── T014: Multiple output items all get same response_id ────
@@ -81,13 +81,13 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
         var itemEvents = events.Where(e =>
             e.EventType is "response.output_item.added" or "response.output_item.done").ToList();
 
-        Assert.IsTrue(itemEvents.Count >= 4, "Expected at least 4 output item events (2 added + 2 done)");
+        Assert.That(itemEvents.Count >= 4, Is.True, "Expected at least 4 output item events (2 added + 2 done)");
 
         foreach (var evt in itemEvents)
         {
             using var doc = JsonDocument.Parse(evt.Data);
             var item = doc.RootElement.GetProperty("item");
-            Assert.AreEqual(responseId, item.GetProperty("response_id").GetString());
+            Assert.That(item.GetProperty("response_id").GetString(), Is.EqualTo(responseId));
         }
     }
 
@@ -104,11 +104,11 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
         using var doc = await ParseJsonAsync(getResponse);
         var output = doc.RootElement.GetProperty("output");
 
-        Assert.IsTrue(output.GetArrayLength() > 0, "Expected at least one output item");
+        Assert.That(output.GetArrayLength() > 0, Is.True, "Expected at least one output item");
 
         foreach (var item in output.EnumerateArray())
         {
-            Assert.AreEqual(responseId, item.GetProperty("response_id").GetString());
+            Assert.That(item.GetProperty("response_id").GetString(), Is.EqualTo(responseId));
         }
     }
 
@@ -129,7 +129,7 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
         var itemAdded = events.First(e => e.EventType == "response.output_item.added");
         using var doc = JsonDocument.Parse(itemAdded.Data);
         var item = doc.RootElement.GetProperty("item");
-        Assert.AreEqual(responseId, item.GetProperty("response_id").GetString());
+        Assert.That(item.GetProperty("response_id").GetString(), Is.EqualTo(responseId));
     }
 
     // ── Helper event factories ─────────────────────────────────

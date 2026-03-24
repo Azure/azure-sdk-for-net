@@ -28,7 +28,7 @@ public class BadHandlerTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => WrongFirstEventStream(ctx);
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var events = await ParseSseAsync(response);
         XAssert.Contains(events, e => e.EventType == "error");
@@ -42,11 +42,11 @@ public class BadHandlerTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => WrongFirstEventStream(ctx);
 
         var response = await PostResponsesAsync(new { model = "test" });
-        Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("server_error", error.GetProperty("type").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("server_error"));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -59,7 +59,7 @@ public class BadHandlerTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => EmptyStream();
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var events = await ParseSseAsync(response);
         XAssert.Contains(events, e => e.EventType == "error");
@@ -71,11 +71,11 @@ public class BadHandlerTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => EmptyStream();
 
         var response = await PostResponsesAsync(new { model = "test" });
-        Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("An internal server error occurred.", error.GetProperty("message").GetString());
+        Assert.That(error.GetProperty("message").GetString(), Is.EqualTo("An internal server error occurred."));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -88,7 +88,7 @@ public class BadHandlerTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => ThrowBeforeCreatedStream();
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var events = await ParseSseAsync(response);
         XAssert.Contains(events, e => e.EventType == "error");
@@ -101,11 +101,11 @@ public class BadHandlerTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => ThrowBeforeCreatedStream();
 
         var response = await PostResponsesAsync(new { model = "test" });
-        Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("server_error", error.GetProperty("type").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("server_error"));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -118,7 +118,7 @@ public class BadHandlerTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => CreatedOnlyStream(ctx);
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var events = await ParseSseAsync(response);
         XAssert.Contains(events, e => e.EventType == "response.created");
@@ -132,10 +132,10 @@ public class BadHandlerTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => CreatedOnlyStream(ctx);
 
         var response = await PostResponsesAsync(new { model = "test" });
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var doc = await ParseJsonAsync(response);
-        Assert.AreEqual("failed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("failed"));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -148,7 +148,7 @@ public class BadHandlerTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => ThrowAfterCreatedStream(ctx);
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var events = await ParseSseAsync(response);
         XAssert.Contains(events, e => e.EventType == "response.created");
@@ -161,13 +161,13 @@ public class BadHandlerTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => ThrowAfterCreatedStream(ctx);
 
         var response = await PostResponsesAsync(new { model = "test" });
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var doc = await ParseJsonAsync(response);
-        Assert.AreEqual("failed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("failed"));
         // Should have error info
-        Assert.IsTrue(doc.RootElement.TryGetProperty("error", out var error));
-        Assert.AreEqual("server_error", error.GetProperty("code").GetString());
+        Assert.That(doc.RootElement.TryGetProperty("error", out var error), Is.True);
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("server_error"));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -181,13 +181,13 @@ public class BadHandlerTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => EmptyStream();
 
         var response = await PostResponsesAsync(new { model = "test" });
-        Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
 
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
         // Error should contain diagnostic message
         var message = error.GetProperty("message").GetString()!;
-        Assert.IsFalse(string.IsNullOrWhiteSpace(message));
+        Assert.That(string.IsNullOrWhiteSpace(message), Is.False);
     }
 
     [Test]
@@ -197,15 +197,15 @@ public class BadHandlerTests : ProtocolTestBase
         Handler.EventFactory = (req, ctx, ct) => WrongFirstEventStream(ctx);
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var events = await ParseSseAsync(response);
         var errorEvent = events.FirstOrDefault(e => e.EventType == "error");
-        Assert.IsNotNull(errorEvent);
+        Assert.That(errorEvent, Is.Not.Null);
         // Error data should contain diagnostic info
         using var errorDoc = JsonDocument.Parse(errorEvent.Data);
         var message = errorDoc.RootElement.GetProperty("message").GetString()!;
-        Assert.IsFalse(string.IsNullOrWhiteSpace(message));
+        Assert.That(string.IsNullOrWhiteSpace(message), Is.False);
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -242,7 +242,9 @@ public class BadHandlerTests : ProtocolTestBase
     {
         await Task.CompletedTask;
         throw new InvalidOperationException("Handler failed before response.created");
-        yield break; // Required for async iterator
+#pragma warning disable CS0162 // Unreachable code — yield break required for async iterator signature
+        yield break;
+#pragma warning restore CS0162
     }
 
     /// <summary>

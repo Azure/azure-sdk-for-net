@@ -24,7 +24,7 @@ public static class CreateResponseExtensions
     /// </returns>
     public static string? GetConversationId(this CreateResponse request)
     {
-        ArgumentNullException.ThrowIfNull(request);
+        Argument.AssertNotNull(request, nameof(request));
 
         if (request.Conversation is not null)
         {
@@ -74,7 +74,7 @@ public static class CreateResponseExtensions
     /// </exception>
     public static ToolChoiceParam? GetToolChoiceExpanded(this CreateResponse request)
     {
-        ArgumentNullException.ThrowIfNull(request);
+        Argument.AssertNotNull(request, nameof(request));
         return BinaryDataExpansionHelpers.ExpandToolChoice(request.ToolChoice);
     }
 
@@ -96,7 +96,7 @@ public static class CreateResponseExtensions
     /// </exception>
     public static List<Item> GetInputExpanded(this CreateResponse request)
     {
-        ArgumentNullException.ThrowIfNull(request);
+        Argument.AssertNotNull(request, nameof(request));
         return BinaryDataExpansionHelpers.ExpandInput(request.Input);
     }
 
@@ -117,7 +117,7 @@ public static class CreateResponseExtensions
     /// </exception>
     public static string GetInputText(this CreateResponse request)
     {
-        ArgumentNullException.ThrowIfNull(request);
+        Argument.AssertNotNull(request, nameof(request));
 
         var items = request.GetInputExpanded();
         var texts = items
@@ -140,7 +140,7 @@ public static class CreateResponseExtensions
     /// <exception cref="ArgumentNullException"><paramref name="request"/> is <c>null</c>.</exception>
     public static ConversationParam? GetConversationExpanded(this CreateResponse request)
     {
-        ArgumentNullException.ThrowIfNull(request);
+        Argument.AssertNotNull(request, nameof(request));
         return BinaryDataExpansionHelpers.ExpandConversation(request.Conversation);
     }
 
@@ -161,7 +161,7 @@ public static class CreateResponseExtensions
     /// <exception cref="ArgumentNullException"><paramref name="request"/> is <c>null</c>.</exception>
     public static BinaryData? GetInstructionsBinaryData(this CreateResponse request)
     {
-        ArgumentNullException.ThrowIfNull(request);
+        Argument.AssertNotNull(request, nameof(request));
         return request.Instructions != null
             ? BinaryData.FromObjectAsJson(request.Instructions)
             : null;

@@ -32,7 +32,7 @@ public static class ResponseExtensions
     /// </exception>
     public static ToolChoiceParam? GetToolChoiceExpanded(this Response response)
     {
-        ArgumentNullException.ThrowIfNull(response);
+        Argument.AssertNotNull(response, nameof(response));
         return BinaryDataExpansionHelpers.ExpandToolChoice(response.ToolChoice);
     }
 
@@ -47,9 +47,9 @@ public static class ResponseExtensions
     /// </exception>
     public static void SetToolChoice(this Response response, ToolChoiceParam toolChoice)
     {
-        ArgumentNullException.ThrowIfNull(response);
-        ArgumentNullException.ThrowIfNull(toolChoice);
-        response.ToolChoice = ModelReaderWriter.Write(toolChoice, ModelReaderWriterOptions.Json);
+        Argument.AssertNotNull(response, nameof(response));
+        Argument.AssertNotNull(toolChoice, nameof(toolChoice));
+        response.ToolChoice = ModelReaderWriter.Write(toolChoice, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ public static class ResponseExtensions
     /// <exception cref="ArgumentNullException"><paramref name="response"/> is <c>null</c>.</exception>
     public static void SetToolChoice(this Response response, ToolChoiceOptions toolChoice)
     {
-        ArgumentNullException.ThrowIfNull(response);
+        Argument.AssertNotNull(response, nameof(response));
         response.ToolChoice = BinaryData.FromObjectAsJson(toolChoice.ToSerialString());
     }
 
@@ -77,7 +77,7 @@ public static class ResponseExtensions
     /// <exception cref="ArgumentNullException"><paramref name="response"/> is <c>null</c>.</exception>
     public static List<Item> GetInstructionItems(this Response response)
     {
-        ArgumentNullException.ThrowIfNull(response);
+        Argument.AssertNotNull(response, nameof(response));
         return BinaryDataExpansionHelpers.ExpandInstructions(response.Instructions);
     }
 
@@ -91,8 +91,8 @@ public static class ResponseExtensions
     /// </exception>
     public static void SetInstructions(this Response response, string instructions)
     {
-        ArgumentNullException.ThrowIfNull(response);
-        ArgumentNullException.ThrowIfNull(instructions);
+        Argument.AssertNotNull(response, nameof(response));
+        Argument.AssertNotNull(instructions, nameof(instructions));
         response.Instructions = BinaryData.FromObjectAsJson(instructions);
     }
 
@@ -107,8 +107,8 @@ public static class ResponseExtensions
     /// </exception>
     public static void SetInstructions(this Response response, IList<Item> items)
     {
-        ArgumentNullException.ThrowIfNull(response);
-        ArgumentNullException.ThrowIfNull(items);
+        Argument.AssertNotNull(response, nameof(response));
+        Argument.AssertNotNull(items, nameof(items));
 
         using var stream = new MemoryStream();
         using (var writer = new Utf8JsonWriter(stream))

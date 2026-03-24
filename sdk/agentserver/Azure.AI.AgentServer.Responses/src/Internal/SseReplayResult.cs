@@ -59,7 +59,17 @@ internal sealed class SseReplayResult : IResult
         if (_keepAliveInterval != Timeout.InfiniteTimeSpan && _keepAliveInterval > TimeSpan.Zero)
         {
             keepAliveTimer = new Timer(
-                _ => _ = sseWriter.WriteKeepAliveAsync(CancellationToken.None),
+                async _ =>
+                {
+                    try
+                    {
+                        await sseWriter.WriteKeepAliveAsync(CancellationToken.None);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogDebug(ex, "Keep-alive write failed for response {ResponseId}", _responseId);
+                    }
+                },
                 null,
                 _keepAliveInterval,
                 _keepAliveInterval);

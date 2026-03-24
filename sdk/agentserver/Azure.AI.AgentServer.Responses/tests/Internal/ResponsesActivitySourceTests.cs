@@ -21,19 +21,19 @@ public sealed class ResponsesActivitySourceTests : IDisposable
     [Test]
     public void DefaultName_IsExpected()
     {
-        Assert.AreEqual("Azure.AI.AgentServer.Responses", ResponsesActivitySource.DefaultName);
+        Assert.That(ResponsesActivitySource.DefaultName, Is.EqualTo("Azure.AI.AgentServer.Responses"));
     }
 
     [Test]
     public void DefaultServiceName_IsExpected()
     {
-        Assert.AreEqual(ResponsesTracingConstants.ServiceName, ResponsesActivitySource.DefaultServiceName);
+        Assert.That(ResponsesActivitySource.DefaultServiceName, Is.EqualTo(ResponsesTracingConstants.ServiceName));
     }
 
     [Test]
     public void DefaultProviderName_IsExpected()
     {
-        Assert.AreEqual(ResponsesTracingConstants.ProviderName, ResponsesActivitySource.DefaultProviderName);
+        Assert.That(ResponsesActivitySource.DefaultProviderName, Is.EqualTo(ResponsesTracingConstants.ProviderName));
     }
 
     // ── Constructor / Name ───────────────────────────────────────────────
@@ -42,14 +42,14 @@ public sealed class ResponsesActivitySourceTests : IDisposable
     public void DefaultConstructor_UsesDefaultName()
     {
         var source = new ResponsesActivitySource();
-        Assert.AreEqual("Azure.AI.AgentServer.Responses", source.Name);
+        Assert.That(source.Name, Is.EqualTo("Azure.AI.AgentServer.Responses"));
     }
 
     [Test]
     public void CustomName_UsesProvidedValue()
     {
         var source = new TestActivitySource("My.Custom.Source");
-        Assert.AreEqual("My.Custom.Source", source.Name);
+        Assert.That(source.Name, Is.EqualTo("My.Custom.Source"));
     }
 
     [TestCase(null)]
@@ -58,7 +58,7 @@ public sealed class ResponsesActivitySourceTests : IDisposable
     public void NullOrEmptyName_FallsBackToDefault(string? name)
     {
         var source = new TestActivitySource(name);
-        Assert.AreEqual("Azure.AI.AgentServer.Responses", source.Name);
+        Assert.That(source.Name, Is.EqualTo("Azure.AI.AgentServer.Responses"));
     }
 
     // ── StartCreateResponseActivity — tags ───────────────────────────────
@@ -72,14 +72,14 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "caresp_123", EmptyHeaders());
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual("create_response gpt-4o", activity.DisplayName);
-        Assert.AreEqual("caresp_123", activity.GetTagItem(ResponsesTracingConstants.Tags.ResponseId));
-        Assert.AreEqual(ResponsesTracingConstants.ProviderName, activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName));
-        Assert.AreEqual(ResponsesTracingConstants.ServiceName, activity.GetTagItem(ResponsesTracingConstants.Tags.ServiceName));
-        Assert.AreEqual(ResponsesTracingConstants.ServiceName, activity.GetTagItem(ResponsesTracingConstants.Tags.System));
-        Assert.AreEqual(ResponsesTracingConstants.OperationName, activity.GetTagItem(ResponsesTracingConstants.Tags.OperationName));
-        Assert.AreEqual("gpt-4o", activity.GetTagItem(ResponsesTracingConstants.Tags.RequestModel));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.DisplayName, Is.EqualTo("create_response gpt-4o"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ResponseId), Is.EqualTo("caresp_123"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.EqualTo(ResponsesTracingConstants.ProviderName));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ServiceName), Is.EqualTo(ResponsesTracingConstants.ServiceName));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.System), Is.EqualTo(ResponsesTracingConstants.ServiceName));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.OperationName), Is.EqualTo(ResponsesTracingConstants.OperationName));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.RequestModel), Is.EqualTo("gpt-4o"));
     }
 
     // ── Namespaced parity tags (azure.ai.agentserver.responses.*) ─────
@@ -98,10 +98,10 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "caresp_parity", EmptyHeaders());
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual("caresp_parity", activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedResponseId));
-        Assert.AreEqual("conv_abc", activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedConversationId));
-        Assert.AreEqual(true, activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedResponseId), Is.EqualTo("caresp_parity"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedConversationId), Is.EqualTo("conv_abc"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming), Is.EqualTo(true));
     }
 
     [Test]
@@ -113,8 +113,8 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "caresp_ns", EmptyHeaders());
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual(false, activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming), Is.EqualTo(false));
     }
 
     [Test]
@@ -126,8 +126,8 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", EmptyHeaders());
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual(string.Empty, activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedConversationId));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedConversationId), Is.EqualTo(string.Empty));
     }
 
     [Test]
@@ -140,10 +140,10 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", headers);
 
-        Assert.IsNotNull(activity);
+        Assert.That(activity, Is.Not.Null);
         // response.mode and request.id tags were removed for parity
-        Assert.IsNull(activity.GetTagItem("response.mode"));
-        Assert.IsNull(activity.GetTagItem("request.id"));
+        Assert.That(activity.GetTagItem("response.mode"), Is.Null);
+        Assert.That(activity.GetTagItem("request.id"), Is.Null);
     }
 
     [Test]
@@ -155,9 +155,9 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", EmptyHeaders());
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual("create_response", activity.DisplayName);
-        Assert.IsNull(activity.GetTagItem(ResponsesTracingConstants.Tags.RequestModel));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.DisplayName, Is.EqualTo("create_response"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.RequestModel), Is.Null);
     }
 
     [Test]
@@ -173,10 +173,10 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", EmptyHeaders());
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual("my-agent", activity.GetTagItem(ResponsesTracingConstants.Tags.AgentName));
-        Assert.AreEqual("my-agent:1.0", activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId));
-        Assert.AreEqual("1.0", activity.GetTagItem(ResponsesTracingConstants.Tags.AgentVersion));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentName), Is.EqualTo("my-agent"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId), Is.EqualTo("my-agent:1.0"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentVersion), Is.EqualTo("1.0"));
     }
 
     [Test]
@@ -192,10 +192,10 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", EmptyHeaders());
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual("my-agent", activity.GetTagItem(ResponsesTracingConstants.Tags.AgentName));
-        Assert.AreEqual("my-agent", activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId));
-        Assert.IsNull(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentVersion));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentName), Is.EqualTo("my-agent"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId), Is.EqualTo("my-agent"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentVersion), Is.Null);
     }
 
     [Test]
@@ -207,11 +207,11 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", EmptyHeaders());
 
-        Assert.IsNotNull(activity);
-        Assert.IsNull(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentName));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentName), Is.Null);
         // Core parity: gen_ai.agent.id = "" when agent is null
-        Assert.AreEqual(string.Empty, activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId));
-        Assert.IsNull(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentVersion));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId), Is.EqualTo(string.Empty));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentVersion), Is.Null);
     }
 
     [Test]
@@ -224,10 +224,10 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", headers);
 
-        Assert.IsNotNull(activity);
+        Assert.That(activity, Is.Not.Null);
         // X-Request-Id is no longer a span tag — only baggage
-        Assert.IsNull(activity.GetTagItem("request.id"));
-        Assert.AreEqual("req-abc", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId));
+        Assert.That(activity.GetTagItem("request.id"), Is.Null);
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId), Is.EqualTo("req-abc"));
     }
 
     [Test]
@@ -239,8 +239,8 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", EmptyHeaders());
 
-        Assert.IsNotNull(activity);
-        Assert.IsNull(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId), Is.Null);
     }
 
     [Test]
@@ -254,10 +254,10 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", headers);
 
-        Assert.IsNotNull(activity);
+        Assert.That(activity, Is.Not.Null);
         var baggageValue = activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId);
-        Assert.IsNotNull(baggageValue);
-        Assert.AreEqual(256, baggageValue!.Length);
+        Assert.That(baggageValue, Is.Not.Null);
+        Assert.That(baggageValue!.Length, Is.EqualTo(256));
     }
 
     [Test]
@@ -273,8 +273,8 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", EmptyHeaders());
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual("conv_123", activity.GetTagItem(ResponsesTracingConstants.Tags.ConversationId));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ConversationId), Is.EqualTo("conv_123"));
     }
 
     // ── StartCreateResponseActivity — baggage ────────────────────────────
@@ -294,11 +294,11 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "caresp_456", headers);
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual("caresp_456", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ResponseId));
-        Assert.AreEqual("conv_xyz", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ConversationId));
-        Assert.AreEqual("True", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming));
-        Assert.AreEqual("req-999", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ResponseId), Is.EqualTo("caresp_456"));
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ConversationId), Is.EqualTo("conv_xyz"));
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming), Is.EqualTo("True"));
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId), Is.EqualTo("req-999"));
     }
 
     [Test]
@@ -310,11 +310,11 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "caresp_789", EmptyHeaders());
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual("caresp_789", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ResponseId));
-        Assert.AreEqual(string.Empty, activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ConversationId));
-        Assert.AreEqual("False", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming));
-        Assert.IsNull(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ResponseId), Is.EqualTo("caresp_789"));
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ConversationId), Is.EqualTo(string.Empty));
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming), Is.EqualTo("False"));
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId), Is.Null);
     }
 
     [Test]
@@ -333,15 +333,15 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "caresp_rm", headers);
 
-        Assert.IsNotNull(activity);
+        Assert.That(activity, Is.Not.Null);
         // Short-key baggage items were removed for parity
-        Assert.IsNull(activity.GetBaggageItem("response.id"));
-        Assert.IsNull(activity.GetBaggageItem("streaming"));
-        Assert.IsNull(activity.GetBaggageItem("provider.name"));
-        Assert.IsNull(activity.GetBaggageItem("conversation.id"));
-        Assert.IsNull(activity.GetBaggageItem("agent.name"));
-        Assert.IsNull(activity.GetBaggageItem("agent.id"));
-        Assert.IsNull(activity.GetBaggageItem("request.id"));
+        Assert.That(activity.GetBaggageItem("response.id"), Is.Null);
+        Assert.That(activity.GetBaggageItem("streaming"), Is.Null);
+        Assert.That(activity.GetBaggageItem("provider.name"), Is.Null);
+        Assert.That(activity.GetBaggageItem("conversation.id"), Is.Null);
+        Assert.That(activity.GetBaggageItem("agent.name"), Is.Null);
+        Assert.That(activity.GetBaggageItem("agent.id"), Is.Null);
+        Assert.That(activity.GetBaggageItem("request.id"), Is.Null);
     }
 
     // ── Composition pattern: base + selective override ───────────────────
@@ -355,12 +355,12 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", EmptyHeaders());
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual(ResponsesTracingConstants.ProviderName, activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.EqualTo(ResponsesTracingConstants.ProviderName));
 
         // SetTag replaces existing value
         activity.SetTag(ResponsesTracingConstants.Tags.ProviderName, "my-custom-provider");
-        Assert.AreEqual("my-custom-provider", activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.EqualTo("my-custom-provider"));
     }
 
     [Test]
@@ -372,12 +372,12 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", EmptyHeaders());
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual("False", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming), Is.EqualTo("False"));
 
         // AddBaggage prepends — GetBaggageItem returns most recent
         activity.AddBaggage(ResponsesTracingConstants.Baggage.Streaming, "True");
-        Assert.AreEqual("True", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming));
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming), Is.EqualTo("True"));
     }
 
     [Test]
@@ -389,10 +389,10 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", EmptyHeaders());
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual("custom-op", activity.DisplayName);
-        Assert.AreEqual("overridden", activity.GetTagItem("custom.tag"));
-        Assert.IsNull(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName)); // base not called
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.DisplayName, Is.EqualTo("custom-op"));
+        Assert.That(activity.GetTagItem("custom.tag"), Is.EqualTo("overridden"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.Null); // base not called
     }
 
     [Test]
@@ -405,20 +405,20 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", headers);
 
-        Assert.IsNotNull(activity);
+        Assert.That(activity, Is.Not.Null);
 
         // Base defaults present
-        Assert.AreEqual("create_response test", activity.DisplayName);
-        Assert.AreEqual("create_response", activity.GetTagItem(ResponsesTracingConstants.Tags.OperationName));
+        Assert.That(activity.DisplayName, Is.EqualTo("create_response test"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.OperationName), Is.EqualTo("create_response"));
 
         // Overridden tags
-        Assert.AreEqual("my-service", activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName));
-        Assert.AreEqual("my-service", activity.GetTagItem(ResponsesTracingConstants.Tags.ServiceName));
-        Assert.AreEqual("my-service", activity.GetTagItem(ResponsesTracingConstants.Tags.System));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.EqualTo("my-service"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ServiceName), Is.EqualTo("my-service"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.System), Is.EqualTo("my-service"));
 
         // Extra tags from custom header
-        Assert.AreEqual("hello", activity.GetTagItem("custom.header"));
-        Assert.AreEqual("my.ns", activity.GetTagItem("service.namespace"));
+        Assert.That(activity.GetTagItem("custom.header"), Is.EqualTo("hello"));
+        Assert.That(activity.GetTagItem("service.namespace"), Is.EqualTo("my.ns"));
     }
 
     [Test]
@@ -435,9 +435,9 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         using var activity = source.StartCreateResponseActivity(
             request, "id", headers);
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual("tenant-123", activity.GetTagItem("tenant.id"));
-        Assert.AreEqual("corr-456", activity.GetTagItem("correlation.id"));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem("tenant.id"), Is.EqualTo("tenant-123"));
+        Assert.That(activity.GetTagItem("correlation.id"), Is.EqualTo("corr-456"));
     }
 
     // ── Test subclasses ──────────────────────────────────────────────────
@@ -478,7 +478,8 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             CreateResponse request, string responseId, IHeaderDictionary headers)
         {
             var activity = base.StartCreateResponseActivity(request, responseId, headers);
-            if (activity is null) return null;
+            if (activity is null)
+                return null;
 
             // Replace service identity
             activity.SetTag(ResponsesTracingConstants.Tags.ProviderName, "my-service");
@@ -507,7 +508,8 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             CreateResponse request, string responseId, IHeaderDictionary headers)
         {
             var activity = base.StartCreateResponseActivity(request, responseId, headers);
-            if (activity is null) return null;
+            if (activity is null)
+                return null;
 
             if (headers.TryGetValue("X-Tenant-Id", out var tenantId))
                 activity.SetTag("tenant.id", tenantId.ToString());

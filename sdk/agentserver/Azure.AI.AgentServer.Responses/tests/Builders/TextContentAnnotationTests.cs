@@ -8,7 +8,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Builders;
 
 public class TextContentAnnotationTests
 {
-    private static (ResponseEventStream stream, OutputItemMessageBuilder msg) CreateMessageScope()
+    private static (ResponseEventStream Stream, OutputItemMessageBuilder Msg) CreateMessageScope()
     {
         var context = new ResponseContext("resp_test");
         var stream = new ResponseEventStream(context, new CreateResponse { Model = "gpt-4o" });
@@ -36,7 +36,7 @@ public class TextContentAnnotationTests
         var text = msg.AddTextContent();
         var annotation = CreateTestAnnotation();
         var evt = text.EmitAnnotationAdded(annotation);
-        Assert.AreSame(annotation, evt.Annotation);
+        Assert.That(evt.Annotation, Is.SameAs(annotation));
     }
 
     [Test]
@@ -46,9 +46,9 @@ public class TextContentAnnotationTests
         var text = msg.AddTextContent();
         var annotation = CreateTestAnnotation();
         var evt = text.EmitAnnotationAdded(annotation);
-        Assert.AreEqual(msg.ItemId, evt.ItemId);
-        Assert.AreEqual(msg.OutputIndex, evt.OutputIndex);
-        Assert.AreEqual(text.ContentIndex, evt.ContentIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(msg.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(msg.OutputIndex));
+        Assert.That(evt.ContentIndex, Is.EqualTo(text.ContentIndex));
     }
 
     [Test]
@@ -58,7 +58,7 @@ public class TextContentAnnotationTests
         var text = msg.AddTextContent();
         var annotation = CreateTestAnnotation();
         var evt = text.EmitAnnotationAdded(annotation);
-        Assert.AreEqual(0, evt.AnnotationIndex);
+        Assert.That(evt.AnnotationIndex, Is.EqualTo(0));
     }
 
     [Test]
@@ -69,9 +69,9 @@ public class TextContentAnnotationTests
         var a1 = text.EmitAnnotationAdded(CreateTestAnnotation());
         var a2 = text.EmitAnnotationAdded(CreateTestAnnotation());
         var a3 = text.EmitAnnotationAdded(CreateTestAnnotation());
-        Assert.AreEqual(0, a1.AnnotationIndex);
-        Assert.AreEqual(1, a2.AnnotationIndex);
-        Assert.AreEqual(2, a3.AnnotationIndex);
+        Assert.That(a1.AnnotationIndex, Is.EqualTo(0));
+        Assert.That(a2.AnnotationIndex, Is.EqualTo(1));
+        Assert.That(a3.AnnotationIndex, Is.EqualTo(2));
     }
 
     [Test]
@@ -83,10 +83,10 @@ public class TextContentAnnotationTests
         var delta = text.EmitDelta("Hi");                            // seq 1
         var ann = text.EmitAnnotationAdded(CreateTestAnnotation());  // seq 2
         var done = text.EmitDone("Hi");                              // seq 3
-        Assert.AreEqual(0, added.SequenceNumber);
-        Assert.AreEqual(1, delta.SequenceNumber);
-        Assert.AreEqual(2, ann.SequenceNumber);
-        Assert.AreEqual(3, done.SequenceNumber);
+        Assert.That(added.SequenceNumber, Is.EqualTo(0));
+        Assert.That(delta.SequenceNumber, Is.EqualTo(1));
+        Assert.That(ann.SequenceNumber, Is.EqualTo(2));
+        Assert.That(done.SequenceNumber, Is.EqualTo(3));
     }
 
     [Test]
@@ -97,7 +97,7 @@ public class TextContentAnnotationTests
         var text2 = msg.AddTextContent();
         var a1 = text1.EmitAnnotationAdded(CreateTestAnnotation());
         var a2 = text2.EmitAnnotationAdded(CreateTestAnnotation());
-        Assert.AreEqual(0, a1.AnnotationIndex);
-        Assert.AreEqual(0, a2.AnnotationIndex);
+        Assert.That(a1.AnnotationIndex, Is.EqualTo(0));
+        Assert.That(a2.AnnotationIndex, Is.EqualTo(0));
     }
 }

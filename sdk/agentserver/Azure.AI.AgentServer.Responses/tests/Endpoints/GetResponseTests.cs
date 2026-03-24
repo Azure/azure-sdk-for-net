@@ -30,11 +30,11 @@ public class GetResponseTests : IDisposable
 
         var response = await _client.GetAsync($"/responses/{responseId}");
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("application/json", response.Content.Headers.ContentType?.MediaType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("application/json"));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.AreEqual(responseId, body.GetProperty("id").GetString());
-        Assert.AreEqual("completed", body.GetProperty("status").GetString());
+        Assert.That(body.GetProperty("id").GetString(), Is.EqualTo(responseId));
+        Assert.That(body.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     [Test]
@@ -48,7 +48,7 @@ public class GetResponseTests : IDisposable
 
         var response = await _client.GetAsync($"/responses/{responseId}");
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.AreEqual("in_progress", body.GetProperty("status").GetString());
+        Assert.That(body.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
 
         tcs.SetResult();
         await Task.Delay(100);
@@ -59,9 +59,9 @@ public class GetResponseTests : IDisposable
     {
         var response = await _client.GetAsync("/responses/resp_nonexistent");
 
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.AreEqual("invalid_request_error", body.GetProperty("error").GetProperty("type").GetString());
+        Assert.That(body.GetProperty("error").GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     [Test]
@@ -74,8 +74,8 @@ public class GetResponseTests : IDisposable
         // GET with ?stream=true to trigger SSE replay
         var response = await _client.GetAsync($"/responses/{responseId}?stream=true");
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("text/event-stream", response.Content.Headers.ContentType?.MediaType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("text/event-stream"));
 
         var body = await response.Content.ReadAsStringAsync();
         XAssert.Contains("event: response.created", body);
@@ -98,10 +98,10 @@ public class GetResponseTests : IDisposable
             .Select(l => JsonSerializer.Deserialize<JsonElement>(l["data: ".Length..]))
             .ToList();
 
-        Assert.IsTrue(dataLines.Count >= 2);
+        Assert.That(dataLines.Count >= 2, Is.True);
         for (int i = 0; i < dataLines.Count; i++)
         {
-            Assert.AreEqual(i, dataLines[i].GetProperty("sequence_number").GetInt32());
+            Assert.That(dataLines[i].GetProperty("sequence_number").GetInt32(), Is.EqualTo(i));
         }
     }
 
@@ -110,7 +110,7 @@ public class GetResponseTests : IDisposable
     {
         var response = await _client.GetAsync("/responses/resp_unknown_sse?stream=true");
 
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     [Test]
@@ -124,8 +124,8 @@ public class GetResponseTests : IDisposable
 
         var response = await _client.SendAsync(request);
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("application/json", response.Content.Headers.ContentType?.MediaType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("application/json"));
     }
 
     private async Task<string> CreateDefaultResponse()

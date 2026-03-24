@@ -32,8 +32,8 @@ public class StreamingErrorTests : IDisposable
 
         var response = await _client.PostAsync("/responses", content);
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("text/event-stream", response.Content.Headers.ContentType?.MediaType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("text/event-stream"));
 
         var body = await response.Content.ReadAsStringAsync();
         var events = ParseSseEvents(body);
@@ -44,9 +44,8 @@ public class StreamingErrorTests : IDisposable
 
         // The response.failed event should have error populated
         var failedEvent = events.Last(e => e.EventType == "response.failed");
-        Assert.AreEqual("failed", failedEvent.Data.GetProperty("response").GetProperty("status").GetString());
-        Assert.AreEqual("server_error",
-            failedEvent.Data.GetProperty("response").GetProperty("error").GetProperty("code").GetString());
+        Assert.That(failedEvent.Data.GetProperty("response").GetProperty("status").GetString(), Is.EqualTo("failed"));
+        Assert.That(failedEvent.Data.GetProperty("response").GetProperty("error").GetProperty("code").GetString(), Is.EqualTo("server_error"));
     }
 
     [Test]
@@ -67,7 +66,7 @@ public class StreamingErrorTests : IDisposable
 
         // Must not leak internal exception details
         XAssert.DoesNotContain("Simulated handler failure", errorMessage!);
-        Assert.AreEqual("An internal server error occurred.", errorMessage);
+        Assert.That(errorMessage, Is.EqualTo("An internal server error occurred."));
     }
 
     [Test]
@@ -97,7 +96,7 @@ public class StreamingErrorTests : IDisposable
 
         var response = await _client.PostAsync("/responses", content);
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var body = await response.Content.ReadAsStringAsync();
         var events = ParseSseEvents(body);
 

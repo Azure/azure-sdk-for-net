@@ -3,7 +3,7 @@
 
 using System.Text.Json;
 
-namespace Azure.AI.AgentServer.Responses.Models;
+namespace Azure.AI.AgentServer.Responses.Validators;
 
 /// <summary>
 /// Custom validation rules for <see cref="ItemValidator"/>.

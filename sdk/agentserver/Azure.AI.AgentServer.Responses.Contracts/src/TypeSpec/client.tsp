@@ -95,10 +95,15 @@ namespace Azure.AI.Projects {
   @@usage(OpenAI.ResponseWebSearchCallInProgressEvent, Usage.input | Usage.output);
   @@usage(OpenAI.ResponseWebSearchCallSearchingEvent, Usage.input | Usage.output);
 
-  // --- Response, ResponseError, and CreateResponse ---
+  // --- Response, ResponseError, Error, and CreateResponse ---
   @@usage(OpenAI.Response, Usage.input | Usage.output);
   @@usage(OpenAI.ResponseError, Usage.input | Usage.output);
+  @@usage(OpenAI.Error, Usage.input | Usage.output);
   @@usage(OpenAI.CreateResponse, Usage.input | Usage.output);
+
+  // --- API envelope types (server needs to construct these) ---
+  @@usage(Azure.AI.Projects.ApiErrorResponse, Usage.input | Usage.output);
+  @@usage(Azure.AI.Projects.DeleteResponseResult, Usage.input | Usage.output);
 
   // --- OpenAI OutputItem subtypes (24 concrete types) ---
   @@usage(OpenAI.OutputItemApplyPatchToolCall, Usage.input | Usage.output);

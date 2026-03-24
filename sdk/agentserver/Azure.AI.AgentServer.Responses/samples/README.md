@@ -4,7 +4,6 @@ languages:
 - csharp
 products:
 - azure
-- azure-ai-agent-service
 name: Azure.AI.AgentServer.Responses samples for .NET
 description: Samples for the Azure.AI.AgentServer.Responses client library.
 ---

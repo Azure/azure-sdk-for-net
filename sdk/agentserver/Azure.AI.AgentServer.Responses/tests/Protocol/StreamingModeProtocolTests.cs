@@ -23,8 +23,8 @@ public class StreamingModeProtocolTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("text/event-stream", response.Content.Headers.ContentType?.MediaType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("text/event-stream"));
     }
 
     [Test]
@@ -45,7 +45,7 @@ public class StreamingModeProtocolTests : ProtocolTestBase
                 continue; // skip keep-alive comments
 
             var lines = block.Split('\n');
-            Assert.IsTrue(lines.Length >= 2, $"SSE block must have at least 2 lines: {block}");
+            Assert.That(lines.Length >= 2, Is.True, $"SSE block must have at least 2 lines: {block}");
             XAssert.StartsWith("event: ", lines[0]);
             XAssert.StartsWith("data: ", lines[1]);
 
@@ -53,7 +53,7 @@ public class StreamingModeProtocolTests : ProtocolTestBase
             var jsonStr = lines[1]["data: ".Length..];
             XAssert.DoesNotContain("\n", jsonStr);
             using var doc = JsonDocument.Parse(jsonStr);
-            Assert.IsNotNull(doc);
+            Assert.That(doc, Is.Not.Null);
         }
     }
 
@@ -65,8 +65,8 @@ public class StreamingModeProtocolTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "test", stream = true });
         var events = await ParseSseAsync(response);
 
-        Assert.IsTrue(events.Count >= 2, "Expected at least 2 SSE events");
-        Assert.AreEqual("response.created", events[0].EventType);
+        Assert.That(events.Count >= 2, Is.True, "Expected at least 2 SSE events");
+        Assert.That(events[0].EventType, Is.EqualTo("response.created"));
     }
 
     [Test]
@@ -77,8 +77,8 @@ public class StreamingModeProtocolTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "test", stream = true });
         var events = await ParseSseAsync(response);
 
-        Assert.IsTrue(events.Count >= 2, "Expected at least 2 SSE events");
-        Assert.AreEqual("response.completed", events[^1].EventType);
+        Assert.That(events.Count >= 2, Is.True, "Expected at least 2 SSE events");
+        Assert.That(events[^1].EventType, Is.EqualTo("response.completed"));
     }
 
     [Test]
@@ -93,20 +93,19 @@ public class StreamingModeProtocolTests : ProtocolTestBase
         foreach (var evt in events)
         {
             using var doc = JsonDocument.Parse(evt.Data);
-            Assert.IsTrue(doc.RootElement.TryGetProperty("sequence_number", out var seqProp),
-                $"Event {evt.EventType} missing sequence_number");
+            Assert.That(doc.RootElement.TryGetProperty("sequence_number", out var seqProp), Is.True, $"Event {evt.EventType} missing sequence_number");
             seqNums.Add(seqProp.GetInt64());
         }
 
         // Verify monotonically increasing (each number > previous)
         for (int i = 1; i < seqNums.Count; i++)
         {
-            Assert.IsTrue(seqNums[i] > seqNums[i - 1],
+            Assert.That(seqNums[i] > seqNums[i - 1], Is.True,
                 $"Sequence numbers not monotonically increasing: {seqNums[i - 1]} → {seqNums[i]} at index {i}");
         }
 
         // First sequence number should be 0
-        Assert.AreEqual(0, seqNums[0]);
+        Assert.That(seqNums[0], Is.EqualTo(0));
     }
 
     [Test]
@@ -122,7 +121,7 @@ public class StreamingModeProtocolTests : ProtocolTestBase
         {
             using var doc = JsonDocument.Parse(evt.Data);
             var dataType = doc.RootElement.GetProperty("type").GetString();
-            Assert.AreEqual(evt.EventType, dataType);
+            Assert.That(dataType, Is.EqualTo(evt.EventType));
         }
     }
 
@@ -149,10 +148,10 @@ public class StreamingModeProtocolTests : ProtocolTestBase
             "response.completed"
         };
 
-        Assert.AreEqual(expectedOrder.Length, eventTypes.Count);
+        Assert.That(eventTypes.Count, Is.EqualTo(expectedOrder.Length));
         for (int i = 0; i < expectedOrder.Length; i++)
         {
-            Assert.AreEqual(expectedOrder[i], eventTypes[i]);
+            Assert.That(eventTypes[i], Is.EqualTo(expectedOrder[i]));
         }
     }
 

@@ -25,12 +25,12 @@ public class GetResponseProtocolTests : ProtocolTestBase
 
         var getResponse = await GetResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
-        Assert.AreEqual("application/json", getResponse.Content.Headers.ContentType?.MediaType);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(getResponse.Content.Headers.ContentType?.MediaType, Is.EqualTo("application/json"));
 
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual(responseId, doc.RootElement.GetProperty("id").GetString());
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("id").GetString(), Is.EqualTo(responseId));
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     [Test]
@@ -43,10 +43,10 @@ public class GetResponseProtocolTests : ProtocolTestBase
         // SSE replay on non-bg response → 400 (per FR-018)
         var getResponse = await GetResponseStreamAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(getResponse);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     [Test]
@@ -71,10 +71,10 @@ public class GetResponseProtocolTests : ProtocolTestBase
         }
 
         // Sequence numbers should be monotonically increasing starting from 0
-        Assert.AreEqual(0, seqNums[0]);
+        Assert.That(seqNums[0], Is.EqualTo(0));
         for (int i = 1; i < seqNums.Count; i++)
         {
-            Assert.IsTrue(seqNums[i] > seqNums[i - 1],
+            Assert.That(seqNums[i] > seqNums[i - 1], Is.True,
                 $"Sequence numbers not monotonically increasing at index {i}: " +
                 $"{seqNums[i - 1]} → {seqNums[i]}");
         }
@@ -85,12 +85,12 @@ public class GetResponseProtocolTests : ProtocolTestBase
     {
         var getResponse = await GetResponseAsync("caresp_nonexistent_id");
 
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         using var doc = await ParseJsonAsync(getResponse);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
-        Assert.IsFalse(string.IsNullOrEmpty(error.GetProperty("message").GetString()));
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(string.IsNullOrEmpty(error.GetProperty("message").GetString()), Is.False);
     }
 
     [Test]
@@ -104,9 +104,9 @@ public class GetResponseProtocolTests : ProtocolTestBase
 
         var getResponse = await GetResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("in_progress", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
 
         // Clean up
         tcs.SetResult();
@@ -127,7 +127,7 @@ public class GetResponseProtocolTests : ProtocolTestBase
 
         var getResponse = await GetResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     // ── T056: cancelled bg → GET 200 with cancelled ──────────
@@ -143,10 +143,10 @@ public class GetResponseProtocolTests : ProtocolTestBase
 
         var getResponse = await GetResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("cancelled", doc.RootElement.GetProperty("status").GetString());
-        Assert.AreEqual(0, doc.RootElement.GetProperty("output").GetArrayLength());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("cancelled"));
+        Assert.That(doc.RootElement.GetProperty("output").GetArrayLength(), Is.EqualTo(0));
 
         tcs.TrySetResult();
     }
@@ -163,7 +163,7 @@ public class GetResponseProtocolTests : ProtocolTestBase
 
         var getResponse = await GetResponseStreamAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 
     // ── T058: starting_after ──────────────────────────────────
@@ -182,14 +182,14 @@ public class GetResponseProtocolTests : ProtocolTestBase
         // Replay with starting_after=2 → should skip events with seq <= 2
         var getResponse = await Client.GetAsync($"/responses/{responseId}?stream=true&starting_after=2");
 
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var replayEvents = await ParseSseAsync(getResponse);
 
         foreach (var evt in replayEvents)
         {
             using var doc = JsonDocument.Parse(evt.Data);
             var seq = doc.RootElement.GetProperty("sequence_number").GetInt64();
-            Assert.IsTrue(seq > 2, $"Expected sequence_number > 2 but got {seq}");
+            Assert.That(seq > 2, Is.True, $"Expected sequence_number > 2 but got {seq}");
         }
     }
 
@@ -207,9 +207,9 @@ public class GetResponseProtocolTests : ProtocolTestBase
         // starting_after >= max sequence → 0 events
         var getResponse = await Client.GetAsync($"/responses/{responseId}?stream=true&starting_after=9999");
 
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var replayEvents = await ParseSseAsync(getResponse);
-        Assert.IsEmpty(replayEvents);
+        Assert.That(replayEvents, Is.Empty);
     }
 
     // ── T060: SSE replay on store=false → 404 ────────────────
@@ -226,7 +226,7 @@ public class GetResponseProtocolTests : ProtocolTestBase
 
         var getResponse = await GetResponseStreamAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     // ── US3: ?stream=true query parameter ──────────────────────
@@ -245,13 +245,13 @@ public class GetResponseProtocolTests : ProtocolTestBase
         // Use ?stream=true (not Accept header) to trigger SSE replay
         var getResponse = await GetResponseStreamAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
-        Assert.AreEqual("text/event-stream", getResponse.Content.Headers.ContentType?.MediaType);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(getResponse.Content.Headers.ContentType?.MediaType, Is.EqualTo("text/event-stream"));
 
         var replayEvents = await ParseSseAsync(getResponse);
-        Assert.IsTrue(replayEvents.Count >= 2, "Expected at least 2 replayed SSE events");
-        Assert.AreEqual("response.created", replayEvents[0].EventType);
-        Assert.AreEqual("response.completed", replayEvents[^1].EventType);
+        Assert.That(replayEvents.Count >= 2, Is.True, "Expected at least 2 replayed SSE events");
+        Assert.That(replayEvents[0].EventType, Is.EqualTo("response.created"));
+        Assert.That(replayEvents[^1].EventType, Is.EqualTo("response.completed"));
     }
 
     [Test]
@@ -269,11 +269,11 @@ public class GetResponseProtocolTests : ProtocolTestBase
         var request = new HttpRequestMessage(HttpMethod.Get, $"/responses/{responseId}?stream=false");
         var getResponse = await Client.SendAsync(request);
 
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
-        Assert.AreEqual("application/json", getResponse.Content.Headers.ContentType?.MediaType);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(getResponse.Content.Headers.ContentType?.MediaType, Is.EqualTo("application/json"));
 
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual(responseId, doc.RootElement.GetProperty("id").GetString());
+        Assert.That(doc.RootElement.GetProperty("id").GetString(), Is.EqualTo(responseId));
     }
 
     [Test]
@@ -290,11 +290,11 @@ public class GetResponseProtocolTests : ProtocolTestBase
         // Accept: text/event-stream WITHOUT ?stream=true should return JSON (Accept alone is NOT a trigger)
         var getResponse = await GetResponseAsync(responseId, accept: "text/event-stream");
 
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
-        Assert.AreEqual("application/json", getResponse.Content.Headers.ContentType?.MediaType);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(getResponse.Content.Headers.ContentType?.MediaType, Is.EqualTo("application/json"));
 
         using var doc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual(responseId, doc.RootElement.GetProperty("id").GetString());
+        Assert.That(doc.RootElement.GetProperty("id").GetString(), Is.EqualTo(responseId));
     }
 
     // ── Helper event factories ─────────────────────────────────

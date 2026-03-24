@@ -27,8 +27,8 @@ public class ResponseSnapshotTests
         original.Status = ResponseStatus.Completed;
 
         // Assert
-        Assert.AreEqual(ResponseStatus.InProgress, snapshot.Status);
-        Assert.AreEqual(ResponseStatus.Completed, original.Status);
+        Assert.That(snapshot.Status, Is.EqualTo(ResponseStatus.InProgress));
+        Assert.That(original.Status, Is.EqualTo(ResponseStatus.Completed));
     }
 
     [Test]
@@ -57,7 +57,7 @@ public class ResponseSnapshotTests
 
         // Assert
         XAssert.Single(snapshot.Output);
-        Assert.AreEqual(2, original.Output.Count);
+        Assert.That(original.Output.Count, Is.EqualTo(2));
     }
 
     [Test]
@@ -74,14 +74,12 @@ public class ResponseSnapshotTests
         var snapshot = original.Snapshot();
 
         // Assert
-        Assert.AreEqual(original.Id, snapshot.Id);
-        Assert.AreEqual(original.Model, snapshot.Model);
-        Assert.AreEqual(original.Status, snapshot.Status);
+        Assert.That(snapshot.Id, Is.EqualTo(original.Id));
+        Assert.That(snapshot.Model, Is.EqualTo(original.Model));
+        Assert.That(snapshot.Status, Is.EqualTo(original.Status));
         // CreatedAt is auto-set by the constructor; JSON round-trip truncates to seconds
-        Assert.AreEqual(
-            original.CreatedAt.ToUnixTimeSeconds(),
-            snapshot.CreatedAt.ToUnixTimeSeconds());
-        Assert.AreEqual(original.CompletedAt, snapshot.CompletedAt);
+        Assert.That(snapshot.CreatedAt.ToUnixTimeSeconds(), Is.EqualTo(original.CreatedAt.ToUnixTimeSeconds()));
+        Assert.That(snapshot.CompletedAt, Is.EqualTo(original.CompletedAt));
     }
 
     [Test]
@@ -110,16 +108,16 @@ public class ResponseSnapshotTests
         var snapshot = original.Snapshot();
 
         // Assert — polymorphic types preserved
-        Assert.AreEqual(2, snapshot.Output.Count);
+        Assert.That(snapshot.Output.Count, Is.EqualTo(2));
 
         var snappedMessage = XAssert.IsType<OutputItemMessage>(snapshot.Output[0]);
-        Assert.AreEqual("msg_poly", snappedMessage.Id);
-        Assert.AreEqual(MessageRole.Assistant, snappedMessage.Role);
+        Assert.That(snappedMessage.Id, Is.EqualTo("msg_poly"));
+        Assert.That(snappedMessage.Role, Is.EqualTo(MessageRole.Assistant));
 
         var snappedFunction = XAssert.IsType<OutputItemFunctionToolCall>(snapshot.Output[1]);
-        Assert.AreEqual("call_fn1", snappedFunction.CallId);
-        Assert.AreEqual("get_weather", snappedFunction.Name);
-        Assert.AreEqual("""{"location":"Seattle"}""", snappedFunction.Arguments);
+        Assert.That(snappedFunction.CallId, Is.EqualTo("call_fn1"));
+        Assert.That(snappedFunction.Name, Is.EqualTo("get_weather"));
+        Assert.That(snappedFunction.Arguments, Is.EqualTo("""{"location":"Seattle"}"""));
     }
 
     [Test]
@@ -139,9 +137,9 @@ public class ResponseSnapshotTests
         var snapshot = original.Snapshot();
 
         // Assert
-        Assert.IsNotNull(snapshot.Metadata);
-        Assert.AreEqual("u_123", snapshot.Metadata.AdditionalProperties["user_id"]);
-        Assert.AreEqual("s_456", snapshot.Metadata.AdditionalProperties["session"]);
+        Assert.That(snapshot.Metadata, Is.Not.Null);
+        Assert.That(snapshot.Metadata.AdditionalProperties["user_id"], Is.EqualTo("u_123"));
+        Assert.That(snapshot.Metadata.AdditionalProperties["session"], Is.EqualTo("s_456"));
     }
 
     [Test]
@@ -162,7 +160,7 @@ public class ResponseSnapshotTests
         original.Metadata.AdditionalProperties["key2"] = "value2";
 
         // Assert — snapshot unaffected by mutation of original's metadata
-        Assert.IsFalse(snapshot.Metadata.AdditionalProperties.ContainsKey("key2"));
+        Assert.That(snapshot.Metadata.AdditionalProperties.ContainsKey("key2"), Is.False);
         XAssert.Single(snapshot.Metadata.AdditionalProperties);
     }
 
@@ -182,9 +180,9 @@ public class ResponseSnapshotTests
         var snapshot = original.Snapshot();
 
         // Assert
-        Assert.IsNotNull(snapshot.Error);
-        Assert.AreEqual(ResponseErrorCode.ServerError, snapshot.Error.Code);
-        Assert.AreEqual("Something went wrong", snapshot.Error.Message);
+        Assert.That(snapshot.Error, Is.Not.Null);
+        Assert.That(snapshot.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(snapshot.Error.Message, Is.EqualTo("Something went wrong"));
     }
 
     [Test]
@@ -197,7 +195,7 @@ public class ResponseSnapshotTests
         var snapshot = original.Snapshot();
 
         // Assert
-        Assert.AreNotSame(original, snapshot);
+        Assert.That(snapshot, Is.Not.SameAs(original));
     }
 
     [Test]
@@ -213,9 +211,9 @@ public class ResponseSnapshotTests
         var snapshot = original.Snapshot();
 
         // Assert
-        Assert.AreEqual("resp_snap9", snapshot.Id);
-        Assert.AreEqual("gpt-4o", snapshot.Model);
-        Assert.AreEqual(ResponseStatus.InProgress, snapshot.Status);
-        Assert.IsEmpty(snapshot.Output);
+        Assert.That(snapshot.Id, Is.EqualTo("resp_snap9"));
+        Assert.That(snapshot.Model, Is.EqualTo("gpt-4o"));
+        Assert.That(snapshot.Status, Is.EqualTo(ResponseStatus.InProgress));
+        Assert.That(snapshot.Output, Is.Empty);
     }
 }

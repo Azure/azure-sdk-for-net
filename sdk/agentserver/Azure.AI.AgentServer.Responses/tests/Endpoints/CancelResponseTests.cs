@@ -28,9 +28,9 @@ public class CancelResponseTests : IDisposable
     {
         var response = await _client.PostAsync("/responses/resp_unknown/cancel", null);
 
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.AreEqual("invalid_request_error", body.GetProperty("error").GetProperty("type").GetString());
+        Assert.That(body.GetProperty("error").GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     [Test]
@@ -46,7 +46,7 @@ public class CancelResponseTests : IDisposable
         // Cancel a non-background response → 400 (per B1: non-bg cannot be cancelled)
         var cancelResponse = await _client.PostAsync($"/responses/{responseId}/cancel", null);
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         var cancelBody = await cancelResponse.Content.ReadFromJsonAsync<JsonElement>();
         XAssert.Contains("synchronous", cancelBody.GetProperty("error").GetProperty("message").GetString());
     }
@@ -67,7 +67,7 @@ public class CancelResponseTests : IDisposable
         // Cancel it
         var cancelResponse = await _client.PostAsync($"/responses/{responseId}/cancel", null);
 
-        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Let the handler observe cancellation
         tcs.SetResult();

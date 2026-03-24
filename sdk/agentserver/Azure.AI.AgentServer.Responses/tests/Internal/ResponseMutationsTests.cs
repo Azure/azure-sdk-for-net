@@ -17,7 +17,7 @@ public class ResponseMutationsTests
 
         response.SetCompleted();
 
-        Assert.AreEqual(ResponseStatus.Completed, response.Status);
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
     }
 
     [Test]
@@ -28,8 +28,8 @@ public class ResponseMutationsTests
 
         response.SetCompleted();
 
-        Assert.IsNotNull(response.CompletedAt);
-        XAssert.InRange(response.CompletedAt.Value, before, DateTimeOffset.UtcNow.AddSeconds(1));
+        Assert.That(response.CompletedAt, Is.Not.Null);
+        XAssert.InRange(response.CompletedAt!.Value, before, DateTimeOffset.UtcNow.AddSeconds(1));
     }
 
     [Test]
@@ -40,7 +40,7 @@ public class ResponseMutationsTests
 
         response.SetCompleted(usage);
 
-        Assert.AreSame(usage, response.Usage);
+        Assert.That(response.Usage, Is.SameAs(usage));
     }
 
     [Test]
@@ -50,7 +50,7 @@ public class ResponseMutationsTests
 
         response.SetCompleted();
 
-        Assert.IsNull(response.Usage);
+        Assert.That(response.Usage, Is.Null);
     }
 
     [Test]
@@ -68,7 +68,7 @@ public class ResponseMutationsTests
 
         response.SetCompleted();
 
-        Assert.AreEqual("Hello ", response.OutputText);
+        Assert.That(response.OutputText, Is.EqualTo("Hello "));
     }
 
     // ── SetFailed ─────────────────────────────────────────────
@@ -80,7 +80,7 @@ public class ResponseMutationsTests
 
         response.SetFailed();
 
-        Assert.AreEqual(ResponseStatus.Failed, response.Status);
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Failed));
     }
 
     [Test]
@@ -90,9 +90,9 @@ public class ResponseMutationsTests
 
         response.SetFailed(ResponseErrorCode.RateLimitExceeded, "Too many requests");
 
-        Assert.IsNotNull(response.Error);
-        Assert.AreEqual(ResponseErrorCode.RateLimitExceeded, response.Error.Code);
-        Assert.AreEqual("Too many requests", response.Error.Message);
+        Assert.That(response.Error, Is.Not.Null);
+        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
+        Assert.That(response.Error.Message, Is.EqualTo("Too many requests"));
     }
 
     [Test]
@@ -102,9 +102,9 @@ public class ResponseMutationsTests
 
         response.SetFailed();
 
-        Assert.IsNotNull(response.Error);
-        Assert.AreEqual(ResponseErrorCode.ServerError, response.Error.Code);
-        Assert.AreEqual("An internal server error occurred.", response.Error.Message);
+        Assert.That(response.Error, Is.Not.Null);
+        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(response.Error.Message, Is.EqualTo("An internal server error occurred."));
     }
 
     [Test]
@@ -114,7 +114,7 @@ public class ResponseMutationsTests
 
         response.SetFailed();
 
-        Assert.IsNull(response.CompletedAt);
+        Assert.That(response.CompletedAt, Is.Null);
     }
 
     [Test]
@@ -126,10 +126,10 @@ public class ResponseMutationsTests
 
         response.SetFailed(ex);
 
-        Assert.IsNotNull(response.Error);
-        Assert.AreEqual(ResponseErrorCode.RateLimitExceeded, response.Error.Code);
-        Assert.AreEqual("Rate limit hit", response.Error.Message);
-        Assert.AreEqual(ResponseStatus.Failed, response.Status);
+        Assert.That(response.Error, Is.Not.Null);
+        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
+        Assert.That(response.Error.Message, Is.EqualTo("Rate limit hit"));
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Failed));
     }
 
     [Test]
@@ -140,9 +140,9 @@ public class ResponseMutationsTests
 
         response.SetFailed(ex);
 
-        Assert.IsNotNull(response.Error);
-        Assert.AreEqual(ResponseErrorCode.ServerError, response.Error.Code);
-        Assert.AreEqual("Model not supported", response.Error.Message);
+        Assert.That(response.Error, Is.Not.Null);
+        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(response.Error.Message, Is.EqualTo("Model not supported"));
     }
 
     [Test]
@@ -153,9 +153,9 @@ public class ResponseMutationsTests
 
         response.SetFailed(ex);
 
-        Assert.IsNotNull(response.Error);
-        Assert.AreEqual(ResponseErrorCode.ServerError, response.Error.Code);
-        Assert.AreEqual(ApiErrorFactory.GenericServerErrorMessage, response.Error.Message);
+        Assert.That(response.Error, Is.Not.Null);
+        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(response.Error.Message, Is.EqualTo(ApiErrorFactory.GenericServerErrorMessage));
     }
 
     [Test]
@@ -166,7 +166,7 @@ public class ResponseMutationsTests
 
         response.SetFailed(usage: usage);
 
-        Assert.AreSame(usage, response.Usage);
+        Assert.That(response.Usage, Is.SameAs(usage));
     }
 
     [Test]
@@ -184,7 +184,7 @@ public class ResponseMutationsTests
 
         response.SetFailed();
 
-        Assert.AreEqual("Partial", response.OutputText);
+        Assert.That(response.OutputText, Is.EqualTo("Partial"));
     }
 
     // ── SetIncomplete ─────────────────────────────────────────
@@ -196,7 +196,7 @@ public class ResponseMutationsTests
 
         response.SetIncomplete();
 
-        Assert.AreEqual(ResponseStatus.Incomplete, response.Status);
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Incomplete));
     }
 
     [Test]
@@ -206,8 +206,8 @@ public class ResponseMutationsTests
 
         response.SetIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
 
-        Assert.IsNotNull(response.IncompleteDetails);
-        Assert.AreEqual(ResponseIncompleteDetailsReason.MaxOutputTokens, response.IncompleteDetails.Reason);
+        Assert.That(response.IncompleteDetails, Is.Not.Null);
+        Assert.That(response.IncompleteDetails.Reason, Is.EqualTo(ResponseIncompleteDetailsReason.MaxOutputTokens));
     }
 
     [Test]
@@ -217,7 +217,7 @@ public class ResponseMutationsTests
 
         response.SetIncomplete();
 
-        Assert.IsNull(response.IncompleteDetails);
+        Assert.That(response.IncompleteDetails, Is.Null);
     }
 
     [Test]
@@ -227,7 +227,7 @@ public class ResponseMutationsTests
 
         response.SetIncomplete();
 
-        Assert.IsNull(response.CompletedAt);
+        Assert.That(response.CompletedAt, Is.Null);
     }
 
     [Test]
@@ -238,7 +238,7 @@ public class ResponseMutationsTests
 
         response.SetIncomplete(usage: usage);
 
-        Assert.AreSame(usage, response.Usage);
+        Assert.That(response.Usage, Is.SameAs(usage));
     }
 
     [Test]
@@ -256,7 +256,7 @@ public class ResponseMutationsTests
 
         response.SetIncomplete();
 
-        Assert.AreEqual("Partial output", response.OutputText);
+        Assert.That(response.OutputText, Is.EqualTo("Partial output"));
     }
 
     // ── ComputeOutputText ─────────────────────────────────────
@@ -276,7 +276,7 @@ public class ResponseMutationsTests
 
         var result = response.ComputeOutputText();
 
-        Assert.AreEqual("Hello World", result);
+        Assert.That(result, Is.EqualTo("Hello World"));
     }
 
     [Test]
@@ -286,7 +286,7 @@ public class ResponseMutationsTests
 
         var result = response.ComputeOutputText();
 
-        Assert.AreEqual("", result);
+        Assert.That(result, Is.EqualTo(""));
     }
 
     [Test]
@@ -299,7 +299,7 @@ public class ResponseMutationsTests
 
         var result = response.ComputeOutputText();
 
-        Assert.AreEqual("", result);
+        Assert.That(result, Is.EqualTo(""));
     }
 
     [Test]
@@ -323,7 +323,7 @@ public class ResponseMutationsTests
 
         var result = response.ComputeOutputText();
 
-        Assert.AreEqual("First Second", result);
+        Assert.That(result, Is.EqualTo("First Second"));
     }
 
     // ── CopyTerminalFields ──────────────────────────────────
@@ -346,14 +346,14 @@ public class ResponseMutationsTests
         ResponseMutations.CopyTerminalFields(source, target);
 
         // Status is NOT copied — managed by the pipeline
-        Assert.AreEqual(ResponseStatus.InProgress, target.Status);
-        Assert.AreEqual(source.CompletedAt, target.CompletedAt);
-        Assert.AreSame(source.Error, target.Error);
-        Assert.AreSame(source.IncompleteDetails, target.IncompleteDetails);
-        Assert.AreSame(source.Usage, target.Usage);
-        Assert.AreEqual("Hello", target.OutputText);
+        Assert.That(target.Status, Is.EqualTo(ResponseStatus.InProgress));
+        Assert.That(target.CompletedAt, Is.EqualTo(source.CompletedAt));
+        Assert.That(target.Error, Is.SameAs(source.Error));
+        Assert.That(target.IncompleteDetails, Is.SameAs(source.IncompleteDetails));
+        Assert.That(target.Usage, Is.SameAs(source.Usage));
+        Assert.That(target.OutputText, Is.EqualTo("Hello"));
         // Output is NOT copied — accumulated via output item events
-        Assert.IsEmpty(target.Output);
+        Assert.That(target.Output, Is.Empty);
     }
 
     // ── UpdateFromEvent ───────────────────────────────────────
@@ -374,7 +374,7 @@ public class ResponseMutationsTests
         target.UpdateFromEvent(evt);
 
         // No fields are copied — ReplaceResponse handles full replacement
-        Assert.IsNull(target.OutputText);
+        Assert.That(target.OutputText, Is.Null);
     }
 
     [Test]
@@ -394,9 +394,9 @@ public class ResponseMutationsTests
         target.UpdateFromEvent(evt);
 
         // No fields are set — handler must set status via SetCompleted()
-        Assert.IsNull(target.Status);
-        Assert.IsNull(target.CompletedAt);
-        Assert.IsNull(target.OutputText);
+        Assert.That(target.Status, Is.Null);
+        Assert.That(target.CompletedAt, Is.Null);
+        Assert.That(target.OutputText, Is.Null);
     }
 
     [Test]
@@ -415,8 +415,8 @@ public class ResponseMutationsTests
         target.UpdateFromEvent(evt);
 
         // No fields are set — handler must set status via SetFailed()
-        Assert.IsNull(target.Status);
-        Assert.IsNull(target.Error);
+        Assert.That(target.Status, Is.Null);
+        Assert.That(target.Error, Is.Null);
     }
 
     [Test]
@@ -435,8 +435,8 @@ public class ResponseMutationsTests
         target.UpdateFromEvent(evt);
 
         // No fields are set — handler must set status via SetIncomplete()
-        Assert.IsNull(target.Status);
-        Assert.IsNull(target.IncompleteDetails);
+        Assert.That(target.Status, Is.Null);
+        Assert.That(target.IncompleteDetails, Is.Null);
     }
 
     [Test]
@@ -455,7 +455,7 @@ public class ResponseMutationsTests
         target.UpdateFromEvent(evt);
 
         // No fields are copied — ReplaceResponse handles full replacement
-        Assert.IsNull(target.OutputText);
+        Assert.That(target.OutputText, Is.Null);
     }
 
     [Test]
@@ -474,7 +474,7 @@ public class ResponseMutationsTests
         target.UpdateFromEvent(evt);
 
         // No fields are copied — ReplaceResponse handles full replacement
-        Assert.IsNull(target.OutputText);
+        Assert.That(target.OutputText, Is.Null);
     }
 
     [Test]
@@ -490,7 +490,7 @@ public class ResponseMutationsTests
         response.UpdateFromEvent(evt);
 
         XAssert.Single(response.Output);
-        Assert.AreSame(item, response.Output[0]);
+        Assert.That(response.Output[0], Is.SameAs(item));
     }
 
     [Test]
@@ -506,7 +506,7 @@ public class ResponseMutationsTests
         response.UpdateFromEvent(evt);
 
         XAssert.Single(response.Output);
-        Assert.AreSame(item, response.Output[0]);
+        Assert.That(response.Output[0], Is.SameAs(item));
     }
 
     [Test]
@@ -517,8 +517,8 @@ public class ResponseMutationsTests
 
         response.UpdateFromEvent(evt);
 
-        Assert.AreEqual(ResponseStatus.InProgress, response.Status);
-        Assert.IsEmpty(response.Output);
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.InProgress));
+        Assert.That(response.Output, Is.Empty);
     }
 
     // ── SetOutputItemAtIndex ──────────────────────────────────
@@ -534,10 +534,10 @@ public class ResponseMutationsTests
 
         output.SetOutputItemAtIndex(2, item);
 
-        Assert.AreEqual(3, output.Count);
-        Assert.IsNull(output[0]);
-        Assert.IsNull(output[1]);
-        Assert.AreSame(item, output[2]);
+        Assert.That(output.Count, Is.EqualTo(3));
+        Assert.That(output[0], Is.Null);
+        Assert.That(output[1], Is.Null);
+        Assert.That(output[2], Is.SameAs(item));
     }
 
     [Test]
@@ -551,6 +551,6 @@ public class ResponseMutationsTests
         output.SetOutputItemAtIndex(0, item2);
 
         XAssert.Single(output);
-        Assert.AreSame(item2, output[0]);
+        Assert.That(output[0], Is.SameAs(item2));
     }
 }

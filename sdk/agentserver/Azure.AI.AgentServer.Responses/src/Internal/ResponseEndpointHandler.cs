@@ -4,6 +4,7 @@
 using System.Diagnostics;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Validators;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -81,7 +82,8 @@ internal sealed class ResponseEndpointHandler
                 ?? throw new BadRequestException("Request body is required.");
 
             // Parse raw body for IResponseContext.RawBody — clone decouples from JsonDocument lifetime
-            rawBody = JsonDocument.Parse(bodyBytes).RootElement.Clone();
+            using var doc = JsonDocument.Parse(bodyBytes);
+            rawBody = doc.RootElement.Clone();
         }
         catch (JsonException ex)
         {
@@ -213,27 +215,45 @@ internal sealed class ResponseEndpointHandler
     public async Task<IResult> GetResponseAsync(HttpContext httpContext, string responseId)
     {
         // SSE replay trigger: ?stream=true query parameter (FR-005)
-        // Must check before delegating to orchestrator because replay requires
-        // access to the execution for bg+streaming guard and the HTTP response for SSE.
         if (httpContext.Request.Query.TryGetValue("stream", out var streamValue)
             && string.Equals(streamValue, "true", StringComparison.OrdinalIgnoreCase))
         {
-            if (!_tracker.TryGet(responseId, out var execution) || execution is null)
+            // Apply B2 guards: SSE replay requires background + streaming + store.
+            if (_tracker.TryGet(responseId, out var execution) && execution is not null)
             {
-                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+                // In-flight: mode flags are available on the execution.
+                if (!execution.Store)
+                {
+                    throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+                }
+
+                // Guard: SSE replay requires background + streaming (B2, FR-013)
+                if (!execution.IsBackground || !execution.IsStreaming)
+                {
+                    throw new BadRequestException(
+                        "SSE replay is only available for background streaming responses.");
+                }
+            }
+            else
+            {
+                // Not in-flight: verify the response exists in the provider before
+                // attempting replay. Provider throws ResourceNotFoundException (404)
+                // for unknown IDs and BadRequestException (400) for deleted responses.
+                // This also covers store=false (never persisted → 404).
+                await _provider.GetResponseAsync(responseId);
+
+                // TODO: B2 requires checking that the response was created with
+                // background=true AND stream=true. After the execution leaves the
+                // tracker, mode flags are not persisted on the Response model.
+                // The stream provider may still have events for non-bg responses
+                // within the EventStreamTtl window. A full fix requires storing
+                // mode flags in the provider or stream provider interface.
             }
 
-            if (!execution.Store)
-            {
-                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
-            }
-
-            // Guard: SSE replay requires background + streaming (FR-013)
-            if (!execution.IsBackground || !execution.IsStreaming)
-            {
-                throw new BadRequestException(
-                    "SSE replay is only available for background streaming responses.");
-            }
+            // In-flight and passed guards OR not-in-flight and exists in provider —
+            // delegate to the stream provider. A pluggable IResponsesStreamProvider
+            // backed by persistent storage (Redis, Kafka, etc.) can replay events
+            // even after the in-flight execution is gone.
 
             // Parse starting_after query parameter (FR-016)
             long? startingAfter = null;
@@ -267,7 +287,7 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> DeleteResponseAsync(HttpContext httpContext, string responseId)
     {
-        // Guard: check execution tracker for in-flight status
+        // Guard: if response is in-flight, check for store=false and in-progress guards
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
             if (!execution.Store)
@@ -275,21 +295,28 @@ internal sealed class ResponseEndpointHandler
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
             }
 
-            // In-flight guard: response with no terminal state cannot be deleted
+            // B16: non-background in-flight responses are not findable
+            if (!execution.IsBackground && execution.CompletedAt is null)
+            {
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+
+            // In-flight guard: background response with no terminal state cannot be deleted
             if (execution.CompletedAt is null)
             {
                 throw new BadRequestException(
                     "Response is currently in progress and cannot be deleted.");
             }
+
+            _tracker.TryRemove(responseId);
         }
 
-        // Delegate deletion to provider (throws ResourceNotFoundException if not found)
+        // Delegate deletion to provider (throws ResourceNotFoundException if not found).
+        // This works whether or not the response was in the tracker — the provider
+        // is the source of truth for persisted responses.
         await _provider.DeleteResponseAsync(responseId);
 
-        // Remove from tracker as well
-        _tracker.TryRemove(responseId);
-
-        var result = new DeleteResponseResult(responseId);
+        var result = AzureAIAgentServerResponsesModelFactory.DeleteResponseResult(id: responseId);
         return Results.Json(result, SharedJsonOptions.Instance, statusCode: 200);
     }
 

@@ -8,7 +8,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Builders;
 
 public class TextContentBuilderTests
 {
-    private static (ResponseEventStream stream, OutputItemMessageBuilder msg) CreateMessageScope()
+    private static (ResponseEventStream Stream, OutputItemMessageBuilder Msg) CreateMessageScope()
     {
         var context = new ResponseContext("resp_test");
         var stream = new ResponseEventStream(context, new CreateResponse { Model = "gpt-4o" });
@@ -25,7 +25,7 @@ public class TextContentBuilderTests
 
         var text = msg.AddTextContent();
 
-        Assert.IsNotNull(text);
+        Assert.That(text, Is.Not.Null);
         XAssert.IsType<TextContentBuilder>(text);
     }
 
@@ -36,7 +36,7 @@ public class TextContentBuilderTests
 
         var text = msg.AddTextContent();
 
-        Assert.AreEqual(0, text.ContentIndex);
+        Assert.That(text.ContentIndex, Is.EqualTo(0));
     }
 
     [Test]
@@ -47,8 +47,8 @@ public class TextContentBuilderTests
         var text0 = msg.AddTextContent();
         var text1 = msg.AddTextContent();
 
-        Assert.AreEqual(0, text0.ContentIndex);
-        Assert.AreEqual(1, text1.ContentIndex);
+        Assert.That(text0.ContentIndex, Is.EqualTo(0));
+        Assert.That(text1.ContentIndex, Is.EqualTo(1));
     }
 
     // ── T007: EmitAdded ───────────────────────────────────────
@@ -73,8 +73,8 @@ public class TextContentBuilderTests
         var evt = text.EmitAdded();
 
         var part = XAssert.IsType<OutputContentOutputTextContent>(evt.Part);
-        Assert.AreEqual("", part.Text);
-        Assert.IsEmpty(part.Annotations);
+        Assert.That(part.Text, Is.EqualTo(""));
+        Assert.That(part.Annotations, Is.Empty);
     }
 
     [Test]
@@ -85,9 +85,9 @@ public class TextContentBuilderTests
 
         var evt = text.EmitAdded();
 
-        Assert.AreEqual(msg.ItemId, evt.ItemId);
-        Assert.AreEqual(msg.OutputIndex, evt.OutputIndex);
-        Assert.AreEqual(text.ContentIndex, evt.ContentIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(msg.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(msg.OutputIndex));
+        Assert.That(evt.ContentIndex, Is.EqualTo(text.ContentIndex));
     }
 
     // ── T008: EmitDelta + EmitDone ────────────────────────────
@@ -101,7 +101,7 @@ public class TextContentBuilderTests
         var evt = text.EmitDelta("Hello, ");
 
         XAssert.IsType<ResponseTextDeltaEvent>(evt);
-        Assert.AreEqual("Hello, ", evt.Delta);
+        Assert.That(evt.Delta, Is.EqualTo("Hello, "));
     }
 
     [Test]
@@ -112,9 +112,9 @@ public class TextContentBuilderTests
 
         var evt = text.EmitDelta("chunk");
 
-        Assert.AreEqual(msg.ItemId, evt.ItemId);
-        Assert.AreEqual(msg.OutputIndex, evt.OutputIndex);
-        Assert.AreEqual(text.ContentIndex, evt.ContentIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(msg.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(msg.OutputIndex));
+        Assert.That(evt.ContentIndex, Is.EqualTo(text.ContentIndex));
     }
 
     [Test]
@@ -126,8 +126,8 @@ public class TextContentBuilderTests
         var d1 = text.EmitDelta("Hello, ");
         var d2 = text.EmitDelta("world!");
 
-        Assert.AreEqual("Hello, ", d1.Delta);
-        Assert.AreEqual("world!", d2.Delta);
+        Assert.That(d1.Delta, Is.EqualTo("Hello, "));
+        Assert.That(d2.Delta, Is.EqualTo("world!"));
     }
 
     [Test]
@@ -140,7 +140,7 @@ public class TextContentBuilderTests
         var evt = text.EmitDone("Hello, world!");
 
         XAssert.IsType<ResponseTextDoneEvent>(evt);
-        Assert.AreEqual("Hello, world!", evt.Text);
+        Assert.That(evt.Text, Is.EqualTo("Hello, world!"));
     }
 
     [Test]
@@ -149,12 +149,12 @@ public class TextContentBuilderTests
         var (_, msg) = CreateMessageScope();
         var text = msg.AddTextContent();
 
-        Assert.IsNull(text.FinalText);
+        Assert.That(text.FinalText, Is.Null);
 
         text.EmitAdded();
         text.EmitDone("Final value");
 
-        Assert.AreEqual("Final value", text.FinalText);
+        Assert.That(text.FinalText, Is.EqualTo("Final value"));
     }
 
     [Test]
@@ -166,9 +166,9 @@ public class TextContentBuilderTests
         text.EmitAdded();
         var evt = text.EmitDone("done text");
 
-        Assert.AreEqual(msg.ItemId, evt.ItemId);
-        Assert.AreEqual(msg.OutputIndex, evt.OutputIndex);
-        Assert.AreEqual(text.ContentIndex, evt.ContentIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(msg.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(msg.OutputIndex));
+        Assert.That(evt.ContentIndex, Is.EqualTo(text.ContentIndex));
     }
 
     [Test]
@@ -183,8 +183,8 @@ public class TextContentBuilderTests
         var delta = text.EmitDelta("Hi");   // seq 1
         var done = text.EmitDone("Hi");     // seq 2
 
-        Assert.AreEqual(0, added.SequenceNumber);
-        Assert.AreEqual(1, delta.SequenceNumber);
-        Assert.AreEqual(2, done.SequenceNumber);
+        Assert.That(added.SequenceNumber, Is.EqualTo(0));
+        Assert.That(delta.SequenceNumber, Is.EqualTo(1));
+        Assert.That(done.SequenceNumber, Is.EqualTo(2));
     }
 }

@@ -54,7 +54,7 @@ public class ShutdownTests : IDisposable
         var body = JsonSerializer.Serialize(new { model = "test", background = true });
         var createResponse = await _client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, createResponse.StatusCode);
+        Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var created = await createResponse.Content.ReadAsStringAsync();
         using var doc = JsonDocument.Parse(created);
@@ -70,8 +70,7 @@ public class ShutdownTests : IDisposable
         await Task.Delay(200);
 
         // Handler should have observed IsShutdownRequested == true
-        Assert.IsTrue(capturedIsShutdown,
-            "Handler should observe IsShutdownRequested == true during shutdown");
+        Assert.That(capturedIsShutdown, Is.True, "Handler should observe IsShutdownRequested == true during shutdown");
     }
 
     /// <summary>
@@ -118,13 +117,13 @@ public class ShutdownTests : IDisposable
             var getBody = await getResponse.Content.ReadAsStringAsync();
             using var getDoc = JsonDocument.Parse(getBody);
             var status = getDoc.RootElement.GetProperty("status").GetString();
-            Assert.AreEqual("incomplete", status);
+            Assert.That(status, Is.EqualTo("incomplete"));
         }
         else
         {
             // If the host shut down too fast, just verify the handler completed
             // with the incomplete signal (the first assertion covers this)
-            Assert.IsTrue(true, "Host shut down before GET could complete — " +
+            Assert.That(true, Is.True, "Host shut down before GET could complete — " +
                 "handler-level assertions verify correct behavior");
         }
     }
@@ -156,7 +155,7 @@ public class ShutdownTests : IDisposable
         var body = JsonSerializer.Serialize(new { model = "test", background = true });
         var createResponse = await client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, createResponse.StatusCode);
+        Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Wait for handler to start
         await handlerStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
@@ -167,7 +166,7 @@ public class ShutdownTests : IDisposable
         stopwatch.Stop();
 
         // Verify shutdown completed within reasonable time (< 5s)
-        Assert.IsTrue(stopwatch.Elapsed < TimeSpan.FromSeconds(5),
+        Assert.That(stopwatch.Elapsed < TimeSpan.FromSeconds(5), Is.True,
             $"Shutdown took {stopwatch.Elapsed}, expected < 5s with 2s timeout");
     }
 
@@ -186,16 +185,16 @@ public class ShutdownTests : IDisposable
         execution.Context = context;
 
         // Before shutdown
-        Assert.IsFalse(context.IsShutdownRequested);
-        Assert.IsFalse(execution.ShutdownRequested);
+        Assert.That(context.IsShutdownRequested, Is.False);
+        Assert.That(execution.ShutdownRequested, Is.False);
 
         // Simulate shutdown
         execution.ShutdownRequested = true;
         context.IsShutdownRequested = true;
 
         // After shutdown
-        Assert.IsTrue(context.IsShutdownRequested);
-        Assert.IsTrue(execution.ShutdownRequested);
+        Assert.That(context.IsShutdownRequested, Is.True);
+        Assert.That(execution.ShutdownRequested, Is.True);
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> ShutdownAwareHandlerStream(

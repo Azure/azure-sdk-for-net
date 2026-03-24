@@ -28,20 +28,20 @@ public class ResponseValidationPipelineTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "test", stream = true });
         var events = await ParseSseAsync(response);
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Should have response.created followed by response.failed
-        Assert.IsTrue(events.Count >= 2, $"Expected at least 2 events, got {events.Count}");
-        Assert.AreEqual("response.created", events[0].EventType);
+        Assert.That(events.Count >= 2, Is.True, $"Expected at least 2 events, got {events.Count}");
+        Assert.That(events[0].EventType, Is.EqualTo("response.created"));
 
         var lastEvent = events[^1];
-        Assert.AreEqual("response.failed", lastEvent.EventType);
+        Assert.That(lastEvent.EventType, Is.EqualTo("response.failed"));
 
         // The failed event should include a server_error on the response object
         using var doc = JsonDocument.Parse(lastEvent.Data);
         var errorCode = doc.RootElement.GetProperty("response")
             .GetProperty("error").GetProperty("code").GetString();
-        Assert.AreEqual("server_error", errorCode);
+        Assert.That(errorCode, Is.EqualTo("server_error"));
     }
 
     // -----------------------------------------------------------------------
@@ -58,10 +58,10 @@ public class ResponseValidationPipelineTests : ProtocolTestBase
 
         // Non-streaming mode: exception should result in 200 with failed status
         // (exception is caught in ConsumeHandlerEventsAsync, response status set to failed)
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(response);
-        Assert.AreEqual("failed", doc.RootElement.GetProperty("status").GetString());
-        Assert.AreEqual("server_error", doc.RootElement.GetProperty("error").GetProperty("code").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("failed"));
+        Assert.That(doc.RootElement.GetProperty("error").GetProperty("code").GetString(), Is.EqualTo("server_error"));
     }
 
     [Test]
@@ -93,12 +93,12 @@ public class ResponseValidationPipelineTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "test", stream = true });
         var events = await ParseSseAsync(response);
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Pre-response.created error: standalone error event (not response.failed)
-        Assert.IsNotEmpty(events);
+        Assert.That(events, Is.Not.Empty);
         var lastEvent = events[^1];
-        Assert.AreEqual("error", lastEvent.EventType);
+        Assert.That(lastEvent.EventType, Is.EqualTo("error"));
     }
 
     // -----------------------------------------------------------------------
@@ -145,9 +145,9 @@ public class ResponseValidationPipelineTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "test", stream = true });
         var events = await ParseSseAsync(response);
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("response.created", events[0].EventType);
-        Assert.AreEqual("response.completed", events[^1].EventType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(events[0].EventType, Is.EqualTo("response.created"));
+        Assert.That(events[^1].EventType, Is.EqualTo("response.completed"));
     }
 
     [Test]
@@ -157,9 +157,9 @@ public class ResponseValidationPipelineTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(response);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // -----------------------------------------------------------------------

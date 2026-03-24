@@ -21,7 +21,7 @@ public class MapResponsesServerTests : IDisposable
 
         var response = await client.PostAsync("/responses", content);
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     [Test]
@@ -35,7 +35,7 @@ public class MapResponsesServerTests : IDisposable
 
         var response = await client.PostAsync("/v1/responses", content);
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     [Test]
@@ -49,7 +49,7 @@ public class MapResponsesServerTests : IDisposable
 
         var response = await client.PostAsync("/responses", content);
 
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     [Test]
@@ -61,7 +61,7 @@ public class MapResponsesServerTests : IDisposable
         // Cancel on unknown ID should return 404 (not 405 / routing miss)
         var response = await client.PostAsync("/responses/resp_test123/cancel", null);
 
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     [Test]
@@ -73,7 +73,7 @@ public class MapResponsesServerTests : IDisposable
         // GET on unknown ID should return 404
         var response = await client.GetAsync("/responses/resp_test123");
 
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     public void Dispose()

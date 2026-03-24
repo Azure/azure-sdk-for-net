@@ -23,8 +23,8 @@ public class ValidationErrorReportingTests
         // temperature wrong type + model wrong type = at least 2 errors
         var result = Validate("""{ "model": 42, "temperature": "hot" }""");
 
-        Assert.IsFalse(result.IsValid);
-        Assert.IsTrue(result.Errors.Count >= 2,
+        Assert.That(result.IsValid, Is.False);
+        Assert.That(result.Errors.Count >= 2, Is.True,
             $"Expected at least 2 errors, got {result.Errors.Count}: {string.Join("; ", result.Errors.Select(e => e.Message))}");
     }
 
@@ -45,11 +45,11 @@ public class ValidationErrorReportingTests
         // PW-006: model is optional, use invalid type to trigger errors
         var result = Validate("""{ "model": 42 }""");
 
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         foreach (var error in result.Errors)
         {
-            Assert.IsFalse(string.IsNullOrWhiteSpace(error.Message));
-            Assert.IsTrue(error.Message.Length > 5, $"Error message too short: '{error.Message}'");
+            Assert.That(string.IsNullOrWhiteSpace(error.Message), Is.False);
+            Assert.That(error.Message.Length > 5, Is.True, $"Error message too short: '{error.Message}'");
         }
     }
 
@@ -68,7 +68,7 @@ public class ValidationErrorReportingTests
         """);
 
         // The second tool is missing "type" discriminator
-        Assert.IsFalse(result.IsValid);
+        Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path.Contains("["));
     }
 }

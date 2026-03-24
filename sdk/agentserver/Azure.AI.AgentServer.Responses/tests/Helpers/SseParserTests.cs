@@ -13,8 +13,8 @@ public class SseParserTests
         var events = SseParser.Parse(raw);
 
         XAssert.Single(events);
-        Assert.AreEqual("response.created", events[0].EventType);
-        Assert.AreEqual("{\"type\":\"response.created\"}", events[0].Data);
+        Assert.That(events[0].EventType, Is.EqualTo("response.created"));
+        Assert.That(events[0].Data, Is.EqualTo("{\"type\":\"response.created\"}"));
     }
 
     [Test]
@@ -25,9 +25,9 @@ public class SseParserTests
 
         var events = SseParser.Parse(raw);
 
-        Assert.AreEqual(2, events.Count);
-        Assert.AreEqual("response.created", events[0].EventType);
-        Assert.AreEqual("response.completed", events[1].EventType);
+        Assert.That(events.Count, Is.EqualTo(2));
+        Assert.That(events[0].EventType, Is.EqualTo("response.created"));
+        Assert.That(events[1].EventType, Is.EqualTo("response.completed"));
     }
 
     [Test]
@@ -38,7 +38,7 @@ public class SseParserTests
         var events = SseParser.Parse(raw);
 
         XAssert.Single(events);
-        Assert.AreEqual("response.created", events[0].EventType);
+        Assert.That(events[0].EventType, Is.EqualTo("response.created"));
     }
 
     [Test]
@@ -46,7 +46,7 @@ public class SseParserTests
     {
         var events = SseParser.Parse("");
 
-        Assert.IsEmpty(events);
+        Assert.That(events, Is.Empty);
     }
 
     [Test]
@@ -56,7 +56,7 @@ public class SseParserTests
 
         var events = SseParser.Parse(raw);
 
-        Assert.IsEmpty(events);
+        Assert.That(events, Is.Empty);
     }
 
     [Test]
@@ -66,7 +66,7 @@ public class SseParserTests
 
         var events = SseParser.Parse(raw);
 
-        Assert.IsEmpty(events);
+        Assert.That(events, Is.Empty);
     }
 
     [Test]
@@ -79,8 +79,8 @@ public class SseParserTests
 
         var events = SseParser.Parse(raw);
 
-        Assert.AreEqual(2, events.Count);
-        Assert.AreEqual("response.created", events[0].EventType);
-        Assert.AreEqual("response.completed", events[1].EventType);
+        Assert.That(events.Count, Is.EqualTo(2));
+        Assert.That(events[0].EventType, Is.EqualTo("response.created"));
+        Assert.That(events[1].EventType, Is.EqualTo("response.completed"));
     }
 }

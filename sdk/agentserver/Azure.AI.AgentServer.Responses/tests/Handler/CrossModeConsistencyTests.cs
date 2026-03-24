@@ -37,13 +37,13 @@ public class CrossModeConsistencyTests : IDisposable
         var response = await _client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var json = await response.Content.ReadFromJsonAsync<JsonElement>();
 
-        Assert.AreEqual("completed", json.GetProperty("status").GetString());
-        Assert.IsTrue(json.TryGetProperty("completed_at", out _));
-        Assert.IsTrue(json.TryGetProperty("output", out var output));
-        Assert.IsTrue(output.GetArrayLength() >= 1);
+        Assert.That(json.GetProperty("status").GetString(), Is.EqualTo("completed"));
+        Assert.That(json.TryGetProperty("completed_at", out _), Is.True);
+        Assert.That(json.TryGetProperty("output", out var output), Is.True);
+        Assert.That(output.GetArrayLength() >= 1, Is.True);
     }
 
     [Test]
@@ -92,11 +92,11 @@ public class CrossModeConsistencyTests : IDisposable
             await Task.Delay(50);
         }
 
-        Assert.IsTrue(reachedTerminal, "Timed out waiting for background response to reach terminal status");
-        Assert.AreEqual("completed", json.GetProperty("status").GetString());
-        Assert.IsTrue(json.TryGetProperty("completed_at", out _));
-        Assert.IsTrue(json.TryGetProperty("output", out var output));
-        Assert.IsTrue(output.GetArrayLength() >= 1);
+        Assert.That(reachedTerminal, Is.True, "Timed out waiting for background response to reach terminal status");
+        Assert.That(json.GetProperty("status").GetString(), Is.EqualTo("completed"));
+        Assert.That(json.TryGetProperty("completed_at", out _), Is.True);
+        Assert.That(json.TryGetProperty("output", out var output), Is.True);
+        Assert.That(output.GetArrayLength() >= 1, Is.True);
     }
 
     [Test]

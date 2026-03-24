@@ -25,8 +25,8 @@ public class BackgroundModeProtocolTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "test", background = true });
 
         // Should return immediately even though handler hasn't finished
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("application/json", response.Content.Headers.ContentType?.MediaType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("application/json"));
 
         // Clean up — let handler finish
         tcs.SetResult();
@@ -43,7 +43,7 @@ public class BackgroundModeProtocolTests : ProtocolTestBase
         var response = await PostResponsesAsync(new { model = "test", background = true });
 
         using var doc = await ParseJsonAsync(response);
-        Assert.AreEqual("in_progress", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
 
         tcs.SetResult();
         await WaitForBackgroundCompletionAsync(
@@ -66,10 +66,10 @@ public class BackgroundModeProtocolTests : ProtocolTestBase
 
         // GET should now return completed
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var getDoc = await ParseJsonAsync(getResponse);
-        Assert.AreEqual("completed", getDoc.RootElement.GetProperty("status").GetString());
+        Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // ── Helper event factories ─────────────────────────────────

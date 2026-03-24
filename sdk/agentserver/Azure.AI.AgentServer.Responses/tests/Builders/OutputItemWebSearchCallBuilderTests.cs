@@ -21,7 +21,7 @@ public class OutputItemWebSearchCallBuilderTests
     {
         var stream = CreateStream();
         var builder = stream.AddOutputItemWebSearchCall();
-        Assert.IsNotNull(builder);
+        Assert.That(builder, Is.Not.Null);
         XAssert.IsType<OutputItemWebSearchCallBuilder>(builder);
     }
 
@@ -30,7 +30,7 @@ public class OutputItemWebSearchCallBuilderTests
     {
         var stream = CreateStream();
         var builder = stream.AddOutputItemWebSearchCall();
-        Assert.AreEqual(0, builder.OutputIndex);
+        Assert.That(builder.OutputIndex, Is.EqualTo(0));
     }
 
     [Test]
@@ -47,8 +47,8 @@ public class OutputItemWebSearchCallBuilderTests
         var stream = CreateStream();
         var msg = stream.AddOutputItemMessage();
         var ws = stream.AddOutputItemWebSearchCall();
-        Assert.AreEqual(0, msg.OutputIndex);
-        Assert.AreEqual(1, ws.OutputIndex);
+        Assert.That(msg.OutputIndex, Is.EqualTo(0));
+        Assert.That(ws.OutputIndex, Is.EqualTo(1));
     }
 
     // ── EmitAdded ─────────────────────────────────────────────
@@ -69,8 +69,8 @@ public class OutputItemWebSearchCallBuilderTests
         var builder = stream.AddOutputItemWebSearchCall();
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemWebSearchToolCall>(evt.Item);
-        Assert.AreEqual(builder.ItemId, item.Id);
-        Assert.AreEqual(OutputItemWebSearchToolCallStatus.InProgress, item.Status);
+        Assert.That(item.Id, Is.EqualTo(builder.ItemId));
+        Assert.That(item.Status, Is.EqualTo(OutputItemWebSearchToolCallStatus.InProgress));
     }
 
     [Test]
@@ -79,7 +79,7 @@ public class OutputItemWebSearchCallBuilderTests
         var stream = CreateStream();
         var builder = stream.AddOutputItemWebSearchCall();
         var evt = builder.EmitAdded();
-        Assert.AreEqual(0, evt.OutputIndex);
+        Assert.That(evt.OutputIndex, Is.EqualTo(0));
     }
 
     // ── Status events ─────────────────────────────────────────
@@ -91,8 +91,8 @@ public class OutputItemWebSearchCallBuilderTests
         var builder = stream.AddOutputItemWebSearchCall();
         var evt = builder.EmitInProgress();
         XAssert.IsType<ResponseWebSearchCallInProgressEvent>(evt);
-        Assert.AreEqual(builder.ItemId, evt.ItemId);
-        Assert.AreEqual(builder.OutputIndex, evt.OutputIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
 
     [Test]
@@ -102,8 +102,8 @@ public class OutputItemWebSearchCallBuilderTests
         var builder = stream.AddOutputItemWebSearchCall();
         var evt = builder.EmitSearching();
         XAssert.IsType<ResponseWebSearchCallSearchingEvent>(evt);
-        Assert.AreEqual(builder.ItemId, evt.ItemId);
-        Assert.AreEqual(builder.OutputIndex, evt.OutputIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
 
     [Test]
@@ -113,8 +113,8 @@ public class OutputItemWebSearchCallBuilderTests
         var builder = stream.AddOutputItemWebSearchCall();
         var evt = builder.EmitCompleted();
         XAssert.IsType<ResponseWebSearchCallCompletedEvent>(evt);
-        Assert.AreEqual(builder.ItemId, evt.ItemId);
-        Assert.AreEqual(builder.OutputIndex, evt.OutputIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
 
     // ── EmitDone ──────────────────────────────────────────────
@@ -137,8 +137,8 @@ public class OutputItemWebSearchCallBuilderTests
         builder.EmitAdded();
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemWebSearchToolCall>(evt.Item);
-        Assert.AreEqual(builder.ItemId, item.Id);
-        Assert.AreEqual(OutputItemWebSearchToolCallStatus.Completed, item.Status);
+        Assert.That(item.Id, Is.EqualTo(builder.ItemId));
+        Assert.That(item.Status, Is.EqualTo(OutputItemWebSearchToolCallStatus.Completed));
     }
 
     // ── Sequence numbers ──────────────────────────────────────
@@ -153,10 +153,10 @@ public class OutputItemWebSearchCallBuilderTests
         var searching = builder.EmitSearching(); // 2
         var completed = builder.EmitCompleted(); // 3
         var done = builder.EmitDone();           // 4
-        Assert.AreEqual(0, added.SequenceNumber);
-        Assert.AreEqual(1, inProg.SequenceNumber);
-        Assert.AreEqual(2, searching.SequenceNumber);
-        Assert.AreEqual(3, completed.SequenceNumber);
-        Assert.AreEqual(4, done.SequenceNumber);
+        Assert.That(added.SequenceNumber, Is.EqualTo(0));
+        Assert.That(inProg.SequenceNumber, Is.EqualTo(1));
+        Assert.That(searching.SequenceNumber, Is.EqualTo(2));
+        Assert.That(completed.SequenceNumber, Is.EqualTo(3));
+        Assert.That(done.SequenceNumber, Is.EqualTo(4));
     }
 }

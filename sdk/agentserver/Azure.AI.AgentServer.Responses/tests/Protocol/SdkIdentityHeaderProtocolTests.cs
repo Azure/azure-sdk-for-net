@@ -25,9 +25,8 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.IsTrue(response.Headers.Contains(HeaderName),
-            $"Response must include '{HeaderName}' header");
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Headers.Contains(HeaderName), Is.True, $"Response must include '{HeaderName}' header");
 
         var value = response.Headers.GetValues(HeaderName).Single();
         AssertIdentityHeaderFormat(value);
@@ -42,9 +41,8 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
 
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.IsTrue(response.Headers.Contains(HeaderName),
-            $"SSE response must include '{HeaderName}' header");
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Headers.Contains(HeaderName), Is.True, $"SSE response must include '{HeaderName}' header");
 
         var value = response.Headers.GetValues(HeaderName).Single();
         AssertIdentityHeaderFormat(value);
@@ -57,9 +55,8 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
     {
         var response = await PostResponsesAsync("{not-valid-json!");
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-        Assert.IsTrue(response.Headers.Contains(HeaderName),
-            $"Error response must include '{HeaderName}' header");
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        Assert.That(response.Headers.Contains(HeaderName), Is.True, $"Error response must include '{HeaderName}' header");
 
         var value = response.Headers.GetValues(HeaderName).Single();
         AssertIdentityHeaderFormat(value);
@@ -76,9 +73,8 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
         // GET the response
         var getResponse = await GetResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
-        Assert.IsTrue(getResponse.Headers.Contains(HeaderName),
-            $"GET response must include '{HeaderName}' header");
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(getResponse.Headers.Contains(HeaderName), Is.True, $"GET response must include '{HeaderName}' header");
 
         var value = getResponse.Headers.GetValues(HeaderName).Single();
         AssertIdentityHeaderFormat(value);
@@ -99,9 +95,8 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
         // GET SSE replay
         var getResponse = await GetResponseStreamAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
-        Assert.IsTrue(getResponse.Headers.Contains(HeaderName),
-            $"SSE replay response must include '{HeaderName}' header");
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(getResponse.Headers.Contains(HeaderName), Is.True, $"SSE replay response must include '{HeaderName}' header");
 
         var value = getResponse.Headers.GetValues(HeaderName).Single();
         AssertIdentityHeaderFormat(value);
@@ -119,8 +114,7 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
         // Cancel it
         var cancelResponse = await CancelResponseAsync(responseId);
 
-        Assert.IsTrue(cancelResponse.Headers.Contains(HeaderName),
-            $"Cancel response must include '{HeaderName}' header");
+        Assert.That(cancelResponse.Headers.Contains(HeaderName), Is.True, $"Cancel response must include '{HeaderName}' header");
 
         var value = cancelResponse.Headers.GetValues(HeaderName).Single();
         AssertIdentityHeaderFormat(value);
@@ -141,8 +135,8 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
             System.Text.Encoding.UTF8, "application/json");
         var response = await client.PostAsync("/responses", content);
 
-        Assert.AreEqual(System.Net.HttpStatusCode.OK, response.StatusCode);
-        Assert.IsTrue(response.Headers.Contains(HeaderName));
+        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+        Assert.That(response.Headers.Contains(HeaderName), Is.True);
 
         var value = response.Headers.GetValues(HeaderName).Single();
         XAssert.Contains("azure-ai-agentserver-responses/", value);
@@ -157,7 +151,7 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
         // Default (no AdditionalServerIdentity) — header is just the SDK identity
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.IsTrue(response.Headers.Contains(HeaderName));
+        Assert.That(response.Headers.Contains(HeaderName), Is.True);
         var value = response.Headers.GetValues(HeaderName).Single();
         XAssert.Contains("azure-ai-agentserver-responses/", value);
         XAssert.DoesNotContain("; ", value);
@@ -175,7 +169,7 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
         // append pattern documented in the spec.
         var response = await PostResponsesAsync(new { model = "test" });
 
-        Assert.IsTrue(response.Headers.Contains(HeaderName));
+        Assert.That(response.Headers.Contains(HeaderName), Is.True);
         var value = response.Headers.GetValues(HeaderName).Single();
 
         // The value should be parseable as a semicolon-separated list

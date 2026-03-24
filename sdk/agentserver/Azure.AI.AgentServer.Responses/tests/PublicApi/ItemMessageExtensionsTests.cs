@@ -15,7 +15,7 @@ public class ItemMessageExtensionsTests
     {
         var json = """[{"type":"input_text","text":"Hello"}]""";
         var msg = new ItemMessage("msg1", MessageStatus.Completed, MessageRole.User, BinaryData.FromString(json));
-        Assert.IsNotNull(msg.Content);
+        Assert.That(msg.Content, Is.Not.Null);
         XAssert.Contains("Hello", msg.Content.ToString());
     }
 
@@ -31,7 +31,7 @@ public class ItemMessageExtensionsTests
         var expanded = msg.GetContentExpanded();
         var textContent = XAssert.Single(expanded);
         var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
-        Assert.AreEqual("Hello world", inputText.Text);
+        Assert.That(inputText.Text, Is.EqualTo("Hello world"));
     }
 
     // ── GetContentExpanded ────────────────────────────────────────────
@@ -51,7 +51,7 @@ public class ItemMessageExtensionsTests
         using var doc = System.Text.Json.JsonDocument.Parse(json);
         var msg = ItemMessage.DeserializeItemMessage(doc.RootElement, System.ClientModel.Primitives.ModelReaderWriterOptions.Json);
         var result = msg.GetContentExpanded();
-        Assert.IsEmpty(result);
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
@@ -64,7 +64,7 @@ public class ItemMessageExtensionsTests
 
         var textContent = XAssert.Single(result);
         var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
-        Assert.AreEqual("Hello world", inputText.Text);
+        Assert.That(inputText.Text, Is.EqualTo("Hello world"));
     }
 
     [Test]
@@ -76,11 +76,11 @@ public class ItemMessageExtensionsTests
 
         var result = msg.GetContentExpanded();
 
-        Assert.AreEqual(2, result.Count);
+        Assert.That(result.Count, Is.EqualTo(2));
         XAssert.IsType<MessageContentInputTextContent>(result[0]);
         XAssert.IsType<MessageContentInputTextContent>(result[1]);
-        Assert.AreEqual("Hi", ((MessageContentInputTextContent)result[0]).Text);
-        Assert.AreEqual("there", ((MessageContentInputTextContent)result[1]).Text);
+        Assert.That(((MessageContentInputTextContent)result[0]).Text, Is.EqualTo("Hi"));
+        Assert.That(((MessageContentInputTextContent)result[1]).Text, Is.EqualTo("there"));
     }
 
     [Test]
@@ -90,6 +90,6 @@ public class ItemMessageExtensionsTests
             BinaryData.FromString("42"));
 
         var ex = Assert.Throws<FormatException>(() => msg.GetContentExpanded());
-        Assert.AreEqual("Expected JSON array, object, or string for item content", ex.Message);
+        Assert.That(ex.Message, Is.EqualTo("Expected JSON array, object, or string for item content"));
     }
 }

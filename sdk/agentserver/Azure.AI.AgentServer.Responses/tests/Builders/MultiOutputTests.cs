@@ -45,31 +45,31 @@ public class MultiOutputTests
         events.Add(stream.EmitCompleted());    // 12
 
         // Assert: distinct output indices
-        Assert.AreEqual(0, msg0.OutputIndex);
-        Assert.AreEqual(1, msg1.OutputIndex);
+        Assert.That(msg0.OutputIndex, Is.EqualTo(0));
+        Assert.That(msg1.OutputIndex, Is.EqualTo(1));
 
         // Assert: distinct item IDs
-        Assert.AreNotEqual(msg0.ItemId, msg1.ItemId);
+        Assert.That(msg1.ItemId, Is.Not.EqualTo(msg0.ItemId));
 
         // Assert: monotonic sequence numbers
         for (int i = 0; i < events.Count; i++)
         {
-            Assert.AreEqual(i, events[i].SequenceNumber);
+            Assert.That(events[i].SequenceNumber, Is.EqualTo(i));
         }
 
         // Assert: correct output indices in events
         var added0 = (ResponseOutputItemAddedEvent)events[2];
         var added1 = (ResponseOutputItemAddedEvent)events[7];
-        Assert.AreEqual(0, added0.OutputIndex);
-        Assert.AreEqual(1, added1.OutputIndex);
+        Assert.That(added0.OutputIndex, Is.EqualTo(0));
+        Assert.That(added1.OutputIndex, Is.EqualTo(1));
 
         // Assert: each message has correct content in done event
         var done0 = XAssert.IsType<OutputItemOutputMessage>(((ResponseOutputItemDoneEvent)events[6]).Item);
         var done1 = XAssert.IsType<OutputItemOutputMessage>(((ResponseOutputItemDoneEvent)events[11]).Item);
         var content0 = XAssert.IsType<OutputMessageContentOutputTextContent>(done0.Content[0]);
         var content1 = XAssert.IsType<OutputMessageContentOutputTextContent>(done1.Content[0]);
-        Assert.AreEqual("First", content0.Text);
-        Assert.AreEqual("Second", content1.Text);
+        Assert.That(content0.Text, Is.EqualTo("First"));
+        Assert.That(content1.Text, Is.EqualTo("Second"));
     }
 
     // ── T018: Message + Function Call ─────────────────────────
@@ -103,17 +103,17 @@ public class MultiOutputTests
         events.Add(stream.EmitCompleted());    // 10
 
         // Assert: consecutive output indices
-        Assert.AreEqual(0, msg.OutputIndex);
-        Assert.AreEqual(1, fc.OutputIndex);
+        Assert.That(msg.OutputIndex, Is.EqualTo(0));
+        Assert.That(fc.OutputIndex, Is.EqualTo(1));
 
         // Assert: monotonic sequence numbers across both
         for (int i = 0; i < events.Count; i++)
         {
-            Assert.AreEqual(i, events[i].SequenceNumber);
+            Assert.That(events[i].SequenceNumber, Is.EqualTo(i));
         }
 
         // Assert: distinct item IDs
-        Assert.AreNotEqual(msg.ItemId, fc.ItemId);
+        Assert.That(fc.ItemId, Is.Not.EqualTo(msg.ItemId));
         XAssert.StartsWith("msg_", msg.ItemId);
         XAssert.StartsWith("fc_", fc.ItemId);
     }

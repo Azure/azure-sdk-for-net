@@ -8,7 +8,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Builders;
 
 public class RefusalContentBuilderTests
 {
-    private static (ResponseEventStream stream, OutputItemMessageBuilder msg) CreateMessageScope()
+    private static (ResponseEventStream Stream, OutputItemMessageBuilder Msg) CreateMessageScope()
     {
         var context = new ResponseContext("resp_test");
         var stream = new ResponseEventStream(context, new CreateResponse { Model = "gpt-4o" });
@@ -23,7 +23,7 @@ public class RefusalContentBuilderTests
     {
         var (_, msg) = CreateMessageScope();
         var refusal = msg.AddRefusalContent();
-        Assert.IsNotNull(refusal);
+        Assert.That(refusal, Is.Not.Null);
         XAssert.IsType<RefusalContentBuilder>(refusal);
     }
 
@@ -32,7 +32,7 @@ public class RefusalContentBuilderTests
     {
         var (_, msg) = CreateMessageScope();
         var refusal = msg.AddRefusalContent();
-        Assert.AreEqual(0, refusal.ContentIndex);
+        Assert.That(refusal.ContentIndex, Is.EqualTo(0));
     }
 
     [Test]
@@ -41,8 +41,8 @@ public class RefusalContentBuilderTests
         var (_, msg) = CreateMessageScope();
         var text = msg.AddTextContent();
         var refusal = msg.AddRefusalContent();
-        Assert.AreEqual(0, text.ContentIndex);
-        Assert.AreEqual(1, refusal.ContentIndex);
+        Assert.That(text.ContentIndex, Is.EqualTo(0));
+        Assert.That(refusal.ContentIndex, Is.EqualTo(1));
     }
 
     // ── RefusalContentBuilder.EmitAdded() ─────────────────────
@@ -63,7 +63,7 @@ public class RefusalContentBuilderTests
         var refusal = msg.AddRefusalContent();
         var evt = refusal.EmitAdded();
         var part = XAssert.IsType<OutputContentRefusalContent>(evt.Part);
-        Assert.AreEqual("", part.Refusal);
+        Assert.That(part.Refusal, Is.EqualTo(""));
     }
 
     [Test]
@@ -72,9 +72,9 @@ public class RefusalContentBuilderTests
         var (_, msg) = CreateMessageScope();
         var refusal = msg.AddRefusalContent();
         var evt = refusal.EmitAdded();
-        Assert.AreEqual(msg.ItemId, evt.ItemId);
-        Assert.AreEqual(msg.OutputIndex, evt.OutputIndex);
-        Assert.AreEqual(refusal.ContentIndex, evt.ContentIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(msg.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(msg.OutputIndex));
+        Assert.That(evt.ContentIndex, Is.EqualTo(refusal.ContentIndex));
     }
 
     // ── RefusalContentBuilder.EmitDelta() ─────────────────────
@@ -86,7 +86,7 @@ public class RefusalContentBuilderTests
         var refusal = msg.AddRefusalContent();
         var evt = refusal.EmitDelta("I can't ");
         XAssert.IsType<ResponseRefusalDeltaEvent>(evt);
-        Assert.AreEqual("I can't ", evt.Delta);
+        Assert.That(evt.Delta, Is.EqualTo("I can't "));
     }
 
     [Test]
@@ -95,9 +95,9 @@ public class RefusalContentBuilderTests
         var (_, msg) = CreateMessageScope();
         var refusal = msg.AddRefusalContent();
         var evt = refusal.EmitDelta("chunk");
-        Assert.AreEqual(msg.ItemId, evt.ItemId);
-        Assert.AreEqual(msg.OutputIndex, evt.OutputIndex);
-        Assert.AreEqual(refusal.ContentIndex, evt.ContentIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(msg.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(msg.OutputIndex));
+        Assert.That(evt.ContentIndex, Is.EqualTo(refusal.ContentIndex));
     }
 
     [Test]
@@ -107,8 +107,8 @@ public class RefusalContentBuilderTests
         var refusal = msg.AddRefusalContent();
         var d1 = refusal.EmitDelta("I can't ");
         var d2 = refusal.EmitDelta("help with that.");
-        Assert.AreEqual("I can't ", d1.Delta);
-        Assert.AreEqual("help with that.", d2.Delta);
+        Assert.That(d1.Delta, Is.EqualTo("I can't "));
+        Assert.That(d2.Delta, Is.EqualTo("help with that."));
     }
 
     // ── RefusalContentBuilder.EmitDone() ──────────────────────
@@ -121,7 +121,7 @@ public class RefusalContentBuilderTests
         refusal.EmitAdded();
         var evt = refusal.EmitDone("I can't help with that.");
         XAssert.IsType<ResponseRefusalDoneEvent>(evt);
-        Assert.AreEqual("I can't help with that.", evt.Refusal);
+        Assert.That(evt.Refusal, Is.EqualTo("I can't help with that."));
     }
 
     [Test]
@@ -129,10 +129,10 @@ public class RefusalContentBuilderTests
     {
         var (_, msg) = CreateMessageScope();
         var refusal = msg.AddRefusalContent();
-        Assert.IsNull(refusal.FinalRefusal);
+        Assert.That(refusal.FinalRefusal, Is.Null);
         refusal.EmitAdded();
         refusal.EmitDone("Final refusal");
-        Assert.AreEqual("Final refusal", refusal.FinalRefusal);
+        Assert.That(refusal.FinalRefusal, Is.EqualTo("Final refusal"));
     }
 
     [Test]
@@ -142,9 +142,9 @@ public class RefusalContentBuilderTests
         var refusal = msg.AddRefusalContent();
         refusal.EmitAdded();
         var evt = refusal.EmitDone("done text");
-        Assert.AreEqual(msg.ItemId, evt.ItemId);
-        Assert.AreEqual(msg.OutputIndex, evt.OutputIndex);
-        Assert.AreEqual(refusal.ContentIndex, evt.ContentIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(msg.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(msg.OutputIndex));
+        Assert.That(evt.ContentIndex, Is.EqualTo(refusal.ContentIndex));
     }
 
     // ── OutputItemMessageBuilder.EmitContentDone(RefusalContentBuilder) ─
@@ -169,7 +169,7 @@ public class RefusalContentBuilderTests
         refusal.EmitDone("I can't help with that.");
         var evt = msg.EmitContentDone(refusal);
         var part = XAssert.IsType<OutputContentRefusalContent>(evt.Part);
-        Assert.AreEqual("I can't help with that.", part.Refusal);
+        Assert.That(part.Refusal, Is.EqualTo("I can't help with that."));
     }
 
     [Test]
@@ -180,9 +180,9 @@ public class RefusalContentBuilderTests
         refusal.EmitAdded();
         refusal.EmitDone("refused");
         var evt = msg.EmitContentDone(refusal);
-        Assert.AreEqual(msg.ItemId, evt.ItemId);
-        Assert.AreEqual(msg.OutputIndex, evt.OutputIndex);
-        Assert.AreEqual(refusal.ContentIndex, evt.ContentIndex);
+        Assert.That(evt.ItemId, Is.EqualTo(msg.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(msg.OutputIndex));
+        Assert.That(evt.ContentIndex, Is.EqualTo(refusal.ContentIndex));
     }
 
     // ── EmitDone accumulation ─────────────────────────────────
@@ -200,7 +200,7 @@ public class RefusalContentBuilderTests
         var item = XAssert.IsType<OutputItemOutputMessage>(evt.Item);
         XAssert.Single(item.Content);
         var content = XAssert.IsType<OutputMessageContentRefusalContent>(item.Content[0]);
-        Assert.AreEqual("I can't help with that.", content.Refusal);
+        Assert.That(content.Refusal, Is.EqualTo("I can't help with that."));
     }
 
     [Test]
@@ -221,7 +221,7 @@ public class RefusalContentBuilderTests
 
         var evt = msg.EmitDone();
         var item = XAssert.IsType<OutputItemOutputMessage>(evt.Item);
-        Assert.AreEqual(2, item.Content.Count);
+        Assert.That(item.Content.Count, Is.EqualTo(2));
         XAssert.IsType<OutputMessageContentOutputTextContent>(item.Content[0]);
         XAssert.IsType<OutputMessageContentRefusalContent>(item.Content[1]);
     }
@@ -236,8 +236,8 @@ public class RefusalContentBuilderTests
         var added = refusal.EmitAdded();       // seq 0
         var delta = refusal.EmitDelta("Hi");   // seq 1
         var done = refusal.EmitDone("Hi");     // seq 2
-        Assert.AreEqual(0, added.SequenceNumber);
-        Assert.AreEqual(1, delta.SequenceNumber);
-        Assert.AreEqual(2, done.SequenceNumber);
+        Assert.That(added.SequenceNumber, Is.EqualTo(0));
+        Assert.That(delta.SequenceNumber, Is.EqualTo(1));
+        Assert.That(done.SequenceNumber, Is.EqualTo(2));
     }
 }

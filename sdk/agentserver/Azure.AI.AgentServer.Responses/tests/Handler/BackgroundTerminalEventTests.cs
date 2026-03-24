@@ -85,8 +85,8 @@ public class BackgroundTerminalEventTests : IDisposable
         var getResponse = await _client.GetAsync($"/responses/{responseId}");
         var json = await getResponse.Content.ReadFromJsonAsync<JsonElement>();
 
-        Assert.AreEqual("completed", json.GetProperty("status").GetString());
-        Assert.IsTrue(json.TryGetProperty("completed_at", out _));
+        Assert.That(json.GetProperty("status").GetString(), Is.EqualTo("completed"));
+        Assert.That(json.TryGetProperty("completed_at", out _), Is.True);
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> SuccessStream(

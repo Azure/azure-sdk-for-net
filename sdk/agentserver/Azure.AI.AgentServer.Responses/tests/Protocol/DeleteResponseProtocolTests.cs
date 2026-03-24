@@ -30,12 +30,12 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
         // DELETE the completed response
         var deleteResponse = await Client.DeleteAsync($"/responses/{responseId}");
 
-        Assert.AreEqual(HttpStatusCode.OK, deleteResponse.StatusCode);
+        Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var body = await deleteResponse.Content.ReadAsStringAsync();
         using var doc = JsonDocument.Parse(body);
-        Assert.AreEqual(responseId, doc.RootElement.GetProperty("id").GetString());
-        Assert.IsTrue(doc.RootElement.GetProperty("deleted").GetBoolean());
+        Assert.That(doc.RootElement.GetProperty("id").GetString(), Is.EqualTo(responseId));
+        Assert.That(doc.RootElement.GetProperty("deleted").GetBoolean(), Is.True);
     }
 
     /// <summary>
@@ -46,12 +46,12 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
     {
         var deleteResponse = await Client.DeleteAsync("/responses/resp_nonexistent_delete_test");
 
-        Assert.AreEqual(HttpStatusCode.NotFound, deleteResponse.StatusCode);
+        Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         var body = await deleteResponse.Content.ReadAsStringAsync();
         using var doc = JsonDocument.Parse(body);
-        Assert.IsTrue(doc.RootElement.TryGetProperty("error", out var error));
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
+        Assert.That(doc.RootElement.TryGetProperty("error", out var error), Is.True);
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     /// <summary>
@@ -69,12 +69,12 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
         // DELETE the in-flight response
         var deleteResponse = await Client.DeleteAsync($"/responses/{responseId}");
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, deleteResponse.StatusCode);
+        Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
         var body2 = await deleteResponse.Content.ReadAsStringAsync();
         using var doc2 = JsonDocument.Parse(body2);
-        Assert.IsTrue(doc2.RootElement.TryGetProperty("error", out var error2));
-        Assert.AreEqual("invalid_request_error", error2.GetProperty("type").GetString());
+        Assert.That(doc2.RootElement.TryGetProperty("error", out var error2), Is.True);
+        Assert.That(error2.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
 
         // Clean up
         tcs.SetResult();
@@ -82,20 +82,22 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
     }
 
     /// <summary>
-    /// T022: GET after DELETE returns 404.
+    /// T022: GET after DELETE returns 400 (deleted responses are distinguished from never-existed).
+    /// Per API Behaviour Contract Endpoint 5 Post-Deletion Behaviour:
+    /// GET /responses/{id} → HTTP 400 with message indicating the response has been deleted.
     /// </summary>
     [Test]
-    public async Task Get_After_Delete_Returns_404()
+    public async Task Get_After_Delete_Returns_400()
     {
         // Create and then delete a response
         var responseId = await CreateDefaultResponseAsync();
 
         var deleteResponse = await Client.DeleteAsync($"/responses/{responseId}");
-        Assert.AreEqual(HttpStatusCode.OK, deleteResponse.StatusCode);
+        Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-        // GET should return 404
+        // GET should return 400 (deleted, not 404 = never-existed)
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 
     /// <summary>
@@ -107,7 +109,7 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
         // Create a store=false response (non-background, non-streaming)
         var body = JsonSerializer.Serialize(new { model = "test", store = false });
         var createResponse = await PostResponsesAsync(body);
-        Assert.AreEqual(HttpStatusCode.OK, createResponse.StatusCode);
+        Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Extract response ID from the returned body
         using var createDoc = await ParseJsonAsync(createResponse);
@@ -115,7 +117,7 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
 
         // DELETE should return 404 since store=false responses aren't persisted
         var deleteResponse = await Client.DeleteAsync($"/responses/{responseId}");
-        Assert.AreEqual(HttpStatusCode.NotFound, deleteResponse.StatusCode);
+        Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     /// <summary>
@@ -127,10 +129,10 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
         var responseId = await CreateDefaultResponseAsync();
 
         var firstDelete = await Client.DeleteAsync($"/responses/{responseId}");
-        Assert.AreEqual(HttpStatusCode.OK, firstDelete.StatusCode);
+        Assert.That(firstDelete.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var secondDelete = await Client.DeleteAsync($"/responses/{responseId}");
-        Assert.AreEqual(HttpStatusCode.NotFound, secondDelete.StatusCode);
+        Assert.That(secondDelete.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     /// <summary>
@@ -143,12 +145,12 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
         await WaitForBackgroundCompletionAsync(responseId);
 
         var deleteResponse = await Client.DeleteAsync($"/responses/{responseId}");
-        Assert.AreEqual(HttpStatusCode.OK, deleteResponse.StatusCode);
+        Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var body = await deleteResponse.Content.ReadAsStringAsync();
         using var doc = JsonDocument.Parse(body);
-        Assert.AreEqual(responseId, doc.RootElement.GetProperty("id").GetString());
-        Assert.IsTrue(doc.RootElement.GetProperty("deleted").GetBoolean());
+        Assert.That(doc.RootElement.GetProperty("id").GetString(), Is.EqualTo(responseId));
+        Assert.That(doc.RootElement.GetProperty("deleted").GetBoolean(), Is.True);
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> BlockingStream(

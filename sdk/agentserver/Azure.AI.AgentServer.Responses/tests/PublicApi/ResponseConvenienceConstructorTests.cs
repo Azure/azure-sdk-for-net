@@ -18,16 +18,16 @@ public class ResponseConvenienceConstructorTests
     public void Response_HasTwoParamConvenienceConstructor()
     {
         var ctor = typeof(Models.Response).GetConstructor(new[] { typeof(string), typeof(string) });
-        Assert.IsNotNull(ctor);
-        Assert.IsTrue(ctor!.IsPublic, "Response(string, string) should be public");
+        Assert.That(ctor, Is.Not.Null);
+        Assert.That(ctor!.IsPublic, Is.True, "Response(string, string) should be public");
     }
 
     [Test]
     public void Response_ConvenienceConstructor_SetsIdAndModel()
     {
         var response = new Models.Response("resp_123", "gpt-4o");
-        Assert.AreEqual("resp_123", response.Id);
-        Assert.AreEqual("gpt-4o", response.Model);
+        Assert.That(response.Id, Is.EqualTo("resp_123"));
+        Assert.That(response.Model, Is.EqualTo("gpt-4o"));
     }
 
     [Test]
@@ -44,15 +44,15 @@ public class ResponseConvenienceConstructorTests
     public void Response_ConvenienceConstructor_HasEmptyOutput()
     {
         var response = new Models.Response("resp_123", "gpt-4o");
-        Assert.IsNotNull(response.Output);
-        Assert.IsEmpty(response.Output);
+        Assert.That(response.Output, Is.Not.Null);
+        Assert.That(response.Output, Is.Empty);
     }
 
     [Test]
     public void Response_ConvenienceConstructor_DefaultsParallelToolCallsToFalse()
     {
         var response = new Models.Response("resp_123", "gpt-4o");
-        Assert.IsFalse(response.ParallelToolCalls);
+        Assert.That(response.ParallelToolCalls, Is.False);
     }
 
     [Test]
@@ -60,7 +60,7 @@ public class ResponseConvenienceConstructorTests
     {
         // Validates the instance is usable (no NullReferenceException on access)
         var response = new Models.Response("resp_123", "gpt-4o");
-        Assert.IsNotNull(response);
+        Assert.That(response, Is.Not.Null);
         XAssert.IsType<Models.Response>(response);
     }
 }

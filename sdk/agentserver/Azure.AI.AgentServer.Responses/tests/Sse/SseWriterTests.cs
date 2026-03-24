@@ -54,8 +54,8 @@ public class SseWriterTests
         var dataLine = output.Split('\n').First(l => l.StartsWith("data: "));
         var json = dataLine["data: ".Length..];
         var parsed = JsonSerializer.Deserialize<JsonElement>(json);
-        Assert.AreEqual("response.output_text.delta", parsed.GetProperty("type").GetString());
-        Assert.AreEqual("Hello", parsed.GetProperty("delta").GetString());
+        Assert.That(parsed.GetProperty("type").GetString(), Is.EqualTo("response.output_text.delta"));
+        Assert.That(parsed.GetProperty("delta").GetString(), Is.EqualTo("Hello"));
     }
 
     [Test]
@@ -67,7 +67,7 @@ public class SseWriterTests
         await writer.WriteKeepAliveAsync(CancellationToken.None);
 
         var output = Encoding.UTF8.GetString(stream.ToArray());
-        Assert.AreEqual(": keep-alive\n\n", output);
+        Assert.That(output, Is.EqualTo(": keep-alive\n\n"));
     }
 
     [Test]
@@ -81,7 +81,7 @@ public class SseWriterTests
 
         var output = Encoding.UTF8.GetString(stream.ToArray());
         var eventLine = output.Split('\n').First(l => l.StartsWith("event: "));
-        Assert.AreEqual("event: response.completed", eventLine);
+        Assert.That(eventLine, Is.EqualTo("event: response.completed"));
     }
 
     [Test]
@@ -97,7 +97,7 @@ public class SseWriterTests
         var output = Encoding.UTF8.GetString(stream.ToArray());
         // Each event ends with \n\n (blank line separator)
         var events = output.Split("\n\n", StringSplitOptions.RemoveEmptyEntries);
-        Assert.AreEqual(2, events.Length);
+        Assert.That(events.Length, Is.EqualTo(2));
     }
 
     [Test]
@@ -121,6 +121,6 @@ public class SseWriterTests
         var output = Encoding.UTF8.GetString(stream.ToArray());
         // All writes should complete without corruption
         var blocks = output.Split("\n\n", StringSplitOptions.RemoveEmptyEntries);
-        Assert.AreEqual(20, blocks.Length); // 10 events + 10 keep-alives
+        Assert.That(blocks.Length, Is.EqualTo(20)); // 10 events + 10 keep-alives
     }
 }

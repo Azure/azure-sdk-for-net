@@ -90,8 +90,8 @@ public class GetAsyncTests : IDisposable
 
         var result = await _orchestrator.GetAsync("resp_get_ok");
 
-        Assert.AreEqual("resp_get_ok", result.Id);
-        Assert.AreEqual(ResponseStatus.Completed, result.Status);
+        Assert.That(result.Id, Is.EqualTo("resp_get_ok"));
+        Assert.That(result.Status, Is.EqualTo(ResponseStatus.Completed));
     }
 
     [Test]
@@ -103,7 +103,7 @@ public class GetAsyncTests : IDisposable
 
         var result = await _orchestrator.GetAsync("resp_get_bg");
 
-        Assert.AreEqual("resp_get_bg", result.Id);
+        Assert.That(result.Id, Is.EqualTo("resp_get_bg"));
     }
 
     public void Dispose()

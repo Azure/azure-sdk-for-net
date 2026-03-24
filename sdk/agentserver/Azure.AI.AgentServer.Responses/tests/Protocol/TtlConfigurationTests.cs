@@ -37,7 +37,7 @@ public class TtlConfigurationTests : IDisposable
         using var provider = new InMemoryResponsesProvider(options, fakeTime);
 
         // Verify default
-        Assert.AreEqual(TimeSpan.FromMinutes(10), options.Value.EventStreamTtl);
+        Assert.That(options.Value.EventStreamTtl, Is.EqualTo(TimeSpan.FromMinutes(10)));
 
         // Create and complete a response with an event stream
         var response = new Models.Response("resp_default_ttl", "gpt-4o") { Status = ResponseStatus.InProgress };
@@ -49,15 +49,15 @@ public class TtlConfigurationTests : IDisposable
         await provider.UpdateResponseAsync(response);
 
         // Still retrievable before TTL
-        Assert.IsNotNull(await provider.GetResponseAsync("resp_default_ttl"));
+        Assert.That(await provider.GetResponseAsync("resp_default_ttl"), Is.Not.Null);
 
         // Advance to 9 minutes — still available
         fakeTime.Advance(TimeSpan.FromMinutes(9));
-        Assert.IsNotNull(await provider.GetResponseAsync("resp_default_ttl"));
+        Assert.That(await provider.GetResponseAsync("resp_default_ttl"), Is.Not.Null);
 
         // Advance past 10 minutes — response still available, event stream evicted
         fakeTime.Advance(TimeSpan.FromMinutes(2));
-        Assert.IsNotNull(await provider.GetResponseAsync("resp_default_ttl"));
+        Assert.That(await provider.GetResponseAsync("resp_default_ttl"), Is.Not.Null);
 
         // Event stream evicted
         Assert.ThrowsAsync<InvalidOperationException>(async () =>
@@ -90,11 +90,11 @@ public class TtlConfigurationTests : IDisposable
         await provider.UpdateResponseAsync(response);
 
         // Still retrievable immediately
-        Assert.IsNotNull(await provider.GetResponseAsync("resp_1s_ttl"));
+        Assert.That(await provider.GetResponseAsync("resp_1s_ttl"), Is.Not.Null);
 
         // Advance past 1 second — event stream evicted, response retained
         fakeTime.Advance(TimeSpan.FromSeconds(2));
-        Assert.IsNotNull(await provider.GetResponseAsync("resp_1s_ttl"));
+        Assert.That(await provider.GetResponseAsync("resp_1s_ttl"), Is.Not.Null);
 
         // Event stream evicted
         Assert.ThrowsAsync<InvalidOperationException>(async () =>
@@ -132,7 +132,7 @@ public class TtlConfigurationTests : IDisposable
         await provider.UpdateResponseAsync(response);
 
         // Before any eviction: both response and event stream available
-        Assert.IsNotNull(await provider.GetResponseAsync("resp_split_ttl"));
+        Assert.That(await provider.GetResponseAsync("resp_split_ttl"), Is.Not.Null);
         var events = new List<ResponseStreamEvent>();
         var tcs = new TaskCompletionSource();
         var observer = new CollectingObserver(events, tcs);
@@ -146,7 +146,7 @@ public class TtlConfigurationTests : IDisposable
         fakeTime.Advance(TimeSpan.FromMinutes(1).Add(TimeSpan.FromSeconds(1)));
 
         // Models.Response still retrievable (retained indefinitely)
-        Assert.IsNotNull(await provider.GetResponseAsync("resp_split_ttl"));
+        Assert.That(await provider.GetResponseAsync("resp_split_ttl"), Is.Not.Null);
 
         // Event stream evicted — subscribing throws
         Assert.ThrowsAsync<InvalidOperationException>(async () =>
@@ -157,7 +157,7 @@ public class TtlConfigurationTests : IDisposable
 
         // Even after a very long time, response is still available
         fakeTime.Advance(TimeSpan.FromHours(24));
-        Assert.IsNotNull(await provider.GetResponseAsync("resp_split_ttl"));
+        Assert.That(await provider.GetResponseAsync("resp_split_ttl"), Is.Not.Null);
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -190,7 +190,7 @@ public class TtlConfigurationTests : IDisposable
         var json = JsonSerializer.Serialize(new { model = "test", background = true });
         var postResponse = await client.PostAsync("/responses",
             new StringContent(json, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, postResponse.StatusCode);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var doc = await JsonDocument.ParseAsync(
             await postResponse.Content.ReadAsStreamAsync());
@@ -200,7 +200,7 @@ public class TtlConfigurationTests : IDisposable
         await WaitForBackgroundCompletion(client, responseId);
 
         // Verify spy was used (custom provider)
-        Assert.IsTrue(spy.Calls.Count > 0, "Custom provider should have been called");
+        Assert.That(spy.Calls.Count > 0, Is.True, "Custom provider should have been called");
         XAssert.Contains("CreateResponseAsync", spy.Calls.ToArray());
 
         // Wait much longer than the InMemoryProviderOptions TTL
@@ -208,7 +208,7 @@ public class TtlConfigurationTests : IDisposable
 
         // Models.Response still available via GET (custom provider never evicts)
         var getResponse = await client.GetAsync($"/responses/{responseId}");
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     public void Dispose()
@@ -363,7 +363,9 @@ public class TtlConfigurationTests : IDisposable
             Calls.Add("CancelResponseAsync");
             if (_cts.TryGetValue(responseId, out var cts))
             {
-                try { cts.Cancel(); } catch (ObjectDisposedException) { }
+                try
+                { cts.Cancel(); }
+                catch (ObjectDisposedException) { }
             }
             return Task.CompletedTask;
         }

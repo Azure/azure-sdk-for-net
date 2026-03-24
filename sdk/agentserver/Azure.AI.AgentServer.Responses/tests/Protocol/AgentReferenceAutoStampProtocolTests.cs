@@ -35,8 +35,8 @@ public class AgentReferenceAutoStampProtocolTests : ProtocolTestBase
         using var doc = JsonDocument.Parse(createdEvent.Data);
         var resp = doc.RootElement.GetProperty("response");
         var agentRef = resp.GetProperty("agent_reference");
-        Assert.AreEqual("my-agent", agentRef.GetProperty("name").GetString());
-        Assert.AreEqual("1.0", agentRef.GetProperty("version").GetString());
+        Assert.That(agentRef.GetProperty("name").GetString(), Is.EqualTo("my-agent"));
+        Assert.That(agentRef.GetProperty("version").GetString(), Is.EqualTo("1.0"));
     }
 
     // ── T025: agent_reference propagates to output items ────────
@@ -57,15 +57,15 @@ public class AgentReferenceAutoStampProtocolTests : ProtocolTestBase
         var itemEvents = events.Where(e =>
             e.EventType is "response.output_item.added" or "response.output_item.done").ToList();
 
-        Assert.IsNotEmpty(itemEvents);
+        Assert.That(itemEvents, Is.Not.Empty);
 
         foreach (var evt in itemEvents)
         {
             using var doc = JsonDocument.Parse(evt.Data);
             var item = doc.RootElement.GetProperty("item");
             var agentRef = item.GetProperty("agent_reference");
-            Assert.AreEqual("my-agent", agentRef.GetProperty("name").GetString());
-            Assert.AreEqual("1.0", agentRef.GetProperty("version").GetString());
+            Assert.That(agentRef.GetProperty("name").GetString(), Is.EqualTo("my-agent"));
+            Assert.That(agentRef.GetProperty("version").GetString(), Is.EqualTo("1.0"));
         }
     }
 
@@ -88,7 +88,7 @@ public class AgentReferenceAutoStampProtocolTests : ProtocolTestBase
         using var doc = JsonDocument.Parse(itemAdded.Data);
         var item = doc.RootElement.GetProperty("item");
         var agentRef = item.GetProperty("agent_reference");
-        Assert.AreEqual("handler-agent", agentRef.GetProperty("name").GetString());
+        Assert.That(agentRef.GetProperty("name").GetString(), Is.EqualTo("handler-agent"));
     }
 
     // ── T027: No agent_reference on request → no agent_reference on items ──
@@ -104,16 +104,15 @@ public class AgentReferenceAutoStampProtocolTests : ProtocolTestBase
         var itemEvents = events.Where(e =>
             e.EventType is "response.output_item.added" or "response.output_item.done").ToList();
 
-        Assert.IsNotEmpty(itemEvents);
+        Assert.That(itemEvents, Is.Not.Empty);
 
         foreach (var evt in itemEvents)
         {
             using var doc = JsonDocument.Parse(evt.Data);
             var item = doc.RootElement.GetProperty("item");
             // agent_reference should be absent (null → omitted in JSON)
-            Assert.IsFalse(item.TryGetProperty("agent_reference", out var agentRefProp)
-                && agentRefProp.ValueKind != JsonValueKind.Null,
-                "Output item should not have agent_reference when request has none");
+            Assert.That(item.TryGetProperty("agent_reference", out var agentRefProp)
+                && agentRefProp.ValueKind != JsonValueKind.Null, Is.False, "Output item should not have agent_reference when request has none");
         }
     }
 
@@ -136,7 +135,7 @@ public class AgentReferenceAutoStampProtocolTests : ProtocolTestBase
         using var doc = JsonDocument.Parse(itemAdded.Data);
         var item = doc.RootElement.GetProperty("item");
         var agentRef = item.GetProperty("agent_reference");
-        Assert.AreEqual("direct-agent", agentRef.GetProperty("name").GetString());
+        Assert.That(agentRef.GetProperty("name").GetString(), Is.EqualTo("direct-agent"));
     }
 
     // ── Helper event factories ─────────────────────────────────

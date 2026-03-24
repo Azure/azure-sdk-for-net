@@ -63,24 +63,43 @@ internal sealed class ResponseExecution : IDisposable
     /// <summary>
     /// Gets or sets whether an explicit cancel request has been issued for this response.
     /// Used by handler code to distinguish cancellation from timeout/disconnect.
+    /// Written from cancel endpoint thread, read from handler thread — uses Volatile for visibility.
     /// </summary>
-    public bool CancelRequested { get; set; }
+    public bool CancelRequested
+    {
+        get => Volatile.Read(ref _cancelRequested);
+        set => Volatile.Write(ref _cancelRequested, value);
+    }
 
     /// <summary>
     /// Gets or sets whether a graceful shutdown has been requested for this response.
     /// Set by <see cref="ResponseExecutionTracker.StopAsync"/> before cancelling the CTS.
     /// Handlers can check <see cref="IResponseContext.IsShutdownRequested"/> to distinguish
     /// shutdown from explicit cancel or client disconnect.
+    /// Written from shutdown thread, read from handler thread — uses Volatile for visibility.
     /// </summary>
-    public bool ShutdownRequested { get; set; }
+    public bool ShutdownRequested
+    {
+        get => Volatile.Read(ref _shutdownRequested);
+        set => Volatile.Write(ref _shutdownRequested, value);
+    }
 
     /// <summary>
     /// Gets or sets whether the HTTP client has disconnected.
     /// Set by <see cref="ResponseEndpointHandler"/> when <c>httpContext.RequestAborted</c> fires
     /// for non-background modes. Used by the orchestrator to distinguish client disconnect
     /// (→ cancelled) from unknown cancellation (→ failed).
+    /// Written from RequestAborted callback thread, read from handler thread — uses Volatile for visibility.
     /// </summary>
-    public bool ClientDisconnected { get; set; }
+    public bool ClientDisconnected
+    {
+        get => Volatile.Read(ref _clientDisconnected);
+        set => Volatile.Write(ref _clientDisconnected, value);
+    }
+
+    private bool _cancelRequested;
+    private bool _shutdownRequested;
+    private bool _clientDisconnected;
 
     /// <summary>
     /// Gets or sets the response context associated with this execution.

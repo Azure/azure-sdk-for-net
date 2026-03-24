@@ -46,7 +46,7 @@ public class ErrorRecoveryTests : IDisposable
             execution, publisher, new InvalidOperationException("test"));
 
         // Models.Response remains null — it was never created.
-        Assert.IsNull(execution.Response);
+        Assert.That(execution.Response, Is.Null);
     }
 
     [Test]
@@ -63,7 +63,7 @@ public class ErrorRecoveryTests : IDisposable
         await publisher.OnCompletedAsync();
         await observer.Completed.WaitAsync(TimeSpan.FromSeconds(5));
 
-        Assert.AreEqual(ResponseStatus.Cancelled, execution.Response!.Status);
+        Assert.That(execution.Response!.Status, Is.EqualTo(ResponseStatus.Cancelled));
         XAssert.Single(events);
         XAssert.IsType<ResponseFailedEvent>(events[0]);
     }
@@ -83,7 +83,7 @@ public class ErrorRecoveryTests : IDisposable
         await publisher.OnCompletedAsync();
         await observer.Completed.WaitAsync(TimeSpan.FromSeconds(5));
 
-        Assert.AreEqual(ResponseStatus.Failed, execution.Response!.Status);
+        Assert.That(execution.Response!.Status, Is.EqualTo(ResponseStatus.Failed));
         XAssert.Single(events);
         XAssert.IsType<ResponseFailedEvent>(events[0]);
     }
@@ -101,7 +101,7 @@ public class ErrorRecoveryTests : IDisposable
         await publisher.OnCompletedAsync();
         await observer.Completed.WaitAsync(TimeSpan.FromSeconds(5));
 
-        Assert.AreEqual(ResponseStatus.Failed, execution.Response!.Status);
+        Assert.That(execution.Response!.Status, Is.EqualTo(ResponseStatus.Failed));
         XAssert.Single(events);
         XAssert.IsType<ResponseFailedEvent>(events[0]);
     }
@@ -119,7 +119,7 @@ public class ErrorRecoveryTests : IDisposable
         await publisher.OnCompletedAsync();
         await observer.Completed.WaitAsync(TimeSpan.FromSeconds(5));
 
-        Assert.AreEqual(ResponseStatus.Failed, execution.Response!.Status);
+        Assert.That(execution.Response!.Status, Is.EqualTo(ResponseStatus.Failed));
         XAssert.Single(events);
         XAssert.IsType<ResponseFailedEvent>(events[0]);
     }
@@ -137,9 +137,9 @@ public class ErrorRecoveryTests : IDisposable
             execution, publisher, new InvalidOperationException("oops"));
 
         // Status should remain Completed, not changed to Failed
-        Assert.AreEqual(ResponseStatus.Completed, execution.Response!.Status);
+        Assert.That(execution.Response!.Status, Is.EqualTo(ResponseStatus.Completed));
         // No events should have been published
-        Assert.IsEmpty(events);
+        Assert.That(events, Is.Empty);
     }
 
     [Test]
@@ -158,11 +158,11 @@ public class ErrorRecoveryTests : IDisposable
         await publisher.OnCompletedAsync();
         await observer.Completed.WaitAsync(TimeSpan.FromSeconds(5));
 
-        Assert.AreEqual(ResponseStatus.Failed, execution.Response!.Status);
+        Assert.That(execution.Response!.Status, Is.EqualTo(ResponseStatus.Failed));
         XAssert.Single(events);
     }
 
-    private async Task<(ResponseExecution execution, IAsyncObserver<ResponseStreamEvent> publisher)>
+    private async Task<(ResponseExecution Execution, IAsyncObserver<ResponseStreamEvent> Publisher)>
         CreateExecutionWithPublisher(string responseId)
     {
         var execution = _tracker.Create(responseId);
@@ -170,7 +170,7 @@ public class ErrorRecoveryTests : IDisposable
         return (execution, publisher);
     }
 
-    private async Task<(List<ResponseStreamEvent> events, CollectingObserver observer)>
+    private async Task<(List<ResponseStreamEvent> Events, CollectingObserver Observer)>
         SubscribeToEvents(string responseId)
     {
         var events = new List<ResponseStreamEvent>();

@@ -321,8 +321,12 @@ class ValidatorGenerator:
 {dispatch_body}"""
             self._pending_dispatch_method = None
 
+        # Compute the parent namespace (strip trailing .Validators if present)
+        parent_ns = self.namespace.rsplit('.Validators', 1)[0] if self.namespace.endswith('.Validators') else ''
+        using_parent = f'\nusing {parent_ns};' if parent_ns else ''
+
         return f"""{self.header}
-using System.Text.Json;
+using System.Text.Json;{using_parent}
 
 namespace {self.namespace};
 
@@ -560,7 +564,7 @@ public static partial class {class_name}
                 lines.append(f"    if (!{safe_var}Result.IsValid)")
                 lines.append("    {")
                 lines.append(f"        foreach (var e in {safe_var}Result.Errors)")
-                lines.append(f'            errors.Add(e with {{ Path = "{json_path}" + e.Path[1..] }});')
+                lines.append(f'            errors.Add(new ValidationError("{json_path}" + e.Path.Substring(1), e.Message));')
                 lines.append("    }")
                 lines.append("}")
 
@@ -584,7 +588,7 @@ public static partial class {class_name}
                 lines.append("        if (!itemResult.IsValid)")
                 lines.append("        {")
                 lines.append("            foreach (var e in itemResult.Errors)")
-                lines.append(f'                errors.Add(e with {{ Path = $"{json_path}[{{{idx_var}}}]" + e.Path[1..] }});')
+                lines.append(f'                errors.Add(new ValidationError($"{json_path}[{{{idx_var}}}]" + e.Path.Substring(1), e.Message));')
                 lines.append("        }")
                 lines.append(f"        {idx_var}++;")
                 lines.append("    }")
@@ -834,7 +838,7 @@ public static partial class {class_name}
                 lines.append(f"if (!{self._var_name(prop_name)}Result.IsValid)")
                 lines.append("{")
                 lines.append(f"    foreach (var e in {self._var_name(prop_name)}Result.Errors)")
-                lines.append(f'        errors.Add(e with {{ Path = "{json_path}" + e.Path[1..] }});')
+                lines.append(f'        errors.Add(new ValidationError("{json_path}" + e.Path.Substring(1), e.Message));')
                 lines.append("}")
                 return lines
             elif "oneOf" in ref_schema or "anyOf" in ref_schema:
@@ -843,7 +847,7 @@ public static partial class {class_name}
                 lines.append(f"if (!{self._var_name(prop_name)}Result.IsValid)")
                 lines.append("{")
                 lines.append(f"    foreach (var e in {self._var_name(prop_name)}Result.Errors)")
-                lines.append(f'        errors.Add(e with {{ Path = "{json_path}" + e.Path[1..] }});')
+                lines.append(f'        errors.Add(new ValidationError("{json_path}" + e.Path.Substring(1), e.Message));')
                 lines.append("}")
                 return lines
             elif "additionalProperties" in ref_schema:
@@ -852,7 +856,7 @@ public static partial class {class_name}
                 lines.append(f"if (!{self._var_name(prop_name)}Result.IsValid)")
                 lines.append("{")
                 lines.append(f"    foreach (var e in {self._var_name(prop_name)}Result.Errors)")
-                lines.append(f'        errors.Add(e with {{ Path = "{json_path}" + e.Path[1..] }});')
+                lines.append(f'        errors.Add(new ValidationError("{json_path}" + e.Path.Substring(1), e.Message));')
                 lines.append("}")
                 return lines
 
@@ -937,7 +941,7 @@ public static partial class {class_name}
                     lines.append(f"    if (!{self._var_name(prop_name)}Result.IsValid)")
                     lines.append("    {")
                     lines.append(f"        foreach (var e in {self._var_name(prop_name)}Result.Errors)")
-                    lines.append(f'            errors.Add(e with {{ Path = "{json_path}" + e.Path[1..] }});')
+                    lines.append(f'            errors.Add(new ValidationError("{json_path}" + e.Path.Substring(1), e.Message));')
                     lines.append("    }")
                     lines.append("}")
 
@@ -993,23 +997,33 @@ public static partial class {class_name}
         if "$ref" in items:
             item_ref = resolve_ref(items["$ref"])
 
+        # Skip delegation for primitive schemas (integer, number, string, boolean)
+        # — these are validated inline, not via separate validator classes.
         if item_ref and item_ref in self.reachable:
-            item_class = to_csharp_class(item_ref)
-            idx_var = f"{self._var_name(prop_name)}Idx"
-            lines.append("else")
-            lines.append("{")
-            lines.append(f"    var {idx_var} = 0;")
-            lines.append(f"    foreach (var item in {var}.EnumerateArray())")
-            lines.append("    {")
-            lines.append(f"        var itemResult = {item_class}.Validate(item);")
-            lines.append("        if (!itemResult.IsValid)")
-            lines.append("        {")
-            lines.append("            foreach (var e in itemResult.Errors)")
-            lines.append(f'                errors.Add(e with {{ Path = $"{json_path}[{{{idx_var}}}]" + e.Path[1..] }});')
-            lines.append("        }")
-            lines.append(f"        {idx_var}++;")
-            lines.append("    }")
-            lines.append("}")
+            ref_schema = self.all_schemas.get(item_ref, {})
+            is_primitive = (
+                ref_schema.get("type") in ("string", "integer", "number", "boolean")
+                and "properties" not in ref_schema
+                and "oneOf" not in ref_schema
+                and "anyOf" not in ref_schema
+            )
+            if not is_primitive:
+                item_class = to_csharp_class(item_ref)
+                idx_var = f"{self._var_name(prop_name)}Idx"
+                lines.append("else")
+                lines.append("{")
+                lines.append(f"    var {idx_var} = 0;")
+                lines.append(f"    foreach (var item in {var}.EnumerateArray())")
+                lines.append("    {")
+                lines.append(f"        var itemResult = {item_class}.Validate(item);")
+                lines.append("        if (!itemResult.IsValid)")
+                lines.append("        {")
+                lines.append("            foreach (var e in itemResult.Errors)")
+                lines.append(f'                errors.Add(new ValidationError($"{json_path}[{{{idx_var}}}]" + e.Path.Substring(1), e.Message));')
+                lines.append("        }")
+                lines.append(f"        {idx_var}++;")
+                lines.append("    }")
+                lines.append("}")
 
         return lines
 
@@ -1135,8 +1149,12 @@ def generate_create_response_validator(
 
     body = "\n".join(f"        {line}" if line else "" for line in body_lines)
 
+    # Compute the parent namespace (strip trailing .Validators if present)
+    parent_ns = namespace.rsplit('.Validators', 1)[0] if namespace.endswith('.Validators') else ''
+    using_parent = f'\nusing {parent_ns};' if parent_ns else ''
+
     code = f"""{header}
-using System.Text.Json;
+using System.Text.Json;{using_parent}
 
 namespace {namespace};
 

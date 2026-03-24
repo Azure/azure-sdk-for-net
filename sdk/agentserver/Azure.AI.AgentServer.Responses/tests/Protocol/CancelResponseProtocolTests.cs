@@ -26,11 +26,11 @@ public class CancelResponseProtocolTests : ProtocolTestBase
 
         var cancelResponse = await CancelResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
-        Assert.AreEqual("application/json", cancelResponse.Content.Headers.ContentType?.MediaType);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(cancelResponse.Content.Headers.ContentType?.MediaType, Is.EqualTo("application/json"));
 
         using var doc = await ParseJsonAsync(cancelResponse);
-        Assert.AreEqual(responseId, doc.RootElement.GetProperty("id").GetString());
+        Assert.That(doc.RootElement.GetProperty("id").GetString(), Is.EqualTo(responseId));
 
         // Clean up — handler should eventually exit via cancellation
         tcs.TrySetResult();
@@ -67,11 +67,11 @@ public class CancelResponseProtocolTests : ProtocolTestBase
         // Cancel a non-background response → 400 (per B1: non-bg cannot be cancelled)
         var cancelResponse = await CancelResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("synchronous", error.GetProperty("message").GetString());
     }
 
@@ -80,12 +80,12 @@ public class CancelResponseProtocolTests : ProtocolTestBase
     {
         var cancelResponse = await CancelResponseAsync("caresp_nonexistent_id");
 
-        Assert.AreEqual(HttpStatusCode.NotFound, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
-        Assert.IsFalse(string.IsNullOrEmpty(error.GetProperty("message").GetString()));
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(string.IsNullOrEmpty(error.GetProperty("message").GetString()), Is.False);
     }
 
     [Test]
@@ -100,8 +100,8 @@ public class CancelResponseProtocolTests : ProtocolTestBase
         var first = await CancelResponseAsync(responseId);
         var second = await CancelResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.OK, first.StatusCode);
-        Assert.AreEqual(HttpStatusCode.OK, second.StatusCode);
+        Assert.That(first.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(second.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         tcs.TrySetResult();
         await Task.Delay(200);

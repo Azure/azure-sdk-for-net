@@ -41,16 +41,16 @@ public class ObservabilityTests : IDisposable
         var response = await _client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var activity = _activities.FirstOrDefault(a =>
             a.OperationName == "create_response obs-test-emit" &&
             a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-emit");
 
-        Assert.IsNotNull(activity);
+        Assert.That(activity, Is.Not.Null);
 
         var responseId = activity.GetTagItem(ResponsesTracingConstants.Tags.ResponseId) as string;
-        Assert.IsNotNull(responseId);
+        Assert.That(responseId, Is.Not.Null);
         XAssert.StartsWith("caresp_", responseId);
     }
 
@@ -65,16 +65,16 @@ public class ObservabilityTests : IDisposable
             a.OperationName == "create_response obs-test-default" &&
             a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-default");
 
-        Assert.IsNotNull(activity);
+        Assert.That(activity, Is.Not.Null);
 
         // Core-parity tags
-        Assert.AreEqual(ResponsesTracingConstants.ServiceName, activity.GetTagItem(ResponsesTracingConstants.Tags.ServiceName));
-        Assert.AreEqual(ResponsesTracingConstants.ProviderName, activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName));
-        Assert.AreEqual(false, activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ServiceName), Is.EqualTo(ResponsesTracingConstants.ServiceName));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.EqualTo(ResponsesTracingConstants.ProviderName));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming), Is.EqualTo(false));
 
         // Removed tags should not be present
-        Assert.IsNull(activity.GetTagItem("response.mode"));
-        Assert.IsNull(activity.GetTagItem("response.status"));
+        Assert.That(activity.GetTagItem("response.mode"), Is.Null);
+        Assert.That(activity.GetTagItem("response.status"), Is.Null);
     }
 
     [Test]
@@ -88,8 +88,8 @@ public class ObservabilityTests : IDisposable
             a.OperationName == "create_response obs-test-stream" &&
             a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-stream");
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual(true, activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming), Is.EqualTo(true));
     }
 
     [Test]
@@ -103,8 +103,8 @@ public class ObservabilityTests : IDisposable
             a.OperationName == "create_response obs-test-background" &&
             a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-background");
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual(false, activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming), Is.EqualTo(false));
     }
 
     [Test]
@@ -118,13 +118,13 @@ public class ObservabilityTests : IDisposable
             a.OperationName == "create_response obs-test-nsid" &&
             a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-nsid");
 
-        Assert.IsNotNull(activity);
+        Assert.That(activity, Is.Not.Null);
 
         // gen_ai.response.id and azure.ai.agentserver.responses.response_id should match
         var genAiId = activity.GetTagItem(ResponsesTracingConstants.Tags.ResponseId) as string;
         var namespacedId = activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedResponseId) as string;
-        Assert.IsNotNull(genAiId);
-        Assert.AreEqual(genAiId, namespacedId);
+        Assert.That(genAiId, Is.Not.Null);
+        Assert.That(namespacedId, Is.EqualTo(genAiId));
     }
 
     [Test]
@@ -138,8 +138,8 @@ public class ObservabilityTests : IDisposable
             a.OperationName == "create_response obs-test-no-agent" &&
             a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-no-agent");
 
-        Assert.IsNotNull(activity);
-        Assert.AreEqual(string.Empty, activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId), Is.EqualTo(string.Empty));
     }
 
     public void Dispose()

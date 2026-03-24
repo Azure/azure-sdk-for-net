@@ -49,8 +49,8 @@ public class LiveOutputTrackingTests : IDisposable
         var body = await PostDefaultRequest();
 
         var output = body.GetProperty("output");
-        Assert.AreEqual(1, output.GetArrayLength());
-        Assert.AreEqual("msg_001", output[0].GetProperty("id").GetString());
+        Assert.That(output.GetArrayLength(), Is.EqualTo(1));
+        Assert.That(output[0].GetProperty("id").GetString(), Is.EqualTo("msg_001"));
     }
 
     [Test]
@@ -76,9 +76,9 @@ public class LiveOutputTrackingTests : IDisposable
         var body = await PostDefaultRequest();
 
         var output = body.GetProperty("output");
-        Assert.AreEqual(2, output.GetArrayLength());
-        Assert.AreEqual("msg_000", output[0].GetProperty("id").GetString());
-        Assert.AreEqual("msg_001", output[1].GetProperty("id").GetString());
+        Assert.That(output.GetArrayLength(), Is.EqualTo(2));
+        Assert.That(output[0].GetProperty("id").GetString(), Is.EqualTo("msg_000"));
+        Assert.That(output[1].GetProperty("id").GetString(), Is.EqualTo("msg_001"));
     }
 
     [Test]
@@ -91,7 +91,7 @@ public class LiveOutputTrackingTests : IDisposable
 
         await PostDefaultRequest();
 
-        Assert.IsNotNull(capturedResponseId);
+        Assert.That(capturedResponseId, Is.Not.Null);
         XAssert.StartsWith("caresp_", capturedResponseId!);
     }
 
@@ -119,8 +119,8 @@ public class LiveOutputTrackingTests : IDisposable
         var body = await PostDefaultRequest();
 
         var output = body.GetProperty("output");
-        Assert.AreEqual(1, output.GetArrayLength());
-        Assert.AreEqual("msg_done", output[0].GetProperty("id").GetString());
+        Assert.That(output.GetArrayLength(), Is.EqualTo(1));
+        Assert.That(output[0].GetProperty("id").GetString(), Is.EqualTo("msg_done"));
     }
 
     [Test]
@@ -148,9 +148,9 @@ public class LiveOutputTrackingTests : IDisposable
         var body = await PostDefaultRequest();
 
         var output = body.GetProperty("output");
-        Assert.AreEqual(2, output.GetArrayLength());
-        Assert.AreEqual("msg_first", output[0].GetProperty("id").GetString());
-        Assert.AreEqual("msg_second_done", output[1].GetProperty("id").GetString());
+        Assert.That(output.GetArrayLength(), Is.EqualTo(2));
+        Assert.That(output[0].GetProperty("id").GetString(), Is.EqualTo("msg_first"));
+        Assert.That(output[1].GetProperty("id").GetString(), Is.EqualTo("msg_second_done"));
     }
 
     // ── US3: Default mode regression ──────────────────────────────
@@ -176,10 +176,10 @@ public class LiveOutputTrackingTests : IDisposable
 
         var body = await PostDefaultRequest();
 
-        Assert.AreEqual("completed", body.GetProperty("status").GetString());
+        Assert.That(body.GetProperty("status").GetString(), Is.EqualTo("completed"));
         var output = body.GetProperty("output");
-        Assert.AreEqual(1, output.GetArrayLength());
-        Assert.AreEqual("msg_final2", output[0].GetProperty("id").GetString());
+        Assert.That(output.GetArrayLength(), Is.EqualTo(1));
+        Assert.That(output[0].GetProperty("id").GetString(), Is.EqualTo("msg_final2"));
     }
 
     // ── Edge cases ────────────────────────────────────────────────
@@ -204,8 +204,8 @@ public class LiveOutputTrackingTests : IDisposable
         var body = await PostDefaultRequest();
 
         var output = body.GetProperty("output");
-        Assert.AreEqual(1, output.GetArrayLength());
-        Assert.AreEqual("msg_noprior", output[0].GetProperty("id").GetString());
+        Assert.That(output.GetArrayLength(), Is.EqualTo(1));
+        Assert.That(output[0].GetProperty("id").GetString(), Is.EqualTo("msg_noprior"));
     }
 
     [Test]
@@ -227,7 +227,7 @@ public class LiveOutputTrackingTests : IDisposable
         var requestBody = JsonSerializer.Serialize(new { model = "test-model" });
         var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
         var httpResponse = await _client.PostAsync("/responses", content);
-        Assert.AreEqual(HttpStatusCode.InternalServerError, httpResponse.StatusCode);
+        Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
     }
 
     [Test]
@@ -249,7 +249,7 @@ public class LiveOutputTrackingTests : IDisposable
         var requestBody = JsonSerializer.Serialize(new { model = "test-model" });
         var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
         var httpResponse = await _client.PostAsync("/responses", content);
-        Assert.AreEqual(HttpStatusCode.InternalServerError, httpResponse.StatusCode);
+        Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
     }
 
     [Test]
@@ -274,8 +274,8 @@ public class LiveOutputTrackingTests : IDisposable
         var body = await PostDefaultRequest();
 
         var output = body.GetProperty("output");
-        Assert.AreEqual(1, output.GetArrayLength());
-        Assert.AreEqual("msg_v2", output[0].GetProperty("id").GetString());
+        Assert.That(output.GetArrayLength(), Is.EqualTo(1));
+        Assert.That(output[0].GetProperty("id").GetString(), Is.EqualTo("msg_v2"));
     }
 
     [Test]
@@ -301,7 +301,7 @@ public class LiveOutputTrackingTests : IDisposable
         // The pipeline should have padded the output list. Verify the response
         // contains the item — the exact JSON shape depends on serialization of nulls,
         // but the response should complete without errors.
-        Assert.AreEqual("completed", body.GetProperty("status").GetString());
+        Assert.That(body.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // ── Helpers ───────────────────────────────────────────────────
@@ -312,7 +312,7 @@ public class LiveOutputTrackingTests : IDisposable
         var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
         var response = await _client.PostAsync("/responses", content);
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         return await response.Content.ReadFromJsonAsync<JsonElement>();
     }
 

@@ -75,7 +75,7 @@ public class HandlerDrivenPersistenceTests : IDisposable
 
         // Wait for POST to complete
         var postResponse = await postTask.WaitAsync(TimeSpan.FromSeconds(5));
-        Assert.AreEqual(HttpStatusCode.OK, postResponse.StatusCode);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Provider should now have CreateResponseAsync called
         XAssert.Contains("CreateResponseAsync", _spy.Calls.ToArray());
@@ -117,7 +117,7 @@ public class HandlerDrivenPersistenceTests : IDisposable
 
         // Wait for POST to complete
         var postResponse = await postTask.WaitAsync(TimeSpan.FromSeconds(5));
-        Assert.AreEqual(HttpStatusCode.OK, postResponse.StatusCode);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var createDoc = await JsonDocument.ParseAsync(
             await postResponse.Content.ReadAsStreamAsync());
@@ -145,7 +145,7 @@ public class HandlerDrivenPersistenceTests : IDisposable
             new { model = "test", background = true });
         var content = new StringContent(json, Encoding.UTF8, "application/json");
         var postResponse = await _client.PostAsync("/responses", content);
-        Assert.AreEqual(HttpStatusCode.OK, postResponse.StatusCode);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var createDoc = await JsonDocument.ParseAsync(
             await postResponse.Content.ReadAsStreamAsync());
@@ -156,8 +156,8 @@ public class HandlerDrivenPersistenceTests : IDisposable
 
         // Provider should have exactly 1 Create and 1 Update
         var calls = _spy.Calls.ToArray();
-        Assert.AreEqual(1, calls.Count(c => c == "CreateResponseAsync"));
-        Assert.AreEqual(1, calls.Count(c => c == "UpdateResponseAsync"));
+        Assert.That(calls.Count(c => c == "CreateResponseAsync"), Is.EqualTo(1));
+        Assert.That(calls.Count(c => c == "UpdateResponseAsync"), Is.EqualTo(1));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -174,17 +174,17 @@ public class HandlerDrivenPersistenceTests : IDisposable
         var json = JsonSerializer.Serialize(new { model = "test" });
         var content = new StringContent(json, Encoding.UTF8, "application/json");
         var postResponse = await _client.PostAsync("/responses", content);
-        Assert.AreEqual(HttpStatusCode.OK, postResponse.StatusCode);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Verify response is completed
         using var doc = await JsonDocument.ParseAsync(
             await postResponse.Content.ReadAsStreamAsync());
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
 
         // Provider should have exactly 1 Create and 0 Updates
         var calls = _spy.Calls.ToArray();
-        Assert.AreEqual(1, calls.Count(c => c == "CreateResponseAsync"));
-        Assert.AreEqual(0, calls.Count(c => c == "UpdateResponseAsync"));
+        Assert.That(calls.Count(c => c == "CreateResponseAsync"), Is.EqualTo(1));
+        Assert.That(calls.Count(c => c == "UpdateResponseAsync"), Is.EqualTo(0));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -321,7 +321,9 @@ public class HandlerDrivenPersistenceTests : IDisposable
             Calls.Add("CancelResponseAsync");
             if (_ctsSources.TryGetValue(responseId, out var cts))
             {
-                try { cts.Cancel(); } catch (ObjectDisposedException) { }
+                try
+                { cts.Cancel(); }
+                catch (ObjectDisposedException) { }
             }
             return Task.CompletedTask;
         }

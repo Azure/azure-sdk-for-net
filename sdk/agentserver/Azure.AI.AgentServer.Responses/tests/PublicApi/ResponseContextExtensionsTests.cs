@@ -30,7 +30,7 @@ public class ResponseContextExtensionsTests
 
         var responsePk = IdGenerator.ExtractPartitionKey(context.ResponseId);
         var itemPk = IdGenerator.ExtractPartitionKey(id);
-        Assert.AreEqual(responsePk, itemPk);
+        Assert.That(itemPk, Is.EqualTo(responsePk));
     }
 
     [Test]
@@ -46,9 +46,7 @@ public class ResponseContextExtensionsTests
     {
         var context = CreateContext();
         var id = context.NewFunctionCallItemId();
-        Assert.AreEqual(
-            IdGenerator.ExtractPartitionKey(context.ResponseId),
-            IdGenerator.ExtractPartitionKey(id));
+        Assert.That(IdGenerator.ExtractPartitionKey(id), Is.EqualTo(IdGenerator.ExtractPartitionKey(context.ResponseId)));
     }
 
     [Test]
@@ -137,7 +135,7 @@ public class ResponseContextExtensionsTests
 
         foreach (var id in ids)
         {
-            Assert.AreEqual(responsePk, IdGenerator.ExtractPartitionKey(id));
+            Assert.That(IdGenerator.ExtractPartitionKey(id), Is.EqualTo(responsePk));
         }
     }
 
@@ -159,6 +157,6 @@ public class ResponseContextExtensionsTests
             context.NewCustomToolCallItemId(),
         };
 
-        Assert.AreEqual(10, ids.Count);
+        Assert.That(ids.Count, Is.EqualTo(10));
     }
 }

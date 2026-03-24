@@ -67,17 +67,17 @@ public class ModelRoundTripTests
 
         var request = JsonSerializer.Deserialize<CreateResponse>(json, options);
 
-        Assert.IsNotNull(request);
-        Assert.AreEqual("gpt-4o", request!.Model);
-        Assert.AreEqual("You are a helpful assistant.", request.Instructions);
-        Assert.IsTrue(request.Stream);
-        Assert.AreEqual(0.7, request.Temperature);
-        Assert.AreEqual(0.9, request.TopP);
-        Assert.AreEqual(1024, request.MaxOutputTokens);
-        Assert.IsTrue(request.Store);
-        Assert.IsNotNull(request.Metadata);
-        Assert.AreEqual("u123", request.Metadata.AdditionalProperties["user_id"]);
-        Assert.AreEqual("s456", request.Metadata.AdditionalProperties["session_id"]);
+        Assert.That(request, Is.Not.Null);
+        Assert.That(request!.Model, Is.EqualTo("gpt-4o"));
+        Assert.That(request.Instructions, Is.EqualTo("You are a helpful assistant."));
+        Assert.That(request.Stream, Is.True);
+        Assert.That(request.Temperature, Is.EqualTo(0.7));
+        Assert.That(request.TopP, Is.EqualTo(0.9));
+        Assert.That(request.MaxOutputTokens, Is.EqualTo(1024));
+        Assert.That(request.Store, Is.True);
+        Assert.That(request.Metadata, Is.Not.Null);
+        Assert.That(request.Metadata.AdditionalProperties["user_id"], Is.EqualTo("u123"));
+        Assert.That(request.Metadata.AdditionalProperties["session_id"], Is.EqualTo("s456"));
     }
 
     [Test]
@@ -88,11 +88,11 @@ public class ModelRoundTripTests
 
         var request = JsonSerializer.Deserialize<CreateResponse>(json, options);
 
-        Assert.IsNotNull(request);
-        Assert.AreEqual("gpt-4o", request!.Model);
-        Assert.IsNull(request.Instructions);
-        Assert.IsNull(request.Stream);
-        Assert.IsNull(request.Temperature);
+        Assert.That(request, Is.Not.Null);
+        Assert.That(request!.Model, Is.EqualTo("gpt-4o"));
+        Assert.That(request.Instructions, Is.Null);
+        Assert.That(request.Stream, Is.Null);
+        Assert.That(request.Temperature, Is.Null);
     }
 
     [Test]
@@ -108,8 +108,8 @@ public class ModelRoundTripTests
 
         var request = JsonSerializer.Deserialize<CreateResponse>(json, options);
 
-        Assert.IsNotNull(request);
-        Assert.AreEqual("resp_prev123", request!.PreviousResponseId);
+        Assert.That(request, Is.Not.Null);
+        Assert.That(request!.PreviousResponseId, Is.EqualTo("resp_prev123"));
     }
 
     [Test]
@@ -126,9 +126,9 @@ public class ModelRoundTripTests
 
         var request = JsonSerializer.Deserialize<CreateResponse>(json, options);
 
-        Assert.IsNotNull(request);
-        Assert.IsTrue(request!.Background);
-        Assert.IsFalse(request.Stream);
+        Assert.That(request, Is.Not.Null);
+        Assert.That(request!.Background, Is.True);
+        Assert.That(request.Stream, Is.False);
     }
 
     // ========================================
@@ -145,13 +145,13 @@ public class ModelRoundTripTests
         using var doc = JsonDocument.Parse(json);
         var root = doc.RootElement;
 
-        Assert.AreEqual("resp_test123", root.GetProperty("id").GetString());
-        Assert.AreEqual("response", root.GetProperty("object").GetString());
-        Assert.AreEqual("completed", root.GetProperty("status").GetString());
-        Assert.AreEqual("gpt-4o", root.GetProperty("model").GetString());
-        Assert.IsTrue(root.TryGetProperty("created_at", out _));
-        Assert.IsTrue(root.TryGetProperty("output", out var output));
-        Assert.AreEqual(JsonValueKind.Array, output.ValueKind);
+        Assert.That(root.GetProperty("id").GetString(), Is.EqualTo("resp_test123"));
+        Assert.That(root.GetProperty("object").GetString(), Is.EqualTo("response"));
+        Assert.That(root.GetProperty("status").GetString(), Is.EqualTo("completed"));
+        Assert.That(root.GetProperty("model").GetString(), Is.EqualTo("gpt-4o"));
+        Assert.That(root.TryGetProperty("created_at", out _), Is.True);
+        Assert.That(root.TryGetProperty("output", out var output), Is.True);
+        Assert.That(output.ValueKind, Is.EqualTo(JsonValueKind.Array));
     }
 
     [Test]
@@ -169,10 +169,10 @@ public class ModelRoundTripTests
         using var doc = JsonDocument.Parse(json);
         var root = doc.RootElement;
 
-        Assert.AreEqual("failed", root.GetProperty("status").GetString());
-        Assert.IsTrue(root.TryGetProperty("error", out var errorProp));
-        Assert.AreEqual("server_error", errorProp.GetProperty("code").GetString());
-        Assert.AreEqual("Internal failure", errorProp.GetProperty("message").GetString());
+        Assert.That(root.GetProperty("status").GetString(), Is.EqualTo("failed"));
+        Assert.That(root.TryGetProperty("error", out var errorProp), Is.True);
+        Assert.That(errorProp.GetProperty("code").GetString(), Is.EqualTo("server_error"));
+        Assert.That(errorProp.GetProperty("message").GetString(), Is.EqualTo("Internal failure"));
     }
 
     [Test]
@@ -193,8 +193,8 @@ public class ModelRoundTripTests
         using var doc = JsonDocument.Parse(json);
         var root = doc.RootElement;
 
-        Assert.IsTrue(root.TryGetProperty("metadata", out var metaProp));
-        Assert.AreEqual("test", metaProp.GetProperty("env").GetString());
+        Assert.That(root.TryGetProperty("metadata", out var metaProp), Is.True);
+        Assert.That(metaProp.GetProperty("env").GetString(), Is.EqualTo("test"));
     }
 
     [Test]
@@ -206,7 +206,7 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(response, options);
         using var doc = JsonDocument.Parse(json);
 
-        Assert.AreEqual("in_progress", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
     }
 
     // ========================================
@@ -223,7 +223,7 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(evt, options);
         using var doc = JsonDocument.Parse(json);
 
-        Assert.AreEqual("response.created", doc.RootElement.GetProperty("type").GetString());
+        Assert.That(doc.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.created"));
     }
 
     [Test]
@@ -236,7 +236,7 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(evt, options);
         using var doc = JsonDocument.Parse(json);
 
-        Assert.AreEqual("response.completed", doc.RootElement.GetProperty("type").GetString());
+        Assert.That(doc.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.completed"));
     }
 
     [Test]
@@ -249,7 +249,7 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(evt, options);
         using var doc = JsonDocument.Parse(json);
 
-        Assert.AreEqual("response.incomplete", doc.RootElement.GetProperty("type").GetString());
+        Assert.That(doc.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.incomplete"));
     }
 
     [Test]
@@ -262,7 +262,7 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(evt, options);
         using var doc = JsonDocument.Parse(json);
 
-        Assert.AreEqual(42, doc.RootElement.GetProperty("sequence_number").GetInt64());
+        Assert.That(doc.RootElement.GetProperty("sequence_number").GetInt64(), Is.EqualTo(42));
     }
 
     [Test]
@@ -275,9 +275,9 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(evt, options);
         using var doc = JsonDocument.Parse(json);
 
-        Assert.IsTrue(doc.RootElement.TryGetProperty("response", out var responseProp));
-        Assert.AreEqual("resp_nested", responseProp.GetProperty("id").GetString());
-        Assert.AreEqual("response", responseProp.GetProperty("object").GetString());
+        Assert.That(doc.RootElement.TryGetProperty("response", out var responseProp), Is.True);
+        Assert.That(responseProp.GetProperty("id").GetString(), Is.EqualTo("resp_nested"));
+        Assert.That(responseProp.GetProperty("object").GetString(), Is.EqualTo("response"));
     }
 
     [Test]
@@ -293,10 +293,10 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(evt, options);
         using var doc = JsonDocument.Parse(json);
 
-        Assert.AreEqual("error", doc.RootElement.GetProperty("type").GetString());
-        Assert.AreEqual(5, doc.RootElement.GetProperty("sequence_number").GetInt64());
-        Assert.AreEqual("server_error", doc.RootElement.GetProperty("code").GetString());
-        Assert.AreEqual("Something broke", doc.RootElement.GetProperty("message").GetString());
+        Assert.That(doc.RootElement.GetProperty("type").GetString(), Is.EqualTo("error"));
+        Assert.That(doc.RootElement.GetProperty("sequence_number").GetInt64(), Is.EqualTo(5));
+        Assert.That(doc.RootElement.GetProperty("code").GetString(), Is.EqualTo("server_error"));
+        Assert.That(doc.RootElement.GetProperty("message").GetString(), Is.EqualTo("Something broke"));
     }
 
     // ========================================
@@ -312,10 +312,10 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<Models.Response>(json, options);
 
-        Assert.IsNotNull(restored);
-        Assert.AreEqual("resp_rt1", restored!.Id);
-        Assert.AreEqual("gpt-4o-mini", restored.Model);
-        Assert.AreEqual(ResponseStatus.Failed, restored.Status);
+        Assert.That(restored, Is.Not.Null);
+        Assert.That(restored!.Id, Is.EqualTo("resp_rt1"));
+        Assert.That(restored.Model, Is.EqualTo("gpt-4o-mini"));
+        Assert.That(restored.Status, Is.EqualTo(ResponseStatus.Failed));
     }
 
     [Test]
@@ -332,10 +332,10 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<Models.Response>(json, options);
 
-        Assert.IsNotNull(restored);
-        Assert.IsNotNull(restored!.Error);
-        Assert.AreEqual(ResponseErrorCode.RateLimitExceeded, restored.Error.Code);
-        Assert.AreEqual("Too many requests", restored.Error.Message);
+        Assert.That(restored, Is.Not.Null);
+        Assert.That(restored!.Error, Is.Not.Null);
+        Assert.That(restored.Error.Code, Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
+        Assert.That(restored.Error.Message, Is.EqualTo("Too many requests"));
     }
 
     [Test]
@@ -348,9 +348,9 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<ResponseCreatedEvent>(json, options);
 
-        Assert.IsNotNull(restored);
-        Assert.AreEqual(10, restored!.SequenceNumber);
-        Assert.AreEqual("resp_evtrt", restored.Response.Id);
+        Assert.That(restored, Is.Not.Null);
+        Assert.That(restored!.SequenceNumber, Is.EqualTo(10));
+        Assert.That(restored.Response.Id, Is.EqualTo("resp_evtrt"));
     }
 
     [Test]
@@ -363,9 +363,9 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<ResponseCompletedEvent>(json, options);
 
-        Assert.IsNotNull(restored);
-        Assert.AreEqual(20, restored!.SequenceNumber);
-        Assert.AreEqual("resp_comprt", restored.Response.Id);
+        Assert.That(restored, Is.Not.Null);
+        Assert.That(restored!.SequenceNumber, Is.EqualTo(20));
+        Assert.That(restored.Response.Id, Is.EqualTo("resp_comprt"));
     }
 
     [Test]
@@ -385,9 +385,9 @@ public class ModelRoundTripTests
             var json = JsonSerializer.Serialize(original, options);
             var restored = JsonSerializer.Deserialize<Models.ResponseError>(json, options);
 
-            Assert.IsNotNull(restored);
-            Assert.AreEqual(code, restored!.Code);
-            Assert.AreEqual($"Error: {code}", restored.Message);
+            Assert.That(restored, Is.Not.Null);
+            Assert.That(restored!.Code, Is.EqualTo(code));
+            Assert.That(restored.Message, Is.EqualTo($"Error: {code}"));
         }
     }
 
@@ -403,11 +403,11 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<Metadata>(json, options);
 
-        Assert.IsNotNull(restored);
-        Assert.AreEqual(3, restored!.AdditionalProperties.Count);
-        Assert.AreEqual("value1", restored.AdditionalProperties["key1"]);
-        Assert.AreEqual("value2", restored.AdditionalProperties["key2"]);
-        Assert.AreEqual("value3", restored.AdditionalProperties["key3"]);
+        Assert.That(restored, Is.Not.Null);
+        Assert.That(restored!.AdditionalProperties.Count, Is.EqualTo(3));
+        Assert.That(restored.AdditionalProperties["key1"], Is.EqualTo("value1"));
+        Assert.That(restored.AdditionalProperties["key2"], Is.EqualTo("value2"));
+        Assert.That(restored.AdditionalProperties["key3"], Is.EqualTo("value3"));
     }
 
     [Test]
@@ -425,16 +425,16 @@ public class ModelRoundTripTests
             """;
 
         var deserialized = JsonSerializer.Deserialize<CreateResponse>(json, options);
-        Assert.IsNotNull(deserialized);
+        Assert.That(deserialized, Is.Not.Null);
 
         var reserialized = JsonSerializer.Serialize(deserialized, options);
         var roundTripped = JsonSerializer.Deserialize<CreateResponse>(reserialized, options);
 
-        Assert.IsNotNull(roundTripped);
-        Assert.AreEqual("gpt-4o", roundTripped!.Model);
-        Assert.AreEqual("Be concise.", roundTripped.Instructions);
-        Assert.IsTrue(roundTripped.Stream);
-        Assert.AreEqual(0.5, roundTripped.Temperature);
+        Assert.That(roundTripped, Is.Not.Null);
+        Assert.That(roundTripped!.Model, Is.EqualTo("gpt-4o"));
+        Assert.That(roundTripped.Instructions, Is.EqualTo("Be concise."));
+        Assert.That(roundTripped.Stream, Is.True);
+        Assert.That(roundTripped.Temperature, Is.EqualTo(0.5));
     }
 
     [Test]
@@ -449,9 +449,9 @@ public class ModelRoundTripTests
         // Deserialize as base type — discriminator should resolve concrete type
         var restored = JsonSerializer.Deserialize<ResponseStreamEvent>(json, options);
 
-        Assert.IsNotNull(restored);
+        Assert.That(restored, Is.Not.Null);
         XAssert.IsType<ResponseCreatedEvent>(restored);
-        Assert.AreEqual(5, ((ResponseCreatedEvent)restored!).SequenceNumber);
+        Assert.That(((ResponseCreatedEvent)restored!).SequenceNumber, Is.EqualTo(5));
     }
 
     [Test]
@@ -464,9 +464,9 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(original, original.GetType(), options);
         var restored = JsonSerializer.Deserialize<ResponseStreamEvent>(json, options);
 
-        Assert.IsNotNull(restored);
+        Assert.That(restored, Is.Not.Null);
         XAssert.IsType<ResponseCompletedEvent>(restored);
-        Assert.AreEqual(15, ((ResponseCompletedEvent)restored!).SequenceNumber);
+        Assert.That(((ResponseCompletedEvent)restored!).SequenceNumber, Is.EqualTo(15));
     }
 
     [Test]
@@ -478,8 +478,8 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(result, options);
         using var doc = JsonDocument.Parse(json);
 
-        Assert.AreEqual("resp_del123", doc.RootElement.GetProperty("id").GetString());
-        Assert.IsTrue(doc.RootElement.GetProperty("deleted").GetBoolean());
+        Assert.That(doc.RootElement.GetProperty("id").GetString(), Is.EqualTo("resp_del123"));
+        Assert.That(doc.RootElement.GetProperty("deleted").GetBoolean(), Is.True);
     }
 
     [Test]
@@ -491,8 +491,8 @@ public class ModelRoundTripTests
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<DeleteResponseResult>(json, options);
 
-        Assert.IsNotNull(restored);
-        Assert.AreEqual("resp_del456", restored!.Id);
-        Assert.IsTrue(restored.Deleted);
+        Assert.That(restored, Is.Not.Null);
+        Assert.That(restored!.Id, Is.EqualTo("resp_del456"));
+        Assert.That(restored.Deleted, Is.True);
     }
 }

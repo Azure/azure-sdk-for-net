@@ -32,11 +32,11 @@ public class ErrorHandlingTests : IDisposable
 
         var response = await _client.PostAsync("/responses", content);
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
         var error = body.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
-        Assert.IsTrue(error.TryGetProperty("message", out var msg) && !string.IsNullOrEmpty(msg.GetString()));
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.TryGetProperty("message", out var msg) && !string.IsNullOrEmpty(msg.GetString()), Is.True);
     }
 
     [Test]
@@ -46,9 +46,9 @@ public class ErrorHandlingTests : IDisposable
 
         var response = await _client.PostAsync("/responses", content);
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.AreEqual("invalid_request_error", body.GetProperty("error").GetProperty("type").GetString());
+        Assert.That(body.GetProperty("error").GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     // ── ResourceNotFoundException (404) ──
@@ -58,9 +58,9 @@ public class ErrorHandlingTests : IDisposable
     {
         var response = await _client.GetAsync("/responses/resp_unknown123");
 
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.AreEqual("invalid_request_error", body.GetProperty("error").GetProperty("type").GetString());
+        Assert.That(body.GetProperty("error").GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     [Test]
@@ -68,9 +68,9 @@ public class ErrorHandlingTests : IDisposable
     {
         var response = await _client.PostAsync("/responses/resp_unknown123/cancel", null);
 
-        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.AreEqual("invalid_request_error", body.GetProperty("error").GetProperty("type").GetString());
+        Assert.That(body.GetProperty("error").GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     // ── Handler-level errors return Models.Response (not ApiErrorResponse) ──
@@ -86,10 +86,10 @@ public class ErrorHandlingTests : IDisposable
 
         var response = await _client.PostAsync("/responses", content);
 
-        Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
         var error = body.GetProperty("error");
-        Assert.AreEqual("server_error", error.GetProperty("type").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("server_error"));
     }
 
     // ── Unhandled exception (500) ──

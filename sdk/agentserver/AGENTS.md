@@ -1,26 +1,105 @@
 # AGENTS.md — Azure.AI.AgentServer
 
 > For general AI agent guidelines, safety boundaries, and repo-wide workflows,
-> see the root [AGENTS.md](../../AGENTS.md).
+> see the root [AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/AGENTS.md).
+
+---
+
+## 0. Core Principles (Constitution)
+
+These principles govern **all** work under `sdk/agentserver/`, across every protocol and project. They are the **supreme governing rules** — they supersede informal practices and ad-hoc decisions. When principles conflict, resolve in this priority order: **Protocol Fidelity > Developer Experience > Minimal API Surface > Simplicity**.
+
+### I. Library-First (Library, Never Application)
+
+- This project produces **class libraries** distributed via NuGet. It is never a standalone executable.
+- Every public type must be designed for consumption by external developers building their own ASP.NET Core hosts.
+- The library owns protocol concerns (request/response models, routing, serialization, error shapes). The consumer owns business logic (tool implementations, agent behaviour).
+- No global state, static mutable singletons, or assumptions about the host process.
+
+### II. Developer Experience Above All
+
+- The primary measure of success is how quickly a developer can go from `dotnet add package` to a working server.
+- Integration follows standard ASP.NET Core conventions: `IServiceCollection` extensions for registration, `IEndpointRouteBuilder` extensions for routing.
+- Provide sensible defaults with progressive disclosure of complexity — simple things must be simple, advanced scenarios must be possible.
+- XML documentation comments are required on **all** `public` and `protected` members.
+
+### III. Minimal Public API Surface
+
+- Default visibility is `internal`. Only promote to `public` when there is a clear, justified consumer need.
+- Every public type, method, and property must earn its place. Prefer fewer, well-designed abstractions over a sprawling API.
+- Use `[EditorBrowsable(EditorBrowsableState.Never)]` for types that must be public for technical reasons but are not intended for direct consumer use.
+- Avoid leaking implementation details into the public API.
+
+### IV. Test-First (NON-NEGOTIABLE)
+
+- **TDD is mandatory.** Write test → see it fail (red) → implement → see it pass (green) → refactor.
+- All public API contracts must have corresponding unit tests.
+- **E2E protocol tests are mandatory for API behaviour changes.** Any change to endpoint logic, SSE event contract, error shapes, status transitions, response headers, or HTTP status codes MUST include protocol tests that exercise the full HTTP pipeline. Unit tests alone are insufficient.
+- **Deterministic synchronization is mandatory.** Never use blind `Task.Delay()` to wait for async state changes. Use `TaskCompletionSource` gates, `WaitAsync(TimeSpan)`, or polling loops with explicit timeout assertions. `Task.Delay` is acceptable only to simulate slow work in handlers.
+- **Transient test failures must be fixed immediately.** A flaky test is a bug. Diagnose the root cause and fix with deterministic synchronization before proceeding.
+
+### V. Protocol Fidelity
+
+- Each protocol library must faithfully implement its specification. Deviations from the spec are bugs.
+- API models (request/response shapes, error codes, headers) must match the specification exactly.
+- The authoritative contract documents win over the code. Fix the code, not the contract. Each protocol's AGENTS.md defines its authoritative documents.
+
+### VI. Async-All-the-Way
+
+- The library is **async-only**. All public service methods are asynchronous.
+- **AZC0004 exemption**: Azure SDK rule AZC0004 requires both sync and async variants for HTTP/REST client libraries. This library is exempt because it is a **server-side hosting library** running on the inherently async ASP.NET Core pipeline (similar to the AMQP exemption for Event Hubs/Service Bus). If an analyzer flags AZC0004, suppress it with justification in `AssemblyInfo.cs`.
+- All async methods MUST accept `CancellationToken cancellationToken = default` as the last parameter.
+- Never block on async code (`Task.Result`, `.Wait()`, `.GetAwaiter().GetResult()`).
+
+### VII. Thread Safety & Immutability
+
+- Public service types must be **thread-safe** — instances may be shared across threads and stored as singletons in DI containers.
+- Service types should be effectively immutable after construction.
+
+### VIII. Designed for Testability & Mocking
+
+- Consumers must be able to mock library types in their own test suites without calling real services.
+- Provide `protected` parameterless constructors on public types to enable mocking frameworks.
+- Make all public service methods `virtual` so they can be overridden in mocks.
+- Provide a static model factory for constructing model types that have no public constructors.
+
+### IX. Observability & Security
+
+- Use `Microsoft.Extensions.Logging.ILogger` for all diagnostic output. Never write to `Console`.
+- Use structured logging placeholders (`{RequestId}`, not string interpolation).
+- Instrument key operations with `System.Diagnostics.Activity` for OpenTelemetry-compatible distributed tracing.
+- **Never** log credentials, tokens, keys, or PII. Sanitize error messages exposed to callers.
+
+### X. Simplicity & YAGNI
+
+- Start with the simplest correct implementation. Do not build speculative features.
+- Prefer composition over inheritance. Prefer interfaces over abstract base classes.
+- If a design decision can be deferred without harm, defer it.
+- Code should be readable by an unfamiliar developer within 5 minutes of opening a file.
+
+---
 
 ## 1. Project Architecture
 
 | Project | Path | Description |
 |---|---|---|
-| **Responses.Contracts** | `Azure.AI.AgentServer.Responses.Contracts/src/` | TypeSpec-generated model contracts (all generated models, internal helpers, customizations) |
-| **Responses** | `Azure.AI.AgentServer.Responses/src/` | Hand-written SDK library (builders, hosting extensions, `IResponseHandler`, streaming plumbing). References Contracts. |
-| **Tests** | `Azure.AI.AgentServer.Responses/tests/` | NUnit tests — protocol tests in `Protocol/`, provider tests in `Provider/`, builder tests in `Builder/` |
-| **Core** | `Azure.AI.AgentServer.Core/src/` | Shared core types |
-| **Contracts** | `Azure.AI.AgentServer.Contracts/src/` | Shared contract types |
-| **AgentFramework** | `Azure.AI.AgentServer.AgentFramework/src/` | Agent framework library |
+| **Responses.Contracts** | `Azure.AI.AgentServer.Responses.Contracts/src/` | TypeSpec-generated model contracts for Responses protocol |
+| **Responses** | `Azure.AI.AgentServer.Responses/src/` | Responses protocol library (hosting extensions, streaming, handlers) |
+| **Responses Tests** | `Azure.AI.AgentServer.Responses/tests/` | NUnit tests for Responses protocol |
 
-Solution file: `Azure.AI.AgentServer.sln` (includes Contracts, Responses, Tests).
+> **Out of scope**: `Azure.AI.AgentServer.Core`, `Azure.AI.AgentServer.Contracts`, and `Azure.AI.AgentServer.AgentFramework` are legacy projects slated for deprecation. Do not invest effort in them.
 
-### Key namespaces
+Solution file: `Azure.AI.AgentServer.sln`
 
-- `Azure.AI.AgentServer.Responses` — public API surface
-- `Azure.AI.AgentServer.Responses.Models` — model types (from Contracts)
-- `Azure.AI.AgentServer.Responses.Internal` — internal implementation (e.g., `SeekableReplaySubject`)
+### Per-protocol AGENTS.md files
+
+Each protocol has its own `AGENTS.md` with protocol-specific contract compliance, package rules, and implementation details:
+
+| Protocol | AGENTS.md | Status |
+|---|---|---|
+| **Responses** | [Azure.AI.AgentServer.Responses/AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/AGENTS.md) | Active |
+
+> When adding a new protocol, create an `AGENTS.md` in the protocol project directory following the same structure.
 
 ## 2. Azure SDK Compliance References
 
@@ -28,17 +107,17 @@ Do **not** duplicate repo-wide rules here. Instead, consult these canonical sour
 
 | Topic | Canonical Source |
 |---|---|
-| Contributing & prerequisites | [CONTRIBUTING.md](../../CONTRIBUTING.md) |
-| Code style (StyleCop) | [eng/stylecop.json](../../eng/stylecop.json) |
-| Code analysis rules | [eng/CodeAnalysis.ruleset](../../eng/CodeAnalysis.ruleset) |
-| Target frameworks (`RequiredTargetFrameworks`, etc.) | [eng/Directory.Build.Common.props](../../eng/Directory.Build.Common.props) |
-| SDK project template & conventions | [sdk/template/Azure.Template/](../../sdk/template/Azure.Template/) |
-| Central package management | [eng/centralpackagemanagement/README.md](../../eng/centralpackagemanagement/README.md) |
-| Pre-commit checks (`dotnet format`, API export, snippets) | [.github/skills/pre-commit-checks/SKILL.md](../../.github/skills/pre-commit-checks/SKILL.md) |
-| Test framework (recorded tests, mocking) | [sdk/core/Azure.Core.TestFramework/README.md](../../sdk/core/Azure.Core.TestFramework/README.md) |
-| Copilot / agent-specific instructions | [.github/copilot-instructions.md](../../.github/copilot-instructions.md) |
-| Versioning strategy | [doc/dev/Versioning.md](../../doc/dev/Versioning.md) |
-| API listing targets | [eng/ApiListing.targets](../../eng/ApiListing.targets) |
+| Contributing & prerequisites | [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) |
+| Code style (StyleCop) | [eng/stylecop.json](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/stylecop.json) |
+| Code analysis rules | [eng/CodeAnalysis.ruleset](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/CodeAnalysis.ruleset) |
+| Target frameworks (`RequiredTargetFrameworks`, etc.) | [eng/Directory.Build.Common.props](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/Directory.Build.Common.props) |
+| Library project template & conventions | [sdk/template/Azure.Template/](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) |
+| Central package management | [eng/centralpackagemanagement/README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/centralpackagemanagement/README.md) |
+| Pre-commit checks (`dotnet format`, API export, snippets) | [.github/skills/pre-commit-checks/SKILL.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/pre-commit-checks/SKILL.md) |
+| Test framework (recorded tests, mocking) | [sdk/core/Azure.Core.TestFramework/README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md) |
+| Copilot / agent-specific instructions | [.github/copilot-instructions.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/copilot-instructions.md) |
+| Versioning strategy | [doc/dev/Versioning.md](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/Versioning.md) |
+| API listing targets | [eng/ApiListing.targets](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/ApiListing.targets) |
 
 ## 3. Build, Test & Finalize
 
@@ -61,7 +140,7 @@ dotnet format Azure.AI.AgentServer.sln
 ### Pre-commit checks
 
 Before committing changes, run the pre-commit validations for the `agentserver` service directory.
-See [pre-commit-checks SKILL.md](../../.github/skills/pre-commit-checks/SKILL.md) for the full procedure. Summary:
+See [pre-commit-checks SKILL.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/pre-commit-checks/SKILL.md) for the full procedure. Summary:
 
 ```powershell
 # Format
@@ -78,43 +157,30 @@ eng/scripts/Update-Snippets.ps1 agentserver
 
 ```powershell
 # Prerequisites: Node.js, Python 3 + pyyaml
-# Install npm deps (one-time)
-npm install
-
-# Regenerate
+# Regenerate (deps installed automatically via tsp-client sync + npm install)
 ./scripts/Generate-Contracts.ps1
 ```
 
-> **Note**: The TypeSpec pipeline currently uses a standalone `package.json` with pinned
-> dependencies. This is a known deviation from the repo-standard pattern of
-> repo-level emitter packages + `tsp-location.yaml` with `emitterPackageJsonPath`.
-> Alignment is tracked for a future PR.
+TypeSpec dependencies are resolved from the repo-level emitter package
+(`eng/http-client-csharp-emitter-package.json`) via `emitterPackageJsonPath`
+in `tsp-location.yaml`. There is no standalone `package.json` in this directory.
 
-## 4. Package-Specific Rules
+## 4. Do NOT
 
-### Dependency isolation
-- **Responses** depends only on **Responses.Contracts** (project reference) plus `Microsoft.AspNetCore.App` (framework reference). No additional NuGet packages in production.
-- **Responses.Contracts** has zero NuGet dependencies.
-- Test dependencies are managed via central package management with overrides in `eng/centralpackagemanagement/overrides/Azure.AI.AgentServer.Responses.Packages.props`.
+- Expose internal implementation details in the public API.
+- Add NuGet dependencies without justification (see Principle III).
+- Skip tests — TDD is non-negotiable (Principle IV).
+- Skip E2E protocol tests for API behaviour changes (Principle IV).
+- Create standalone executable projects — this is a library (Principle I).
+- Use `Task.Result`, `.Wait()`, or `.GetAwaiter().GetResult()` (Principle VI).
+- Log credentials, tokens, keys, or PII (Principle IX).
+- Modify contract docs to match code — fix the code instead (Principle V).
+- Use blind `Task.Delay()` for test synchronization (Principle IV).
+- Add `InternalsVisibleTo` for non-test assemblies. `InternalsVisibleTo` must only grant access to test assemblies (e.g., `*.Tests`). When another production assembly needs to construct types with `internal` constructors, use the public model factory (`AzureAIAgentServerResponsesModelFactory` via `static using`) or add a public constructor/factory method via partial-class customization.
 
-### ASP.NET target framework
-`Responses` uses `$(RequiredRunnableTargetFrameworks)` (resolves to `net10.0;net8.0`) because it references `Microsoft.AspNetCore.App`. Standard `$(RequiredTargetFrameworks)` is used for Contracts and Tests.
+## 5. Governance
 
-### Generated code suppressions
-Analyzer suppressions for generated code are scoped to `Azure.AI.AgentServer.Responses.Contracts/src/Generated/Directory.Build.props` — **not** in the root `Directory.Build.props`. Do not add blanket suppressions at higher levels.
-
-### Generation pipeline
-The TypeSpec generation pipeline is in `scripts/Generate-Contracts.ps1`:
-1. `npx tsp-client sync` — fetch upstream TypeSpec sources
-2. `npx tsp compile .` — compile TypeSpec → C# models + OpenAPI
-3. Copy `Models/` and `Internal/` into `Contracts/src/Generated/`
-4. `python3 generate-validators.py` — generate validators from OpenAPI spec
-5. Clean intermediate `tsp-output/`
-
-The Python validator generator (`scripts/generate-validators.py`) emits copyright-stamped C# files.
-
-### E2E protocol tests
-Any API behaviour change **must** include protocol tests in `tests/Protocol/`. These test the full HTTP pipeline via `TestWebApplicationFactory`. Unit tests alone are insufficient.
-
-### Deterministic test synchronization
-Never use blind `Task.Delay()` for async synchronization. Use `TaskCompletionSource`, `WaitAsync(TimeSpan)`, or polling loops with explicit timeout assertions. `Task.Delay` is acceptable only to simulate slow work in handlers.
+- This `AGENTS.md` (including Section 0: Core Principles) is the **supreme governing document** for the AgentServer library. It supersedes informal practices and ad-hoc decisions.
+- Per-protocol `AGENTS.md` files inherit and extend these principles for their specific protocol. They may add protocol-specific rules but may **not** weaken or override the core principles.
+- All PRs and code reviews must verify compliance with these principles.
+- Amendments require: (1) written proposal with rationale, (2) update to any affected docs for consistency.

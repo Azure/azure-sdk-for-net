@@ -35,7 +35,7 @@ public class GetNonBgInFlightProtocolTests : ProtocolTestBase
 
         // GET during in-flight → 404
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         // Release handler
         handlerGate.TrySetResult();
@@ -43,9 +43,9 @@ public class GetNonBgInFlightProtocolTests : ProtocolTestBase
 
         // GET after completion → 200 with completed status
         var getAfter = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getAfter.StatusCode);
+        Assert.That(getAfter.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(getAfter);
-        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // Validates: B16 — non-bg streaming mode: GET during stream → 404
@@ -68,11 +68,13 @@ public class GetNonBgInFlightProtocolTests : ProtocolTestBase
 
         // GET during streaming → 404
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         // Cleanup
         handlerGate.TrySetResult();
-        try { await postTask; } catch (TaskCanceledException) { }
+        try
+        { await postTask; }
+        catch (TaskCanceledException) { }
     }
 
     // Validates: B16 contrast — background in-flight GET → 200 (not 404)
@@ -85,16 +87,15 @@ public class GetNonBgInFlightProtocolTests : ProtocolTestBase
             WaitingStream(ctx, handlerGate.Task, ct);
 
         var createResponse = await PostResponsesAsync(new { model = "test", background = true });
-        Assert.AreEqual(HttpStatusCode.OK, createResponse.StatusCode);
+        Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var createDoc = await ParseJsonAsync(createResponse);
         var responseId = createDoc.RootElement.GetProperty("id").GetString()!;
 
         // GET during bg in-flight → 200 with in_progress
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var getDoc = await ParseJsonAsync(getResponse);
-        Assert.IsTrue(
-            getDoc.RootElement.GetProperty("status").GetString() is "queued" or "in_progress");
+        Assert.That(getDoc.RootElement.GetProperty("status").GetString() is "queued" or "in_progress", Is.True);
 
         handlerGate.TrySetResult();
         await WaitForBackgroundCompletionAsync(responseId);

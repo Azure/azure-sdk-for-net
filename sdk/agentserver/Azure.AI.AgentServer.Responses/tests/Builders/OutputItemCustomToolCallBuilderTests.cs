@@ -19,7 +19,7 @@ public class OutputItemCustomToolCallBuilderTests
     {
         var stream = CreateStream();
         var builder = stream.AddOutputItemCustomToolCall("call_001", "my_tool");
-        Assert.IsNotNull(builder);
+        Assert.That(builder, Is.Not.Null);
         XAssert.IsType<OutputItemCustomToolCallBuilder>(builder);
     }
 
@@ -36,8 +36,8 @@ public class OutputItemCustomToolCallBuilderTests
     {
         var stream = CreateStream();
         var builder = stream.AddOutputItemCustomToolCall("call_001", "my_tool");
-        Assert.AreEqual("call_001", builder.CallId);
-        Assert.AreEqual("my_tool", builder.Name);
+        Assert.That(builder.CallId, Is.EqualTo("call_001"));
+        Assert.That(builder.Name, Is.EqualTo("my_tool"));
     }
 
     [Test]
@@ -47,10 +47,10 @@ public class OutputItemCustomToolCallBuilderTests
         var builder = stream.AddOutputItemCustomToolCall("call_001", "my_tool");
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemCustomToolCall>(evt.Item);
-        Assert.AreEqual(builder.ItemId, item.Id);
-        Assert.AreEqual("call_001", item.CallId);
-        Assert.AreEqual("my_tool", item.Name);
-        Assert.AreEqual("", item.Input);
+        Assert.That(item.Id, Is.EqualTo(builder.ItemId));
+        Assert.That(item.CallId, Is.EqualTo("call_001"));
+        Assert.That(item.Name, Is.EqualTo("my_tool"));
+        Assert.That(item.Input, Is.EqualTo(""));
     }
 
     [Test]
@@ -60,9 +60,9 @@ public class OutputItemCustomToolCallBuilderTests
         var builder = stream.AddOutputItemCustomToolCall("c1", "t1");
         var evt = builder.EmitInputDelta("{\"key");
         XAssert.IsType<ResponseCustomToolCallInputDeltaEvent>(evt);
-        Assert.AreEqual("{\"key", evt.Delta);
-        Assert.AreEqual(builder.ItemId, evt.ItemId);
-        Assert.AreEqual(builder.OutputIndex, evt.OutputIndex);
+        Assert.That(evt.Delta, Is.EqualTo("{\"key"));
+        Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
+        Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
 
     [Test]
@@ -72,8 +72,8 @@ public class OutputItemCustomToolCallBuilderTests
         var builder = stream.AddOutputItemCustomToolCall("c1", "t1");
         var d1 = builder.EmitInputDelta("{\"key");
         var d2 = builder.EmitInputDelta("\":\"value\"}");
-        Assert.AreEqual("{\"key", d1.Delta);
-        Assert.AreEqual("\":\"value\"}", d2.Delta);
+        Assert.That(d1.Delta, Is.EqualTo("{\"key"));
+        Assert.That(d2.Delta, Is.EqualTo("\":\"value\"}"));
     }
 
     [Test]
@@ -83,8 +83,8 @@ public class OutputItemCustomToolCallBuilderTests
         var builder = stream.AddOutputItemCustomToolCall("c1", "t1");
         var evt = builder.EmitInputDone("{\"key\":\"value\"}");
         XAssert.IsType<ResponseCustomToolCallInputDoneEvent>(evt);
-        Assert.AreEqual("{\"key\":\"value\"}", evt.Input);
-        Assert.AreEqual(builder.ItemId, evt.ItemId);
+        Assert.That(evt.Input, Is.EqualTo("{\"key\":\"value\"}"));
+        Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
     }
 
     [Test]
@@ -96,10 +96,10 @@ public class OutputItemCustomToolCallBuilderTests
         builder.EmitInputDone("{\"key\":\"value\"}");
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemCustomToolCall>(evt.Item);
-        Assert.AreEqual(builder.ItemId, item.Id);
-        Assert.AreEqual("call_001", item.CallId);
-        Assert.AreEqual("my_tool", item.Name);
-        Assert.AreEqual("{\"key\":\"value\"}", item.Input);
+        Assert.That(item.Id, Is.EqualTo(builder.ItemId));
+        Assert.That(item.CallId, Is.EqualTo("call_001"));
+        Assert.That(item.Name, Is.EqualTo("my_tool"));
+        Assert.That(item.Input, Is.EqualTo("{\"key\":\"value\"}"));
     }
 
     [Test]
@@ -111,9 +111,9 @@ public class OutputItemCustomToolCallBuilderTests
         var delta = builder.EmitInputDelta("{");                // 1
         var inputDone = builder.EmitInputDone("{}");           // 2
         var done = builder.EmitDone();                         // 3
-        Assert.AreEqual(0, added.SequenceNumber);
-        Assert.AreEqual(1, delta.SequenceNumber);
-        Assert.AreEqual(2, inputDone.SequenceNumber);
-        Assert.AreEqual(3, done.SequenceNumber);
+        Assert.That(added.SequenceNumber, Is.EqualTo(0));
+        Assert.That(delta.SequenceNumber, Is.EqualTo(1));
+        Assert.That(inputDone.SequenceNumber, Is.EqualTo(2));
+        Assert.That(done.SequenceNumber, Is.EqualTo(3));
     }
 }

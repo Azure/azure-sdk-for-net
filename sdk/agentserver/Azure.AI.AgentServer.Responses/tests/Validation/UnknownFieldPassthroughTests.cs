@@ -28,8 +28,7 @@ public class UnknownFieldPassthroughTests
         }
         """);
 
-        Assert.IsTrue(result.IsValid,
-            $"Unknown fields should be accepted. Errors: {string.Join("; ", result.Errors.Select(e => $"{e.Path}: {e.Message}"))}");
+        Assert.That(result.IsValid, Is.True, $"Unknown fields should be accepted. Errors: {string.Join("; ", result.Errors.Select(e => $"{e.Path}: {e.Message}"))}");
     }
 
     [Test]
@@ -45,8 +44,7 @@ public class UnknownFieldPassthroughTests
         }
         """);
 
-        Assert.IsTrue(result.IsValid,
-            $"Unknown nested fields should be accepted. Errors: {string.Join("; ", result.Errors.Select(e => $"{e.Path}: {e.Message}"))}");
+        Assert.That(result.IsValid, Is.True, $"Unknown nested fields should be accepted. Errors: {string.Join("; ", result.Errors.Select(e => $"{e.Path}: {e.Message}"))}");
     }
 
     [Test]
@@ -67,7 +65,6 @@ public class UnknownFieldPassthroughTests
         }
         """);
 
-        Assert.IsTrue(result.IsValid,
-            $"Unknown tool fields should be accepted. Errors: {string.Join("; ", result.Errors.Select(e => $"{e.Path}: {e.Message}"))}");
+        Assert.That(result.IsValid, Is.True, $"Unknown tool fields should be accepted. Errors: {string.Join("; ", result.Errors.Select(e => $"{e.Path}: {e.Message}"))}");
     }
 }

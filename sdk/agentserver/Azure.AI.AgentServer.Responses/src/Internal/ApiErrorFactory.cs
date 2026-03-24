@@ -5,6 +5,8 @@ using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Http;
 
+using ModelFactory = Azure.AI.AgentServer.Responses.AzureAIAgentServerResponsesModelFactory;
+
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
@@ -38,8 +40,8 @@ internal static class ApiErrorFactory
         string? code = null,
         string? param = null)
     {
-        var error = new Error(code!, message, param!, type, null!, null!, null!, null!);
-        return Results.Json(new ApiErrorResponse(error), SharedJsonOptions.Instance, statusCode: statusCode);
+        var error = ModelFactory.Error(code: code, message: message, param: param, type: type);
+        return Results.Json(ModelFactory.ApiErrorResponse(error), SharedJsonOptions.Instance, statusCode: statusCode);
     }
 
     /// <summary>
@@ -65,7 +67,7 @@ internal static class ApiErrorFactory
     /// Creates an <see cref="IResult"/> wrapping a pre-built <see cref="ResponsesApiException"/>.
     /// </summary>
     internal static IResult FromApiException(ResponsesApiException ex)
-        => Results.Json(new ApiErrorResponse(ex.Error), SharedJsonOptions.Instance, statusCode: ex.StatusCode);
+        => Results.Json(ModelFactory.ApiErrorResponse(ex.Error), SharedJsonOptions.Instance, statusCode: ex.StatusCode);
 
     /// <summary>
     /// Creates an <see cref="IResult"/> for a <see cref="PayloadValidationException"/>
@@ -73,27 +75,22 @@ internal static class ApiErrorFactory
     /// </summary>
     internal static IResult PayloadValidation(PayloadValidationException ex)
     {
-        var details = new List<Error>();
+        var detailsList = new List<Models.Error>();
         foreach (var validationError in ex.Errors)
         {
-            details.Add(new Error(
-                "invalid_value",
-                validationError.Message,
-                validationError.Path,
-                "invalid_request_error", details: null!, null!, null!, null!));
+            detailsList.Add(ModelFactory.Error(
+                code: "invalid_value",
+                message: validationError.Message,
+                param: validationError.Path,
+                type: "invalid_request_error"));
         }
 
-        var topLevelError = new Error(
-            null!,
-            ex.Message,
-            null!,
-            "invalid_request_error",
-            details: details,
-            null!,
-            null!,
-            null!);
+        var topLevelError = ModelFactory.Error(
+            message: ex.Message,
+            type: "invalid_request_error",
+            details: detailsList);
 
-        return Results.Json(new ApiErrorResponse(topLevelError), SharedJsonOptions.Instance, statusCode: 400);
+        return Results.Json(ModelFactory.ApiErrorResponse(topLevelError), SharedJsonOptions.Instance, statusCode: 400);
     }
 
     // --- Standalone Error model (for ResponsesApiException construction) ---
@@ -102,8 +99,8 @@ internal static class ApiErrorFactory
     /// Creates a <see cref="Error"/> with <c>type: "server_error"</c>.
     /// Used when constructing <see cref="ResponsesApiException"/> to throw.
     /// </summary>
-    internal static Error NewServerError(string message)
-        => new("server_error", message, null!, "server_error", null!, null!, null!, null!);
+    internal static Models.Error NewServerError(string message)
+        => ModelFactory.Error(code: "server_error", message: message, type: "server_error");
 
     /// <summary>
     /// Creates a <see cref="ResponsesApiException"/> with HTTP 500 and the
@@ -188,6 +185,31 @@ internal static class ApiErrorFactory
     // --- Helpers ---
 
     /// <summary>
+    /// Maps snake_case error code strings to <see cref="ResponseErrorCode"/> values.
+    /// </summary>
+    private static readonly Dictionary<string, ResponseErrorCode> s_errorCodeMap = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["server_error"] = ResponseErrorCode.ServerError,
+        ["rate_limit_exceeded"] = ResponseErrorCode.RateLimitExceeded,
+        ["invalid_prompt"] = ResponseErrorCode.InvalidPrompt,
+        ["vector_store_timeout"] = ResponseErrorCode.VectorStoreTimeout,
+        ["invalid_image"] = ResponseErrorCode.InvalidImage,
+        ["invalid_image_format"] = ResponseErrorCode.InvalidImageFormat,
+        ["invalid_base64_image"] = ResponseErrorCode.InvalidBase64Image,
+        ["invalid_image_url"] = ResponseErrorCode.InvalidImageUrl,
+        ["image_too_large"] = ResponseErrorCode.ImageTooLarge,
+        ["image_too_small"] = ResponseErrorCode.ImageTooSmall,
+        ["image_parse_error"] = ResponseErrorCode.ImageParseError,
+        ["image_content_policy_violation"] = ResponseErrorCode.ImageContentPolicyViolation,
+        ["invalid_image_mode"] = ResponseErrorCode.InvalidImageMode,
+        ["image_file_too_large"] = ResponseErrorCode.ImageFileTooLarge,
+        ["unsupported_image_media_type"] = ResponseErrorCode.UnsupportedImageMediaType,
+        ["empty_image_file"] = ResponseErrorCode.EmptyImageFile,
+        ["failed_to_download_image"] = ResponseErrorCode.FailedToDownloadImage,
+        ["image_file_not_found"] = ResponseErrorCode.ImageFileNotFound,
+    };
+
+    /// <summary>
     /// Parses a snake_case error code string to <see cref="ResponseErrorCode"/>,
     /// falling back to <see cref="ResponseErrorCode.ServerError"/> for unknown values.
     /// </summary>
@@ -198,13 +220,6 @@ internal static class ApiErrorFactory
             return ResponseErrorCode.ServerError;
         }
 
-        try
-        {
-            return code.ToResponseErrorCode();
-        }
-        catch (ArgumentOutOfRangeException)
-        {
-            return ResponseErrorCode.ServerError;
-        }
+        return s_errorCodeMap.TryGetValue(code, out var result) ? result : ResponseErrorCode.ServerError;
     }
 }

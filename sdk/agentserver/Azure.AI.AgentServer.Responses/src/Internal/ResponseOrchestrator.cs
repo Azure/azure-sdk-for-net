@@ -130,6 +130,7 @@ internal sealed class ResponseOrchestrator
     /// <exception cref="ResourceNotFoundException">If the response cannot be retrieved.</exception>
     public async Task<Models.Response> GetAsync(string responseId)
     {
+        // If the response is in-flight, apply in-flight guards and return a snapshot.
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
             // Guard: store=false responses are not retrievable (FR-014)
@@ -150,7 +151,8 @@ internal sealed class ResponseOrchestrator
             return execution.Response!.Snapshot();
         }
 
-        // Not in tracker — fall through to provider for persisted responses
+        // Not in-flight — fall through to the durable store.
+        // Provider throws ResourceNotFoundException if the ID doesn't exist.
         return await _provider.GetResponseAsync(responseId);
     }
 
@@ -167,12 +169,32 @@ internal sealed class ResponseOrchestrator
     {
         if (!_tracker.TryGet(responseId, out var execution) || execution is null)
         {
-            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            // Not in-flight — check durable store for terminal state.
+            // If it exists and is already terminal, return as-is (idempotent).
+            // If it doesn't exist, provider throws ResourceNotFoundException.
+            var persisted = await _provider.GetResponseAsync(responseId);
+
+            // Already completed / failed / cancelled / incomplete — not cancellable.
+            return persisted.Status switch
+            {
+                ResponseStatus.Cancelled => persisted,
+                ResponseStatus.Completed => throw new BadRequestException("Cannot cancel a completed response."),
+                ResponseStatus.Failed => throw new BadRequestException("Cannot cancel a failed response."),
+                ResponseStatus.Incomplete => throw new BadRequestException("Cannot cancel an incomplete response."),
+                _ => throw new BadRequestException("Cannot cancel a response that is not in progress."),
+            };
         }
 
-        // B1: non-background responses cannot be cancelled
+        // B1/B16: non-background responses cannot be cancelled via this endpoint.
+        // If still in-flight, return 404 (non-background in-flight not findable per B16).
+        // If finished, return 400 (background check takes priority per contract matrix).
         if (!execution.IsBackground)
         {
+            if (execution.CompletedAt is null)
+            {
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+
             throw new BadRequestException("Cannot cancel a synchronous response.");
         }
 
@@ -240,7 +262,7 @@ internal sealed class ResponseOrchestrator
                 {
                     // FR-006: Wrong first event — bad handler
                     ThrowBadHandler(execution,
-                        $"Handler did not yield response.created as its first event. Received: {evt.Type}. Handler type: {_handler.GetType().Name}.");
+                        $"Handler did not yield response.created as its first event. Received: {evt.EventType}. Handler type: {_handler.GetType().Name}.");
                     yield break; // unreachable — satisfies compiler definite-assignment
                 }
 
@@ -509,7 +531,7 @@ internal sealed class ResponseOrchestrator
             execution.Response!.SetFailed();
         }
 
-        var failedEvent = new ResponseFailedEvent(0, execution.Response.Snapshot());
+        var failedEvent = new ResponseFailedEvent(0, execution.Response!.Snapshot());
         await publisher.OnNextAsync(failedEvent);
     }
 
@@ -523,7 +545,7 @@ internal sealed class ResponseOrchestrator
         IAsyncObserver<ResponseStreamEvent> publisher)
     {
         execution.Response!.SetCancelled();
-        var cancelledEvent = new ResponseFailedEvent(0, execution.Response.Snapshot());
+        var cancelledEvent = new ResponseFailedEvent(0, execution.Response!.Snapshot());
         await publisher.OnNextAsync(cancelledEvent);
     }
 
@@ -693,7 +715,7 @@ internal sealed class ResponseOrchestrator
     /// Resolves input items and history item IDs from the context for persistence.
     /// Returns null collections when the context is not available (e.g. cancelled before response.created).
     /// </summary>
-    private static async Task<(IEnumerable<OutputItem>? inputItems, IEnumerable<string>? historyItemIds)>
+    private static async Task<(IEnumerable<OutputItem>? InputItems, IEnumerable<string>? HistoryItemIds)>
         ResolveItemsForPersistenceAsync(IResponseContext? context)
     {
         if (context is null)

@@ -44,7 +44,7 @@ public class BuilderLifecycleTests
         events.Add(message.EmitDone());
         events.Add(stream.EmitCompleted());
 
-        Assert.AreEqual(10, events.Count);
+        Assert.That(events.Count, Is.EqualTo(10));
 
         // Event types in order
         XAssert.IsType<ResponseCreatedEvent>(events[0]);
@@ -61,7 +61,7 @@ public class BuilderLifecycleTests
         // Monotonic sequence numbers
         for (int i = 0; i < events.Count; i++)
         {
-            Assert.AreEqual(i, events[i].SequenceNumber);
+            Assert.That(events[i].SequenceNumber, Is.EqualTo(i));
         }
     }
 
@@ -100,7 +100,7 @@ public class BuilderLifecycleTests
         events.Add(reasoning.EmitDone());
         events.Add(stream.EmitCompleted());
 
-        Assert.AreEqual(13, events.Count);
+        Assert.That(events.Count, Is.EqualTo(13));
 
         // Verify event types
         XAssert.IsType<ResponseCreatedEvent>(events[0]);
@@ -120,7 +120,7 @@ public class BuilderLifecycleTests
         // Monotonic sequence numbers
         for (int i = 0; i < events.Count; i++)
         {
-            Assert.AreEqual(i, events[i].SequenceNumber);
+            Assert.That(events[i].SequenceNumber, Is.EqualTo(i));
         }
     }
 
@@ -146,7 +146,7 @@ public class BuilderLifecycleTests
 
         events.Add(stream.EmitCompleted());
 
-        Assert.AreEqual(8, events.Count);
+        Assert.That(events.Count, Is.EqualTo(8));
 
         XAssert.IsType<ResponseCreatedEvent>(events[0]);
         XAssert.IsType<ResponseInProgressEvent>(events[1]);
@@ -159,7 +159,7 @@ public class BuilderLifecycleTests
 
         for (int i = 0; i < events.Count; i++)
         {
-            Assert.AreEqual(i, events[i].SequenceNumber);
+            Assert.That(events[i].SequenceNumber, Is.EqualTo(i));
         }
     }
 
@@ -187,7 +187,7 @@ public class BuilderLifecycleTests
 
         events.Add(stream.EmitCompleted());
 
-        Assert.AreEqual(10, events.Count);
+        Assert.That(events.Count, Is.EqualTo(10));
 
         XAssert.IsType<ResponseCreatedEvent>(events[0]);
         XAssert.IsType<ResponseInProgressEvent>(events[1]);
@@ -202,7 +202,7 @@ public class BuilderLifecycleTests
 
         for (int i = 0; i < events.Count; i++)
         {
-            Assert.AreEqual(i, events[i].SequenceNumber);
+            Assert.That(events[i].SequenceNumber, Is.EqualTo(i));
         }
     }
 
@@ -230,7 +230,7 @@ public class BuilderLifecycleTests
 
         events.Add(stream.EmitCompleted());
 
-        Assert.AreEqual(10, events.Count);
+        Assert.That(events.Count, Is.EqualTo(10));
 
         XAssert.IsType<ResponseCreatedEvent>(events[0]);
         XAssert.IsType<ResponseInProgressEvent>(events[1]);
@@ -245,7 +245,7 @@ public class BuilderLifecycleTests
 
         for (int i = 0; i < events.Count; i++)
         {
-            Assert.AreEqual(i, events[i].SequenceNumber);
+            Assert.That(events[i].SequenceNumber, Is.EqualTo(i));
         }
     }
 
@@ -270,7 +270,7 @@ public class BuilderLifecycleTests
 
         events.Add(stream.EmitCompleted());
 
-        Assert.AreEqual(5, events.Count);
+        Assert.That(events.Count, Is.EqualTo(5));
 
         XAssert.IsType<ResponseCreatedEvent>(events[0]);
         XAssert.IsType<ResponseInProgressEvent>(events[1]);
@@ -280,7 +280,7 @@ public class BuilderLifecycleTests
 
         for (int i = 0; i < events.Count; i++)
         {
-            Assert.AreEqual(i, events[i].SequenceNumber);
+            Assert.That(events[i].SequenceNumber, Is.EqualTo(i));
         }
     }
 
@@ -313,7 +313,7 @@ public class BuilderLifecycleTests
         events.Add(mcp.EmitFailed());
         events.Add(mcp.EmitDone());
 
-        Assert.AreEqual(4, events.Count);
+        Assert.That(events.Count, Is.EqualTo(4));
         XAssert.IsType<ResponseOutputItemAddedEvent>(events[0]);
         XAssert.IsType<ResponseMCPCallInProgressEvent>(events[1]);
         XAssert.IsType<ResponseMCPCallFailedEvent>(events[2]);
@@ -335,9 +335,9 @@ public class BuilderLifecycleTests
         events.Add(fc.EmitAdded());
 
         // Sequence numbers should be monotonic across different builders
-        Assert.AreEqual(0, events[0].SequenceNumber);
-        Assert.AreEqual(1, events[1].SequenceNumber);
-        Assert.AreEqual(2, events[2].SequenceNumber);
+        Assert.That(events[0].SequenceNumber, Is.EqualTo(0));
+        Assert.That(events[1].SequenceNumber, Is.EqualTo(1));
+        Assert.That(events[2].SequenceNumber, Is.EqualTo(2));
     }
 
     [Test]
@@ -346,36 +346,36 @@ public class BuilderLifecycleTests
         var stream = CreateStream();
 
         var msg = stream.AddOutputItemMessage();
-        Assert.AreEqual(0, msg.OutputIndex);
+        Assert.That(msg.OutputIndex, Is.EqualTo(0));
 
         var reasoning = stream.AddOutputItemReasoningItem();
-        Assert.AreEqual(1, reasoning.OutputIndex);
+        Assert.That(reasoning.OutputIndex, Is.EqualTo(1));
 
         var fs = stream.AddOutputItemFileSearchCall();
-        Assert.AreEqual(2, fs.OutputIndex);
+        Assert.That(fs.OutputIndex, Is.EqualTo(2));
 
         var ws = stream.AddOutputItemWebSearchCall();
-        Assert.AreEqual(3, ws.OutputIndex);
+        Assert.That(ws.OutputIndex, Is.EqualTo(3));
 
         var ci = stream.AddOutputItemCodeInterpreterCall();
-        Assert.AreEqual(4, ci.OutputIndex);
+        Assert.That(ci.OutputIndex, Is.EqualTo(4));
 
         var ig = stream.AddOutputItemImageGenCall();
-        Assert.AreEqual(5, ig.OutputIndex);
+        Assert.That(ig.OutputIndex, Is.EqualTo(5));
 
         var mcp = stream.AddOutputItemMcpCall("s", "t");
-        Assert.AreEqual(6, mcp.OutputIndex);
+        Assert.That(mcp.OutputIndex, Is.EqualTo(6));
 
         var mcpl = stream.AddOutputItemMcpListTools("s");
-        Assert.AreEqual(7, mcpl.OutputIndex);
+        Assert.That(mcpl.OutputIndex, Is.EqualTo(7));
 
         var ctc = stream.AddOutputItemCustomToolCall("c1", "tool");
-        Assert.AreEqual(8, ctc.OutputIndex);
+        Assert.That(ctc.OutputIndex, Is.EqualTo(8));
 
         var genericItem = new OutputItemFunctionToolCall("c", "f", "{}");
         genericItem.Id = IdGenerator.NewFunctionCallItemId();
         var generic = stream.AddOutputItem<OutputItemFunctionToolCall>(genericItem.Id);
-        Assert.AreEqual(9, generic.OutputIndex);
+        Assert.That(generic.OutputIndex, Is.EqualTo(9));
     }
 
     [Test]
@@ -391,7 +391,7 @@ public class BuilderLifecycleTests
         events.Add(ctc.EmitInputDone("{\"key\":\"val\"}"));
         events.Add(ctc.EmitDone());
 
-        Assert.AreEqual(5, events.Count);
+        Assert.That(events.Count, Is.EqualTo(5));
         XAssert.IsType<ResponseOutputItemAddedEvent>(events[0]);
         XAssert.IsType<ResponseCustomToolCallInputDeltaEvent>(events[1]);
         XAssert.IsType<ResponseCustomToolCallInputDeltaEvent>(events[2]);
@@ -413,7 +413,7 @@ public class BuilderLifecycleTests
         events.Add(ig.EmitCompleted());
         events.Add(ig.EmitDone());
 
-        Assert.AreEqual(6, events.Count);
+        Assert.That(events.Count, Is.EqualTo(6));
         XAssert.IsType<ResponseOutputItemAddedEvent>(events[0]);
         XAssert.IsType<ResponseImageGenCallInProgressEvent>(events[1]);
         XAssert.IsType<ResponseImageGenCallPartialImageEvent>(events[2]);
@@ -434,7 +434,7 @@ public class BuilderLifecycleTests
         events.Add(mcpl.EmitCompleted());
         events.Add(mcpl.EmitDone());
 
-        Assert.AreEqual(4, events.Count);
+        Assert.That(events.Count, Is.EqualTo(4));
         XAssert.IsType<ResponseOutputItemAddedEvent>(events[0]);
         XAssert.IsType<ResponseMCPListToolsInProgressEvent>(events[1]);
         XAssert.IsType<ResponseMCPListToolsCompletedEvent>(events[2]);

@@ -36,7 +36,7 @@ public class FunctionCallResponseTests
         events.Add(stream.EmitCompleted());                            // 8
 
         // Assert: correct number of events
-        Assert.AreEqual(9, events.Count);
+        Assert.That(events.Count, Is.EqualTo(9));
 
         // Assert: event types in order
         XAssert.IsType<ResponseCreatedEvent>(events[0]);
@@ -52,26 +52,26 @@ public class FunctionCallResponseTests
         // Assert: monotonically increasing sequence numbers
         for (int i = 0; i < events.Count; i++)
         {
-            Assert.AreEqual(i, events[i].SequenceNumber);
+            Assert.That(events[i].SequenceNumber, Is.EqualTo(i));
         }
 
         // Assert: consistent item ID
         var itemId = fc.ItemId;
         var addedItem = XAssert.IsType<OutputItemFunctionToolCall>(((ResponseOutputItemAddedEvent)events[2]).Item);
-        Assert.AreEqual(itemId, addedItem.Id);
+        Assert.That(addedItem.Id, Is.EqualTo(itemId));
 
         var delta1 = (ResponseFunctionCallArgumentsDeltaEvent)events[3];
-        Assert.AreEqual(itemId, delta1.ItemId);
+        Assert.That(delta1.ItemId, Is.EqualTo(itemId));
 
         var argsDone = (ResponseFunctionCallArgumentsDoneEvent)events[6];
-        Assert.AreEqual(itemId, argsDone.ItemId);
-        Assert.AreEqual("get_weather", argsDone.Name);
-        Assert.AreEqual("{\"location\":\"Seattle\"}", argsDone.Arguments);
+        Assert.That(argsDone.ItemId, Is.EqualTo(itemId));
+        Assert.That(argsDone.Name, Is.EqualTo("get_weather"));
+        Assert.That(argsDone.Arguments, Is.EqualTo("{\"location\":\"Seattle\"}"));
 
         // Assert: done item has full arguments
         var doneItem = XAssert.IsType<OutputItemFunctionToolCall>(((ResponseOutputItemDoneEvent)events[7]).Item);
-        Assert.AreEqual(itemId, doneItem.Id);
-        Assert.AreEqual("{\"location\":\"Seattle\"}", doneItem.Arguments);
-        Assert.AreEqual(OutputItemFunctionToolCallStatus.Completed, doneItem.Status);
+        Assert.That(doneItem.Id, Is.EqualTo(itemId));
+        Assert.That(doneItem.Arguments, Is.EqualTo("{\"location\":\"Seattle\"}"));
+        Assert.That(doneItem.Status, Is.EqualTo(OutputItemFunctionToolCallStatus.Completed));
     }
 }

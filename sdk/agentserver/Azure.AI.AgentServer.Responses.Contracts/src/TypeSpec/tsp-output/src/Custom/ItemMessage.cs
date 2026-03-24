@@ -27,7 +27,7 @@ public partial class ItemMessage
     public ItemMessage(MessageRole role, IList<MessageContent> content)
         : base(ItemType.Message)
     {
-        ArgumentNullException.ThrowIfNull(content);
+        Argument.AssertNotNull(content, nameof(content));
 
         Id = string.Empty;
         Status = default;

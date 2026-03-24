@@ -26,10 +26,10 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
 
         var cancelResponse = await CancelResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
-        Assert.AreEqual("invalid_request_error", error.GetProperty("type").GetString());
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("synchronous", error.GetProperty("message").GetString());
     }
 
@@ -42,7 +42,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
 
         var cancelResponse = await CancelResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
         XAssert.Contains("synchronous", error.GetProperty("message").GetString());
@@ -62,7 +62,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
 
         var cancelResponse = await CancelResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
         XAssert.Contains("completed", error.GetProperty("message").GetString());
@@ -82,7 +82,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
 
         var cancelResponse = await CancelResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
         XAssert.Contains("completed", error.GetProperty("message").GetString());
@@ -101,7 +101,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
 
         var cancelResponse = await CancelResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.BadRequest, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
         XAssert.Contains("failed", error.GetProperty("message").GetString());
@@ -120,13 +120,13 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
 
         var cancelResponse = await CancelResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var doc = await ParseJsonAsync(cancelResponse);
-        Assert.AreEqual("cancelled", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("cancelled"));
         // Output should be empty (cleared by SetCancelled)
         var output = doc.RootElement.GetProperty("output");
-        Assert.AreEqual(0, output.GetArrayLength());
+        Assert.That(output.GetArrayLength(), Is.EqualTo(0));
 
         tcs.TrySetResult(); // clean up
     }
@@ -149,11 +149,11 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
 
         var cancelResponse = await CancelResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var doc = await ParseJsonAsync(cancelResponse);
-        Assert.AreEqual("cancelled", doc.RootElement.GetProperty("status").GetString());
-        Assert.AreEqual(0, doc.RootElement.GetProperty("output").GetArrayLength());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("cancelled"));
+        Assert.That(doc.RootElement.GetProperty("output").GetArrayLength(), Is.EqualTo(0));
 
         tcs.TrySetResult();
     }
@@ -171,14 +171,14 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
 
         // First cancel
         var first = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, first.StatusCode);
+        Assert.That(first.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // Second cancel — idempotent
         var second = await CancelResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.OK, second.StatusCode);
+        Assert.That(second.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var doc = await ParseJsonAsync(second);
-        Assert.AreEqual("cancelled", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("cancelled"));
 
         tcs.TrySetResult();
     }
@@ -189,7 +189,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
     {
         var cancelResponse = await CancelResponseAsync("resp_nonexistent");
 
-        Assert.AreEqual(HttpStatusCode.NotFound, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     // T045: OCE during winddown → status: cancelled (not failed)
@@ -206,10 +206,10 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
 
         var cancelResponse = await CancelResponseAsync(responseId);
 
-        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         using var doc = await ParseJsonAsync(cancelResponse);
-        Assert.AreEqual("cancelled", doc.RootElement.GetProperty("status").GetString());
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("cancelled"));
     }
 
     // ── Helper event factories ─────────────────────────────────

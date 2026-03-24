@@ -26,8 +26,8 @@ public class ConversationStoreProtocolTests : ProtocolTestBase
             conversation = "conv_abc123"
         });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("text/event-stream", response.Content.Headers.ContentType?.MediaType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("text/event-stream"));
 
         var events = await ParseSseAsync(response);
         XAssert.Contains(events, e => e.EventType == "response.completed");
@@ -36,7 +36,7 @@ public class ConversationStoreProtocolTests : ProtocolTestBase
         using var doc = JsonDocument.Parse(events[0].Data);
         var responseId = doc.RootElement.GetProperty("response").GetProperty("id").GetString()!;
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     // Validates: conversation (object) + store=false → 200 with SSE stream, GET → 404
@@ -51,8 +51,8 @@ public class ConversationStoreProtocolTests : ProtocolTestBase
             conversation = new { id = "conv_xyz789" }
         });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("text/event-stream", response.Content.Headers.ContentType?.MediaType);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("text/event-stream"));
 
         var events = await ParseSseAsync(response);
         XAssert.Contains(events, e => e.EventType == "response.completed");
@@ -61,7 +61,7 @@ public class ConversationStoreProtocolTests : ProtocolTestBase
         using var doc = JsonDocument.Parse(events[0].Data);
         var responseId = doc.RootElement.GetProperty("response").GetProperty("id").GetString()!;
         var getResponse = await GetResponseAsync(responseId);
-        Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     // Validates: store=true + conversation is allowed (unchanged)
@@ -76,7 +76,7 @@ public class ConversationStoreProtocolTests : ProtocolTestBase
         });
 
         // Should not be 400 — conversation + store=true is valid
-        Assert.AreNotEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.That(response.StatusCode, Is.Not.EqualTo(HttpStatusCode.BadRequest));
     }
 
     // Validates: store=false without conversation is allowed (unchanged)
@@ -89,6 +89,6 @@ public class ConversationStoreProtocolTests : ProtocolTestBase
             store = false
         });
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 }

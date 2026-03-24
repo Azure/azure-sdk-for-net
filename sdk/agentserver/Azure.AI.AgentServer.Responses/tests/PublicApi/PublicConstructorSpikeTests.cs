@@ -27,8 +27,8 @@ public class PublicConstructorSpikeTests
             types: [typeof(long), typeof(Models.Response)],
             modifiers: null);
 
-        Assert.IsNotNull(ctor);
-        Assert.IsTrue(ctor!.IsPublic);
+        Assert.That(ctor, Is.Not.Null);
+        Assert.That(ctor!.IsPublic, Is.True);
     }
 
     [Test]
@@ -40,8 +40,8 @@ public class PublicConstructorSpikeTests
             types: [typeof(long), typeof(Models.Response)],
             modifiers: null);
 
-        Assert.IsNotNull(ctor);
-        Assert.IsTrue(ctor!.IsPublic);
+        Assert.That(ctor, Is.Not.Null);
+        Assert.That(ctor!.IsPublic, Is.True);
     }
 
     [Test]
@@ -53,8 +53,8 @@ public class PublicConstructorSpikeTests
             types: [typeof(ResponseErrorCode), typeof(string)],
             modifiers: null);
 
-        Assert.IsNotNull(ctor);
-        Assert.IsTrue(ctor!.IsPublic);
+        Assert.That(ctor, Is.Not.Null);
+        Assert.That(ctor!.IsPublic, Is.True);
     }
 
     // ===========================================
@@ -67,7 +67,7 @@ public class PublicConstructorSpikeTests
         var publicCtors = typeof(ResponseStreamEvent)
             .GetConstructors(BindingFlags.Public | BindingFlags.Instance);
 
-        Assert.IsEmpty(publicCtors);
+        Assert.That(publicCtors, Is.Empty);
     }
 
     [Test]
@@ -81,8 +81,8 @@ public class PublicConstructorSpikeTests
             types: [typeof(ResponseStreamEventType), typeof(long), typeof(IDictionary<string, BinaryData>), typeof(Models.Response)],
             modifiers: null);
 
-        Assert.IsNotNull(fullCtor);
-        Assert.IsFalse(fullCtor!.IsPublic, "Full serialization constructor should remain non-public");
+        Assert.That(fullCtor, Is.Not.Null);
+        Assert.That(fullCtor!.IsPublic, Is.False, "Full serialization constructor should remain non-public");
     }
 
     [Test]
@@ -93,12 +93,12 @@ public class PublicConstructorSpikeTests
         var type = typeof(ResponseCreatedEvent);
 
         var responseProp = type.GetProperty("Response", BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsNotNull(responseProp);
-        Assert.IsNotNull(responseProp!.GetSetMethod(nonPublic: false));
+        Assert.That(responseProp, Is.Not.Null);
+        Assert.That(responseProp!.GetSetMethod(nonPublic: false), Is.Not.Null);
 
         var seqNumProp = type.GetProperty("SequenceNumber", BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsNotNull(seqNumProp);
-        Assert.IsNotNull(seqNumProp!.GetSetMethod(nonPublic: false));
+        Assert.That(seqNumProp, Is.Not.Null);
+        Assert.That(seqNumProp!.GetSetMethod(nonPublic: false), Is.Not.Null);
     }
 
     [Test]
@@ -107,8 +107,8 @@ public class PublicConstructorSpikeTests
         var type = typeof(ResponseCompletedEvent);
 
         var responseProp = type.GetProperty("Response", BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsNotNull(responseProp);
-        Assert.IsNotNull(responseProp!.GetSetMethod(nonPublic: false));
+        Assert.That(responseProp, Is.Not.Null);
+        Assert.That(responseProp!.GetSetMethod(nonPublic: false), Is.Not.Null);
     }
 
     [Test]
@@ -117,17 +117,17 @@ public class PublicConstructorSpikeTests
         var type = typeof(Models.ResponseError);
 
         var codeProp = type.GetProperty("Code", BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsNotNull(codeProp);
-        Assert.IsNotNull(codeProp!.GetSetMethod(nonPublic: false));
+        Assert.That(codeProp, Is.Not.Null);
+        Assert.That(codeProp!.GetSetMethod(nonPublic: false), Is.Not.Null);
 
         var msgProp = type.GetProperty("Message", BindingFlags.Public | BindingFlags.Instance);
-        Assert.IsNotNull(msgProp);
-        Assert.IsNotNull(msgProp!.GetSetMethod(nonPublic: false));
+        Assert.That(msgProp, Is.Not.Null);
+        Assert.That(msgProp!.GetSetMethod(nonPublic: false), Is.Not.Null);
     }
 
     [Test]
     public void ResponseStreamEvent_IsAbstract()
     {
-        Assert.IsTrue(typeof(ResponseStreamEvent).IsAbstract);
+        Assert.That(typeof(ResponseStreamEvent).IsAbstract, Is.True);
     }
 }

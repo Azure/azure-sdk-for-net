@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Tests;
 
 /// <summary>
 /// T017: Validates ResponsesModelFactory existence and basic functionality.
-/// Per constitution Section IX and FR-010.
+/// Per AGENTS.md Principle VIII (Designed for Testability &amp; Mocking) and FR-010.
 /// </summary>
 public class ResponsesModelFactoryTests
 {
@@ -18,18 +18,17 @@ public class ResponsesModelFactoryTests
     public void ResponsesModelFactory_Exists_IsPublicStatic()
     {
         var factoryType = typeof(ResponsesModelFactory);
-        Assert.IsNotNull(factoryType);
-        Assert.IsTrue(factoryType.IsPublic, "ResponsesModelFactory should be public");
-        Assert.IsTrue(factoryType.IsAbstract && factoryType.IsSealed,
-            "ResponsesModelFactory should be static (abstract + sealed)");
+        Assert.That(factoryType, Is.Not.Null);
+        Assert.That(factoryType.IsPublic, Is.True, "ResponsesModelFactory should be public");
+        Assert.That(factoryType.IsAbstract && factoryType.IsSealed, Is.True, "ResponsesModelFactory should be static (abstract + sealed)");
     }
 
     [Test]
     public void ResponsesModelFactory_Response_ReturnsValidInstance()
     {
         var response = ResponsesModelFactory.Response(id: "resp_test");
-        Assert.IsNotNull(response);
-        Assert.AreEqual("resp_test", response.Id);
+        Assert.That(response, Is.Not.Null);
+        Assert.That(response.Id, Is.EqualTo("resp_test"));
     }
 
     [Test]
@@ -40,9 +39,9 @@ public class ResponsesModelFactoryTests
             model: "gpt-4o",
             status: ResponseStatus.Completed);
 
-        Assert.AreEqual("resp_test", response.Id);
-        Assert.AreEqual("gpt-4o", response.Model);
-        Assert.AreEqual(ResponseStatus.Completed, response.Status);
+        Assert.That(response.Id, Is.EqualTo("resp_test"));
+        Assert.That(response.Model, Is.EqualTo("gpt-4o"));
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
     }
 
     [Test]
@@ -52,9 +51,9 @@ public class ResponsesModelFactoryTests
             code: ResponseErrorCode.ServerError,
             message: "Something went wrong");
 
-        Assert.IsNotNull(error);
-        Assert.AreEqual(ResponseErrorCode.ServerError, error.Code);
-        Assert.AreEqual("Something went wrong", error.Message);
+        Assert.That(error, Is.Not.Null);
+        Assert.That(error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(error.Message, Is.EqualTo("Something went wrong"));
     }
 
     [Test]
@@ -65,8 +64,8 @@ public class ResponsesModelFactoryTests
             response: response,
             sequenceNumber: 1);
 
-        Assert.IsNotNull(evt);
-        Assert.AreEqual(response, evt.Response);
-        Assert.AreEqual(1, evt.SequenceNumber);
+        Assert.That(evt, Is.Not.Null);
+        Assert.That(evt.Response, Is.EqualTo(response));
+        Assert.That(evt.SequenceNumber, Is.EqualTo(1));
     }
 }

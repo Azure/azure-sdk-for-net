@@ -44,10 +44,10 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
         // T028 / FR-019, FR-021: RawBody contains standard fields
         await PostResponsesAsync(new { model = "gpt-4o" });
 
-        Assert.AreNotEqual(default, _capturedRawBody);
-        Assert.AreEqual(JsonValueKind.Object, _capturedRawBody.ValueKind);
-        Assert.IsTrue(_capturedRawBody.TryGetProperty("model", out var modelProp));
-        Assert.AreEqual("gpt-4o", modelProp.GetString());
+        Assert.That(_capturedRawBody, Is.Not.EqualTo(default(JsonElement)));
+        Assert.That(_capturedRawBody.ValueKind, Is.EqualTo(JsonValueKind.Object));
+        Assert.That(_capturedRawBody.TryGetProperty("model", out var modelProp), Is.True);
+        Assert.That(modelProp.GetString(), Is.EqualTo("gpt-4o"));
     }
 
     [Test]
@@ -63,17 +63,14 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
         });
         var response = await PostResponsesAsync(json);
 
-        Assert.IsTrue(response.IsSuccessStatusCode,
-            $"Request failed with {response.StatusCode}: {await response.Content.ReadAsStringAsync()}");
-        Assert.AreNotEqual(default, _capturedRawBody);
-        Assert.IsTrue(_capturedRawBody.TryGetProperty("x_custom_extension", out var customProp),
-            "RawBody should include x_custom_extension field");
-        Assert.AreEqual("hello-world", customProp.GetString());
+        Assert.That(response.IsSuccessStatusCode, Is.True, $"Request failed with {response.StatusCode}: {await response.Content.ReadAsStringAsync()}");
+        Assert.That(_capturedRawBody, Is.Not.EqualTo(default(JsonElement)));
+        Assert.That(_capturedRawBody.TryGetProperty("x_custom_extension", out var customProp), Is.True, "RawBody should include x_custom_extension field");
+        Assert.That(customProp.GetString(), Is.EqualTo("hello-world"));
 
-        Assert.IsTrue(_capturedRawBody.TryGetProperty("x_extra_info", out var extraProp),
-            "RawBody should include x_extra_info field");
-        Assert.AreEqual(JsonValueKind.Object, extraProp.ValueKind);
-        Assert.AreEqual("value1", extraProp.GetProperty("key1").GetString());
+        Assert.That(_capturedRawBody.TryGetProperty("x_extra_info", out var extraProp), Is.True, "RawBody should include x_extra_info field");
+        Assert.That(extraProp.ValueKind, Is.EqualTo(JsonValueKind.Object));
+        Assert.That(extraProp.GetProperty("key1").GetString(), Is.EqualTo("value1"));
     }
 
     [Test]
@@ -93,9 +90,9 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
 
         await PostResponsesAsync(new { model = "test" });
 
-        Assert.AreNotEqual(default, firstAccess);
-        Assert.AreNotEqual(default, secondAccess);
-        Assert.AreEqual(firstAccess.GetRawText(), secondAccess.GetRawText());
+        Assert.That(firstAccess, Is.Not.EqualTo(default(JsonElement)));
+        Assert.That(secondAccess, Is.Not.EqualTo(default(JsonElement)));
+        Assert.That(secondAccess.GetRawText(), Is.EqualTo(firstAccess.GetRawText()));
     }
 
     [Test]
@@ -109,8 +106,8 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
         });
         await PostResponsesAsync(json);
 
-        Assert.AreNotEqual(default, _capturedRawBody);
-        Assert.IsTrue(_capturedRawBody.TryGetProperty("stream", out var streamProp));
-        Assert.IsTrue(streamProp.GetBoolean());
+        Assert.That(_capturedRawBody, Is.Not.EqualTo(default(JsonElement)));
+        Assert.That(_capturedRawBody.TryGetProperty("stream", out var streamProp), Is.True);
+        Assert.That(streamProp.GetBoolean(), Is.True);
     }
 }

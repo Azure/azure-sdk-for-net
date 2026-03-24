@@ -26,9 +26,9 @@ public sealed class CustomActivitySourceProtocolTests
         using var env = CreateEnv();
         await env.PostAsync(new { model = "test" });
 
-        Assert.AreEqual(ResponsesTracingConstants.ProviderName, env.Tags[ResponsesTracingConstants.Tags.ProviderName]);
-        Assert.AreEqual(ResponsesTracingConstants.ServiceName, env.Tags[ResponsesTracingConstants.Tags.ServiceName]);
-        Assert.AreEqual(ResponsesTracingConstants.ServiceName, env.Tags[ResponsesTracingConstants.Tags.System]);
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo(ResponsesTracingConstants.ProviderName));
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ServiceName], Is.EqualTo(ResponsesTracingConstants.ServiceName));
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.System], Is.EqualTo(ResponsesTracingConstants.ServiceName));
     }
 
     [Test]
@@ -37,7 +37,7 @@ public sealed class CustomActivitySourceProtocolTests
         using var env = CreateEnv();
         await env.PostAsync(new { model = "test-model" });
 
-        Assert.AreEqual("create_response test-model", env.DisplayName);
+        Assert.That(env.DisplayName, Is.EqualTo("create_response test-model"));
     }
 
     [Test]
@@ -46,7 +46,7 @@ public sealed class CustomActivitySourceProtocolTests
         using var env = CreateEnv();
         await env.PostAsync(new { });
 
-        Assert.AreEqual("create_response", env.DisplayName);
+        Assert.That(env.DisplayName, Is.EqualTo("create_response"));
     }
 
     [Test]
@@ -55,10 +55,10 @@ public sealed class CustomActivitySourceProtocolTests
         using var env = CreateEnv();
         await env.PostAsync(new { model = "test" });
 
-        Assert.IsTrue(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.ResponseId));
-        Assert.IsTrue(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.Streaming));
+        Assert.That(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.ResponseId), Is.True);
+        Assert.That(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.Streaming), Is.True);
         // Short-key baggage removed
-        Assert.IsFalse(env.Baggage.ContainsKey("provider.name"));
+        Assert.That(env.Baggage.ContainsKey("provider.name"), Is.False);
     }
 
     // ── Composition pattern: base + selective SetTag ─────────────────────
@@ -70,12 +70,12 @@ public sealed class CustomActivitySourceProtocolTests
         await env.PostAsync(new { model = "test" });
 
         // Overridden tags
-        Assert.AreEqual("my.custom.provider", env.Tags[ResponsesTracingConstants.Tags.ProviderName]);
-        Assert.AreEqual("my.custom.provider", env.Tags[ResponsesTracingConstants.Tags.ServiceName]);
-        Assert.AreEqual("my.custom.provider", env.Tags[ResponsesTracingConstants.Tags.System]);
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo("my.custom.provider"));
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ServiceName], Is.EqualTo("my.custom.provider"));
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.System], Is.EqualTo("my.custom.provider"));
 
         // Base defaults still present
-        Assert.AreEqual(ResponsesTracingConstants.OperationName, env.Tags[ResponsesTracingConstants.Tags.OperationName]);
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.OperationName], Is.EqualTo(ResponsesTracingConstants.OperationName));
     }
 
     [Test]
@@ -84,9 +84,9 @@ public sealed class CustomActivitySourceProtocolTests
         using var env = CreateEnvWithCustomSource<NamespaceActivitySource>();
         await env.PostAsync(new { model = "test" });
 
-        Assert.AreEqual("my.namespace", env.Tags["service.namespace"]);
+        Assert.That(env.Tags["service.namespace"], Is.EqualTo("my.namespace"));
         // Other base defaults intact
-        Assert.AreEqual(ResponsesTracingConstants.ProviderName, env.Tags[ResponsesTracingConstants.Tags.ProviderName]);
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo(ResponsesTracingConstants.ProviderName));
     }
 
     [Test]
@@ -97,9 +97,9 @@ public sealed class CustomActivitySourceProtocolTests
             new { model = "test" },
             ("X-Tenant-Id", "tenant-abc"));
 
-        Assert.AreEqual("tenant-abc", env.Tags["tenant.id"]);
+        Assert.That(env.Tags["tenant.id"], Is.EqualTo("tenant-abc"));
         // Base defaults still present
-        Assert.AreEqual(ResponsesTracingConstants.ProviderName, env.Tags[ResponsesTracingConstants.Tags.ProviderName]);
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo(ResponsesTracingConstants.ProviderName));
     }
 
     [Test]
@@ -108,9 +108,9 @@ public sealed class CustomActivitySourceProtocolTests
         using var env = CreateEnvWithCustomSource<CustomServiceNameActivitySource>();
         await env.PostAsync(new { model = "test" });
 
-        Assert.IsTrue(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.ResponseId));
+        Assert.That(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.ResponseId), Is.True);
         var responseId = env.Tags[ResponsesTracingConstants.Tags.ResponseId] as string;
-        Assert.IsNotNull(responseId);
+        Assert.That(responseId, Is.Not.Null);
         XAssert.StartsWith("caresp_", responseId);
     }
 
@@ -121,9 +121,9 @@ public sealed class CustomActivitySourceProtocolTests
         await env.PostAsync(new { model = "test" });
 
         // Base defaults present
-        Assert.AreEqual(ResponsesTracingConstants.ProviderName, env.Tags[ResponsesTracingConstants.Tags.ProviderName]);
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo(ResponsesTracingConstants.ProviderName));
         // Plus the extra tag from the subclass
-        Assert.AreEqual("extended-value", env.Tags["custom.extended"]);
+        Assert.That(env.Tags["custom.extended"], Is.EqualTo("extended-value"));
     }
 
     // ── Full override (no base call) ─────────────────────────────────────
@@ -134,14 +134,14 @@ public sealed class CustomActivitySourceProtocolTests
         using var env = CreateEnvWithCustomSource<MinimalActivitySource>();
         await env.PostAsync(new { model = "gpt-4o" });
 
-        Assert.AreEqual("minimal-op", env.DisplayName);
-        Assert.IsTrue(env.Tags.ContainsKey("custom.tag"));
-        Assert.AreEqual("yes", env.Tags["custom.tag"]);
+        Assert.That(env.DisplayName, Is.EqualTo("minimal-op"));
+        Assert.That(env.Tags.ContainsKey("custom.tag"), Is.True);
+        Assert.That(env.Tags["custom.tag"], Is.EqualTo("yes"));
 
         // Default GenAI tags NOT present (base not called)
-        Assert.IsFalse(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.ProviderName));
-        Assert.IsFalse(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.ServiceName));
-        Assert.IsFalse(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.System));
+        Assert.That(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.ProviderName), Is.False);
+        Assert.That(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.ServiceName), Is.False);
+        Assert.That(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.System), Is.False);
     }
 
     [Test]
@@ -150,7 +150,7 @@ public sealed class CustomActivitySourceProtocolTests
         using var env = CreateEnvWithCustomSource<CustomNameActivitySource>();
         await env.PostAsync(new { model = "gpt-4o" });
 
-        Assert.IsNotNull(env.DisplayName);
+        Assert.That(env.DisplayName, Is.Not.Null);
         XAssert.StartsWith("HostedAgents-caresp_", env.DisplayName);
     }
 
@@ -161,7 +161,7 @@ public sealed class CustomActivitySourceProtocolTests
         using var env = CreateEnvWithCustomSource<CustomServiceNameActivitySource>();
         await env.PostAsync(new { model = "test" });
 
-        Assert.AreEqual("my.custom.provider", env.Tags[ResponsesTracingConstants.Tags.ProviderName]);
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo("my.custom.provider"));
     }
 
     // ── Custom ActivitySource subclasses ─────────────────────────────────
@@ -185,7 +185,8 @@ public sealed class CustomActivitySourceProtocolTests
             CreateResponse request, string responseId, IHeaderDictionary headers)
         {
             var activity = base.StartCreateResponseActivity(request, responseId, headers);
-            if (activity is null) return null;
+            if (activity is null)
+                return null;
 
             activity.SetTag(ResponsesTracingConstants.Tags.ProviderName, "my.custom.provider");
             activity.SetTag(ResponsesTracingConstants.Tags.ServiceName, "my.custom.provider");
@@ -240,7 +241,8 @@ public sealed class CustomActivitySourceProtocolTests
             CreateResponse request, string responseId, IHeaderDictionary headers)
         {
             var activity = Source.StartActivity($"HostedAgents-{responseId}");
-            if (activity is null) return null;
+            if (activity is null)
+                return null;
             activity.SetTag(ResponsesTracingConstants.Tags.ResponseId, responseId);
             return activity;
         }
@@ -371,8 +373,7 @@ public sealed class CustomActivitySourceProtocolTests
                 JsonSerializer.Serialize(payload),
                 System.Text.Encoding.UTF8, "application/json");
             var response = await _client.PostAsync("/responses", content);
-            Assert.IsTrue(response.IsSuccessStatusCode,
-                $"Request failed with {response.StatusCode}: {await response.Content.ReadAsStringAsync()}");
+            Assert.That(response.IsSuccessStatusCode, Is.True, $"Request failed with {response.StatusCode}: {await response.Content.ReadAsStringAsync()}");
         }
 
         public async Task PostWithHeadersAsync(object payload, params (string Key, string Value)[] extraHeaders)
@@ -388,8 +389,7 @@ public sealed class CustomActivitySourceProtocolTests
                 request.Headers.Add(key, value);
             }
             var response = await _client.SendAsync(request);
-            Assert.IsTrue(response.IsSuccessStatusCode,
-                $"Request failed with {response.StatusCode}: {await response.Content.ReadAsStringAsync()}");
+            Assert.That(response.IsSuccessStatusCode, Is.True, $"Request failed with {response.StatusCode}: {await response.Content.ReadAsStringAsync()}");
         }
 
         public void Dispose()

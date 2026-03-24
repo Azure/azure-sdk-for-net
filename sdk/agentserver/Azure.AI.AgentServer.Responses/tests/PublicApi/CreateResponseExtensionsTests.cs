@@ -21,7 +21,7 @@ public class CreateResponseExtensionsTests
     public void GetConversationId_NoFields_ReturnsNull()
     {
         var request = new CreateResponse();
-        Assert.IsNull(request.GetConversationId());
+        Assert.That(request.GetConversationId(), Is.Null);
     }
 
     [Test]
@@ -29,7 +29,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse { PreviousResponseId = "caresp_abc123" };
 
-        Assert.IsNull(request.GetConversationId());
+        Assert.That(request.GetConversationId(), Is.Null);
     }
 
     [Test]
@@ -42,7 +42,7 @@ public class CreateResponseExtensionsTests
             Conversation = BinaryData.FromString(JsonSerializer.Serialize(conversationId)),
         };
 
-        Assert.AreEqual(conversationId, request.GetConversationId());
+        Assert.That(request.GetConversationId(), Is.EqualTo(conversationId));
     }
 
     [Test]
@@ -54,7 +54,7 @@ public class CreateResponseExtensionsTests
             Conversation = BinaryData.FromString(JsonSerializer.Serialize(conversationId)),
         };
 
-        Assert.AreEqual(conversationId, request.GetConversationId());
+        Assert.That(request.GetConversationId(), Is.EqualTo(conversationId));
     }
 
     [Test]
@@ -66,7 +66,7 @@ public class CreateResponseExtensionsTests
             Conversation = BinaryData.FromString(JsonSerializer.Serialize(new { id = conversationId })),
         };
 
-        Assert.AreEqual(conversationId, request.GetConversationId());
+        Assert.That(request.GetConversationId(), Is.EqualTo(conversationId));
     }
 
     [Test]
@@ -77,7 +77,7 @@ public class CreateResponseExtensionsTests
             Conversation = BinaryData.FromString(JsonSerializer.Serialize(new { name = "test" })),
         };
 
-        Assert.IsNull(request.GetConversationId());
+        Assert.That(request.GetConversationId(), Is.Null);
     }
 
     [Test]
@@ -88,7 +88,7 @@ public class CreateResponseExtensionsTests
             Conversation = BinaryData.FromString(JsonSerializer.Serialize("")),
         };
 
-        Assert.IsNull(request.GetConversationId());
+        Assert.That(request.GetConversationId(), Is.Null);
     }
 
     [Test]
@@ -99,7 +99,7 @@ public class CreateResponseExtensionsTests
             Conversation = BinaryData.FromString("not valid json {{{"),
         };
 
-        Assert.IsNull(request.GetConversationId());
+        Assert.That(request.GetConversationId(), Is.Null);
     }
 
     [Test]
@@ -111,7 +111,7 @@ public class CreateResponseExtensionsTests
             Conversation = null,
         };
 
-        Assert.IsNull(request.GetConversationId());
+        Assert.That(request.GetConversationId(), Is.Null);
     }
 
     // ── GetToolChoiceExpanded ──────────────────────────────────────────
@@ -127,7 +127,7 @@ public class CreateResponseExtensionsTests
     public void GetToolChoiceExpanded_NullToolChoice_ReturnsNull()
     {
         var request = new CreateResponse();
-        Assert.IsNull(request.GetToolChoiceExpanded());
+        Assert.That(request.GetToolChoiceExpanded(), Is.Null);
     }
 
     [Test]
@@ -141,8 +141,8 @@ public class CreateResponseExtensionsTests
         var result = request.GetToolChoiceExpanded();
 
         var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
-        Assert.AreEqual(ToolChoiceAllowedMode.Auto, allowed.Mode);
-        Assert.IsEmpty(allowed.Tools);
+        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Auto));
+        Assert.That(allowed.Tools, Is.Empty);
     }
 
     [Test]
@@ -156,8 +156,8 @@ public class CreateResponseExtensionsTests
         var result = request.GetToolChoiceExpanded();
 
         var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
-        Assert.AreEqual(ToolChoiceAllowedMode.Required, allowed.Mode);
-        Assert.IsEmpty(allowed.Tools);
+        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Required));
+        Assert.That(allowed.Tools, Is.Empty);
     }
 
     [Test]
@@ -168,7 +168,7 @@ public class CreateResponseExtensionsTests
             ToolChoice = BinaryData.FromObjectAsJson("none"),
         };
 
-        Assert.IsNull(request.GetToolChoiceExpanded());
+        Assert.That(request.GetToolChoiceExpanded(), Is.Null);
     }
 
     [Test]
@@ -183,7 +183,7 @@ public class CreateResponseExtensionsTests
         var result = request.GetToolChoiceExpanded();
 
         var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
-        Assert.AreEqual(ToolChoiceAllowedMode.Auto, allowed.Mode);
+        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Auto));
     }
 
     [Test]
@@ -222,7 +222,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse();
         var result = request.GetInputExpanded();
-        Assert.IsEmpty(result);
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
@@ -237,11 +237,11 @@ public class CreateResponseExtensionsTests
 
         var msg = XAssert.Single(result);
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
-        Assert.AreEqual(MessageRole.User, itemMsg.Role);
+        Assert.That(itemMsg.Role, Is.EqualTo(MessageRole.User));
         var content = itemMsg.GetContentExpanded();
         var textContent = XAssert.Single(content);
         var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
-        Assert.AreEqual("Hello world", inputText.Text);
+        Assert.That(inputText.Text, Is.EqualTo("Hello world"));
     }
 
     [Test]
@@ -257,7 +257,7 @@ public class CreateResponseExtensionsTests
 
         var msg = XAssert.Single(result);
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
-        Assert.AreEqual(MessageRole.User, itemMsg.Role);
+        Assert.That(itemMsg.Role, Is.EqualTo(MessageRole.User));
     }
 
     [Test]
@@ -273,7 +273,7 @@ public class CreateResponseExtensionsTests
 
         var msg = XAssert.Single(result);
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
-        Assert.AreEqual(MessageRole.User, itemMsg.Role);
+        Assert.That(itemMsg.Role, Is.EqualTo(MessageRole.User));
     }
 
     [Test]
@@ -285,7 +285,7 @@ public class CreateResponseExtensionsTests
         };
 
         var ex = Assert.Throws<FormatException>(() => request.GetInputExpanded());
-        Assert.AreEqual("Failed to convert input items", ex.Message);
+        Assert.That(ex.Message, Is.EqualTo("Expected a string or array for Input, but got Number."));
     }
 
     [Test]
@@ -297,8 +297,8 @@ public class CreateResponseExtensionsTests
         };
 
         var ex = Assert.Throws<FormatException>(() => request.GetInputExpanded());
-        Assert.AreEqual("Failed to convert input items", ex.Message);
-        Assert.IsNotNull(ex.InnerException);
+        Assert.That(ex.Message, Is.EqualTo("Failed to convert input items"));
+        Assert.That(ex.InnerException, Is.Not.Null);
     }
 
     // ── GetInputText ──────────────────────────────────────────────────
@@ -314,7 +314,7 @@ public class CreateResponseExtensionsTests
     public void GetInputText_NullInput_ReturnsEmptyString()
     {
         var request = new CreateResponse();
-        Assert.AreEqual(string.Empty, request.GetInputText());
+        Assert.That(request.GetInputText(), Is.EqualTo(string.Empty));
     }
 
     [Test]
@@ -325,7 +325,7 @@ public class CreateResponseExtensionsTests
             Input = BinaryData.FromObjectAsJson("Hello world"),
         };
 
-        Assert.AreEqual("Hello world", request.GetInputText());
+        Assert.That(request.GetInputText(), Is.EqualTo("Hello world"));
     }
 
     [Test]
@@ -343,7 +343,7 @@ public class CreateResponseExtensionsTests
         };
 
         var result = request.GetInputText();
-        Assert.AreEqual("Hello\nWorld", result);
+        Assert.That(result, Is.EqualTo("Hello\nWorld"));
     }
 
     [Test]
@@ -363,7 +363,7 @@ public class CreateResponseExtensionsTests
             Input = BinaryData.FromString(json),
         };
 
-        Assert.AreEqual("Look at this", request.GetInputText());
+        Assert.That(request.GetInputText(), Is.EqualTo("Look at this"));
     }
 
     [Test]
@@ -375,7 +375,7 @@ public class CreateResponseExtensionsTests
             Input = BinaryData.FromString(json),
         };
 
-        Assert.AreEqual(string.Empty, request.GetInputText());
+        Assert.That(request.GetInputText(), Is.EqualTo(string.Empty));
     }
 
     // ── GetConversationExpanded ────────────────────────────────────────
@@ -391,7 +391,7 @@ public class CreateResponseExtensionsTests
     public void GetConversationExpanded_NullConversation_ReturnsNull()
     {
         var request = new CreateResponse();
-        Assert.IsNull(request.GetConversationExpanded());
+        Assert.That(request.GetConversationExpanded(), Is.Null);
     }
 
     [Test]
@@ -404,8 +404,8 @@ public class CreateResponseExtensionsTests
 
         var result = request.GetConversationExpanded();
 
-        Assert.IsNotNull(result);
-        Assert.AreEqual("conv_abc123", result.Id);
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Id, Is.EqualTo("conv_abc123"));
     }
 
     [Test]
@@ -419,8 +419,8 @@ public class CreateResponseExtensionsTests
 
         var result = request.GetConversationExpanded();
 
-        Assert.IsNotNull(result);
-        Assert.AreEqual("conv_xyz", result.Id);
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Id, Is.EqualTo("conv_xyz"));
     }
 
     [Test]

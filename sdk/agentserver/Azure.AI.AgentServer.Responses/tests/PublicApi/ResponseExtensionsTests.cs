@@ -22,7 +22,7 @@ public class ResponseExtensionsTests
     public void GetToolChoiceExpanded_NullToolChoice_ReturnsNull()
     {
         var response = new Models.Response("resp_1", "gpt-4o");
-        Assert.IsNull(response.GetToolChoiceExpanded());
+        Assert.That(response.GetToolChoiceExpanded(), Is.Null);
     }
 
     [Test]
@@ -36,7 +36,7 @@ public class ResponseExtensionsTests
         var result = response.GetToolChoiceExpanded();
 
         var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
-        Assert.AreEqual(ToolChoiceAllowedMode.Auto, allowed.Mode);
+        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Auto));
     }
 
     [Test]
@@ -47,7 +47,7 @@ public class ResponseExtensionsTests
             ToolChoice = BinaryData.FromObjectAsJson("none"),
         };
 
-        Assert.IsNull(response.GetToolChoiceExpanded());
+        Assert.That(response.GetToolChoiceExpanded(), Is.Null);
     }
 
     // ── SetToolChoice(ToolChoiceParam) ────────────────────────────────
@@ -62,7 +62,7 @@ public class ResponseExtensionsTests
         var result = response.GetToolChoiceExpanded();
 
         var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
-        Assert.AreEqual(ToolChoiceAllowedMode.Required, allowed.Mode);
+        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Required));
     }
 
     [Test]
@@ -83,7 +83,7 @@ public class ResponseExtensionsTests
         var result = response.GetToolChoiceExpanded();
 
         var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
-        Assert.AreEqual(ToolChoiceAllowedMode.Auto, allowed.Mode);
+        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Auto));
     }
 
     [Test]
@@ -95,7 +95,7 @@ public class ResponseExtensionsTests
         var result = response.GetToolChoiceExpanded();
 
         var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
-        Assert.AreEqual(ToolChoiceAllowedMode.Required, allowed.Mode);
+        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Required));
     }
 
     [Test]
@@ -105,7 +105,7 @@ public class ResponseExtensionsTests
 
         response.SetToolChoice(ToolChoiceOptions.None);
 
-        Assert.IsNull(response.GetToolChoiceExpanded());
+        Assert.That(response.GetToolChoiceExpanded(), Is.Null);
     }
 
     // ── GetInstructionItems ───────────────────────────────────────────
@@ -121,7 +121,7 @@ public class ResponseExtensionsTests
     public void GetInstructionItems_NullInstructions_ReturnsEmptyList()
     {
         var response = new Models.Response("resp_1", "gpt-4o");
-        Assert.IsEmpty(response.GetInstructionItems());
+        Assert.That(response.GetInstructionItems(), Is.Empty);
     }
 
     [Test]
@@ -136,11 +136,11 @@ public class ResponseExtensionsTests
 
         var msg = XAssert.Single(result);
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
-        Assert.AreEqual(MessageRole.Developer, itemMsg.Role);
+        Assert.That(itemMsg.Role, Is.EqualTo(MessageRole.Developer));
         var content = itemMsg.GetContentExpanded();
         var textContent = XAssert.Single(content);
         var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
-        Assert.AreEqual("You are helpful.", inputText.Text);
+        Assert.That(inputText.Text, Is.EqualTo("You are helpful."));
     }
 
     [Test]
@@ -156,7 +156,7 @@ public class ResponseExtensionsTests
 
         var msg = XAssert.Single(result);
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
-        Assert.AreEqual(MessageRole.Developer, itemMsg.Role);
+        Assert.That(itemMsg.Role, Is.EqualTo(MessageRole.Developer));
     }
 
     // ── SetInstructions(string) ───────────────────────────────────────
@@ -174,7 +174,7 @@ public class ResponseExtensionsTests
         var content = itemMsg.GetContentExpanded();
         var textContent = XAssert.Single(content);
         var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
-        Assert.AreEqual("You are a helpful assistant.", inputText.Text);
+        Assert.That(inputText.Text, Is.EqualTo("You are a helpful assistant."));
     }
 
     [Test]
@@ -206,7 +206,7 @@ public class ResponseExtensionsTests
         var content = itemMsg.GetContentExpanded();
         var textContent = XAssert.Single(content);
         var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
-        Assert.AreEqual("Be helpful.", inputText.Text);
+        Assert.That(inputText.Text, Is.EqualTo("Be helpful."));
     }
 
     [Test]

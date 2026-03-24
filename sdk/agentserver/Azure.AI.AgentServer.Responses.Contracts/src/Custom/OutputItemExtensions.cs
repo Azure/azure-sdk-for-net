@@ -27,7 +27,7 @@ public static class OutputItemExtensions
     /// </exception>
     public static string GetId(this OutputItem item)
     {
-        ArgumentNullException.ThrowIfNull(item);
+        Argument.AssertNotNull(item, nameof(item));
 
         if (TryGetIdCore(item, out var id) && id is not null)
         {
@@ -125,7 +125,6 @@ public static class OutputItemExtensions
         // This covers any future OutputItem subclasses added by code generation.
         return TryGetIdFromJson(item, out id);
     }
-
 
     private static bool TryGetIdFromJson(OutputItem item, out string? id)
     {

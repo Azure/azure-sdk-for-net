@@ -41,8 +41,8 @@ public class ResponseContextImplTests
         XAssert.Single(items);
         var msg = XAssert.IsType<OutputItemMessage>(items[0]);
         XAssert.StartsWith("msg_", msg.Id);
-        Assert.AreEqual(MessageStatus.Completed, msg.Status);
-        Assert.AreEqual(MessageRole.User, msg.Role);
+        Assert.That(msg.Status, Is.EqualTo(MessageStatus.Completed));
+        Assert.That(msg.Role, Is.EqualTo(MessageRole.User));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -72,8 +72,8 @@ public class ResponseContextImplTests
 
         XAssert.Single(items);
         var msg = XAssert.IsType<OutputItemMessage>(items[0]);
-        Assert.AreEqual("msg_existing", msg.Id);
-        Assert.AreEqual(MessageRole.Assistant, msg.Role);
+        Assert.That(msg.Id, Is.EqualTo("msg_existing"));
+        Assert.That(msg.Role, Is.EqualTo(MessageRole.Assistant));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -93,9 +93,9 @@ public class ResponseContextImplTests
         var result1 = await context.GetInputItemsAsync();
         var result2 = await context.GetInputItemsAsync();
 
-        Assert.AreSame(result1, result2);
+        Assert.That(result2, Is.SameAs(result1));
         // Provider.GetItemsAsync should not be called at all (no references)
-        Assert.AreEqual(0, provider.GetItemsCallCount);
+        Assert.That(provider.GetItemsCallCount, Is.EqualTo(0));
     }
 
     [Test]
@@ -114,7 +114,7 @@ public class ResponseContextImplTests
         await context.GetInputItemsAsync();
         await context.GetInputItemsAsync();
 
-        Assert.AreEqual(1, provider.GetItemsCallCount);
+        Assert.That(provider.GetItemsCallCount, Is.EqualTo(1));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -140,7 +140,7 @@ public class ResponseContextImplTests
         var context = CreateContext(request, provider);
         var items = await context.GetInputItemsAsync();
 
-        Assert.AreEqual(3, items.Count);
+        Assert.That(items.Count, Is.EqualTo(3));
 
         // First item: inline message
         var first = XAssert.IsType<OutputItemMessage>(items[0]);
@@ -148,14 +148,14 @@ public class ResponseContextImplTests
 
         // Second item: resolved reference
         var second = XAssert.IsType<OutputItemMessage>(items[1]);
-        Assert.AreEqual("ref_middle", second.Id);
+        Assert.That(second.Id, Is.EqualTo("ref_middle"));
 
         // Third item: inline message
         var third = XAssert.IsType<OutputItemMessage>(items[2]);
         XAssert.StartsWith("msg_", third.Id);
 
         // First and third should have different generated IDs
-        Assert.AreNotEqual(first.Id, third.Id);
+        Assert.That(third.Id, Is.Not.EqualTo(first.Id));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -170,7 +170,7 @@ public class ResponseContextImplTests
         var context = CreateContext(request);
         var items = await context.GetInputItemsAsync();
 
-        Assert.IsEmpty(items);
+        Assert.That(items, Is.Empty);
     }
 
     [Test]
@@ -182,7 +182,7 @@ public class ResponseContextImplTests
         var context = CreateContext(request);
         var items = await context.GetInputItemsAsync();
 
-        Assert.IsEmpty(items);
+        Assert.That(items, Is.Empty);
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -203,13 +203,13 @@ public class ResponseContextImplTests
 
         var items = await context.GetHistoryAsync();
 
-        Assert.AreEqual(3, items.Count);
+        Assert.That(items.Count, Is.EqualTo(3));
         var first = XAssert.IsType<OutputItemMessage>(items[0]);
         var second = XAssert.IsType<OutputItemMessage>(items[1]);
         var third = XAssert.IsType<OutputItemMessage>(items[2]);
-        Assert.AreEqual("hist_1", first.Id);
-        Assert.AreEqual("hist_2", second.Id);
-        Assert.AreEqual("hist_3", third.Id);
+        Assert.That(first.Id, Is.EqualTo("hist_1"));
+        Assert.That(second.Id, Is.EqualTo("hist_2"));
+        Assert.That(third.Id, Is.EqualTo("hist_3"));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -224,7 +224,7 @@ public class ResponseContextImplTests
 
         var items = await context.GetHistoryAsync();
 
-        Assert.IsEmpty(items);
+        Assert.That(items, Is.Empty);
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -244,9 +244,9 @@ public class ResponseContextImplTests
         var result1 = await context.GetHistoryAsync();
         var result2 = await context.GetHistoryAsync();
 
-        Assert.AreSame(result1, result2);
-        Assert.AreEqual(1, provider.GetHistoryItemIdsCallCount);
-        Assert.AreEqual(1, provider.GetItemsCallCount);
+        Assert.That(result2, Is.SameAs(result1));
+        Assert.That(provider.GetHistoryItemIdsCallCount, Is.EqualTo(1));
+        Assert.That(provider.GetItemsCallCount, Is.EqualTo(1));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -266,7 +266,7 @@ public class ResponseContextImplTests
 
         await context.GetHistoryAsync();
 
-        Assert.AreEqual(42, provider.LastHistoryLimit);
+        Assert.That(provider.LastHistoryLimit, Is.EqualTo(42));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
