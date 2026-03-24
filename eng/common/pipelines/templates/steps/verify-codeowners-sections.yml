@@ -58,7 +58,7 @@ steps:
         # Extract parent commit version
         git show "HEAD~1:.github/CODEOWNERS" > $beforeFile
         Write-Host "Retrieved parent commit CODEOWNERS to $beforeFile"
-        Get-Content $beforeFile | Select-Object -First 20 | Write-Host
+
         if ($LASTEXITCODE) {
           Write-Host "Could not retrieve CODEOWNERS from HEAD~1. The file may be newly added. Skipping."
           Write-Host "##vso[task.setvariable variable=CodeownersChanged]false"
