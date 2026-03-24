@@ -8,9 +8,19 @@ This sample demonstrates how to access **grounding source references** from anal
 |-------|------------|----------|
 | `ContentSource` (abstract) | — | Base class; use `ContentSource.Parse()` to create typed instances |
 | `DocumentSource` | `D(page,x1,y1,...,xN,yN)` or `D(page)` | Document/image: page number + polygon coordinates + computed `BoundingBox` |
-| `AudioVisualSource` | `AV(time[,x,y,w,h])` | Audio/video: timestamp (ms) + optional bounding box |
 
-Multiple source regions are separated by `;` in the raw string. `ContentSource.Parse()` splits them and returns a typed array.
+Multiple source regions are separated by `;` in the raw string. `ContentSource.Parse()` splits them and returns a typed array. For example, a field spanning two regions on page 1:
+
+```
+D(1,0.10,0.20,0.50,0.20,0.50,0.25,0.10,0.25);D(1,0.10,0.30,0.50,0.30,0.50,0.35,0.10,0.35)
+```
+
+```csharp
+// Parse a multi-segment source string into individual DocumentSource instances.
+string rawSource = field.Sources.ToRawString();    // e.g. "D(1,...);D(1,...)"
+ContentSource[] sources = ContentSource.Parse(rawSource);
+// sources.Length == 2, each is a DocumentSource with its own page + polygon
+```
 
 ## Prerequisites
 
@@ -20,6 +30,8 @@ To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Con
 
 For full client setup details, see [Sample 00: Configure model deployment defaults][sample00].
 
+### Using DefaultAzureCredential (recommended)
+
 ```C# Snippet:CreateContentUnderstandingClient
 // Example: https://your-foundry.services.ai.azure.com/
 string endpoint = "<endpoint>";
@@ -27,13 +39,24 @@ var credential = new DefaultAzureCredential();
 var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
 ```
 
+### Using API key
+
+```C# Snippet:CreateContentUnderstandingClientApiKey
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>";
+var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+```
+
+> **⚠️ Security Warning**: API key authentication is less secure and is only recommended for testing purposes with test resources. For production, use `DefaultAzureCredential` or other secure authentication methods.
+
 ## Accessing sources from analysis results
 
 Analyze a document (e.g., an invoice) and iterate over fields to access their grounding sources. Each source identifies the page and precise region where the extracted value appears.
 
 ```C# Snippet:ContentUnderstandingContentSourceFromAnalysis
 // Analyze an invoice to get fields with grounding sources.
-Uri invoiceUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-dotnet/main/ContentUnderstanding.Common/data/invoice.pdf");
+Uri invoiceUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
 Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-invoice",
@@ -80,42 +103,41 @@ foreach (var kvp in documentContent.Fields)
 }
 ```
 
-## Parsing raw source strings
+## Round-tripping source strings with Parse and ToRawString
 
-`ContentSource.Parse()` converts raw wire-format strings into strongly-typed `DocumentSource` or `AudioVisualSource` instances. This is useful when working with source strings from JSON responses or external storage.
+Use `ToRawString()` to convert parsed `ContentSource` objects back to their wire format, and `ContentSource.Parse()` to re-parse them. This is useful when serializing source references for storage or transmission.
 
 ```C# Snippet:ContentUnderstandingContentSourceParse
-// ContentSource.Parse() can parse raw source strings into typed instances.
-// The raw format uses prefixes: D(...) for documents, AV(...) for audio/video.
+// Get the grounding source from a real analysis result and round-trip it.
+// Find a field that has grounding sources.
+ContentField fieldWithSource = documentContent.Fields.Values
+    .First(f => f.Sources != null);
 
-// Parse a single document source: page 1 with a 4-point polygon
-ContentSource[] docSources = ContentSource.Parse("D(1,0.5712,0.3381,0.7276,0.3381,0.7276,0.3534,0.5712,0.3534)");
-DocumentSource doc = (DocumentSource)docSources[0];
-Console.WriteLine($"Parsed document source: page {doc.PageNumber}, {doc.Polygon!.Count} polygon points");
-Console.WriteLine($"  BoundingBox: {doc.BoundingBox}");
+// Convert the parsed sources back to their wire-format string using ToRawString().
+string sourceString = fieldWithSource.Sources!.ToRawString();
+Console.WriteLine($"Source wire format: {sourceString}");
 
-// Parse a page-only document source (no coordinates)
-ContentSource[] pageOnlySources = ContentSource.Parse("D(3)");
+// Parse the wire-format string back into typed ContentSource instances.
+ContentSource[] roundTripped = ContentSource.Parse(sourceString);
+DocumentSource roundTrippedDoc = (DocumentSource)roundTripped[0];
+Console.WriteLine($"Round-tripped: page {roundTrippedDoc.PageNumber}, polygon points: {roundTrippedDoc.Polygon?.Count ?? 0}");
+Console.WriteLine($"  BoundingBox: {roundTrippedDoc.BoundingBox}");
+
+// Find a field with multiple source segments (e.g., multi-line addresses).
+ContentField multiSourceField = documentContent.Fields.Values
+    .First(f => f.Sources != null && f.Sources.Length > 1);
+string multiSourceString = multiSourceField.Sources!.ToRawString();
+Console.WriteLine($"Multi-segment wire format: {multiSourceString}");
+
+ContentSource[] multiParsed = ContentSource.Parse(multiSourceString);
+Console.WriteLine($"Multi-segment: {multiParsed.Length} sources on pages {string.Join(", ", multiParsed.OfType<DocumentSource>().Select(s => s.PageNumber))}");
+
+// ContentSource.Parse() also handles page-only format (no polygon coordinates).
+// Construct a page-only source string from a real field's page number.
+int realPageNumber = ((DocumentSource)fieldWithSource.Sources![0]).PageNumber;
+ContentSource[] pageOnlySources = ContentSource.Parse($"D({realPageNumber})");
 DocumentSource pageOnly = (DocumentSource)pageOnlySources[0];
 Console.WriteLine($"Page-only source: page {pageOnly.PageNumber}, polygon: {(pageOnly.Polygon != null ? "yes" : "none")}");
-
-// Parse an audio/visual source: timestamp at 5000 ms (no bounding box)
-ContentSource[] avSources = ContentSource.Parse("AV(5000)");
-AudioVisualSource av = (AudioVisualSource)avSources[0];
-Console.WriteLine($"Audio/visual source: time {av.Time.TotalMilliseconds} ms, bbox: {(av.BoundingBox.HasValue ? "yes" : "none")}");
-
-// Parse an audio/visual source with bounding box: 5000 ms at (100,200) size 50x60
-ContentSource[] avWithBbox = ContentSource.Parse("AV(5000,100,200,50,60)");
-AudioVisualSource avBbox = (AudioVisualSource)avWithBbox[0];
-Console.WriteLine($"AV with bbox: time {avBbox.Time.TotalMilliseconds} ms, bbox: {avBbox.BoundingBox}");
-
-// Parse multiple segments separated by semicolons
-ContentSource[] multiSources = ContentSource.Parse("D(1,0.1,0.2,0.3,0.2,0.3,0.4,0.1,0.4);D(2,0.5,0.6,0.7,0.6,0.7,0.8,0.5,0.8)");
-Console.WriteLine($"Multi-segment: {multiSources.Length} sources across pages {((DocumentSource)multiSources[0]).PageNumber} and {((DocumentSource)multiSources[1]).PageNumber}");
-
-// Reconstruct the wire format from parsed sources
-string wireFormat = multiSources.ToRawString();
-Console.WriteLine($"Reconstructed wire format: {wireFormat}");
 ```
 
 [sample00]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md

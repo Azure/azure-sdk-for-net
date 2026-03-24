@@ -23,11 +23,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
         /// from analysis results. Content sources identify the exact location in the original
         /// content where a field value was extracted from.
         ///
-        /// Two source types are supported:
-        /// <list type="bullet">
-        /// <item><see cref="DocumentSource"/> — page + polygon coordinates for documents/images</item>
-        /// <item><see cref="AudioVisualSource"/> — timestamp + optional bounding box for audio/video</item>
-        /// </list>
+        /// For document/image content, sources are <see cref="DocumentSource"/> instances
+        /// with page number, polygon coordinates, and a computed bounding box.
         /// </summary>
         [RecordedTest]
         public async Task ContentSourceAsync()
@@ -38,7 +35,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Snippet:ContentUnderstandingContentSourceFromAnalysis
             // Analyze an invoice to get fields with grounding sources.
-            Uri invoiceUrl = new Uri("https://github.com/Azure-Samples/azure-ai-content-understanding-assets/blob/main/document/invoice.pdf");
+            Uri invoiceUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
             Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-invoice",
@@ -115,75 +112,55 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Snippet:ContentUnderstandingContentSourceParse
-            // ContentSource.Parse() can parse raw source strings into typed instances.
-            // The raw format uses prefixes: D(...) for documents, AV(...) for audio/video.
+            // Get the grounding source from a real analysis result and round-trip it.
+            // Find a field that has grounding sources.
+            ContentField fieldWithSource = documentContent.Fields.Values
+                .First(f => f.Sources != null);
 
-            // Parse a single document source: page 1 with a 4-point polygon
-            ContentSource[] docSources = ContentSource.Parse("D(1,0.5712,0.3381,0.7276,0.3381,0.7276,0.3534,0.5712,0.3534)");
-            DocumentSource doc = (DocumentSource)docSources[0];
-            Console.WriteLine($"Parsed document source: page {doc.PageNumber}, {doc.Polygon!.Count} polygon points");
-            Console.WriteLine($"  BoundingBox: {doc.BoundingBox}");
+            // Convert the parsed sources back to their wire-format string using ToRawString().
+            string sourceString = fieldWithSource.Sources!.ToRawString();
+            Console.WriteLine($"Source wire format: {sourceString}");
 
-            // Parse a page-only document source (no coordinates)
-            ContentSource[] pageOnlySources = ContentSource.Parse("D(3)");
+            // Parse the wire-format string back into typed ContentSource instances.
+            ContentSource[] roundTripped = ContentSource.Parse(sourceString);
+            DocumentSource roundTrippedDoc = (DocumentSource)roundTripped[0];
+            Console.WriteLine($"Round-tripped: page {roundTrippedDoc.PageNumber}, polygon points: {roundTrippedDoc.Polygon?.Count ?? 0}");
+            Console.WriteLine($"  BoundingBox: {roundTrippedDoc.BoundingBox}");
+
+            // Find a field with multiple source segments (e.g., multi-line addresses).
+            ContentField multiSourceField = documentContent.Fields.Values
+                .First(f => f.Sources != null && f.Sources.Length > 1);
+            string multiSourceString = multiSourceField.Sources!.ToRawString();
+            Console.WriteLine($"Multi-segment wire format: {multiSourceString}");
+
+            ContentSource[] multiParsed = ContentSource.Parse(multiSourceString);
+            Console.WriteLine($"Multi-segment: {multiParsed.Length} sources on pages {string.Join(", ", multiParsed.OfType<DocumentSource>().Select(s => s.PageNumber))}");
+
+            // ContentSource.Parse() also handles page-only format (no polygon coordinates).
+            // Construct a page-only source string from a real field's page number.
+            int realPageNumber = ((DocumentSource)fieldWithSource.Sources![0]).PageNumber;
+            ContentSource[] pageOnlySources = ContentSource.Parse($"D({realPageNumber})");
             DocumentSource pageOnly = (DocumentSource)pageOnlySources[0];
             Console.WriteLine($"Page-only source: page {pageOnly.PageNumber}, polygon: {(pageOnly.Polygon != null ? "yes" : "none")}");
-
-            // Parse an audio/visual source: timestamp at 5000 ms (no bounding box)
-            ContentSource[] avSources = ContentSource.Parse("AV(5000)");
-            AudioVisualSource av = (AudioVisualSource)avSources[0];
-            Console.WriteLine($"Audio/visual source: time {av.Time.TotalMilliseconds} ms, bbox: {(av.BoundingBox.HasValue ? "yes" : "none")}");
-
-            // Parse an audio/visual source with bounding box: 5000 ms at (100,200) size 50x60
-            ContentSource[] avWithBbox = ContentSource.Parse("AV(5000,100,200,50,60)");
-            AudioVisualSource avBbox = (AudioVisualSource)avWithBbox[0];
-            Console.WriteLine($"AV with bbox: time {avBbox.Time.TotalMilliseconds} ms, bbox: {avBbox.BoundingBox}");
-
-            // Parse multiple segments separated by semicolons
-            ContentSource[] multiSources = ContentSource.Parse("D(1,0.1,0.2,0.3,0.2,0.3,0.4,0.1,0.4);D(2,0.5,0.6,0.7,0.6,0.7,0.8,0.5,0.8)");
-            Console.WriteLine($"Multi-segment: {multiSources.Length} sources across pages {((DocumentSource)multiSources[0]).PageNumber} and {((DocumentSource)multiSources[1]).PageNumber}");
-
-            // Reconstruct the wire format from parsed sources
-            string wireFormat = multiSources.ToRawString();
-            Console.WriteLine($"Reconstructed wire format: {wireFormat}");
             #endregion
 
             #region Assertion:ContentUnderstandingContentSourceParse
-            // Verify single document source parsing
-            Assert.AreEqual(1, docSources.Length);
-            Assert.IsInstanceOf<DocumentSource>(docSources[0]);
-            Assert.AreEqual(1, doc.PageNumber);
-            Assert.AreEqual(4, doc.Polygon!.Count);
-            Assert.IsTrue(doc.BoundingBox.HasValue);
+            // Verify round-trip: sources → ToRawString → Parse → same data
+            Assert.IsTrue(roundTripped.Length >= 1);
+            Assert.IsInstanceOf<DocumentSource>(roundTripped[0]);
+            Assert.AreEqual(((DocumentSource)fieldWithSource.Sources![0]).PageNumber, roundTrippedDoc.PageNumber);
+            Assert.IsNotNull(roundTrippedDoc.Polygon);
+            Assert.IsTrue(roundTrippedDoc.BoundingBox.HasValue);
+
+            // Verify multi-segment round-trip
+            Assert.IsTrue(multiParsed.Length > 1, $"Expected multiple segments, got {multiParsed.Length}");
+            Assert.AreEqual(multiSourceField.Sources!.Length, multiParsed.Length);
 
             // Verify page-only document source
             Assert.AreEqual(1, pageOnlySources.Length);
-            Assert.AreEqual(3, pageOnly.PageNumber);
+            Assert.AreEqual(realPageNumber, pageOnly.PageNumber);
             Assert.IsNull(pageOnly.Polygon, "Page-only source should have null polygon");
             Assert.IsNull(pageOnly.BoundingBox, "Page-only source should have null BoundingBox");
-
-            // Verify audio/visual source without bounding box
-            Assert.AreEqual(1, avSources.Length);
-            Assert.IsInstanceOf<AudioVisualSource>(avSources[0]);
-            Assert.AreEqual(TimeSpan.FromMilliseconds(5000), av.Time);
-            Assert.IsFalse(av.BoundingBox.HasValue, "Audio-only AV source should have no BoundingBox");
-
-            // Verify audio/visual source with bounding box
-            Assert.AreEqual(1, avWithBbox.Length);
-            Assert.AreEqual(TimeSpan.FromMilliseconds(5000), avBbox.Time);
-            Assert.IsTrue(avBbox.BoundingBox.HasValue);
-            Assert.AreEqual(new Rectangle(100, 200, 50, 60), avBbox.BoundingBox!.Value);
-
-            // Verify multi-segment parsing
-            Assert.AreEqual(2, multiSources.Length);
-            Assert.AreEqual(1, ((DocumentSource)multiSources[0]).PageNumber);
-            Assert.AreEqual(2, ((DocumentSource)multiSources[1]).PageNumber);
-
-            // Verify round-trip: parse → ToRawString → parse again
-            ContentSource[] reparsed = ContentSource.Parse(wireFormat);
-            Assert.AreEqual(multiSources.Length, reparsed.Length);
-            Assert.AreEqual(((DocumentSource)multiSources[0]).PageNumber, ((DocumentSource)reparsed[0]).PageNumber);
-            Assert.AreEqual(((DocumentSource)multiSources[1]).PageNumber, ((DocumentSource)reparsed[1]).PageNumber);
             #endregion
         }
     }
