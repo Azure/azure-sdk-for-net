@@ -45,9 +45,6 @@
 # PRLabel: %EngSys
 /sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
 
-# Smoke tests
-/common/SmokeTests/                                                @jsquire @m-redding
-
 #########
 # SDK
 #########

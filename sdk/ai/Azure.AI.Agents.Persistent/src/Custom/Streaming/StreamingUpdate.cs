@@ -47,11 +47,11 @@ public abstract partial class StreamingUpdate
 
     internal static IEnumerable<StreamingUpdate> FromEvent(SseItem<byte[]> sseItem)
     {
+        StreamingUpdateReason updateKind = StreamingUpdateReasonExtensions.FromSseEventLabel(sseItem.EventType);
         try
         {
-            StreamingUpdateReason updateKind = StreamingUpdateReasonExtensions.FromSseEventLabel(sseItem.EventType);
-            using JsonDocument dataDocument = JsonDocument.Parse(sseItem.Data);
-            JsonElement e = dataDocument.RootElement;
+            using JsonDocument dataDocument = sseItem.Data is null || sseItem.Data.Length == 0 ? null : JsonDocument.Parse(sseItem.Data);
+            JsonElement e = dataDocument is null ? new JsonElement() : dataDocument.RootElement;
 
             return updateKind switch
             {
@@ -78,6 +78,7 @@ public abstract partial class StreamingUpdate
                 or StreamingUpdateReason.MessageFailed => MessageStatusUpdate.DeserializeMessageStatusUpdates(e, updateKind),
                 StreamingUpdateReason.RunStepUpdated => RunStepDetailsUpdate.DeserializeRunStepDetailsUpdates(e, updateKind),
                 StreamingUpdateReason.MessageUpdated => MessageContentUpdate.DeserializeMessageContentUpdates(e, updateKind),
+                StreamingUpdateReason.KeepAlive => KeepAliveUpdate.GetRunSteps(),
                 _ => null,
             };
         }

@@ -127,4 +127,8 @@ public enum StreamingUpdateReason
     /// Indicates the end of streaming update events. This value should never be typically observed.
     /// </summary>
     Done,
+    /// <summary>
+    /// Indicates that a keep-alive message was received, signifying that the connection is still active.
+    /// </summary>
+    KeepAlive,
 }

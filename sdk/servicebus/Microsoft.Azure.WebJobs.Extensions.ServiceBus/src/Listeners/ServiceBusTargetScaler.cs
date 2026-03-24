@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             )
         {
             _functionId = functionId;
-            _serviceBusMetricsProvider = new ServiceBusMetricsProvider(entityPath, entityType, receiver, administrationClient, loggerFactory);
+            _serviceBusMetricsProvider = new ServiceBusMetricsProvider(_functionId, entityPath, entityType, receiver, administrationClient, loggerFactory);
             _entityPath = entityPath;
             _targetScalerDescriptor = new TargetScalerDescriptor(functionId);
             _logger = loggerFactory.CreateLogger<ServiceBusTargetScaler>();
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
                 targetWorkerCount = int.MaxValue;
             }
 
-            _logger.LogInformation($"Target worker count for function '{_functionId}' is '{targetWorkerCount}' (EntityPath='{_entityPath}', MessageCount ='{messageCount}', Concurrency='{concurrency}').");
+            _logger.LogInformation($"Target worker count for function '{_functionId}' is '{targetWorkerCount}' (EntityPath='{_entityPath}', MessageCount='{messageCount}', Concurrency='{concurrency}').");
 
             return new TargetScalerResult
             {
