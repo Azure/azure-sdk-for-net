@@ -1511,6 +1511,88 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 etag);
         }
 
+        /// <summary> Paged collection of DerivedPatch items. </summary>
+        /// <param name="value"> The DerivedPatch items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.SharedParamReproListResult"/> instance for mocking. </returns>
+        public static SharedParamReproListResult SharedParamReproListResult(IEnumerable<DerivedPatch> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<DerivedPatch>();
+
+            return new SharedParamReproListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A derived patch model extending the custom base — triggers FixRawDataFieldReference. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="derivedProp"> Update properties. </param>
+        /// <returns> A new <see cref="Models.DerivedPatch"/> instance for mocking. </returns>
+        public static DerivedPatch DerivedPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string derivedProp = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DerivedPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                derivedProp);
+        }
+
+        /// <summary> A custom patch base model extending Resource directly. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.CustomPatchBase"/> instance for mocking. </returns>
+        public static CustomPatchBase CustomPatchBase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CustomPatchBase(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags);
+        }
+
+        /// <summary> Paged collection of SiblingPatch items. </summary>
+        /// <param name="value"> The SiblingPatch items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.SiblingPatchListResult"/> instance for mocking. </returns>
+        public static SiblingPatchListResult SiblingPatchListResult(IEnumerable<SiblingPatch> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<SiblingPatch>();
+
+            return new SiblingPatchListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A sibling model that also extends Resource — affected by the shared mutation. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="siblingProp"> Sibling properties. </param>
+        /// <returns> A new <see cref="Models.SiblingPatch"/> instance for mocking. </returns>
+        public static SiblingPatch SiblingPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string siblingProp = default)
+        {
+            return new SiblingPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                siblingProp);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>
