@@ -18,12 +18,18 @@
 .PARAMETER ApiFilePath
     Direct path to an API surface file. Overrides PackagePath-based discovery.
 
+.PARAMETER BaselineApiFilePath
+    Path to the baseline (previously released) API surface file. When provided, only violations
+    on types/members that are new or changed compared to the baseline will be reported.
+    This enables deterministic filtering without relying on LLM judgment.
+
 .PARAMETER ExcludeRules
     Array of rule IDs to skip (e.g., 'SUFFIX001', 'BOOL001').
 
 .EXAMPLE
     .\Check-MgmtNamingRules.ps1 -PackagePath sdk/compute/Azure.ResourceManager.Compute
     .\Check-MgmtNamingRules.ps1 -ApiFilePath sdk/compute/Azure.ResourceManager.Compute/api/Azure.ResourceManager.Compute.net10.0.cs
+    .\Check-MgmtNamingRules.ps1 -ApiFilePath current-api.cs -BaselineApiFilePath baseline-api.cs
 #>
 [CmdletBinding()]
 param(
@@ -32,6 +38,9 @@ param(
 
     [Parameter(Mandatory = $false)]
     [string]$ApiFilePath,
+
+    [Parameter(Mandatory = $false)]
+    [string]$BaselineApiFilePath,
 
     [Parameter(Mandatory = $false)]
     [string[]]$ExcludeRules = @()
@@ -66,29 +75,19 @@ class NamingViolation {
     }
 }
 
-function Get-ShortTypeName([string]$fullName) {
-    # Azure.ResourceManager.Compute.Models.Foo  ->  Foo
-    if ($fullName.Contains('.')) {
-        return $fullName.Split('.')[-1]
-    }
-    return $fullName
-}
-
 #endregion
 
 #region --- Resolve API file ---
 
 if (-not $ApiFilePath -and -not $PackagePath) {
-    Write-Error "Specify either -PackagePath or -ApiFilePath."
-    return
+    throw "Specify either -PackagePath or -ApiFilePath."
 }
 
 if (-not $ApiFilePath) {
     # Prefer net10.0, then net8.0, then netstandard2.0
     $apiDir = Join-Path $PackagePath 'api'
     if (-not (Test-Path $apiDir)) {
-        Write-Error "API directory not found: $apiDir"
-        return
+        throw "API directory not found: $apiDir"
     }
     $candidates = @('net10.0', 'net8.0', 'netstandard2.0')
     foreach ($tfm in $candidates) {
@@ -103,20 +102,34 @@ if (-not $ApiFilePath) {
         if ($allCs.Count -gt 0) {
             $ApiFilePath = $allCs[0].FullName
         } else {
-            Write-Error "No API surface files found in $apiDir"
-            return
+            throw "No API surface files found in $apiDir"
         }
     }
 }
 
 if (-not (Test-Path $ApiFilePath)) {
-    Write-Error "API file not found: $ApiFilePath"
-    return
+    throw "API file not found: $ApiFilePath"
 }
 
 Write-Host "Scanning: $ApiFilePath" -ForegroundColor Cyan
 $lines = Get-Content $ApiFilePath
 $totalLines = $lines.Count
+
+# Load baseline API file for filtering (if provided)
+$baselineLines = @{}
+if ($BaselineApiFilePath) {
+    if (-not (Test-Path $BaselineApiFilePath)) {
+        throw "Baseline API file not found: $BaselineApiFilePath"
+    }
+    Write-Host "Baseline: $BaselineApiFilePath" -ForegroundColor Cyan
+    # Store each non-empty trimmed line in a HashSet for fast lookup
+    foreach ($bline in (Get-Content $BaselineApiFilePath)) {
+        $trimmed = $bline.Trim()
+        if ($trimmed) {
+            $baselineLines[$trimmed] = $true
+        }
+    }
+}
 
 #endregion
 
@@ -292,8 +305,8 @@ for ($i = 0; $i -lt $totalLines; $i++) {
             $violations.Add([NamingViolation]::new(
                 'BOOL001', 'Error', 'Property Naming',
                 $currentTypeName, $propName,
-                "Boolean property '$propName' does not start with a verb prefix (Is, Can, Has).",
-                "Rename to 'Is$propName', 'Can$propName', or 'Has$propName'.",
+                "Boolean property '$propName' does not start with a verb prefix (Is, Can, Has, Does, Should, Allow, Enable, Disable, Use, Support).",
+                "Rename to 'Is$propName', 'Can$propName', 'Has$propName', or another accepted verb prefix.",
                 $i + 1
             ))
         }
@@ -379,16 +392,21 @@ for ($i = 0; $i -lt $totalLines; $i++) {
     }
 
     # string location/Location property -> should consider AzureLocation
+    # Only match 'Location' as a PascalCase word (capital L), not as a suffix of words like
+    # Allocation, Deallocation, Collocation, Relocation where 'location' is lowercase.
     if ($ExcludeRules -notcontains 'TYPE003' -and
-        $line -match '^\s*public\s+(?:(?:new|override|virtual|abstract|static|sealed)\s+)*string\s+(\w*[Ll]ocation)\s*\{') {
+        $line -match '^\s*public\s+(?:(?:new|override|virtual|abstract|static|sealed)\s+)*string\s+(\w*Location)\s*\{') {
         $propName = $Matches[1]
-        $violations.Add([NamingViolation]::new(
-            'TYPE003', 'Warning', 'Type Formatting',
-            $currentTypeName, $propName,
-            "String property '$propName' may represent an Azure location and should use AzureLocation type.",
-            "Change type to Azure.Core.AzureLocation.",
-            $i + 1
-        ))
+        # Exclude words where "location" is part of a different English word (lowercase 'l')
+        if ($propName -cnotmatch '[a-z]location') {
+            $violations.Add([NamingViolation]::new(
+                'TYPE003', 'Warning', 'Type Formatting',
+                $currentTypeName, $propName,
+                "String property '$propName' may represent an Azure location and should use AzureLocation type.",
+                "Change type to Azure.Core.AzureLocation.",
+                $i + 1
+            ))
+        }
     }
 }
 
@@ -422,8 +440,8 @@ $acronymPatterns = @(
     @{ AllCaps = 'AAD';   PascalCase = 'Aad';   Id = 'ACRONYM001' }
 )
 
-# Also check: "ID" should be "Id" (except when standalone or after a lowercase letter)
-# And "VM" should be "Vm"
+# NOTE: Potential future enhancement: consider enforcing "ID" -> "Id" and "VM" -> "Vm"
+#       with appropriate exceptions (e.g., when standalone or after a lowercase letter).
 
 foreach ($typeName in $typeInfos.Keys) {
     $info = $typeInfos[$typeName]
@@ -431,7 +449,10 @@ foreach ($typeName in $typeInfos.Keys) {
 
     foreach ($acr in $acronymPatterns) {
         # Check if the ALL-CAPS version appears as a substring in the type name
-        # but not as the PascalCase version
+        # but not as the PascalCase version.
+        # The lookahead ensures we match the end of the all-caps run: next char must be
+        # uppercase-then-lowercase (new PascalCase word), non-letter, or end-of-string.
+        # This prevents "HTTP" from matching inside "HTTPS".
         if ($typeName -cmatch "(?<![A-Z])$($acr.AllCaps)(?=[A-Z][a-z]|[^a-zA-Z]|$)") {
             $violations.Add([NamingViolation]::new(
                 $acr.Id, 'Error', 'Acronym Casing',
@@ -445,6 +466,9 @@ foreach ($typeName in $typeInfos.Keys) {
 }
 
 # Also scan property names and enum members for acronym issues
+# NOTE: The acronym regex may produce rare false positives on names that coincidentally
+# contain the letter sequence (e.g., NIC check could flag "UnicodeProperty"). These cases
+# are unlikely in Azure SDK naming but worth being aware of.
 $currentTypeName = ''
 for ($i = 0; $i -lt $totalLines; $i++) {
     $line = $lines[$i]
@@ -525,11 +549,17 @@ foreach ($typeName in $typeInfos.Keys) {
     if ($typeName -in $ambiguousPatterns) {
         # Check if the type name is exactly one of the ambiguous patterns
         # (not prefixed with the RP name)
+        if ([string]::IsNullOrEmpty($rpPrefix)) {
+            $suggestion = "Type '$typeName' is a generic/ambiguous name. Consider adding a service or resource prefix for clarity."
+        }
+        else {
+            $suggestion = "Rename to '${rpPrefix}${typeName}' or similar qualified name."
+        }
         $violations.Add([NamingViolation]::new(
             'CONTEXT001', 'Warning', 'Contextual Naming',
             $typeName, '',
             "Type '$typeName' is a generic/ambiguous name. It should include a service or resource prefix for clarity.",
-            "Rename to '${rpPrefix}${typeName}' or similar qualified name.",
+            $suggestion,
             $info.Line
         ))
     }
@@ -543,12 +573,35 @@ foreach ($typeName in $typeInfos.Keys) {
     if ($info.Kind -ne 'enum') { continue }
     if ($ExcludeRules -contains 'ENUM001') { continue }
 
-    # Check for Flags attribute - we'd need to look at the line before, but in API surface files
-    # [Flags] appears on the line before the enum declaration
+    # Detect Flags enums heuristically: API surface files (api/*.cs) do not include
+    # attribute annotations like [Flags], so we cannot check for the attribute directly.
+    # Instead, check if the enum member values are powers of 2 (0, 1, 2, 4, 8, ...),
+    # which strongly indicates a flags enum.
     $lineIdx = $info.Line - 1  # 0-based
     $hasFlagsAttr = $false
-    if ($lineIdx -gt 0 -and $lines[$lineIdx - 1] -match '\[System\.Flags\]|\[Flags\]') {
-        $hasFlagsAttr = $true
+
+    # Scan forward from the enum declaration to collect member values
+    $enumValues = @()
+    for ($j = $lineIdx + 1; $j -lt $totalLines; $j++) {
+        $eline = $lines[$j]
+        if ($eline -match '^\s*\}') { break }
+        if ($eline -match '^\s*\w+\s*=\s*(-?\d+)') {
+            $enumValues += [long]$Matches[1]
+        }
+    }
+    # A flags enum typically has at least 2 members with values that are all powers of 2 (or 0)
+    if ($enumValues.Count -ge 2) {
+        $allPowersOfTwo = $true
+        foreach ($val in $enumValues) {
+            if ($val -lt 0) { $allPowersOfTwo = $false; break }
+            if ($val -ne 0 -and ($val -band ($val - 1)) -ne 0) {
+                $allPowersOfTwo = $false
+                break
+            }
+        }
+        if ($allPowersOfTwo) {
+            $hasFlagsAttr = $true
+        }
     }
 
     if (-not $hasFlagsAttr -and $typeName -match 's$' -and $typeName -notmatch '(ss|us|is|as|os|Status|Access|Address|Series|Alias|Atlas|Chaos|Canvas)$') {
@@ -600,7 +653,7 @@ for ($i = 0; $i -lt $totalLines; $i++) {
     }
 
     if ($currentTypeName -and $ExcludeRules -notcontains 'TTL001' -and
-        $line -match '^\s*public\s+(?:(?:new|override|virtual|abstract|static|sealed)\s+)*\S+\s+(\w*(?:(?<=\b|[a-z])Ttl|TTL)\w*)\s*\{') {
+        $line -match '^\s*public\s+(?:(?:new|override|virtual|abstract|static|sealed)\s+)*\S+\s+(\w*(?:Ttl|TTL)\w*)\s*\{') {
         $propName = $Matches[1]
         # Exclude false positives like "Throttle" containing "ttl"
         if ($propName -notmatch 'Throttle|Bottl|Settle|Little|Battle|Cattle|Subtle' -and
@@ -614,6 +667,29 @@ for ($i = 0; $i -lt $totalLines; $i++) {
             ))
         }
     }
+}
+
+#endregion
+
+#region --- Baseline Filtering ---
+
+# If a baseline API file was provided, filter out violations for types/members that
+# existed unchanged in the baseline. This ensures only new or changed API surface is reported.
+if ($BaselineApiFilePath -and $baselineLines.Count -gt 0) {
+    $filteredViolations = [System.Collections.Generic.List[NamingViolation]]::new()
+    foreach ($v in $violations) {
+        # For type-level violations, check if the type declaration line exists in baseline
+        # For member-level violations, check if the member line exists in baseline
+        $violationLine = $lines[$v.Line - 1].Trim()
+        if (-not $baselineLines.ContainsKey($violationLine)) {
+            $filteredViolations.Add($v)
+        }
+    }
+    $removedCount = $violations.Count - $filteredViolations.Count
+    if ($removedCount -gt 0) {
+        Write-Host "Filtered out $removedCount violation(s) present in baseline." -ForegroundColor DarkGray
+    }
+    $violations = $filteredViolations
 }
 
 #endregion
@@ -656,8 +732,5 @@ foreach ($group in $grouped) {
 Write-Host "----------------------------------------"
 Write-Host "Total: $($violations.Count) violations ($errorCount errors, $warningCount warnings)"
 Write-Host "----------------------------------------"
-
-# Return violations for programmatic use (pipe to Out-Null if you only want console output)
-Write-Output $violations
 
 #endregion

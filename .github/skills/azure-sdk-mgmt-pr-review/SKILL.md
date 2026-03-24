@@ -47,7 +47,11 @@ To determine the review scope:
    pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -PackagePath <package-path>
    ```
    The script checks all rules in the "API Review Checklist" below and outputs violations with rule IDs, line numbers, and suggested fixes. Include every violation from the script output as an inline review comment.
-   If `ApiCompatVersion` is present (i.e., a prior stable version exists), filter the script output to only report violations on **new or changed** API surface (per the "Scope of Review" section). Violations on types/members that existed unchanged in the prior stable release should be ignored.
+   If `ApiCompatVersion` is present (i.e., a prior stable version exists), pass the baseline API surface file to the script using `-BaselineApiFilePath` so it can deterministically filter out violations on unchanged API surface:
+   ```powershell
+   pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFilePath <current-api-file> -BaselineApiFilePath <baseline-api-file>
+   ```
+   When `-BaselineApiFilePath` is provided, the script automatically excludes violations on types/members that existed unchanged in the prior stable release.
 3. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface. Check for any additional issues not covered by the script (e.g., contextual judgment calls, domain-specific naming).
 4. Check Generated models and resources in src/Generated/.
 5. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`).
