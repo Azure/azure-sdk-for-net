@@ -44,7 +44,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             FlattenedNestedProperty = new BarNestedQuotaProperties(innerProp2, middleProp1, middleProp2, prop1, prop2);
             DiscriminatorProperty = discriminatorProperty;
             Properties = new BarSettingsProperties();
-            OptionalFlattenProperty = new OptionalFlattenPropertyType();
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>

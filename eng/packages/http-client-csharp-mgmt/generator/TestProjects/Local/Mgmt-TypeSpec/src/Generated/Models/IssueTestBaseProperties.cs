@@ -23,7 +23,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Initializes a new instance of <see cref="IssueTestBaseProperties"/>. </summary>
         public IssueTestBaseProperties()
         {
-            NestedConfig = new IssueTestNestedConfig();
         }
 
         /// <summary> Initializes a new instance of <see cref="IssueTestBaseProperties"/>. </summary>

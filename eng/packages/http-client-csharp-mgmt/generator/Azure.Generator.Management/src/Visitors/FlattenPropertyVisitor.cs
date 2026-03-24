@@ -718,10 +718,15 @@ namespace Azure.Generator.Management.Visitors
                             else if (value.Count > 0)
                             {
                                 // When all flattened properties are optional (none required for the public
-                                // constructor), we still need to initialize the internal properties bag so
-                                // that the "properties" envelope is always serialized (matching ARM convention).
+                                // constructor), we still need to initialize the internal ARM "properties"
+                                // bag so that the "properties" envelope is always serialized.
+                                // Only apply to the ARM "properties" bag to avoid eagerly initializing
+                                // other unrelated flattened objects.
                                 var internalProperty = value[0].InternalProperty;
-                                updatedBodyStatements.Add(((MemberExpression)internalProperty).Assign(New.Instance(variable.Type)).Terminate());
+                                if (IsArmPropertiesBag(internalProperty))
+                                {
+                                    updatedBodyStatements.Add(((MemberExpression)internalProperty).Assign(New.Instance(variable.Type)).Terminate());
+                                }
                             }
                         }
                         else
@@ -737,18 +742,34 @@ namespace Azure.Generator.Management.Visitors
 
                 // For flattened property entries that weren't handled by existing body statements
                 // (e.g. parameterless constructors where no assignment for 'properties' exists),
-                // add initialization so the "properties" envelope is always serialized.
+                // add initialization so the ARM "properties" envelope is always serialized.
+                // Only apply to the ARM "properties" bag to avoid eagerly initializing
+                // other unrelated flattened objects.
                 foreach (var (name, entries) in flattenPropertyMap)
                 {
                     if (!handledFlattenEntries.Contains(name) && entries.Count > 0)
                     {
                         var internalProperty = entries[0].InternalProperty;
-                        updatedBodyStatements.Add(((MemberExpression)internalProperty).Assign(New.Instance(internalProperty.Type)).Terminate());
+                        if (IsArmPropertiesBag(internalProperty))
+                        {
+                            updatedBodyStatements.Add(((MemberExpression)internalProperty).Assign(New.Instance(internalProperty.Type)).Terminate());
+                        }
                     }
                 }
 
                 publicConstructor.Update(signature: publicConstructor.Signature, bodyStatements: updatedBodyStatements);
             }
+        }
+
+        /// <summary>
+        /// Returns true if the property represents the ARM resource "properties" bag
+        /// (serialized name "properties"), which should always be initialized to ensure
+        /// the "properties" JSON envelope is present in request bodies.
+        /// </summary>
+        private static bool IsArmPropertiesBag(PropertyProvider property)
+        {
+            return property.WireInfo?.SerializedName == "properties"
+                   || property.Name == "Properties";
         }
 
         private class CSharpTypeNameComparer : IEqualityComparer<CSharpType>

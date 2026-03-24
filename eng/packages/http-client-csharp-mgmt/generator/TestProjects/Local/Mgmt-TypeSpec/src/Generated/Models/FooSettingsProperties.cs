@@ -28,7 +28,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
             Marketplace = marketplace;
             User = user;
-            MetaData = new FooSettingsPropertiesMetaData();
         }
 
         /// <summary> Initializes a new instance of <see cref="FooSettingsProperties"/>. </summary>

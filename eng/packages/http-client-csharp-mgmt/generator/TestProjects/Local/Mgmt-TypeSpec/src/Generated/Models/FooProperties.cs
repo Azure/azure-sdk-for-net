@@ -37,9 +37,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             Prop1 = prop1.ToList();
             Prop2 = new ChangeTrackingList<int>();
             NestedProperty = new NestedFooModel(nestedPropertyProperties);
-            OptionalProperty = new SafeFlattenModel();
-            VmProfile = new VmProfile();
-            ComputeFleetVmProfile = new ComputeFleetVmProfile();
         }
 
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>

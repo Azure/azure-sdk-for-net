@@ -20,7 +20,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Initializes a new instance of <see cref="VmProfile"/>. </summary>
         public VmProfile()
         {
-            ApplicationProfile = new ApplicationProfile();
         }
 
         /// <summary> Initializes a new instance of <see cref="VmProfile"/>. </summary>

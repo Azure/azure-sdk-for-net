@@ -21,7 +21,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public MultiFlattenProperties(FlattenChannel? channel)
         {
             Channel = channel;
-            Inner = new SafeFlattenInner();
         }
 
         /// <summary> Initializes a new instance of <see cref="MultiFlattenProperties"/>. </summary>

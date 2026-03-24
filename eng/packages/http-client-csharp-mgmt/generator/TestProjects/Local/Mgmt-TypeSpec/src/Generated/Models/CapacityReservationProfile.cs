@@ -21,7 +21,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Initializes a new instance of <see cref="CapacityReservationProfile"/>. </summary>
         public CapacityReservationProfile()
         {
-            CapacityReservationGroup = new TestSubResource();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationProfile"/>. </summary>
