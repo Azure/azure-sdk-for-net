@@ -255,7 +255,7 @@ try {
                 }
                 if ($preExistingChanges) {
                     Write-Host ""
-                    Write-Host -f Cyan "Note: $($preExistingChanges.Count) pre-existing changed file(s) were ignored (not modified by code checks)."
+                    Write-Host -f Cyan "Note: $($preExistingChanges.Count) file(s) already had changes before code checks ran and were excluded from the list above."
                 }
             }
             else {
