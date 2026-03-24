@@ -419,7 +419,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 virtualMachinesAssociatedIds: virtualMachinesAssociatedIds);
         }
 
-        // NetworkCloudOperationStatusResult backward-compat overload is now generated automatically.
+        // GENERATOR BUG WORKAROUND: The generated backward-compat overload for
+        // NetworkCloudOperationStatusResult in ArmNetworkCloudModelFactory.cs (Generated) uses
+        // positional args after named args, which is invalid C#. The generated file's call was
+        // manually fixed to use all named args. [CodeGenSuppress] with nullable/generic typeof()
+        // crashes the emitter, so this cannot be moved to custom code yet.
+        // TODO: Remove this workaround when the generator bug is fixed.
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudRackData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
