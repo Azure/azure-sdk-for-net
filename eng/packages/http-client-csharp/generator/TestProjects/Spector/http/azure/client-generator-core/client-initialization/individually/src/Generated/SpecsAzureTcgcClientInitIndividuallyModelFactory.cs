@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
+using Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient;
 
-namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient
+namespace Specs.Azure.Tcgc.ClientInit.Individually
 {
-    public static partial class _Specs_AzureClientGeneratorCoreClientInitializationIndividuallyClientModelFactory
+    public static partial class SpecsAzureTcgcClientInitIndividuallyModelFactory
     {
         public static BlobProperties BlobProperties(string name = default, long size = default, string contentType = default, DateTimeOffset createdOn = default) => throw null;
     }

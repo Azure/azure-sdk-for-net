@@ -12,7 +12,7 @@ using Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class _Specs_AzureClientGeneratorCoreClientInitializationDefaultClientClientBuilderExtensions
+    public static partial class SpecsAzureTcgcClientInitDefaultClientBuilderExtensions
     {
         public static IAzureClientBuilder<HeaderParamClient, HeaderParamClientOptions> AddHeaderParamClient<TBuilder>(this TBuilder builder, string name)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
