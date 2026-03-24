@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ApiserverProfile))
+            if (Optional.IsDefined(ApiServerProfile))
             {
                 writer.WritePropertyName("apiserverProfile"u8);
-                writer.WriteObjectValue(ApiserverProfile, options);
+                writer.WriteObjectValue(ApiServerProfile, options);
             }
             if (Optional.IsCollectionDefined(IngressProfiles))
             {

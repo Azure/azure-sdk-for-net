@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="masterProfile"> The cluster master profile. </param>
         /// <param name="workerProfiles"> The cluster worker profiles. </param>
         /// <param name="workerProfilesStatus"> The cluster worker profiles status. </param>
-        /// <param name="apiserverProfile"> The cluster API server profile. </param>
+        /// <param name="apiServerProfile"> The cluster API server profile. </param>
         /// <param name="ingressProfiles"> The cluster ingress profiles. </param>
         /// <returns> A new <see cref="RedHatOpenShift.OpenShiftClusterData"/> instance for mocking. </returns>
-        public static OpenShiftClusterData OpenShiftClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, OpenShiftClusterProvisioningState? provisioningState = null, OpenShiftClusterProfile clusterProfile = null, string consoleUrl = null, OpenShiftServicePrincipalProfile servicePrincipalProfile = null, OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = null, OpenShiftNetworkProfile networkProfile = null, OpenShiftMasterProfile masterProfile = null, IEnumerable<OpenShiftWorkerProfile> workerProfiles = null, IEnumerable<OpenShiftWorkerProfile> workerProfilesStatus = null, OpenShiftApiServerProfile apiserverProfile = null, IEnumerable<OpenShiftIngressProfile> ingressProfiles = null)
+        public static OpenShiftClusterData OpenShiftClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, OpenShiftClusterProvisioningState? provisioningState = null, OpenShiftClusterProfile clusterProfile = null, string consoleUrl = null, OpenShiftServicePrincipalProfile servicePrincipalProfile = null, OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = null, OpenShiftNetworkProfile networkProfile = null, OpenShiftMasterProfile masterProfile = null, IEnumerable<OpenShiftWorkerProfile> workerProfiles = null, IEnumerable<OpenShiftWorkerProfile> workerProfilesStatus = null, OpenShiftApiServerProfile apiServerProfile = null, IEnumerable<OpenShiftIngressProfile> ingressProfiles = null)
         {
             tags ??= new Dictionary<string, string>();
             workerProfiles ??= new List<OpenShiftWorkerProfile>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 masterProfile,
                 workerProfiles?.ToList(),
                 workerProfilesStatus?.ToList(),
-                apiserverProfile,
+                apiServerProfile,
                 ingressProfiles?.ToList(),
                 serializedAdditionalRawData: null);
         }
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="masterProfile"> The cluster master profile. </param>
         /// <param name="workerProfiles"> The cluster worker profiles. </param>
         /// <param name="workerProfilesStatus"> The cluster worker profiles status. </param>
-        /// <param name="apiserverProfile"> The cluster API server profile. </param>
+        /// <param name="apiServerProfile"> The cluster API server profile. </param>
         /// <param name="ingressProfiles"> The cluster ingress profiles. </param>
         /// <returns> A new <see cref="Models.OpenShiftClusterPatch"/> instance for mocking. </returns>
-        public static OpenShiftClusterPatch OpenShiftClusterPatch(IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, OpenShiftClusterProvisioningState? provisioningState = null, OpenShiftClusterProfile clusterProfile = null, string consoleUrl = null, OpenShiftServicePrincipalProfile servicePrincipalProfile = null, OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = null, OpenShiftNetworkProfile networkProfile = null, OpenShiftMasterProfile masterProfile = null, IEnumerable<OpenShiftWorkerProfile> workerProfiles = null, IEnumerable<OpenShiftWorkerProfile> workerProfilesStatus = null, OpenShiftApiServerProfile apiserverProfile = null, IEnumerable<OpenShiftIngressProfile> ingressProfiles = null)
+        public static OpenShiftClusterPatch OpenShiftClusterPatch(IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, OpenShiftClusterProvisioningState? provisioningState = null, OpenShiftClusterProfile clusterProfile = null, string consoleUrl = null, OpenShiftServicePrincipalProfile servicePrincipalProfile = null, OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = null, OpenShiftNetworkProfile networkProfile = null, OpenShiftMasterProfile masterProfile = null, IEnumerable<OpenShiftWorkerProfile> workerProfiles = null, IEnumerable<OpenShiftWorkerProfile> workerProfilesStatus = null, OpenShiftApiServerProfile apiServerProfile = null, IEnumerable<OpenShiftIngressProfile> ingressProfiles = null)
         {
             tags ??= new Dictionary<string, string>();
             workerProfiles ??= new List<OpenShiftWorkerProfile>();
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 masterProfile,
                 workerProfiles?.ToList(),
                 workerProfilesStatus?.ToList(),
-                apiserverProfile,
+                apiServerProfile,
                 ingressProfiles?.ToList(),
                 serializedAdditionalRawData: null);
         }

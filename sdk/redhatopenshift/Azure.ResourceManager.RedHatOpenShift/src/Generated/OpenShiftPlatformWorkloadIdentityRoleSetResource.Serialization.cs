@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RedHatOpenShift
 {
-    public partial class PlatformWorkloadIdentityRoleSetResource : IJsonModel<PlatformWorkloadIdentityRoleSetData>
+    public partial class OpenShiftPlatformWorkloadIdentityRoleSetResource : IJsonModel<PlatformWorkloadIdentityRoleSetData>
     {
         private static PlatformWorkloadIdentityRoleSetData s_dataDeserializationInstance;
         private static PlatformWorkloadIdentityRoleSetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();

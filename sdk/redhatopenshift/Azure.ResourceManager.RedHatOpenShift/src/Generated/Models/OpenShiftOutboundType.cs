@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string LoadbalancerValue = "Loadbalancer";
+        private const string LoadBalancerValue = "Loadbalancer";
         private const string UserDefinedRoutingValue = "UserDefinedRouting";
 
         /// <summary> Loadbalancer. </summary>
-        public static OpenShiftOutboundType Loadbalancer { get; } = new OpenShiftOutboundType(LoadbalancerValue);
+        public static OpenShiftOutboundType LoadBalancer { get; } = new OpenShiftOutboundType(LoadBalancerValue);
         /// <summary> UserDefinedRouting. </summary>
         public static OpenShiftOutboundType UserDefinedRouting { get; } = new OpenShiftOutboundType(UserDefinedRoutingValue);
         /// <summary> Determines if two <see cref="OpenShiftOutboundType"/> values are the same. </summary>

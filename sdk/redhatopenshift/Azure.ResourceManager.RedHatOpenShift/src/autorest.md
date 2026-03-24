@@ -21,6 +21,7 @@ modelerfour:
 use-model-reader-writer: true
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}: OpenShiftCluster
+  /subscriptions/{subscriptionId}/providers/Microsoft.RedHatOpenShift/locations/{location}/platformWorkloadIdentityRoleSets/{openShiftMinorVersion}: OpenShiftPlatformWorkloadIdentityRoleSet
 override-client-name: RedHatOpenShiftManagementClient
 rename-mapping:
   APIServerProfile: OpenShiftApiServerProfile
@@ -43,12 +44,14 @@ rename-mapping:
   PlatformWorkloadIdentityRoleSetList: OpenShiftPlatformWorkloadIdentityRoleSetList
   ConsoleProfile: OpenShiftConsoleProfile
   ManagedOutboundIPs: OpenShiftManagedOutboundIPs
+  OutboundType.Loadbalancer: LoadBalancer
 format-by-name-rules:
   'subnetId': 'arm-id'
   'diskEncryptionSetId': 'arm-id'
   'resourceGroupId': 'arm-id'
   'resourceId': 'arm-id'
   'roleDefinitionId': 'arm-id'
+  'location': 'azure-location'
 
 directive:
   - from: swagger-document
@@ -57,4 +60,12 @@ directive:
       if ($.operationId && $.operationId.startsWith("PlatformWorkloadIdentityRoleSets_")) {
         $.operationId = $.operationId.replace("PlatformWorkloadIdentityRoleSets_", "PlatformWorkloadIdentityRoleSet_");
       }
+  - from: swagger-document
+    where: $.definitions..properties.apiserverProfile
+    transform: >
+      $["x-ms-client-name"] = "ApiServerProfile";
+  - from: swagger-document
+    where: $.definitions..properties.preconfiguredNSG
+    transform: >
+      $["x-ms-client-name"] = "PreconfiguredNsg";
 ```

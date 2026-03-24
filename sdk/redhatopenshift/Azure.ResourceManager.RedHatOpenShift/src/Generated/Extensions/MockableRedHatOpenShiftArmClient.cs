@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PlatformWorkloadIdentityRoleSetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PlatformWorkloadIdentityRoleSetResource.CreateResourceIdentifier" /> to create a <see cref="PlatformWorkloadIdentityRoleSetResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource.CreateResourceIdentifier" /> to create an <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PlatformWorkloadIdentityRoleSetResource"/> object. </returns>
-        public virtual PlatformWorkloadIdentityRoleSetResource GetPlatformWorkloadIdentityRoleSetResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> object. </returns>
+        public virtual OpenShiftPlatformWorkloadIdentityRoleSetResource GetOpenShiftPlatformWorkloadIdentityRoleSetResource(ResourceIdentifier id)
         {
-            PlatformWorkloadIdentityRoleSetResource.ValidateResourceId(id);
-            return new PlatformWorkloadIdentityRoleSetResource(Client, id);
+            OpenShiftPlatformWorkloadIdentityRoleSetResource.ValidateResourceId(id);
+            return new OpenShiftPlatformWorkloadIdentityRoleSetResource(Client, id);
         }
 
         /// <summary>

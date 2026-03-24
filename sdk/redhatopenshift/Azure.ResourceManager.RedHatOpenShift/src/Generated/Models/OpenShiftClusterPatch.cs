@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="masterProfile"> The cluster master profile. </param>
         /// <param name="workerProfiles"> The cluster worker profiles. </param>
         /// <param name="workerProfilesStatus"> The cluster worker profiles status. </param>
-        /// <param name="apiserverProfile"> The cluster API server profile. </param>
+        /// <param name="apiServerProfile"> The cluster API server profile. </param>
         /// <param name="ingressProfiles"> The cluster ingress profiles. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftClusterPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, OpenShiftClusterProvisioningState? provisioningState, OpenShiftClusterProfile clusterProfile, OpenShiftConsoleProfile consoleProfile, OpenShiftServicePrincipalProfile servicePrincipalProfile, OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile, OpenShiftNetworkProfile networkProfile, OpenShiftMasterProfile masterProfile, IList<OpenShiftWorkerProfile> workerProfiles, IReadOnlyList<OpenShiftWorkerProfile> workerProfilesStatus, OpenShiftApiServerProfile apiserverProfile, IList<OpenShiftIngressProfile> ingressProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OpenShiftClusterPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, OpenShiftClusterProvisioningState? provisioningState, OpenShiftClusterProfile clusterProfile, OpenShiftConsoleProfile consoleProfile, OpenShiftServicePrincipalProfile servicePrincipalProfile, OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile, OpenShiftNetworkProfile networkProfile, OpenShiftMasterProfile masterProfile, IList<OpenShiftWorkerProfile> workerProfiles, IReadOnlyList<OpenShiftWorkerProfile> workerProfilesStatus, OpenShiftApiServerProfile apiServerProfile, IList<OpenShiftIngressProfile> ingressProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Identity = identity;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             MasterProfile = masterProfile;
             WorkerProfiles = workerProfiles;
             WorkerProfilesStatus = workerProfilesStatus;
-            ApiserverProfile = apiserverProfile;
+            ApiServerProfile = apiServerProfile;
             IngressProfiles = ingressProfiles;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <summary> The cluster worker profiles status. </summary>
         public IReadOnlyList<OpenShiftWorkerProfile> WorkerProfilesStatus { get; }
         /// <summary> The cluster API server profile. </summary>
-        public OpenShiftApiServerProfile ApiserverProfile { get; set; }
+        public OpenShiftApiServerProfile ApiServerProfile { get; set; }
         /// <summary> The cluster ingress profiles. </summary>
         public IList<OpenShiftIngressProfile> IngressProfiles { get; }
     }

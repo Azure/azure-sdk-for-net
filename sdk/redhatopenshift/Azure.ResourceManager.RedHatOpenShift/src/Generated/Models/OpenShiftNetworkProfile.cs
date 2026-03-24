@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="serviceCidr"> The CIDR used for OpenShift/Kubernetes Services. </param>
         /// <param name="outboundType"> The OutboundType used for egress traffic. </param>
         /// <param name="loadBalancerProfile"> The cluster load balancer profile. </param>
-        /// <param name="preconfiguredNSG"> Specifies whether subnets are pre-attached with an NSG. </param>
+        /// <param name="preconfiguredNsg"> Specifies whether subnets are pre-attached with an NSG. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftNetworkProfile(string podCidr, string serviceCidr, OpenShiftOutboundType? outboundType, OpenShiftLoadBalancerProfile loadBalancerProfile, OpenShiftPreconfiguredNsg? preconfiguredNSG, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OpenShiftNetworkProfile(string podCidr, string serviceCidr, OpenShiftOutboundType? outboundType, OpenShiftLoadBalancerProfile loadBalancerProfile, OpenShiftPreconfiguredNsg? preconfiguredNsg, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PodCidr = podCidr;
             ServiceCidr = serviceCidr;
             OutboundType = outboundType;
             LoadBalancerProfile = loadBalancerProfile;
-            PreconfiguredNSG = preconfiguredNSG;
+            PreconfiguredNsg = preconfiguredNsg;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <summary> The cluster load balancer profile. </summary>
         public OpenShiftLoadBalancerProfile LoadBalancerProfile { get; set; }
         /// <summary> Specifies whether subnets are pre-attached with an NSG. </summary>
-        public OpenShiftPreconfiguredNsg? PreconfiguredNSG { get; set; }
+        public OpenShiftPreconfiguredNsg? PreconfiguredNsg { get; set; }
     }
 }

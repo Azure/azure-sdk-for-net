@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
     {
         private readonly ClientDiagnostics _openShiftVersionClientDiagnostics;
         private readonly OpenShiftVersionsRestOperations _openShiftVersionRestClient;
-        private readonly string _location;
+        private readonly AzureLocation _location;
 
         /// <summary> Initializes a new instance of the <see cref="OpenShiftVersionCollection"/> class for mocking. </summary>
         protected OpenShiftVersionCollection()
@@ -38,9 +38,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        internal OpenShiftVersionCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
+        internal OpenShiftVersionCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
             _location = location;
             _openShiftVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftVersionResource.ResourceType.Namespace, Diagnostics);
@@ -90,7 +88,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             scope.Start();
             try
             {
-                var response = await _openShiftVersionRestClient.GetAsync(Id.SubscriptionId, _location, openShiftVersion, cancellationToken).ConfigureAwait(false);
+                var response = await _openShiftVersionRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), openShiftVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OpenShiftVersionResource(Client, response.Value), response.GetRawResponse());
@@ -135,7 +133,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             scope.Start();
             try
             {
-                var response = _openShiftVersionRestClient.Get(Id.SubscriptionId, _location, openShiftVersion, cancellationToken);
+                var response = _openShiftVersionRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), openShiftVersion, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OpenShiftVersionResource(Client, response.Value), response.GetRawResponse());
@@ -172,8 +170,8 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <returns> An async collection of <see cref="OpenShiftVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OpenShiftVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _openShiftVersionRestClient.CreateListRequest(Id.SubscriptionId, _location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _openShiftVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _location);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _openShiftVersionRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _openShiftVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OpenShiftVersionResource(Client, OpenShiftVersionData.DeserializeOpenShiftVersionData(e)), _openShiftVersionClientDiagnostics, Pipeline, "OpenShiftVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -202,8 +200,8 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <returns> A collection of <see cref="OpenShiftVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OpenShiftVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _openShiftVersionRestClient.CreateListRequest(Id.SubscriptionId, _location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _openShiftVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _location);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _openShiftVersionRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _openShiftVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OpenShiftVersionResource(Client, OpenShiftVersionData.DeserializeOpenShiftVersionData(e)), _openShiftVersionClientDiagnostics, Pipeline, "OpenShiftVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -240,7 +238,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             scope.Start();
             try
             {
-                var response = await _openShiftVersionRestClient.GetAsync(Id.SubscriptionId, _location, openShiftVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _openShiftVersionRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), openShiftVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -283,7 +281,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             scope.Start();
             try
             {
-                var response = _openShiftVersionRestClient.Get(Id.SubscriptionId, _location, openShiftVersion, cancellationToken: cancellationToken);
+                var response = _openShiftVersionRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), openShiftVersion, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -326,7 +324,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             scope.Start();
             try
             {
-                var response = await _openShiftVersionRestClient.GetAsync(Id.SubscriptionId, _location, openShiftVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _openShiftVersionRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), openShiftVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<OpenShiftVersionResource>(response.GetRawResponse());
                 return Response.FromValue(new OpenShiftVersionResource(Client, response.Value), response.GetRawResponse());
@@ -371,7 +369,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             scope.Start();
             try
             {
-                var response = _openShiftVersionRestClient.Get(Id.SubscriptionId, _location, openShiftVersion, cancellationToken: cancellationToken);
+                var response = _openShiftVersionRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), openShiftVersion, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<OpenShiftVersionResource>(response.GetRawResponse());
                 return Response.FromValue(new OpenShiftVersionResource(Client, response.Value), response.GetRawResponse());

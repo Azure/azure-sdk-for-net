@@ -52,22 +52,22 @@ namespace Azure.ResourceManager.RedHatOpenShift
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PlatformWorkloadIdentityRoleSetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PlatformWorkloadIdentityRoleSetResource.CreateResourceIdentifier" /> to create a <see cref="PlatformWorkloadIdentityRoleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource.CreateResourceIdentifier" /> to create an <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRedHatOpenShiftArmClient.GetPlatformWorkloadIdentityRoleSetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedHatOpenShiftArmClient.GetOpenShiftPlatformWorkloadIdentityRoleSetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PlatformWorkloadIdentityRoleSetResource"/> object. </returns>
-        public static PlatformWorkloadIdentityRoleSetResource GetPlatformWorkloadIdentityRoleSetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/> object. </returns>
+        public static OpenShiftPlatformWorkloadIdentityRoleSetResource GetOpenShiftPlatformWorkloadIdentityRoleSetResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRedHatOpenShiftArmClient(client).GetPlatformWorkloadIdentityRoleSetResource(id);
+            return GetMockableRedHatOpenShiftArmClient(client).GetOpenShiftPlatformWorkloadIdentityRoleSetResource(id);
         }
 
         /// <summary>
@@ -186,15 +186,14 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// Gets a collection of OpenShiftVersionResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftVersions(string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftVersions(AzureLocation)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of OpenShiftVersionResources and their operations over a OpenShiftVersionResource. </returns>
-        public static OpenShiftVersionCollection GetOpenShiftVersions(this SubscriptionResource subscriptionResource, string location)
+        public static OpenShiftVersionCollection GetOpenShiftVersions(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -223,17 +222,17 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftVersionAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftVersionAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="openShiftVersion"> The desired version value of the OpenShiftVersion resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="location"/> or <paramref name="openShiftVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="openShiftVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<OpenShiftVersionResource>> GetOpenShiftVersionAsync(this SubscriptionResource subscriptionResource, string location, string openShiftVersion, CancellationToken cancellationToken = default)
+        public static async Task<Response<OpenShiftVersionResource>> GetOpenShiftVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string openShiftVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -262,17 +261,17 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftVersion(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftVersion(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="openShiftVersion"> The desired version value of the OpenShiftVersion resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="location"/> or <paramref name="openShiftVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="openShiftVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="openShiftVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<OpenShiftVersionResource> GetOpenShiftVersion(this SubscriptionResource subscriptionResource, string location, string openShiftVersion, CancellationToken cancellationToken = default)
+        public static Response<OpenShiftVersionResource> GetOpenShiftVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string openShiftVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -280,22 +279,21 @@ namespace Azure.ResourceManager.RedHatOpenShift
         }
 
         /// <summary>
-        /// Gets a collection of PlatformWorkloadIdentityRoleSetResources in the SubscriptionResource.
+        /// Gets a collection of OpenShiftPlatformWorkloadIdentityRoleSetResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetPlatformWorkloadIdentityRoleSets(string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftPlatformWorkloadIdentityRoleSets(AzureLocation)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of PlatformWorkloadIdentityRoleSetResources and their operations over a PlatformWorkloadIdentityRoleSetResource. </returns>
-        public static PlatformWorkloadIdentityRoleSetCollection GetPlatformWorkloadIdentityRoleSets(this SubscriptionResource subscriptionResource, string location)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of OpenShiftPlatformWorkloadIdentityRoleSetResources and their operations over a OpenShiftPlatformWorkloadIdentityRoleSetResource. </returns>
+        public static OpenShiftPlatformWorkloadIdentityRoleSetCollection GetOpenShiftPlatformWorkloadIdentityRoleSets(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableRedHatOpenShiftSubscriptionResource(subscriptionResource).GetPlatformWorkloadIdentityRoleSets(location);
+            return GetMockableRedHatOpenShiftSubscriptionResource(subscriptionResource).GetOpenShiftPlatformWorkloadIdentityRoleSets(location);
         }
 
         /// <summary>
@@ -315,26 +313,26 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PlatformWorkloadIdentityRoleSetResource"/></description>
+        /// <description><see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetPlatformWorkloadIdentityRoleSetAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftPlatformWorkloadIdentityRoleSetAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="openShiftMinorVersion"> The desired version value of the PlatformWorkloadIdentityRoleSet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="location"/> or <paramref name="openShiftMinorVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="openShiftMinorVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="openShiftMinorVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="openShiftMinorVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PlatformWorkloadIdentityRoleSetResource>> GetPlatformWorkloadIdentityRoleSetAsync(this SubscriptionResource subscriptionResource, string location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
+        public static async Task<Response<OpenShiftPlatformWorkloadIdentityRoleSetResource>> GetOpenShiftPlatformWorkloadIdentityRoleSetAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableRedHatOpenShiftSubscriptionResource(subscriptionResource).GetPlatformWorkloadIdentityRoleSetAsync(location, openShiftMinorVersion, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRedHatOpenShiftSubscriptionResource(subscriptionResource).GetOpenShiftPlatformWorkloadIdentityRoleSetAsync(location, openShiftMinorVersion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -354,26 +352,26 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PlatformWorkloadIdentityRoleSetResource"/></description>
+        /// <description><see cref="OpenShiftPlatformWorkloadIdentityRoleSetResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetPlatformWorkloadIdentityRoleSet(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftPlatformWorkloadIdentityRoleSet(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="openShiftMinorVersion"> The desired version value of the PlatformWorkloadIdentityRoleSet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="location"/> or <paramref name="openShiftMinorVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="openShiftMinorVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="openShiftMinorVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="openShiftMinorVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<PlatformWorkloadIdentityRoleSetResource> GetPlatformWorkloadIdentityRoleSet(this SubscriptionResource subscriptionResource, string location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
+        public static Response<OpenShiftPlatformWorkloadIdentityRoleSetResource> GetOpenShiftPlatformWorkloadIdentityRoleSet(this SubscriptionResource subscriptionResource, AzureLocation location, string openShiftMinorVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableRedHatOpenShiftSubscriptionResource(subscriptionResource).GetPlatformWorkloadIdentityRoleSet(location, openShiftMinorVersion, cancellationToken);
+            return GetMockableRedHatOpenShiftSubscriptionResource(subscriptionResource).GetOpenShiftPlatformWorkloadIdentityRoleSet(location, openShiftMinorVersion, cancellationToken);
         }
 
         /// <summary>

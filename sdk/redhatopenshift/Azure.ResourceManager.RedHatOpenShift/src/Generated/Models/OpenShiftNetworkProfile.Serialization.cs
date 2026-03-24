@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 writer.WritePropertyName("loadBalancerProfile"u8);
                 writer.WriteObjectValue(LoadBalancerProfile, options);
             }
-            if (Optional.IsDefined(PreconfiguredNSG))
+            if (Optional.IsDefined(PreconfiguredNsg))
             {
                 writer.WritePropertyName("preconfiguredNSG"u8);
-                writer.WriteStringValue(PreconfiguredNSG.Value.ToString());
+                writer.WriteStringValue(PreconfiguredNsg.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
