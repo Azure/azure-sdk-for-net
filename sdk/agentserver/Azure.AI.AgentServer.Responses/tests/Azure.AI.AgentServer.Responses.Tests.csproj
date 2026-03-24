@@ -31,4 +31,9 @@
     <ProjectReference Include="..\src\Azure.AI.AgentServer.Responses.csproj" />
   </ItemGroup>
 
+  <!-- Exclude all test source files for net462 — no source project to test -->
+  <ItemGroup Condition="$(TargetFramework) == 'net462'">
+    <Compile Remove="**\*.cs" />
+  </ItemGroup>
+
 </Project>

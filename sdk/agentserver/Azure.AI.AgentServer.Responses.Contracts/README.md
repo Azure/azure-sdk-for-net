@@ -1,4 +1,4 @@
-# Azure.AI.AgentServer.Responses.Contracts library for .NET
+# Azure AI Agent Server Contracts client library for .NET
 
 Azure.AI.AgentServer.Responses.Contracts contains the TypeSpec-generated model contracts for the Azure AI Responses API. These types are used by [Azure.AI.AgentServer.Responses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/README.md) and can also be consumed directly for serialization, validation, and integration purposes.
 
@@ -17,6 +17,11 @@ dotnet add package Azure.AI.AgentServer.Responses.Contracts --prerelease
 ### Prerequisites
 
 - [.NET 8.0](https://dotnet.microsoft.com/download) or later
+
+### Authenticate the client
+
+This is a data model package and does not make service calls.
+Authentication is handled by the server library [Azure.AI.AgentServer.Responses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/README.md).
 
 ## Key concepts
 

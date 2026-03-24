@@ -2,7 +2,7 @@
 
 > **Language-agnostic specification** defining what any conforming SDK implementation MUST do to correctly bridge handler logic to the API behaviour defined in [api-behaviour-contract.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md). This document, together with the [API Behaviour Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md) and [Handler Implementation Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md), forms the **authoritative trio** — sufficient to generate a conforming SDK in any language without reading the .NET source code.
 
-**Language-specific implementation details are NOT part of this spec.** For the .NET implementation, see [.NET Design Documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/README.md).
+**Language-specific implementation details are NOT part of this spec.** For the .NET implementation, see [.NET Design Documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/OVERVIEW.md).
 
 ---
 
