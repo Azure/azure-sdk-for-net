@@ -10,11 +10,12 @@ namespace Azure.Provisioning.Batch.Tests;
 
 public class BasicBatchTests
 {
-    internal static Trycep CreateBatchAccountTest()
+    internal static Trycep CreateBatchAccountWithPoolTest()
     {
         return new Trycep().Define(
             ctx =>
             {
+                #region Snippet:BatchAccountBasic
                 Infrastructure infra = new();
 
                 BatchAccount account =
@@ -23,6 +24,23 @@ public class BasicBatchTests
                         Tags = { ["environment"] = "test" },
                     };
                 infra.Add(account);
+
+                BatchAccountPool pool =
+                    new(nameof(pool), BatchAccountPool.ResourceVersions.V2025_06_01)
+                    {
+                        Parent = account,
+                        DisplayName = "MyPool",
+                        VmSize = "Standard_D2s_v3",
+                        ScaleSettings = new BatchAccountPoolScaleSettings
+                        {
+                            FixedScale = new BatchAccountFixedScaleSettings
+                            {
+                                TargetDedicatedNodes = 1,
+                                TargetLowPriorityNodes = 0,
+                            },
+                        },
+                    };
+                infra.Add(pool);
 
                 BatchApplication app =
                     new(nameof(app), BatchApplication.ResourceVersions.V2025_06_01)
@@ -33,26 +51,19 @@ public class BasicBatchTests
                     };
                 infra.Add(app);
 
-                BatchAccountPool pool =
-                    new(nameof(pool), BatchAccountPool.ResourceVersions.V2025_06_01)
-                    {
-                        Parent = account,
-                        DisplayName = "MyPool",
-                        VmSize = "Standard_D2s_v3",
-                    };
-                infra.Add(pool);
-
                 infra.Add(new ProvisioningOutput("accountName", typeof(string)) { Value = account.Name });
+                infra.Add(new ProvisioningOutput("resourceId", typeof(string)) { Value = account.Id });
+                #endregion
 
                 return infra;
             });
     }
 
     [Test]
-    [Description("Verify basic Batch account, pool, and application provisioning")]
-    public async Task CreateBatchAccountPoolAndApp()
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.batch/batchaccount-with-storage/main.bicep")]
+    public async Task CreateBatchAccountWithPool()
     {
-        await using Trycep test = CreateBatchAccountTest();
+        await using Trycep test = CreateBatchAccountWithPoolTest();
         test.Compare(
             """
             @description('The location for the resource(s) to be deployed.')
@@ -66,6 +77,21 @@ public class BasicBatchTests
               location: location
             }
 
+            resource pool 'Microsoft.Batch/batchAccounts/pools@2025-06-01' = {
+              properties: {
+                displayName: 'MyPool'
+                vmSize: 'Standard_D2s_v3'
+                scaleSettings: {
+                  fixedScale: {
+                    targetDedicatedNodes: 1
+                    targetLowPriorityNodes: 0
+                  }
+                }
+              }
+              name: take('pool-${uniqueString(resourceGroup().id)}', 64)
+              parent: account
+            }
+
             resource app 'Microsoft.Batch/batchAccounts/applications@2025-06-01' = {
               properties: {
                 displayName: 'MyApp'
@@ -75,16 +101,9 @@ public class BasicBatchTests
               parent: account
             }
 
-            resource pool 'Microsoft.Batch/batchAccounts/pools@2025-06-01' = {
-              properties: {
-                displayName: 'MyPool'
-                vmSize: 'Standard_D2s_v3'
-              }
-              name: take('pool-${uniqueString(resourceGroup().id)}', 64)
-              parent: account
-            }
-
             output accountName string = account.name
+
+            output resourceId string = account.id
             """);
     }
 }
