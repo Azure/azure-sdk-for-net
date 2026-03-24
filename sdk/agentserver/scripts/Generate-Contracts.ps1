@@ -8,7 +8,7 @@
 
 .DESCRIPTION
     Runs the full contract generation pipeline:
-    1. Syncs upstream TypeSpec sources (npx tsp-client sync)
+    1. Syncs upstream TypeSpec sources (eng/common/tsp-client)
     2. Compiles TypeSpec → C# models + OpenAPI spec (npx tsp compile)
     3. Copies generated Models/ and Internal/ into Contracts/src/Generated/
     4. Generates C# validators from the OpenAPI spec (python3 generate-validators.py)
@@ -19,7 +19,7 @@
 
     Prerequisites:
     - Python 3 + pyyaml (for generate-validators.py)
-    - Node.js (for npx tsp-client / tsp compile) — only needed for full regeneration
+    - Node.js (for tsp-client sync / tsp compile) — only needed for full regeneration
 
 .PARAMETER ValidatorsOnly
     When specified, skips TypeSpec sync/compile and model copying.
@@ -70,14 +70,38 @@ if ($LASTEXITCODE -ne 0) {
 Push-Location $AgentServerRoot
 try {
     if (-not $ValidatorsOnly) {
-        # Step 1: Sync upstream TypeSpec sources
+        # Step 1: Sync upstream TypeSpec sources via eng/common/tsp-client
+        $RepoRoot = Resolve-Path (Join-Path $AgentServerRoot ".." "..")
+        $TspClientDir = Join-Path $RepoRoot "eng" "common" "tsp-client"
+        if (-not (Test-Path (Join-Path $TspClientDir "package.json"))) {
+            throw "tsp-client not found at '$TspClientDir'. Ensure eng/common/tsp-client exists."
+        }
+        Write-Host "Installing tsp-client dependencies..."
+        Push-Location $TspClientDir
+        try {
+            npm ci --silent
+            if ($LASTEXITCODE -ne 0) { throw "npm ci failed in eng/common/tsp-client" }
+        } finally {
+            Pop-Location
+        }
+
         Write-Host "Syncing upstream TypeSpec sources..."
-        npx tsp-client sync --output-dir (Join-Path "Azure.AI.AgentServer.Responses.Contracts" "src" "TypeSpec")
-        if ($LASTEXITCODE -ne 0) { throw "tsp-client sync failed" }
+        $syncOutputDir = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses.Contracts" "src" "TypeSpec"
+        npx --prefix $TspClientDir --no -- tsp-client sync --no-prompt --output-dir $syncOutputDir
+        $TempTypeSpecDir = Join-Path $TspDir "TempTypeSpecFiles"
+        if ($LASTEXITCODE -ne 0) {
+            # Verify sync at least downloaded the source files
+            if (-not (Test-Path (Join-Path $TempTypeSpecDir "Foundry"))) {
+                throw "tsp-client sync failed: TempTypeSpecFiles/Foundry/ not found"
+            }
+            Write-Warning "tsp-client sync exited non-zero but source files are present. Continuing..."
+        }
+        if (-not (Test-Path (Join-Path $TempTypeSpecDir "package.json"))) {
+            throw "tsp-client sync did not create TempTypeSpecFiles/package.json. Check emitterPackageJsonPath in tsp-location.yaml."
+        }
         Write-Host "TypeSpec sources synced."
 
         # Step 1b: Install TypeSpec dependencies (including @typespec/openapi3 for OpenAPI generation)
-        $TempTypeSpecDir = Join-Path $TspDir "TempTypeSpecFiles"
         Write-Host "Installing TypeSpec dependencies..."
         Push-Location $TempTypeSpecDir
         try {
@@ -100,9 +124,22 @@ try {
         Write-Host "Compiling TypeSpec -> C# models + OpenAPI spec..."
         Push-Location $TspDir
         try {
+            # Create a node_modules symlink so the TypeSpec compiler can resolve
+            # npm-packaged imports (tspconfig.yaml "imports" section) from the
+            # project directory (TypeSpec/) while using deps in TempTypeSpecFiles/.
+            $nodeModulesLink = Join-Path $TspDir "node_modules"
+            $nodeModulesTarget = Join-Path $TempTypeSpecDir "node_modules"
+            if (-not (Test-Path $nodeModulesLink)) {
+                New-Item -ItemType SymbolicLink -Path $nodeModulesLink -Target $nodeModulesTarget | Out-Null
+            }
             npx --prefix TempTypeSpecFiles tsp compile .
             if ($LASTEXITCODE -ne 0) { throw "tsp compile failed" }
         } finally {
+            # Clean up symlink
+            $nodeModulesLink = Join-Path $TspDir "node_modules"
+            if ((Test-Path $nodeModulesLink) -and ((Get-Item $nodeModulesLink).Attributes -band [IO.FileAttributes]::ReparsePoint)) {
+                Remove-Item $nodeModulesLink
+            }
             Pop-Location
         }
         Write-Host "TypeSpec compiled."

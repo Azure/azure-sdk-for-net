@@ -563,8 +563,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     }
     public partial class ApiErrorResponse : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ApiErrorResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ApiErrorResponse>
     {
-        internal ApiErrorResponse() { }
-        public Azure.AI.AgentServer.Responses.Models.Error Error { get { throw null; } }
+        public ApiErrorResponse(Azure.AI.AgentServer.Responses.Models.Error error) { }
+        public Azure.AI.AgentServer.Responses.Models.Error Error { get { throw null; } set { } }
         protected virtual Azure.AI.AgentServer.Responses.Models.ApiErrorResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.AgentServer.Responses.Models.ApiErrorResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1949,9 +1949,9 @@ namespace Azure.AI.AgentServer.Responses.Models
     }
     public partial class DeleteResponseResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.DeleteResponseResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.DeleteResponseResult>
     {
-        internal DeleteResponseResult() { }
+        public DeleteResponseResult(string id) { }
         public bool Deleted { get { throw null; } }
-        public string Id { get { throw null; } }
+        public string Id { get { throw null; } set { } }
         protected virtual Azure.AI.AgentServer.Responses.Models.DeleteResponseResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.AI.AgentServer.Responses.Models.DeleteResponseResult (System.ClientModel.ClientResult result) { throw null; }
@@ -2000,14 +2000,14 @@ namespace Azure.AI.AgentServer.Responses.Models
     }
     public partial class Error : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.Error>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.Error>
     {
-        internal Error() { }
+        public Error(string code, string message) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalInfo { get { throw null; } }
-        public string Code { get { throw null; } }
+        public string Code { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> DebugInfo { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.AgentServer.Responses.Models.Error> Details { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Param { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string Message { get { throw null; } set { } }
+        public string Param { get { throw null; } set { } }
+        public string Type { get { throw null; } set { } }
         protected virtual Azure.AI.AgentServer.Responses.Models.Error JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.AgentServer.Responses.Models.Error PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
