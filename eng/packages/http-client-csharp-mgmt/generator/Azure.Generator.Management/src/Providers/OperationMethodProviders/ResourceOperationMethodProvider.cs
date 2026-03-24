@@ -295,16 +295,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
         {
-            // If there's no body type, fall back to non-generic pipeline processing
-            if (_originalBodyType == null)
-            {
-                return ResourceMethodSnippets.CreateNonGenericResponsePipelineProcessing(
-                    messageVariable,
-                    contextVariable,
-                    _isAsync,
-                    out responseVariable);
-            }
-
             var statements = new List<MethodBodyStatement>();
 
             var sendMethod = _isAsync ? "SendAsync" : "Send";
