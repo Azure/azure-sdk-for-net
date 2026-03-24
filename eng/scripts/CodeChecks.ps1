@@ -231,10 +231,24 @@ try {
             $status = git status -s | Out-String
             $status = $status -replace "`n","`n    "
             if ($PreparePr) {
-                $currentChanges = @(git diff --name-only)
-                $newChanges = $currentChanges | Where-Object { $_ -notin $preExistingChanges }
-                if ($newChanges) {
-                    $newStatus = ($newChanges | ForEach-Object { "    M $_" }) -join "`n"
+                $currentStatusLines = git status --porcelain
+                $newStatusLines = @()
+                foreach ($line in $currentStatusLines) {
+                    if ([string]::IsNullOrWhiteSpace($line)) { continue }
+                    $trimmed = $line.Trim()
+                    if ($trimmed.Length -le 3) { continue }
+                    $pathPart = $trimmed.Substring(3)
+                    # For renames, check the destination path against pre-existing changes.
+                    $checkPath = $pathPart
+                    if ($pathPart -match '.+?\s->\s(.+)$') {
+                        $checkPath = $matches[1]
+                    }
+                    if ($checkPath -notin $preExistingChanges) {
+                        $newStatusLines += $line
+                    }
+                }
+                if ($newStatusLines) {
+                    $newStatus = ($newStatusLines | ForEach-Object { "    $_" }) -join "`n"
                     Write-Host ""
                     Write-Host -f Green "The following files were updated by code checks and should be included in your commit:"
                     Write-Host -f Yellow $newStatus
