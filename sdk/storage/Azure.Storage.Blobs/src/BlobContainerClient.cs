@@ -2797,6 +2797,7 @@ namespace Azure.Storage.Blobs
 
                         if (arrowResponse.Headers.ContentType == Constants.Blob.ApacheArrowContentType)
                         {
+                            // Parse using Apache Arrow
                             listblobFlatResponse = await ParseArrowListBlobsFlatResponse(
                                 arrowResponse.Value,
                                 prefix,
@@ -2947,6 +2948,7 @@ namespace Azure.Storage.Blobs
                 StringArray accessTierCol = GetArrowColumn(batch, "AccessTier") as StringArray;
                 BooleanArray accessTierInferredCol = GetArrowColumn(batch, "AccessTierInferred") as BooleanArray;
                 StringArray archiveStatusCol = GetArrowColumn(batch, "ArchiveStatus") as StringArray;
+                StringArray smartAccessTierCol = GetArrowColumn(batch, "SmartAccessTier") as StringArray;
                 StringArray customerProvidedKeySha256Col = GetArrowColumn(batch, "CustomerProvidedKeySha256") as StringArray;
                 StringArray encryptionScopeCol = GetArrowColumn(batch, "EncryptionScope") as StringArray;
                 TimestampArray accessTierChangeTimeCol = GetArrowColumn(batch, "AccessTierChangeTime") as TimestampArray;
@@ -2998,6 +3000,7 @@ namespace Azure.Storage.Blobs
                         accessTier: ReadEnum(accessTierCol, i, s => new AccessTier(s)),
                         accessTierInferred: ReadNullableBool(accessTierInferredCol, i),
                         archiveStatus: ReadEnum(archiveStatusCol, i, s => s.ToArchiveStatus()),
+                        smartAccessTier: ReadEnum(smartAccessTierCol, i, s => new AccessTier(s)),
                         customerProvidedKeySha256: customerProvidedKeySha256Col?.GetString(i),
                         encryptionScope: encryptionScopeCol?.GetString(i),
                         accessTierChangeTime: accessTierChangeTimeCol?.GetTimestamp(i),

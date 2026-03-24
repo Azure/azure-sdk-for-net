@@ -20,7 +20,6 @@ namespace Azure.Storage.Blobs.Models
         private readonly string _prefix;
         private readonly string _startFrom;
         private readonly string _endBefore;
-        //private readonly string _delimiter;
         private readonly bool _useApacheArrow;
 
         public GetBlobsAsyncCollection(

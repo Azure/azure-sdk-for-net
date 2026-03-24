@@ -2854,6 +2854,34 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            IDictionary<string, string> tags = BuildTags();
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
+            {
+                Tags = tags
+            };
+            await appendBlob.CreateAsync(options);
+
+            GetBlobsOptions getBlobsOptions = new GetBlobsOptions
+            {
+                UseApacheArrow = true,
+                Traits = BlobTraits.Tags
+            };
+
+            // Act
+            IList<BlobItem> blobItems = await test.Container.GetBlobsAsync(getBlobsOptions).ToListAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, blobItems[0].Tags);
+            Assert.AreEqual(tags.Count, blobItems[0].Properties.TagCount);
+        }
+
+        [RecordedTest]
         [PlaybackOnly("Service bug - https://github.com/Azure/azure-sdk-for-net/issues/16516")]
         public async Task ListBlobsHierarchySegmentAsync()
         {
