@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
     /// A class representing the NotificationHubNamespace data model.
-    /// Backward-compat: baseline had setters for output-only properties and
-    /// backward-compat mappings for ProvisioningState, Status, NamespaceType.
-    /// After regen, the generator skips its read-only versions of these properties.
     /// </summary>
+    // Backward-compat: baseline had a constructor with only AzureLocation (no sku),
+    // setters for output-only properties, and string/enum versions of ProvisioningState,
+    // Status, and NamespaceType. Required by ApiCompat.
     public partial class NotificationHubNamespaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceData"/>. </summary>
@@ -25,6 +25,12 @@ namespace Azure.ResourceManager.NotificationHubs
         {
         }
 
+        // Backing fields provide setters for read-only properties to maintain backward-compat.
+        // These properties are @visibility(Lifecycle.Read) in the spec, so:
+        // - The generated serializer skips them on the wire (options.Format != "W" guard)
+        // - The setter writes to the backing field, not Properties, but this won't cause
+        //   practical issues because the values are never sent to the API anyway.
+        // - The getter falls back to Properties for deserialized server data.
         private string _namespaceName;
         private bool? _isEnabled;
         private bool? _isCritical;

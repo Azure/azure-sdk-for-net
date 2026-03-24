@@ -11,10 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<NotificationHubCreateOrUpdateContent>
+    // TODO: This model is completely missing from the TypeSpec spec — the generator produces NotificationHubData instead.
+    // The hand-written serialization below is error-prone and not registered in AzureResourceManagerNotificationHubsContext.
+    // Consider throwing NotSupportedException in these interface implementations instead of maintaining hand-written serialization,
+    // since actual API calls go through the generated Data type serialization via ContentToData() in the Collection class.
+    public partial class NotificationHubCreateOrUpdateContent : IJsonModel<NotificationHubCreateOrUpdateContent>, IPersistableModel<NotificationHubCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
         void IJsonModel<NotificationHubCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;

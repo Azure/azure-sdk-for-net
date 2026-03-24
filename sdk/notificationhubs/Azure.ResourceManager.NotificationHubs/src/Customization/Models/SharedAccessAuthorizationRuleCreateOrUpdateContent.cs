@@ -11,12 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
+    // Backward-compat: this model is completely missing from the TypeSpec spec —
+    // the generator produces NotificationHubAuthorizationRuleData instead.
+    // This hand-written type preserves the baseline API contract. Overloads in
+    // the AuthorizationRule Collection classes bridge this type to the generated Data type.
     /// <summary>
     /// Parameters supplied to the CreateOrUpdate Namespace AuthorizationRules.
     /// Serialized Name: SharedAccessAuthorizationRuleCreateOrUpdateParameters
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent : IJsonModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>, IPersistableModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>
+    public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

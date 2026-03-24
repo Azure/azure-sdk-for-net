@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Parameters supplied to the CreateOrUpdate NotificationHub operation. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class NotificationHubCreateOrUpdateContent : TrackedResourceData, IJsonModel<NotificationHubCreateOrUpdateContent>, IPersistableModel<NotificationHubCreateOrUpdateContent>
+    public partial class NotificationHubCreateOrUpdateContent : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

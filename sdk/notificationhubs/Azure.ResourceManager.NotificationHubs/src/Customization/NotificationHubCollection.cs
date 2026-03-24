@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.NotificationHubs
         public virtual Pageable<NotificationHubResource> GetAll(CancellationToken cancellationToken)
             => GetAll(null, null, cancellationToken);
 
+        // AuthorizationRules is intentionally not mapped — the generated NotificationHubProperties
+        // exposes it as IReadOnlyList<T> (output-only). Auth rules are managed via the
+        // AuthorizationRule sub-resource CRUD operations, not via the NotificationHub body.
         private static NotificationHubData ContentToData(NotificationHubCreateOrUpdateContent content)
         {
             var data = new NotificationHubData(content.Location);
