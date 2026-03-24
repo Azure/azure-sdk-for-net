@@ -5,9 +5,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ClientModel.Primitives;
 using System.ComponentModel;
-using System.Text.Json;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
