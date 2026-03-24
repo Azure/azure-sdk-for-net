@@ -22,6 +22,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Initializes a new instance of <see cref="EndpointResourceData"/>. </summary>
         public EndpointResourceData()
         {
+            Properties = new EndpointProperties();
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointResourceData"/>. </summary>

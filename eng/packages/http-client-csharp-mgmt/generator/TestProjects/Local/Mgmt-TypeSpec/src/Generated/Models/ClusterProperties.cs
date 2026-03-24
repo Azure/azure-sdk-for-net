@@ -21,6 +21,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public ClusterProperties()
         {
             PrivateEndpointConnections = new ChangeTrackingList<RedisPrivateEndpointConnection>();
+            Encryption = new ClusterPropertiesEncryption();
+            MaintenanceConfiguration = new MaintenanceConfiguration();
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterProperties"/>. </summary>

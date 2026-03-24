@@ -25,6 +25,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+            Prediction = new Prediction();
         }
 
         /// <summary> Initializes a new instance of <see cref="JooProperties"/>. </summary>

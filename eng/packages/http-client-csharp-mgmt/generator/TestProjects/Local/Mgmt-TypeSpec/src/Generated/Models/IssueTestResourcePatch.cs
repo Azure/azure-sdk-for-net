@@ -24,6 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public IssueTestResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+            Properties = new IssueTestUpdateProperties();
         }
 
         /// <summary> Initializes a new instance of <see cref="IssueTestResourcePatch"/>. </summary>

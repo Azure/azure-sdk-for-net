@@ -22,6 +22,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Initializes a new instance of <see cref="MultiFlattenTestData"/>. </summary>
         public MultiFlattenTestData()
         {
+            Properties = new MultiFlattenProperties();
         }
 
         /// <summary> Initializes a new instance of <see cref="MultiFlattenTestData"/>. </summary>

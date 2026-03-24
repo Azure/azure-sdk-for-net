@@ -22,6 +22,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Initializes a new instance of <see cref="BarQuotaResourceData"/>. </summary>
         public BarQuotaResourceData()
         {
+            Properties = new BarQuotaProperties();
         }
 
         /// <summary> Initializes a new instance of <see cref="BarQuotaResourceData"/>. </summary>

@@ -87,5 +87,67 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.IsNotNull(decoratorsProperty, "Could not find InputModelProperty.Decorators property");
             decoratorsProperty!.SetValue(property, new[] { decorator });
         }
+
+        /// <summary>
+        /// Verifies that when a model has a flattened properties bag where all
+        /// sub-properties are optional, the public constructor still initializes
+        /// the internal Properties field. Without this initialization, serialization
+        /// skips the "properties" JSON envelope entirely (because Optional.IsDefined
+        /// returns false for null), which breaks wire compatibility with ARM resources
+        /// that always include "properties": {} in request bodies.
+        /// </summary>
+        [Test]
+        public void TestPropertiesBagInitializedWhenAllFlattenedPropertiesAreOptional()
+        {
+            // Create a nested "properties" model with only optional sub-properties.
+            var optionalProp1 = InputFactory.Property("optionalValue", InputPrimitiveType.String, isRequired: false, serializedName: "optionalValue");
+            var optionalProp2 = InputFactory.Property("optionalFlag", InputPrimitiveType.Boolean, isRequired: false, serializedName: "optionalFlag");
+            var propertiesModel = InputFactory.Model(
+                "AllOptionalProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [optionalProp1, optionalProp2]);
+
+            // Create a property on the parent model referencing the properties model,
+            // then apply the @flattenProperty decorator to it.
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+
+            // Create the parent model (like a Patch model with tags + optional properties bag).
+            var tagsProperty = InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String), isRequired: false, serializedName: "tags");
+            var parentModel = InputFactory.Model(
+                "TestPatchModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [tagsProperty, propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+
+            // Create the model provider.
+            var model = plugin.Object.TypeFactory.CreateModel(parentModel);
+            Assert.IsNotNull(model);
+
+            // Run the visitors to process flattening.
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+
+            // Find the public constructor.
+            var publicCtor = model!.Constructors
+                .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.IsNotNull(publicCtor, "Expected a public constructor on the model");
+
+            // Verify the constructor body initializes Properties.
+            // The body should contain an assignment like: Properties = new AllOptionalProperties();
+            var bodyText = publicCtor!.BodyStatements?.ToDisplayString() ?? "";
+            Assert.IsTrue(
+                bodyText.Contains("Properties = new") && bodyText.Contains("AllOptionalProperties()"),
+                $"Expected the public constructor to initialize Properties, but body was:\n{bodyText}");
+        }
     }
 }

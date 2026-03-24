@@ -21,6 +21,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public ZooPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+            Properties = new ZooUpdateProperties();
         }
 
         /// <summary> Initializes a new instance of <see cref="ZooPatch"/>. </summary>

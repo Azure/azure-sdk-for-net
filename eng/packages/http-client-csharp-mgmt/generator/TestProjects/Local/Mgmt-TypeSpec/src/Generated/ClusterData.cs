@@ -23,6 +23,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="location"> The geo-location where the resource lives. </param>
         public ClusterData(AzureLocation location) : base(location)
         {
+            Properties = new ClusterCreateProperties();
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterData"/>. </summary>

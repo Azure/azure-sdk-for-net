@@ -21,6 +21,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public JobResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+            Properties = new JobProperties();
         }
 
         /// <summary> Initializes a new instance of <see cref="JobResourcePatch"/>. </summary>

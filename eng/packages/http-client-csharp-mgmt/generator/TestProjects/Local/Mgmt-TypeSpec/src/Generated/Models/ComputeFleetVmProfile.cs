@@ -21,6 +21,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmProfile"/>. </summary>
         public ComputeFleetVmProfile()
         {
+            CapacityReservation = new CapacityReservationProfile();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmProfile"/>. </summary>

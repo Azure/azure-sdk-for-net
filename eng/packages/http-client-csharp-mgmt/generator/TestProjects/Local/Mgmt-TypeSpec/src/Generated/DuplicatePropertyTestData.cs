@@ -29,6 +29,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="location"> The geo-location where the resource lives. </param>
         public DuplicatePropertyTestData(AzureLocation location) : base(location)
         {
+            Properties = new PropertyOverrideCreateProperties();
         }
 
         /// <summary> Initializes a new instance of <see cref="DuplicatePropertyTestData"/>. </summary>

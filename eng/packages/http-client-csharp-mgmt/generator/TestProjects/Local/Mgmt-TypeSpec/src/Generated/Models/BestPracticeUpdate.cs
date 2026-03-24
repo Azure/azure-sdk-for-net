@@ -20,6 +20,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Initializes a new instance of <see cref="BestPracticeUpdate"/>. </summary>
         public BestPracticeUpdate()
         {
+            Properties = new BestPracticeUpdateProperties();
         }
 
         /// <summary> Initializes a new instance of <see cref="BestPracticeUpdate"/>. </summary>

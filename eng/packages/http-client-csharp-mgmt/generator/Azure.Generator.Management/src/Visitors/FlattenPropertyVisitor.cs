@@ -644,6 +644,7 @@ namespace Azure.Generator.Management.Visitors
             if (body is not null)
             {
                 var updatedBodyStatements = new List<MethodBodyStatement>();
+                var handledFlattenEntries = new HashSet<string>();
                 foreach (var statement in body)
                 {
                     // If the statement is validating a parameter, we need to update it to validate the flattened properties.
@@ -682,6 +683,7 @@ namespace Azure.Generator.Management.Visitors
                         var flattenedProperties = new HashSet<PropertyProvider>();
                         if (flattenPropertyMap.TryGetValue(variable.Declaration.RequestedName, out var value))
                         {
+                            handledFlattenEntries.Add(variable.Declaration.RequestedName);
                             // collect all internal properties to assign
                             foreach (var (flattenProperty, internalProperty) in value)
                             {
@@ -713,6 +715,14 @@ namespace Azure.Generator.Management.Visitors
                                     );
                                 updatedBodyStatements.Add(((MemberExpression)currentInternalProperty).Assign(assignmentExpression).Terminate());
                             }
+                            else if (value.Count > 0)
+                            {
+                                // When all flattened properties are optional (none required for the public
+                                // constructor), we still need to initialize the internal properties bag so
+                                // that the "properties" envelope is always serialized (matching ARM convention).
+                                var internalProperty = value[0].InternalProperty;
+                                updatedBodyStatements.Add(((MemberExpression)internalProperty).Assign(New.Instance(variable.Type)).Terminate());
+                            }
                         }
                         else
                         {
@@ -724,6 +734,19 @@ namespace Azure.Generator.Management.Visitors
                         updatedBodyStatements.Add(statement);
                     }
                 }
+
+                // For flattened property entries that weren't handled by existing body statements
+                // (e.g. parameterless constructors where no assignment for 'properties' exists),
+                // add initialization so the "properties" envelope is always serialized.
+                foreach (var (name, entries) in flattenPropertyMap)
+                {
+                    if (!handledFlattenEntries.Contains(name) && entries.Count > 0)
+                    {
+                        var internalProperty = entries[0].InternalProperty;
+                        updatedBodyStatements.Add(((MemberExpression)internalProperty).Assign(New.Instance(internalProperty.Type)).Terminate());
+                    }
+                }
+
                 publicConstructor.Update(signature: publicConstructor.Signature, bodyStatements: updatedBodyStatements);
             }
         }

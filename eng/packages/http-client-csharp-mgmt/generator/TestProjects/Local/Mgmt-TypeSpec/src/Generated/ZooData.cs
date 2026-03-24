@@ -24,6 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="location"> The geo-location where the resource lives. </param>
         public ZooData(AzureLocation location) : base(location)
         {
+            Properties = new ZooProperties();
         }
 
         /// <summary> Initializes a new instance of <see cref="ZooData"/>. </summary>

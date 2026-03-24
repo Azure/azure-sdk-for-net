@@ -22,6 +22,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitListData"/>. </summary>
         public GroupQuotaLimitListData()
         {
+            Properties = new GroupQuotaLimitListProperties();
         }
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitListData"/>. </summary>
