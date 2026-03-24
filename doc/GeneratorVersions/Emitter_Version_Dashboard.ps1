@@ -107,10 +107,16 @@ function Get-DateFromVersion([string]$Version) {
     return $null
 }
 
-function Get-CommitForVersion([string]$RepoRoot, [string]$RelativePath, [string]$Version) {
+function Get-CommitForVersion([string]$RepoRoot, [string]$RelativePath, [string]$Version,
+    [string]$GitHubOwner, [string]$GitHubRepo) {
     $date = Get-DateFromVersion $Version
     if (-not $date) { return @{ Hash = $null; Short = "unknown" } }
+    # Try local git log first (works with full clones)
     $hash = git -C $RepoRoot log --until="${date}T23:59:59" -1 --format="%H" -- $RelativePath 2>$null
+    # Fall back to GitHub API when local history is unavailable (e.g. shallow clones)
+    if (-not $hash -and $GitHubOwner -and $GitHubRepo) {
+        return Get-CommitForVersionGitHub $GitHubOwner $GitHubRepo $RelativePath $Version
+    }
     $shortHash = if ($hash) { $hash.Substring(0, 7) } else { "unknown" }
     return @{ Hash = $hash; Short = $shortHash }
 }
@@ -132,8 +138,8 @@ $commitBase = Get-CommitForVersionGitHub "microsoft" "typespec" "packages/http-c
 $commitBaseLink = if ($commitBase.Hash) { "https://github.com/microsoft/typespec/commit/$($commitBase.Hash)" } else { $null }
 
 # Azure packages are from this repo
-$commitAzure = Get-CommitForVersion $RepoRoot "eng/packages/http-client-csharp" $azureDep_mgmt
-$commitMgmt  = Get-CommitForVersion $RepoRoot "eng/packages/http-client-csharp-mgmt" $mgmtDep_prov
+$commitAzure = Get-CommitForVersion $RepoRoot "eng/packages/http-client-csharp" $azureDep_mgmt "Azure" "azure-sdk-for-net"
+$commitMgmt  = Get-CommitForVersion $RepoRoot "eng/packages/http-client-csharp-mgmt" $mgmtDep_prov "Azure" "azure-sdk-for-net"
 
 # Always link to the canonical Azure SDK for .NET repository
 $gitBaseUrl = "https://github.com/Azure/azure-sdk-for-net"
