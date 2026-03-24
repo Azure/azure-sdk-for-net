@@ -41,11 +41,7 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
 # Resolve paths relative to the agentserver root (parent of scripts/)
-$AgentServerRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-if (-not (Test-Path (Join-Path $AgentServerRoot "scripts" "Generate-Contracts.ps1"))) {
-    # Fallback: script is at sdk/agentserver/scripts/Generate-Contracts.ps1
-    $AgentServerRoot = Split-Path -Parent $PSScriptRoot
-}
+$AgentServerRoot = Split-Path -Parent $PSScriptRoot
 
 $TspDir = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses.Contracts" "src" "TypeSpec"
 $TspOut = Join-Path $TspDir "tsp-output"

@@ -51,7 +51,7 @@ The Responses SDK has three **authoritative contract documents** that define all
 
 - **Responses** depends only on **Responses.Contracts** (project reference) plus `Microsoft.AspNetCore.App` (framework reference). No additional NuGet packages in production.
 - **Responses.Contracts** has zero NuGet dependencies.
-- Test dependencies are managed via central package management with overrides in `eng/centralpackagemanagement/overrides/Azure.AI.AgentServer.Responses.Packages.props`.
+- Test dependencies are managed via central package management (no per-package version overrides needed).
 
 ### ASP.NET target framework
 

@@ -4,5 +4,9 @@ Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/**
 # Keep compiled OpenAPI spec (includes client.tsp customizations; used by -ValidatorsOnly)
 !Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/openapi.virtual-public-preview.yaml
 
+# Python bytecode
+__pycache__/
+*.pyc
+
 # npm
 package-lock.json

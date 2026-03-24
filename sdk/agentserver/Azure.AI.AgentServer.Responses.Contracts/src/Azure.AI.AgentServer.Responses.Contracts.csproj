@@ -4,7 +4,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Responses</RootNamespace>
     <Nullable>enable</Nullable>
-    <Version>1.0.0-beta.1</Version>
     <Description>TypeSpec-generated model contracts for the Azure AI Agent Server Responses SDK.</Description>
     <PackageTags>Azure.AI.AgentServer.Responses.Contracts</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

@@ -82,7 +82,8 @@ internal sealed class ResponseEndpointHandler
                 ?? throw new BadRequestException("Request body is required.");
 
             // Parse raw body for IResponseContext.RawBody — clone decouples from JsonDocument lifetime
-            rawBody = JsonDocument.Parse(bodyBytes).RootElement.Clone();
+            using var doc = JsonDocument.Parse(bodyBytes);
+            rawBody = doc.RootElement.Clone();
         }
         catch (JsonException ex)
         {
