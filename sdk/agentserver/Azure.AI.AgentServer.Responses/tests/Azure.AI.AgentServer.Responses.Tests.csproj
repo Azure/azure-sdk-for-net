@@ -13,13 +13,21 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
     <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
     <PackageReference Include="Moq" />
   </ItemGroup>
 
+  <!-- ASP.NET Core packages are not compatible with net462 -->
+  <ItemGroup Condition="$(TargetFramework) != 'net462'">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
+  </ItemGroup>
+
+  <!-- Source project targets RequiredRunnableTargetFrameworks (no net462) -->
+  <ItemGroup Condition="$(TargetFramework) != 'net462'">
     <ProjectReference Include="..\src\Azure.AI.AgentServer.Responses.csproj" />
   </ItemGroup>
 
