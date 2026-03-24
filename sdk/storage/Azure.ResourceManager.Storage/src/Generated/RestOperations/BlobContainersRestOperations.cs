@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Storage
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Storage
             {
                 request.Headers.Add("If-Match", ifMatch.Value);
             }
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Storage
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             request.Headers.SetValue("If-Match", ifMatch);
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }

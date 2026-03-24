@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand?.ToString(), context);
+                HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand?.ToSerialString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand?.ToString(), context);
+                HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand?.ToSerialString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                 if (response.Value == null)

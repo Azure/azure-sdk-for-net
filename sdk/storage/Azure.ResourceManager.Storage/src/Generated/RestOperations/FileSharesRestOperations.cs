@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Storage
             {
                 request.Headers.SetValue("x-ms-snapshot", xMsSnapshot);
             }
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
