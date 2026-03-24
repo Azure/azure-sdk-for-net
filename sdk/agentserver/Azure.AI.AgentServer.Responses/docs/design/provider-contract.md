@@ -1,12 +1,12 @@
 # Provider Contract — .NET Implementation
 
-> .NET-specific `IResponsesProvider` interface and `InMemoryResponsesProvider` implementation details. For language-agnostic persistence rules, see [SDK Behavioural Specification — Persistence Contract](../sdk-behaviour-spec.md#persistence-contract) (S-034–S-038).
+> .NET-specific `IResponsesProvider` interface and `InMemoryResponsesProvider` implementation details. For language-agnostic persistence rules, see [SDK Behavioural Specification — Persistence Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#persistence-contract) (S-034–S-038).
 
 ---
 
 ## IResponsesProvider Interface
 
-`IResponsesProvider`, `IResponsesCancellationSignalProvider`, and `IResponsesStreamProvider` are the three pluggable provider interfaces that the SDK delegates state persistence, cancellation signalling, and event streaming to ([S-034](../sdk-behaviour-spec.md#persistence-contract)).
+`IResponsesProvider`, `IResponsesCancellationSignalProvider`, and `IResponsesStreamProvider` are the three pluggable provider interfaces that the SDK delegates state persistence, cancellation signalling, and event streaming to ([S-034](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#persistence-contract)).
 
 The provider contract is split into three focused interfaces. `IResponsesProvider` handles state persistence:
 
@@ -54,13 +54,13 @@ Event streaming uses a custom `IAsyncObserver<ResponseStreamEvent>` interface de
 | `OnCompletedAsync()` | Signal that the event stream is complete |
 | `OnErrorAsync(Exception)` | Signal an error on the event stream |
 
-The `InMemoryResponsesProvider` uses a `SeekableReplaySubject<ResponseStreamEvent>` which buffers events and supports cursor-based replay for SSE reconnection ([B4](../api-behaviour-contract.md#behavioural-rules-index)).
+The `InMemoryResponsesProvider` uses a `SeekableReplaySubject<ResponseStreamEvent>` which buffers events and supports cursor-based replay for SSE reconnection ([B4](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index)).
 
 ---
 
 ## InMemoryResponsesProvider
 
-The default in-memory provider implementation ([S-037](../sdk-behaviour-spec.md#persistence-contract)):
+The default in-memory provider implementation ([S-037](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#persistence-contract)):
 
 - **Thread-safety**: Uses `ConcurrentDictionary` for response storage
 - **Cancellation**: Per-response `CancellationTokenSource` stored alongside responses
@@ -68,7 +68,7 @@ The default in-memory provider implementation ([S-037](../sdk-behaviour-spec.md#
 
 ### TTL Eviction
 
-Implements [S-038](../sdk-behaviour-spec.md#persistence-contract) with a periodic timer:
+Implements [S-038](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#persistence-contract) with a periodic timer:
 
 - **Completion tracking**: Records `DateTimeOffset` when a response reaches any terminal status (`completed`, `failed`, `incomplete`, `cancelled`)
 - **Timer interval**: `max(min(eventStreamTtl / 4, 30s), 1s)` — based on `EventStreamTtl`
@@ -104,14 +104,14 @@ Custom `IResponsesProvider` implementations manage their own retention and evict
 
 ## Persistence Timing Implementation
 
-Implements [S-035](../sdk-behaviour-spec.md#persistence-contract):
+Implements [S-035](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#persistence-contract):
 
 | Mode | When `CreateResponseAsync` is called | When `UpdateResponseAsync` is called |
 |------|--------------------------------------|--------------------------------------|
 | `background=true` | In `ProcessEventsAsync` after first `response.created` event | In `FinalizeExecutionAsync` (`finally` block — guaranteed) |
 | `background=false` | In `FinalizeExecutionAsync` (single create at terminal state) | N/A |
 
-The `FinalizeExecutionAsync` method runs in a `finally` block, ensuring persistence even when exceptions occur. Non-background cancelled/disconnected responses are ephemeral — `CreateResponseAsync` is never called ([S-036](../sdk-behaviour-spec.md#persistence-contract)).
+The `FinalizeExecutionAsync` method runs in a `finally` block, ensuring persistence even when exceptions occur. Non-background cancelled/disconnected responses are ephemeral — `CreateResponseAsync` is never called ([S-036](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#persistence-contract)).
 
 ---
 
@@ -129,7 +129,7 @@ Per-response cancellation management:
 
 ## Cross-References
 
-- [SDK Behavioural Specification — Persistence Contract](../sdk-behaviour-spec.md#persistence-contract) — Abstract persistence rules (S-034–S-038)
-- [API Behaviour Contract — Event Stream Replay Availability](../api-behaviour-contract.md#event-stream-replay-availability-rule-b35) — Observable eviction effects (B35)
-- [API Behaviour Contract — Response Persistence Timing](../api-behaviour-contract.md#handler-driven-persistence-rule-b36) — Observable persistence behaviour (B36)
-- [Orchestration](orchestration.md) — When provider methods are called in the pipeline
+- [SDK Behavioural Specification — Persistence Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#persistence-contract) — Abstract persistence rules (S-034–S-038)
+- [API Behaviour Contract — Event Stream Replay Availability](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#event-stream-replay-availability-rule-b35) — Observable eviction effects (B35)
+- [API Behaviour Contract — Response Persistence Timing](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#handler-driven-persistence-rule-b36) — Observable persistence behaviour (B36)
+- [Orchestration](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/orchestration.md) — When provider methods are called in the pipeline

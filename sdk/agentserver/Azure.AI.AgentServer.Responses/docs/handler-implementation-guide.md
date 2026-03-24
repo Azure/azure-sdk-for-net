@@ -271,13 +271,13 @@ You typically don't need to call these directly — the builders handle ID gener
 
 The server auto-assigns 0-based sequence numbers to every SSE event. Never set them manually — they are injected automatically by the SDK during event serialization.
 
-Clients use sequence numbers for stream resumption via the `starting_after` query parameter on SSE replay. See [Sequence Numbers (B9)](api-behaviour-contract.md#behavioural-rules-index) for the wire format.
+Clients use sequence numbers for stream resumption via the `starting_after` query parameter on SSE replay. See [Sequence Numbers (B9)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the wire format.
 
 ### Snapshot Semantics
 
 Each SSE event captures a point-in-time snapshot of the `Response`. It is safe to mutate response state between yields — each event reflects the state at emission time, not the current state.
 
-See [Snapshot Semantics (B23)](api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour and [Response Replacement Semantics (B37)](api-behaviour-contract.md#response-replacement-semantics-rule-b37) for how response state is tracked.
+See [Snapshot Semantics (B23)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour and [Response Replacement Semantics (B37)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#response-replacement-semantics-rule-b37) for how response state is tracked.
 
 ### Builder Pattern
 
@@ -583,13 +583,13 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 
 Let `OperationCanceledException` propagate — the server handles the winddown automatically. The 10-second grace period, output clearing, and terminal event emission are all automatic. You don't need to emit any terminal event on cancellation.
 
-See [Cancel Winddown (B11)](api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
+See [Cancel Winddown (B11)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
 
 ### Graceful Shutdown
 
 When the host shuts down (e.g., `SIGTERM`, `IHost.StopAsync()`), `context.IsShutdownRequested` is set to `true` and the handler's `CancellationToken` is cancelled.
 
-Use `context.IsShutdownRequested` to distinguish shutdown from explicit cancel or client disconnect and choose the appropriate terminal state for your scenario. See [Shutdown Signal (B24)](api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
+Use `context.IsShutdownRequested` to distinguish shutdown from explicit cancel or client disconnect and choose the appropriate terminal state for your scenario. See [Shutdown Signal (B24)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
 
 **Option A — Emit `response.incomplete`** (clients can resume with `previous_response_id`):
 
@@ -666,7 +666,7 @@ The SDK recognises specific exception types and maps them to structured error re
 
 **The `ResponseError` on the response object** (visible via `GET /responses/{id}` when `store=true`) contains only `code` and `message` — no `type` or `param`. This is a different (smaller) shape than the HTTP error envelope.
 
-> For the complete error-to-status mapping, see [SDK Behavioural Specification — Error Handling Pipeline](sdk-behaviour-spec.md#error-handling-pipeline) (S-027–S-030). For .NET exception class details, see [.NET Design — Error Handling](design/error-handling.md).
+> For the complete error-to-status mapping, see [SDK Behavioural Specification — Error Handling Pipeline](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#error-handling-pipeline) (S-027–S-030). For .NET exception class details, see [.NET Design — Error Handling](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/error-handling.md).
 
 ### Explicit Failure
 
@@ -701,7 +701,7 @@ Bad client input returns HTTP 400 before your handler runs. Bad handler output r
 
 **Debugging**: If you see unexpected 500 errors during development, check your application logs for validation errors. The logged details include the JSON path and expected type, pointing you to the builder call that produced invalid output.
 
-See [Validation (B29, B30)](api-behaviour-contract.md#validation) for the protocol-level behaviour.
+See [Validation (B29, B30)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#validation) for the protocol-level behaviour.
 
 ---
 
@@ -754,7 +754,7 @@ throw new BadRequestException("Unsupported model", "model");
 - Lets you choose the right terminal status (`completed`, `failed`, or `incomplete`)
 - Makes handler intent unambiguous to readers of your code
 
-See [Terminal Event Guarantee (B32)](api-behaviour-contract.md#behavioural-rules-index) for the API-level guarantee.
+See [Terminal Event Guarantee (B32)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the API-level guarantee.
 
 ---
 
@@ -785,7 +785,7 @@ yield return stream.EmitCompleted(usage);
 
 Handlers that proxy to an LLM and receive token counts should pass them through. Handlers that do not interact with an LLM typically omit usage.
 
-See [Token Usage (B33)](api-behaviour-contract.md#token-usage-reporting-rule-b33) for the protocol-level behaviour.
+See [Token Usage (B33)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#token-usage-reporting-rule-b33) for the protocol-level behaviour.
 
 ---
 
@@ -858,7 +858,7 @@ services.AddSingleton<IResponsesCancellationSignalProvider, MyProvider>();
 services.AddSingleton<IResponsesStreamProvider, MyProvider>();
 ```
 
-For multi-instance or durable scenarios, see [SDK Behavioural Specification — Persistence Contract](sdk-behaviour-spec.md#persistence-contract) for the abstract provider contract, and [.NET Design — Provider Contract](design/provider-contract.md) for implementation details.
+For multi-instance or durable scenarios, see [SDK Behavioural Specification — Persistence Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#persistence-contract) for the abstract provider contract, and [.NET Design — Provider Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md) for implementation details.
 
 ---
 
@@ -911,7 +911,7 @@ builder.Services.AddResponsesServer(options =>
 });
 ```
 
-See [Server Identity Header (B19)](api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
+See [Server Identity Header (B19)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
 
 ### Distributed Tracing
 
@@ -1037,9 +1037,9 @@ builder.Services.AddOpenTelemetry()
 
 If your subclass uses a different source name (via the `protected` constructor), listen for that name instead.
 
-See [SDK Behavioural Specification — Observability Requirements](sdk-behaviour-spec.md#observability-requirements) (S-043–S-045) for the full tracing contract.
+See [SDK Behavioural Specification — Observability Requirements](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#observability-requirements) (S-043–S-045) for the full tracing contract.
 
-See [API Behaviour Contract — Distributed Tracing](api-behaviour-contract.md#distributed-tracing) for the full list of activity tags and baggage items.
+See [API Behaviour Contract — Distributed Tracing](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#distributed-tracing) for the full list of activity tags and baggage items.
 
 ### TTL Eviction
 
@@ -1054,7 +1054,7 @@ builder.Services.Configure<InMemoryProviderOptions>(opts =>
 
 If you register a custom `IResponsesProvider`, you manage your own retention strategy. `InMemoryProviderOptions` only affects the built-in in-memory provider.
 
-See [Event Stream Replay Availability (B35)](api-behaviour-contract.md#event-stream-replay-availability-rule-b35) for the protocol-level behaviour. See [.NET Design — Provider Contract](design/provider-contract.md) for implementation details.
+See [Event Stream Replay Availability (B35)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#event-stream-replay-availability-rule-b35) for the protocol-level behaviour. See [.NET Design — Provider Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md) for implementation details.
 
 ### SSE Keep-Alive
 
@@ -1077,7 +1077,7 @@ export SSE_KEEPALIVE_INTERVAL=15
 
 The `X-Accel-Buffering: no` response header is automatically set on SSE streams to disable nginx buffering.
 
-See [SSE Keep-Alive (B28)](api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
+See [SSE Keep-Alive (B28)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
 
 ---
 
@@ -1232,7 +1232,7 @@ yield return stream.EmitCompleted();
 
 ### Omitting Output Items from Terminal Response (Raw Events)
 
-When emitting raw events (without `ResponseEventStream` builders), each `response.*` event **fully replaces** the SDK's tracked `Response` with the event's embedded `Response` ([Rule B37](api-behaviour-contract.md#behavioural-rules-index)). If the terminal `response.completed` has empty output, accumulated `output_item.added/done` items are lost. Additionally, the handler **must** set the correct `Status` on the `Response` before yielding a terminal event — the SDK validates but never auto-sets terminal status.
+When emitting raw events (without `ResponseEventStream` builders), each `response.*` event **fully replaces** the SDK's tracked `Response` with the event's embedded `Response` ([Rule B37](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index)). If the terminal `response.completed` has empty output, accumulated `output_item.added/done` items are lost. Additionally, the handler **must** set the correct `Status` on the `Response` before yielding a terminal event — the SDK validates but never auto-sets terminal status.
 
 ```csharp
 // ❌ Terminal response has empty output — items accumulated via output_item.added are lost

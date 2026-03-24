@@ -1,7 +1,7 @@
 # AGENTS.md — Azure.AI.AgentServer.Responses
 
 > This file contains **Responses-protocol-specific** rules.
-> For core principles, build commands, and governance, see the parent [AGENTS.md](../AGENTS.md).
+> For core principles, build commands, and governance, see the parent [AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/AGENTS.md).
 
 ---
 

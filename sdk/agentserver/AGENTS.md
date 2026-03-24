@@ -1,7 +1,7 @@
 # AGENTS.md — Azure.AI.AgentServer
 
 > For general AI agent guidelines, safety boundaries, and repo-wide workflows,
-> see the root [AGENTS.md](../../AGENTS.md).
+> see the root [AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/AGENTS.md).
 
 ---
 
@@ -97,7 +97,7 @@ Each protocol has its own `AGENTS.md` with protocol-specific contract compliance
 
 | Protocol | AGENTS.md | Status |
 |---|---|---|
-| **Responses** | [Azure.AI.AgentServer.Responses/AGENTS.md](Azure.AI.AgentServer.Responses/AGENTS.md) | Active |
+| **Responses** | [Azure.AI.AgentServer.Responses/AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/AGENTS.md) | Active |
 
 > When adding a new protocol, create an `AGENTS.md` in the protocol project directory following the same structure.
 
@@ -107,17 +107,17 @@ Do **not** duplicate repo-wide rules here. Instead, consult these canonical sour
 
 | Topic | Canonical Source |
 |---|---|
-| Contributing & prerequisites | [CONTRIBUTING.md](../../CONTRIBUTING.md) |
-| Code style (StyleCop) | [eng/stylecop.json](../../eng/stylecop.json) |
-| Code analysis rules | [eng/CodeAnalysis.ruleset](../../eng/CodeAnalysis.ruleset) |
-| Target frameworks (`RequiredTargetFrameworks`, etc.) | [eng/Directory.Build.Common.props](../../eng/Directory.Build.Common.props) |
-| SDK project template & conventions | [sdk/template/Azure.Template/](../../sdk/template/Azure.Template/) |
-| Central package management | [eng/centralpackagemanagement/README.md](../../eng/centralpackagemanagement/README.md) |
-| Pre-commit checks (`dotnet format`, API export, snippets) | [.github/skills/pre-commit-checks/SKILL.md](../../.github/skills/pre-commit-checks/SKILL.md) |
-| Test framework (recorded tests, mocking) | [sdk/core/Azure.Core.TestFramework/README.md](../../sdk/core/Azure.Core.TestFramework/README.md) |
-| Copilot / agent-specific instructions | [.github/copilot-instructions.md](../../.github/copilot-instructions.md) |
-| Versioning strategy | [doc/dev/Versioning.md](../../doc/dev/Versioning.md) |
-| API listing targets | [eng/ApiListing.targets](../../eng/ApiListing.targets) |
+| Contributing & prerequisites | [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) |
+| Code style (StyleCop) | [eng/stylecop.json](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/stylecop.json) |
+| Code analysis rules | [eng/CodeAnalysis.ruleset](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/CodeAnalysis.ruleset) |
+| Target frameworks (`RequiredTargetFrameworks`, etc.) | [eng/Directory.Build.Common.props](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/Directory.Build.Common.props) |
+| SDK project template & conventions | [sdk/template/Azure.Template/](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) |
+| Central package management | [eng/centralpackagemanagement/README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/centralpackagemanagement/README.md) |
+| Pre-commit checks (`dotnet format`, API export, snippets) | [.github/skills/pre-commit-checks/SKILL.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/pre-commit-checks/SKILL.md) |
+| Test framework (recorded tests, mocking) | [sdk/core/Azure.Core.TestFramework/README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md) |
+| Copilot / agent-specific instructions | [.github/copilot-instructions.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/copilot-instructions.md) |
+| Versioning strategy | [doc/dev/Versioning.md](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/Versioning.md) |
+| API listing targets | [eng/ApiListing.targets](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/ApiListing.targets) |
 
 ## 3. Build, Test & Finalize
 
@@ -140,7 +140,7 @@ dotnet format Azure.AI.AgentServer.sln
 ### Pre-commit checks
 
 Before committing changes, run the pre-commit validations for the `agentserver` service directory.
-See [pre-commit-checks SKILL.md](../../.github/skills/pre-commit-checks/SKILL.md) for the full procedure. Summary:
+See [pre-commit-checks SKILL.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/pre-commit-checks/SKILL.md) for the full procedure. Summary:
 
 ```powershell
 # Format

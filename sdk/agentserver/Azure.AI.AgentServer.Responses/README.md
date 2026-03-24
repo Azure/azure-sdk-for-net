@@ -81,7 +81,7 @@ Manages `sequenceNumber`, `outputIndex`, `contentIndex`, `itemId`, and the full 
 
 The SDK orchestrates the complete response lifecycle: `created` → `in_progress` → `completed` (or `failed` / `cancelled`). Cancellation, error handling, and terminal event guarantees are all managed automatically.
 
-For detailed handler implementation guidance, see [docs/handler-implementation-guide.md](docs/handler-implementation-guide.md).
+For detailed handler implementation guidance, see [docs/handler-implementation-guide.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md).
 
 ### Thread safety
 
@@ -108,8 +108,8 @@ The SDK emits OpenTelemetry traces via `Azure.AI.AgentServer.Responses` activity
 ## Next steps
 
 - [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples) — Getting started, function calling, conversation history, multi-output
-- [Handler implementation guide](docs/handler-implementation-guide.md) — Detailed reference for building handlers
-- [API behaviour contract](docs/api-behaviour-contract.md) — Protocol-level specification
+- [Handler implementation guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md) — Detailed reference for building handlers
+- [API behaviour contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md) — Protocol-level specification
 
 ## Contributing
 

@@ -1,8 +1,8 @@
 # SDK Behavioural Specification
 
-> **Language-agnostic specification** defining what any conforming SDK implementation MUST do to correctly bridge handler logic to the API behaviour defined in [api-behaviour-contract.md](api-behaviour-contract.md). This document, together with the [API Behaviour Contract](api-behaviour-contract.md) and [Handler Implementation Guide](handler-implementation-guide.md), forms the **authoritative trio** — sufficient to generate a conforming SDK in any language without reading the .NET source code.
+> **Language-agnostic specification** defining what any conforming SDK implementation MUST do to correctly bridge handler logic to the API behaviour defined in [api-behaviour-contract.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md). This document, together with the [API Behaviour Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md) and [Handler Implementation Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md), forms the **authoritative trio** — sufficient to generate a conforming SDK in any language without reading the .NET source code.
 
-**Language-specific implementation details are NOT part of this spec.** For the .NET implementation, see [.NET Design Documentation](design/README.md).
+**Language-specific implementation details are NOT part of this spec.** For the .NET implementation, see [.NET Design Documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/README.md).
 
 ---
 
@@ -46,7 +46,7 @@ This specification uses abstract terminology to remain language-agnostic. The fo
 
 - **S-001**: The SDK MUST process `POST /responses` through the following abstract pipeline: validate request → deserialize → invoke handler → process events → persist → respond. Each stage is a distinct responsibility; a conforming SDK MAY structure the code differently, but the logical ordering MUST be preserved.
 
-- **S-002**: The SDK MUST validate request payloads against the API schema before invoking the handler. Invalid payloads MUST be rejected with HTTP 400 and a structured error response (see [B29](api-behaviour-contract.md#request-payload-validation-rule-b29)). The handler MUST NOT be invoked for invalid requests.
+- **S-002**: The SDK MUST validate request payloads against the API schema before invoking the handler. Invalid payloads MUST be rejected with HTTP 400 and a structured error response (see [B29](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#request-payload-validation-rule-b29)). The handler MUST NOT be invoked for invalid requests.
 
 - **S-003**: The SDK MUST support three response modes, determined by the `stream` and `background` flags in the request:
 
@@ -78,15 +78,15 @@ This specification uses abstract terminology to remain language-agnostic. The fo
 
 The SDK validates and transforms handler-emitted events before writing them to the client. These rules ensure protocol conformance regardless of handler behaviour.
 
-- **S-007**: The SDK MUST validate that the first event yielded by the handler is `response.created`. If it is not, the SDK MUST reject the handler output with HTTP 500, cancel the handler's execution, and skip persistence. See [B8](api-behaviour-contract.md#sse-event-contract).
+- **S-007**: The SDK MUST validate that the first event yielded by the handler is `response.created`. If it is not, the SDK MUST reject the handler output with HTTP 500, cancel the handler's execution, and skip persistence. See [B8](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#sse-event-contract).
 
 - **S-008**: The SDK MUST validate that the `response.created` event contains a `Response.Id` matching the SDK-assigned response ID. Mismatches MUST be rejected with HTTP 500 and the handler cancelled (FR-006).
 
 - **S-009**: The SDK MUST validate that the `response.created` event's `Response.Status` is non-terminal (`queued` or `in_progress`). A terminal status on the created event MUST be rejected with HTTP 500 (FR-007).
 
-- **S-010**: The SDK MUST inject a 0-based, monotonically increasing `sequence_number` into every SSE event payload before writing it to the client. The first event (`response.created`) MUST have `sequence_number: 0`. See [B9](api-behaviour-contract.md#behavioural-rules-index).
+- **S-010**: The SDK MUST inject a 0-based, monotonically increasing `sequence_number` into every SSE event payload before writing it to the client. The first event (`response.created`) MUST have `sequence_number: 0`. See [B9](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
-- **S-011**: The SDK MUST create an immutable point-in-time snapshot of the `Response` for each SSE event. Events written to the stream MUST reflect the response state at emission time, not the current (possibly mutated) state. See [B23](api-behaviour-contract.md#behavioural-rules-index).
+- **S-011**: The SDK MUST create an immutable point-in-time snapshot of the `Response` for each SSE event. Events written to the stream MUST reflect the response state at emission time, not the current (possibly mutated) state. See [B23](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
 - **S-012**: The SDK MUST validate that output item counts match tracked `output_item.added` events (FR-008a). Direct manipulation of the output list (bypassing the event stream) MUST be detected and treated as a handler error — HTTP 500 if pre-creation, `response.failed` if post-creation.
 
@@ -96,13 +96,13 @@ The SDK validates and transforms handler-emitted events before writing them to t
 
 The SDK maintains a tracked `Response` object that evolves through the lifecycle. These rules govern how state is managed.
 
-- **S-013**: Every `response.*` event (`response.created`, `response.queued`, `response.in_progress`, `response.completed`, `response.failed`, `response.incomplete`) MUST fully replace the SDK's tracked `Response` object with the event's embedded `Response` (deep clone/snapshot). The handler's event response is the single source of truth. See [B37](api-behaviour-contract.md#behavioural-rules-index).
+- **S-013**: Every `response.*` event (`response.created`, `response.queued`, `response.in_progress`, `response.completed`, `response.failed`, `response.incomplete`) MUST fully replace the SDK's tracked `Response` object with the event's embedded `Response` (deep clone/snapshot). The handler's event response is the single source of truth. See [B37](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
 - **S-014**: Output items from `output_item.added` and `output_item.done` events MUST accumulate on the tracked response between `response.*` events. When the next `response.*` event arrives, the accumulated list is replaced by the event's output list. Handlers MUST include desired output items in their terminal `response.*` event if they want them in the final result.
 
-- **S-015**: The SDK MUST auto-stamp `response_id` on every output item to the current response ID. Handler-set values MUST take precedence. See [B20](api-behaviour-contract.md#behavioural-rules-index).
+- **S-015**: The SDK MUST auto-stamp `response_id` on every output item to the current response ID. Handler-set values MUST take precedence. See [B20](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
-- **S-016**: The SDK MUST propagate `agent_reference` from the original request to all output items. Handler-set values MUST take precedence. This is the sole SDK-managed property on the `Response` object. See [B21](api-behaviour-contract.md#behavioural-rules-index).
+- **S-016**: The SDK MUST propagate `agent_reference` from the original request to all output items. Handler-set values MUST take precedence. This is the sole SDK-managed property on the `Response` object. See [B21](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
 - **S-017**: The SDK MUST validate that terminal event types match the `Response.Status` field. Mismatches (e.g., `response.completed` event with status != `completed`) MUST be treated as a handler error — the SDK MUST emit `response.failed` instead.
 
@@ -114,7 +114,7 @@ The SDK guarantees exactly one terminal event per response lifecycle. The rules 
 
 - **S-018**: The SDK MUST guarantee exactly one terminal event (`response.completed`, `response.failed`, or `response.incomplete`) per response lifecycle. No response may end without a terminal event; no response may emit more than one.
 
-- **S-019** *(Cancellation path)*: When cancellation is triggered (explicit cancel via `POST /responses/{id}/cancel` per [B11](api-behaviour-contract.md#behavioural-rules-index), or client disconnect per [B17](api-behaviour-contract.md#behavioural-rules-index)), the SDK is the **sole authority** on the terminal event. The SDK MUST:
+- **S-019** *(Cancellation path)*: When cancellation is triggered (explicit cancel via `POST /responses/{id}/cancel` per [B11](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index), or client disconnect per [B17](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index)), the SDK is the **sole authority** on the terminal event. The SDK MUST:
   1. Signal the handler to stop (via the cancellation signal)
   2. Start a grace period timer (SHOULD be configurable, default 10 seconds — see S-042)
   3. Override any handler-emitted terminal event during the winddown (the handler cannot override the cancelled outcome)
@@ -122,7 +122,7 @@ The SDK guarantees exactly one terminal event per response lifecycle. The rules 
   5. Set status to `cancelled`
   6. Emit `response.failed` with `status: "cancelled"` as the terminal SSE event
 
-  If the handler has already completed before cancellation is triggered, the cancel request MUST be rejected (see [B12](api-behaviour-contract.md#behavioural-rules-index)).
+  If the handler has already completed before cancellation is triggered, the cancel request MUST be rejected (see [B12](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index)).
 
 - **S-020** *(Non-cancellation error path)*: Throwing an exception is a valid way for the handler to terminate. If the handler throws a non-cancellation error and has NOT already emitted a terminal event (status is still `in_progress`), the SDK MUST:
   1. Classify the exception against the SDK's known exception types (bad request, not found, validation — see S-028)
@@ -132,7 +132,7 @@ The SDK guarantees exactly one terminal event per response lifecycle. The rules 
 
   If the handler HAS already emitted a terminal event, the SDK MUST respect the handler's terminal status.
 
-- **S-021**: If the handler's asynchronous event stream completes **without** emitting a terminal event **and without** throwing an exception, and the response status is non-terminal, the SDK MUST treat this as a handler programming error — log a diagnostic message (handler identifier, request ID), set `status: "failed"`, and emit `response.failed`. A conforming handler MUST either emit a terminal event or throw an exception; silently completing the stream is never valid. See [B32](api-behaviour-contract.md#behavioural-rules-index).
+- **S-021**: If the handler's asynchronous event stream completes **without** emitting a terminal event **and without** throwing an exception, and the response status is non-terminal, the SDK MUST treat this as a handler programming error — log a diagnostic message (handler identifier, request ID), set `status: "failed"`, and emit `response.failed`. A conforming handler MUST either emit a terminal event or throw an exception; silently completing the stream is never valid. See [B32](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
 - **S-022**: The SDK MUST NOT emit `response.incomplete`. The `incomplete` status is handler-driven only — the handler must explicitly yield `response.incomplete`. The SDK's error-handling paths MUST never produce `incomplete`. This ensures `incomplete` always represents a deliberate handler decision (e.g., max output tokens reached), not an SDK-level failure.
 
@@ -146,16 +146,16 @@ The SDK classifies cancellation signals by source and applies different winddown
 
   | Category | Trigger | Source |
   |----------|---------|--------|
-  | **Explicit cancel** | `POST /responses/{id}/cancel` | API endpoint ([B11](api-behaviour-contract.md#behavioural-rules-index)) |
-  | **Client disconnect** | Connection terminated during non-background request | Transport layer ([B17](api-behaviour-contract.md#behavioural-rules-index)) |
-  | **Shutdown** | Host application shutting down | Runtime signal ([B24](api-behaviour-contract.md#behavioural-rules-index)) |
+  | **Explicit cancel** | `POST /responses/{id}/cancel` | API endpoint ([B11](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index)) |
+  | **Client disconnect** | Connection terminated during non-background request | Transport layer ([B17](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index)) |
+  | **Shutdown** | Host application shutting down | Runtime signal ([B24](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index)) |
   | **Unknown** | Cancellation exception not matching any known source | Handler or runtime |
 
 - **S-024**: Explicit cancel and client disconnect MUST follow the cancellation winddown path (S-019). Unknown cancellation exceptions MUST be treated as handler errors (S-020 — non-cancellation error path).
 
 - **S-025**: Shutdown cancellation SHOULD allow the handler to choose its own terminal state if it checks the shutdown signal. If the handler does not emit a terminal event before the cancellation signal fires, the SDK MUST emit `response.failed`. The SDK itself MUST NOT emit `response.incomplete` for shutdown (see S-022).
 
-- **S-026**: Background responses (`background=true`) MUST NOT be cancelled by client disconnect ([B18](api-behaviour-contract.md#behavioural-rules-index)). Only explicit cancel via the cancel endpoint is honoured for background responses. Client disconnect during a background streaming connection simply closes the SSE stream without affecting the handler's execution.
+- **S-026**: Background responses (`background=true`) MUST NOT be cancelled by client disconnect ([B18](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index)). Only explicit cancel via the cancel endpoint is honoured for background responses. Client disconnect during a background streaming connection simply closes the SSE stream without affecting the handler's execution.
 
 ---
 
@@ -174,11 +174,11 @@ The SDK maps handler errors and internal failures to standardised HTTP error res
   | Handler error (unhandled exception) | 500 | `server_error` | `null` |
   | Client disconnect | 499 | *(no body)* | *(no body)* |
 
-  See [Error Shapes](api-behaviour-contract.md#error-shapes) for the complete error catalogue.
+  See [Error Shapes](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#error-shapes) for the complete error catalogue.
 
 - **S-029**: The SDK MUST populate `ResponseError` (code + message) on the `Response` object when `status: "failed"`. The `ResponseError` shape has only `code` and `message` — it differs from the HTTP error envelope (which also has `type` and `param`).
 
-- **S-030**: Validation error details (field paths, specific violations) from response validation (S-032) MUST be logged but MUST NOT be exposed in the API response. Request validation details (S-031) ARE exposed in the `details[]` array per [B29](api-behaviour-contract.md#behavioural-rules-index).
+- **S-030**: Validation error details (field paths, specific violations) from response validation (S-032) MUST be logged but MUST NOT be exposed in the API response. Request validation details (S-031) ARE exposed in the `details[]` array per [B29](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
 ---
 
@@ -186,9 +186,9 @@ The SDK maps handler errors and internal failures to standardised HTTP error res
 
 The SDK validates both incoming requests and handler-produced output.
 
-- **S-031**: The SDK MUST validate incoming request payloads against the API schema before invoking the handler. Failures MUST return HTTP 400 with a `details[]` array of individual validation errors. Each detail MUST include `type`, `code`, `param` (field path), and `message`. See [B29](api-behaviour-contract.md#behavioural-rules-index).
+- **S-031**: The SDK MUST validate incoming request payloads against the API schema before invoking the handler. Failures MUST return HTTP 400 with a `details[]` array of individual validation errors. Each detail MUST include `type`, `code`, `param` (field path), and `message`. See [B29](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
-- **S-032**: The SDK MUST validate handler-produced output at construction time. Invalid output (e.g., zero content parts in a text message) MUST be treated as a handler error: HTTP 500 (non-streaming) or `response.failed` (streaming). See [B30](api-behaviour-contract.md#behavioural-rules-index).
+- **S-032**: The SDK MUST validate handler-produced output at construction time. Invalid output (e.g., zero content parts in a text message) MUST be treated as a handler error: HTTP 500 (non-streaming) or `response.failed` (streaming). See [B30](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
 - **S-033**: Validation error details for response validation MUST be logged at error level but MUST NOT be exposed to API callers. This separates observability (logs) from the API surface (error responses). Request validation details ARE exposed per S-031.
 
@@ -215,13 +215,13 @@ The SDK delegates state persistence to a pluggable provider interface.
   | `background=true` | At `response.created` event | At terminal state (SDK-guaranteed, MUST run even on error) |
   | `background=false` | At terminal state only (single create) | N/A |
 
-  See [B36](api-behaviour-contract.md#behavioural-rules-index).
+  See [B36](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
 - **S-036**: Non-background cancelled/disconnected responses MUST be ephemeral (not persisted). Only background responses that have already been created are updated on cancellation.
 
 - **S-037**: The SDK MUST provide a default in-memory provider implementation. This enables zero-configuration usage for development and testing.
 
-- **S-038**: The default provider MUST support TTL-based eviction of event stream replay buffers (default: 10 minutes). Response data (envelopes, items, history, conversation membership) is retained indefinitely. After event stream eviction, SSE replay (`?stream=true`) fails but JSON GET still works. See [B35](api-behaviour-contract.md#behavioural-rules-index).
+- **S-038**: The default provider MUST support TTL-based eviction of event stream replay buffers (default: 10 minutes). Response data (envelopes, items, history, conversation membership) is retained indefinitely. After event stream eviction, SSE replay (`?stream=true`) fails but JSON GET still works. See [B35](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
 ---
 
@@ -229,15 +229,15 @@ The SDK delegates state persistence to a pluggable provider interface.
 
 The SDK MUST support the following configuration options.
 
-- **S-039**: The SDK MUST support model resolution with fallback: `request.model → default_model → ""`. The resolved model MUST be propagated to the `Response.Model` field. See [B22](api-behaviour-contract.md#behavioural-rules-index).
+- **S-039**: The SDK MUST support model resolution with fallback: `request.model → default_model → ""`. The resolved model MUST be propagated to the `Response.Model` field. See [B22](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
-- **S-040**: The SDK MUST support configurable SSE keep-alive interval (default: disabled). When enabled, the SDK MUST send periodic keep-alive comments (`: keep-alive\n\n`) during SSE streaming to prevent proxy/load-balancer timeouts. See [B28](api-behaviour-contract.md#behavioural-rules-index).
+- **S-040**: The SDK MUST support configurable SSE keep-alive interval (default: disabled). When enabled, the SDK MUST send periodic keep-alive comments (`: keep-alive\n\n`) during SSE streaming to prevent proxy/load-balancer timeouts. See [B28](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
-- **S-041**: The SDK MUST include an identity header on all responses: `x-platform-server: {sdk_name}/{version} ({language}/{runtime})`. The header value MUST support composable append via `; ` separator. See [B19](api-behaviour-contract.md#behavioural-rules-index).
+- **S-041**: The SDK MUST include an identity header on all responses: `x-platform-server: {sdk_name}/{version} ({language}/{runtime})`. The header value MUST support composable append via `; ` separator. See [B19](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
 - **S-042**: The SDK SHOULD support configurable cancel winddown grace period (default: 10 seconds).
 
-- **S-046**: The SDK MUST expose a configurable `AdditionalServerIdentity` option (default: `null`). When set, the SDK MUST append the value to the `x-platform-server` header using a `; ` separator (e.g., `azure-ai-agentserver-responses/0.1.0-preview (dotnet/8.0); my-app/1.0`). See S-041, [B19](api-behaviour-contract.md#behavioural-rules-index).
+- **S-046**: The SDK MUST expose a configurable `AdditionalServerIdentity` option (default: `null`). When set, the SDK MUST append the value to the `x-platform-server` header using a `; ` separator (e.g., `azure-ai-agentserver-responses/0.1.0-preview (dotnet/8.0); my-app/1.0`). See S-041, [B19](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
 ---
 
@@ -256,7 +256,7 @@ The SDK MUST instrument request processing for distributed tracing.
   | `response.model` | The resolved model name |
   | `response.status` | The terminal status (set in finalization path, always reflects final state) |
 
-  See [B34](api-behaviour-contract.md#behavioural-rules-index).
+  See [B34](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
 - **S-045**: The SDK MUST NOT create spans for GET or cancel endpoints. Only `POST /responses` (create) is instrumented.
 

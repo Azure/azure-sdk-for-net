@@ -1,12 +1,12 @@
 # Orchestration — .NET Implementation
 
-> .NET-specific implementation details for request orchestration. For language-agnostic SDK behavioural rules, see [SDK Behavioural Specification](../sdk-behaviour-spec.md).
+> .NET-specific implementation details for request orchestration. For language-agnostic SDK behavioural rules, see [SDK Behavioural Specification](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md).
 
 ---
 
 ## Request Pipeline Overview
 
-The `ResponseOrchestrator` class is the central coordination point for processing `POST /responses` requests. It implements the abstract pipeline defined in [S-001](../sdk-behaviour-spec.md#request-processing-pipeline) using these .NET components:
+The `ResponseOrchestrator` class is the central coordination point for processing `POST /responses` requests. It implements the abstract pipeline defined in [S-001](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#request-processing-pipeline) using these .NET components:
 
 ```
 HTTP Request → ResponseEndpointHandler → ResponseOrchestrator
@@ -18,7 +18,7 @@ HTTP Request → ResponseEndpointHandler → ResponseOrchestrator
   → SseWriter / JSON serialization
 ```
 
-The orchestrator has three entry points corresponding to the three response modes ([S-003](../sdk-behaviour-spec.md#request-processing-pipeline)):
+The orchestrator has three entry points corresponding to the three response modes ([S-003](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#request-processing-pipeline)):
 
 | Mode | Entry Method | Return Type |
 |------|-------------|-------------|
@@ -45,7 +45,7 @@ The loop is shared across all three modes — the difference is in how the yield
 
 ## Handler Validation Rules
 
-The orchestrator enforces the following rules during event processing, as defined in the [SDK Behavioural Specification](../sdk-behaviour-spec.md#event-processing-rules):
+The orchestrator enforces the following rules during event processing, as defined in the [SDK Behavioural Specification](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#event-processing-rules):
 
 | Rule | SDK Rule | Check | .NET Enforcement |
 |------|----------|-------|------------------|
@@ -61,7 +61,7 @@ All validation failures before `response.created` result in HTTP 500. Failures a
 
 ## Auto-Stamping Implementation
 
-The `ResponseMutations` class implements [S-015](../sdk-behaviour-spec.md#response-state-management) and [S-016](../sdk-behaviour-spec.md#response-state-management):
+The `ResponseMutations` class implements [S-015](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#response-state-management) and [S-016](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#response-state-management):
 
 - **`response_id`**: Set on every `OutputItem` to `ResponseExecution.ResponseId`. Handler-set values take precedence (checked via null/empty guard).
 - **`agent_reference`**: Propagated from `CreateResponse.AgentReference` on the original request. Handler-set values take precedence.
@@ -72,7 +72,7 @@ Both are applied in the mutation phase of each event iteration, before snapshot 
 
 ## Response Replacement Mechanism
 
-`ResponseMutations` implements [S-013](../sdk-behaviour-spec.md#response-state-management) and [S-014](../sdk-behaviour-spec.md#response-state-management):
+`ResponseMutations` implements [S-013](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#response-state-management) and [S-014](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#response-state-management):
 
 - On any `response.*` event: `ResponseExecution.Response` is fully replaced with a deep clone of the event's embedded `Response`
 - Between `response.*` events: `output_item.added`/`output_item.done` events accumulate on `ResponseExecution.Response.Output`
@@ -82,7 +82,7 @@ Both are applied in the mutation phase of each event iteration, before snapshot 
 
 ## Snapshot Serialization
 
-Implements [S-011](../sdk-behaviour-spec.md#event-processing-rules) using `ModelReaderWriter`:
+Implements [S-011](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#event-processing-rules) using `ModelReaderWriter`:
 
 1. Serialize the `ResponseStreamEvent` to `BinaryData` via `ModelReaderWriter.Write()`
 2. Deserialize back to a new `ResponseStreamEvent` via `ModelReaderWriter.Read()`
@@ -94,7 +94,7 @@ Three snapshot points per event: pre-mutation original, post-mutation tracked re
 
 ## Sequence Number Injection
 
-Implements [S-010](../sdk-behaviour-spec.md#event-processing-rules):
+Implements [S-010](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#event-processing-rules):
 
 - `ResponseExecution` maintains a `SequenceNumber` counter (0-based `int`)
 - Each event processed by `ProcessEventsAsync` receives the current counter value
@@ -105,7 +105,7 @@ Implements [S-010](../sdk-behaviour-spec.md#event-processing-rules):
 
 ## Terminal Event Authority
 
-Implements [S-018](../sdk-behaviour-spec.md#terminal-event-authority) through [S-022](../sdk-behaviour-spec.md#terminal-event-authority):
+Implements [S-018](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#terminal-event-authority) through [S-022](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#terminal-event-authority):
 
 - **Cancellation path** (`CancelRequested` or `ClientDisconnected`): `EmitTerminalCancellationAsync()` clears output, sets `status: "cancelled"`, emits `response.failed`
 - **Shutdown path** (`ShutdownRequested`): `EmitTerminalFailureAsync()` — handler may have chosen its own terminal state
@@ -118,7 +118,7 @@ The classification uses `ResponseExecution` flags (`CancelRequested`, `ClientDis
 
 ## Missing Terminal Event Detection
 
-Implements [S-021](../sdk-behaviour-spec.md#terminal-event-authority):
+Implements [S-021](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/sdk-behaviour-spec.md#terminal-event-authority):
 
 - After `ProcessEventsAsync` completes (handler's `IAsyncEnumerable` is exhausted), `FinalizeExecutionAsync` checks if `ResponseExecution.Response.Status` is non-terminal
 - If non-terminal: logs error with handler type name and request ID, calls `EmitTerminalFailureAsync()`
@@ -128,6 +128,6 @@ Implements [S-021](../sdk-behaviour-spec.md#terminal-event-authority):
 
 ## Cross-References
 
-- [API Behaviour Contract](../api-behaviour-contract.md) — Observable outcomes of each mechanism
-- [Error Handling](error-handling.md) — Exception paths and error classification
-- [Provider Contract](provider-contract.md) — When provider methods are called
+- [API Behaviour Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md) — Observable outcomes of each mechanism
+- [Error Handling](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/error-handling.md) — Exception paths and error classification
+- [Provider Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md) — When provider methods are called
