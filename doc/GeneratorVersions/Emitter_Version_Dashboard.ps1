@@ -148,8 +148,12 @@ function Get-CommitForVersion([string]$RepoRoot, [string]$RelativePath, [string]
 function Get-CommitForVersionGitHub([string]$Owner, [string]$Repo, [string]$Path, [string]$Until) {
     if (-not $Until) { return @{ Hash = $null; Short = "unknown" } }
     try {
-        $hash = gh api "repos/$Owner/$Repo/commits?path=$Path&until=$Until&per_page=1" --jq ".[0].sha" 2>$null
-        $shortHash = if ($hash) { $hash.Substring(0, 7) } else { "unknown" }
+        $encodedPath = [System.Uri]::EscapeDataString($Path)
+        $hash = gh api "repos/$Owner/$Repo/commits?path=$encodedPath&until=$Until&per_page=1" --jq ".[0].sha" 2>$null
+        if (-not $hash -or $hash -eq "null") {
+            return @{ Hash = $null; Short = "unknown" }
+        }
+        $shortHash = $hash.Substring(0, 7)
         return @{ Hash = $hash; Short = $shortHash }
     } catch {
         return @{ Hash = $null; Short = "unknown" }
