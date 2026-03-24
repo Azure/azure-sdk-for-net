@@ -10,14 +10,22 @@ steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
     # 1. Check if CODEOWNERS changed; skip everything if it hasn't
     - pwsh: |
-        $diffOutput = git diff --name-only HEAD~1 HEAD -- ".github/CODEOWNERS" 2>&1
-        if ($LASTEXITCODE) {
-          Write-Host "Unable to compute diff (exit code $LASTEXITCODE). Skipping CODEOWNERS section check."
-          Write-Host "##vso[task.setvariable variable=CodeownersChanged]false"
-          exit 0
+        $scriptPath = [System.IO.Path]::Combine("${{ parameters.SourceRootPath }}", "eng", "common", "scripts", "get-changedfiles.ps1")
+        try {
+          $changedFiles = & $scriptPath `
+            -DiffPath ".github/CODEOWNERS" `
+            -DiffFilterType ''
+
+          if ($LASTEXITCODE -gt 1) {
+            Write-Host "git diff returned exit code $LASTEXITCODE, which indicates an error. Output: $changedFiles"
+            exit 1
+          }
+        } catch {
+          Write-Host "Error running get-changedfiles.ps1: $_"
+          exit 1
         }
 
-        if (!$diffOutput) {
+        if (!$changedFiles) {
           Write-Host "CODEOWNERS file has not changed."
           Write-Host "##vso[task.setvariable variable=CodeownersChanged]false"
         } else {
