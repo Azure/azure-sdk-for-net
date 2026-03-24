@@ -65,7 +65,14 @@ if (-not (Test-Path $AzsdkCliPath)) {
 }
 
 # ---------------------------------------------------------------------------
-# 2. Export and compare each section
+# 2. Ensure temp directory exists
+# ---------------------------------------------------------------------------
+if (-not (Test-Path $TempDirectory)) {
+  New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
+}
+
+# ---------------------------------------------------------------------------
+# 3. Export and compare each section
 # ---------------------------------------------------------------------------
 $failed = $false
 
@@ -105,10 +112,11 @@ foreach ($section in $Sections) {
   } else {
     Write-Host "Section '$section' is unchanged."
   }
-}
+  $sectionList = ($Sections | ForEach-Object { "'$_'" }) -join ", "
+  Write-Host "##vso[task.LogIssue type=error;]One or more protected CODEOWNERS sections have been modified. Please revert changes to the $sectionList sections."
 
 # ---------------------------------------------------------------------------
-# 3. Exit
+# 4. Exit
 # ---------------------------------------------------------------------------
 if ($failed) {
   Write-Host ""
