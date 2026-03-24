@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning;
@@ -14,66 +13,46 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Communication
 {
-    /// <summary> The object describing the smtp username resource. </summary>
-    public partial class CommunicationSmtpUsername : ProvisionableResource
+    /// <summary> A class representing an EmailService resource. </summary>
+    public partial class EmailServiceResource : ProvisionableResource
     {
-        private BicepValue<string> _username;
-        private BicepValue<string> _entraApplicationId;
-        private BicepValue<Guid> _tenantId;
+        private BicepValue<EmailServicesProvisioningState> _provisioningState;
+        private BicepValue<string> _dataLocation;
         private BicepValue<string> _name;
+        private BicepDictionary<string> _tags;
+        private BicepValue<AzureLocation> _location;
         private BicepValue<ResourceIdentifier> _id;
         private SystemData _systemData;
-        private ResourceReference<CommunicationServiceResource> _parent;
 
-        /// <summary> Creates a new CommunicationSmtpUsername. </summary>
+        /// <summary> Creates a new EmailServiceResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public CommunicationSmtpUsername(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Communication/communicationServices/smtpUsernames", resourceVersion ?? "2026-03-18")
+        public EmailServiceResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Communication/emailServices", resourceVersion ?? "2026-03-18")
         {
         }
 
-        /// <summary> Gets or sets the Username. </summary>
-        public BicepValue<string> Username
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<EmailServicesProvisioningState> ProvisioningState
         {
             get
             {
                 Initialize();
-                return _username;
-            }
-            set
-            {
-                Initialize();
-                _username.Assign(value);
+                return _provisioningState;
             }
         }
 
-        /// <summary> Gets or sets the EntraApplicationId. </summary>
-        public BicepValue<string> EntraApplicationId
+        /// <summary> Gets or sets the DataLocation. </summary>
+        public BicepValue<string> DataLocation
         {
             get
             {
                 Initialize();
-                return _entraApplicationId;
+                return _dataLocation;
             }
             set
             {
                 Initialize();
-                _entraApplicationId.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the TenantId. </summary>
-        public BicepValue<Guid> TenantId
-        {
-            get
-            {
-                Initialize();
-                return _tenantId;
-            }
-            set
-            {
-                Initialize();
-                _tenantId.Assign(value);
+                _dataLocation.Assign(value);
             }
         }
 
@@ -89,6 +68,36 @@ namespace Azure.Provisioning.Communication
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Tags. </summary>
+        public BicepDictionary<string> Tags
+        {
+            get
+            {
+                Initialize();
+                return _tags;
+            }
+            set
+            {
+                Initialize();
+                _tags.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Location. </summary>
+        public BicepValue<AzureLocation> Location
+        {
+            get
+            {
+                Initialize();
+                return _location;
+            }
+            set
+            {
+                Initialize();
+                _location.Assign(value);
             }
         }
 
@@ -112,52 +121,37 @@ namespace Azure.Provisioning.Communication
             }
         }
 
-        /// <summary> Gets or sets the Parent. </summary>
-        public CommunicationServiceResource Parent
-        {
-            get
-            {
-                Initialize();
-                return _parent.Value;
-            }
-            set
-            {
-                Initialize();
-                _parent.Value = value;
-            }
-        }
-
-        /// <summary> Define all the provisionable properties for CommunicationSmtpUsername. </summary>
+        /// <summary> Define all the provisionable properties for EmailServiceResource. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _username = DefineProperty<string>(nameof(Username), new string[] { "properties", "username" }, isRequired: true);
-            _entraApplicationId = DefineProperty<string>(nameof(EntraApplicationId), new string[] { "properties", "entraApplicationId" }, isRequired: true);
-            _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "properties", "tenantId" }, isRequired: true);
+            _provisioningState = DefineProperty<EmailServicesProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
+            _dataLocation = DefineProperty<string>(nameof(DataLocation), new string[] { "properties", "dataLocation" }, isRequired: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _parent = DefineResource<CommunicationServiceResource>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing CommunicationSmtpUsername. </summary>
+        /// <summary> Creates a reference to an existing EmailServiceResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static CommunicationSmtpUsername FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static EmailServiceResource FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            CommunicationSmtpUsername result = new CommunicationSmtpUsername(bicepIdentifier, resourceVersion);
+            EmailServiceResource result = new EmailServiceResource(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for CommunicationSmtpUsername that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for EmailServiceResource that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 253, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 63, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 
         /// <summary></summary>
         public static partial class ResourceVersions

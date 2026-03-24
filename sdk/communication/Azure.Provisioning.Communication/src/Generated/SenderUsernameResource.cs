@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning;
@@ -14,22 +13,33 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Communication
 {
-    /// <summary> The object describing the smtp username resource. </summary>
-    public partial class CommunicationSmtpUsername : ProvisionableResource
+    /// <summary> A class representing a SenderUsername resource. </summary>
+    public partial class SenderUsernameResource : ProvisionableResource
     {
+        private BicepValue<string> _dataLocation;
         private BicepValue<string> _username;
-        private BicepValue<string> _entraApplicationId;
-        private BicepValue<Guid> _tenantId;
+        private BicepValue<string> _displayName;
+        private BicepValue<CommunicationServiceProvisioningState> _provisioningState;
         private BicepValue<string> _name;
         private BicepValue<ResourceIdentifier> _id;
         private SystemData _systemData;
-        private ResourceReference<CommunicationServiceResource> _parent;
+        private ResourceReference<CommunicationDomainResource> _parent;
 
-        /// <summary> Creates a new CommunicationSmtpUsername. </summary>
+        /// <summary> Creates a new SenderUsernameResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public CommunicationSmtpUsername(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Communication/communicationServices/smtpUsernames", resourceVersion ?? "2026-03-18")
+        public SenderUsernameResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion ?? "2026-03-18")
         {
+        }
+
+        /// <summary> Gets the DataLocation. </summary>
+        public BicepValue<string> DataLocation
+        {
+            get
+            {
+                Initialize();
+                return _dataLocation;
+            }
         }
 
         /// <summary> Gets or sets the Username. </summary>
@@ -47,33 +57,28 @@ namespace Azure.Provisioning.Communication
             }
         }
 
-        /// <summary> Gets or sets the EntraApplicationId. </summary>
-        public BicepValue<string> EntraApplicationId
+        /// <summary> Gets or sets the DisplayName. </summary>
+        public BicepValue<string> DisplayName
         {
             get
             {
                 Initialize();
-                return _entraApplicationId;
+                return _displayName;
             }
             set
             {
                 Initialize();
-                _entraApplicationId.Assign(value);
+                _displayName.Assign(value);
             }
         }
 
-        /// <summary> Gets or sets the TenantId. </summary>
-        public BicepValue<Guid> TenantId
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<CommunicationServiceProvisioningState> ProvisioningState
         {
             get
             {
                 Initialize();
-                return _tenantId;
-            }
-            set
-            {
-                Initialize();
-                _tenantId.Assign(value);
+                return _provisioningState;
             }
         }
 
@@ -113,7 +118,7 @@ namespace Azure.Provisioning.Communication
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public CommunicationServiceResource Parent
+        public CommunicationDomainResource Parent
         {
             get
             {
@@ -127,37 +132,38 @@ namespace Azure.Provisioning.Communication
             }
         }
 
-        /// <summary> Define all the provisionable properties for CommunicationSmtpUsername. </summary>
+        /// <summary> Define all the provisionable properties for SenderUsernameResource. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _dataLocation = DefineProperty<string>(nameof(DataLocation), new string[] { "properties", "dataLocation" }, isOutput: true);
             _username = DefineProperty<string>(nameof(Username), new string[] { "properties", "username" }, isRequired: true);
-            _entraApplicationId = DefineProperty<string>(nameof(EntraApplicationId), new string[] { "properties", "entraApplicationId" }, isRequired: true);
-            _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "properties", "tenantId" }, isRequired: true);
+            _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "properties", "displayName" });
+            _provisioningState = DefineProperty<CommunicationServiceProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _parent = DefineResource<CommunicationServiceResource>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CommunicationDomainResource>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing CommunicationSmtpUsername. </summary>
+        /// <summary> Creates a reference to an existing SenderUsernameResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static CommunicationSmtpUsername FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static SenderUsernameResource FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            CommunicationSmtpUsername result = new CommunicationSmtpUsername(bicepIdentifier, resourceVersion);
+            SenderUsernameResource result = new SenderUsernameResource(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for CommunicationSmtpUsername that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for SenderUsernameResource that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 253, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 253, ResourceNameCharacters.LowercaseLetters);
 
         /// <summary></summary>
         public static partial class ResourceVersions
