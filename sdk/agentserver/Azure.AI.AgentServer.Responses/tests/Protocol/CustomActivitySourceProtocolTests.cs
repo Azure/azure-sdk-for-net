@@ -185,7 +185,8 @@ public sealed class CustomActivitySourceProtocolTests
             CreateResponse request, string responseId, IHeaderDictionary headers)
         {
             var activity = base.StartCreateResponseActivity(request, responseId, headers);
-            if (activity is null) return null;
+            if (activity is null)
+                return null;
 
             activity.SetTag(ResponsesTracingConstants.Tags.ProviderName, "my.custom.provider");
             activity.SetTag(ResponsesTracingConstants.Tags.ServiceName, "my.custom.provider");
@@ -240,7 +241,8 @@ public sealed class CustomActivitySourceProtocolTests
             CreateResponse request, string responseId, IHeaderDictionary headers)
         {
             var activity = Source.StartActivity($"HostedAgents-{responseId}");
-            if (activity is null) return null;
+            if (activity is null)
+                return null;
             activity.SetTag(ResponsesTracingConstants.Tags.ResponseId, responseId);
             return activity;
         }

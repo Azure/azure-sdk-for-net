@@ -35,7 +35,7 @@ public class ResponseEventStream
             Metadata = request.Metadata!,
             AgentReference = request.AgentReference,
             Background = request.Background,
-            Conversation = conversationId != null ? new ConversationReference() { Id = conversationId } : null,
+            Conversation = conversationId != null ? new ConversationReference(conversationId) : null,
             PreviousResponseId = request.PreviousResponseId,
         };
     }

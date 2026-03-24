@@ -216,7 +216,9 @@ public class CrossApiE2eTests : ProtocolTestBase
         cts.Cancel();
         await handlerCancelled.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
-        try { await postTask; } catch (TaskCanceledException) { }
+        try
+        { await postTask; }
+        catch (TaskCanceledException) { }
 
         // Non-bg cancelled → ephemeral (not persisted) → GET 404
         // Poll until cleanup propagates
@@ -268,7 +270,9 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         // Release and cleanup
         handlerGate.TrySetResult();
-        try { await postTask; } catch (TaskCanceledException) { }
+        try
+        { await postTask; }
+        catch (TaskCanceledException) { }
     }
 
     // E9: Create (SSE) → GET ?stream=true → 400 (B2: non-bg, no replay)
@@ -321,7 +325,9 @@ public class CrossApiE2eTests : ProtocolTestBase
         XAssert.Contains("synchronous", doc.RootElement.GetProperty("error").GetProperty("message").GetString());
 
         handlerGate.TrySetResult();
-        try { await postTask; } catch (TaskCanceledException) { }
+        try
+        { await postTask; }
+        catch (TaskCanceledException) { }
     }
 
     // E12: Create (SSE) → Disconnect → GET → status: cancelled (B17, B5)
@@ -346,7 +352,9 @@ public class CrossApiE2eTests : ProtocolTestBase
         cts.Cancel();
         await handlerCancelled.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
-        try { await postTask; } catch (TaskCanceledException) { }
+        try
+        { await postTask; }
+        catch (TaskCanceledException) { }
 
         // Non-bg cancelled → ephemeral (not persisted) → GET 404
         // Poll until cleanup propagates

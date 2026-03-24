@@ -115,7 +115,8 @@ internal sealed class SeekableReplaySubject : IDisposable
     /// <inheritdoc/>
     public void Dispose()
     {
-        if (_disposed) return;
+        if (_disposed)
+            return;
         _disposed = true;
         _writeLock.Dispose();
         lock (_subscribersLock)

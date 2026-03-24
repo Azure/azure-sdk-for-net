@@ -39,7 +39,7 @@ internal sealed class SseWriter : IDisposable
     /// <param name="cancellationToken">Cancellation token.</param>
     public async Task WriteEventAsync(ResponseStreamEvent evt, long sequenceNumber, CancellationToken cancellationToken)
     {
-        var eventType = evt.Type.ToString();
+        var eventType = evt.EventType.ToString();
         var json = JsonSerializer.Serialize(evt, evt.GetType(), _jsonOptions);
 
         // Inject the SDK-assigned sequence number into the serialized JSON

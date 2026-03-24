@@ -1,4 +1,4 @@
-sdk/agentserver/Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/client.tspimport "./main.tsp";
+import "./main.tsp";
 
 using Azure.ClientGenerator.Core;
 using Azure.Core.Experimental;

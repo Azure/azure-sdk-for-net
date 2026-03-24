@@ -72,7 +72,9 @@ public class GetNonBgInFlightProtocolTests : ProtocolTestBase
 
         // Cleanup
         handlerGate.TrySetResult();
-        try { await postTask; } catch (TaskCanceledException) { }
+        try
+        { await postTask; }
+        catch (TaskCanceledException) { }
     }
 
     // Validates: B16 contrast — background in-flight GET → 200 (not 404)

@@ -250,7 +250,8 @@ public class ProviderDiIntegrationTests : IDisposable
             Calls.Add("CancelResponseAsync");
             if (_cancellationTokenSources.TryGetValue(responseId, out var cts))
             {
-                try { cts.Cancel(); }
+                try
+                { cts.Cancel(); }
                 catch (ObjectDisposedException) { }
             }
             return Task.CompletedTask;

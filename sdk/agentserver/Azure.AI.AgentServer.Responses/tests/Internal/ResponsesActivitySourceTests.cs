@@ -478,7 +478,8 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             CreateResponse request, string responseId, IHeaderDictionary headers)
         {
             var activity = base.StartCreateResponseActivity(request, responseId, headers);
-            if (activity is null) return null;
+            if (activity is null)
+                return null;
 
             // Replace service identity
             activity.SetTag(ResponsesTracingConstants.Tags.ProviderName, "my-service");
@@ -507,7 +508,8 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             CreateResponse request, string responseId, IHeaderDictionary headers)
         {
             var activity = base.StartCreateResponseActivity(request, responseId, headers);
-            if (activity is null) return null;
+            if (activity is null)
+                return null;
 
             if (headers.TryGetValue("X-Tenant-Id", out var tenantId))
                 activity.SetTag("tenant.id", tenantId.ToString());

@@ -300,7 +300,8 @@ public class ServiceRegistrationTests
             Calls.Add("CancelResponseAsync");
             if (_ctsSources.TryGetValue(responseId, out var cts))
             {
-                try { cts.Cancel(); }
+                try
+                { cts.Cancel(); }
                 catch (ObjectDisposedException) { }
             }
             return Task.CompletedTask;
@@ -346,7 +347,8 @@ public class ServiceRegistrationTests
 
         public void Dispose()
         {
-            foreach (var s in _subjects.Values) s.Dispose();
+            foreach (var s in _subjects.Values)
+                s.Dispose();
         }
 
         private sealed class UnwrappingObserver(IAsyncObserver<ResponseStreamEvent> inner)

@@ -2,12 +2,18 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredRunnableTargetFrameworks)</TargetFrameworks>
+    <!-- Server-side ASP.NET Core library — no netstandard2.0 support needed. -->
+    <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Responses</RootNamespace>
     <Version>1.0.0-beta.1</Version>
     <Description>An SDK for building ASP.NET Core servers that implement the Azure AI Responses API.</Description>
     <PackageTags>Azure.AI.AgentServer.Responses</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
+    <!-- AZC0100: Server-side hosting library on ASP.NET Core async pipeline — ConfigureAwait(false) is unnecessary and harmful.
+         AZC0004: Async-only API — no sync variants needed (same exemption as AMQP-based SDKs).
+         See AGENTS.md §0.VI for rationale. -->
+    <NoWarn>$(NoWarn);AZC0100;AZC0004</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -213,7 +213,8 @@ public class SnapshotConsistencyTests : ProtocolTestBase
         }
 
         var completedResponse = new Models.Response(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
-        foreach (var item in items) completedResponse.Output.Add(item);
+        foreach (var item in items)
+            completedResponse.Output.Add(item);
         completedResponse.CompletedAt = DateTimeOffset.UtcNow;
         completedResponse.OutputText = completedResponse.ComputeOutputText();
         yield return new ResponseCompletedEvent(0, completedResponse);

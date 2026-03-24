@@ -140,7 +140,9 @@ public class CancelConsistencyTests : IDisposable
         cancelDone.TrySetResult();
 
         // Wait for the SSE stream to complete
-        try { await postTask.WaitAsync(TimeSpan.FromSeconds(5)); } catch { }
+        try
+        { await postTask.WaitAsync(TimeSpan.FromSeconds(5)); }
+        catch { }
 
         // Allow time for finally block to run UpdateResponseAsync
         await Task.Delay(200);
@@ -268,7 +270,9 @@ public class CancelConsistencyTests : IDisposable
         {
             if (_cts.TryGetValue(responseId, out var cts))
             {
-                try { cts.Cancel(); } catch (ObjectDisposedException) { }
+                try
+                { cts.Cancel(); }
+                catch (ObjectDisposedException) { }
             }
             return Task.CompletedTask;
         }

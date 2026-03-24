@@ -260,7 +260,7 @@ internal sealed class ResponseOrchestrator
                 {
                     // FR-006: Wrong first event — bad handler
                     ThrowBadHandler(execution,
-                        $"Handler did not yield response.created as its first event. Received: {evt.Type}. Handler type: {_handler.GetType().Name}.");
+                        $"Handler did not yield response.created as its first event. Received: {evt.EventType}. Handler type: {_handler.GetType().Name}.");
                     yield break; // unreachable — satisfies compiler definite-assignment
                 }
 
@@ -377,7 +377,7 @@ internal sealed class ResponseOrchestrator
             execution.Response!.UpdateFromEvent(evt);
 
             // Snapshot the Response embedded in lifecycle events
-            evt.SnapshotEmbeddedResponse(execution.Response);
+            evt.SnapshotEmbeddedResponse(execution.Response!);
 
             // Push to replay subject via provider publisher
             await publisher.OnNextAsync(evt);
@@ -528,7 +528,7 @@ internal sealed class ResponseOrchestrator
             execution.Response!.SetFailed();
         }
 
-        var failedEvent = new ResponseFailedEvent(0, execution.Response.Snapshot());
+        var failedEvent = new ResponseFailedEvent(0, execution.Response!.Snapshot());
         await publisher.OnNextAsync(failedEvent);
     }
 
@@ -542,7 +542,7 @@ internal sealed class ResponseOrchestrator
         IAsyncObserver<ResponseStreamEvent> publisher)
     {
         execution.Response!.SetCancelled();
-        var cancelledEvent = new ResponseFailedEvent(0, execution.Response.Snapshot());
+        var cancelledEvent = new ResponseFailedEvent(0, execution.Response!.Snapshot());
         await publisher.OnNextAsync(cancelledEvent);
     }
 
@@ -711,7 +711,7 @@ internal sealed class ResponseOrchestrator
     /// Resolves input items and history item IDs from the context for persistence.
     /// Returns null collections when the context is not available (e.g. cancelled before response.created).
     /// </summary>
-    private static async Task<(IEnumerable<OutputItem>? inputItems, IEnumerable<string>? historyItemIds)>
+    private static async Task<(IEnumerable<OutputItem>? InputItems, IEnumerable<string>? HistoryItemIds)>
         ResolveItemsForPersistenceAsync(IResponseContext? context)
     {
         if (context is null)

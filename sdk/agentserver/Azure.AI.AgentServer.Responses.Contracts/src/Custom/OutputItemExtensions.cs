@@ -27,7 +27,7 @@ public static class OutputItemExtensions
     /// </exception>
     public static string GetId(this OutputItem item)
     {
-        ArgumentNullException.ThrowIfNull(item);
+        Argument.AssertNotNull(item, nameof(item));
 
         if (TryGetIdCore(item, out var id) && id is not null)
         {

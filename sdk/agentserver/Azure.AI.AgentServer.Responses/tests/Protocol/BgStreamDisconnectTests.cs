@@ -46,7 +46,9 @@ public class BgStreamDisconnectTests : ProtocolTestBase
 
         // Disconnect the SSE client
         cts.Cancel();
-        try { await postTask; } catch (TaskCanceledException) { }
+        try
+        { await postTask; }
+        catch (TaskCanceledException) { }
 
         // Wait for handler to complete all events
         await handlerCompleted.Task.WaitAsync(TimeSpan.FromSeconds(5));
@@ -87,7 +89,9 @@ public class BgStreamDisconnectTests : ProtocolTestBase
 
         // Disconnect
         cts.Cancel();
-        try { await postTask; } catch (TaskCanceledException) { }
+        try
+        { await postTask; }
+        catch (TaskCanceledException) { }
 
         // Wait for handler to complete
         var completedTask = await Task.WhenAny(

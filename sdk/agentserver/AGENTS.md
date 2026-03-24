@@ -180,6 +180,7 @@ npm install
 - Log credentials, tokens, keys, or PII (Principle IX).
 - Modify contract docs to match code — fix the code instead (Principle V).
 - Use blind `Task.Delay()` for test synchronization (Principle IV).
+- Add `InternalsVisibleTo` for non-test assemblies. `InternalsVisibleTo` must only grant access to test assemblies (e.g., `*.Tests`). When another production assembly needs to construct types with `internal` constructors, use the public model factory (`AzureAIAgentServerResponsesModelFactory` via `static using`) or add a public constructor/factory method via partial-class customization.
 
 ## 5. Governance
 

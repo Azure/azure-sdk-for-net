@@ -41,7 +41,9 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
         cts.Cancel();
         await handlerCancelled.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
-        try { await postTask; } catch (TaskCanceledException) { }
+        try
+        { await postTask; }
+        catch (TaskCanceledException) { }
 
         // Non-bg cancelled → ephemeral (not persisted) → GET 404
         // Poll until cleanup propagates
@@ -75,7 +77,9 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
         cts.Cancel();
         await handlerCancelled.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
-        try { await postTask; } catch (TaskCanceledException) { }
+        try
+        { await postTask; }
+        catch (TaskCanceledException) { }
 
         // Non-bg cancelled → ephemeral (not persisted) → GET 404
         // Poll until cleanup propagates

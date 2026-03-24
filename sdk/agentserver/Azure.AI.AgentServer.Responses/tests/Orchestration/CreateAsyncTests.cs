@@ -183,7 +183,8 @@ public class CreateAsyncTests : IDisposable
         Assert.IsNull(execution.CompletedAt);
 
         // Consume the stream
-        await foreach (var _ in result.Events!) { }
+        await foreach (var _ in result.Events!)
+        { }
 
         // After consuming: should be finalized
         Assert.IsNotNull(execution.CompletedAt);

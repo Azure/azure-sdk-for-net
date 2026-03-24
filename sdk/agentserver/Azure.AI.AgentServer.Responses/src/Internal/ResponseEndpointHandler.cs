@@ -4,6 +4,7 @@
 using System.Diagnostics;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Validators;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -314,7 +315,7 @@ internal sealed class ResponseEndpointHandler
         // is the source of truth for persisted responses.
         await _provider.DeleteResponseAsync(responseId);
 
-        var result = new DeleteResponseResult(responseId);
+        var result = AzureAIAgentServerResponsesModelFactory.DeleteResponseResult(id: responseId);
         return Results.Json(result, SharedJsonOptions.Instance, statusCode: 200);
     }
 

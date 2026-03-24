@@ -321,7 +321,9 @@ public class HandlerDrivenPersistenceTests : IDisposable
             Calls.Add("CancelResponseAsync");
             if (_ctsSources.TryGetValue(responseId, out var cts))
             {
-                try { cts.Cancel(); } catch (ObjectDisposedException) { }
+                try
+                { cts.Cancel(); }
+                catch (ObjectDisposedException) { }
             }
             return Task.CompletedTask;
         }

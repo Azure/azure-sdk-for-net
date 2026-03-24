@@ -363,7 +363,9 @@ public class TtlConfigurationTests : IDisposable
             Calls.Add("CancelResponseAsync");
             if (_cts.TryGetValue(responseId, out var cts))
             {
-                try { cts.Cancel(); } catch (ObjectDisposedException) { }
+                try
+                { cts.Cancel(); }
+                catch (ObjectDisposedException) { }
             }
             return Task.CompletedTask;
         }
