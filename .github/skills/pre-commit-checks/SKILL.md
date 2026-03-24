@@ -7,6 +7,8 @@ description: Pre-commit validation checks for azure-sdk-for-net. Use this before
 
 Run these checks after making changes to SDK packages under `sdk/` and **before** staging, committing, or pushing. These steps may produce additional file changes that must be included in the commit.
 
+> **Quick alternative:** Run `eng/scripts/CodeChecks.ps1 -ServiceDirectory <service> -PreparePr` to execute all pre-commit checks at once (format, regenerate code, export API, update snippets). It reports which files were updated so you can commit them. The steps below describe the same checks in detail for when you need more control.
+
 > **General rule:** Steps 3–5 are conditional to save time, but if you are unsure whether a step is needed, **always run it**. It is better to run an unnecessary script than to miss a required regeneration.
 
 ## 1. Determine scope from changed files

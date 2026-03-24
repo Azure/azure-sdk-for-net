@@ -12,7 +12,10 @@ param (
     [string] $SDKType = "all",
 
     [Parameter()]
-    [switch] $SpellCheckPublicApiSurface
+    [switch] $SpellCheckPublicApiSurface,
+
+    [Parameter()]
+    [switch] $PreparePr
 )
 
 Write-Host "Service Directory $ServiceDirectory"
@@ -91,6 +94,19 @@ try {
                             }
                         }
             }
+
+        if ($PreparePr) {
+            Write-Host "`nRunning dotnet format"
+            Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory `
+                | Resolve-Path `
+                | % { Get-ChildItem $_ -Filter "Azure.*.sln" -Recurse } `
+                | % {
+                    Write-Host "Formatting $(Split-Path -Leaf $_)"
+                    Invoke-Block {
+                        & dotnet format $_ --verbosity minimal
+                    }
+                }
+        }
 
         $debugLogging = $env:SYSTEM_DEBUG -eq "true"
         $logsFolder = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
@@ -187,14 +203,21 @@ try {
         if ($LastExitCode -ne 0) {
             $status = git status -s | Out-String
             $status = $status -replace "`n","`n    "
-            LogError `
+            if ($PreparePr) {
+                Write-Host ""
+                Write-Host -f Green "The following files were updated by code checks and should be included in your commit:"
+                Write-Host -f Yellow "    $status"
+            }
+            else {
+                LogError `
 "Generated code is not up to date.`
     You may need to rebase on the latest main, `
     run 'eng\scripts\Update-Snippets.ps1 $ServiceDirectory' if you modified sample snippets or other *.md files (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets), `
     run 'eng\scripts\Export-API.ps1 $ServiceDirectory' if you changed public APIs (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#public-api-additions). `
     run 'dotnet build /t:GenerateCode' to update the generated code and samples.`
     `
-To reproduce this error locally, run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory $ServiceDirectory'."
+To fix this locally, run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory $ServiceDirectory -PreparePr' and commit the resulting changes."
+            }
         }
     }
 }
