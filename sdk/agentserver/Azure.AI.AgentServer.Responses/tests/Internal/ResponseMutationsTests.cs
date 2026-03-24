@@ -29,7 +29,7 @@ public class ResponseMutationsTests
         response.SetCompleted();
 
         Assert.That(response.CompletedAt, Is.Not.Null);
-        XAssert.InRange(response.CompletedAt.Value, before, DateTimeOffset.UtcNow.AddSeconds(1));
+        XAssert.InRange(response.CompletedAt!.Value, before, DateTimeOffset.UtcNow.AddSeconds(1));
     }
 
     [Test]

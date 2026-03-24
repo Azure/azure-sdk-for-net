@@ -138,7 +138,7 @@ public class FinalizeExecutionTests : IDisposable
             () => _provider.GetResponseAsync("resp_fin_07"));
     }
 
-    private async Task<(ResponseExecution execution, IAsyncObserver<ResponseStreamEvent> publisher)>
+    private async Task<(ResponseExecution Execution, IAsyncObserver<ResponseStreamEvent> Publisher)>
         CreateExecutionWithPublisher(string responseId,
             bool isBackground = false, bool store = true)
     {
@@ -147,7 +147,7 @@ public class FinalizeExecutionTests : IDisposable
         return (execution, publisher);
     }
 
-    private async Task<(List<ResponseStreamEvent> events, CollectingObserver observer)>
+    private async Task<(List<ResponseStreamEvent> Events, CollectingObserver Observer)>
         SubscribeToEvents(string responseId)
     {
         var events = new List<ResponseStreamEvent>();

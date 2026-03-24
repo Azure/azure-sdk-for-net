@@ -242,7 +242,9 @@ public class BadHandlerTests : ProtocolTestBase
     {
         await Task.CompletedTask;
         throw new InvalidOperationException("Handler failed before response.created");
-        yield break; // Required for async iterator
+#pragma warning disable CS0162 // Unreachable code — yield break required for async iterator signature
+        yield break;
+#pragma warning restore CS0162
     }
 
     /// <summary>

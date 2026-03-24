@@ -8,7 +8,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Builders;
 
 public class TextContentAnnotationTests
 {
-    private static (ResponseEventStream stream, OutputItemMessageBuilder msg) CreateMessageScope()
+    private static (ResponseEventStream Stream, OutputItemMessageBuilder Msg) CreateMessageScope()
     {
         var context = new ResponseContext("resp_test");
         var stream = new ResponseEventStream(context, new CreateResponse { Model = "gpt-4o" });

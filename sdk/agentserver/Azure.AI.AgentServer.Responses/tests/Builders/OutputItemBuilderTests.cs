@@ -313,5 +313,4 @@ public class OutputItemBuilderTests
         var builder = new TestableOutputItemBuilder();
         Assert.That(builder, Is.Not.Null);
     }
-
 }

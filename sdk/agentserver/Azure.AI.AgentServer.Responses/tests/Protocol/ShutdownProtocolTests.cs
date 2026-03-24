@@ -151,7 +151,7 @@ public class ShutdownProtocolTests : IDisposable
     // ── Helper streams ──
 
     private static async IAsyncEnumerable<ResponseStreamEvent> ShutdownAwareStream(
-        IResponseContext ctx, CancellationToken ct,
+        IResponseContext ctx, [EnumeratorCancellation] CancellationToken ct,
         TaskCompletionSource started, TaskCompletionSource done)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });

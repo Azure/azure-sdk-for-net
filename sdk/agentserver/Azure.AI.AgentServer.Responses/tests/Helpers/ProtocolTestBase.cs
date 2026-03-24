@@ -79,7 +79,9 @@ public abstract class ProtocolTestBase : IDisposable
     /// <summary>
     /// Reads the response body as a JsonDocument for assertion.
     /// </summary>
+#pragma warning disable AZC0014 // JsonDocument is appropriate for test assertion helpers
     protected static async Task<JsonDocument> ParseJsonAsync(HttpResponseMessage response)
+#pragma warning restore AZC0014
     {
         var body = await response.Content.ReadAsStringAsync();
         return JsonDocument.Parse(body);

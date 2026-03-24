@@ -108,5 +108,4 @@ public class SseEventContractTests : ProtocolTestBase
         yield return stream.EmitCompleted();
         await Task.CompletedTask;
     }
-
 }

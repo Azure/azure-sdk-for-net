@@ -260,7 +260,7 @@ public class ResponseEventStreamTests
 
         Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Completed));
         Assert.That(evt.Response.CompletedAt, Is.Not.Null);
-        XAssert.InRange(evt.Response.CompletedAt.Value, before, after);
+        XAssert.InRange(evt.Response.CompletedAt!.Value, before, after);
         Assert.That(evt.Response.Usage, Is.SameAs(usage));
     }
 

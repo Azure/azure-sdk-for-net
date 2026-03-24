@@ -100,7 +100,7 @@ public class TerminalEmissionTests : IDisposable
         Assert.That(failedEvt.Response.Status, Is.EqualTo(ResponseStatus.Failed));
     }
 
-    private async Task<(ResponseExecution execution, IAsyncObserver<ResponseStreamEvent> publisher)>
+    private async Task<(ResponseExecution Execution, IAsyncObserver<ResponseStreamEvent> Publisher)>
         CreateExecutionWithPublisher(string responseId)
     {
         var execution = _tracker.Create(responseId);
@@ -109,7 +109,7 @@ public class TerminalEmissionTests : IDisposable
         return (execution, publisher);
     }
 
-    private async Task<(List<ResponseStreamEvent> events, CollectingObserver observer)>
+    private async Task<(List<ResponseStreamEvent> Events, CollectingObserver Observer)>
         SubscribeToEvents(string responseId)
     {
         var events = new List<ResponseStreamEvent>();

@@ -8,7 +8,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Builders;
 
 public class ReasoningSummaryPartBuilderTests
 {
-    private static (ResponseEventStream stream, OutputItemReasoningItemBuilder reasoning) CreateReasoningScope()
+    private static (ResponseEventStream Stream, OutputItemReasoningItemBuilder Reasoning) CreateReasoningScope()
     {
         var context = new ResponseContext("resp_test");
         var stream = new ResponseEventStream(context, new CreateResponse { Model = "gpt-4o" });
