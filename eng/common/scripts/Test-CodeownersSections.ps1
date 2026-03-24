@@ -112,16 +112,16 @@ foreach ($section in $Sections) {
   } else {
     Write-Host "Section '$section' is unchanged."
   }
-  $sectionList = ($Sections | ForEach-Object { "'$_'" }) -join ", "
-  Write-Host "##vso[task.LogIssue type=error;]One or more protected CODEOWNERS sections have been modified. Please revert changes to the $sectionList sections."
 }
 
 # ---------------------------------------------------------------------------
 # 4. Exit
 # ---------------------------------------------------------------------------
 if ($failed) {
+  $sectionList = ($Sections | ForEach-Object { "'$_'" }) -join ", "
+
   Write-Host ""
-  Write-Host "##vso[task.LogIssue type=error;]One or more protected CODEOWNERS sections have been modified. Please revert changes to the 'Client Libraries', 'Management Top Level Owners', and 'Management Libraries' sections."
+  LogError "##vso[task.LogIssue type=error;]One or more protected CODEOWNERS sections have been modified. Please revert changes to the $sectionList sections."
   exit 1
 }
 
