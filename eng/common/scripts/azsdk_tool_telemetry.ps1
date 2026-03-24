@@ -25,7 +25,7 @@ if ($env:AZSDKTOOLS_COLLECT_TELEMETRY -eq "false")
     exit 0
 }
 
-$toolsToIgnore = @( "run_in_terminal", "view", "apply_patch")
+$toolsToIgnore = @( "run_in_terminal", "apply_patch")
 
 # Return success and exit
 function Write-Success
