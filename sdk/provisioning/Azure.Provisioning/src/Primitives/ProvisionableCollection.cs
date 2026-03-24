@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Primitives;
 /// A collection of <see cref="Provisionable"/> resources that supports
 /// on-demand upgrading of deserialized resource wrappers to typed resources.
 /// </summary>
-public class ProvisionableCollection : IEnumerable<Provisionable>
+internal class ProvisionableCollection : IEnumerable<Provisionable>
 {
     private readonly List<Provisionable> _items = [];
     internal Infrastructure? Owner { get; set; }

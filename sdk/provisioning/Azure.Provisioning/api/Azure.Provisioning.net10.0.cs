@@ -1132,13 +1132,6 @@ namespace Azure.Provisioning.Primitives
         protected internal virtual void Resolve(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
         protected internal virtual void Validate(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
     }
-    public partial class ProvisionableCollection : System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable>, System.Collections.IEnumerable
-    {
-        public ProvisionableCollection() { }
-        public System.Collections.Generic.IEnumerator<Azure.Provisioning.Primitives.Provisionable> GetEnumerator() { throw null; }
-        public System.Collections.Generic.IEnumerable<T> OfType<T>() where T : Azure.Provisioning.Primitives.Provisionable { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
     public abstract partial class ProvisionableConstruct : Azure.Provisioning.Primitives.Provisionable, Azure.Provisioning.IBicepValue
     {
         protected ProvisionableConstruct() { }
