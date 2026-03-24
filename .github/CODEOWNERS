@@ -49,8 +49,6 @@
 # SDK
 #########
 
-# A benign edit
-
 # Catch all
 /sdk/                                                              @jsquire
 
