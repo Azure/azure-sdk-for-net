@@ -39,49 +39,66 @@ namespace Azure.Generator.Provisioning.Providers
             string serviceName,
             IEnumerable<ArmResourceMetadata> resources)
         {
-            // Aggregate all roles across all resources, deduplicating by value (GUID)
-            var rolesByValue = new Dictionary<string, ArmResourceRbacRole>(StringComparer.OrdinalIgnoreCase);
+            // Step 1: Collect all roles with sanitized names
+            var allRoles = new List<(string Name, string Value)>();
             foreach (var resource in resources)
             {
                 foreach (var role in resource.RbacRoles)
                 {
-                    if (rolesByValue.TryGetValue(role.Value, out var existingRole))
-                    {
-                        if (!string.Equals(role.Name, existingRole.Name, StringComparison.Ordinal))
-                        {
-                            ProvisioningGenerator.Instance.Emitter.ReportDiagnostic(
-                                "rbac-role-guid-conflict",
-                                $"RBAC role GUID '{role.Value}' has conflicting names: '{existingRole.Name}' and '{role.Name}'. Using '{existingRole.Name}'.");
-                        }
-                    }
-                    else
-                    {
-                        rolesByValue.Add(role.Value, role);
-                    }
+                    allRoles.Add((Name: role.Name.ToIdentifierName(), Value: role.Value));
                 }
             }
 
-            if (rolesByValue.Count == 0)
+            if (allRoles.Count == 0)
                 return null;
 
-            // Sort by name for deterministic output, sanitize names for C# identifiers
-            var sortedRoles = rolesByValue.Values
-                .OrderBy(r => r.Name, StringComparer.Ordinal)
-                .Select(r => (Name: r.Name.ToIdentifierName(), r.Value))
-                .ToList();
-
-            // Detect post-sanitization name collisions
-            var seenNames = new HashSet<string>(StringComparer.Ordinal);
-            foreach (var role in sortedRoles)
+            // Step 2: Deduplicate by value (GUID). If two entries share the same GUID
+            // but have different names, warn and keep the first one.
+            var rolesByValue = new Dictionary<string, (string Name, string Value)>(StringComparer.OrdinalIgnoreCase);
+            foreach (var role in allRoles)
             {
-                if (!seenNames.Add(role.Name))
+                if (rolesByValue.TryGetValue(role.Value, out var existing))
                 {
-                    ProvisioningGenerator.Instance.Emitter.ReportDiagnostic(
-                        "rbac-role-name-collision",
-                        $"RBAC role name collision: multiple roles map to identifier '{role.Name}' after sanitization.");
+                    if (!string.Equals(role.Name, existing.Name, StringComparison.Ordinal))
+                    {
+                        ProvisioningGenerator.Instance.Emitter.ReportDiagnostic(
+                            "rbac-role-guid-conflict",
+                            $"RBAC role GUID '{role.Value}' has conflicting names: '{existing.Name}' and '{role.Name}'. Using '{existing.Name}'.");
+                    }
+                }
+                else
+                {
+                    rolesByValue.Add(role.Value, role);
                 }
             }
 
+            // Step 3: Deduplicate by name. If two entries share the same sanitized name
+            // but have different GUIDs, this is an error — stop generation for this type.
+            var rolesByName = new Dictionary<string, (string Name, string Value)>(StringComparer.Ordinal);
+            bool hasNameCollision = false;
+            foreach (var role in rolesByValue.Values)
+            {
+                if (rolesByName.TryGetValue(role.Name, out var existing))
+                {
+                    if (!string.Equals(role.Value, existing.Value, StringComparison.OrdinalIgnoreCase))
+                    {
+                        hasNameCollision = true;
+                        ProvisioningGenerator.Instance.Emitter.ReportDiagnostic(
+                            "rbac-role-name-collision",
+                            $"RBAC role name collision: '{role.Name}' maps to different GUIDs '{existing.Value}' and '{role.Value}'. Cannot generate BuiltInRole type.");
+                    }
+                }
+                else
+                {
+                    rolesByName.Add(role.Name, role);
+                }
+            }
+
+            if (hasNameCollision)
+                return null;
+
+            // Sort by name for deterministic output
+            var sortedRoles = rolesByName.Values.OrderBy(r => r.Name, StringComparer.Ordinal).ToList();
             return new BuiltInRoleProvider(serviceName, sortedRoles);
         }
 
