@@ -107,11 +107,11 @@ try {
             Write-Host "`nRunning dotnet format"
             Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory `
                 | Resolve-Path `
-                | % { Get-ChildItem $_ -Filter "Azure.*.sln" -Recurse } `
+                | % { Get-ChildItem $_ -Filter "*.csproj" -Recurse } `
                 | % {
                     Write-Host "Formatting $(Split-Path -Leaf $_)"
                     Invoke-Block {
-                        & dotnet format $_ --verbosity minimal
+                        & dotnet format $_ --verbosity quiet
                     }
                 }
         }
