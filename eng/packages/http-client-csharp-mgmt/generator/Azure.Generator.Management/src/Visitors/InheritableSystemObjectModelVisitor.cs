@@ -167,7 +167,87 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
         model.Update(properties: properties);
 
+        // Fix raw data field reference mismatch: when the management generator adds a new
+        // _additionalBinaryDataProperties field to a base model (in Update()), the constructor
+        // parameter for this model may still reference the original field from a higher ancestor.
+        // The serialization code's base-model field search finds the newly-added field, creating
+        // two different FieldProvider objects for the same concept. This causes the code writer
+        // to generate mismatched variable names (e.g., additionalBinaryDataProperties0 vs
+        // additionalBinaryDataProperties). To fix, update the constructor parameter to reference
+        // the same field the serialization code will find.
+        FixRawDataFieldReference(model);
+
         _regularUpdated.Add(model);
+    }
+
+    private static void FixRawDataFieldReference(ModelProvider model)
+    {
+        // Find the raw data field that the serialization code's base-model search will find.
+        FieldProvider? rawDataField = null;
+        var baseModel = model.BaseModelProvider;
+        while (baseModel != null)
+        {
+            rawDataField = baseModel.Fields.FirstOrDefault(
+                f => f.Name == $"_{RawDataParameterName}");
+            if (rawDataField != null)
+            {
+                break;
+            }
+            baseModel = baseModel.BaseModelProvider;
+        }
+
+        if (rawDataField == null)
+        {
+            return;
+        }
+
+        var signature = model.FullConstructor.Signature;
+        var ctorParamIndex = -1;
+        for (int i = 0; i < signature.Parameters.Count; i++)
+        {
+            if (signature.Parameters[i].Name.Equals(RawDataParameterName))
+            {
+                ctorParamIndex = i;
+                break;
+            }
+        }
+
+        if (ctorParamIndex < 0 || signature.Parameters[ctorParamIndex].Field == rawDataField)
+        {
+            return;
+        }
+
+        // Create a model-owned parameter that references the correct field.
+        // IMPORTANT: Do NOT call ctorParam.Update(field:) on the existing parameter.
+        // Constructor parameters are shared across sibling models because
+        // BuildConstructorParameters copies references from the base constructor via
+        // AddRange. Mutating a shared parameter would corrupt unrelated models.
+        var newParam = rawDataField.AsParameter;
+
+        // Replace the parameter in the constructor signature.
+        var updatedParams = new List<ParameterProvider>(signature.Parameters);
+        updatedParams[ctorParamIndex] = newParam;
+
+        // Also update the base constructor initializer to use the new parameter's
+        // variable expression so the code writer doesn't disambiguate with a "0" suffix.
+        var initializer = signature.Initializer;
+        if (initializer is not null)
+        {
+            var updatedArgs = initializer.Arguments.Select(
+                arg => arg is VariableExpression ve && ve.Declaration.RequestedName == RawDataParameterName
+                    ? (ValueExpression)newParam
+                    : arg).ToArray();
+            initializer = new ConstructorInitializer(initializer.IsBase, updatedArgs);
+        }
+
+        var updatedSignature = new ConstructorSignature(
+            signature.Type,
+            signature.Description,
+            signature.Modifiers,
+            updatedParams,
+            signature.Attributes,
+            initializer);
+        model.FullConstructor.Update(signature: updatedSignature);
     }
 
     private static readonly HashSet<string> _methodNamesToUpdate = new(){ "JsonModelCreateCore", "PersistableModelCreateCore", "PersistableModelWriteCore" };
