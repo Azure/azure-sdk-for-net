@@ -360,7 +360,9 @@ namespace Azure.ResourceManager.NotificationHubs
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.NotificationHubData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.NotificationHubData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubResource> Update(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubResource> Update(Azure.ResourceManager.NotificationHubs.Models.NotificationHubUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubResource>> UpdateAsync(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubResource>> UpdateAsync(Azure.ResourceManager.NotificationHubs.Models.NotificationHubUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class NotificationHubsExtensions
     {
@@ -555,7 +557,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class DebugSendResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NotificationHubs.Models.DebugSendResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.DebugSendResult>
     {
-        internal DebugSendResult() { }
+        public DebugSendResult() { }
         public long? Failure { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NotificationHubs.Models.NotificationHubPubRegistrationResult> FailureDescription { get { throw null; } }
         public long? Success { get { throw null; } }
@@ -991,7 +993,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class NotificationHubPubRegistrationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubPubRegistrationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.NotificationHubPubRegistrationResult>
     {
-        internal NotificationHubPubRegistrationResult() { }
+        public NotificationHubPubRegistrationResult() { }
         public string ApplicationPlatform { get { throw null; } }
         public string Outcome { get { throw null; } }
         public string PnsHandle { get { throw null; } }
@@ -1103,7 +1105,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     {
         public NotificationHubTestSendResult(Azure.Core.AzureLocation location) { }
         public int? Failure { get { throw null; } set { } }
-        public Azure.ResourceManager.NotificationHubs.Models.DebugSendResult Properties { get { throw null; } }
+        public Azure.ResourceManager.NotificationHubs.Models.DebugSendResult Properties { get { throw null; } set { } }
         public System.BinaryData Results { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku Sku { get { throw null; } set { } }
         public int? Success { get { throw null; } set { } }
