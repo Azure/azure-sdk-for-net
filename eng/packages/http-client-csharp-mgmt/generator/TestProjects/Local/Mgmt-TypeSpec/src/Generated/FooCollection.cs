@@ -30,6 +30,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly Foos _foosRestClient;
         private readonly ClientDiagnostics _entityResourceReproClientDiagnostics;
         private readonly EntityResourceRepro _entityResourceReproRestClient;
+        private readonly ClientDiagnostics _sharedParamReproClientDiagnostics;
+        private readonly SharedParamRepro _sharedParamReproRestClient;
 
         /// <summary> Initializes a new instance of FooCollection for mocking. </summary>
         protected FooCollection()
@@ -46,6 +48,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
             _entityResourceReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", FooResource.ResourceType.Namespace, Diagnostics);
             _entityResourceReproRestClient = new EntityResourceRepro(_entityResourceReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _sharedParamReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", FooResource.ResourceType.Namespace, Diagnostics);
+            _sharedParamReproRestClient = new SharedParamRepro(_sharedParamReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

@@ -31,6 +31,7 @@ import "./extensionresourcename.tsp";
 import "./testcertificate.tsp";
 import "./sharedmodel.tsp";
 import "./entityresource.tsp";
+import "./sharedparamrepro.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;

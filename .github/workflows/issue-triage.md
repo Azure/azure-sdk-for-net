@@ -33,9 +33,10 @@ tools:
   bash: true
   github:
     toolsets: [issues]
-    # Setting lockdown: false allows reading issues, pull requests
-    # and comments from 3rd-parties in public repos
-    lockdown: false
+    # Triage must read issues from all users, including external
+    # customers with NONE author_association; without this, the
+    # auto-applied "approved" policy filters them out via DIFC
+    min-integrity: none
 
 timeout-minutes: 10
 ---
@@ -286,8 +287,7 @@ IF a matching ServiceLabel entry is found in CODEOWNERS:
         - Add the "Service Attention" label
         - Add the "needs-team-attention" label
         - Leave the issue unassigned
-        - Leave ServiceOwner @mentions to the github-event-processor, which creates
-          them automatically when "Service Attention" is added
+        - Record all ServiceOwners for Step 5
 
     ELSE (matched entry has neither AzureSdkOwners nor ServiceOwners):
         - Add the "needs-team-triage" label
@@ -298,7 +298,7 @@ ELSE (no ServiceLabel entry matches any of the issue's predicted labels):
 
 ## Step 5: Owner Mention Comment
 
-If AzureSdkOwners were identified in Step 4, add a dedicated comment @mentioning them before the analysis comment
+If AzureSdkOwners or ServiceOwners were identified in Step 4, add a dedicated comment @mentioning them before the analysis comment
 
 This comment should be concise: a brief routing message and the @mentions only; no analysis or debugging detail
 
@@ -307,7 +307,11 @@ IF AzureSdkOwners were identified in Step 4:
     - Add a comment @mentioning all AzureSdkOwners
     - Example: "Routing to the team for assistance: @owner1 @owner2"
 
-IF no AzureSdkOwners were identified:
+ELSE IF ServiceOwners were identified in Step 4 (Service Attention path):
+    - Add a comment @mentioning all ServiceOwners
+    - Example: "Thanks for the feedback! We are routing this to the appropriate team for follow-up. cc @owner1 @owner2"
+
+ELSE:
     - Skip this step
 ```
 
