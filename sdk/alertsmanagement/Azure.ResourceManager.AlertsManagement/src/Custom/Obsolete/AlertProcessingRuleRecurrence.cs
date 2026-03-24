@@ -13,6 +13,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Backward compatibility stub. This type is no longer supported. </summary>
+    [PersistableModelProxy(typeof(UnknownRecurrence))]
     [Obsolete("This type is no longer supported.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public abstract partial class AlertProcessingRuleRecurrence : IJsonModel<AlertProcessingRuleRecurrence>, IPersistableModel<AlertProcessingRuleRecurrence>

@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="resourceGroupResource"> The resource group. </param>
         /// <param name="alertProcessingRuleName"> The name. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
         [Obsolete("This method is no longer supported.", true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<AlertProcessingRuleResource> GetAlertProcessingRule(this ResourceGroupResource resourceGroupResource, string alertProcessingRuleName, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="resourceGroupResource"> The resource group. </param>
         /// <param name="alertProcessingRuleName"> The name. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
         [Obsolete("This method is no longer supported.", true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Task<Response<AlertProcessingRuleResource>> GetAlertProcessingRuleAsync(this ResourceGroupResource resourceGroupResource, string alertProcessingRuleName, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
@@ -64,6 +66,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="subscriptionResource"> The subscription. </param>
         /// <param name="alertId"> The alert ID. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
         [Obsolete("This method is no longer supported.", true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<ServiceAlertResource> GetServiceAlert(this SubscriptionResource subscriptionResource, Guid alertId, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
@@ -72,6 +75,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="subscriptionResource"> The subscription. </param>
         /// <param name="alertId"> The alert ID. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
         [Obsolete("This method is no longer supported.", true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Task<Response<ServiceAlertResource>> GetServiceAlertAsync(this SubscriptionResource subscriptionResource, Guid alertId, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
@@ -87,6 +91,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="subscriptionResource"> The subscription. </param>
         /// <param name="smartGroupId"> The smart group ID. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
         [Obsolete("This method is no longer supported.", true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<SmartGroupResource> GetSmartGroup(this SubscriptionResource subscriptionResource, Guid smartGroupId, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
@@ -95,6 +100,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="subscriptionResource"> The subscription. </param>
         /// <param name="smartGroupId"> The smart group ID. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
         [Obsolete("This method is no longer supported.", true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Task<Response<SmartGroupResource>> GetSmartGroupAsync(this SubscriptionResource subscriptionResource, Guid smartGroupId, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }

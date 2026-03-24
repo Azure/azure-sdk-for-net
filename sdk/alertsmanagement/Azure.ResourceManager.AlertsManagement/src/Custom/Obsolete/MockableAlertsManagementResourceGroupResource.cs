@@ -27,11 +27,13 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <summary> Gets an alert processing rule. </summary>
         /// <param name="alertProcessingRuleName"> The name. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
         public virtual Response<AlertProcessingRuleResource> GetAlertProcessingRule(string alertProcessingRuleName, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
 
         /// <summary> Gets an alert processing rule async. </summary>
         /// <param name="alertProcessingRuleName"> The name. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
         public virtual Task<Response<AlertProcessingRuleResource>> GetAlertProcessingRuleAsync(string alertProcessingRuleName, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
     }
 }

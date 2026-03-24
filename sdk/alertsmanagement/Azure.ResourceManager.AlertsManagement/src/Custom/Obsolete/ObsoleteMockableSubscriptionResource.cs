@@ -9,6 +9,7 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Mocking
 {
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <summary> Gets a service alert. </summary>
         /// <param name="alertId"> The alert ID. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
         [Obsolete("This method is no longer supported.", true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ServiceAlertResource> GetServiceAlert(Guid alertId, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
@@ -36,6 +38,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <summary> Gets a service alert async. </summary>
         /// <param name="alertId"> The alert ID. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
         [Obsolete("This method is no longer supported.", true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<ServiceAlertResource>> GetServiceAlertAsync(Guid alertId, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
@@ -43,6 +46,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <summary> Gets a smart group. </summary>
         /// <param name="smartGroupId"> The smart group ID. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
         [Obsolete("This method is no longer supported.", true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<SmartGroupResource> GetSmartGroup(Guid smartGroupId, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
@@ -50,6 +54,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <summary> Gets a smart group async. </summary>
         /// <param name="smartGroupId"> The smart group ID. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
         [Obsolete("This method is no longer supported.", true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<SmartGroupResource>> GetSmartGroupAsync(Guid smartGroupId, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
