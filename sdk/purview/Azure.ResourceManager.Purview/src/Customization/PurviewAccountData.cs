@@ -11,8 +11,6 @@ namespace Azure.ResourceManager.Purview
     // Old API returned PurviewAccountEndpoint and PurviewManagedResource;
     // new generator creates derived types AccountPropertiesEndpoints/AccountPropertiesManagedResources
     // from property flattening. Suppress and re-expose with base types for backward compatibility.
-    [CodeGenSuppress("Endpoints")]
-    [CodeGenSuppress("ManagedResources")]
     public partial class PurviewAccountData
     {
         /// <summary> The URIs that are the public endpoints of the account. </summary>

@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.Purview
     public partial class PurviewPrivateLinkResourceData
     {
         /// <summary> The private link resource properties. </summary>
-        [CodeGenMember("Properties")]
         public PurviewPrivateLinkResourceProperties Properties { get; }
     }
 }
