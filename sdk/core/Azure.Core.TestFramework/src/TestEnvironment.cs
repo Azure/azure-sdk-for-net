@@ -244,10 +244,14 @@ namespace Azure.Core.TestFramework
                     else
                     {
                         _credential = new ChainedTokenCredential(
+                            new EnvironmentCredential(),
+                            new WorkloadIdentityCredential(),
+                            new VisualStudioCodeCredential(),
                             new AzureCliCredential(),
                             new AzurePowerShellCredential(),
                             new AzureDeveloperCliCredential(),
-                            new VisualStudioCredential());
+                            new VisualStudioCredential(),
+                            new InteractiveBrowserCredential());
                     }
                 }
 
