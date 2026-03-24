@@ -64,11 +64,24 @@ namespace Azure.Generator.Provisioning.Providers
             if (rolesByValue.Count == 0)
                 return null;
 
-            // Sort by name for deterministic output
+            // Sort by name for deterministic output, sanitize names for C# identifiers
             var sortedRoles = rolesByValue.Values
                 .OrderBy(r => r.Name, StringComparer.Ordinal)
                 .Select(r => (Name: r.Name.ToIdentifierName(), r.Value))
                 .ToList();
+
+            // Detect post-sanitization name collisions
+            var seenNames = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var role in sortedRoles)
+            {
+                if (!seenNames.Add(role.Name))
+                {
+                    ProvisioningGenerator.Instance.Emitter.ReportDiagnostic(
+                        "rbac-role-name-collision",
+                        $"RBAC role name collision: multiple roles map to identifier '{role.Name}' after sanitization.");
+                }
+            }
+
             return new BuiltInRoleProvider(serviceName, sortedRoles);
         }
 

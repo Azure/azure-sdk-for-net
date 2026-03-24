@@ -24,8 +24,6 @@ namespace Azure.Generator.Provisioning
 
         /// <summary>
         /// Gets the BuiltInRole type provider if any resources define RBAC roles.
-        /// Set during <see cref="BuildTypeProviders"/> and accessed by resource providers
-        /// to generate CreateRoleAssignment methods.
         /// </summary>
         internal BuiltInRoleProvider? BuiltInRole { get; private set; }
 
@@ -40,7 +38,7 @@ namespace Azure.Generator.Provisioning
         /// </summary>
         internal IReadOnlyList<ProvisioningResourceProvider> Resources => GetValue(ref _resources);
 
-        private static void InitializeResources(
+        private void InitializeResources(
             ref IReadOnlyList<ProvisioningResourceProvider>? resources,
             ref Dictionary<string, ProvisioningResourceProvider>? resourcesByIdPattern,
             ref Dictionary<InputModelType, List<ProvisioningResourceProvider>>? resourcesByModel)
@@ -52,7 +50,8 @@ namespace Azure.Generator.Provisioning
             var byIdPattern = new Dictionary<string, ProvisioningResourceProvider>();
             var byModel = new Dictionary<InputModelType, List<ProvisioningResourceProvider>>();
 
-            foreach (var metadata in ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources)
+            var allMetadata = ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources;
+            foreach (var metadata in allMetadata)
             {
                 if (metadata.ResourceModel == null)
                     continue;
@@ -68,6 +67,12 @@ namespace Azure.Generator.Provisioning
                 }
                 modelList.Add(resource);
             }
+
+            // Initialize BuiltInRole from input metadata — this is safe to do here since
+            // it's constructed purely from input values, and must be available before any
+            // resource provider's methods are materialized.
+            var serviceName = ProvisioningGenerator.Instance.TypeFactory.ResourceProviderName;
+            BuiltInRole = BuiltInRoleProvider.TryCreate(serviceName, allMetadata);
 
             resources = list;
             resourcesByIdPattern = byIdPattern;
@@ -120,10 +125,6 @@ namespace Azure.Generator.Provisioning
             }
 
             // Add BuiltInRole struct if any resources have RBAC roles defined.
-            var serviceName = ProvisioningGenerator.Instance.TypeFactory.ResourceProviderName;
-            BuiltInRole = BuiltInRoleProvider.TryCreate(
-                serviceName,
-                ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources);
             if (BuiltInRole != null)
             {
                 providers.Add(BuiltInRole);
