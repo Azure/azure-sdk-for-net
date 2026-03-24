@@ -1,4 +1,4 @@
-# Azure.Provisioning.Batch client library for .NET
+# Azure Provisioning Batch client library for .NET
 
 Azure.Provisioning.Batch simplifies declarative resource provisioning for Azure Batch in .NET.
 
