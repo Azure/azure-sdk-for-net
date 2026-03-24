@@ -794,13 +794,7 @@ public class DeterministicFixRegistryTests
         Assert.Multiple(() =>
         {
             Assert.That(result.IsDeterministic, Is.False);
-            Assert.That(result.ToolName, Is.Null);
             Assert.That(result.Reason, Does.Contain("ApiCompat"));
-            Assert.That(result.Reason, Does.Contain("protected constructor"));
-            Assert.That(result.ToolArgs, Does.ContainKey("typeName"));
-            Assert.That(result.ToolArgs!["typeName"], Is.EqualTo("SomeBaseType"));
-            Assert.That(result.ToolArgs, Does.ContainKey("missingCtorParams"));
-            Assert.That(result.ToolArgs["missingCtorParams"], Does.Contain("System.Guid"));
         });
     }
 
@@ -821,8 +815,7 @@ public class DeterministicFixRegistryTests
         Assert.Multiple(() =>
         {
             Assert.That(result.IsDeterministic, Is.False);
-            Assert.That(result.ToolArgs!["typeName"], Is.EqualTo("SomeBaseType"));
-            Assert.That(result.ToolArgs["missingCtorParams"], Is.Empty);
+            Assert.That(result.Reason, Does.Contain("ApiCompat"));
         });
     }
 
@@ -843,11 +836,8 @@ public class DeterministicFixRegistryTests
         Assert.Multiple(() =>
         {
             Assert.That(result.IsDeterministic, Is.False);
-            Assert.That(result.ToolName, Is.Null);
             Assert.That(result.Reason, Does.Contain("ApiCompat"));
             Assert.That(result.Reason, Does.Contain("effectively sealed"));
-            Assert.That(result.ToolArgs!["typeName"], Is.EqualTo("SomeBaseModel"));
-            Assert.That(result.ToolArgs["fullTypeName"], Is.EqualTo("Azure.SomeService.Models.SomeBaseModel"));
         });
     }
 

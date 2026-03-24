@@ -319,11 +319,46 @@ Max 10 iterations. If still failing, escalate to user.
 - After editing only custom `.cs` code (no generator attributes) → just rebuild, no regeneration needed
 - If build returns 0 errors but previous build had errors → verify no regressions by rebuilding once more
 
-**ApiCompat errors (CP0001, CP0002, etc.):**
-- These are API compatibility violations — the new generated code differs from the previously shipped public API.
-- **NEVER remove or modify `ApiCompatVersion` from the .csproj to suppress these errors.** The version must stay to enforce compatibility.
-- Instead, **fix each ApiCompat error** by adding the missing API surface back via customization files (partial classes, `CodeGenSuppress`, forwarding methods, etc.).
-- See Customization Patterns and the error-reference.md for how to restore missing APIs.
+### ApiCompat Error Handling
+
+**⛔ NEVER create or modify `ApiCompatBaseline.txt` to suppress ApiCompat errors. This is a hard rule — no exceptions.**
+**⛔ NEVER remove or modify `ApiCompatVersion` from the .csproj to suppress these errors.** The version must stay to enforce compatibility.
+
+ApiCompat errors surface when `dotnet build` detects breaking changes vs the previously shipped API. Run `dotnet pack --no-restore` to get the full list. For each error, create a backward-compat shim in `Custom/BackwardCompat/`:
+
+| ApiCompat Rule | What It Means | Fix |
+|---|---|---|
+| `MembersMustExist` (constructor) | Protected constructor removed from abstract type | Use `fix_sealed_type_constructor` tool or manually add `protected TypeName(params) : base(params) { }` in `Custom/BackwardCompat/AbstractTypeConstructors.cs`. Never edit Generated/ files. |
+| `MembersMustExist` (method/property) | Method signature changed (e.g., `IReadOnlyDictionary` → `IDictionary`) | Create forwarding overloads in `Custom/BackwardCompat/ClientMethodShims.cs` with the old `IReadOnlyDictionary` parameter type that convert and delegate to the new `IDictionary` method. Add `#pragma warning disable AZC0002` if overloads lack CancellationToken. Never edit Generated/ files. |
+| `MembersMustExist` (ModelFactory) | ModelFactory overload signature changed | Add overload with old signature in `Custom/BackwardCompat/ModelFactoryBackwardCompat.cs` |
+| `MembersMustExist` (missing setter) | Property lost its setter | `[CodeGenSuppress("Property")]` + re-declare with `{ get; set; }` |
+| `MembersMustExist` (missing enum value) | Enum value removed/renamed | Add `[EditorBrowsable(EditorBrowsableState.Never)]` deprecated value in custom partial |
+| `MembersMustExist` (property type changed) | Property type changed (e.g., custom enum → `string`) | Use `[CodeGenSuppress("Property")]` to suppress the generated property, then re-declare it in a custom partial class returning the old type. Create a stub type (e.g., a `readonly struct` with `implicit operator` from `string`) in `MissingEnumTypes.cs`, marked `[EditorBrowsable(Never)]`. Never edit Generated/ files. |
+| `TypesMustExist` | Type renamed/removed | `@@clientName` to restore old name, OR create stub type in custom code |
+| `TypesMustExist` (extension class renamed) | DI extension class renamed (e.g., `AIFooClientBuilderExtensions` → `FooClientBuilderExtensions`) | Create a stub `public static class` with the old name containing extension methods that delegate to the new class. Use `global::` namespace qualifiers if the stub is inside `Microsoft.Extensions.Azure` (bare `Azure.X` resolves wrong). Copy any `[RequiresUnreferencedCode]`/`[RequiresDynamicCode]` attributes from the target method. |
+| `CannotMakeMemberNonVirtual` | `virtual` → non-virtual (abstract type) | Add protected constructor shim to keep type inheritable (check for serialization constructor conflicts first — see constructor row above) |
+| `CannotSealType` | Type effectively sealed (private ctor) | Same as above — add protected constructor to keep type inheritable |
+
+**File organization**: Group shims by category in `Custom/BackwardCompat/`:
+- `AbstractTypeConstructors.cs` — Protected constructors for abstract types
+- `ClientMethodShims.cs` — Forwarding overloads for parameter type changes
+- `ModelFactoryBackwardCompat.cs` — Old ModelFactory overloads
+- `PropertyTypeShims.cs` — Properties with changed types
+- `MissingEnumTypes.cs` — Deprecated enum values
+- `SerializedAdditionalRawDataShims.cs` — `_serializedAdditionalRawData` backward compat
+
+**Mark all backward-compat shims with:**
+- `[EditorBrowsable(EditorBrowsableState.Never)]` — hide from IntelliSense
+- `#pragma warning disable AZC0002` if needed for missing CancellationToken
+- Code comment explaining why the shim exists
+
+#### Common Pitfalls
+
+1. **`[CodeGenType]` attribute mismatch**: When a custom partial class uses `[CodeGenType("X")]`, the value `X` must exactly match the generated class name. If the generated name changed during migration, the partial classes silently fail to merge — methods from both sides become invisible, producing dozens of spurious `MembersMustExist` errors. Always verify the generated class name before assuming individual methods are missing.
+
+2. **XML `cref` references break after signature changes**: After changing method parameter types (e.g., `IDictionary` → `IReadOnlyDictionary`), XML doc comments in custom files that reference the old signatures via `cref` attributes produce CS1574 errors. Scan custom `*.cs` files for `cref` attributes containing the old type and update them.
+
+3. **ModelFactory class name mismatch**: The generated ModelFactory class name may differ from what the custom partial class expects. If most ModelFactory methods show as `MembersMustExist` errors, check whether the generated and custom ModelFactory classes have matching names/`[CodeGenType]` attributes before creating individual shims.
 
 ### Key Insight: Generator and Customization File Interaction
 
@@ -711,7 +746,7 @@ Report: error messages, generated code snippet, repro steps. Do NOT manually fix
 1. **Never edit files under `Generated/`** — they are overwritten by codegen.
 2. **Never hand-edit `metadata.json`** — it is auto-generated.
 3. **Never use `tsp-client update`** — use `dotnet build /t:GenerateCode`.
-4. **Never add entries to `ApiCompatBaseline.txt`** without explicit user approval.
+4. **Never create or add entries to `ApiCompatBaseline.txt`** — this file must never be used to bypass breaking changes. Always mitigate ApiCompat errors through spec-side fixes (`@@clientName`) or SDK custom code shims in `Custom/BackwardCompat/` (see ApiCompat Error Handling in Phase 6 and error-reference.md). Do NOT suppress them via baseline files.
 5. **Never bump the major version** of an Azure SDK package.
 6. **Preserve git history** — prefer renames over delete+create.
 7. **Never manually edit files under `src/Generated/`** — this is strictly forbidden. All generated code must come from the generator. If generated code has a bug (e.g., references a non-existent method, wrong type), fix it through:

@@ -1035,15 +1035,34 @@ public static class DeterministicFixRegistry
         });
 
         // =====================================================================
-        // ApiCompat rules — classified as non-deterministic with actionable hints
+        // ApiCompat rules
         // These errors come from Microsoft.DotNet.ApiCompat.targets and appear
         // as codeless MSBuild errors (e.g., "error : CannotSealType : ...").
         // The BuildOutputParser extracts the rule name as the error code.
         // =====================================================================
 
+        // --- MembersMustExist: IReadOnlyDictionary → IDictionary parameter type change ---
+        // The new generator uses IDictionary for convenience method params where the old used
+        // IReadOnlyDictionary. Fix by creating forwarding overloads in Custom/BackwardCompat/ClientMethodShims.cs
+        // with IReadOnlyDictionary params that delegate to the new IDictionary methods.
+        rules.Add(new FixRule
+        {
+            ErrorCode = "MembersMustExist",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"Member '.*IReadOnlyDictionary.*' does not exist in the implementation",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "ApiCompat: convenience method changed IReadOnlyDictionary<string,string> to IDictionary<string,string>. " +
+                          "Create forwarding overloads in Custom/BackwardCompat/ClientMethodShims.cs with the old IReadOnlyDictionary " +
+                          "parameter type that convert and delegate to the new IDictionary method. " +
+                          "Add #pragma warning disable AZC0002 if overloads lack CancellationToken.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>()
+        });
+
         // --- CannotSealType + MembersMustExist: protected constructor removed ---
         // The new generator uses private protected ctors where the old used protected.
-        // Fix: add a custom partial class with a protected ctor delegating to the generated one.
+        // Fix: create a protected constructor shim in Custom/BackwardCompat/AbstractTypeConstructors.cs
         rules.Add(new FixRule
         {
             ErrorCode = "MembersMustExist",
@@ -1052,22 +1071,9 @@ public static class DeterministicFixRegistry
                 @"Member '(?<fullType>[^']+)\.\.ctor\((?<params>[^)]*)\)' does not exist in the implementation",
                 RegexOptions.Compiled),
             ToolName = null,
-            Description = "ApiCompat: protected constructor missing. The new generator uses 'private protected' constructors. " +
-                          "Add a custom partial class with a 'protected' constructor that delegates to the generated 'private protected' one, " +
-                          "passing 'default' for any additional discriminator parameter. " +
-                          "If the generated code has a conflicting parameterless 'internal' ctor (in .Serialization.cs), " +
-                          "add [CodeGenSuppress(\"TypeName\")] to suppress it.",
-            ExtractArgs = (err, m) =>
-            {
-                var fullType = m.Groups["fullType"].Value;
-                var typeName = fullType.Contains('.') ? fullType[(fullType.LastIndexOf('.') + 1)..] : fullType;
-                return new Dictionary<string, string>
-                {
-                    ["typeName"] = typeName,
-                    ["fullTypeName"] = fullType,
-                    ["missingCtorParams"] = m.Groups["params"].Value
-                };
-            }
+            Description = "ApiCompat: protected constructor missing. Create a protected constructor shim " +
+                          "in Custom/BackwardCompat/AbstractTypeConstructors.cs. Never edit Generated/ files.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>()
         });
 
         rules.Add(new FixRule
@@ -1078,19 +1084,24 @@ public static class DeterministicFixRegistry
                 @"Type '(?<fullType>[^']+)' is effectively sealed",
                 RegexOptions.Compiled),
             ToolName = null,
-            Description = "ApiCompat: type is effectively sealed (private constructor). Usually paired with a MembersMustExist error " +
-                          "for a missing protected constructor. Fix both together by adding a protected constructor shim " +
-                          "in a custom partial class.",
-            ExtractArgs = (err, m) =>
-            {
-                var fullType = m.Groups["fullType"].Value;
-                var typeName = fullType.Contains('.') ? fullType[(fullType.LastIndexOf('.') + 1)..] : fullType;
-                return new Dictionary<string, string>
-                {
-                    ["typeName"] = typeName,
-                    ["fullTypeName"] = fullType
-                };
-            }
+            Description = "ApiCompat: type is effectively sealed (private constructor). Create a protected " +
+                          "constructor shim in Custom/BackwardCompat/AbstractTypeConstructors.cs.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>()
+        });
+
+        // --- CannotMakeMemberNonVirtual: virtual → non-virtual on abstract type ---
+        // Usually paired with CannotSealType. Same fix: add protected constructor shim.
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CannotMakeMemberNonVirtual",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"Member '(?<fullType>[^']+)\.(?<member>[^']+)' is virtual.*but non-virtual",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "ApiCompat: member lost 'virtual' modifier. Usually paired with CannotSealType. " +
+                          "Fix by adding a protected constructor shim to keep the type inheritable.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>()
         });
 
         // --- CannotRemoveAttribute: attribute present in contract but not in implementation ---
