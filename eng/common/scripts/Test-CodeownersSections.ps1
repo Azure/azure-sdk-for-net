@@ -114,6 +114,7 @@ foreach ($section in $Sections) {
   }
   $sectionList = ($Sections | ForEach-Object { "'$_'" }) -join ", "
   Write-Host "##vso[task.LogIssue type=error;]One or more protected CODEOWNERS sections have been modified. Please revert changes to the $sectionList sections."
+}
 
 # ---------------------------------------------------------------------------
 # 4. Exit
