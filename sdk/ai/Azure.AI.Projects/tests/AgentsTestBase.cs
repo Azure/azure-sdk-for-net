@@ -156,6 +156,9 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.FunctionCall, typeof(StreamingResponseFunctionCallArgumentsDoneUpdate)},
         {ToolType.CodeInterpreter, typeof(StreamingResponseCodeInterpreterCallCompletedUpdate)},
         {ToolType.CodeInterpreterGen, typeof(StreamingResponseCodeInterpreterCallCompletedUpdate)},
+        {ToolType.WebSearchPreview, typeof(StreamingResponseWebSearchCallInProgressUpdate)},
+        {ToolType.WebSearch, typeof(StreamingResponseWebSearchCallInProgressUpdate)},
+        {ToolType.WebSearchCustom, typeof(StreamingResponseWebSearchCallInProgressUpdate)},
     };
 
     public Dictionary<ToolType, Type> ExpectedAnnotations = new()

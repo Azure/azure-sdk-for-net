@@ -21,18 +21,18 @@ public class Sample_WebSearchPreviewStreaming : ProjectsOpenAITestBase
         IgnoreSampleMayBe();
         #region Snippet:Sample_CreateAgentClient_WebSearchPreviewStreaming
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_CreateAgent_WebSearchPreviewStreaming_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
-            Instructions = "You are a helpful agent.",
+            Instructions = "You are a helpful assistant that can search the web.",
             Tools = { ResponseTool.CreateWebSearchPreviewTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
         };
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
@@ -47,7 +47,7 @@ public class Sample_WebSearchPreviewStreaming : ProjectsOpenAITestBase
         CreateResponseOptions options = new()
         {
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-            InputItems = { ResponseItem.CreateUserMessageItem("How many medals did the USA win in the 2024 summer olympics?") },
+            InputItems = { ResponseItem.CreateUserMessageItem("Show me the latest London Underground service updates") },
         };
         await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(options))
         {
@@ -89,17 +89,20 @@ public class Sample_WebSearchPreviewStreaming : ProjectsOpenAITestBase
     {
         IgnoreSampleMayBe();
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AIProjectClientOptions opts = new();
+        //opts.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
+
+        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: opts);
         #region Snippet:Sample_CreateAgent_WebSearchPreviewStreaming_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
-            Instructions = "You are a helpful agent.",
+            Instructions = "You are a helpful assistant that can search the web.",
             Tools = { ResponseTool.CreateWebSearchPreviewTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
         };
         AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
@@ -114,8 +117,9 @@ public class Sample_WebSearchPreviewStreaming : ProjectsOpenAITestBase
         CreateResponseOptions options = new()
         {
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-            InputItems = { ResponseItem.CreateUserMessageItem("How many medals did the USA win in the 2024 summer olympics?") },
+            InputItems = { ResponseItem.CreateUserMessageItem("Show me the latest London Underground service updates") },
         };
+
         foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming(options))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)

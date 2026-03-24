@@ -9,8 +9,8 @@ To enable your Agent to use Web Search Preview tool, we need to create .
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_WebSearchPreviewStreaming
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
@@ -19,9 +19,9 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_WebSearchPreviewStreaming_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
-    Instructions = "You are a helpful agent.",
+    Instructions = "You are a helpful assistant that can search the web.",
     Tools = { ResponseTool.CreateWebSearchPreviewTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
 };
 AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
@@ -31,9 +31,9 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_WebSearchPreviewStreaming_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
-    Instructions = "You are a helpful agent.",
+    Instructions = "You are a helpful assistant that can search the web.",
     Tools = { ResponseTool.CreateWebSearchPreviewTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
@@ -74,8 +74,9 @@ string text = "";
 CreateResponseOptions options = new()
 {
     ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-    InputItems = { ResponseItem.CreateUserMessageItem("How many medals did the USA win in the 2024 summer olympics?") },
+    InputItems = { ResponseItem.CreateUserMessageItem("Show me the latest London Underground service updates") },
 };
+
 foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming(options))
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
@@ -114,7 +115,7 @@ string text = "";
 CreateResponseOptions options = new()
 {
     ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-    InputItems = { ResponseItem.CreateUserMessageItem("How many medals did the USA win in the 2024 summer olympics?") },
+    InputItems = { ResponseItem.CreateUserMessageItem("Show me the latest London Underground service updates") },
 };
 await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(options))
 {
