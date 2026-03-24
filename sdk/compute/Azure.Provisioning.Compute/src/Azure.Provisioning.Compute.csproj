@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Azure.Provisioning.Compute simplifies declarative resource provisioning in .NET.</Description>
+    <Version>1.0.0-beta.1</Version>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <LangVersion>12</LangVersion>
+
+    <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
+    <!-- Disable warning AZC0012: Single word class names (generated from management SDK) -->
+    <!-- Disable warning AZC0034: Type name conflicts (generated from management SDK) -->
+    <NoWarn>CS1591;AZC0012;AZC0034</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Provisioning" />
+  </ItemGroup>
+
+</Project>
