@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </param>
         /// <param name="server"> Properties of the server managing the lifecycle of volume buckets. </param>
         /// <param name="permissions"> Access permissions for the bucket. Either ReadOnly or ReadWrite. The default is ReadOnly if no value is provided during bucket creation. </param>
-        /// <param name="akvDetails">
+        /// <param name="keyVaultDetails">
         /// Specifies the Azure Key Vault settings. These are used when
         /// a) retrieving the bucket server certificate, and
         /// b) storing the bucket credentials
@@ -1423,7 +1423,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// 2. These properties are mutually exclusive with the server.certificateObject property.
         /// </param>
         /// <returns> A new <see cref="NetApp.NetAppBucketData"/> instance for mocking. </returns>
-        public static NetAppBucketData NetAppBucketData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, NetAppFileSystemUser fileSystemUser = null, NetAppVolumeQuotaRuleProvisioningState? provisioningState = null, NetAppCredentialsStatus? status = null, NetAppBucketServerProperties server = null, NetAppBucketPermission? permissions = null, NetAppKeyVaultDetails akvDetails = null)
+        public static NetAppBucketData NetAppBucketData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, NetAppFileSystemUser fileSystemUser = null, NetAppVolumeQuotaRuleProvisioningState? provisioningState = null, NetAppCredentialsStatus? status = null, NetAppBucketServerProperties server = null, NetAppBucketPermission? permissions = null, NetAppKeyVaultDetails keyVaultDetails = null)
         {
             return new NetAppBucketData(
                 id,
@@ -1436,7 +1436,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 status,
                 server,
                 permissions,
-                akvDetails,
+                keyVaultDetails,
                 serializedAdditionalRawData: null);
         }
 
@@ -1475,7 +1475,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="server"> Properties of the server managing the lifecycle of volume buckets. </param>
         /// <param name="permissions"> Access permissions for the bucket. Either ReadOnly or ReadWrite. </param>
-        /// <param name="akvDetails">
+        /// <param name="keyVaultDetails">
         /// Specifies the Azure Key Vault settings. These are used when
         /// a) retrieving the bucket server certificate, and
         /// b) storing the bucket credentials
@@ -1486,7 +1486,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// 2. These properties are mutually exclusive with the server.certificateObject property.
         /// </param>
         /// <returns> A new <see cref="Models.NetAppBucketPatch"/> instance for mocking. </returns>
-        public static NetAppBucketPatch NetAppBucketPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetAppFileSystemUser fileSystemUser = null, NetAppVolumeQuotaRuleProvisioningState? provisioningState = null, NetAppBucketServerPatchProperties server = null, NetAppBucketPatchPermission? permissions = null, NetAppKeyVaultDetails akvDetails = null)
+        public static NetAppBucketPatch NetAppBucketPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetAppFileSystemUser fileSystemUser = null, NetAppVolumeQuotaRuleProvisioningState? provisioningState = null, NetAppBucketServerPatchProperties server = null, NetAppBucketPatchPermission? permissions = null, NetAppKeyVaultDetails keyVaultDetails = null)
         {
             return new NetAppBucketPatch(
                 id,
@@ -1497,7 +1497,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 provisioningState,
                 server,
                 permissions,
-                akvDetails,
+                keyVaultDetails,
                 serializedAdditionalRawData: null);
         }
 

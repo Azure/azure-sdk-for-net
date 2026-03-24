@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultDetails"/>. </summary>
-        /// <param name="certificateAkvDetails"> Specifies the Azure Key Vault settings for retrieving the bucket server certificate. </param>
-        /// <param name="credentialsAkvDetails"> Specifies the Azure Key Vault settings for storing the bucket credentials. </param>
+        /// <param name="certificateKeyVaultDetails"> Specifies the Azure Key Vault settings for retrieving the bucket server certificate. </param>
+        /// <param name="credentialsKeyVaultDetails"> Specifies the Azure Key Vault settings for storing the bucket credentials. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppKeyVaultDetails(CertificateKeyVaultDetails certificateAkvDetails, CredentialsKeyVaultDetails credentialsAkvDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppKeyVaultDetails(CertificateKeyVaultDetails certificateKeyVaultDetails, CredentialsKeyVaultDetails credentialsKeyVaultDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CertificateAkvDetails = certificateAkvDetails;
-            CredentialsAkvDetails = credentialsAkvDetails;
+            CertificateKeyVaultDetails = certificateKeyVaultDetails;
+            CredentialsKeyVaultDetails = credentialsKeyVaultDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the Azure Key Vault settings for retrieving the bucket server certificate. </summary>
-        public CertificateKeyVaultDetails CertificateAkvDetails { get; set; }
+        public CertificateKeyVaultDetails CertificateKeyVaultDetails { get; set; }
         /// <summary> Specifies the Azure Key Vault settings for storing the bucket credentials. </summary>
-        public CredentialsKeyVaultDetails CredentialsAkvDetails { get; set; }
+        public CredentialsKeyVaultDetails CredentialsKeyVaultDetails { get; set; }
     }
 }

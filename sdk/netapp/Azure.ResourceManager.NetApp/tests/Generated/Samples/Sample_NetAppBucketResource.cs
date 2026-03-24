@@ -154,14 +154,14 @@ namespace Azure.ResourceManager.NetApp.Samples
                     OnCertificateConflictAction = NetAppOnCertificateConflictAction.Fail,
                 },
                 Permissions = NetAppBucketPatchPermission.ReadOnly,
-                AkvDetails = new NetAppKeyVaultDetails
+                KeyVaultDetails = new NetAppKeyVaultDetails
                 {
-                    CertificateAkvDetails = new CertificateKeyVaultDetails
+                    CertificateKeyVaultDetails = new CertificateKeyVaultDetails
                     {
                         CertificateKeyVaultUri = new Uri("https://REDACTED.vault.azure.net/"),
                         CertificateName = "my-certificate",
                     },
-                    CredentialsAkvDetails = new CredentialsKeyVaultDetails
+                    CredentialsKeyVaultDetails = new CredentialsKeyVaultDetails
                     {
                         CredentialsKeyVaultUri = new Uri("https://REDACTED.vault.azure.net/"),
                         SecretName = "my-secret",
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GenerateAkvCredentials_BucketsGenerateAkvCredentials()
+        public async Task GenerateKeyVaultCredentials_BucketsGenerateAkvCredentials()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Buckets_GenerateAkvCredentials.json
             // this example is just showing the usage of "Buckets_GenerateAkvCredentials" operation, for the dependent resources, they will have to be created separately.
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             {
                 KeyPairExpiryDays = 3,
             };
-            await netAppBucket.GenerateAkvCredentialsAsync(WaitUntil.Completed, body);
+            await netAppBucket.GenerateKeyVaultCredentialsAsync(WaitUntil.Completed, body);
 
             Console.WriteLine("Succeeded");
         }

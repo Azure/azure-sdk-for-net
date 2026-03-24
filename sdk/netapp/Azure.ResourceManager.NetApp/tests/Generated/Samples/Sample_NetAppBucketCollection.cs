@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.NetApp.Samples
                     OnCertificateConflictAction = NetAppOnCertificateConflictAction.Fail,
                 },
                 Permissions = NetAppBucketPermission.ReadOnly,
-                AkvDetails = new NetAppKeyVaultDetails
+                KeyVaultDetails = new NetAppKeyVaultDetails
                 {
-                    CertificateAkvDetails = new CertificateKeyVaultDetails
+                    CertificateKeyVaultDetails = new CertificateKeyVaultDetails
                     {
                         CertificateKeyVaultUri = new Uri("https://REDACTED.vault.azure.net/"),
                         CertificateName = "my-certificate",
                     },
-                    CredentialsAkvDetails = new CredentialsKeyVaultDetails
+                    CredentialsKeyVaultDetails = new CredentialsKeyVaultDetails
                     {
                         CredentialsKeyVaultUri = new Uri("https://REDACTED.vault.azure.net/"),
                         SecretName = "my-secret",

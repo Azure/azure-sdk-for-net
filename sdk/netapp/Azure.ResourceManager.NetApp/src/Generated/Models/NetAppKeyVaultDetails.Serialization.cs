@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 throw new FormatException($"The model {nameof(NetAppKeyVaultDetails)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(CertificateAkvDetails))
+            if (Optional.IsDefined(CertificateKeyVaultDetails))
             {
                 writer.WritePropertyName("certificateAkvDetails"u8);
-                writer.WriteObjectValue(CertificateAkvDetails, options);
+                writer.WriteObjectValue(CertificateKeyVaultDetails, options);
             }
-            if (Optional.IsDefined(CredentialsAkvDetails))
+            if (Optional.IsDefined(CredentialsKeyVaultDetails))
             {
                 writer.WritePropertyName("credentialsAkvDetails"u8);
-                writer.WriteObjectValue(CredentialsAkvDetails, options);
+                writer.WriteObjectValue(CredentialsKeyVaultDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

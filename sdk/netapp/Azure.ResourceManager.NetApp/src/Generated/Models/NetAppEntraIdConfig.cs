@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="applicationId"> ApplicationId of the app created by customer to provide authentication and required API permissions for Microsoft Graph endpoint. </param>
         /// <param name="domain"> Domain of the Active directory synced to Entra ID for hybrid identities. </param>
         /// <param name="serverNamePrefix"> Using ServerNamePrefix, FQDN (Fully Qualified Domain Name) will be generated for SMB share, using this FQDN, SMB Share will be mounted on Entra Joined VM. </param>
-        /// <param name="entraIdAkvConfig"> Using AKV config, certificate will be fetched, which will contain private key &amp; public certificate, that correspond to the public certificate which is uploaded on the application created by customer. This will be used further for authentication. </param>
+        /// <param name="entraIdKeyVaultConfig"> Using AKV config, certificate will be fetched, which will contain private key &amp; public certificate, that correspond to the public certificate which is uploaded on the application created by customer. This will be used further for authentication. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppEntraIdConfig(string applicationId, string domain, string serverNamePrefix, EntraIdKeyVaultConfig entraIdAkvConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppEntraIdConfig(string applicationId, string domain, string serverNamePrefix, EntraIdKeyVaultConfig entraIdKeyVaultConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApplicationId = applicationId;
             Domain = domain;
             ServerNamePrefix = serverNamePrefix;
-            EntraIdAkvConfig = entraIdAkvConfig;
+            EntraIdKeyVaultConfig = entraIdKeyVaultConfig;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,6 +88,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Using ServerNamePrefix, FQDN (Fully Qualified Domain Name) will be generated for SMB share, using this FQDN, SMB Share will be mounted on Entra Joined VM. </summary>
         public string ServerNamePrefix { get; set; }
         /// <summary> Using AKV config, certificate will be fetched, which will contain private key &amp; public certificate, that correspond to the public certificate which is uploaded on the application created by customer. This will be used further for authentication. </summary>
-        public EntraIdKeyVaultConfig EntraIdAkvConfig { get; set; }
+        public EntraIdKeyVaultConfig EntraIdKeyVaultConfig { get; set; }
     }
 }

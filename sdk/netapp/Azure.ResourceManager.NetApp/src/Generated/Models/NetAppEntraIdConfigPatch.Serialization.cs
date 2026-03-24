@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("serverNamePrefix"u8);
                 writer.WriteStringValue(ServerNamePrefix);
             }
-            if (Optional.IsDefined(EntraIdAkvConfig))
+            if (Optional.IsDefined(EntraIdKeyVaultConfig))
             {
                 writer.WritePropertyName("entraIdAkvConfig"u8);
-                writer.WriteObjectValue(EntraIdAkvConfig, options);
+                writer.WriteObjectValue(EntraIdKeyVaultConfig, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

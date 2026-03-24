@@ -372,11 +372,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> GenerateAkvCredentialsAsync(WaitUntil waitUntil, NetAppBucketCredentialsExpiry body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> GenerateKeyVaultCredentialsAsync(WaitUntil waitUntil, NetAppBucketCredentialsExpiry body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = _netAppBucketBucketsClientDiagnostics.CreateScope("NetAppBucketResource.GenerateAkvCredentials");
+            using var scope = _netAppBucketBucketsClientDiagnostics.CreateScope("NetAppBucketResource.GenerateKeyVaultCredentials");
             scope.Start();
             try
             {
@@ -418,11 +418,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation GenerateAkvCredentials(WaitUntil waitUntil, NetAppBucketCredentialsExpiry body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation GenerateKeyVaultCredentials(WaitUntil waitUntil, NetAppBucketCredentialsExpiry body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = _netAppBucketBucketsClientDiagnostics.CreateScope("NetAppBucketResource.GenerateAkvCredentials");
+            using var scope = _netAppBucketBucketsClientDiagnostics.CreateScope("NetAppBucketResource.GenerateKeyVaultCredentials");
             scope.Start();
             try
             {

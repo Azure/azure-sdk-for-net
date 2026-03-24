@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions.Value.ToString());
             }
-            if (Optional.IsDefined(AkvDetails))
+            if (Optional.IsDefined(KeyVaultDetails))
             {
                 writer.WritePropertyName("akvDetails"u8);
-                writer.WriteObjectValue(AkvDetails, options);
+                writer.WriteObjectValue(KeyVaultDetails, options);
             }
             writer.WriteEndObject();
         }

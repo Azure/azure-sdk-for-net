@@ -71,6 +71,7 @@ override-operation-name:
   Volumes_ReplicationStatus: GetReplicationStatus
   VolumeGroups_ListByNetAppAccount: GetVolumeGroups
   ElasticCapacityPools_CheckVolumeFilePathAvailability: CheckElasticVolumeFilePathAvailability
+  Buckets_GenerateAkvCredentials: GenerateKeyVaultCredentials
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
@@ -147,6 +148,12 @@ prepend-rp-prefix:
 
 rename-mapping:
   AzureKeyVaultDetails: NetAppKeyVaultDetails
+  AzureKeyVaultDetails.certificateAkvDetails: CertificateKeyVaultDetails
+  AzureKeyVaultDetails.credentialsAkvDetails: CredentialsKeyVaultDetails
+  Bucket.properties.akvDetails: KeyVaultDetails
+  BucketPatch.properties.akvDetails: KeyVaultDetails
+  EntraIdConfig.entraIdAkvConfig: EntraIdKeyVaultConfig
+  EntraIdConfigPatch.entraIdAkvConfig: EntraIdKeyVaultConfig
   CapacityPool.properties.poolId: -|uuid
   FilePathAvailabilityRequest.subnetId: -|arm-id
   MountTargetProperties.mountTargetId: -|uuid
