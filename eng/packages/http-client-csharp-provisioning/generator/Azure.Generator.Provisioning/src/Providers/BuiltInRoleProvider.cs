@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Models;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -24,7 +25,7 @@ namespace Azure.Generator.Provisioning.Providers
     internal class BuiltInRoleProvider : TypeProvider
     {
         private readonly string _serviceName;
-        private readonly IReadOnlyList<ArmResourceRbacRole> _roles;
+        private readonly IReadOnlyList<(string Name, string Value)> _roles;
 
         private static readonly ValueExpression EditorNeverAttribute = new MemberExpression(
             Static(typeof(EditorBrowsableState)),
@@ -64,17 +65,23 @@ namespace Azure.Generator.Provisioning.Providers
                 return null;
 
             // Sort by name for deterministic output
-            var sortedRoles = rolesByValue.Values.OrderBy(r => r.Name, StringComparer.Ordinal).ToList();
+            var sortedRoles = rolesByValue.Values
+                .OrderBy(r => r.Name, StringComparer.Ordinal)
+                .Select(r => (Name: r.Name.ToIdentifierName(), r.Value))
+                .ToList();
             return new BuiltInRoleProvider(serviceName, sortedRoles);
         }
 
-        private BuiltInRoleProvider(string serviceName, IReadOnlyList<ArmResourceRbacRole> roles)
+        private BuiltInRoleProvider(string serviceName, IReadOnlyList<(string Name, string Value)> roles)
         {
             _serviceName = serviceName;
             _roles = roles;
         }
 
         protected override string BuildName() => $"{_serviceName}BuiltInRole";
+
+        protected override FormattableString BuildDescription()
+            => $"Defines the built-in roles for {_serviceName} resources.";
 
         protected override string BuildNamespace()
             => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
