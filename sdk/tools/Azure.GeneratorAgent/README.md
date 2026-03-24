@@ -27,8 +27,8 @@ The Azure Generator Agent automates SDK code generation workflows, including cod
 The agent uses a three-layer architecture:
 
 - **MCP Server** — Exposes deterministic fix tools over the [Model Context Protocol](https://modelcontextprotocol.io/) via stdio transport. Tools are auto-discovered from the assembly at startup.
-- **MCP Tools** — 17 individual tools covering regex replacements (field renames, type patterns), adding/removing using directives, nullable annotation fixes, build output parsing, error classification, code generation, commit iteration, and finalization. Each tool supports both MCP (JSON) and in-process invocation.
-- **Skill-Driven Workflow** — The skill docs ([`sdk-migration`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration/SKILL.md) and [`sdk-migration-mcp`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration-mcp/SKILL.md)) ARE the orchestrator. The LLM reads them, calls MCP tools directly, and reasons about what to do next. No compiled C# orchestrator — the skill drives the build→classify→fix→rebuild loop.
+- **MCP Tools** — 18 individual tools covering regex replacements (field renames, type patterns), adding/removing using directives, nullable annotation fixes, build output parsing, error classification, code generation, test execution, commit iteration, and finalization. Each tool supports both MCP (JSON) and in-process invocation.
+- **Skill-Driven Workflow** — The skill doc ([`sdk-migration`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration/SKILL.md)) IS the orchestrator. The LLM reads it, calls MCP tools directly, and reasons about what to do next. No compiled C# orchestrator — the skill drives the build→classify→fix→rebuild loop.
 
 ### MCP Tools
 
@@ -41,12 +41,13 @@ The agent uses a three-layer architecture:
 | `batch_fix` | Apply multiple deterministic fixes in a single call |
 | `build_and_classify` | Run `dotnet build`, parse output, and classify each error as deterministic or requires-reasoning |
 | `classify_errors` | Classify a batch of build errors against the deterministic fix registry |
-| `run_code_generation` | Run `dotnet build /t:generateCode` for a project |
+| `run_code_generation` | Run `dotnet build /t:generateCode` for a project. Accepts optional `localSpecsPath` for local spec iteration. |
 | `validate_tsp_config` | Validate that `tspconfig.yaml` has the correct emitter configuration |
-| `commit_iteration` | Iterate through spec repo commits to find one with valid tspconfig |
+| `commit_iteration` | Iterate through spec repo commits to find one with valid tspconfig. Accepts optional `commitOverride` to skip iteration. |
 | `pregen_cleanup` | Remove `IncludeAutorestDependency` from `.csproj` files before first generation |
 | `migrate_test_samples` | Move test samples from `Generated/Samples/` to `Samples/` |
 | `finalize_migration` | Run `Export-API.ps1` and `Update-Snippets.ps1` after a successful migration |
+| `run_tests` | Run `dotnet test` with configurable filter (defaults to excluding live tests). Returns structured pass/fail results. |
 | `rename_codegen_type` | Fix mismatched `[CodeGenType]` attributes by matching generated counterparts |
 | `fetch_to_fromlro` | Replace legacy `Fetch(response)` calls with `ResponseModel.FromLroResponse(response)` |
 
@@ -61,37 +62,37 @@ The `DeterministicFixRegistry` contains rules that map error codes and message p
 - **Nullable annotations** — CS8625/CS8600 fixes
 - **Method call replacements** — `FromCancellationToken` → `ToRequestContext`, `Fetch(response)` → `FromLroResponse`, obsolete `.ToRequestContent()` removal
 
-See [`.github/skills/sdk-migration-mcp/SKILL.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration-mcp/SKILL.md) for the full rule list, tool usage guide, and the skill-driven workflow.
+See [`.github/skills/sdk-migration/SKILL.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration/SKILL.md) for the full rule list, tool usage guide, and the skill-driven workflow.
 
 ## Examples
 
 ### Use with a migration skill
 
-The tools are designed to be called by the [`sdk-migration-mcp`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration-mcp/SKILL.md) skill. The typical workflow is:
+The tools are designed to be called by the [`sdk-migration`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration/SKILL.md) skill. The typical workflow is:
 
 1. **Setup** — `pregen_cleanup` → `validate_tsp_config` → `commit_iteration` → `run_code_generation`
 2. **Build-fix loop** — `build_and_classify` → `batch_fix` (for deterministic errors) → LLM reasoning (for non-deterministic errors) → rebuild
-3. **Finalize** — `migrate_test_samples` → `finalize_migration`
+3. **Finalize** — `migrate_test_samples` → `run_tests` → `finalize_migration`
 
 ### Use with Copilot Chat
 
 To trigger an MCP-assisted migration in Copilot Chat, use a prompt like:
 
 ```
-Use the sdk-migration-mcp skill to migrate <repo-root>/sdk/<service>/<library>
+Use the sdk-migration skill to migrate <repo-root>/sdk/<service>/<library>
 The local specs repo is at <specs-root>/specification/<service>/<spec-directory>
 ```
 
 For example:
 
 ```
-Use the sdk-migration-mcp skill to migrate C:\git\azure-sdk-for-net\sdk\communication\Azure.Communication.Messages
+Use the sdk-migration skill to migrate C:\git\azure-sdk-for-net\sdk\communication\Azure.Communication.Messages
 The local specs repo is at C:\git\azure-rest-api-specs\specification\communication\Communication.Messages
 ```
 If you wish you use specific commit id for tsp-location.yaml add to the message. For example:
 
 ```
-Use the sdk-migration-mcp skill to migrate C:\git\azure-sdk-for-net\sdk\communication\Azure.Communication.Messages
+Use the sdk-migration skill to migrate C:\git\azure-sdk-for-net\sdk\communication\Azure.Communication.Messages
 The local specs repo is at C:\git\azure-rest-api-specs\specification\communication\Communication.Messages with commit id xyz
 ```
 
@@ -121,5 +122,4 @@ This project welcomes contributions and suggestions. Most contributions require 
 
 - Explore the [Azure SDK for .NET repository](https://github.com/Azure/azure-sdk-for-net)
 - Learn about [Azure SDK design guidelines](https://azure.github.io/azure-sdk/)
-- Read the [MCP migration skill](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration-mcp/SKILL.md) for the tool-driven workflow
-- Read the [SDK migration skill](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration/SKILL.md) for the full migration process
+- Read the [SDK migration skill](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration/SKILL.md) for the full migration workflow

@@ -13,13 +13,14 @@ namespace Azure.GeneratorAgent.Mcp.Tools;
 [McpServerToolType]
 public static class CodeGenerationTool
 {
-    [McpServerTool(Name = "run_code_generation"), Description("Run dotnet build /t:generateCode in a project's src directory.")]
+    [McpServerTool(Name = "run_code_generation"), Description("Run dotnet build /t:generateCode in a project's src directory. Optionally pass a local specs repo path to use during iteration.")]
     public static async Task<string> ExecuteAsync(
-        [Description("Absolute path to the SDK project directory")] string projectPath)
+        [Description("Absolute path to the SDK project directory")] string projectPath,
+        [Description("Optional. Absolute path to local azure-rest-api-specs clone. When provided, passes /p:LocalSpecRepo to the build.")] string? localSpecsPath = null)
     {
         try
         {
-            var (success, output, error) = await ExecuteInProcessAsync(projectPath).ConfigureAwait(false);
+            var (success, output, error) = await ExecuteInProcessAsync(projectPath, localSpecsPath).ConfigureAwait(false);
             if (!success)
             {
                 return JsonSerializer.Serialize(new { success = false, error, output });
@@ -35,15 +36,16 @@ public static class CodeGenerationTool
     /// <summary>
     /// In-process execution for the orchestrator.
     /// </summary>
-    public static async Task<(bool Success, string Output, string? Error)> ExecuteInProcessAsync(string projectPath)
+    public static async Task<(bool Success, string Output, string? Error)> ExecuteInProcessAsync(string projectPath, string? localSpecsPath = null)
     {
         try
         {
             var normalizedPath = Path.GetFullPath(projectPath);
             var srcPath = Path.Combine(normalizedPath, "src");
             var workDir = Directory.Exists(srcPath) ? srcPath : normalizedPath;
+            var buildArgs = BuildArguments(localSpecsPath);
 
-            var (output, exitCode) = await ProcessRunner.RunAsync("dotnet", "build /t:generateCode", workDir).ConfigureAwait(false);
+            var (output, exitCode) = await ProcessRunner.RunAsync("dotnet", buildArgs, workDir).ConfigureAwait(false);
 
             return (exitCode == 0, output, exitCode != 0 ? $"Code generation failed with exit code {exitCode}" : null);
         }
@@ -53,5 +55,16 @@ public static class CodeGenerationTool
         }
     }
 
-
+    /// <summary>
+    /// Builds the dotnet build arguments for code generation.
+    /// </summary>
+    internal static string BuildArguments(string? localSpecsPath)
+    {
+        var args = "build /t:generateCode";
+        if (!string.IsNullOrWhiteSpace(localSpecsPath))
+        {
+            args += $" /p:LocalSpecRepo={Path.GetFullPath(localSpecsPath)}";
+        }
+        return args;
+    }
 }
