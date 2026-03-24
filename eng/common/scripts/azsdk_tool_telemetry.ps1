@@ -3,7 +3,7 @@ $ErrorActionPreference = "SilentlyContinue"
 
 $cliPath = Get-CommonInstallDirectory
 
-# check for azsdk.exe on Windows or azsdk on Linux/Mac in the install directory, then check for dotnet CLI as fallback since it's required to run the tool
+# check for azsdk.exe on Windows or azsdk on Linux/Mac in the install directory
 if ($IsWindows)
 {
     $cliPath = Join-Path $cliPath "azsdk.exe"
