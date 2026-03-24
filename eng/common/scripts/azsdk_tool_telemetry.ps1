@@ -102,11 +102,6 @@ $shouldTrack = $false
 $eventType = $null
 $skillName = $null
 $azsdkToolName = $null
-$packageName = $null
-$language = $null
-$typeSpecProject = $null
-$status = $null
-$package_type = $null
 $clientType = $null
 
 # check if hook is triggered from vscode or copilot-cli. Azure sdk tools hook is not considering claude at this point.
@@ -163,66 +158,10 @@ function Get-Property
 }
 
 # Check for Azure SDK Tools MCP invocation
-# Copilot CLI: "mcp_azure-sdk*" or "azure-*" prefixes
+# Skip mcp tool telemetry since it's already tracked by MCP server
 if ($toolName.StartsWith("mcp_azure-sdk") -or $toolName.StartsWith("azure-sdk-mcp"))
 {
-    $azsdkToolName = $toolName
-    $eventType = "tool_invocation"
-    $shouldTrack = $true
-
-    # Parser tool_input and tool output : @{packageName=azure-template; language=python; checkReady=True}
-    if ($toolInput)
-    {
-        # Check if it contains a packageName property and append it to the tool name for more granular telemetry (e.g., "mcp_azure-sdk_template" for the azure-template package)
-        $packageName = Get-Property -Object $toolInput -PropertyName "packageName"
-        $language = Get-Property -Object $toolInput -PropertyName "language"
-        $typeSpecProject = Get-Property -Object $toolInput -PropertyName "typeSpecProject"
-    }
-
-    # Get tool output arguments
-    $toolOutput = $null
-    try
-    {
-        if ($inputData.PSObject.Properties['toolResult'])
-        {
-            # toolResult exists
-            $toolOutput = $inputData.toolResult | ConvertFrom-Json
-        }
-        elseif ($inputData.PSObject.Properties['tool_response'])
-        {
-            # tool_response exists
-            $toolOutput = $inputData.tool_response | ConvertFrom-Json
-        }
-
-        if ($toolOutput -and $toolOutput.PSObject.Properties['textResultForLlm'])
-        {
-            $toolOutput = $toolOutput.textResultForLlm | ConvertFrom-Json
-        }
-    }
-    catch
-    {
-        Write-Success
-    }       
-    
-    # Process tool output for mcp tool calls
-    if ($toolOutput)
-    {
-        # Some tools may return the packageName in the output instead of input, so also check there
-        if (-not $packageName)
-        {
-            $packageName = Get-Property -Object $toolOutput -PropertyName "packageName"
-        }
-        if (-not $language)
-        {
-            $language = Get-Property -Object $toolOutput -PropertyName "language"
-        }
-        if (-not $typeSpecProject)
-        {
-            $typeSpecProject = Get-Property -Object $toolOutput -PropertyName "typeSpecProject"
-        }
-        $status = Get-Property -Object $toolOutput -PropertyName "operation_status"
-        $package_type = Get-Property -Object $toolOutput -PropertyName "package_type"
-    }
+    Write-Success
 }
 
 # === STEP 3: Publish event ===
@@ -240,11 +179,6 @@ if ($shouldTrack)
     if ($sessionId) { $cliArgs += "--session-id"; $cliArgs += $sessionId }
     if ($skillName) { $cliArgs += "--skill-name"; $cliArgs += $skillName }
     if ($azsdkToolName) { $cliArgs += "--tool-name"; $cliArgs += $azsdkToolName }
-    if ($packageName) { $cliArgs += "--package-name"; $cliArgs += $packageName }
-    if ($language) { $cliArgs += "--language"; $cliArgs += $language }
-    if ($typeSpecProject) { $cliArgs += "--type-spec-project"; $cliArgs += $typeSpecProject }
-    if ($status) { $cliArgs += "--operation-status"; $cliArgs += $status }
-    if ($package_type) { $cliArgs += "--package-type"; $cliArgs += $package_type }
     
     # run azsdk cli to ingest telemetry (non-blocking)
     try
