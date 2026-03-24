@@ -25,6 +25,7 @@ public partial class OutboundRule : ProvisionableResource
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -142,7 +143,7 @@ public partial class OutboundRule : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _allocatedOutboundPorts = DefineProperty<int>("AllocatedOutboundPorts", ["properties", "allocatedOutboundPorts"], isOutput: true);
         _backendAddressPoolId = DefineProperty<ResourceIdentifier>("BackendAddressPoolId", ["properties", "backendAddressPool", "id"], isOutput: true);
         _enableTcpReset = DefineProperty<bool>("EnableTcpReset", ["properties", "enableTcpReset"], isOutput: true);
