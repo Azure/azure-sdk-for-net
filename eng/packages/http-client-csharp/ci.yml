@@ -49,6 +49,9 @@ extends:
   parameters:
     InitializationSteps:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
+        parameters:
+          SourceDirectory: $(Build.SourcesDirectory)
     EmitterPackageJsonOutputPath: eng/azure-typespec-http-client-csharp-emitter-package.json
     EmitterPackagePath: eng/packages/http-client-csharp
     SparseCheckoutPaths:
