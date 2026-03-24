@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 request.Headers.Add(matchConditions);
             }
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }

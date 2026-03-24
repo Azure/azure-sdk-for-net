@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudBareMetalMachineKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual ArmOperation<NetworkCloudBareMetalMachineKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => CreateOrUpdate(waitUntil, bareMetalMachineKeySetName, data, null, cancellationToken);
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await CreateOrUpdateAsync(waitUntil, bareMetalMachineKeySetName, data, null, cancellationToken).ConfigureAwait(false);
     }
 }

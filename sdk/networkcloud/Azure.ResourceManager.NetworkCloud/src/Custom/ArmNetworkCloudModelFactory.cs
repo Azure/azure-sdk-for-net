@@ -419,21 +419,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 virtualMachinesAssociatedIds: virtualMachinesAssociatedIds);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloud.Models.NetworkCloudOperationStatusResult"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(ResourceIdentifier id, ResourceIdentifier resourceId, string status, string name, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IEnumerable<NetworkCloudOperationStatusResult> operations, ResponseError error)
-        {
-            return NetworkCloudOperationStatusResult(
-                id: id,
-                resourceId: resourceId,
-                status: status,
-                name: name,
-                percentComplete: percentComplete,
-                startOn: startOn,
-                endOn: endOn,
-                operations: operations,
-                error: error);
-        }
+        // NetworkCloudOperationStatusResult backward-compat overload is now generated automatically.
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudRackData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

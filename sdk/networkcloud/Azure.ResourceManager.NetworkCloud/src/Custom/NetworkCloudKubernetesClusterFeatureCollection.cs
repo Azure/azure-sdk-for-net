@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudKubernetesClusterFeatureResource> CreateOrUpdate(WaitUntil waitUntil, string featureName, NetworkCloudKubernetesClusterFeatureData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual ArmOperation<NetworkCloudKubernetesClusterFeatureResource> CreateOrUpdate(WaitUntil waitUntil, string featureName, NetworkCloudKubernetesClusterFeatureData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => CreateOrUpdate(waitUntil, featureName, data, null, cancellationToken);
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterFeatureResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string featureName, NetworkCloudKubernetesClusterFeatureData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterFeatureResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string featureName, NetworkCloudKubernetesClusterFeatureData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await CreateOrUpdateAsync(waitUntil, featureName, data, null, cancellationToken).ConfigureAwait(false);
     }
 }

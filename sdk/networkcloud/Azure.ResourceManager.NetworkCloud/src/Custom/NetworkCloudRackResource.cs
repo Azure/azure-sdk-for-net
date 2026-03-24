@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudRackResource> Update(WaitUntil waitUntil, NetworkCloudRackPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual ArmOperation<NetworkCloudRackResource> Update(WaitUntil waitUntil, NetworkCloudRackPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => Update(waitUntil, patch, null, cancellationToken);
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudRackResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudRackPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<NetworkCloudRackResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudRackPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
     }
 }

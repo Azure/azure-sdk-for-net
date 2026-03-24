@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudVirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string virtualMachineName, NetworkCloudVirtualMachineData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual ArmOperation<NetworkCloudVirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string virtualMachineName, NetworkCloudVirtualMachineData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => CreateOrUpdate(waitUntil, virtualMachineName, data, null, cancellationToken);
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudVirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualMachineName, NetworkCloudVirtualMachineData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<NetworkCloudVirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualMachineName, NetworkCloudVirtualMachineData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await CreateOrUpdateAsync(waitUntil, virtualMachineName, data, null, cancellationToken).ConfigureAwait(false);
     }
 }

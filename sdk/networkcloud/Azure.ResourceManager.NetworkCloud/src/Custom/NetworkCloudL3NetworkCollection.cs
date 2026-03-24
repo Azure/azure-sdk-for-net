@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudL3NetworkResource> CreateOrUpdate(WaitUntil waitUntil, string l3NetworkName, NetworkCloudL3NetworkData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual ArmOperation<NetworkCloudL3NetworkResource> CreateOrUpdate(WaitUntil waitUntil, string l3NetworkName, NetworkCloudL3NetworkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => CreateOrUpdate(waitUntil, l3NetworkName, data, null, cancellationToken);
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudL3NetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string l3NetworkName, NetworkCloudL3NetworkData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<NetworkCloudL3NetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string l3NetworkName, NetworkCloudL3NetworkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await CreateOrUpdateAsync(waitUntil, l3NetworkName, data, null, cancellationToken).ConfigureAwait(false);
     }
 }

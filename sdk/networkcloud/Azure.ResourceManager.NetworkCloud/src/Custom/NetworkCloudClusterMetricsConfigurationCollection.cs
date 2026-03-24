@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudClusterMetricsConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual ArmOperation<NetworkCloudClusterMetricsConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => CreateOrUpdate(waitUntil, metricsConfigurationName, data, null, cancellationToken);
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudClusterMetricsConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<NetworkCloudClusterMetricsConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await CreateOrUpdateAsync(waitUntil, metricsConfigurationName, data, null, cancellationToken).ConfigureAwait(false);
     }
 }

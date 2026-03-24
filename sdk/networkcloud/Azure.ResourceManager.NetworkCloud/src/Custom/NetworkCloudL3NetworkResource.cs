@@ -162,22 +162,22 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<NetworkCloudL3NetworkResource> Update(NetworkCloudL3NetworkPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual Response<NetworkCloudL3NetworkResource> Update(NetworkCloudL3NetworkPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => Update(patch, null, cancellationToken);
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<NetworkCloudL3NetworkResource>> UpdateAsync(NetworkCloudL3NetworkPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual async Task<Response<NetworkCloudL3NetworkResource>> UpdateAsync(NetworkCloudL3NetworkPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await UpdateAsync(patch, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => Delete(waitUntil, null, cancellationToken);
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
     }
 }

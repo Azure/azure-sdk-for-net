@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudTrunkedNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string trunkedNetworkName, NetworkCloudTrunkedNetworkData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual ArmOperation<NetworkCloudTrunkedNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string trunkedNetworkName, NetworkCloudTrunkedNetworkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => CreateOrUpdate(waitUntil, trunkedNetworkName, data, null, cancellationToken);
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudTrunkedNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string trunkedNetworkName, NetworkCloudTrunkedNetworkData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<NetworkCloudTrunkedNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string trunkedNetworkName, NetworkCloudTrunkedNetworkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await CreateOrUpdateAsync(waitUntil, trunkedNetworkName, data, null, cancellationToken).ConfigureAwait(false);
     }
 }

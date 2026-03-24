@@ -2570,7 +2570,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return SecretArchiveReference(keyVaultId, keyVaultUri: default, secretName, secretVersion);
         }
 
-
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2730,8 +2729,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 default);
         }
 
-
-
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudBareMetalMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2778,7 +2775,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             return NetworkCloudBareMetalMachineData(id, name, resourceType, systemData, tags, location, bmcConnectionString, bmcCredentials, bmcMacAddress, bootMacAddress, machineDetails, machineName, machineSkuId, rackId, rackSlot, serialNumber, actionStates: default, associatedResourceIds, bmcIpv4Address: default, bmcIpv6Address: default, caCertificate: default, clusterId, cordonStatus, detailedStatus, detailedStatusMessage, hardwareInventory, hardwareValidationStatus, hybridAksClustersAssociatedIds, kubernetesNodeName, kubernetesVersion, machineClusterVersion, machineRoles, oamIPv4Address, oamIPv6Address, osImage, powerState, readyState, runtimeProtectionStatus, secretRotationStatus, serviceTag, virtualMachinesAssociatedIds, provisioningState, etag: default, extendedLocation);
         }
-
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudClusterManagerData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -2883,8 +2879,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 default);
         }
 
-
-
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudL3NetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2936,7 +2930,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 extendedLocation);
         }
 
-
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudStorageApplianceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2969,7 +2962,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             return NetworkCloudStorageApplianceData(id, name, resourceType, systemData, tags, location, rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials, caCertificate: default, capacity, capacityUsed, clusterId, detailedStatus, detailedStatusMessage, expansionShelves: default, managementIPv4Address, manufacturer, model, remoteVendorManagementFeature, remoteVendorManagementStatus, secretRotationStatus, version, provisioningState, etag: default, extendedLocation);
         }
-
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudVirtualMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -3009,13 +3001,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             return NetworkCloudVirtualMachineData(id, name, resourceType, systemData, tags, location, adminUsername, bootMethod, cloudServicesNetworkAttachment, cpuCores, isolateEmulatorThread, memorySizeInGB, networkAttachments, networkData, networkDataContent: default, placementHints, sshPublicKeys, storageProfile, userData, userDataContent: default, virtioInterface, vmDeviceModel, vmImage, vmImageRepositoryCredentials, availabilityZone, bareMetalMachineId, clusterId, consoleExtendedLocation: default, detailedStatus, detailedStatusMessage, powerState, volumes, provisioningState, etag: default, extendedLocation, identity: default);
         }
-
-
-
-
-
-
-
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudBareMetalMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -3186,5 +3171,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return NetworkCloudStorageApplianceData(id, name, resourceType, systemData, tags, location, rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials, caCertificate: default, capacity, capacityUsed, clusterId, detailedStatus, detailedStatusMessage, expansionShelves: default, managementIPv4Address, manufacturer: default, model: default, remoteVendorManagementFeature, remoteVendorManagementStatus, secretRotationStatus: default, version: default, provisioningState, etag: default, extendedLocation);
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.Models.NetworkCloudOperationStatusResult"/>. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudOperationStatusResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IEnumerable<NetworkCloudOperationStatusResult> operations, ResponseError error)
+        {
+            return NetworkCloudOperationStatusResult(endOn: endOn, error: error, id: id, name: name, operations: operations, percentComplete: percentComplete, resourceId: resourceId, startOn: startOn, status: status);
+        }
     }
 }

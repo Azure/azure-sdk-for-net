@@ -163,21 +163,21 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudBareMetalMachineKeySetResource> Update(WaitUntil waitUntil, NetworkCloudBareMetalMachineKeySetPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual ArmOperation<NetworkCloudBareMetalMachineKeySetResource> Update(WaitUntil waitUntil, NetworkCloudBareMetalMachineKeySetPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => Update(waitUntil, patch, null, cancellationToken);
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachineKeySetPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachineKeySetPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => Delete(waitUntil, null, cancellationToken);
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
     }
 }

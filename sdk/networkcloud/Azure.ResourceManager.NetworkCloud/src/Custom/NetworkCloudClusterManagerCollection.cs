@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudClusterManagerResource> CreateOrUpdate(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual ArmOperation<NetworkCloudClusterManagerResource> CreateOrUpdate(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => CreateOrUpdate(waitUntil, clusterManagerName, data, null, cancellationToken);
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudClusterManagerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<NetworkCloudClusterManagerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await CreateOrUpdateAsync(waitUntil, clusterManagerName, data, null, cancellationToken).ConfigureAwait(false);
     }
 }

@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudBmcKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bmcKeySetName, NetworkCloudBmcKeySetData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual ArmOperation<NetworkCloudBmcKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bmcKeySetName, NetworkCloudBmcKeySetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => CreateOrUpdate(waitUntil, bmcKeySetName, data, null, cancellationToken);
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudBmcKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bmcKeySetName, NetworkCloudBmcKeySetData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<NetworkCloudBmcKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bmcKeySetName, NetworkCloudBmcKeySetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await CreateOrUpdateAsync(waitUntil, bmcKeySetName, data, null, cancellationToken).ConfigureAwait(false);
     }
 }
