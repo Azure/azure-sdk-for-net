@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Purview.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
-        public ErrorResponse()
+        internal ErrorResponse()
         {
         }
 
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <summary> The error object. </summary>
-        public ResponseError ErrorDetails { get; set; }
+        public ResponseError ErrorDetails { get; }
     }
 }

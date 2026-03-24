@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> The Managed Identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
 
+        /// <summary> The account properties. </summary>
+        public PurviewAccountProperties Properties { get; set; }
+
         /// <summary> Tags on the azure resource. </summary>
         public IDictionary<string, string> Tags { get; }
     }

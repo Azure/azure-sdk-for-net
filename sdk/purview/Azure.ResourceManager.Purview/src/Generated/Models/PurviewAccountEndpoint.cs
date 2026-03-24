@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.Purview.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PurviewAccountEndpoint"/>. </summary>
+        internal PurviewAccountEndpoint()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountEndpoint"/>. </summary>
         /// <param name="catalog"> Gets the catalog endpoint. </param>
         /// <param name="scan"> Gets the scan endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>

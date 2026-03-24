@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.Purview.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PurviewAccountStatus"/>. </summary>
+        internal PurviewAccountStatus()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountStatus"/>. </summary>
         /// <param name="accountProvisioningState"> Gets the account status code. </param>
         /// <param name="error"> Gets the account error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>

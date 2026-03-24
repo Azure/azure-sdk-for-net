@@ -9,15 +9,9 @@ namespace Azure.ResourceManager.Purview.Models
 {
     // Backward compatibility: the Guardian endpoint property was removed in API version
     // 2024-04-01-preview. The old SDK (1.1.0) exposed it publicly. We keep it here with
-    // [EditorBrowsable(Never)] so existing consumers don't break. The parameterless ctor
-    // is also re-added since the new generator removed it.
+    // [EditorBrowsable(Never)] so existing consumers don't break.
     public partial class PurviewAccountEndpoint
     {
-        /// <summary> Initializes a new instance of <see cref="PurviewAccountEndpoint"/>. </summary>
-        internal PurviewAccountEndpoint()
-        {
-        }
-
         /// <summary> Gets the guardian endpoint. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Guardian { get; }
