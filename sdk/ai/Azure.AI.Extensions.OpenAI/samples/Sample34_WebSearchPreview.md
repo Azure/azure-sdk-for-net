@@ -1,5 +1,7 @@
 # Sample of web search preview tool with Agent in Azure.AI.Extensions.OpenAI.
 
+**Note:** The Web Search Preview is deprecated, please use Web Search instead.
+
 ## Warning
 Web Search Preview tool uses Grounding with Bing, which has additional costs and terms: [terms of use](https://www.microsoft.com/bing/apis/grounding-legal-enterprise) and [privacy statement](https://go.microsoft.com/fwlink/?LinkId=521839&clcid=0x409). Customer data will flow outside the Azure compliance boundary. Learn more [here](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/tools/web-search).
 

@@ -1042,6 +1042,8 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 ```
 
 ### Web Search Preview
+**Note:** The Web Search Preview is deprecated, please use Web Search from the section above instead.
+
 The `WebSearchPreviewTool` also allows the agent to perform web search. To improve the results we can set up the search location. After the agent was created, it can be used as usual. When needed, it will use the Web Search Preview tool to answer the question.
 
 ```C# Snippet:Sample_CreateAgent_WebSearchPreviewStreaming_Async
