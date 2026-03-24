@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-03-21 17:47:46 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-03-24 04:09:30 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -16,18 +16,18 @@
 
 ## Summary
 
-- Total libraries: 411
+- Total libraries: 412
 - Management Plane (MPG): 232
-  - Autorest/Swagger: 118
-  - New Emitter (TypeSpec): 114
+  - Autorest/Swagger: 117
+  - New Emitter (TypeSpec): 115
   - Old TypeSpec: 0
 - Data Plane (DPG): 145
   - Autorest/Swagger: 53
   - New Emitter (TypeSpec): 39
   - Old TypeSpec: 4
-- Provisioning: 34
+- Provisioning: 35
   - Reflection-based generator: 32
-  - TypeSpec-based generator: 0
+  - TypeSpec-based generator: 1
   - No generator: 2
 - No generator: 49
 
@@ -150,7 +150,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 53
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 114 / 114 (100%)
+**Migration Status**: 115 / 115 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -260,6 +260,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | storagediscovery | Azure.ResourceManager.StorageDiscovery | ✅ |
 | storagemover | Azure.ResourceManager.StorageMover | ✅ |
 | storagesync | Azure.ResourceManager.StorageSync | ✅ |
+| support | Azure.ResourceManager.Support | ✅ |
 | terraform | Azure.ResourceManager.Terraform | ✅ |
 | trafficmanager | Azure.ResourceManager.TrafficManager | ✅ |
 | trustedsigning | Azure.ResourceManager.TrustedSigning | ✅ |
@@ -272,7 +273,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 118
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 117
 
 | Service | Library |
 | ------- | ------- |
@@ -388,7 +389,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 11
 | storagepool | Azure.ResourceManager.StoragePool |
 | streamanalytics | Azure.ResourceManager.StreamAnalytics |
 | subscription | Azure.ResourceManager.Subscription |
-| support | Azure.ResourceManager.Support |
 | synapse | Azure.ResourceManager.Synapse |
 | voiceservices | Azure.ResourceManager.VoiceServices |
 | websites | Azure.ResourceManager.AppService |
@@ -400,13 +400,14 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 11
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 0 / 34 migrated to TypeSpec-based generator
+**Migration Status**: 1 / 35 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
 | apimanagement | Azure.Provisioning.ApiManagement | Azure.ResourceManager.ApiManagement | Reflection |
 | appconfiguration | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | Reflection |
 | applicationinsights | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights | Reflection |
+| batch | Azure.Provisioning.Batch | Azure.ResourceManager.Batch ✅ | TypeSpec ✅ |
 | cdn | Azure.Provisioning.Cdn | Azure.ResourceManager.Cdn | Reflection |
 | cognitiveservices | Azure.Provisioning.CognitiveServices | Azure.ResourceManager.CognitiveServices | Reflection |
 | communication | Azure.Provisioning.Communication | Azure.ResourceManager.Communication ✅ | Reflection |
