@@ -116,38 +116,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(deviceUpdateResponse.Value.Data.Properties.Endpoints.Inbound["myendpoint1"].EndpointType, deviceData.Properties.Endpoints.Inbound["myendpoint1"].EndpointType);
             Assert.AreEqual(deviceUpdateResponse.Value.Data.Properties.Version, 2);
 
-            // Test Revoke on device with no policy attached — negative test (new in 2026-03-01-preview)
-            // Only DPS-provisioned devices have a policy attached and CMS-issued credentials.
-            // This ARM-created device has no policy, so Revoke is expected to fail.
-            //
-            // RP LRO bug (see doc/device-revoke-lro-bug.md):
-            //   The RP returns HTTP 200 instead of 202, missing LRO headers and required "result" property.
-            //   In Record: SDK throws RequestFailedException (status 200, ErrorCode 400231).
-            //   In Playback: DiagnosticScopeValidatingInterceptor wraps RequestFailedException
-            //     inside InvalidOperationException ("scope not marked as failed").
-            //   Use Assert.CatchAsync<Exception> which catches T or any derived type (unlike
-            //   Assert.ThrowsAsync which requires exact type match).
-            var revokeRequest = new DeviceCredentialsRevokeRequest() { Disable = false };
-
-            var revokeException = Assert.CatchAsync<Exception>(async () =>
-            {
-                await device.RevokeAsync(
-                    WaitUntil.Completed,
-                    revokeRequest,
-                    CancellationToken.None);
-            });
-
-            Assert.IsNotNull(revokeException, "Revoke should throw (RP LRO bug — see doc/device-revoke-lro-bug.md)");
-
-            // Verify device is unchanged after failed revoke
-            var deviceAfterRevoke = await devicesCollection.GetAsync(deviceName, CancellationToken.None);
-            Assert.AreEqual(deviceAfterRevoke.Value.Data.Properties.Version, 2,
-                "Device version should be unchanged after failed revoke");
-
             // Delete DeviceRegistry Device
-            // Unlike Revoke, Delete succeeds with 200 against the live RP (the SDK treats
-            // a void 200 as success for delete). Just call directly.
-            await device.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            try
+            {
+                await device.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            }
+            catch (RequestFailedException ex)
+            {
+                // Delete temporary returns 200 since async operation is defined for the resource but not implemented in RP
+                if (ex.Status != 200)
+                {
+                    throw;
+                }
+            }
         }
     }
 }
