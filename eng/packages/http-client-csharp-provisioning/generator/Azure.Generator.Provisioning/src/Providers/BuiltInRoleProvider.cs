@@ -74,31 +74,39 @@ namespace Azure.Generator.Provisioning.Providers
 
             // Step 3: Deduplicate by name. If two entries share the same sanitized name
             // but have different GUIDs, this is an error — stop generation for this type.
-            var rolesByName = new Dictionary<string, (string Name, string Value)>(StringComparer.Ordinal);
-            bool hasNameCollision = false;
+            // Report all collisions so users can fix them all at once.
+            var guidsByName = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
             foreach (var role in rolesByValue.Values)
             {
-                if (rolesByName.TryGetValue(role.Name, out var existing))
+                if (!guidsByName.TryGetValue(role.Name, out var guids))
                 {
-                    if (!string.Equals(role.Value, existing.Value, StringComparison.OrdinalIgnoreCase))
-                    {
-                        hasNameCollision = true;
-                        ProvisioningGenerator.Instance.Emitter.ReportDiagnostic(
-                            "rbac-role-name-collision",
-                            $"RBAC role name collision: '{role.Name}' maps to different GUIDs '{existing.Value}' and '{role.Value}'. Cannot generate BuiltInRole type.");
-                    }
+                    guids = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                    guidsByName[role.Name] = guids;
                 }
-                else
+                guids.Add(role.Value);
+            }
+
+            bool hasNameCollision = false;
+            foreach (var (name, guids) in guidsByName)
+            {
+                if (guids.Count > 1)
                 {
-                    rolesByName.Add(role.Name, role);
+                    hasNameCollision = true;
+                    ProvisioningGenerator.Instance.Emitter.ReportDiagnostic(
+                        "rbac-role-name-collision",
+                        $"RBAC role name collision: '{name}' maps to different GUIDs [{string.Join(", ", guids.Select(g => $"'{g}'"))}]. Cannot generate BuiltInRole type.");
                 }
             }
 
             if (hasNameCollision)
                 return null;
 
-            // Sort by name for deterministic output
-            var sortedRoles = rolesByName.Values.OrderBy(r => r.Name, StringComparer.Ordinal).ToList();
+            // Sort by name for deterministic output — take one entry per name from rolesByValue
+            var sortedRoles = rolesByValue.Values
+                .GroupBy(r => r.Name, StringComparer.Ordinal)
+                .Select(g => g.First())
+                .OrderBy(r => r.Name, StringComparer.Ordinal)
+                .ToList();
             return new BuiltInRoleProvider(serviceName, sortedRoles);
         }
 
