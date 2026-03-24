@@ -18,6 +18,14 @@ pr:
       - eng/packages/http-client-csharp
       - eng/scripts/typespec
 
+schedules:
+  - cron: "0 8 * * *"
+    displayName: "Nightly build"
+    branches:
+      include:
+        - main
+    always: true
+
 parameters:
   - name: UseTypeSpecNext
     displayName: "Use TypeSpec Next"
