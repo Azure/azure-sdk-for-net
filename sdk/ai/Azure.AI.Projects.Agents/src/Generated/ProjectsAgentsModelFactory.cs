@@ -46,7 +46,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The AgentDefinition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PromptAgentDefinition"/>, <see cref="Agents.WorkflowAgentDefinition"/>, and <see cref="Agents.HostedAgentDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeclarativeAgentDefinition"/>, <see cref="Agents.WorkflowAgentDefinition"/>, and <see cref="Agents.HostedAgentDefinition"/>.
         /// </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>

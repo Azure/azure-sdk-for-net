@@ -41,7 +41,7 @@ public class Sample_AzureAISearchStreaming : ProjectsOpenAITestBase
             Filter = "category eq 'sleeping bag'",
             QueryType = AzureAISearchQueryType.Simple
         };
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
             Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
@@ -114,7 +114,7 @@ public class Sample_AzureAISearchStreaming : ProjectsOpenAITestBase
             Filter = "category eq 'sleeping bag'",
             QueryType = AzureAISearchQueryType.Simple
         };
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
             Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }

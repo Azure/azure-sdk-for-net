@@ -62,7 +62,7 @@ FabricDataAgentToolOptions fabricToolOption = new()
 {
     ProjectConnections = { new ToolProjectConnection(projectConnectionId: fabricConnection.Id) }
 };
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }
@@ -79,7 +79,7 @@ FabricDataAgentToolOptions fabricToolOption = new()
 {
     ProjectConnections = { new ToolProjectConnection(projectConnectionId: fabricConnection.Id) }
 };
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }

@@ -13,43 +13,11 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary>
-    /// A class representing the ServiceBusQueue data model.
-    /// Description of queue Resource.
-    /// </summary>
+    /// <summary> Description of queue Resource. </summary>
     public partial class ServiceBusQueueData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusQueueData"/>. </summary>
         public ServiceBusQueueData()
@@ -57,135 +25,392 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusQueueData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Queue Properties. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="countDetails"> Message Count Details. </param>
-        /// <param name="createdOn"> The exact time the message was created. </param>
-        /// <param name="updatedOn"> The exact time the message was updated. </param>
-        /// <param name="accessedOn"> Last time a message was sent, or the last time there was a receive request to this queue. </param>
-        /// <param name="sizeInBytes"> The size of the queue, in bytes. </param>
-        /// <param name="messageCount"> The number of messages in the queue. </param>
-        /// <param name="lockDuration"> ISO 8601 timespan duration of a peek-lock; that is, the amount of time that the message is locked for other receivers. The maximum value for LockDuration is 5 minutes; the default value is 1 minute. </param>
-        /// <param name="maxSizeInMegabytes"> The maximum size of the queue in megabytes, which is the size of memory allocated for the queue. Default is 1024. </param>
-        /// <param name="maxMessageSizeInKilobytes"> Maximum size (in KB) of the message payload that can be accepted by the queue. This property is only used in Premium today and default is 1024. </param>
-        /// <param name="requiresDuplicateDetection"> A value indicating if this queue requires duplicate detection. </param>
-        /// <param name="requiresSession"> A value that indicates whether the queue supports the concept of sessions. </param>
-        /// <param name="defaultMessageTimeToLive"> ISO 8601 default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself. </param>
-        /// <param name="deadLetteringOnMessageExpiration"> A value that indicates whether this queue has dead letter support when a message expires. </param>
-        /// <param name="duplicateDetectionHistoryTimeWindow"> ISO 8601 timeSpan structure that defines the duration of the duplicate detection history. The default value is 10 minutes. </param>
-        /// <param name="maxDeliveryCount"> The maximum delivery count. A message is automatically deadlettered after this number of deliveries. default value is 10. </param>
-        /// <param name="status"> Enumerates the possible values for the status of a messaging entity. </param>
-        /// <param name="enableBatchedOperations"> Value that indicates whether server-side batched operations are enabled. </param>
-        /// <param name="autoDeleteOnIdle"> ISO 8061 timeSpan idle interval after which the queue is automatically deleted. The minimum duration is 5 minutes. </param>
-        /// <param name="enablePartitioning"> A value that indicates whether the queue is to be partitioned across multiple message brokers. </param>
-        /// <param name="enableExpress"> A value that indicates whether Express Entities are enabled. An express queue holds a message in memory temporarily before writing it to persistent storage. </param>
-        /// <param name="forwardTo"> Queue/Topic name to forward the messages. </param>
-        /// <param name="forwardDeadLetteredMessagesTo"> Queue/Topic name to forward the Dead Letter message. </param>
-        /// <param name="userMetadata"> Gets and Sets Metadata of User. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusQueueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, MessageCountDetails countDetails, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? accessedOn, long? sizeInBytes, long? messageCount, TimeSpan? lockDuration, int? maxSizeInMegabytes, long? maxMessageSizeInKilobytes, bool? requiresDuplicateDetection, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, ServiceBusMessagingEntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, bool? enablePartitioning, bool? enableExpress, string forwardTo, string forwardDeadLetteredMessagesTo, string userMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceBusQueueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SBQueueProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Location = location;
-            CountDetails = countDetails;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            AccessedOn = accessedOn;
-            SizeInBytes = sizeInBytes;
-            MessageCount = messageCount;
-            LockDuration = lockDuration;
-            MaxSizeInMegabytes = maxSizeInMegabytes;
-            MaxMessageSizeInKilobytes = maxMessageSizeInKilobytes;
-            RequiresDuplicateDetection = requiresDuplicateDetection;
-            RequiresSession = requiresSession;
-            DefaultMessageTimeToLive = defaultMessageTimeToLive;
-            DeadLetteringOnMessageExpiration = deadLetteringOnMessageExpiration;
-            DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindow;
-            MaxDeliveryCount = maxDeliveryCount;
-            Status = status;
-            EnableBatchedOperations = enableBatchedOperations;
-            AutoDeleteOnIdle = autoDeleteOnIdle;
-            EnablePartitioning = enablePartitioning;
-            EnableExpress = enableExpress;
-            ForwardTo = forwardTo;
-            ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo;
-            UserMetadata = userMetadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Queue Properties. </summary>
+        [WirePath("properties")]
+        internal SBQueueProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
+
         /// <summary> Message Count Details. </summary>
         [WirePath("properties.countDetails")]
-        public MessageCountDetails CountDetails { get; }
+        public MessageCountDetails CountDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CountDetails;
+            }
+        }
+
         /// <summary> The exact time the message was created. </summary>
         [WirePath("properties.createdAt")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The exact time the message was updated. </summary>
         [WirePath("properties.updatedAt")]
-        public DateTimeOffset? UpdatedOn { get; }
+        public DateTimeOffset? UpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdatedOn;
+            }
+        }
+
         /// <summary> Last time a message was sent, or the last time there was a receive request to this queue. </summary>
         [WirePath("properties.accessedAt")]
-        public DateTimeOffset? AccessedOn { get; }
+        public DateTimeOffset? AccessedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessedOn;
+            }
+        }
+
         /// <summary> The size of the queue, in bytes. </summary>
         [WirePath("properties.sizeInBytes")]
-        public long? SizeInBytes { get; }
+        public long? SizeInBytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SizeInBytes;
+            }
+        }
+
         /// <summary> The number of messages in the queue. </summary>
         [WirePath("properties.messageCount")]
-        public long? MessageCount { get; }
+        public long? MessageCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MessageCount;
+            }
+        }
+
         /// <summary> ISO 8601 timespan duration of a peek-lock; that is, the amount of time that the message is locked for other receivers. The maximum value for LockDuration is 5 minutes; the default value is 1 minute. </summary>
         [WirePath("properties.lockDuration")]
-        public TimeSpan? LockDuration { get; set; }
+        public TimeSpan? LockDuration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LockDuration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.LockDuration = value.Value;
+            }
+        }
+
         /// <summary> The maximum size of the queue in megabytes, which is the size of memory allocated for the queue. Default is 1024. </summary>
         [WirePath("properties.maxSizeInMegabytes")]
-        public int? MaxSizeInMegabytes { get; set; }
+        public int? MaxSizeInMegabytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxSizeInMegabytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.MaxSizeInMegabytes = value.Value;
+            }
+        }
+
         /// <summary> Maximum size (in KB) of the message payload that can be accepted by the queue. This property is only used in Premium today and default is 1024. </summary>
         [WirePath("properties.maxMessageSizeInKilobytes")]
-        public long? MaxMessageSizeInKilobytes { get; set; }
+        public long? MaxMessageSizeInKilobytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxMessageSizeInKilobytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.MaxMessageSizeInKilobytes = value.Value;
+            }
+        }
+
         /// <summary> A value indicating if this queue requires duplicate detection. </summary>
         [WirePath("properties.requiresDuplicateDetection")]
-        public bool? RequiresDuplicateDetection { get; set; }
+        public bool? RequiresDuplicateDetection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiresDuplicateDetection;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.RequiresDuplicateDetection = value.Value;
+            }
+        }
+
         /// <summary> A value that indicates whether the queue supports the concept of sessions. </summary>
         [WirePath("properties.requiresSession")]
-        public bool? RequiresSession { get; set; }
+        public bool? RequiresSession
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiresSession;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.RequiresSession = value.Value;
+            }
+        }
+
         /// <summary> ISO 8601 default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself. </summary>
         [WirePath("properties.defaultMessageTimeToLive")]
-        public TimeSpan? DefaultMessageTimeToLive { get; set; }
+        public TimeSpan? DefaultMessageTimeToLive
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultMessageTimeToLive;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.DefaultMessageTimeToLive = value.Value;
+            }
+        }
+
         /// <summary> A value that indicates whether this queue has dead letter support when a message expires. </summary>
         [WirePath("properties.deadLetteringOnMessageExpiration")]
-        public bool? DeadLetteringOnMessageExpiration { get; set; }
+        public bool? DeadLetteringOnMessageExpiration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeadLetteringOnMessageExpiration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.DeadLetteringOnMessageExpiration = value.Value;
+            }
+        }
+
         /// <summary> ISO 8601 timeSpan structure that defines the duration of the duplicate detection history. The default value is 10 minutes. </summary>
         [WirePath("properties.duplicateDetectionHistoryTimeWindow")]
-        public TimeSpan? DuplicateDetectionHistoryTimeWindow { get; set; }
+        public TimeSpan? DuplicateDetectionHistoryTimeWindow
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DuplicateDetectionHistoryTimeWindow;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.DuplicateDetectionHistoryTimeWindow = value.Value;
+            }
+        }
+
         /// <summary> The maximum delivery count. A message is automatically deadlettered after this number of deliveries. default value is 10. </summary>
         [WirePath("properties.maxDeliveryCount")]
-        public int? MaxDeliveryCount { get; set; }
+        public int? MaxDeliveryCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxDeliveryCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.MaxDeliveryCount = value.Value;
+            }
+        }
+
         /// <summary> Enumerates the possible values for the status of a messaging entity. </summary>
         [WirePath("properties.status")]
-        public ServiceBusMessagingEntityStatus? Status { get; set; }
+        public ServiceBusMessagingEntityStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.Status = value.Value;
+            }
+        }
+
         /// <summary> Value that indicates whether server-side batched operations are enabled. </summary>
         [WirePath("properties.enableBatchedOperations")]
-        public bool? EnableBatchedOperations { get; set; }
+        public bool? EnableBatchedOperations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableBatchedOperations;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.EnableBatchedOperations = value.Value;
+            }
+        }
+
         /// <summary> ISO 8061 timeSpan idle interval after which the queue is automatically deleted. The minimum duration is 5 minutes. </summary>
         [WirePath("properties.autoDeleteOnIdle")]
-        public TimeSpan? AutoDeleteOnIdle { get; set; }
+        public TimeSpan? AutoDeleteOnIdle
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoDeleteOnIdle;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.AutoDeleteOnIdle = value.Value;
+            }
+        }
+
         /// <summary> A value that indicates whether the queue is to be partitioned across multiple message brokers. </summary>
         [WirePath("properties.enablePartitioning")]
-        public bool? EnablePartitioning { get; set; }
+        public bool? EnablePartitioning
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnablePartitioning;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.EnablePartitioning = value.Value;
+            }
+        }
+
         /// <summary> A value that indicates whether Express Entities are enabled. An express queue holds a message in memory temporarily before writing it to persistent storage. </summary>
         [WirePath("properties.enableExpress")]
-        public bool? EnableExpress { get; set; }
+        public bool? EnableExpress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableExpress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.EnableExpress = value.Value;
+            }
+        }
+
         /// <summary> Queue/Topic name to forward the messages. </summary>
         [WirePath("properties.forwardTo")]
-        public string ForwardTo { get; set; }
+        public string ForwardTo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForwardTo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.ForwardTo = value;
+            }
+        }
+
         /// <summary> Queue/Topic name to forward the Dead Letter message. </summary>
         [WirePath("properties.forwardDeadLetteredMessagesTo")]
-        public string ForwardDeadLetteredMessagesTo { get; set; }
+        public string ForwardDeadLetteredMessagesTo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForwardDeadLetteredMessagesTo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.ForwardDeadLetteredMessagesTo = value;
+            }
+        }
+
         /// <summary> Gets and Sets Metadata of User. </summary>
         [WirePath("properties.userMetadata")]
-        public string UserMetadata { get; set; }
+        public string UserMetadata
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserMetadata;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBQueueProperties();
+                }
+                Properties.UserMetadata = value;
+            }
+        }
     }
 }

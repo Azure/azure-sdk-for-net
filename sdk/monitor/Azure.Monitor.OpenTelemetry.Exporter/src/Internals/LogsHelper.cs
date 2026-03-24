@@ -26,6 +26,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const string EndUserIdAttributeName = "enduser.id";
         private const string UserAgentOriginalAttributeName = "user_agent.original";
         private const string OperationNameAttributeName = "microsoft.operation_name";
+        private const string SessionIdAttributeName = "microsoft.session.id";
+        private const string DeviceIdAttributeName = "ai.device.id";
+        private const string DeviceModelAttributeName = "ai.device.model";
+        private const string DeviceTypeAttributeName = "ai.device.type";
+        private const string DeviceOsVersionAttributeName = "ai.device.osVersion";
+        private const string SyntheticSourceAttributeName = "microsoft.synthetic_source";
+        private const string UserAccountIdAttributeName = "microsoft.user.account_id";
         private const string AvailabilityIdAttributeName = "microsoft.availability.id";
         private const string AvailabilityNameAttributeName = "microsoft.availability.name";
         private const string AvailabilityDurationAttributeName = "microsoft.availability.duration";
@@ -169,6 +176,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case OperationNameAttributeName:
                         logContext.OperationName = item.Value?.ToString();
                         break;
+                    case SessionIdAttributeName:
+                        logContext.SessionId = item.Value?.ToString();
+                        break;
+                    case DeviceIdAttributeName:
+                        logContext.DeviceId = item.Value?.ToString();
+                        break;
+                    case DeviceModelAttributeName:
+                        logContext.DeviceModel = item.Value?.ToString();
+                        break;
+                    case DeviceTypeAttributeName:
+                        logContext.DeviceType = item.Value?.ToString();
+                        break;
+                    case DeviceOsVersionAttributeName:
+                        logContext.DeviceOsVersion = item.Value?.ToString();
+                        break;
+                    case SyntheticSourceAttributeName:
+                        logContext.SyntheticSource = item.Value?.ToString();
+                        break;
+                    case UserAccountIdAttributeName:
+                        logContext.UserAccountId = item.Value?.ToString();
+                        break;
                     default:
                         // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
                         if (item.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength && item.Value != null)
@@ -286,6 +314,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         break;
                     case OperationNameAttributeName:
                         logContext.OperationName = item.Value?.ToString();
+                        break;
+                    case SessionIdAttributeName:
+                        logContext.SessionId = item.Value?.ToString();
+                        break;
+                    case DeviceIdAttributeName:
+                        logContext.DeviceId = item.Value?.ToString();
+                        break;
+                    case DeviceModelAttributeName:
+                        logContext.DeviceModel = item.Value?.ToString();
+                        break;
+                    case DeviceTypeAttributeName:
+                        logContext.DeviceType = item.Value?.ToString();
+                        break;
+                    case DeviceOsVersionAttributeName:
+                        logContext.DeviceOsVersion = item.Value?.ToString();
+                        break;
+                    case SyntheticSourceAttributeName:
+                        logContext.SyntheticSource = item.Value?.ToString();
+                        break;
+                    case UserAccountIdAttributeName:
+                        logContext.UserAccountId = item.Value?.ToString();
                         break;
                     default:
                         if (item.Key.Length <= SchemaConstants.AvailabilityData_Properties_MaxValueLength && item.Value != null && !properties.ContainsKey(item.Key))

@@ -62,7 +62,7 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_CreateAgent_ImageGeneration_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "Generate images based on user prompts.",
             Tools = {
@@ -123,7 +123,7 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
         );
 
         #region Snippet:Sample_CreateAgent_ImageGeneration_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "Generate images based on user prompts.",
             Tools = {

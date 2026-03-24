@@ -16,7 +16,7 @@ EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_EvaluationsAgent_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant that answers general questions",
 };
@@ -28,7 +28,7 @@ Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Na
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_EvaluationsAgent_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant that answers general questions",
 };

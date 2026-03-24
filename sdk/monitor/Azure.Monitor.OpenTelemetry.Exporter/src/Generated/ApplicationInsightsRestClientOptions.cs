@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -24,10 +26,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 ServiceVersion.V2_1 => "v2.1",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of ApplicationInsightsRestClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal ApplicationInsightsRestClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "v2.1";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
 
         internal enum ServiceVersion
         {

@@ -6,7 +6,7 @@ using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenType("CreateAgentRequest1")]
+[CodeGenType("CreateAgentRequest")]
 [CodeGenSerialization(nameof(Definition), SerializationName = "definition", DeserializationValueHook = nameof(DeserializeDefinitionValue))]
 internal partial class InternalCreateAgentRequest
 {

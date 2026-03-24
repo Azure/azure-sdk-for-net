@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Mgmt.Tests
 {
@@ -111,6 +112,115 @@ namespace Azure.Generator.Mgmt.Tests
             // Also verify derived models can be created without issues
             var legacyType = plugin.Object.TypeFactory.CreateModel(legacyModel);
             Assert.IsNotNull(legacyType);
+        }
+
+        /// <summary>
+        /// Verifies that a two-level inheritance chain (Resource → BaseModel → DerivedModel)
+        /// produces consistent raw-data field references. Before the fix, the derived model's
+        /// FullConstructor parameter for additionalBinaryDataProperties referenced a different
+        /// FieldProvider than the one the serialization code finds via base-model field lookup,
+        /// causing the code writer to emit mismatched variable names (additionalBinaryDataProperties0).
+        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/57281
+        /// </summary>
+        [Test]
+        public void DerivedModelRawDataFieldMatchesBaseModelField()
+        {
+            // Arrange: Resource → EntityResourceLike → ContainerItemLike
+            var resourceModel = new InputModelType(
+                "Resource",
+                "Azure.ResourceManager.CommonTypes",
+                "Azure.ResourceManager.CommonTypes.Resource",
+                "public",
+                null,
+                null,
+                "ARM Resource",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
+            // Mid-level model extending Resource (like AzureEntityResource)
+            var entityModel = new InputModelType(
+                "EntityResourceLike",
+                "Samples.Models",
+                "EntityResourceLike",
+                "public",
+                null,
+                null,
+                "Entity resource extending ARM Resource",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [InputFactory.Property("etag", InputPrimitiveType.String, isReadOnly: true)],
+                resourceModel,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
+            // Leaf model extending mid-level model (like ListContainerItem)
+            var containerModel = new InputModelType(
+                "ContainerItemLike",
+                "Samples.Models",
+                "ContainerItemLike",
+                "public",
+                null,
+                null,
+                "Container item extending entity resource",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [InputFactory.Property("something", InputPrimitiveType.String)],
+                entityModel,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [resourceModel, entityModel, containerModel]);
+
+            // Act - create models in order; the visitor runs Update on entityModel
+            // (adding a new _additionalBinaryDataProperties field) and then
+            // FixRawDataFieldReference on containerModel.
+            var entityType = plugin.Object.TypeFactory.CreateModel(entityModel);
+            var containerType = plugin.Object.TypeFactory.CreateModel(containerModel);
+
+            Assert.IsNotNull(entityType);
+            Assert.IsNotNull(containerType);
+
+            // Find the _additionalBinaryDataProperties field on the base model
+            var baseRawDataField = entityType!.Fields.FirstOrDefault(
+                f => f.Name == "_additionalBinaryDataProperties");
+            Assert.IsNotNull(baseRawDataField, "Base model should have _additionalBinaryDataProperties field");
+
+            // Find the constructor parameter on the derived model
+            var derivedCtorParam = containerType!.FullConstructor.Signature.Parameters
+                .FirstOrDefault(p => p.Name == "additionalBinaryDataProperties");
+            Assert.IsNotNull(derivedCtorParam, "Derived model should have additionalBinaryDataProperties constructor parameter");
+
+            // Assert: the derived model's constructor parameter references the same
+            // FieldProvider that the base model exposes — this is exactly what
+            // FixRawDataFieldReference ensures.
+            Assert.AreSame(baseRawDataField, derivedCtorParam!.Field,
+                "Derived model's constructor parameter must reference the same FieldProvider " +
+                "as the base model's _additionalBinaryDataProperties field to avoid variable " +
+                "name mismatch in generated serialization code");
         }
     }
 }

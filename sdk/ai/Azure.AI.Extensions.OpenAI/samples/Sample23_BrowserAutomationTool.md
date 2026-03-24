@@ -43,7 +43,7 @@ BrowserAutomationPreviewTool playwrightTool = new(
         new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
     ));
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are an Agent helping with browser automation tasks.\n" +
     "You can answer questions, provide information, and assist with various tasks\n" +
@@ -63,7 +63,7 @@ BrowserAutomationPreviewTool playwrightTool = new(
         new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
     ));
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are an Agent helping with browser automation tasks.\n" +
     "You can answer questions, provide information, and assist with various tasks\n" +

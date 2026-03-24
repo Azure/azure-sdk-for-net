@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `BatchClientSettings` to support creating a `BatchClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ### Breaking Changes
 
 ### Bugs Fixed

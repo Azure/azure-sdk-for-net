@@ -150,7 +150,7 @@ public class Sample_AzureFunction : ProjectsOpenAITestBase
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_AzureFunction_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful support agent. Use the provided function any "
         + "time the prompt contains the string 'What would foo say?'. When you invoke "
@@ -166,7 +166,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_AzureFunction_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful support agent. Use the provided function any "
         + "time the prompt contains the string 'What would foo say?'. When you invoke "

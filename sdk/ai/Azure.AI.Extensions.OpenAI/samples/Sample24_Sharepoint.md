@@ -22,7 +22,7 @@ SharePointGroundingToolOptions sharepointToolOption = new()
 {
     ProjectConnections = { new ToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
 };
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { new SharepointPreviewTool(sharepointToolOption), }
@@ -39,7 +39,7 @@ SharePointGroundingToolOptions sharepointToolOption = new()
 {
     ProjectConnections = { new ToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
 };
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { new SharepointPreviewTool(sharepointToolOption), }
