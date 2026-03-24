@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -24,7 +24,7 @@ namespace Azure.AI.Agents.Persistent
 
         internal static IEnumerable<SubmitToolApprovalUpdate> DeserializeSubmitToolApprovalUpdates(JsonElement element)
         {
-            ThreadRun run = ThreadRun.DeserializeThreadRun(element);
+            ThreadRun run = ThreadRun.DeserializeThreadRun(element, null);
             List<SubmitToolApprovalUpdate> updates = [];
             if (run.RequiredAction is SubmitToolApprovalAction submitAction)
             {

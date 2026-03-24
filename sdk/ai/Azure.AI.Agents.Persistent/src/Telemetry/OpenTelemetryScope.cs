@@ -1,7 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -415,7 +416,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
 
             // Parse the JSON into a CreateAgentRequest object
             using var document = JsonDocument.Parse(stream);
-            return CreateAgentRequest.DeserializeCreateAgentRequest(document.RootElement);
+            return CreateAgentRequest.DeserializeCreateAgentRequest(document.RootElement, null);
         }
 
         private static CreateMessageRequest DeserializeCreateMessageRequest(RequestContent content)
@@ -427,7 +428,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
 
             // Parse the JSON into a CreateMessageRequest object
             using var document = JsonDocument.Parse(stream);
-            return CreateMessageRequest.DeserializeCreateMessageRequest(document.RootElement);
+            return CreateMessageRequest.DeserializeCreateMessageRequest(document.RootElement, null);
         }
 
         private static CreateRunRequest DeserializeCreateRunRequest(RequestContent content)
@@ -439,7 +440,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
 
             // Parse the JSON into a CreateMessageRequest object
             using var document = JsonDocument.Parse(stream);
-            return CreateRunRequest.DeserializeCreateRunRequest(document.RootElement);
+            return CreateRunRequest.DeserializeCreateRunRequest(document.RootElement, null);
         }
 
         private static CreateThreadAndRunRequest DeserializeCreateThreadAndRunRequest(RequestContent content)
@@ -451,7 +452,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
 
             // Parse the JSON into a CreateMessageRequest object
             using var document = JsonDocument.Parse(stream);
-            return CreateThreadAndRunRequest.DeserializeCreateThreadAndRunRequest(document.RootElement);
+            return CreateThreadAndRunRequest.DeserializeCreateThreadAndRunRequest(document.RootElement, null);
         }
 
         private static SubmitToolOutputsToRunRequest DeserializeSubmitToolOutputsToRunRequest(RequestContent content)
@@ -463,7 +464,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
 
             // Parse the JSON into a CreateMessageRequest object
             using var document = JsonDocument.Parse(stream);
-            return SubmitToolOutputsToRunRequest.DeserializeSubmitToolOutputsToRunRequest(document.RootElement);
+            return SubmitToolOutputsToRunRequest.DeserializeSubmitToolOutputsToRunRequest(document.RootElement, null);
         }
 
         private OpenTelemetryScope(string activityName, Uri endpoint, string operationName = null)
@@ -517,7 +518,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             if (s_enableTelemetry)
             {
                 _response = new RecordedResponse(s_traceContent);
-                var agentResponse = Response.FromValue(PersistentAgent.FromResponse(response), response);
+                var agentResponse = Response.FromValue((PersistentAgent)response, response);
                 _response.AgentId = agentResponse.Value.Id;
             }
         }
@@ -527,7 +528,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             if (s_enableTelemetry)
             {
                 _response = new RecordedResponse(s_traceContent);
-                var threadResponse = Response.FromValue(PersistentAgentThread.FromResponse(response), response);
+                var threadResponse = Response.FromValue((PersistentAgentThread)response, response);
                 _response.ThreadId = threadResponse.Value.Id;
             }
         }
@@ -537,7 +538,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             if (s_enableTelemetry)
             {
                 _response = new RecordedResponse(s_traceContent);
-                var messageResponse = Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
+                var messageResponse = Response.FromValue((PersistentThreadMessage)response, response);
                 _response.MessageId = messageResponse.Value.Id;
                 _response.ThreadId = messageResponse.Value.ThreadId;
             }
@@ -548,7 +549,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             if (s_enableTelemetry)
             {
                 _response = new RecordedResponse(s_traceContent);
-                var runResponse = Response.FromValue(ThreadRun.FromResponse(response), response);
+                var runResponse = Response.FromValue((ThreadRun)response, response);
                 _response.RunId = runResponse.Value.Id;
                 _response.ThreadId = runResponse.Value.ThreadId;
                 _response.Model = runResponse.Value.Model;
@@ -561,7 +562,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             if (s_enableTelemetry)
             {
                 _response = new RecordedResponse(s_traceContent);
-                var runResponse = Response.FromValue(ThreadRun.FromResponse(response), response);
+                var runResponse = Response.FromValue((ThreadRun)response, response);
                 _response.RunId = runResponse.Value.Id;
                 _response.AgentId = runResponse.Value.AssistantId;
                 _response.Model = runResponse.Value.Model;
@@ -589,7 +590,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 _response = new RecordedResponse(s_traceContent);
                 if (!stream)
                 {
-                    ThreadRun run = Response.FromValue(ThreadRun.FromResponse(response), response);
+                    ThreadRun run = Response.FromValue((ThreadRun)response, response);
                     _response.Model = run.Model;
                     _response.Stream = stream;
                 }
@@ -699,7 +700,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                     {
                         // Deserialize the item as a PersistentThreadMessage
                         // Use your model's deserializer
-                        PersistentThreadMessage message = PersistentThreadMessage.DeserializePersistentThreadMessage(itemElement);
+                        PersistentThreadMessage message = PersistentThreadMessage.DeserializePersistentThreadMessage(itemElement, null);
                         if (_response.Messages == null)
                         {
                             _response.Messages = new List<PersistentThreadMessage>();
@@ -710,7 +711,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                     {
                         // Deserialize the item as a RunStep
                         // Use your model's deserializer
-                        RunStep runStep = RunStep.DeserializeRunStep(itemElement);
+                        RunStep runStep = RunStep.DeserializeRunStep(itemElement, null);
                         if (_response.RunSteps == null)
                         {
                             _response.RunSteps = new List<RunStep>();
@@ -1339,11 +1340,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
 
             // We cannot get the properties of an object, because Dynamic types are not AOT compatible.
             // Convert the call to JSON and get properties from it.
-            using var memStream = new MemoryStream();
-            toolCall.ToRequestContent().WriteTo(memStream, default);
-            // Reset stream position to the beginning.
-            memStream.Position = 0;
-            using var tempDoc = JsonDocument.Parse(memStream);
+            using var tempDoc = JsonDocument.Parse(ModelReaderWriter.Write(toolCall, ModelReaderWriterOptions.Json, AzureAIAgentsPersistentContext.Default));
             // Try to find a property with the parsed name
             var toolCallKind = tempDoc.RootElement.ValueKind;
             Dictionary<string, string> toolDetails = [];

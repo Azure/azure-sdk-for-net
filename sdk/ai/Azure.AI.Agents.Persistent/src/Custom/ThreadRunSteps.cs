@@ -1,18 +1,18 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Agents.Persistent
 {
-    [CodeGenClient("RunSteps")]
+    [CodeGenType("RunSteps")]
     internal partial class ThreadRunSteps
     {
         /// <summary> Returns a list of run steps associated an agent thread run. </summary>
@@ -101,8 +101,8 @@ namespace Azure.AI.Agents.Persistent
             );
             var asyncPageable = new ContinuationTokenPageableAsync<RunStep>(
                 createPageRequest: PageRequest,
-                valueFactory: e => RunStep.DeserializeRunStep(e),
-                pipeline: _pipeline,
+                valueFactory: e => RunStep.DeserializeRunStep(e, null),
+                pipeline: Pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
@@ -148,8 +148,8 @@ namespace Azure.AI.Agents.Persistent
             );
             var pageable = new ContinuationTokenPageable<RunStep>(
                 createPageRequest: PageRequest,
-                valueFactory: e => RunStep.DeserializeRunStep(e),
-                pipeline: _pipeline,
+                valueFactory: e => RunStep.DeserializeRunStep(e, null),
+                pipeline: Pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
@@ -201,7 +201,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunStepsRequest(threadId, runId, include, limit, order, after, before, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadRunStepsClient.GetRunSteps", "data", null, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, Pipeline, "ThreadRunStepsClient.GetRunSteps", "data", null, context);
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunStepsRequest(threadId, runId, include, limit, order, after, before, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadRunStepsClient.GetRunSteps", "data", null, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, Pipeline, "ThreadRunStepsClient.GetRunSteps", "data", null, context);
         }
     }
 }

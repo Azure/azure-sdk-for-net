@@ -7,23 +7,499 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class PersistentAgentsModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Persistent.AzureFunctionBinding"/>. </summary>
-        /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
-        /// <param name="storageQueue"> Storage queue. </param>
-        /// <returns> A new <see cref="Persistent.AzureFunctionBinding"/> instance for mocking. </returns>
-        public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionBindingType type = default, AzureFunctionStorageQueue storageQueue = null)
+        /// <summary>
+        /// An abstract representation of an input tool definition that an agent can use.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.CodeInterpreterToolDefinition"/>, <see cref="Persistent.FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="Persistent.BingGroundingToolDefinition"/>, <see cref="Persistent.MicrosoftFabricToolDefinition"/>, <see cref="Persistent.SharepointToolDefinition"/>, <see cref="Persistent.AzureAISearchToolDefinition"/>, <see cref="Persistent.OpenApiToolDefinition"/>, <see cref="Persistent.BingCustomSearchToolDefinition"/>, <see cref="Persistent.ConnectedAgentToolDefinition"/>, <see cref="Persistent.DeepResearchToolDefinition"/>, <see cref="Persistent.MCPToolDefinition"/>, <see cref="Persistent.ComputerUseToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, and <see cref="Persistent.BrowserAutomationToolDefinition"/>.
+        /// </summary>
+        /// <param name="type"> The object type. </param>
+        /// <returns> A new <see cref="Persistent.ToolDefinition"/> instance for mocking. </returns>
+        public static ToolDefinition ToolDefinition(string @type = default)
         {
-            return new AzureFunctionBinding(type, storageQueue, serializedAdditionalRawData: null);
+            return new UnknownToolDefinition(@type, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.AISearchIndexResource"/>. </summary>
+        /// <summary> The input definition information for a code interpreter tool as used to configure an agent. </summary>
+        /// <returns> A new <see cref="Persistent.CodeInterpreterToolDefinition"/> instance for mocking. </returns>
+        public static CodeInterpreterToolDefinition CodeInterpreterToolDefinition()
+        {
+            return new CodeInterpreterToolDefinition("code_interpreter", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a file search tool as used to configure an agent. </summary>
+        /// <param name="fileSearch"> Options overrides for the file search tool. </param>
+        /// <returns> A new <see cref="Persistent.FileSearchToolDefinition"/> instance for mocking. </returns>
+        public static FileSearchToolDefinition FileSearchToolDefinition(FileSearchToolDefinitionDetails fileSearch = default)
+        {
+            return new FileSearchToolDefinition("file_search", additionalBinaryDataProperties: null, fileSearch);
+        }
+
+        /// <summary> Options overrides for the file search tool. </summary>
+        /// <param name="maxNumResults">
+        /// The maximum number of results the file search tool should output. The default is 20 for gpt-4* models and 5 for gpt-3.5-turbo. This number should be between 1 and 50 inclusive.
+        /// Note that the file search tool may output fewer than `max_num_results` results. See the file search tool documentation for more information.
+        /// </param>
+        /// <param name="rankingOptions"> Ranking options for file search. </param>
+        /// <returns> A new <see cref="Persistent.FileSearchToolDefinitionDetails"/> instance for mocking. </returns>
+        public static FileSearchToolDefinitionDetails FileSearchToolDefinitionDetails(int? maxNumResults = default, FileSearchRankingOptions rankingOptions = default)
+        {
+            return new FileSearchToolDefinitionDetails(maxNumResults, rankingOptions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Ranking options for file search. </summary>
+        /// <param name="ranker"> File search ranker. </param>
+        /// <param name="scoreThreshold"> Ranker search threshold. </param>
+        /// <returns> A new <see cref="Persistent.FileSearchRankingOptions"/> instance for mocking. </returns>
+        public static FileSearchRankingOptions FileSearchRankingOptions(string ranker = default, float scoreThreshold = default)
+        {
+            return new FileSearchRankingOptions(ranker, scoreThreshold, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
+        /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
+        /// <returns> A new <see cref="Persistent.BingGroundingToolDefinition"/> instance for mocking. </returns>
+        public static BingGroundingToolDefinition BingGroundingToolDefinition(BingGroundingSearchToolParameters bingGrounding = default)
+        {
+            return new BingGroundingToolDefinition("bing_grounding", additionalBinaryDataProperties: null, bingGrounding);
+        }
+
+        /// <summary> The bing grounding search tool parameters. </summary>
+        /// <param name="searchConfigurations">
+        /// The search configurations attached to this tool. There can be a maximum of 1
+        /// search configuration resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Persistent.BingGroundingSearchToolParameters"/> instance for mocking. </returns>
+        public static BingGroundingSearchToolParameters BingGroundingSearchToolParameters(IEnumerable<BingGroundingSearchConfiguration> searchConfigurations = default)
+        {
+            searchConfigurations ??= new ChangeTrackingList<BingGroundingSearchConfiguration>();
+
+            return new BingGroundingSearchToolParameters(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Search configuration for Bing Grounding. </summary>
+        /// <param name="connectionId"> Connection id for grounding with bing search. </param>
+        /// <param name="market"> The market where the results come from. Typically, market is the country where the user is making the request from. However, it could be a different country if the user is not located in a country where Bing delivers results. The market must be in the form: `&lt;language&gt;-&lt;country/region&gt;` where `&lt;language&gt;` is an ISO 639-1 language code (neutral culture) and `&lt;country/region&gt;` is an ISO 3166 country/region (specific culture) code. For example, `en-US`. The string is case insensitive. For a list of possible market values, see [Market codes](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/market-codes). If known, you are encouraged to always specify the market. Specifying the market helps Bing route the request and return an appropriate and optimal response. If you specify a market that is not listed in Market codes, Bing uses a best fit market code based on an internal mapping that is subject to change. </param>
+        /// <param name="setLang">
+        /// The language to use for user interface strings. You may specify the language using either a 2-letter or 4-letter code. Using 4-letter codes is preferred.
+        /// For a list of supported language codes, see [Bing supported languages](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/market-codes#bing-supported-language-codes).
+        /// Bing loads the localized strings if this parameter contains a valid 2-letter neutral culture code (for example `fr`) or a valid 4-letter specific culture code (`fr-ca`). For example, for `fr-ca`, Bing loads the `fr` neutral culture code strings.
+        /// If the parameter is not valid (for example, `zh`) or Bing doesn’t support the language (for example, `af`, `af-na`), Bing defaults to `en` (English).
+        /// To specify the 2-letter code, set this parameter to an ISO 639-1 language code.
+        /// To specify the 4-letter code, use the form `&lt;language&gt;-&lt;country/region&gt;` where `&lt;language&gt;` is an ISO 639-1 language code (neutral culture) and `&lt;country/region&gt;` is an ISO 3166 country/region (specific culture) code. For example, use `en-US` for United States English.
+        /// Although optional, you should always specify the language. Typically, you set this parameter to the same language specified by the market value unless the user wants the user interface strings displayed in a different language.
+        /// </param>
+        /// <param name="count">
+        /// The number of search results to return in the response. The default is 5 and the maximum value is 50. The actual number delivered may be less than requested. 
+        /// <list type="bullet"><item><description>It is possible for multiple pages to include some overlap in results. </description></item><item><description>This parameter affects only web page results. It's possible that AI model might not use all search results returned by Bing.</description></item></list>
+        /// </param>
+        /// <param name="freshness">
+        /// Filter search results by the following case-insensitive age values:
+        /// <list type="bullet"><item><description>Day: Return webpages that Bing discovered within the last 24 hours.</description></item><item><description>Week: Return webpages that Bing discovered within the last 7 days.</description></item><item><description>Month: Return webpages that Bing discovered within the last 30 days. To get articles discovered by Bing during a specific timeframe, specify a date range in the form: `YYYY-MM-DD..YYYY-MM-DD`. For example, `freshness=2019-02-01..2019-05-30. To limit the results to a single date, set this parameter to a specific date. For example, freshness=2019-02-04`.</description></item></list>
+        /// </param>
+        /// <returns> A new <see cref="Persistent.BingGroundingSearchConfiguration"/> instance for mocking. </returns>
+        public static BingGroundingSearchConfiguration BingGroundingSearchConfiguration(string connectionId = default, string market = default, string setLang = default, long? count = default, string freshness = default)
+        {
+            return new BingGroundingSearchConfiguration(
+                connectionId,
+                market,
+                setLang,
+                count,
+                freshness,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
+        /// <param name="fabricDataagent"> The fabric data agent tool parameters. </param>
+        /// <returns> A new <see cref="Persistent.MicrosoftFabricToolDefinition"/> instance for mocking. </returns>
+        public static MicrosoftFabricToolDefinition MicrosoftFabricToolDefinition(FabricDataAgentToolParameters fabricDataagent = default)
+        {
+            return new MicrosoftFabricToolDefinition("fabric_dataagent", additionalBinaryDataProperties: null, fabricDataagent);
+        }
+
+        /// <summary> The fabric data agent tool parameters. </summary>
+        /// <param name="connectionList">
+        /// The connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Persistent.FabricDataAgentToolParameters"/> instance for mocking. </returns>
+        public static FabricDataAgentToolParameters FabricDataAgentToolParameters(IEnumerable<ToolConnection> connectionList = default)
+        {
+            connectionList ??= new ChangeTrackingList<ToolConnection>();
+
+            return new FabricDataAgentToolParameters(connectionList.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A connection resource. </summary>
+        /// <param name="connectionId"> A connection in a ToolConnectionList attached to this tool. </param>
+        /// <returns> A new <see cref="Persistent.ToolConnection"/> instance for mocking. </returns>
+        public static ToolConnection ToolConnection(string connectionId = default)
+        {
+            return new ToolConnection(connectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
+        /// <param name="sharepointGrounding"> The sharepoint grounding tool parameters. </param>
+        /// <returns> A new <see cref="Persistent.SharepointToolDefinition"/> instance for mocking. </returns>
+        public static SharepointToolDefinition SharepointToolDefinition(SharepointGroundingToolParameters sharepointGrounding = default)
+        {
+            return new SharepointToolDefinition("sharepoint_grounding", additionalBinaryDataProperties: null, sharepointGrounding);
+        }
+
+        /// <summary> The sharepoint grounding tool parameters. </summary>
+        /// <param name="connectionList">
+        /// The connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Persistent.SharepointGroundingToolParameters"/> instance for mocking. </returns>
+        public static SharepointGroundingToolParameters SharepointGroundingToolParameters(IEnumerable<ToolConnection> connectionList = default)
+        {
+            connectionList ??= new ChangeTrackingList<ToolConnection>();
+
+            return new SharepointGroundingToolParameters(connectionList.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
+        /// <returns> A new <see cref="Persistent.AzureAISearchToolDefinition"/> instance for mocking. </returns>
+        public static AzureAISearchToolDefinition AzureAISearchToolDefinition()
+        {
+            return new AzureAISearchToolDefinition("azure_ai_search", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
+        /// <param name="openapi"> The openapi function definition. </param>
+        /// <returns> A new <see cref="Persistent.OpenApiToolDefinition"/> instance for mocking. </returns>
+        public static OpenApiToolDefinition OpenApiToolDefinition(OpenApiFunctionDefinition openapi = default)
+        {
+            return new OpenApiToolDefinition("openapi", additionalBinaryDataProperties: null, openapi);
+        }
+
+        /// <summary>
+        /// authentication details for OpenApiFunctionDefinition
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.OpenApiAnonymousAuthDetails"/>, <see cref="Persistent.OpenApiConnectionAuthDetails"/>, and <see cref="Persistent.OpenApiManagedAuthDetails"/>.
+        /// </summary>
+        /// <param name="type"> The type of authentication, must be anonymous/connection/managed_identity. </param>
+        /// <returns> A new <see cref="Persistent.OpenApiAuthDetails"/> instance for mocking. </returns>
+        public static OpenApiAuthDetails OpenApiAuthDetails(string @type = default)
+        {
+            return new UnknownOpenApiAuthDetails(new OpenApiAuthType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Security details for OpenApi anonymous authentication. </summary>
+        /// <returns> A new <see cref="Persistent.OpenApiAnonymousAuthDetails"/> instance for mocking. </returns>
+        public static OpenApiAnonymousAuthDetails OpenApiAnonymousAuthDetails()
+        {
+            return new OpenApiAnonymousAuthDetails(OpenApiAuthType.Anonymous, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Security details for OpenApi connection authentication. </summary>
+        /// <param name="securityScheme"> Connection auth security details. </param>
+        /// <returns> A new <see cref="Persistent.OpenApiConnectionAuthDetails"/> instance for mocking. </returns>
+        public static OpenApiConnectionAuthDetails OpenApiConnectionAuthDetails(OpenApiConnectionSecurityScheme securityScheme = default)
+        {
+            return new OpenApiConnectionAuthDetails(OpenApiAuthType.Connection, additionalBinaryDataProperties: null, securityScheme);
+        }
+
+        /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
+        /// <param name="connectionId"> Connection id for Connection auth type. </param>
+        /// <returns> A new <see cref="Persistent.OpenApiConnectionSecurityScheme"/> instance for mocking. </returns>
+        public static OpenApiConnectionSecurityScheme OpenApiConnectionSecurityScheme(string connectionId = default)
+        {
+            return new OpenApiConnectionSecurityScheme(connectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Security details for OpenApi managed_identity authentication. </summary>
+        /// <param name="securityScheme"> Connection auth security details. </param>
+        /// <returns> A new <see cref="Persistent.OpenApiManagedAuthDetails"/> instance for mocking. </returns>
+        public static OpenApiManagedAuthDetails OpenApiManagedAuthDetails(OpenApiManagedSecurityScheme securityScheme = default)
+        {
+            return new OpenApiManagedAuthDetails(OpenApiAuthType.ManagedIdentity, additionalBinaryDataProperties: null, securityScheme);
+        }
+
+        /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
+        /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
+        /// <returns> A new <see cref="Persistent.OpenApiManagedSecurityScheme"/> instance for mocking. </returns>
+        public static OpenApiManagedSecurityScheme OpenApiManagedSecurityScheme(string audience = default)
+        {
+            return new OpenApiManagedSecurityScheme(audience, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
+        /// <param name="bingCustomSearch"> The bing custom search tool parameters. </param>
+        /// <returns> A new <see cref="Persistent.BingCustomSearchToolDefinition"/> instance for mocking. </returns>
+        public static BingCustomSearchToolDefinition BingCustomSearchToolDefinition(BingCustomSearchToolParameters bingCustomSearch = default)
+        {
+            return new BingCustomSearchToolDefinition("bing_custom_search", additionalBinaryDataProperties: null, bingCustomSearch);
+        }
+
+        /// <summary> The bing custom search tool parameters. </summary>
+        /// <param name="searchConfigurations">
+        /// The connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Persistent.BingCustomSearchToolParameters"/> instance for mocking. </returns>
+        public static BingCustomSearchToolParameters BingCustomSearchToolParameters(IEnumerable<BingCustomSearchConfiguration> searchConfigurations = default)
+        {
+            searchConfigurations ??= new ChangeTrackingList<BingCustomSearchConfiguration>();
+
+            return new BingCustomSearchToolParameters(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A bing custom search configuration. </summary>
+        /// <param name="connectionId"> Connection id for grounding with bing search. </param>
+        /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
+        /// <param name="market"> The market where the results come from. Typically, market is the country where the user is making the request from. However, it could be a different country if the user is not located in a country where Bing delivers results. The market must be in the form: `&lt;language&gt;-&lt;country/region&gt;` where `&lt;language&gt;` is an ISO 639-1 language code (neutral culture) and `&lt;country/region&gt;` is an ISO 3166 country/region (specific culture) code. For example, `en-US`. The string is case insensitive. For a list of possible market values, see [Market codes](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/market-codes). If known, you are encouraged to always specify the market. Specifying the market helps Bing route the request and return an appropriate and optimal response. If you specify a market that is not listed in Market codes, Bing uses a best fit market code based on an internal mapping that is subject to change. </param>
+        /// <param name="setLang">
+        /// The language to use for user interface strings. You may specify the language using either a 2-letter or 4-letter code. Using 4-letter codes is preferred.
+        /// For a list of supported language codes, see [Bing supported languages](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/market-codes#bing-supported-language-codes).
+        /// Bing loads the localized strings if this parameter contains a valid 2-letter neutral culture code (for example `fr`) or a valid 4-letter specific culture code (`fr-ca`). For example, for `fr-ca`, Bing loads the `fr` neutral culture code strings.
+        /// If the parameter is not valid (for example, `zh`) or Bing doesn’t support the language (for example, `af`, `af-na`), Bing defaults to `en` (English).
+        /// To specify the 2-letter code, set this parameter to an ISO 639-1 language code.
+        /// To specify the 4-letter code, use the form `&lt;language&gt;-&lt;country/region&gt;` where `&lt;language&gt;` is an ISO 639-1 language code (neutral culture) and `&lt;country/region&gt;` is an ISO 3166 country/region (specific culture) code. For example, use `en-US` for United States English.
+        /// Although optional, you should always specify the language. Typically, you set this parameter to the same language specified by the market value unless the user wants the user interface strings displayed in a different language.
+        /// </param>
+        /// <param name="count">
+        /// The number of search results to return in the response. The default is 5 and the maximum value is 50. The actual number delivered may be less than requested. 
+        /// <list type="bullet"><item><description>It is possible for multiple pages to include some overlap in results. </description></item><item><description>This parameter affects only web page results. It's possible that AI model might not use all search results returned by Bing.</description></item></list>
+        /// </param>
+        /// <param name="freshness">
+        /// Filter search results by the following case-insensitive age values:
+        /// <list type="bullet"><item><description>Day: Return webpages that Bing discovered within the last 24 hours.</description></item><item><description>Week: Return webpages that Bing discovered within the last 7 days.</description></item><item><description>Month: Return webpages that Bing discovered within the last 30 days. To get articles discovered by Bing during a specific timeframe, specify a date range in the form: `YYYY-MM-DD..YYYY-MM-DD`. For example, `freshness=2019-02-01..2019-05-30. To limit the results to a single date, set this parameter to a specific date. For example, freshness=2019-02-04`.</description></item></list>
+        /// </param>
+        /// <returns> A new <see cref="Persistent.BingCustomSearchConfiguration"/> instance for mocking. </returns>
+        public static BingCustomSearchConfiguration BingCustomSearchConfiguration(string connectionId = default, string instanceName = default, string market = default, string setLang = default, long? count = default, string freshness = default)
+        {
+            return new BingCustomSearchConfiguration(
+                connectionId,
+                instanceName,
+                market,
+                setLang,
+                count,
+                freshness,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a connected agent tool which defines a domain specific sub-agent. </summary>
+        /// <param name="connectedAgent"> The sub-agent to connect. </param>
+        /// <returns> A new <see cref="Persistent.ConnectedAgentToolDefinition"/> instance for mocking. </returns>
+        public static ConnectedAgentToolDefinition ConnectedAgentToolDefinition(ConnectedAgentDetails connectedAgent = default)
+        {
+            return new ConnectedAgentToolDefinition("connected_agent", additionalBinaryDataProperties: null, connectedAgent);
+        }
+
+        /// <summary> Information for connecting one agent to another as a tool. </summary>
+        /// <param name="id"> The identifier of the child agent. </param>
+        /// <param name="name"> The name of the agent to be called. </param>
+        /// <param name="description"> A description of what the agent does, used by the model to choose when and how to call the agent. </param>
+        /// <returns> A new <see cref="Persistent.ConnectedAgentDetails"/> instance for mocking. </returns>
+        public static ConnectedAgentDetails ConnectedAgentDetails(string id = default, string name = default, string description = default)
+        {
+            return new ConnectedAgentDetails(id, name, description, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a Deep Research tool as used to configure an agent. </summary>
+        /// <param name="deepResearch"> The deep_research tool definition configuration. </param>
+        /// <returns> A new <see cref="Persistent.DeepResearchToolDefinition"/> instance for mocking. </returns>
+        public static DeepResearchToolDefinition DeepResearchToolDefinition(DeepResearchDetails deepResearch = default)
+        {
+            return new DeepResearchToolDefinition("deep_research", additionalBinaryDataProperties: null, deepResearch);
+        }
+
+        /// <summary> The details of the Deep Research tool. </summary>
+        /// <param name="model"> The deep research model deployment name. </param>
+        /// <param name="bingGroundingConnections"> The array containing Bing grounding connection IDs to enhance deep research capabilities. </param>
+        /// <returns> A new <see cref="Persistent.DeepResearchDetails"/> instance for mocking. </returns>
+        public static DeepResearchDetails DeepResearchDetails(string model = default, IEnumerable<DeepResearchBingGroundingConnection> bingGroundingConnections = default)
+        {
+            bingGroundingConnections ??= new ChangeTrackingList<DeepResearchBingGroundingConnection>();
+
+            return new DeepResearchDetails(model, bingGroundingConnections.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The connection resource ID for the Bing grounding resource . </summary>
+        /// <param name="connectionId"> The connection ID for the Bing grounding connection. </param>
+        /// <returns> A new <see cref="Persistent.DeepResearchBingGroundingConnection"/> instance for mocking. </returns>
+        public static DeepResearchBingGroundingConnection DeepResearchBingGroundingConnection(string connectionId = default)
+        {
+            return new DeepResearchBingGroundingConnection(connectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a MCP tool which defines a MCP server endpoint. </summary>
+        /// <param name="serverLabel"> The label for the MCP server. </param>
+        /// <param name="serverUrl"> The endpoint for the MCP server. </param>
+        /// <param name="allowedTools"> List of allowed tools for MCP server. </param>
+        /// <returns> A new <see cref="Persistent.MCPToolDefinition"/> instance for mocking. </returns>
+        public static MCPToolDefinition MCPToolDefinition(string serverLabel = default, string serverUrl = default, IEnumerable<string> allowedTools = default)
+        {
+            allowedTools ??= new ChangeTrackingList<string>();
+
+            return new MCPToolDefinition("mcp", additionalBinaryDataProperties: null, serverLabel, serverUrl, allowedTools.ToList());
+        }
+
+        /// <summary> The input definition information for a Computer Use tool as used to configure an agent. </summary>
+        /// <param name="computerUsePreview"> The computer use tool parameters. </param>
+        /// <returns> A new <see cref="Persistent.ComputerUseToolDefinition"/> instance for mocking. </returns>
+        public static ComputerUseToolDefinition ComputerUseToolDefinition(ComputerUseToolParameters computerUsePreview = default)
+        {
+            return new ComputerUseToolDefinition("computer_use_preview", additionalBinaryDataProperties: null, computerUsePreview);
+        }
+
+        /// <summary> The computer use tool parameters. </summary>
+        /// <param name="displayWidth"> The display width for the computer use tool. </param>
+        /// <param name="displayHeight"> The display height for the computer use tool. </param>
+        /// <param name="environment"> The environment for the computer use tool. </param>
+        /// <returns> A new <see cref="Persistent.ComputerUseToolParameters"/> instance for mocking. </returns>
+        public static ComputerUseToolParameters ComputerUseToolParameters(int displayWidth = default, int displayHeight = default, ComputerUseEnvironment environment = default)
+        {
+            return new ComputerUseToolParameters(displayWidth, displayHeight, environment, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The structure for keeping storage queue name and URI. </summary>
+        /// <param name="storageQueue"> Storage queue. </param>
+        /// <returns> A new <see cref="Persistent.AzureFunctionBinding"/> instance for mocking. </returns>
+        public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionStorageQueue storageQueue = default)
+        {
+            return new AzureFunctionBinding("new AzureFunctionBindingType(\"storage_queue\")", storageQueue, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The structure for keeping storage queue name and URI. </summary>
+        /// <param name="storageServiceEndpoint"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
+        /// <param name="queueName"> The name of an Azure function storage queue. </param>
+        /// <returns> A new <see cref="Persistent.AzureFunctionStorageQueue"/> instance for mocking. </returns>
+        public static AzureFunctionStorageQueue AzureFunctionStorageQueue(string storageServiceEndpoint = default, string queueName = default)
+        {
+            return new AzureFunctionStorageQueue(storageServiceEndpoint, queueName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+        /// <param name="browserAutomation"> The Browser Automation Tool parameters. </param>
+        /// <returns> A new <see cref="Persistent.BrowserAutomationToolDefinition"/> instance for mocking. </returns>
+        public static BrowserAutomationToolDefinition BrowserAutomationToolDefinition(BrowserAutomationToolParameters browserAutomation = default)
+        {
+            return new BrowserAutomationToolDefinition("browser_automation", additionalBinaryDataProperties: null, browserAutomation);
+        }
+
+        /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
+        /// <param name="connection"> The connection parameters associated with the Browser Automation Tool. </param>
+        /// <returns> A new <see cref="Persistent.BrowserAutomationToolParameters"/> instance for mocking. </returns>
+        public static BrowserAutomationToolParameters BrowserAutomationToolParameters(BrowserAutomationToolConnectionParameters connection = default)
+        {
+            return new BrowserAutomationToolParameters(connection, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
+        /// <param name="id"> The ID of the connection to your Azure Playwright resource. </param>
+        /// <returns> A new <see cref="Persistent.BrowserAutomationToolConnectionParameters"/> instance for mocking. </returns>
+        public static BrowserAutomationToolConnectionParameters BrowserAutomationToolConnectionParameters(string id = default)
+        {
+            return new BrowserAutomationToolConnectionParameters(id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A set of resources that are used by the agent's tools. The resources are specific to the type of
+        /// tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search`
+        /// tool requires a list of vector store IDs.
+        /// </summary>
+        /// <param name="codeInterpreter"> Resources to be used by the `code_interpreter` tool consisting of file IDs. </param>
+        /// <param name="fileSearch"> Resources to be used by the `file_search` tool consisting of vector store IDs. </param>
+        /// <param name="azureAISearch"> Resources to be used by the `azure_ai_search` tool consisting of index IDs and names. </param>
+        /// <param name="mcp"> Resources to be used by the `mcp` tool consisting of a server label and headers. </param>
+        /// <returns> A new <see cref="Persistent.ToolResources"/> instance for mocking. </returns>
+        public static ToolResources ToolResources(CodeInterpreterToolResource codeInterpreter = default, FileSearchToolResource fileSearch = default, AzureAISearchToolResource azureAISearch = default, IEnumerable<MCPToolResource> mcp = default)
+        {
+            mcp ??= new ChangeTrackingList<MCPToolResource>();
+
+            return new ToolResources(codeInterpreter, fileSearch, azureAISearch, mcp.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A set of resources that are used by the `code_interpreter` tool. </summary>
+        /// <param name="fileIds">
+        /// A list of file IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files
+        /// associated with the tool.
+        /// </param>
+        /// <param name="dataSources"> The data sources to be used. This option is mutually exclusive with the `fileIds` property. </param>
+        /// <returns> A new <see cref="Persistent.CodeInterpreterToolResource"/> instance for mocking. </returns>
+        public static CodeInterpreterToolResource CodeInterpreterToolResource(IEnumerable<string> fileIds = default, IEnumerable<VectorStoreDataSource> dataSources = default)
+        {
+            fileIds ??= new ChangeTrackingList<string>();
+            dataSources ??= new ChangeTrackingList<VectorStoreDataSource>();
+
+            return new CodeInterpreterToolResource(fileIds.ToList(), dataSources.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The structure, containing Azure asset URI path and the asset type of the file used as a data source
+        /// for the enterprise file search.
+        /// </summary>
+        /// <param name="assetIdentifier"> Asset URI. </param>
+        /// <param name="assetType"> The asset type. </param>
+        /// <returns> A new <see cref="Persistent.VectorStoreDataSource"/> instance for mocking. </returns>
+        public static VectorStoreDataSource VectorStoreDataSource(string assetIdentifier = default, VectorStoreDataSourceAssetType assetType = default)
+        {
+            return new VectorStoreDataSource(assetIdentifier, assetType, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A set of resources that are used by the `file_search` tool. </summary>
+        /// <param name="vectorStoreIds">
+        /// The ID of the vector store attached to this agent. There can be a maximum of 1 vector
+        /// store attached to the agent.
+        /// </param>
+        /// <param name="vectorStores">
+        /// The list of vector store configuration objects from Azure.
+        /// This list is limited to one element.
+        /// The only element of this list contains the list of azure asset IDs used by the search tool.
+        /// </param>
+        /// <returns> A new <see cref="Persistent.FileSearchToolResource"/> instance for mocking. </returns>
+        public static FileSearchToolResource FileSearchToolResource(IEnumerable<string> vectorStoreIds = default, IEnumerable<VectorStoreConfigurations> vectorStores = default)
+        {
+            vectorStoreIds ??= new ChangeTrackingList<string>();
+            vectorStores ??= new ChangeTrackingList<VectorStoreConfigurations>();
+
+            return new FileSearchToolResource(vectorStoreIds.ToList(), vectorStores.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The structure, containing the list of vector storage configurations i.e. the list of azure asset IDs. </summary>
+        /// <param name="storeName"> Name. </param>
+        /// <param name="storeConfiguration"> Configurations. </param>
+        /// <returns> A new <see cref="Persistent.VectorStoreConfigurations"/> instance for mocking. </returns>
+        public static VectorStoreConfigurations VectorStoreConfigurations(string storeName = default, VectorStoreConfiguration storeConfiguration = default)
+        {
+            return new VectorStoreConfigurations(storeName, storeConfiguration, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Vector storage configuration is the list of data sources, used when multiple
+        /// files can be used for the enterprise file search.
+        /// </summary>
+        /// <param name="dataSources"> Data sources. </param>
+        /// <returns> A new <see cref="Persistent.VectorStoreConfiguration"/> instance for mocking. </returns>
+        public static VectorStoreConfiguration VectorStoreConfiguration(IEnumerable<VectorStoreDataSource> dataSources = default)
+        {
+            dataSources ??= new ChangeTrackingList<VectorStoreDataSource>();
+
+            return new VectorStoreConfiguration(dataSources.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
+        /// <param name="indexList">
+        /// The indices attached to this agent. There can be a maximum of 1 index
+        /// resource attached to the agent.
+        /// </param>
+        /// <returns> A new <see cref="Persistent.AzureAISearchToolResource"/> instance for mocking. </returns>
+        public static AzureAISearchToolResource AzureAISearchToolResource(IEnumerable<AISearchIndexResource> indexList = default)
+        {
+            indexList ??= new ChangeTrackingList<AISearchIndexResource>();
+
+            return new AzureAISearchToolResource(indexList.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A AI Search Index resource. </summary>
         /// <param name="indexConnectionId"> An index connection id in an IndexResource attached to this agent. </param>
         /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
         /// <param name="queryType"> Type of query in an AIIndexResource attached to this agent. </param>
@@ -31,7 +507,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="filter"> filter string for search resource. </param>
         /// <param name="indexAssetId"> Index asset id for search resource. </param>
         /// <returns> A new <see cref="Persistent.AISearchIndexResource"/> instance for mocking. </returns>
-        public static AISearchIndexResource AISearchIndexResource(string indexConnectionId = null, string indexName = null, AzureAISearchQueryType? queryType = null, int? topK = null, string filter = null, string indexAssetId = null)
+        public static AISearchIndexResource AISearchIndexResource(string indexConnectionId = default, string indexName = default, AzureAISearchQueryType? queryType = default, int? topK = default, string filter = default, string indexAssetId = default)
         {
             return new AISearchIndexResource(
                 indexConnectionId,
@@ -40,19 +516,79 @@ namespace Azure.AI.Agents.Persistent
                 topK,
                 filter,
                 indexAssetId,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.ResponseFormatJsonSchemaType"/>. </summary>
-        /// <param name="type"> Type. </param>
+        /// <summary> A set of resources that are used by the `mcp` tool. </summary>
+        /// <param name="serverLabel"> The label for the MCP server. </param>
+        /// <param name="headers"> The headers for the MCP server updates. </param>
+        /// <param name="requireApprovalInternal"> Does MCP server require approval. </param>
+        /// <returns> A new <see cref="Persistent.MCPToolResource"/> instance for mocking. </returns>
+        public static MCPToolResource MCPToolResource(string serverLabel = default, IDictionary<string, string> headers = default, BinaryData requireApprovalInternal = default)
+        {
+            headers ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MCPToolResource(serverLabel, headers, requireApprovalInternal, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Customized MCP approval object, listing tools requiring and not requiring approvals. </summary>
+        /// <param name="never"> The list of tools, not requiring approval. </param>
+        /// <param name="always"> The list of tools, always requiring approval. </param>
+        /// <returns> A new <see cref="Persistent.MCPApprovalPerTool"/> instance for mocking. </returns>
+        public static MCPApprovalPerTool MCPApprovalPerTool(MCPToolList never = default, MCPToolList always = default)
+        {
+            return new MCPApprovalPerTool(never, always, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The object, containing list of tools for approvals. </summary>
+        /// <param name="toolNames"> The list of tools for approval. </param>
+        /// <returns> A new <see cref="Persistent.MCPToolList"/> instance for mocking. </returns>
+        public static MCPToolList MCPToolList(IEnumerable<string> toolNames = default)
+        {
+            toolNames ??= new ChangeTrackingList<string>();
+
+            return new MCPToolList(toolNames.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type of response format being defined: `json_schema`. </summary>
         /// <param name="jsonSchema"> The JSON schema, describing response format. </param>
         /// <returns> A new <see cref="Persistent.ResponseFormatJsonSchemaType"/> instance for mocking. </returns>
-        public static ResponseFormatJsonSchemaType ResponseFormatJsonSchemaType(ResponseFormatJsonSchemaTypeType type = default, ResponseFormatJsonSchema jsonSchema = null)
+        public static ResponseFormatJsonSchemaType ResponseFormatJsonSchemaType(ResponseFormatJsonSchema jsonSchema = default)
         {
-            return new ResponseFormatJsonSchemaType(type, jsonSchema, serializedAdditionalRawData: null);
+            return new ResponseFormatJsonSchemaType("new ResponseFormatJsonSchemaTypeType(\"json_schema\")", jsonSchema, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.ThreadMessageOptions"/>. </summary>
+        /// <summary> A description of what the response format is for, used by the model to determine how to respond in the format. </summary>
+        /// <param name="description"> A description of what the response format is for, used by the model to determine how to respond in the format. </param>
+        /// <param name="name"> The name of a schema. </param>
+        /// <param name="schema"> The JSON schema object, describing the response format. </param>
+        /// <returns> A new <see cref="Persistent.ResponseFormatJsonSchema"/> instance for mocking. </returns>
+        public static ResponseFormatJsonSchema ResponseFormatJsonSchema(string description = default, string name = default, BinaryData schema = default)
+        {
+            return new ResponseFormatJsonSchema(description, name, schema, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The details used to create a new agent thread. </summary>
+        /// <param name="messages"> The initial messages to associate with the new thread. </param>
+        /// <param name="toolResources">
+        /// A set of resources that are made available to the agent's tools in this thread. The resources are specific to the
+        /// type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires
+        /// a list of vector store IDs.
+        /// </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <returns> A new <see cref="Persistent.PersistentAgentThreadCreationOptions"/> instance for mocking. </returns>
+        public static PersistentAgentThreadCreationOptions PersistentAgentThreadCreationOptions(IEnumerable<ThreadMessageOptions> messages = default, ToolResources toolResources = default, IDictionary<string, string> metadata = default)
+        {
+            messages ??= new ChangeTrackingList<ThreadMessageOptions>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PersistentAgentThreadCreationOptions(messages.ToList(), toolResources, metadata, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A single message within an agent thread,
+        /// as provided during that thread's creation for its initial state.
+        /// </summary>
         /// <param name="role">
         /// The role of the entity that is creating the message. Allowed values include:
         /// `user`, which indicates the message is sent by an actual user (and should be
@@ -68,164 +604,248 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="attachments"> A list of files attached to the message, and the tools they should be added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <returns> A new <see cref="Persistent.ThreadMessageOptions"/> instance for mocking. </returns>
-        public static ThreadMessageOptions ThreadMessageOptions(MessageRole role = default, BinaryData content = null, IEnumerable<MessageAttachment> attachments = null, IDictionary<string, string> metadata = null)
+        public static ThreadMessageOptions ThreadMessageOptions(MessageRole role = default, BinaryData content = default, IEnumerable<MessageAttachment> attachments = default, IDictionary<string, string> metadata = default)
         {
-            attachments ??= new List<MessageAttachment>();
-            metadata ??= new Dictionary<string, string>();
+            attachments ??= new ChangeTrackingList<MessageAttachment>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ThreadMessageOptions(role, content, attachments?.ToList(), metadata, serializedAdditionalRawData: null);
+            return new ThreadMessageOptions(role, content, attachments.ToList(), metadata, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageInputTextBlock"/>. </summary>
+        /// <summary>
+        /// Defines a single content block when creating a message. The 'type' field determines whether it is text, an image file, or an external image URL, etc.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.MessageInputTextBlock"/>, <see cref="Persistent.MessageInputImageFileBlock"/>, and <see cref="Persistent.MessageInputImageUriBlock"/>.
+        /// </summary>
+        /// <param name="type"> Specifies which kind of content block this is (text, image_file, image_url, etc.). </param>
+        /// <returns> A new <see cref="Persistent.MessageInputContentBlock"/> instance for mocking. </returns>
+        public static MessageInputContentBlock MessageInputContentBlock(string @type = default)
+        {
+            return new UnknownMessageInputContentBlock(new MessageBlockType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A text block in a new message, containing plain text content. </summary>
         /// <param name="text"> The plain text content for this block. </param>
         /// <returns> A new <see cref="Persistent.MessageInputTextBlock"/> instance for mocking. </returns>
-        public static MessageInputTextBlock MessageInputTextBlock(string text = null)
+        public static MessageInputTextBlock MessageInputTextBlock(string text = default)
         {
-            return new MessageInputTextBlock(MessageBlockType.Text, serializedAdditionalRawData: null, text);
+            return new MessageInputTextBlock(MessageBlockType.Text, additionalBinaryDataProperties: null, text);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageInputImageFileBlock"/>. </summary>
+        /// <summary> An image-file block in a new message, referencing an internally uploaded image by file ID. </summary>
         /// <param name="imageFile"> Information about the referenced image file, including file ID and optional detail level. </param>
         /// <returns> A new <see cref="Persistent.MessageInputImageFileBlock"/> instance for mocking. </returns>
-        public static MessageInputImageFileBlock MessageInputImageFileBlock(MessageImageFileParam imageFile = null)
+        public static MessageInputImageFileBlock MessageInputImageFileBlock(MessageImageFileParam imageFile = default)
         {
-            return new MessageInputImageFileBlock(MessageBlockType.ImageFile, serializedAdditionalRawData: null, imageFile);
+            return new MessageInputImageFileBlock(MessageBlockType.ImageFile, additionalBinaryDataProperties: null, imageFile);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageImageFileParam"/>. </summary>
+        /// <summary> Defines how an internally uploaded image file is referenced when creating an image-file block. </summary>
         /// <param name="fileId"> The ID of the previously uploaded image file. </param>
         /// <param name="detail"> Optional detail level for the image (auto, low, or high). </param>
         /// <returns> A new <see cref="Persistent.MessageImageFileParam"/> instance for mocking. </returns>
-        public static MessageImageFileParam MessageImageFileParam(string fileId = null, ImageDetailLevel? detail = null)
+        public static MessageImageFileParam MessageImageFileParam(string fileId = default, ImageDetailLevel? detail = default)
         {
-            return new MessageImageFileParam(fileId, detail, serializedAdditionalRawData: null);
+            return new MessageImageFileParam(fileId, detail, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageInputImageUriBlock"/>. </summary>
+        /// <summary> An image-URL block in a new message, referencing an external image by URL. </summary>
         /// <param name="imageUrl"> Information about the external image URL, including the URL and optional detail level. </param>
         /// <returns> A new <see cref="Persistent.MessageInputImageUriBlock"/> instance for mocking. </returns>
-        public static MessageInputImageUriBlock MessageInputImageUriBlock(MessageImageUriParam imageUrl = null)
+        public static MessageInputImageUriBlock MessageInputImageUriBlock(MessageImageUriParam imageUrl = default)
         {
-            return new MessageInputImageUriBlock(MessageBlockType.ImageUrl, serializedAdditionalRawData: null, imageUrl);
+            return new MessageInputImageUriBlock(MessageBlockType.ImageUrl, additionalBinaryDataProperties: null, imageUrl);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageImageUriParam"/>. </summary>
+        /// <summary> Defines how an external image URL is referenced when creating an image-URL block. </summary>
         /// <param name="uri"> The publicly accessible URL of the external image. </param>
         /// <param name="detail"> Optional detail level for the image (auto, low, or high). Defaults to 'auto' if not specified. </param>
         /// <returns> A new <see cref="Persistent.MessageImageUriParam"/> instance for mocking. </returns>
-        public static MessageImageUriParam MessageImageUriParam(string uri = null, ImageDetailLevel? detail = null)
+        public static MessageImageUriParam MessageImageUriParam(string uri = default, ImageDetailLevel? detail = default)
         {
-            return new MessageImageUriParam(uri, detail, serializedAdditionalRawData: null);
+            return new MessageImageUriParam(uri, detail, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RequiredToolCall"/>. </summary>
+        /// <summary> This describes to which tools a file has been attached. </summary>
+        /// <param name="fileId"> The ID of the file to attach to the message. </param>
+        /// <param name="dataSource"> Azure asset ID. </param>
+        /// <param name="tools"> The tools to add to this file. </param>
+        /// <returns> A new <see cref="Persistent.MessageAttachment"/> instance for mocking. </returns>
+        public static MessageAttachment MessageAttachment(string fileId = default, VectorStoreDataSource dataSource = default, IEnumerable<BinaryData> tools = default)
+        {
+            tools ??= new ChangeTrackingList<BinaryData>();
+
+            return new MessageAttachment(fileId, dataSource, tools.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Controls for how a thread will be truncated prior to the run. Use this to control the initial
+        /// context window of the run.
+        /// </summary>
+        /// <param name="type">
+        /// The truncation strategy to use for the thread. The default is `auto`. If set to `last_messages`, the thread will
+        /// be truncated to the `lastMessages` count most recent messages in the thread. When set to `auto`, messages in the middle of the thread
+        /// will be dropped to fit the context length of the model, `max_prompt_tokens`.
+        /// </param>
+        /// <param name="lastMessages"> The number of most recent messages from the thread when constructing the context for the run. </param>
+        /// <returns> A new <see cref="Persistent.Truncation"/> instance for mocking. </returns>
+        public static Truncation Truncation(TruncationStrategy @type = default, int? lastMessages = default)
+        {
+            return new Truncation(@type, lastMessages, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specifies a tool the model should use. Use to force the model to call a specific tool. </summary>
+        /// <param name="type"> the type of tool. If type is `function`, the function name must be set. </param>
+        /// <param name="function"> The name of the function to call. </param>
+        /// <returns> A new <see cref="Persistent.PersistentAgentsNamedToolChoice"/> instance for mocking. </returns>
+        public static PersistentAgentsNamedToolChoice PersistentAgentsNamedToolChoice(PersistentAgentsNamedToolChoiceType @type = default, PersistentAgentsFunctionName function = default)
+        {
+            return new PersistentAgentsNamedToolChoice(@type, function, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The function name that will be used, if using the `function` tool. </summary>
+        /// <param name="name"> The name of the function to call. </param>
+        /// <returns> A new <see cref="Persistent.PersistentAgentsFunctionName"/> instance for mocking. </returns>
+        public static PersistentAgentsFunctionName PersistentAgentsFunctionName(string name = default)
+        {
+            return new PersistentAgentsFunctionName(name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// An abstract representation of a required action for an agent thread run to continue.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.SubmitToolOutputsAction"/> and <see cref="Persistent.SubmitToolApprovalAction"/>.
+        /// </summary>
+        /// <param name="type"> The object type. </param>
+        /// <returns> A new <see cref="Persistent.RequiredAction"/> instance for mocking. </returns>
+        public static RequiredAction RequiredAction(string @type = default)
+        {
+            return new UnknownRequiredAction(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// An abstract representation of a tool invocation needed by the model to continue a run.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RequiredFunctionToolCall"/>, <see cref="Persistent.RequiredMcpToolCall"/>, and <see cref="Persistent.RequiredComputerUseToolCall"/>.
+        /// </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
         /// <returns> A new <see cref="Persistent.RequiredToolCall"/> instance for mocking. </returns>
-        public static RequiredToolCall RequiredToolCall(string type = null, string id = null)
+        public static RequiredToolCall RequiredToolCall(string @type = default, string id = default)
         {
-            return new UnknownRequiredToolCall(type, serializedAdditionalRawData: null, id);
+            return new UnknownRequiredToolCall(@type, additionalBinaryDataProperties: null, id);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RequiredMcpToolCall"/>. </summary>
+        /// <summary> A representation of a requested call to a MCP tool, needed by the model to continue evaluation of a run. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
         /// <param name="arguments"> The arguments to use when invoking the mcp tool, as provided by the model. Arguments are presented as a JSON document that should be validated and parsed for evaluation. </param>
         /// <param name="name"> The name of the function used on the MCP server. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <returns> A new <see cref="Persistent.RequiredMcpToolCall"/> instance for mocking. </returns>
-        public static RequiredMcpToolCall RequiredMcpToolCall(string id = null, string arguments = null, string name = null, string serverLabel = null)
+        public static RequiredMcpToolCall RequiredMcpToolCall(string id = default, string arguments = default, string name = default, string serverLabel = default)
         {
             return new RequiredMcpToolCall(
-                "mcp",
-                serializedAdditionalRawData: null,
+                default,
+                additionalBinaryDataProperties: null,
                 id,
                 arguments,
                 name,
                 serverLabel);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RequiredComputerUseToolCall"/>. </summary>
+        /// <summary> A representation of a requested call to a Computer Use tool, needed by the model to continue evaluation of a run. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
         /// <param name="computerUsePreview"> Detailed information about the computer use action to be executed. </param>
         /// <returns> A new <see cref="Persistent.RequiredComputerUseToolCall"/> instance for mocking. </returns>
-        public static RequiredComputerUseToolCall RequiredComputerUseToolCall(string id = null, RequiredComputerUseToolCallDetails computerUsePreview = null)
+        public static RequiredComputerUseToolCall RequiredComputerUseToolCall(string id = default, RequiredComputerUseToolCallDetails computerUsePreview = default)
         {
-            return new RequiredComputerUseToolCall("computer_use_preview", serializedAdditionalRawData: null, id, computerUsePreview);
+            return new RequiredComputerUseToolCall(default, additionalBinaryDataProperties: null, id, computerUsePreview);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RequiredComputerUseToolCallDetails"/>. </summary>
-        /// <param name="action">
-        /// The action to be performed by the computer use tool.
-        /// Please note <see cref="ComputerUseAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.ClickAction"/>, <see cref="Persistent.DoubleClickAction"/>, <see cref="Persistent.DragAction"/>, <see cref="Persistent.KeyPressAction"/>, <see cref="Persistent.MoveAction"/>, <see cref="ScreenshotAction"/>, <see cref="Persistent.ScrollAction"/>, <see cref="Persistent.TypeAction"/> and <see cref="WaitAction"/>.
-        /// </param>
+        /// <summary> The detailed information for a computer use tool invocation. </summary>
+        /// <param name="action"> The action to be performed by the computer use tool. </param>
         /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
         /// <returns> A new <see cref="Persistent.RequiredComputerUseToolCallDetails"/> instance for mocking. </returns>
-        public static RequiredComputerUseToolCallDetails RequiredComputerUseToolCallDetails(ComputerUseAction action = null, IEnumerable<SafetyCheck> pendingSafetyChecks = null)
+        public static RequiredComputerUseToolCallDetails RequiredComputerUseToolCallDetails(ComputerUseAction action = default, IEnumerable<SafetyCheck> pendingSafetyChecks = default)
         {
-            pendingSafetyChecks ??= new List<SafetyCheck>();
+            pendingSafetyChecks ??= new ChangeTrackingList<SafetyCheck>();
 
-            return new RequiredComputerUseToolCallDetails(action, pendingSafetyChecks?.ToList(), serializedAdditionalRawData: null);
+            return new RequiredComputerUseToolCallDetails(action, pendingSafetyChecks.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.ClickAction"/>. </summary>
+        /// <summary>
+        /// An abstract representation of a computer use action.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.ClickAction"/>, <see cref="Persistent.DoubleClickAction"/>, <see cref="Persistent.DragAction"/>, <see cref="Persistent.KeyPressAction"/>, <see cref="Persistent.MoveAction"/>, <see cref="Persistent.ScreenshotAction"/>, <see cref="Persistent.ScrollAction"/>, <see cref="Persistent.TypeAction"/>, and <see cref="Persistent.WaitAction"/>.
+        /// </summary>
+        /// <param name="type"> The type of computer use action. </param>
+        /// <returns> A new <see cref="Persistent.ComputerUseAction"/> instance for mocking. </returns>
+        public static ComputerUseAction ComputerUseAction(string @type = default)
+        {
+            return new UnknownComputerUseAction(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A click action. </summary>
         /// <param name="x"> The x-coordinate where the click occurred. </param>
         /// <param name="y"> The y-coordinate where the click occurred. </param>
         /// <param name="button"> Indicates which mouse button was pressed during the click. </param>
         /// <returns> A new <see cref="Persistent.ClickAction"/> instance for mocking. </returns>
         public static ClickAction ClickAction(int x = default, int y = default, MouseButton button = default)
         {
-            return new ClickAction("click", serializedAdditionalRawData: null, x, y, button);
+            return new ClickAction("click", additionalBinaryDataProperties: null, x, y, button);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.DoubleClickAction"/>. </summary>
+        /// <summary> A double click action. </summary>
         /// <param name="x"> The x-coordinate where the double click occurred. </param>
         /// <param name="y"> The y-coordinate where the double click occurred. </param>
         /// <returns> A new <see cref="Persistent.DoubleClickAction"/> instance for mocking. </returns>
         public static DoubleClickAction DoubleClickAction(int x = default, int y = default)
         {
-            return new DoubleClickAction("double_click", serializedAdditionalRawData: null, x, y);
+            return new DoubleClickAction("double_click", additionalBinaryDataProperties: null, x, y);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.DragAction"/>. </summary>
+        /// <summary> A drag action. </summary>
         /// <param name="path"> An array of coordinates representing the path of the drag action. </param>
         /// <returns> A new <see cref="Persistent.DragAction"/> instance for mocking. </returns>
-        public static DragAction DragAction(IEnumerable<CoordinatePoint> path = null)
+        public static DragAction DragAction(IEnumerable<CoordinatePoint> path = default)
         {
-            path ??= new List<CoordinatePoint>();
+            path ??= new ChangeTrackingList<CoordinatePoint>();
 
-            return new DragAction("drag", serializedAdditionalRawData: null, path?.ToList());
+            return new DragAction("drag", additionalBinaryDataProperties: null, path.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.CoordinatePoint"/>. </summary>
+        /// <summary> A coordinate point with x and y values. </summary>
         /// <param name="x"> The x-coordinate. </param>
         /// <param name="y"> The y-coordinate. </param>
         /// <returns> A new <see cref="Persistent.CoordinatePoint"/> instance for mocking. </returns>
         public static CoordinatePoint CoordinatePoint(int x = default, int y = default)
         {
-            return new CoordinatePoint(x, y, serializedAdditionalRawData: null);
+            return new CoordinatePoint(x, y, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.KeyPressAction"/>. </summary>
+        /// <summary> A collection of keypresses the model would like to perform. </summary>
         /// <param name="keys"> The combination of keys the model is requesting to be pressed. This is an array of strings, each representing a key. </param>
         /// <returns> A new <see cref="Persistent.KeyPressAction"/> instance for mocking. </returns>
-        public static KeyPressAction KeyPressAction(IEnumerable<string> keys = null)
+        public static KeyPressAction KeyPressAction(IEnumerable<string> keys = default)
         {
-            keys ??= new List<string>();
+            keys ??= new ChangeTrackingList<string>();
 
-            return new KeyPressAction("keypress", serializedAdditionalRawData: null, keys?.ToList());
+            return new KeyPressAction("keypress", additionalBinaryDataProperties: null, keys.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MoveAction"/>. </summary>
+        /// <summary> A mouse move action. </summary>
         /// <param name="x"> The x-coordinate to move to. </param>
         /// <param name="y"> The y-coordinate to move to. </param>
         /// <returns> A new <see cref="Persistent.MoveAction"/> instance for mocking. </returns>
         public static MoveAction MoveAction(int x = default, int y = default)
         {
-            return new MoveAction("move", serializedAdditionalRawData: null, x, y);
+            return new MoveAction("move", additionalBinaryDataProperties: null, x, y);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.ScrollAction"/>. </summary>
+        /// <summary> A screenshot action. </summary>
+        /// <returns> A new <see cref="Persistent.ScreenshotAction"/> instance for mocking. </returns>
+        public static ScreenshotAction ScreenshotAction()
+        {
+            return new ScreenshotAction("screenshot", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A scroll action. </summary>
         /// <param name="x"> The x-coordinate where the scroll occurred. </param>
         /// <param name="y"> The y-coordinate where the scroll occurred. </param>
         /// <param name="scrollX"> The horizontal scroll distance. </param>
@@ -235,442 +855,577 @@ namespace Azure.AI.Agents.Persistent
         {
             return new ScrollAction(
                 "scroll",
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 x,
                 y,
                 scrollX,
                 scrollY);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.TypeAction"/>. </summary>
+        /// <summary> An action to type in text. </summary>
         /// <param name="text"> The text to type. </param>
         /// <returns> A new <see cref="Persistent.TypeAction"/> instance for mocking. </returns>
-        public static TypeAction TypeAction(string text = null)
+        public static TypeAction TypeAction(string text = default)
         {
-            return new TypeAction("type", serializedAdditionalRawData: null, text);
+            return new TypeAction("type", additionalBinaryDataProperties: null, text);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.SubmitToolApprovalAction"/>. </summary>
+        /// <summary> A wait action. </summary>
+        /// <returns> A new <see cref="Persistent.WaitAction"/> instance for mocking. </returns>
+        public static WaitAction WaitAction()
+        {
+            return new WaitAction("wait", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Safety check that has been acknowledged by the developer. </summary>
+        /// <param name="id"> The ID of the pending safety check. </param>
+        /// <param name="code"> The type of the pending safety check. </param>
+        /// <param name="message"> Details about the pending safety check. </param>
+        /// <returns> A new <see cref="Persistent.SafetyCheck"/> instance for mocking. </returns>
+        public static SafetyCheck SafetyCheck(string id = default, string code = default, string message = default)
+        {
+            return new SafetyCheck(id, code, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The details for required tool call approval that must be submitted for an agent thread run to continue. </summary>
         /// <param name="submitToolApproval"> The details describing tools that should be approved to continue run. </param>
         /// <returns> A new <see cref="Persistent.SubmitToolApprovalAction"/> instance for mocking. </returns>
-        public static SubmitToolApprovalAction SubmitToolApprovalAction(SubmitToolApprovalDetails submitToolApproval = null)
+        public static SubmitToolApprovalAction SubmitToolApprovalAction(SubmitToolApprovalDetails submitToolApproval = default)
         {
-            return new SubmitToolApprovalAction("submit_tool_approval", serializedAdditionalRawData: null, submitToolApproval);
+            return new SubmitToolApprovalAction("submit_tool_approval", additionalBinaryDataProperties: null, submitToolApproval);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.SubmitToolApprovalDetails"/>. </summary>
-        /// <param name="toolCalls">
-        /// The list of tool calls that must be approved for the agent thread run to continue.
-        /// Please note <see cref="Persistent.RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RequiredComputerUseToolCall"/>, <see cref="Persistent.RequiredFunctionToolCall"/> and <see cref="Persistent.RequiredMcpToolCall"/>.
-        /// </param>
+        /// <summary> The details describing tools that should be approved. </summary>
+        /// <param name="toolCalls"> The list of tool calls that must be approved for the agent thread run to continue. </param>
         /// <returns> A new <see cref="Persistent.SubmitToolApprovalDetails"/> instance for mocking. </returns>
-        public static SubmitToolApprovalDetails SubmitToolApprovalDetails(IEnumerable<RequiredToolCall> toolCalls = null)
+        public static SubmitToolApprovalDetails SubmitToolApprovalDetails(IEnumerable<RequiredToolCall> toolCalls = default)
         {
-            toolCalls ??= new List<RequiredToolCall>();
+            toolCalls ??= new ChangeTrackingList<RequiredToolCall>();
 
-            return new SubmitToolApprovalDetails(toolCalls?.ToList(), serializedAdditionalRawData: null);
+            return new SubmitToolApprovalDetails(toolCalls.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunError"/>. </summary>
+        /// <summary> The details of an error as encountered by an agent thread run. </summary>
         /// <param name="code"> The status for the error. </param>
         /// <param name="message"> The human-readable text associated with the error. </param>
         /// <returns> A new <see cref="Persistent.RunError"/> instance for mocking. </returns>
-        public static RunError RunError(string code = null, string message = null)
+        public static RunError RunError(string code = default, string message = default)
         {
-            return new RunError(code, message, serializedAdditionalRawData: null);
+            return new RunError(code, message, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.IncompleteRunDetails"/>. </summary>
+        /// <summary> Details on why the run is incomplete. Will be `null` if the run is not incomplete. </summary>
         /// <param name="reason"> The reason why the run is incomplete. This indicates which specific token limit was reached during the run. </param>
         /// <returns> A new <see cref="Persistent.IncompleteRunDetails"/> instance for mocking. </returns>
         public static IncompleteRunDetails IncompleteRunDetails(IncompleteDetailsReason reason = default)
         {
-            return new IncompleteRunDetails(reason, serializedAdditionalRawData: null);
+            return new IncompleteRunDetails(reason, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunCompletionUsage"/>. </summary>
+        /// <summary> Usage statistics related to the run. This value will be `null` if the run is not in a terminal state (i.e. `in_progress`, `queued`, etc.). </summary>
         /// <param name="completionTokens"> Number of completion tokens used over the course of the run. </param>
         /// <param name="promptTokens"> Number of prompt tokens used over the course of the run. </param>
         /// <param name="totalTokens"> Total number of tokens used (prompt + completion). </param>
         /// <returns> A new <see cref="Persistent.RunCompletionUsage"/> instance for mocking. </returns>
         public static RunCompletionUsage RunCompletionUsage(long completionTokens = default, long promptTokens = default, long totalTokens = default)
         {
-            return new RunCompletionUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
+            return new RunCompletionUsage(completionTokens, promptTokens, totalTokens, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageIncompleteDetails"/>. </summary>
+        /// <summary> A single, existing message within an agent thread. </summary>
+        /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
+        /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
+        /// <param name="threadId"> The ID of the thread that this message belongs to. </param>
+        /// <param name="status"> The status of the message. </param>
+        /// <param name="incompleteDetails"> On an incomplete message, details about why the message is incomplete. </param>
+        /// <param name="completedAt"> The Unix timestamp (in seconds) for when the message was completed. </param>
+        /// <param name="incompleteAt"> The Unix timestamp (in seconds) for when the message was marked as incomplete. </param>
+        /// <param name="role"> The role associated with the agent thread message. </param>
+        /// <param name="contentItems"> The list of content items associated with the agent thread message. </param>
+        /// <param name="assistantId"> If applicable, the ID of the agent that authored this message. </param>
+        /// <param name="runId"> If applicable, the ID of the run associated with the authoring of this message. </param>
+        /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <returns> A new <see cref="Persistent.PersistentThreadMessage"/> instance for mocking. </returns>
+        public static PersistentThreadMessage PersistentThreadMessage(string id = default, DateTimeOffset createdAt = default, string threadId = default, MessageStatus status = default, MessageIncompleteDetails incompleteDetails = default, DateTimeOffset? completedAt = default, DateTimeOffset? incompleteAt = default, MessageRole role = default, IEnumerable<MessageContent> contentItems = default, string assistantId = default, string runId = default, IEnumerable<MessageAttachment> attachments = default, IReadOnlyDictionary<string, string> metadata = default)
+        {
+            contentItems ??= new ChangeTrackingList<MessageContent>();
+            attachments ??= new ChangeTrackingList<MessageAttachment>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PersistentThreadMessage(
+                id,
+                default,
+                createdAt,
+                threadId,
+                status,
+                incompleteDetails,
+                completedAt,
+                incompleteAt,
+                role,
+                contentItems.ToList(),
+                assistantId,
+                runId,
+                attachments.ToList(),
+                metadata,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Information providing additional detail about a message entering an incomplete status. </summary>
         /// <param name="reason"> The provided reason describing why the message was marked as incomplete. </param>
         /// <returns> A new <see cref="Persistent.MessageIncompleteDetails"/> instance for mocking. </returns>
         public static MessageIncompleteDetails MessageIncompleteDetails(MessageIncompleteDetailsReason reason = default)
         {
-            return new MessageIncompleteDetails(reason, serializedAdditionalRawData: null);
+            return new MessageIncompleteDetails(reason, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageTextAnnotation"/>. </summary>
+        /// <summary>
+        /// An abstract representation of a single item of thread message content.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.MessageTextContent"/> and <see cref="Persistent.MessageImageFileContent"/>.
+        /// </summary>
+        /// <param name="type"> The object type. </param>
+        /// <returns> A new <see cref="Persistent.MessageContent"/> instance for mocking. </returns>
+        public static MessageContent MessageContent(string @type = default)
+        {
+            return new UnknownMessageContent(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// An abstract representation of an annotation to text thread message content.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.MessageTextUriCitationAnnotation"/>, <see cref="MessageTextFileCitationAnnotation"/>, and <see cref="MessageTextFilePathAnnotation"/>.
+        /// </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
         /// <returns> A new <see cref="Persistent.MessageTextAnnotation"/> instance for mocking. </returns>
-        public static MessageTextAnnotation MessageTextAnnotation(string type = null, string text = null)
+        public static MessageTextAnnotation MessageTextAnnotation(string @type = default, string text = default)
         {
-            return new UnknownMessageTextAnnotation(type, text, serializedAdditionalRawData: null);
+            return new UnknownMessageTextAnnotation(@type, text, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageTextUriCitationAnnotation"/>. </summary>
+        /// <summary> A citation within the message that points to a specific URL associated with the message. Generated when the agent uses tools such as 'bing_grounding' to search the Internet. </summary>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
         /// <param name="uriCitation"> The details of the URL citation. </param>
         /// <param name="startIndex"> The first text index associated with this text annotation. </param>
         /// <param name="endIndex"> The last text index associated with this text annotation. </param>
         /// <returns> A new <see cref="Persistent.MessageTextUriCitationAnnotation"/> instance for mocking. </returns>
-        public static MessageTextUriCitationAnnotation MessageTextUriCitationAnnotation(string text = null, MessageTextUriCitationDetails uriCitation = null, int? startIndex = null, int? endIndex = null)
+        public static MessageTextUriCitationAnnotation MessageTextUriCitationAnnotation(string text = default, MessageTextUriCitationDetails uriCitation = default, int? startIndex = default, int? endIndex = default)
         {
             return new MessageTextUriCitationAnnotation(
                 "url_citation",
                 text,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 uriCitation,
                 startIndex,
                 endIndex);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageTextUriCitationDetails"/>. </summary>
+        /// <summary> A representation of a URL citation, as used in text thread message content. </summary>
         /// <param name="uri"> The URL associated with this citation. </param>
         /// <param name="title"> The title of the URL. </param>
         /// <returns> A new <see cref="Persistent.MessageTextUriCitationDetails"/> instance for mocking. </returns>
-        public static MessageTextUriCitationDetails MessageTextUriCitationDetails(string uri = null, string title = null)
+        public static MessageTextUriCitationDetails MessageTextUriCitationDetails(string uri = default, string title = default)
         {
-            return new MessageTextUriCitationDetails(uri, title, serializedAdditionalRawData: null);
+            return new MessageTextUriCitationDetails(uri, title, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.ComputerToolOutput"/>. </summary>
+        /// <summary>
+        /// The data provided during a tool outputs submission to resolve pending tool calls and allow the model to continue.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.ToolOutput"/> and <see cref="Persistent.ComputerToolOutput"/>.
+        /// </summary>
+        /// <param name="type"> The object type for the tool output. Defaults to `function_call_output` if not provided. </param>
+        /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
+        /// <returns> A new <see cref="Persistent.StructuredToolOutput"/> instance for mocking. </returns>
+        public static StructuredToolOutput StructuredToolOutput(string @type = default, string toolCallId = default)
+        {
+            return new UnknownStructuredToolOutput(@type, toolCallId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The output from a function tool to be submitted. </summary>
+        /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
+        /// <param name="output"> The output from the function tool to be submitted. </param>
+        /// <returns> A new <see cref="Persistent.ToolOutput"/> instance for mocking. </returns>
+        public static ToolOutput ToolOutput(string toolCallId = default, string output = default)
+        {
+            return new ToolOutput("function_call_output", toolCallId, additionalBinaryDataProperties: null, output);
+        }
+
+        /// <summary> The output from a computer use tool to be submitted. </summary>
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
         /// <param name="output"> The output from the computer use tool. </param>
         /// <param name="acknowledgedSafetyChecks"> Safety checks that have been acknowledged by the developer. </param>
         /// <returns> A new <see cref="Persistent.ComputerToolOutput"/> instance for mocking. </returns>
-        public static ComputerToolOutput ComputerToolOutput(string toolCallId = null, ComputerScreenshot output = null, IEnumerable<SafetyCheck> acknowledgedSafetyChecks = null)
+        public static ComputerToolOutput ComputerToolOutput(string toolCallId = default, ComputerScreenshot output = default, IEnumerable<SafetyCheck> acknowledgedSafetyChecks = default)
         {
-            acknowledgedSafetyChecks ??= new List<SafetyCheck>();
+            acknowledgedSafetyChecks ??= new ChangeTrackingList<SafetyCheck>();
 
-            return new ComputerToolOutput("computer_call_output", toolCallId, serializedAdditionalRawData: null, output, acknowledgedSafetyChecks?.ToList());
+            return new ComputerToolOutput("computer_call_output", toolCallId, additionalBinaryDataProperties: null, output, acknowledgedSafetyChecks.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.ComputerScreenshot"/>. </summary>
-        /// <param name="type"> Specifies the event type. For a computer screenshot, this property is always set to computer_screenshot. </param>
+        /// <summary> The output from a computer use tool representing a screenshot. </summary>
         /// <param name="fileId"> The identifier of an uploaded file that contains the screenshot. </param>
         /// <param name="imageUrl"> The URL of the screenshot image. </param>
         /// <returns> A new <see cref="Persistent.ComputerScreenshot"/> instance for mocking. </returns>
-        public static ComputerScreenshot ComputerScreenshot(ComputerScreenshotType type = default, string fileId = null, string imageUrl = null)
+        public static ComputerScreenshot ComputerScreenshot(string fileId = default, string imageUrl = default)
         {
-            return new ComputerScreenshot(type, fileId, imageUrl, serializedAdditionalRawData: null);
+            return new ComputerScreenshot("computer_screenshot", fileId, imageUrl, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.ToolApproval"/>. </summary>
+        /// <summary> The data provided during a tool outputs submission to resolve pending tool calls and allow the model to continue. </summary>
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
         /// <param name="approve"> The approval boolean value to be submitted. </param>
         /// <param name="headers"> Headers to be attached to the approval. </param>
         /// <returns> A new <see cref="Persistent.ToolApproval"/> instance for mocking. </returns>
-        public static ToolApproval ToolApproval(string toolCallId = null, bool approve = default, IDictionary<string, string> headers = null)
+        public static ToolApproval ToolApproval(string toolCallId = default, bool approve = default, IDictionary<string, string> headers = default)
         {
-            headers ??= new Dictionary<string, string>();
+            headers ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ToolApproval(toolCallId, approve, headers, serializedAdditionalRawData: null);
+            return new ToolApproval(toolCallId, approve, headers, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepMessageCreationDetails"/>. </summary>
+        /// <summary>
+        /// An abstract representation of the details for a run step.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepMessageCreationDetails"/>, <see cref="Persistent.RunStepToolCallDetails"/>, and <see cref="Persistent.RunStepActivityDetails"/>.
+        /// </summary>
+        /// <param name="type"> The object type. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDetails"/> instance for mocking. </returns>
+        public static RunStepDetails RunStepDetails(string @type = default)
+        {
+            return new UnknownRunStepDetails(new RunStepType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The detailed information associated with a message creation run step. </summary>
         /// <param name="messageCreation"> Information about the message creation associated with this run step. </param>
         /// <returns> A new <see cref="Persistent.RunStepMessageCreationDetails"/> instance for mocking. </returns>
-        public static RunStepMessageCreationDetails RunStepMessageCreationDetails(RunStepMessageCreationReference messageCreation = null)
+        public static RunStepMessageCreationDetails RunStepMessageCreationDetails(RunStepMessageCreationReference messageCreation = default)
         {
-            return new RunStepMessageCreationDetails(RunStepType.MessageCreation, serializedAdditionalRawData: null, messageCreation);
+            return new RunStepMessageCreationDetails(RunStepType.MessageCreation, additionalBinaryDataProperties: null, messageCreation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepMessageCreationReference"/>. </summary>
+        /// <summary> The details of a message created as a part of a run step. </summary>
         /// <param name="messageId"> The ID of the message created by this run step. </param>
         /// <returns> A new <see cref="Persistent.RunStepMessageCreationReference"/> instance for mocking. </returns>
-        public static RunStepMessageCreationReference RunStepMessageCreationReference(string messageId = null)
+        public static RunStepMessageCreationReference RunStepMessageCreationReference(string messageId = default)
         {
-            return new RunStepMessageCreationReference(messageId, serializedAdditionalRawData: null);
+            return new RunStepMessageCreationReference(messageId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepToolCallDetails"/>. </summary>
-        /// <param name="toolCalls">
-        /// A list of tool call details for this run step.
-        /// Please note <see cref="Persistent.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepAzureFunctionToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepBrowserAutomationToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepComputerUseToolCall"/>, <see cref="Persistent.RunStepConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeepResearchToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepMcpToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/> and <see cref="Persistent.RunStepSharepointToolCall"/>.
-        /// </param>
+        /// <summary> The detailed information associated with a run step calling tools. </summary>
+        /// <param name="toolCalls"> A list of tool call details for this run step. </param>
         /// <returns> A new <see cref="Persistent.RunStepToolCallDetails"/> instance for mocking. </returns>
-        public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
+        public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = default)
         {
-            toolCalls ??= new List<RunStepToolCall>();
+            toolCalls ??= new ChangeTrackingList<RunStepToolCall>();
 
-            return new RunStepToolCallDetails(RunStepType.ToolCalls, serializedAdditionalRawData: null, toolCalls?.ToList());
+            return new RunStepToolCallDetails(RunStepType.ToolCalls, additionalBinaryDataProperties: null, toolCalls.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepToolCall"/>. </summary>
+        /// <summary>
+        /// An abstract representation of a detailed tool call as recorded within a run step for an existing run.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepBrowserAutomationToolCall"/>, <see cref="Persistent.RunStepMcpToolCall"/>, <see cref="Persistent.RunStepComputerUseToolCall"/>, <see cref="Persistent.RunStepSharepointToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepAzureFunctionToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/>, <see cref="Persistent.RunStepDeepResearchToolCall"/>, and <see cref="Persistent.RunStepConnectedAgentToolCall"/>.
+        /// </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <returns> A new <see cref="Persistent.RunStepToolCall"/> instance for mocking. </returns>
-        public static RunStepToolCall RunStepToolCall(string type = null, string id = null)
+        public static RunStepToolCall RunStepToolCall(string @type = default, string id = default)
         {
-            return new UnknownRunStepToolCall(type, id, serializedAdditionalRawData: null);
+            return new UnknownRunStepToolCall(@type, id, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepCodeInterpreterLogOutput"/>. </summary>
+        /// <summary>
+        /// An abstract representation of an emitted output from a code interpreter tool.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepCodeInterpreterLogOutput"/> and <see cref="Persistent.RunStepCodeInterpreterImageOutput"/>.
+        /// </summary>
+        /// <param name="type"> The object type. </param>
+        /// <returns> A new <see cref="Persistent.RunStepCodeInterpreterToolCallOutput"/> instance for mocking. </returns>
+        public static RunStepCodeInterpreterToolCallOutput RunStepCodeInterpreterToolCallOutput(string @type = default)
+        {
+            return new UnknownRunStepCodeInterpreterToolCallOutput(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A representation of a log output emitted by a code interpreter tool in response to a tool call by the model. </summary>
         /// <param name="logs"> The serialized log output emitted by the code interpreter. </param>
         /// <returns> A new <see cref="Persistent.RunStepCodeInterpreterLogOutput"/> instance for mocking. </returns>
-        public static RunStepCodeInterpreterLogOutput RunStepCodeInterpreterLogOutput(string logs = null)
+        public static RunStepCodeInterpreterLogOutput RunStepCodeInterpreterLogOutput(string logs = default)
         {
-            return new RunStepCodeInterpreterLogOutput("logs", serializedAdditionalRawData: null, logs);
+            return new RunStepCodeInterpreterLogOutput("logs", additionalBinaryDataProperties: null, logs);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepCodeInterpreterImageOutput"/>. </summary>
+        /// <summary> A representation of an image output emitted by a code interpreter tool in response to a tool call by the model. </summary>
         /// <param name="image"> Referential information for the image associated with this output. </param>
         /// <returns> A new <see cref="Persistent.RunStepCodeInterpreterImageOutput"/> instance for mocking. </returns>
-        public static RunStepCodeInterpreterImageOutput RunStepCodeInterpreterImageOutput(RunStepCodeInterpreterImageReference image = null)
+        public static RunStepCodeInterpreterImageOutput RunStepCodeInterpreterImageOutput(RunStepCodeInterpreterImageReference image = default)
         {
-            return new RunStepCodeInterpreterImageOutput("image", serializedAdditionalRawData: null, image);
+            return new RunStepCodeInterpreterImageOutput("image", additionalBinaryDataProperties: null, image);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepCodeInterpreterImageReference"/>. </summary>
+        /// <summary> An image reference emitted by a code interpreter tool in response to a tool call by the model. </summary>
         /// <param name="fileId"> The ID of the file associated with this image. </param>
         /// <returns> A new <see cref="Persistent.RunStepCodeInterpreterImageReference"/> instance for mocking. </returns>
-        public static RunStepCodeInterpreterImageReference RunStepCodeInterpreterImageReference(string fileId = null)
+        public static RunStepCodeInterpreterImageReference RunStepCodeInterpreterImageReference(string fileId = default)
         {
-            return new RunStepCodeInterpreterImageReference(fileId, serializedAdditionalRawData: null);
+            return new RunStepCodeInterpreterImageReference(fileId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepFileSearchToolCall"/>. </summary>
+        /// <summary>
+        /// A record of a call to a file search tool, issued by the model in evaluation of a defined tool, that represents
+        /// executed file search.
+        /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="fileSearch"> For now, this is always going to be an empty object. </param>
         /// <returns> A new <see cref="Persistent.RunStepFileSearchToolCall"/> instance for mocking. </returns>
-        public static RunStepFileSearchToolCall RunStepFileSearchToolCall(string id = null, RunStepFileSearchToolCallResults fileSearch = null)
+        public static RunStepFileSearchToolCall RunStepFileSearchToolCall(string id = default, RunStepFileSearchToolCallResults fileSearch = default)
         {
-            return new RunStepFileSearchToolCall("file_search", id, serializedAdditionalRawData: null, fileSearch);
+            return new RunStepFileSearchToolCall("file_search", additionalBinaryDataProperties: null, id, fileSearch);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepFileSearchToolCallResults"/>. </summary>
+        /// <summary> The results of the file search. </summary>
         /// <param name="rankingOptions"> Ranking options for file search. </param>
         /// <param name="results"> The array of a file search results. </param>
         /// <returns> A new <see cref="Persistent.RunStepFileSearchToolCallResults"/> instance for mocking. </returns>
-        public static RunStepFileSearchToolCallResults RunStepFileSearchToolCallResults(FileSearchRankingOptions rankingOptions = null, IEnumerable<RunStepFileSearchToolCallResult> results = null)
+        public static RunStepFileSearchToolCallResults RunStepFileSearchToolCallResults(FileSearchRankingOptions rankingOptions = default, IEnumerable<RunStepFileSearchToolCallResult> results = default)
         {
-            results ??= new List<RunStepFileSearchToolCallResult>();
+            results ??= new ChangeTrackingList<RunStepFileSearchToolCallResult>();
 
-            return new RunStepFileSearchToolCallResults(rankingOptions, results?.ToList(), serializedAdditionalRawData: null);
+            return new RunStepFileSearchToolCallResults(rankingOptions, results.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepFileSearchToolCallResult"/>. </summary>
+        /// <summary>   File search tool call result. </summary>
         /// <param name="fileId"> The ID of the file that result was found in. </param>
         /// <param name="fileName"> The name of the file that result was found in. </param>
         /// <param name="score"> The score of the result. All values must be a floating point number between 0 and 1. </param>
         /// <param name="content"> The content of the result that was found. The content is only included if requested via the include query parameter. </param>
         /// <returns> A new <see cref="Persistent.RunStepFileSearchToolCallResult"/> instance for mocking. </returns>
-        public static RunStepFileSearchToolCallResult RunStepFileSearchToolCallResult(string fileId = null, string fileName = null, float score = default, IEnumerable<FileSearchToolCallContent> content = null)
+        public static RunStepFileSearchToolCallResult RunStepFileSearchToolCallResult(string fileId = default, string fileName = default, float score = default, IEnumerable<FileSearchToolCallContent> content = default)
         {
-            content ??= new List<FileSearchToolCallContent>();
+            content ??= new ChangeTrackingList<FileSearchToolCallContent>();
 
-            return new RunStepFileSearchToolCallResult(fileId, fileName, score, content?.ToList(), serializedAdditionalRawData: null);
+            return new RunStepFileSearchToolCallResult(fileId, fileName, score, content.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.FileSearchToolCallContent"/>. </summary>
-        /// <param name="type"> The type of the content. </param>
+        /// <summary> The file search result content object. </summary>
         /// <param name="text"> The text content of the file. </param>
         /// <returns> A new <see cref="Persistent.FileSearchToolCallContent"/> instance for mocking. </returns>
-        public static FileSearchToolCallContent FileSearchToolCallContent(FileSearchToolCallContentType type = default, string text = null)
+        public static FileSearchToolCallContent FileSearchToolCallContent(string text = default)
         {
-            return new FileSearchToolCallContent(type, text, serializedAdditionalRawData: null);
+            return new FileSearchToolCallContent("new FileSearchToolCallContentType(\"text\")", text, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepBingGroundingToolCall"/>. </summary>
+        /// <summary>
+        /// A record of a call to a bing grounding tool, issued by the model in evaluation of a defined tool, that represents
+        /// executed search with bing grounding.
+        /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="bingGrounding"> The dictionary with request and response from Bing Grounding search tool. </param>
         /// <returns> A new <see cref="Persistent.RunStepBingGroundingToolCall"/> instance for mocking. </returns>
-        public static RunStepBingGroundingToolCall RunStepBingGroundingToolCall(string id = null, IReadOnlyDictionary<string, string> bingGrounding = null)
+        public static RunStepBingGroundingToolCall RunStepBingGroundingToolCall(string id = default, IReadOnlyDictionary<string, string> bingGrounding = default)
         {
-            bingGrounding ??= new Dictionary<string, string>();
+            bingGrounding ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RunStepBingGroundingToolCall("bing_grounding", id, serializedAdditionalRawData: null, bingGrounding);
+            return new RunStepBingGroundingToolCall("bing_grounding", id, additionalBinaryDataProperties: null, bingGrounding);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepAzureAISearchToolCall"/>. </summary>
+        /// <summary>
+        /// A record of a call to an Azure AI Search tool, issued by the model in evaluation of a defined tool, that represents
+        /// executed Azure AI search.
+        /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="azureAISearch"> Reserved for future use. </param>
         /// <returns> A new <see cref="Persistent.RunStepAzureAISearchToolCall"/> instance for mocking. </returns>
-        public static RunStepAzureAISearchToolCall RunStepAzureAISearchToolCall(string id = null, IReadOnlyDictionary<string, string> azureAISearch = null)
+        public static RunStepAzureAISearchToolCall RunStepAzureAISearchToolCall(string id = default, IReadOnlyDictionary<string, string> azureAISearch = default)
         {
-            azureAISearch ??= new Dictionary<string, string>();
+            azureAISearch ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RunStepAzureAISearchToolCall("azure_ai_search", id, serializedAdditionalRawData: null, azureAISearch);
+            return new RunStepAzureAISearchToolCall("azure_ai_search", id, additionalBinaryDataProperties: null, azureAISearch);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepBrowserAutomationToolCall"/>. </summary>
+        /// <summary> A record of a call to a Browser Automation tool issued by the Agent. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="browserAutomation"> Details of the browser automation tool call. </param>
         /// <returns> A new <see cref="Persistent.RunStepBrowserAutomationToolCall"/> instance for mocking. </returns>
-        public static RunStepBrowserAutomationToolCall RunStepBrowserAutomationToolCall(string id = null, BrowserAutomationToolCallDetails browserAutomation = null)
+        public static RunStepBrowserAutomationToolCall RunStepBrowserAutomationToolCall(string id = default, BrowserAutomationToolCallDetails browserAutomation = default)
         {
-            return new RunStepBrowserAutomationToolCall("browser_automation", id, serializedAdditionalRawData: null, browserAutomation);
+            return new RunStepBrowserAutomationToolCall("browser_automation", id, additionalBinaryDataProperties: null, browserAutomation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.BrowserAutomationToolCallDetails"/>. </summary>
+        /// <summary> Details of a Browser Automation tool call. </summary>
         /// <param name="input"> The input provided to the Browser Automation tool. </param>
         /// <param name="output"> The output returned by the Browser Automation tool. </param>
         /// <param name="steps"> The steps the Browser Automation tool executed. </param>
         /// <returns> A new <see cref="Persistent.BrowserAutomationToolCallDetails"/> instance for mocking. </returns>
-        public static BrowserAutomationToolCallDetails BrowserAutomationToolCallDetails(string input = null, string output = null, IEnumerable<BrowserAutomationToolCallStep> steps = null)
+        public static BrowserAutomationToolCallDetails BrowserAutomationToolCallDetails(string input = default, string output = default, IEnumerable<BrowserAutomationToolCallStep> steps = default)
         {
-            steps ??= new List<BrowserAutomationToolCallStep>();
+            steps ??= new ChangeTrackingList<BrowserAutomationToolCallStep>();
 
-            return new BrowserAutomationToolCallDetails(input, output, steps?.ToList(), serializedAdditionalRawData: null);
+            return new BrowserAutomationToolCallDetails(input, output, steps.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.BrowserAutomationToolCallStep"/>. </summary>
+        /// <summary> Describes a single step of a Browser Automation tool execution. </summary>
         /// <param name="lastStepResult"> The result of the last step executed with the Browser. </param>
         /// <param name="currentState"> The current state of execution with the Browser. </param>
         /// <param name="nextStep"> The next step to execute with the Browser. </param>
         /// <returns> A new <see cref="Persistent.BrowserAutomationToolCallStep"/> instance for mocking. </returns>
-        public static BrowserAutomationToolCallStep BrowserAutomationToolCallStep(string lastStepResult = null, string currentState = null, string nextStep = null)
+        public static BrowserAutomationToolCallStep BrowserAutomationToolCallStep(string lastStepResult = default, string currentState = default, string nextStep = default)
         {
-            return new BrowserAutomationToolCallStep(lastStepResult, currentState, nextStep, serializedAdditionalRawData: null);
+            return new BrowserAutomationToolCallStep(lastStepResult, currentState, nextStep, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepMcpToolCall"/>. </summary>
+        /// <summary>
+        /// A record of a call to a MCP tool, issued by the model in evaluation of a defined tool, that represents
+        /// executed MCP actions.
+        /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="arguments"> Arguments to the MCP tool call, as provided by the model. Arguments are presented as a JSON document that should be validated and parsed for evaluation. </param>
         /// <param name="name"> Name of the function used on the MCP server. </param>
         /// <param name="output"> Output of the MCP tool call. </param>
         /// <param name="serverLabel"> The label for the MCP server. </param>
         /// <returns> A new <see cref="Persistent.RunStepMcpToolCall"/> instance for mocking. </returns>
-        public static RunStepMcpToolCall RunStepMcpToolCall(string id = null, string arguments = null, string name = null, string output = null, string serverLabel = null)
+        public static RunStepMcpToolCall RunStepMcpToolCall(string id = default, string arguments = default, string name = default, string output = default, string serverLabel = default)
         {
             return new RunStepMcpToolCall(
                 "mcp",
                 id,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 arguments,
                 name,
                 output,
                 serverLabel);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepComputerUseToolCall"/>. </summary>
+        /// <summary>
+        /// A record of a call to a Computer Use tool, issued by the model in evaluation of a defined tool, that represents
+        /// executed computer automation actions.
+        /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="computerUsePreview"> The detailed information about the computer use tool call. </param>
         /// <returns> A new <see cref="Persistent.RunStepComputerUseToolCall"/> instance for mocking. </returns>
-        public static RunStepComputerUseToolCall RunStepComputerUseToolCall(string id = null, RunStepComputerUseToolCallDetails computerUsePreview = null)
+        public static RunStepComputerUseToolCall RunStepComputerUseToolCall(string id = default, RunStepComputerUseToolCallDetails computerUsePreview = default)
         {
-            return new RunStepComputerUseToolCall("computer_use_preview", id, serializedAdditionalRawData: null, computerUsePreview);
+            return new RunStepComputerUseToolCall("computer_use_preview", id, additionalBinaryDataProperties: null, computerUsePreview);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepComputerUseToolCallDetails"/>. </summary>
-        /// <param name="action">
-        /// The action to be performed by the computer use tool.
-        /// Please note <see cref="ComputerUseAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.ClickAction"/>, <see cref="Persistent.DoubleClickAction"/>, <see cref="Persistent.DragAction"/>, <see cref="Persistent.KeyPressAction"/>, <see cref="Persistent.MoveAction"/>, <see cref="ScreenshotAction"/>, <see cref="Persistent.ScrollAction"/>, <see cref="Persistent.TypeAction"/> and <see cref="WaitAction"/>.
-        /// </param>
+        /// <summary> The detailed information about a computer use tool call. </summary>
+        /// <param name="action"> The action to be performed by the computer use tool. </param>
         /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
         /// <param name="output"> The output from the computer use tool. </param>
         /// <param name="acknowledgedSafetyChecks"> Safety checks that have been acknowledged by the developer. </param>
         /// <returns> A new <see cref="Persistent.RunStepComputerUseToolCallDetails"/> instance for mocking. </returns>
-        public static RunStepComputerUseToolCallDetails RunStepComputerUseToolCallDetails(ComputerUseAction action = null, IEnumerable<SafetyCheck> pendingSafetyChecks = null, ComputerScreenshot output = null, IEnumerable<SafetyCheck> acknowledgedSafetyChecks = null)
+        public static RunStepComputerUseToolCallDetails RunStepComputerUseToolCallDetails(ComputerUseAction action = default, IEnumerable<SafetyCheck> pendingSafetyChecks = default, ComputerScreenshot output = default, IEnumerable<SafetyCheck> acknowledgedSafetyChecks = default)
         {
-            pendingSafetyChecks ??= new List<SafetyCheck>();
-            acknowledgedSafetyChecks ??= new List<SafetyCheck>();
+            pendingSafetyChecks ??= new ChangeTrackingList<SafetyCheck>();
+            acknowledgedSafetyChecks ??= new ChangeTrackingList<SafetyCheck>();
 
-            return new RunStepComputerUseToolCallDetails(action, pendingSafetyChecks?.ToList(), output, acknowledgedSafetyChecks?.ToList(), serializedAdditionalRawData: null);
+            return new RunStepComputerUseToolCallDetails(action, pendingSafetyChecks.ToList(), output, acknowledgedSafetyChecks.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepSharepointToolCall"/>. </summary>
+        /// <summary>
+        /// A record of a call to a SharePoint tool, issued by the model in evaluation of a defined tool, that represents
+        /// executed SharePoint actions.
+        /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="sharePoint"> SharePoint tool input and output. </param>
         /// <returns> A new <see cref="Persistent.RunStepSharepointToolCall"/> instance for mocking. </returns>
-        public static RunStepSharepointToolCall RunStepSharepointToolCall(string id = null, IReadOnlyDictionary<string, string> sharePoint = null)
+        public static RunStepSharepointToolCall RunStepSharepointToolCall(string id = default, IDictionary<string, string> sharePoint = default)
         {
-            sharePoint ??= new Dictionary<string, string>();
+            sharePoint ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RunStepSharepointToolCall("sharepoint_grounding", id, serializedAdditionalRawData: null, sharePoint);
+            return new RunStepSharepointToolCall("sharepoint_grounding", id, additionalBinaryDataProperties: null, sharePoint);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>. </summary>
+        /// <summary>
+        /// A record of a call to a Microsoft Fabric tool, issued by the model in evaluation of a defined tool, that represents
+        /// executed Microsoft Fabric operations.
+        /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="microsoftFabric"> Fabric input and output. </param>
         /// <returns> A new <see cref="Persistent.RunStepMicrosoftFabricToolCall"/> instance for mocking. </returns>
-        public static RunStepMicrosoftFabricToolCall RunStepMicrosoftFabricToolCall(string id = null, IReadOnlyDictionary<string, string> microsoftFabric = null)
+        public static RunStepMicrosoftFabricToolCall RunStepMicrosoftFabricToolCall(string id = default, IDictionary<string, string> microsoftFabric = default)
         {
-            microsoftFabric ??= new Dictionary<string, string>();
+            microsoftFabric ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RunStepMicrosoftFabricToolCall("fabric_dataagent", id, serializedAdditionalRawData: null, microsoftFabric);
+            return new RunStepMicrosoftFabricToolCall("fabric_dataagent", id, additionalBinaryDataProperties: null, microsoftFabric);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepBingCustomSearchToolCall"/>. </summary>
+        /// <summary>
+        /// A record of a call to a Bing Custom Search tool, issued by the model in evaluation of a defined tool, that represents
+        /// executed search with Bing Custom Search.
+        /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="bingCustomSearch"> The dictionary with request and response from Bing Custom Search tool. </param>
         /// <returns> A new <see cref="Persistent.RunStepBingCustomSearchToolCall"/> instance for mocking. </returns>
-        public static RunStepBingCustomSearchToolCall RunStepBingCustomSearchToolCall(string id = null, IReadOnlyDictionary<string, string> bingCustomSearch = null)
+        public static RunStepBingCustomSearchToolCall RunStepBingCustomSearchToolCall(string id = default, IDictionary<string, string> bingCustomSearch = default)
         {
-            bingCustomSearch ??= new Dictionary<string, string>();
+            bingCustomSearch ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RunStepBingCustomSearchToolCall("bing_custom_search", id, serializedAdditionalRawData: null, bingCustomSearch);
+            return new RunStepBingCustomSearchToolCall("bing_custom_search", id, additionalBinaryDataProperties: null, bingCustomSearch);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepAzureFunctionToolCall"/>. </summary>
+        /// <summary> A record of a call to an Azure Function tool. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="azureFunction"> The description of an Azure function call. </param>
         /// <returns> A new <see cref="Persistent.RunStepAzureFunctionToolCall"/> instance for mocking. </returns>
-        public static RunStepAzureFunctionToolCall RunStepAzureFunctionToolCall(string id = null, AzureFunctionToolCallDetails azureFunction = null)
+        public static RunStepAzureFunctionToolCall RunStepAzureFunctionToolCall(string id = default, AzureFunctionToolCallDetails azureFunction = default)
         {
-            return new RunStepAzureFunctionToolCall("azure_function", id, serializedAdditionalRawData: null, azureFunction);
+            return new RunStepAzureFunctionToolCall("azure_function", id, additionalBinaryDataProperties: null, azureFunction);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.AzureFunctionToolCallDetails"/>. </summary>
+        /// <summary>
+        /// The Azure function call description. All the fields are present in the completed run step, however
+        /// only some fields are present in the RunStepDeltaAzureFunctionToolCall.
+        /// </summary>
         /// <param name="name"> The Azure function name. </param>
         /// <param name="arguments"> JSON serialized function arguments. </param>
         /// <param name="output"> The function output. </param>
         /// <returns> A new <see cref="Persistent.AzureFunctionToolCallDetails"/> instance for mocking. </returns>
-        public static AzureFunctionToolCallDetails AzureFunctionToolCallDetails(string name = null, string arguments = null, string output = null)
+        public static AzureFunctionToolCallDetails AzureFunctionToolCallDetails(string name = default, string arguments = default, string output = default)
         {
-            return new AzureFunctionToolCallDetails(name, arguments, output, serializedAdditionalRawData: null);
+            return new AzureFunctionToolCallDetails(name, arguments, output, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepOpenAPIToolCall"/>. </summary>
+        /// <summary>
+        /// A record of a call to an OpenAPI tool, issued by the model in evaluation of a defined tool, that represents
+        /// executed OpenAPI operations.
+        /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="openAPI"> Reserved for future use. </param>
         /// <returns> A new <see cref="Persistent.RunStepOpenAPIToolCall"/> instance for mocking. </returns>
-        public static RunStepOpenAPIToolCall RunStepOpenAPIToolCall(string id = null, IReadOnlyDictionary<string, string> openAPI = null)
+        public static RunStepOpenAPIToolCall RunStepOpenAPIToolCall(string id = default, IReadOnlyDictionary<string, string> openAPI = default)
         {
-            openAPI ??= new Dictionary<string, string>();
+            openAPI ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RunStepOpenAPIToolCall("openapi", id, serializedAdditionalRawData: null, openAPI);
+            return new RunStepOpenAPIToolCall("openapi", id, additionalBinaryDataProperties: null, openAPI);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeepResearchToolCall"/>. </summary>
+        /// <summary>
+        /// A record of a call to a Deep Research tool, issued by the model in evaluation of a defined tool, that represents
+        /// executed deep research operations.
+        /// </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="deepResearch"> The detailed information about the automated browser tasks performed by the model. </param>
         /// <returns> A new <see cref="Persistent.RunStepDeepResearchToolCall"/> instance for mocking. </returns>
-        public static RunStepDeepResearchToolCall RunStepDeepResearchToolCall(string id = null, RunStepDeepResearchToolCallDetails deepResearch = null)
+        public static RunStepDeepResearchToolCall RunStepDeepResearchToolCall(string id = default, RunStepDeepResearchToolCallDetails deepResearch = default)
         {
-            return new RunStepDeepResearchToolCall("deep_research", id, serializedAdditionalRawData: null, deepResearch);
+            return new RunStepDeepResearchToolCall("deep_research", id, additionalBinaryDataProperties: null, deepResearch);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeepResearchToolCallDetails"/>. </summary>
+        /// <summary> The detailed information about the deep research tasks performed by the model. </summary>
         /// <param name="input"> The input provided by the model to the deep research tool. </param>
         /// <param name="output"> The final output for the deep research tool. </param>
         /// <returns> A new <see cref="Persistent.RunStepDeepResearchToolCallDetails"/> instance for mocking. </returns>
-        public static RunStepDeepResearchToolCallDetails RunStepDeepResearchToolCallDetails(string input = null, string output = null)
+        public static RunStepDeepResearchToolCallDetails RunStepDeepResearchToolCallDetails(string input = default, string output = default)
         {
-            return new RunStepDeepResearchToolCallDetails(input, output, serializedAdditionalRawData: null);
+            return new RunStepDeepResearchToolCallDetails(input, output, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepConnectedAgentToolCall"/>. </summary>
+        /// <summary> A record of a call to the connected agent. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="connectedAgent"> The connected agent step information. </param>
         /// <returns> A new <see cref="Persistent.RunStepConnectedAgentToolCall"/> instance for mocking. </returns>
-        public static RunStepConnectedAgentToolCall RunStepConnectedAgentToolCall(string id = null, RunStepConnectedAgent connectedAgent = null)
+        public static RunStepConnectedAgentToolCall RunStepConnectedAgentToolCall(string id = default, RunStepConnectedAgent connectedAgent = default)
         {
-            return new RunStepConnectedAgentToolCall("connected_agent", id, serializedAdditionalRawData: null, connectedAgent);
+            return new RunStepConnectedAgentToolCall("connected_agent", id, additionalBinaryDataProperties: null, connectedAgent);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepConnectedAgent"/>. </summary>
+        /// <summary> The detailed information about connected agent tool call. </summary>
         /// <param name="name"> The name of connected agent. </param>
         /// <param name="arguments"> The JSON serialized query to the connected agent. </param>
         /// <param name="output"> The tool output. </param>
@@ -678,7 +1433,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="threadId"> The thread ID used by the connected agent. </param>
         /// <param name="agentId"> The ID of a connected agent. </param>
         /// <returns> A new <see cref="Persistent.RunStepConnectedAgent"/> instance for mocking. </returns>
-        public static RunStepConnectedAgent RunStepConnectedAgent(string name = null, string arguments = null, string output = null, string runId = null, string threadId = null, string agentId = null)
+        public static RunStepConnectedAgent RunStepConnectedAgent(string name = default, string arguments = default, string output = default, string runId = default, string threadId = default, string agentId = default)
         {
             return new RunStepConnectedAgent(
                 name,
@@ -687,81 +1442,786 @@ namespace Azure.AI.Agents.Persistent
                 runId,
                 threadId,
                 agentId,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepActivityDetails"/>. </summary>
+        /// <summary> The detailed information associated with a run step activities. </summary>
         /// <param name="activities"> A list of activities for this run step. </param>
         /// <returns> A new <see cref="Persistent.RunStepActivityDetails"/> instance for mocking. </returns>
-        public static RunStepActivityDetails RunStepActivityDetails(IEnumerable<RunStepDetailsActivity> activities = null)
+        public static RunStepActivityDetails RunStepActivityDetails(IEnumerable<RunStepDetailsActivity> activities = default)
         {
-            activities ??= new List<RunStepDetailsActivity>();
+            activities ??= new ChangeTrackingList<RunStepDetailsActivity>();
 
-            return new RunStepActivityDetails(RunStepType.Activities, serializedAdditionalRawData: null, activities?.ToList());
+            return new RunStepActivityDetails(RunStepType.Activities, additionalBinaryDataProperties: null, activities.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDetailsActivity"/>. </summary>
-        /// <param name="type"> The activity type, which is always 'mcp_list_tools'. </param>
+        /// <summary> Represents the list of activities, associated with the given step. </summary>
         /// <param name="id"> The activity ID. </param>
         /// <param name="serverLabel"> Server label. </param>
         /// <param name="tools"> The supported function list. </param>
         /// <returns> A new <see cref="Persistent.RunStepDetailsActivity"/> instance for mocking. </returns>
-        public static RunStepDetailsActivity RunStepDetailsActivity(RunStepDetailsActivityType type = default, string id = null, string serverLabel = null, IReadOnlyDictionary<string, ActivityFunctionDefinition> tools = null)
+        public static RunStepDetailsActivity RunStepDetailsActivity(string id = default, string serverLabel = default, IDictionary<string, ActivityFunctionDefinition> tools = default)
         {
-            tools ??= new Dictionary<string, ActivityFunctionDefinition>();
+            tools ??= new ChangeTrackingDictionary<string, ActivityFunctionDefinition>();
 
-            return new RunStepDetailsActivity(type, id, serverLabel, tools, serializedAdditionalRawData: null);
+            return new RunStepDetailsActivity("mcp_list_tools", id, serverLabel, tools, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.ActivityFunctionDefinition"/>. </summary>
+        /// <summary> The activity definition information for a function. </summary>
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
         /// <returns> A new <see cref="Persistent.ActivityFunctionDefinition"/> instance for mocking. </returns>
-        public static ActivityFunctionDefinition ActivityFunctionDefinition(string description = null, ActivityFunctionParameters parameters = null)
+        public static ActivityFunctionDefinition ActivityFunctionDefinition(string description = default, ActivityFunctionParameters parameters = default)
         {
-            return new ActivityFunctionDefinition(description, parameters, serializedAdditionalRawData: null);
+            return new ActivityFunctionDefinition(description, parameters, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.ActivityFunctionParameters"/>. </summary>
-        /// <param name="type"> The parameter type, it is always object. </param>
+        /// <summary> The parameters used for activity function definition. </summary>
         /// <param name="properties"> The dictionary of function arguments. </param>
         /// <param name="required"> The list of the required parameters. </param>
         /// <param name="additionalProperties"> If true the function has additional parameters. </param>
         /// <returns> A new <see cref="Persistent.ActivityFunctionParameters"/> instance for mocking. </returns>
-        public static ActivityFunctionParameters ActivityFunctionParameters(ActivityFunctionParametersType type = default, IReadOnlyDictionary<string, FunctionArgument> properties = null, IEnumerable<string> required = null, bool? additionalProperties = null)
+        public static ActivityFunctionParameters ActivityFunctionParameters(IDictionary<string, FunctionArgument> properties = default, IEnumerable<string> @required = default, bool? additionalProperties = default)
         {
-            properties ??= new Dictionary<string, FunctionArgument>();
-            required ??= new List<string>();
+            properties ??= new ChangeTrackingDictionary<string, FunctionArgument>();
+            @required ??= new ChangeTrackingList<string>();
 
-            return new ActivityFunctionParameters(type, properties, required?.ToList(), additionalProperties, serializedAdditionalRawData: null);
+            return new ActivityFunctionParameters("object", properties, @required.ToList(), additionalProperties, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.FunctionArgument"/>. </summary>
+        /// <summary> The function argument and description. </summary>
         /// <param name="type"> The type of an argument, for example 'string' or 'number'. </param>
         /// <param name="description"> The argument description. </param>
         /// <returns> A new <see cref="Persistent.FunctionArgument"/> instance for mocking. </returns>
-        public static FunctionArgument FunctionArgument(string type = null, string description = null)
+        public static FunctionArgument FunctionArgument(string @type = default, string description = default)
         {
-            return new FunctionArgument(type, description, serializedAdditionalRawData: null);
+            return new FunctionArgument(@type, description, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepError"/>. </summary>
+        /// <summary> The error information associated with a failed run step. </summary>
         /// <param name="code"> The error code for this error. </param>
         /// <param name="message"> The human-readable text associated with this error. </param>
         /// <returns> A new <see cref="Persistent.RunStepError"/> instance for mocking. </returns>
-        public static RunStepError RunStepError(RunStepErrorCode code = default, string message = null)
+        public static RunStepError RunStepError(RunStepErrorCode code = default, string message = default)
         {
-            return new RunStepError(code, message, serializedAdditionalRawData: null);
+            return new RunStepError(code, message, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepCompletionUsage"/>. </summary>
+        /// <summary> Usage statistics related to the run step. </summary>
         /// <param name="completionTokens"> Number of completion tokens used over the course of the run step. </param>
         /// <param name="promptTokens"> Number of prompt tokens used over the course of the run step. </param>
         /// <param name="totalTokens"> Total number of tokens used (prompt + completion). </param>
         /// <returns> A new <see cref="Persistent.RunStepCompletionUsage"/> instance for mocking. </returns>
         public static RunStepCompletionUsage RunStepCompletionUsage(long completionTokens = default, long promptTokens = default, long totalTokens = default)
         {
-            return new RunStepCompletionUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
+            return new RunStepCompletionUsage(completionTokens, promptTokens, totalTokens, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents an agent that can call the model and use tools. </summary>
+        /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
+        /// <param name="size"> The size of the file, in bytes. </param>
+        /// <param name="filename"> The name of the file. </param>
+        /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
+        /// <param name="purpose"> The intended purpose of a file. </param>
+        /// <param name="status"> The state of the file. This field is available in Azure OpenAI only. </param>
+        /// <param name="statusDetails"> The error message with details in case processing of this file failed. This field is available in Azure OpenAI only. </param>
+        /// <returns> A new <see cref="Persistent.PersistentAgentFileInfo"/> instance for mocking. </returns>
+        public static PersistentAgentFileInfo PersistentAgentFileInfo(string id = default, int size = default, string filename = default, DateTimeOffset createdAt = default, PersistentAgentFilePurpose purpose = default, FileState? status = default, string statusDetails = default)
+        {
+            return new PersistentAgentFileInfo(
+                default,
+                id,
+                size,
+                filename,
+                createdAt,
+                purpose,
+                status,
+                statusDetails,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A vector store is a collection of processed files can be used by the `file_search` tool. </summary>
+        /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the vector store was created. </param>
+        /// <param name="name"> The name of the vector store. </param>
+        /// <param name="usageBytes"> The total number of bytes used by the files in the vector store. </param>
+        /// <param name="fileCounts"> Files count grouped by status processed or being processed by this vector store. </param>
+        /// <param name="status"> The status of the vector store, which can be either `expired`, `in_progress`, or `completed`. A status of `completed` indicates that the vector store is ready for use. </param>
+        /// <param name="expiresAfter"> Details on when this vector store expires. </param>
+        /// <param name="expiresAt"> The Unix timestamp (in seconds) for when the vector store will expire. </param>
+        /// <param name="lastActiveAt"> The Unix timestamp (in seconds) for when the vector store was last active. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <returns> A new <see cref="Persistent.PersistentAgentsVectorStore"/> instance for mocking. </returns>
+        public static PersistentAgentsVectorStore PersistentAgentsVectorStore(string id = default, DateTimeOffset createdAt = default, string name = default, int usageBytes = default, VectorStoreFileCount fileCounts = default, VectorStoreStatus status = default, VectorStoreExpirationPolicy expiresAfter = default, DateTimeOffset? expiresAt = default, DateTimeOffset? lastActiveAt = default, IReadOnlyDictionary<string, string> metadata = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PersistentAgentsVectorStore(
+                id,
+                "new PersistentAgentsVectorStoreObject(\"vector_store\")",
+                createdAt,
+                name,
+                usageBytes,
+                fileCounts,
+                status,
+                expiresAfter,
+                expiresAt,
+                lastActiveAt,
+                metadata,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Counts of files processed or being processed by this vector store grouped by status. </summary>
+        /// <param name="inProgress"> The number of files that are currently being processed. </param>
+        /// <param name="completed"> The number of files that have been successfully processed. </param>
+        /// <param name="failed"> The number of files that have failed to process. </param>
+        /// <param name="cancelled"> The number of files that were cancelled. </param>
+        /// <param name="total"> The total number of files. </param>
+        /// <returns> A new <see cref="Persistent.VectorStoreFileCount"/> instance for mocking. </returns>
+        public static VectorStoreFileCount VectorStoreFileCount(int inProgress = default, int completed = default, int failed = default, int cancelled = default, int total = default)
+        {
+            return new VectorStoreFileCount(
+                inProgress,
+                completed,
+                failed,
+                cancelled,
+                total,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The expiration policy for a vector store. </summary>
+        /// <param name="anchor"> Anchor timestamp after which the expiration policy applies. Supported anchors: `last_active_at`. </param>
+        /// <param name="days"> The anchor timestamp after which the expiration policy applies. </param>
+        /// <returns> A new <see cref="Persistent.VectorStoreExpirationPolicy"/> instance for mocking. </returns>
+        public static VectorStoreExpirationPolicy VectorStoreExpirationPolicy(VectorStoreExpirationPolicyAnchor anchor = default, int days = default)
+        {
+            return new VectorStoreExpirationPolicy(anchor, days, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// An abstract representation of a vector store chunking strategy configuration.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.VectorStoreAutoChunkingStrategy"/> and <see cref="Persistent.VectorStoreStaticChunkingStrategyRequest"/>.
+        /// </summary>
+        /// <param name="type"> The object type. </param>
+        /// <returns> A new <see cref="Persistent.VectorStoreChunkingStrategy"/> instance for mocking. </returns>
+        public static VectorStoreChunkingStrategy VectorStoreChunkingStrategy(string @type = default)
+        {
+            return new UnknownVectorStoreChunkingStrategy(new VectorStoreChunkingStrategyRequestType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The default strategy. This strategy currently uses a max_chunk_size_tokens of 800 and chunk_overlap_tokens of 400. </summary>
+        /// <returns> A new <see cref="Persistent.VectorStoreAutoChunkingStrategy"/> instance for mocking. </returns>
+        public static VectorStoreAutoChunkingStrategy VectorStoreAutoChunkingStrategy()
+        {
+            return new VectorStoreAutoChunkingStrategy(VectorStoreChunkingStrategyRequestType.Auto, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A statically configured chunking strategy. </summary>
+        /// <param name="static"> The options for the static chunking strategy. </param>
+        /// <returns> A new <see cref="Persistent.VectorStoreStaticChunkingStrategyRequest"/> instance for mocking. </returns>
+        public static VectorStoreStaticChunkingStrategyRequest VectorStoreStaticChunkingStrategyRequest(VectorStoreStaticChunkingStrategyOptions @static = default)
+        {
+            return new VectorStoreStaticChunkingStrategyRequest(VectorStoreChunkingStrategyRequestType.Static, additionalBinaryDataProperties: null, @static);
+        }
+
+        /// <summary> Options to configure a vector store static chunking strategy. </summary>
+        /// <param name="maxChunkSizeTokens"> The maximum number of tokens in each chunk. The default value is 800. The minimum value is 100 and the maximum value is 4096. </param>
+        /// <param name="chunkOverlapTokens">
+        /// The number of tokens that overlap between chunks. The default value is 400.
+        /// Note that the overlap must not exceed half of max_chunk_size_tokens.
+        /// </param>
+        /// <returns> A new <see cref="Persistent.VectorStoreStaticChunkingStrategyOptions"/> instance for mocking. </returns>
+        public static VectorStoreStaticChunkingStrategyOptions VectorStoreStaticChunkingStrategyOptions(int maxChunkSizeTokens = default, int chunkOverlapTokens = default)
+        {
+            return new VectorStoreStaticChunkingStrategyOptions(maxChunkSizeTokens, chunkOverlapTokens, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Description of a file attached to a vector store. </summary>
+        /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
+        /// <param name="usageBytes">
+        /// The total vector store usage in bytes. Note that this may be different from the original file
+        /// size.
+        /// </param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the vector store file was created. </param>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file is attached to. </param>
+        /// <param name="status"> The status of the vector store file, which can be either `in_progress`, `completed`, `cancelled`, or `failed`. The status `completed` indicates that the vector store file is ready for use. </param>
+        /// <param name="lastError"> The last error associated with this vector store file. Will be `null` if there are no errors. </param>
+        /// <param name="chunkingStrategy"> The strategy used to chunk the file. </param>
+        /// <returns> A new <see cref="Persistent.VectorStoreFile"/> instance for mocking. </returns>
+        public static VectorStoreFile VectorStoreFile(string id = default, int usageBytes = default, DateTimeOffset createdAt = default, string vectorStoreId = default, VectorStoreFileStatus status = default, VectorStoreFileError lastError = default, VectorStoreChunkingStrategyResponse chunkingStrategy = default)
+        {
+            return new VectorStoreFile(
+                id,
+                "new VectorStoreFileObject(\"vector_store.file\")",
+                usageBytes,
+                createdAt,
+                vectorStoreId,
+                status,
+                lastError,
+                chunkingStrategy,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details on the error that may have occurred while processing a file for this vector store. </summary>
+        /// <param name="code"> One of `server_error` or `rate_limit_exceeded`. </param>
+        /// <param name="message"> A human-readable description of the error. </param>
+        /// <returns> A new <see cref="Persistent.VectorStoreFileError"/> instance for mocking. </returns>
+        public static VectorStoreFileError VectorStoreFileError(VectorStoreFileErrorCode code = default, string message = default)
+        {
+            return new VectorStoreFileError(code, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// An abstract representation of a vector store chunking strategy configuration.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.VectorStoreAutoChunkingStrategyResponse"/> and <see cref="Persistent.VectorStoreStaticChunkingStrategyResponse"/>.
+        /// </summary>
+        /// <param name="type"> The object type. </param>
+        /// <returns> A new <see cref="Persistent.VectorStoreChunkingStrategyResponse"/> instance for mocking. </returns>
+        public static VectorStoreChunkingStrategyResponse VectorStoreChunkingStrategyResponse(string @type = default)
+        {
+            return new UnknownVectorStoreChunkingStrategyResponse(new VectorStoreChunkingStrategyResponseType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> This is returned when the chunking strategy is unknown. Typically, this is because the file was indexed before the chunking_strategy concept was introduced in the API. </summary>
+        /// <returns> A new <see cref="Persistent.VectorStoreAutoChunkingStrategyResponse"/> instance for mocking. </returns>
+        public static VectorStoreAutoChunkingStrategyResponse VectorStoreAutoChunkingStrategyResponse()
+        {
+            return new VectorStoreAutoChunkingStrategyResponse(VectorStoreChunkingStrategyResponseType.Other, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A statically configured chunking strategy. </summary>
+        /// <param name="static"> The options for the static chunking strategy. </param>
+        /// <returns> A new <see cref="Persistent.VectorStoreStaticChunkingStrategyResponse"/> instance for mocking. </returns>
+        public static VectorStoreStaticChunkingStrategyResponse VectorStoreStaticChunkingStrategyResponse(VectorStoreStaticChunkingStrategyOptions @static = default)
+        {
+            return new VectorStoreStaticChunkingStrategyResponse(VectorStoreChunkingStrategyResponseType.Static, additionalBinaryDataProperties: null, @static);
+        }
+
+        /// <summary> A batch of files attached to a vector store. </summary>
+        /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the vector store files batch was created. </param>
+        /// <param name="vectorStoreId"> The ID of the vector store that the file is attached to. </param>
+        /// <param name="status"> The status of the vector store files batch, which can be either `in_progress`, `completed`, `cancelled` or `failed`. </param>
+        /// <param name="fileCounts"> Files count grouped by status processed or being processed by this vector store. </param>
+        /// <returns> A new <see cref="Persistent.VectorStoreFileBatch"/> instance for mocking. </returns>
+        public static VectorStoreFileBatch VectorStoreFileBatch(string id = default, DateTimeOffset createdAt = default, string vectorStoreId = default, VectorStoreFileBatchStatus status = default, VectorStoreFileCount fileCounts = default)
+        {
+            return new VectorStoreFileBatch(
+                id,
+                "new VectorStoreFileBatchObject(\"vector_store.files_batch\")",
+                createdAt,
+                vectorStoreId,
+                status,
+                fileCounts,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a message delta i.e. any changed fields on a message during streaming. </summary>
+        /// <param name="id"> The identifier of the message, which can be referenced in API endpoints. </param>
+        /// <param name="delta"> The delta containing the fields that have changed on the Message. </param>
+        /// <returns> A new <see cref="Persistent.MessageDeltaChunk"/> instance for mocking. </returns>
+        public static MessageDeltaChunk MessageDeltaChunk(string id = default, MessageDelta delta = default)
+        {
+            return new MessageDeltaChunk(id, "new MessageDeltaChunkObject(\"thread.message.delta\")", delta, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the typed 'delta' payload within a streaming message delta chunk. </summary>
+        /// <param name="role"> The entity that produced the message. </param>
+        /// <param name="content"> The content of the message as an array of text and/or images. </param>
+        /// <returns> A new <see cref="Persistent.MessageDelta"/> instance for mocking. </returns>
+        public static MessageDelta MessageDelta(MessageRole role = default, IEnumerable<MessageDeltaContent> content = default)
+        {
+            content ??= new ChangeTrackingList<MessageDeltaContent>();
+
+            return new MessageDelta(role, content.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The abstract base representation of a partial streamed message content payload.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.MessageDeltaImageFileContent"/> and <see cref="Persistent.MessageDeltaTextContent"/>.
+        /// </summary>
+        /// <param name="index"> The index of the content part of the message. </param>
+        /// <param name="type"> The type of content for this content part. </param>
+        /// <returns> A new <see cref="Persistent.MessageDeltaContent"/> instance for mocking. </returns>
+        public static MessageDeltaContent MessageDeltaContent(int index = default, string @type = default)
+        {
+            return new UnknownMessageDeltaContent(index, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a streamed image file content part within a streaming message delta chunk. </summary>
+        /// <param name="index"> The index of the content part of the message. </param>
+        /// <param name="imageFile"> The image_file data. </param>
+        /// <returns> A new <see cref="Persistent.MessageDeltaImageFileContent"/> instance for mocking. </returns>
+        public static MessageDeltaImageFileContent MessageDeltaImageFileContent(int index = default, MessageDeltaImageFileContentObject imageFile = default)
+        {
+            return new MessageDeltaImageFileContent(index, "image_file", additionalBinaryDataProperties: null, imageFile);
+        }
+
+        /// <summary> Represents the 'image_file' payload within streaming image file content. </summary>
+        /// <param name="fileId"> The file ID of the image in the message content. </param>
+        /// <returns> A new <see cref="Persistent.MessageDeltaImageFileContentObject"/> instance for mocking. </returns>
+        public static MessageDeltaImageFileContentObject MessageDeltaImageFileContentObject(string fileId = default)
+        {
+            return new MessageDeltaImageFileContentObject(fileId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a streamed text content part within a streaming message delta chunk. </summary>
+        /// <param name="index"> The index of the content part of the message. </param>
+        /// <param name="text"> The text content details. </param>
+        /// <returns> A new <see cref="Persistent.MessageDeltaTextContent"/> instance for mocking. </returns>
+        public static MessageDeltaTextContent MessageDeltaTextContent(int index = default, MessageDeltaTextContentObject text = default)
+        {
+            return new MessageDeltaTextContent(index, "text", additionalBinaryDataProperties: null, text);
+        }
+
+        /// <summary> Represents the data of a streamed text content part within a streaming message delta chunk. </summary>
+        /// <param name="value"> The data that makes up the text. </param>
+        /// <param name="annotations"> Annotations for the text. </param>
+        /// <returns> A new <see cref="Persistent.MessageDeltaTextContentObject"/> instance for mocking. </returns>
+        public static MessageDeltaTextContentObject MessageDeltaTextContentObject(string value = default, IEnumerable<MessageDeltaTextAnnotation> annotations = default)
+        {
+            annotations ??= new ChangeTrackingList<MessageDeltaTextAnnotation>();
+
+            return new MessageDeltaTextContentObject(value, annotations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The abstract base representation of a streamed text content part's text annotation.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.MessageDeltaTextUriCitationAnnotation"/>, <see cref="Persistent.MessageDeltaTextFileCitationAnnotation"/>, and <see cref="Persistent.MessageDeltaTextFilePathAnnotation"/>.
+        /// </summary>
+        /// <param name="index"> The index of the annotation within a text content part. </param>
+        /// <param name="type"> The type of the text content annotation. </param>
+        /// <returns> A new <see cref="Persistent.MessageDeltaTextAnnotation"/> instance for mocking. </returns>
+        public static MessageDeltaTextAnnotation MessageDeltaTextAnnotation(int index = default, string @type = default)
+        {
+            return new UnknownMessageDeltaTextAnnotation(index, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A citation within the message that points to a specific URL associated with the message. Generated when the agent uses tools such as 'bing_grounding' to search the Internet. </summary>
+        /// <param name="index"> The index of the annotation within a text content part. </param>
+        /// <param name="uriCitation"> The details of the URL citation. </param>
+        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
+        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
+        /// <returns> A new <see cref="Persistent.MessageDeltaTextUriCitationAnnotation"/> instance for mocking. </returns>
+        public static MessageDeltaTextUriCitationAnnotation MessageDeltaTextUriCitationAnnotation(int index = default, MessageDeltaTextUriCitationDetails uriCitation = default, int? startIndex = default, int? endIndex = default)
+        {
+            return new MessageDeltaTextUriCitationAnnotation(
+                index,
+                "url_citation",
+                additionalBinaryDataProperties: null,
+                uriCitation,
+                startIndex,
+                endIndex);
+        }
+
+        /// <summary> A representation of a URL citation, as used in text thread message content. </summary>
+        /// <param name="uri"> The URL associated with this citation. </param>
+        /// <param name="title"> The title of the URL. </param>
+        /// <returns> A new <see cref="Persistent.MessageDeltaTextUriCitationDetails"/> instance for mocking. </returns>
+        public static MessageDeltaTextUriCitationDetails MessageDeltaTextUriCitationDetails(string uri = default, string title = default)
+        {
+            return new MessageDeltaTextUriCitationDetails(uri, title, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a streamed file citation applied to a streaming text content part. </summary>
+        /// <param name="index"> The index of the annotation within a text content part. </param>
+        /// <param name="fileCitation"> The file citation information. </param>
+        /// <param name="text"> The text in the message content that needs to be replaced. </param>
+        /// <param name="startIndex"> The start index of this annotation in the content text. </param>
+        /// <param name="endIndex"> The end index of this annotation in the content text. </param>
+        /// <returns> A new <see cref="Persistent.MessageDeltaTextFileCitationAnnotation"/> instance for mocking. </returns>
+        public static MessageDeltaTextFileCitationAnnotation MessageDeltaTextFileCitationAnnotation(int index = default, MessageDeltaTextFileCitationAnnotationObject fileCitation = default, string text = default, int? startIndex = default, int? endIndex = default)
+        {
+            return new MessageDeltaTextFileCitationAnnotation(
+                index,
+                "file_citation",
+                additionalBinaryDataProperties: null,
+                fileCitation,
+                text,
+                startIndex,
+                endIndex);
+        }
+
+        /// <summary> Represents the data of a streamed file citation as applied to a streaming text content part. </summary>
+        /// <param name="fileId"> The ID of the specific file the citation is from. </param>
+        /// <param name="quote"> The specific quote in the cited file. </param>
+        /// <returns> A new <see cref="Persistent.MessageDeltaTextFileCitationAnnotationObject"/> instance for mocking. </returns>
+        public static MessageDeltaTextFileCitationAnnotationObject MessageDeltaTextFileCitationAnnotationObject(string fileId = default, string quote = default)
+        {
+            return new MessageDeltaTextFileCitationAnnotationObject(fileId, quote, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a streamed file path annotation applied to a streaming text content part. </summary>
+        /// <param name="index"> The index of the annotation within a text content part. </param>
+        /// <param name="filePath"> The file path information. </param>
+        /// <param name="startIndex"> The start index of this annotation in the content text. </param>
+        /// <param name="endIndex"> The end index of this annotation in the content text. </param>
+        /// <param name="text"> The text in the message content that needs to be replaced. </param>
+        /// <returns> A new <see cref="Persistent.MessageDeltaTextFilePathAnnotation"/> instance for mocking. </returns>
+        public static MessageDeltaTextFilePathAnnotation MessageDeltaTextFilePathAnnotation(int index = default, MessageDeltaTextFilePathAnnotationObject filePath = default, int? startIndex = default, int? endIndex = default, string text = default)
+        {
+            return new MessageDeltaTextFilePathAnnotation(
+                index,
+                "file_path",
+                additionalBinaryDataProperties: null,
+                filePath,
+                startIndex,
+                endIndex,
+                text);
+        }
+
+        /// <summary> Represents the data of a streamed file path annotation as applied to a streaming text content part. </summary>
+        /// <param name="fileId"> The file ID for the annotation. </param>
+        /// <returns> A new <see cref="Persistent.MessageDeltaTextFilePathAnnotationObject"/> instance for mocking. </returns>
+        public static MessageDeltaTextFilePathAnnotationObject MessageDeltaTextFilePathAnnotationObject(string fileId = default)
+        {
+            return new MessageDeltaTextFilePathAnnotationObject(fileId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a run step delta i.e. any changed fields on a run step during streaming. </summary>
+        /// <param name="id"> The identifier of the run step, which can be referenced in API endpoints. </param>
+        /// <param name="delta"> The delta containing the fields that have changed on the run step. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaChunk"/> instance for mocking. </returns>
+        public static RunStepDeltaChunk RunStepDeltaChunk(string id = default, RunStepDelta delta = default)
+        {
+            return new RunStepDeltaChunk(id, "new RunStepDeltaChunkObject(\"thread.run.step.delta\")", delta, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the delta payload in a streaming run step delta chunk. </summary>
+        /// <param name="stepDetails"> The details of the run step. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDelta"/> instance for mocking. </returns>
+        public static RunStepDelta RunStepDelta(RunStepDeltaDetail stepDetails = default)
+        {
+            return new RunStepDelta(stepDetails, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Represents a single run step detail item in a streaming run step's delta payload.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepDeltaMessageCreation"/>, <see cref="Persistent.RunStepDeltaToolCallObject"/>, <see cref="Persistent.RunStepDeltaMCPObject"/>, and <see cref="Persistent.RunStepDeltaOpenAPIObject"/>.
+        /// </summary>
+        /// <param name="type"> The object type for the run step detail object. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaDetail"/> instance for mocking. </returns>
+        public static RunStepDeltaDetail RunStepDeltaDetail(string @type = default)
+        {
+            return new UnknownRunStepDeltaDetail(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a message creation within a streaming run step delta. </summary>
+        /// <param name="messageCreation"> The message creation data. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaMessageCreation"/> instance for mocking. </returns>
+        public static RunStepDeltaMessageCreation RunStepDeltaMessageCreation(RunStepDeltaMessageCreationObject messageCreation = default)
+        {
+            return new RunStepDeltaMessageCreation("message_creation", additionalBinaryDataProperties: null, messageCreation);
+        }
+
+        /// <summary> Represents the data within a streaming run step message creation response object. </summary>
+        /// <param name="messageId"> The ID of the newly-created message. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaMessageCreationObject"/> instance for mocking. </returns>
+        public static RunStepDeltaMessageCreationObject RunStepDeltaMessageCreationObject(string messageId = default)
+        {
+            return new RunStepDeltaMessageCreationObject(messageId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents an invocation of tool calls as part of a streaming run step. </summary>
+        /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaToolCallObject"/> instance for mocking. </returns>
+        public static RunStepDeltaToolCallObject RunStepDeltaToolCallObject(IEnumerable<RunStepDeltaToolCall> toolCalls = default)
+        {
+            toolCalls ??= new ChangeTrackingList<RunStepDeltaToolCall>();
+
+            return new RunStepDeltaToolCallObject("tool_calls", additionalBinaryDataProperties: null, toolCalls.ToList());
+        }
+
+        /// <summary>
+        /// The abstract base representation of a single tool call within a streaming run step's delta tool call details.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepDeltaMcpToolCall"/>, <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/>, <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaAzureFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Persistent.RunStepDeltaComputerUseToolCall"/>, <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/>, and <see cref="Persistent.RunStepDeltaSharepointToolCall"/>.
+        /// </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="type"> The type of the tool call detail item in a streaming run step's details. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaToolCall RunStepDeltaToolCall(int index = default, string id = default, string @type = default)
+        {
+            return new UnknownRunStepDeltaToolCall(index, id, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the function data in a streaming run step MCP call. </summary>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="index"> The index of a response. </param>
+        /// <param name="arguments"> The arguments for MCP call. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaMcpToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaMcpToolCall RunStepDeltaMcpToolCall(string id = default, int index = default, string arguments = default)
+        {
+            return new RunStepDeltaMcpToolCall(id, "mcp", additionalBinaryDataProperties: null, index, arguments);
+        }
+
+        /// <summary> Represents the openapi tool call in a streaming run step. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="openAPI"> Reserved for future use. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaOpenAPIToolCall RunStepDeltaOpenAPIToolCall(int index = default, string id = default, IDictionary<string, string> openAPI = default)
+        {
+            openAPI ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RunStepDeltaOpenAPIToolCall(index, id, "openapi", additionalBinaryDataProperties: null, openAPI);
+        }
+
+        /// <summary> Represents the invocation of connected agent as a part of a streaming run step. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="connectedAgent"> The collection of tool calls for the tool call detail item. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaConnectedAgentToolCall RunStepDeltaConnectedAgentToolCall(int index = default, string id = default, RunStepConnectedAgent connectedAgent = default)
+        {
+            return new RunStepDeltaConnectedAgentToolCall(index, id, "connected_agent", additionalBinaryDataProperties: null, connectedAgent);
+        }
+
+        /// <summary> Represents a function tool call within a streaming run step's tool call details. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="function"> The function data for the tool call. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaFunctionToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaFunctionToolCall RunStepDeltaFunctionToolCall(int index = default, string id = default, RunStepDeltaFunction function = default)
+        {
+            return new RunStepDeltaFunctionToolCall(index, id, "function", additionalBinaryDataProperties: null, function);
+        }
+
+        /// <summary> Represents the function data in a streaming run step delta's function tool call. </summary>
+        /// <param name="name"> The name of the function. </param>
+        /// <param name="arguments"> The arguments passed to the function as input. </param>
+        /// <param name="output"> The output of the function, null if outputs have not yet been submitted. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaFunction"/> instance for mocking. </returns>
+        public static RunStepDeltaFunction RunStepDeltaFunction(string name = default, string arguments = default, string output = default)
+        {
+            return new RunStepDeltaFunction(name, arguments, output, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a file search tool call within a streaming run step's tool call details. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="fileSearch"> Reserved for future use. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaFileSearchToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = default, string id = default, RunStepFileSearchToolCallResults fileSearch = default)
+        {
+            return new RunStepDeltaFileSearchToolCall(index, id, "file_search", additionalBinaryDataProperties: null, fileSearch);
+        }
+
+        /// <summary> Represents a Code Interpreter tool call within a streaming run step's tool call details. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="codeInterpreter"> The Code Interpreter data for the tool call. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaCodeInterpreterToolCall RunStepDeltaCodeInterpreterToolCall(int index = default, string id = default, RunStepDeltaCodeInterpreterDetailItemObject codeInterpreter = default)
+        {
+            return new RunStepDeltaCodeInterpreterToolCall(index, id, "code_interpreter", additionalBinaryDataProperties: null, codeInterpreter);
+        }
+
+        /// <summary> Represents the Code Interpreter tool call data in a streaming run step's tool calls. </summary>
+        /// <param name="input"> The input into the Code Interpreter tool call. </param>
+        /// <param name="outputs">
+        /// The outputs from the Code Interpreter tool call. Code Interpreter can output one or more
+        /// items, including text (`logs`) or images (`image`). Each of these are represented by a
+        /// different object type.
+        /// </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterDetailItemObject"/> instance for mocking. </returns>
+        public static RunStepDeltaCodeInterpreterDetailItemObject RunStepDeltaCodeInterpreterDetailItemObject(string input = default, IEnumerable<RunStepDeltaCodeInterpreterOutput> outputs = default)
+        {
+            outputs ??= new ChangeTrackingList<RunStepDeltaCodeInterpreterOutput>();
+
+            return new RunStepDeltaCodeInterpreterDetailItemObject(input, outputs.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The abstract base representation of a streaming run step tool call's Code Interpreter tool output.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.RunStepDeltaCodeInterpreterLogOutput"/> and <see cref="Persistent.RunStepDeltaCodeInterpreterImageOutput"/>.
+        /// </summary>
+        /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
+        /// <param name="type"> The type of the streaming run step tool call's Code Interpreter output. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterOutput"/> instance for mocking. </returns>
+        public static RunStepDeltaCodeInterpreterOutput RunStepDeltaCodeInterpreterOutput(int index = default, string @type = default)
+        {
+            return new UnknownRunStepDeltaCodeInterpreterOutput(index, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a log output as produced by the Code Interpreter tool and as represented in a streaming run step's delta tool calls collection. </summary>
+        /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
+        /// <param name="logs"> The text output from the Code Interpreter tool call. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterLogOutput"/> instance for mocking. </returns>
+        public static RunStepDeltaCodeInterpreterLogOutput RunStepDeltaCodeInterpreterLogOutput(int index = default, string logs = default)
+        {
+            return new RunStepDeltaCodeInterpreterLogOutput(index, "logs", additionalBinaryDataProperties: null, logs);
+        }
+
+        /// <summary> Represents an image output as produced the Code interpreter tool and as represented in a streaming run step's delta tool calls collection. </summary>
+        /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
+        /// <param name="image"> The image data for the Code Interpreter tool call output. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterImageOutput"/> instance for mocking. </returns>
+        public static RunStepDeltaCodeInterpreterImageOutput RunStepDeltaCodeInterpreterImageOutput(int index = default, RunStepDeltaCodeInterpreterImageOutputObject image = default)
+        {
+            return new RunStepDeltaCodeInterpreterImageOutput(index, "image", additionalBinaryDataProperties: null, image);
+        }
+
+        /// <summary> Represents the data for a streaming run step's Code Interpreter tool call image output. </summary>
+        /// <param name="fileId"> The file ID for the image. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterImageOutputObject"/> instance for mocking. </returns>
+        public static RunStepDeltaCodeInterpreterImageOutputObject RunStepDeltaCodeInterpreterImageOutputObject(string fileId = default)
+        {
+            return new RunStepDeltaCodeInterpreterImageOutputObject(fileId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the bing grounding tool call in a streaming run step. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="bingGrounding"> The dictionary with request and response from Bing Grounding search tool. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaBingGroundingToolCall RunStepDeltaBingGroundingToolCall(int index = default, string id = default, IDictionary<string, string> bingGrounding = default)
+        {
+            bingGrounding ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RunStepDeltaBingGroundingToolCall(index, id, "bing_grounding", additionalBinaryDataProperties: null, bingGrounding);
+        }
+
+        /// <summary> Represents the Bing Custom Search tool call in a streaming run step. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="bingCustomSearch"> The dictionary with request and response from Bing Custom Search tool. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaCustomBingGroundingToolCall RunStepDeltaCustomBingGroundingToolCall(int index = default, string id = default, IDictionary<string, string> bingCustomSearch = default)
+        {
+            bingCustomSearch ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RunStepDeltaCustomBingGroundingToolCall(index, id, "bing_custom_search", additionalBinaryDataProperties: null, bingCustomSearch);
+        }
+
+        /// <summary> Represents the Azure Function tool call in a streaming run step. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="azureFunction"> Partial description of an Azure function call. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaAzureFunctionToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaAzureFunctionToolCall RunStepDeltaAzureFunctionToolCall(int index = default, string id = default, AzureFunctionToolCallDetails azureFunction = default)
+        {
+            return new RunStepDeltaAzureFunctionToolCall(index, id, "azure_function", additionalBinaryDataProperties: null, azureFunction);
+        }
+
+        /// <summary> Represents the Deep research in a streaming run step. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="deepResearch"> The details of DeepResearch tool call. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaDeepResearchToolCall RunStepDeltaDeepResearchToolCall(int index = default, string id = default, RunStepDeepResearchToolCallDetails deepResearch = default)
+        {
+            return new RunStepDeltaDeepResearchToolCall(index, id, "deep_research", additionalBinaryDataProperties: null, deepResearch);
+        }
+
+        /// <summary> Represents the Azure AI Search in a streaming run step. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="azureAISearch"> Reserved for future use. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaAzureAISearchToolCall RunStepDeltaAzureAISearchToolCall(int index = default, string id = default, IDictionary<string, string> azureAISearch = default)
+        {
+            azureAISearch ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RunStepDeltaAzureAISearchToolCall(index, id, "azure_ai_search", additionalBinaryDataProperties: null, azureAISearch);
+        }
+
+        /// <summary> Represents the Computer Use tool call in a streaming run step. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="computerUsePreview"> The computer use data for the tool call. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaComputerUseToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaComputerUseToolCall RunStepDeltaComputerUseToolCall(int index = default, string id = default, RunStepDeltaComputerUseDetails computerUsePreview = default)
+        {
+            return new RunStepDeltaComputerUseToolCall(index, id, "computer_use_preview", additionalBinaryDataProperties: null, computerUsePreview);
+        }
+
+        /// <summary> Represents the Computer Use tool call details in a streaming run step. </summary>
+        /// <param name="action"> The action to be performed by the computer use tool. </param>
+        /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
+        /// <param name="output"> The output from the computer use tool, null if outputs have not yet been submitted. </param>
+        /// <param name="acknowledgedSafetyChecks"> Safety checks that have been acknowledged by the developer, null if outputs have not yet been submitted. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaComputerUseDetails"/> instance for mocking. </returns>
+        public static RunStepDeltaComputerUseDetails RunStepDeltaComputerUseDetails(ComputerUseAction action = default, IEnumerable<SafetyCheck> pendingSafetyChecks = default, ComputerScreenshot output = default, IEnumerable<SafetyCheck> acknowledgedSafetyChecks = default)
+        {
+            pendingSafetyChecks ??= new ChangeTrackingList<SafetyCheck>();
+            acknowledgedSafetyChecks ??= new ChangeTrackingList<SafetyCheck>();
+
+            return new RunStepDeltaComputerUseDetails(action, pendingSafetyChecks.ToList(), output, acknowledgedSafetyChecks.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the Microsoft Fabric tool call in a streaming run step. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="microsoftFabric"> Fabric input and output. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaMicrosoftFabricToolCall RunStepDeltaMicrosoftFabricToolCall(int index = default, string id = default, IDictionary<string, string> microsoftFabric = default)
+        {
+            microsoftFabric ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RunStepDeltaMicrosoftFabricToolCall(index, id, "fabric_dataagent", additionalBinaryDataProperties: null, microsoftFabric);
+        }
+
+        /// <summary> Represents the SharePoint tool call in a streaming run step. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="sharepointGrounding"> SharePoint tool input and output. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaSharepointToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaSharepointToolCall RunStepDeltaSharepointToolCall(int index = default, string id = default, IDictionary<string, string> sharepointGrounding = default)
+        {
+            sharepointGrounding ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RunStepDeltaSharepointToolCall(index, id, "sharepoint_grounding", additionalBinaryDataProperties: null, sharepointGrounding);
+        }
+
+        /// <summary> Represents an invocation of mcp as part of a streaming run step. </summary>
+        /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaMCPObject"/> instance for mocking. </returns>
+        public static RunStepDeltaMCPObject RunStepDeltaMCPObject(IEnumerable<RunStepDeltaMcpToolCall> toolCalls = default)
+        {
+            toolCalls ??= new ChangeTrackingList<RunStepDeltaMcpToolCall>();
+
+            return new RunStepDeltaMCPObject("mcp", additionalBinaryDataProperties: null, toolCalls.ToList());
+        }
+
+        /// <summary> Represents an invocation of openapi as part of a streaming run step. </summary>
+        /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaOpenAPIObject"/> instance for mocking. </returns>
+        public static RunStepDeltaOpenAPIObject RunStepDeltaOpenAPIObject(IEnumerable<RunStepDeltaOpenAPIToolCall> toolCalls = default)
+        {
+            toolCalls ??= new ChangeTrackingList<RunStepDeltaOpenAPIToolCall>();
+
+            return new RunStepDeltaOpenAPIObject("openapi", additionalBinaryDataProperties: null, toolCalls.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.AzureFunctionBinding"/>. </summary>
+        /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
+        /// <param name="storageQueue"> Storage queue. </param>
+        /// <returns> A new <see cref="Persistent.AzureFunctionBinding"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionBindingType @type, AzureFunctionStorageQueue storageQueue)
+        {
+            return new AzureFunctionBinding(@type, storageQueue, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.ResponseFormatJsonSchemaType"/>. </summary>
+        /// <param name="type"> Type. </param>
+        /// <param name="jsonSchema"> The JSON schema, describing response format. </param>
+        /// <returns> A new <see cref="Persistent.ResponseFormatJsonSchemaType"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ResponseFormatJsonSchemaType ResponseFormatJsonSchemaType(ResponseFormatJsonSchemaTypeType @type, ResponseFormatJsonSchema jsonSchema)
+        {
+            return new ResponseFormatJsonSchemaType(@type, jsonSchema, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.FileSearchToolCallContent"/>. </summary>
+        /// <param name="type"> The type of the content. </param>
+        /// <param name="text"> The text content of the file. </param>
+        /// <returns> A new <see cref="Persistent.FileSearchToolCallContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileSearchToolCallContent FileSearchToolCallContent(FileSearchToolCallContentType @type, string text)
+        {
+            return new FileSearchToolCallContent(@type, text, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.PersistentAgentsVectorStore"/>. </summary>
@@ -777,9 +2237,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="lastActiveAt"> The Unix timestamp (in seconds) for when the vector store was last active. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <returns> A new <see cref="Persistent.PersistentAgentsVectorStore"/> instance for mocking. </returns>
-        public static PersistentAgentsVectorStore PersistentAgentsVectorStore(string id = null, PersistentAgentsVectorStoreObject @object = default, DateTimeOffset createdAt = default, string name = null, int usageBytes = default, VectorStoreFileCount fileCounts = null, VectorStoreStatus status = default, VectorStoreExpirationPolicy expiresAfter = null, DateTimeOffset? expiresAt = null, DateTimeOffset? lastActiveAt = null, IReadOnlyDictionary<string, string> metadata = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PersistentAgentsVectorStore PersistentAgentsVectorStore(string id, PersistentAgentsVectorStoreObject @object, DateTimeOffset createdAt, string name, int usageBytes, VectorStoreFileCount fileCounts, VectorStoreStatus status, VectorStoreExpirationPolicy expiresAfter, DateTimeOffset? expiresAt, DateTimeOffset? lastActiveAt, IReadOnlyDictionary<string, string> metadata)
         {
-            metadata ??= new Dictionary<string, string>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new PersistentAgentsVectorStore(
                 id,
@@ -793,33 +2254,7 @@ namespace Azure.AI.Agents.Persistent
                 expiresAt,
                 lastActiveAt,
                 metadata,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.VectorStoreFileCount"/>. </summary>
-        /// <param name="inProgress"> The number of files that are currently being processed. </param>
-        /// <param name="completed"> The number of files that have been successfully processed. </param>
-        /// <param name="failed"> The number of files that have failed to process. </param>
-        /// <param name="cancelled"> The number of files that were cancelled. </param>
-        /// <param name="total"> The total number of files. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreFileCount"/> instance for mocking. </returns>
-        public static VectorStoreFileCount VectorStoreFileCount(int inProgress = default, int completed = default, int failed = default, int cancelled = default, int total = default)
-        {
-            return new VectorStoreFileCount(
-                inProgress,
-                completed,
-                failed,
-                cancelled,
-                total,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.VectorStoreStaticChunkingStrategyRequest"/>. </summary>
-        /// <param name="static"> The options for the static chunking strategy. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreStaticChunkingStrategyRequest"/> instance for mocking. </returns>
-        public static VectorStoreStaticChunkingStrategyRequest VectorStoreStaticChunkingStrategyRequest(VectorStoreStaticChunkingStrategyOptions @static = null)
-        {
-            return new VectorStoreStaticChunkingStrategyRequest(VectorStoreChunkingStrategyRequestType.Static, serializedAdditionalRawData: null, @static);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.VectorStoreFile"/>. </summary>
@@ -827,7 +2262,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="object"> The object type, which is always `vector_store.file`. </param>
         /// <param name="usageBytes">
         /// The total vector store usage in bytes. Note that this may be different from the original file
-        /// size.
+        ///             size.
         /// </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the vector store file was created. </param>
         /// <param name="vectorStoreId"> The ID of the vector store that the file is attached to. </param>
@@ -835,11 +2270,12 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="lastError"> The last error associated with this vector store file. Will be `null` if there are no errors. </param>
         /// <param name="chunkingStrategy">
         /// The strategy used to chunk the file.
-        /// Please note <see cref="VectorStoreChunkingStrategyResponse"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VectorStoreAutoChunkingStrategyResponse"/> and <see cref="Persistent.VectorStoreStaticChunkingStrategyResponse"/>.
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include  and .
         /// </param>
         /// <returns> A new <see cref="Persistent.VectorStoreFile"/> instance for mocking. </returns>
-        public static VectorStoreFile VectorStoreFile(string id = null, VectorStoreFileObject @object = default, int usageBytes = default, DateTimeOffset createdAt = default, string vectorStoreId = null, VectorStoreFileStatus status = default, VectorStoreFileError lastError = null, VectorStoreChunkingStrategyResponse chunkingStrategy = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VectorStoreFile VectorStoreFile(string id, VectorStoreFileObject @object, int usageBytes, DateTimeOffset createdAt, string vectorStoreId, VectorStoreFileStatus status, VectorStoreFileError lastError, VectorStoreChunkingStrategyResponse chunkingStrategy)
         {
             return new VectorStoreFile(
                 id,
@@ -850,24 +2286,7 @@ namespace Azure.AI.Agents.Persistent
                 status,
                 lastError,
                 chunkingStrategy,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.VectorStoreFileError"/>. </summary>
-        /// <param name="code"> One of `server_error` or `rate_limit_exceeded`. </param>
-        /// <param name="message"> A human-readable description of the error. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreFileError"/> instance for mocking. </returns>
-        public static VectorStoreFileError VectorStoreFileError(VectorStoreFileErrorCode code = default, string message = null)
-        {
-            return new VectorStoreFileError(code, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.VectorStoreStaticChunkingStrategyResponse"/>. </summary>
-        /// <param name="static"> The options for the static chunking strategy. </param>
-        /// <returns> A new <see cref="Persistent.VectorStoreStaticChunkingStrategyResponse"/> instance for mocking. </returns>
-        public static VectorStoreStaticChunkingStrategyResponse VectorStoreStaticChunkingStrategyResponse(VectorStoreStaticChunkingStrategyOptions @static = null)
-        {
-            return new VectorStoreStaticChunkingStrategyResponse(VectorStoreChunkingStrategyResponseType.Static, serializedAdditionalRawData: null, @static);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.VectorStoreFileBatch"/>. </summary>
@@ -878,7 +2297,8 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="status"> The status of the vector store files batch, which can be either `in_progress`, `completed`, `cancelled` or `failed`. </param>
         /// <param name="fileCounts"> Files count grouped by status processed or being processed by this vector store. </param>
         /// <returns> A new <see cref="Persistent.VectorStoreFileBatch"/> instance for mocking. </returns>
-        public static VectorStoreFileBatch VectorStoreFileBatch(string id = null, VectorStoreFileBatchObject @object = default, DateTimeOffset createdAt = default, string vectorStoreId = null, VectorStoreFileBatchStatus status = default, VectorStoreFileCount fileCounts = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VectorStoreFileBatch VectorStoreFileBatch(string id, VectorStoreFileBatchObject @object, DateTimeOffset createdAt, string vectorStoreId, VectorStoreFileBatchStatus status, VectorStoreFileCount fileCounts)
         {
             return new VectorStoreFileBatch(
                 id,
@@ -887,7 +2307,7 @@ namespace Azure.AI.Agents.Persistent
                 vectorStoreId,
                 status,
                 fileCounts,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaChunk"/>. </summary>
@@ -895,164 +2315,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="object"> The object type, which is always `thread.message.delta`. </param>
         /// <param name="delta"> The delta containing the fields that have changed on the Message. </param>
         /// <returns> A new <see cref="Persistent.MessageDeltaChunk"/> instance for mocking. </returns>
-        public static MessageDeltaChunk MessageDeltaChunk(string id = null, MessageDeltaChunkObject @object = default, MessageDelta delta = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MessageDeltaChunk MessageDeltaChunk(string id, MessageDeltaChunkObject @object, MessageDelta delta)
         {
-            return new MessageDeltaChunk(id, @object, delta, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDelta"/>. </summary>
-        /// <param name="role"> The entity that produced the message. </param>
-        /// <param name="content">
-        /// The content of the message as an array of text and/or images.
-        /// Please note <see cref="Persistent.MessageDeltaContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.MessageDeltaImageFileContent"/> and <see cref="Persistent.MessageDeltaTextContent"/>.
-        /// </param>
-        /// <returns> A new <see cref="Persistent.MessageDelta"/> instance for mocking. </returns>
-        public static MessageDelta MessageDelta(MessageRole role = default, IEnumerable<MessageDeltaContent> content = null)
-        {
-            content ??= new List<MessageDeltaContent>();
-
-            return new MessageDelta(role, content?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaContent"/>. </summary>
-        /// <param name="index"> The index of the content part of the message. </param>
-        /// <param name="type"> The type of content for this content part. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaContent"/> instance for mocking. </returns>
-        public static MessageDeltaContent MessageDeltaContent(int index = default, string type = null)
-        {
-            return new UnknownMessageDeltaContent(index, type, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaImageFileContent"/>. </summary>
-        /// <param name="index"> The index of the content part of the message. </param>
-        /// <param name="imageFile"> The image_file data. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaImageFileContent"/> instance for mocking. </returns>
-        public static MessageDeltaImageFileContent MessageDeltaImageFileContent(int index = default, MessageDeltaImageFileContentObject imageFile = null)
-        {
-            return new MessageDeltaImageFileContent(index, "image_file", serializedAdditionalRawData: null, imageFile);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaImageFileContentObject"/>. </summary>
-        /// <param name="fileId"> The file ID of the image in the message content. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaImageFileContentObject"/> instance for mocking. </returns>
-        public static MessageDeltaImageFileContentObject MessageDeltaImageFileContentObject(string fileId = null)
-        {
-            return new MessageDeltaImageFileContentObject(fileId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaTextContent"/>. </summary>
-        /// <param name="index"> The index of the content part of the message. </param>
-        /// <param name="text"> The text content details. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextContent"/> instance for mocking. </returns>
-        public static MessageDeltaTextContent MessageDeltaTextContent(int index = default, MessageDeltaTextContentObject text = null)
-        {
-            return new MessageDeltaTextContent(index, "text", serializedAdditionalRawData: null, text);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaTextContentObject"/>. </summary>
-        /// <param name="value"> The data that makes up the text. </param>
-        /// <param name="annotations">
-        /// Annotations for the text.
-        /// Please note <see cref="Persistent.MessageDeltaTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.MessageDeltaTextFileCitationAnnotation"/>, <see cref="Persistent.MessageDeltaTextFilePathAnnotation"/> and <see cref="Persistent.MessageDeltaTextUriCitationAnnotation"/>.
-        /// </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextContentObject"/> instance for mocking. </returns>
-        public static MessageDeltaTextContentObject MessageDeltaTextContentObject(string value = null, IEnumerable<MessageDeltaTextAnnotation> annotations = null)
-        {
-            annotations ??= new List<MessageDeltaTextAnnotation>();
-
-            return new MessageDeltaTextContentObject(value, annotations?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaTextAnnotation"/>. </summary>
-        /// <param name="index"> The index of the annotation within a text content part. </param>
-        /// <param name="type"> The type of the text content annotation. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextAnnotation"/> instance for mocking. </returns>
-        public static MessageDeltaTextAnnotation MessageDeltaTextAnnotation(int index = default, string type = null)
-        {
-            return new UnknownMessageDeltaTextAnnotation(index, type, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaTextUriCitationAnnotation"/>. </summary>
-        /// <param name="index"> The index of the annotation within a text content part. </param>
-        /// <param name="uriCitation"> The details of the URL citation. </param>
-        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
-        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextUriCitationAnnotation"/> instance for mocking. </returns>
-        public static MessageDeltaTextUriCitationAnnotation MessageDeltaTextUriCitationAnnotation(int index = default, MessageDeltaTextUriCitationDetails uriCitation = null, int? startIndex = null, int? endIndex = null)
-        {
-            return new MessageDeltaTextUriCitationAnnotation(
-                index,
-                "url_citation",
-                serializedAdditionalRawData: null,
-                uriCitation,
-                startIndex,
-                endIndex);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaTextUriCitationDetails"/>. </summary>
-        /// <param name="uri"> The URL associated with this citation. </param>
-        /// <param name="title"> The title of the URL. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextUriCitationDetails"/> instance for mocking. </returns>
-        public static MessageDeltaTextUriCitationDetails MessageDeltaTextUriCitationDetails(string uri = null, string title = null)
-        {
-            return new MessageDeltaTextUriCitationDetails(uri, title, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaTextFileCitationAnnotation"/>. </summary>
-        /// <param name="index"> The index of the annotation within a text content part. </param>
-        /// <param name="fileCitation"> The file citation information. </param>
-        /// <param name="text"> The text in the message content that needs to be replaced. </param>
-        /// <param name="startIndex"> The start index of this annotation in the content text. </param>
-        /// <param name="endIndex"> The end index of this annotation in the content text. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextFileCitationAnnotation"/> instance for mocking. </returns>
-        public static MessageDeltaTextFileCitationAnnotation MessageDeltaTextFileCitationAnnotation(int index = default, MessageDeltaTextFileCitationAnnotationObject fileCitation = null, string text = null, int? startIndex = null, int? endIndex = null)
-        {
-            return new MessageDeltaTextFileCitationAnnotation(
-                index,
-                "file_citation",
-                serializedAdditionalRawData: null,
-                fileCitation,
-                text,
-                startIndex,
-                endIndex);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaTextFileCitationAnnotationObject"/>. </summary>
-        /// <param name="fileId"> The ID of the specific file the citation is from. </param>
-        /// <param name="quote"> The specific quote in the cited file. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextFileCitationAnnotationObject"/> instance for mocking. </returns>
-        public static MessageDeltaTextFileCitationAnnotationObject MessageDeltaTextFileCitationAnnotationObject(string fileId = null, string quote = null)
-        {
-            return new MessageDeltaTextFileCitationAnnotationObject(fileId, quote, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaTextFilePathAnnotation"/>. </summary>
-        /// <param name="index"> The index of the annotation within a text content part. </param>
-        /// <param name="filePath"> The file path information. </param>
-        /// <param name="startIndex"> The start index of this annotation in the content text. </param>
-        /// <param name="endIndex"> The end index of this annotation in the content text. </param>
-        /// <param name="text"> The text in the message content that needs to be replaced. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextFilePathAnnotation"/> instance for mocking. </returns>
-        public static MessageDeltaTextFilePathAnnotation MessageDeltaTextFilePathAnnotation(int index = default, MessageDeltaTextFilePathAnnotationObject filePath = null, int? startIndex = null, int? endIndex = null, string text = null)
-        {
-            return new MessageDeltaTextFilePathAnnotation(
-                index,
-                "file_path",
-                serializedAdditionalRawData: null,
-                filePath,
-                startIndex,
-                endIndex,
-                text);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.MessageDeltaTextFilePathAnnotationObject"/>. </summary>
-        /// <param name="fileId"> The file ID for the annotation. </param>
-        /// <returns> A new <see cref="Persistent.MessageDeltaTextFilePathAnnotationObject"/> instance for mocking. </returns>
-        public static MessageDeltaTextFilePathAnnotationObject MessageDeltaTextFilePathAnnotationObject(string fileId = null)
-        {
-            return new MessageDeltaTextFilePathAnnotationObject(fileId, serializedAdditionalRawData: null);
+            return new MessageDeltaChunk(id, @object, delta, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaChunk"/>. </summary>
@@ -1060,313 +2326,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="object"> The object type, which is always `thread.run.step.delta`. </param>
         /// <param name="delta"> The delta containing the fields that have changed on the run step. </param>
         /// <returns> A new <see cref="Persistent.RunStepDeltaChunk"/> instance for mocking. </returns>
-        public static RunStepDeltaChunk RunStepDeltaChunk(string id = null, RunStepDeltaChunkObject @object = default, RunStepDelta delta = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RunStepDeltaChunk RunStepDeltaChunk(string id, RunStepDeltaChunkObject @object, RunStepDelta delta)
         {
-            return new RunStepDeltaChunk(id, @object, delta, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDelta"/>. </summary>
-        /// <param name="stepDetails">
-        /// The details of the run step.
-        /// Please note <see cref="RunStepDeltaDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepDeltaMCPObject"/>, <see cref="Persistent.RunStepDeltaMessageCreation"/>, <see cref="Persistent.RunStepDeltaOpenAPIObject"/> and <see cref="Persistent.RunStepDeltaToolCallObject"/>.
-        /// </param>
-        /// <returns> A new <see cref="Persistent.RunStepDelta"/> instance for mocking. </returns>
-        public static RunStepDelta RunStepDelta(RunStepDeltaDetail stepDetails = null)
-        {
-            return new RunStepDelta(stepDetails, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaMessageCreation"/>. </summary>
-        /// <param name="messageCreation"> The message creation data. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaMessageCreation"/> instance for mocking. </returns>
-        public static RunStepDeltaMessageCreation RunStepDeltaMessageCreation(RunStepDeltaMessageCreationObject messageCreation = null)
-        {
-            return new RunStepDeltaMessageCreation("message_creation", serializedAdditionalRawData: null, messageCreation);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaMessageCreationObject"/>. </summary>
-        /// <param name="messageId"> The ID of the newly-created message. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaMessageCreationObject"/> instance for mocking. </returns>
-        public static RunStepDeltaMessageCreationObject RunStepDeltaMessageCreationObject(string messageId = null)
-        {
-            return new RunStepDeltaMessageCreationObject(messageId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaToolCallObject"/>. </summary>
-        /// <param name="toolCalls">
-        /// The collection of tool calls for the tool call detail item.
-        /// Please note <see cref="Persistent.RunStepDeltaToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Persistent.RunStepDeltaAzureFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaComputerUseToolCall"/>, <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaMcpToolCall"/>, <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/> and <see cref="Persistent.RunStepDeltaSharepointToolCall"/>.
-        /// </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaToolCallObject"/> instance for mocking. </returns>
-        public static RunStepDeltaToolCallObject RunStepDeltaToolCallObject(IEnumerable<RunStepDeltaToolCall> toolCalls = null)
-        {
-            toolCalls ??= new List<RunStepDeltaToolCall>();
-
-            return new RunStepDeltaToolCallObject("tool_calls", serializedAdditionalRawData: null, toolCalls?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="type"> The type of the tool call detail item in a streaming run step's details. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaToolCall RunStepDeltaToolCall(int index = default, string id = null, string type = null)
-        {
-            return new UnknownRunStepDeltaToolCall(index, id, type, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaMcpToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="arguments"> The arguments for MCP call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaMcpToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaMcpToolCall RunStepDeltaMcpToolCall(int index = default, string id = null, string arguments = null)
-        {
-            return new RunStepDeltaMcpToolCall(index, id, "mcp", serializedAdditionalRawData: null, arguments);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="openAPI"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaOpenAPIToolCall RunStepDeltaOpenAPIToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> openAPI = null)
-        {
-            openAPI ??= new Dictionary<string, string>();
-
-            return new RunStepDeltaOpenAPIToolCall(index, id, "openapi", serializedAdditionalRawData: null, openAPI);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="connectedAgent"> The collection of tool calls for the tool call detail item. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaConnectedAgentToolCall RunStepDeltaConnectedAgentToolCall(int index = default, string id = null, RunStepConnectedAgent connectedAgent = null)
-        {
-            return new RunStepDeltaConnectedAgentToolCall(index, id, "connected_agent", serializedAdditionalRawData: null, connectedAgent);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaFunctionToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="function"> The function data for the tool call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaFunctionToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaFunctionToolCall RunStepDeltaFunctionToolCall(int index = default, string id = null, RunStepDeltaFunction function = null)
-        {
-            return new RunStepDeltaFunctionToolCall(index, id, "function", serializedAdditionalRawData: null, function);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaFunction"/>. </summary>
-        /// <param name="name"> The name of the function. </param>
-        /// <param name="arguments"> The arguments passed to the function as input. </param>
-        /// <param name="output"> The output of the function, null if outputs have not yet been submitted. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaFunction"/> instance for mocking. </returns>
-        public static RunStepDeltaFunction RunStepDeltaFunction(string name = null, string arguments = null, string output = null)
-        {
-            return new RunStepDeltaFunction(name, arguments, output, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="fileSearch"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaFileSearchToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = default, string id = null, RunStepFileSearchToolCallResults fileSearch = null)
-        {
-            return new RunStepDeltaFileSearchToolCall(index, id, "file_search", serializedAdditionalRawData: null, fileSearch);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="codeInterpreter"> The Code Interpreter data for the tool call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaCodeInterpreterToolCall RunStepDeltaCodeInterpreterToolCall(int index = default, string id = null, RunStepDeltaCodeInterpreterDetailItemObject codeInterpreter = null)
-        {
-            return new RunStepDeltaCodeInterpreterToolCall(index, id, "code_interpreter", serializedAdditionalRawData: null, codeInterpreter);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaCodeInterpreterDetailItemObject"/>. </summary>
-        /// <param name="input"> The input into the Code Interpreter tool call. </param>
-        /// <param name="outputs">
-        /// The outputs from the Code Interpreter tool call. Code Interpreter can output one or more
-        /// items, including text (`logs`) or images (`image`). Each of these are represented by a
-        /// different object type.
-        /// Please note <see cref="Persistent.RunStepDeltaCodeInterpreterOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepDeltaCodeInterpreterImageOutput"/> and <see cref="Persistent.RunStepDeltaCodeInterpreterLogOutput"/>.
-        /// </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterDetailItemObject"/> instance for mocking. </returns>
-        public static RunStepDeltaCodeInterpreterDetailItemObject RunStepDeltaCodeInterpreterDetailItemObject(string input = null, IEnumerable<RunStepDeltaCodeInterpreterOutput> outputs = null)
-        {
-            outputs ??= new List<RunStepDeltaCodeInterpreterOutput>();
-
-            return new RunStepDeltaCodeInterpreterDetailItemObject(input, outputs?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaCodeInterpreterOutput"/>. </summary>
-        /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
-        /// <param name="type"> The type of the streaming run step tool call's Code Interpreter output. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterOutput"/> instance for mocking. </returns>
-        public static RunStepDeltaCodeInterpreterOutput RunStepDeltaCodeInterpreterOutput(int index = default, string type = null)
-        {
-            return new UnknownRunStepDeltaCodeInterpreterOutput(index, type, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaCodeInterpreterLogOutput"/>. </summary>
-        /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
-        /// <param name="logs"> The text output from the Code Interpreter tool call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterLogOutput"/> instance for mocking. </returns>
-        public static RunStepDeltaCodeInterpreterLogOutput RunStepDeltaCodeInterpreterLogOutput(int index = default, string logs = null)
-        {
-            return new RunStepDeltaCodeInterpreterLogOutput(index, "logs", serializedAdditionalRawData: null, logs);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaCodeInterpreterImageOutput"/>. </summary>
-        /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
-        /// <param name="image"> The image data for the Code Interpreter tool call output. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterImageOutput"/> instance for mocking. </returns>
-        public static RunStepDeltaCodeInterpreterImageOutput RunStepDeltaCodeInterpreterImageOutput(int index = default, RunStepDeltaCodeInterpreterImageOutputObject image = null)
-        {
-            return new RunStepDeltaCodeInterpreterImageOutput(index, "image", serializedAdditionalRawData: null, image);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaCodeInterpreterImageOutputObject"/>. </summary>
-        /// <param name="fileId"> The file ID for the image. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaCodeInterpreterImageOutputObject"/> instance for mocking. </returns>
-        public static RunStepDeltaCodeInterpreterImageOutputObject RunStepDeltaCodeInterpreterImageOutputObject(string fileId = null)
-        {
-            return new RunStepDeltaCodeInterpreterImageOutputObject(fileId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="bingGrounding"> The dictionary with request and response from Bing Grounding search tool. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaBingGroundingToolCall RunStepDeltaBingGroundingToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> bingGrounding = null)
-        {
-            bingGrounding ??= new Dictionary<string, string>();
-
-            return new RunStepDeltaBingGroundingToolCall(index, id, "bing_grounding", serializedAdditionalRawData: null, bingGrounding);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="bingCustomSearch"> The dictionary with request and response from Bing Custom Search tool. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaCustomBingGroundingToolCall RunStepDeltaCustomBingGroundingToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> bingCustomSearch = null)
-        {
-            bingCustomSearch ??= new Dictionary<string, string>();
-
-            return new RunStepDeltaCustomBingGroundingToolCall(index, id, "bing_custom_search", serializedAdditionalRawData: null, bingCustomSearch);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaAzureFunctionToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="azureFunction"> Partial description of an Azure function call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaAzureFunctionToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaAzureFunctionToolCall RunStepDeltaAzureFunctionToolCall(int index = default, string id = null, AzureFunctionToolCallDetails azureFunction = null)
-        {
-            return new RunStepDeltaAzureFunctionToolCall(index, id, "azure_function", serializedAdditionalRawData: null, azureFunction);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="deepResearch"> The details of DeepResearch tool call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaDeepResearchToolCall RunStepDeltaDeepResearchToolCall(int index = default, string id = null, RunStepDeepResearchToolCallDetails deepResearch = null)
-        {
-            return new RunStepDeltaDeepResearchToolCall(index, id, "deep_research", serializedAdditionalRawData: null, deepResearch);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="azureAISearch"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaAzureAISearchToolCall RunStepDeltaAzureAISearchToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> azureAISearch = null)
-        {
-            azureAISearch ??= new Dictionary<string, string>();
-
-            return new RunStepDeltaAzureAISearchToolCall(index, id, "azure_ai_search", serializedAdditionalRawData: null, azureAISearch);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaComputerUseToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="computerUsePreview"> The computer use data for the tool call. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaComputerUseToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaComputerUseToolCall RunStepDeltaComputerUseToolCall(int index = default, string id = null, RunStepDeltaComputerUseDetails computerUsePreview = null)
-        {
-            return new RunStepDeltaComputerUseToolCall(index, id, "computer_use_preview", serializedAdditionalRawData: null, computerUsePreview);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaComputerUseDetails"/>. </summary>
-        /// <param name="action">
-        /// The action to be performed by the computer use tool.
-        /// Please note <see cref="ComputerUseAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.ClickAction"/>, <see cref="Persistent.DoubleClickAction"/>, <see cref="Persistent.DragAction"/>, <see cref="Persistent.KeyPressAction"/>, <see cref="Persistent.MoveAction"/>, <see cref="ScreenshotAction"/>, <see cref="Persistent.ScrollAction"/>, <see cref="Persistent.TypeAction"/> and <see cref="WaitAction"/>.
-        /// </param>
-        /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
-        /// <param name="output"> The output from the computer use tool, null if outputs have not yet been submitted. </param>
-        /// <param name="acknowledgedSafetyChecks"> Safety checks that have been acknowledged by the developer, null if outputs have not yet been submitted. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaComputerUseDetails"/> instance for mocking. </returns>
-        public static RunStepDeltaComputerUseDetails RunStepDeltaComputerUseDetails(ComputerUseAction action = null, IEnumerable<SafetyCheck> pendingSafetyChecks = null, ComputerScreenshot output = null, IEnumerable<SafetyCheck> acknowledgedSafetyChecks = null)
-        {
-            pendingSafetyChecks ??= new List<SafetyCheck>();
-            acknowledgedSafetyChecks ??= new List<SafetyCheck>();
-
-            return new RunStepDeltaComputerUseDetails(action, pendingSafetyChecks?.ToList(), output, acknowledgedSafetyChecks?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="microsoftFabric"> Fabric input and output. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaMicrosoftFabricToolCall RunStepDeltaMicrosoftFabricToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> microsoftFabric = null)
-        {
-            microsoftFabric ??= new Dictionary<string, string>();
-
-            return new RunStepDeltaMicrosoftFabricToolCall(index, id, "fabric_dataagent", serializedAdditionalRawData: null, microsoftFabric);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaSharepointToolCall"/>. </summary>
-        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
-        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="sharepointGrounding"> SharePoint tool input and output. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaSharepointToolCall"/> instance for mocking. </returns>
-        public static RunStepDeltaSharepointToolCall RunStepDeltaSharepointToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> sharepointGrounding = null)
-        {
-            sharepointGrounding ??= new Dictionary<string, string>();
-
-            return new RunStepDeltaSharepointToolCall(index, id, "sharepoint_grounding", serializedAdditionalRawData: null, sharepointGrounding);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaMCPObject"/>. </summary>
-        /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaMCPObject"/> instance for mocking. </returns>
-        public static RunStepDeltaMCPObject RunStepDeltaMCPObject(IEnumerable<RunStepDeltaMcpToolCall> toolCalls = null)
-        {
-            toolCalls ??= new List<RunStepDeltaMcpToolCall>();
-
-            return new RunStepDeltaMCPObject("mcp", serializedAdditionalRawData: null, toolCalls?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaOpenAPIObject"/>. </summary>
-        /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaOpenAPIObject"/> instance for mocking. </returns>
-        public static RunStepDeltaOpenAPIObject RunStepDeltaOpenAPIObject(IEnumerable<RunStepDeltaOpenAPIToolCall> toolCalls = null)
-        {
-            toolCalls ??= new List<RunStepDeltaOpenAPIToolCall>();
-
-            return new RunStepDeltaOpenAPIObject("openapi", serializedAdditionalRawData: null, toolCalls?.ToList());
+            return new RunStepDeltaChunk(id, @object, delta, additionalBinaryDataProperties: null);
         }
     }
 }

@@ -43,7 +43,7 @@ public class RequiredActionUpdate : RunUpdate
 
     internal static IEnumerable<RequiredActionUpdate> DeserializeRequiredActionUpdates(JsonElement element)
     {
-        ThreadRun run = ThreadRun.DeserializeThreadRun(element);
+        ThreadRun run = ThreadRun.DeserializeThreadRun(element, null);
         List<RequiredActionUpdate> updates = [];
         foreach (RequiredAction action in run.RequiredActions ?? [])
         {

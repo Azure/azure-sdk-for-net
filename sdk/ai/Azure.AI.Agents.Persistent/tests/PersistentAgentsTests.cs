@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -495,7 +495,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.AreEqual(0, oldMsgResp.Value.Metadata.Count);
             if (argType == ArgumentType.Metadata)
             {
-                Response<PersistentThreadMessage> msg = await client.Messages.UpdateMessageAsync(thread.Id, oldMsgResp.Value.Id, metadata: new Dictionary<string, string> {
+                Response<PersistentThreadMessage> msg = await client.Messages.UpdateMessageAsync(thread.Id, oldMsgResp.Value.Id, metadata: (IDictionary<string, string>)new Dictionary<string, string> {
                         {"key1", "value1"},
                         {"key2", "value2"}
                 });
@@ -1059,7 +1059,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 runResp = await client.Runs.UpdateRunAsync(
                     threadId: thread.Id,
                     runId: runResp.Id,
-                    metadata: new Dictionary<string, string> {
+                    metadata: (IDictionary<string, string>)new Dictionary<string, string> {
                             { "key1", "value1"},
                             { "key2", "value2"}
                         }
@@ -1606,7 +1606,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             if (includeContent)
             {
                 Assert.Greater(fileSearchCall.FileSearch.Results[0].Content.Count, 0);
-                Assert.AreEqual(FileSearchToolCallContentType.Text, fileSearchCall.FileSearch.Results[0].Content[0].Type);
+                Assert.AreEqual("text", fileSearchCall.FileSearch.Results[0].Content[0].Type);
                 Assert.False(string.IsNullOrEmpty(fileSearchCall.FileSearch.Results[0].Content[0].Text));
             }
             else
@@ -2293,8 +2293,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                 fileAnnotation = new MessageDeltaTextFileCitationAnnotation(
                     index: 42,
                     type: "file_citation",
-                    serializedAdditionalRawData: null,
-                    fileCitation: new MessageDeltaTextFileCitationAnnotationObject(fileId: await GetFileId(toolRes.FileSearch), quote: "foo", serializedAdditionalRawData: null),
+                    additionalBinaryDataProperties: null,
+                    fileCitation: new MessageDeltaTextFileCitationAnnotationObject(fileId: await GetFileId(toolRes.FileSearch), quote: "foo", additionalBinaryDataProperties: null),
                     text: "test",
                     startIndex: 0,
                     endIndex: 1);

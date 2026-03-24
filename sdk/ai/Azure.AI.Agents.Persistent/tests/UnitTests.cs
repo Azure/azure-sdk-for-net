@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
@@ -31,7 +31,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 new MCPApprovalPerTool(
                     always: new MCPToolList(["foo", "bar"]),
                     never: new MCPToolList(["baz"]),
-                    serializedAdditionalRawData: null
+                    additionalBinaryDataProperties: null
                 )
             );
             Assert.False(approval.AlwaysRequireApproval);
@@ -70,7 +70,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             var mcp = new MCPApproval(perToolApproval: new MCPApprovalPerTool(
                     always: isAlwaysEmpty ? new MCPToolList([]) : new MCPToolList(["foo", "bar"]),
                     never: isAlwaysEmpty ? new MCPToolList(["foo", "bar"]) : new MCPToolList([]),
-                    serializedAdditionalRawData: null
+                    additionalBinaryDataProperties: null
                 )
             );
             if (isAlwaysEmpty)
@@ -124,7 +124,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 RequireApproval = new MCPApproval(new MCPApprovalPerTool(
                     always: new MCPToolList(["foo", "bar"]),
                     never: new MCPToolList(["baz"]),
-                    serializedAdditionalRawData: null
+                    additionalBinaryDataProperties: null
                 ))
             };
             MCPApproval returned = mcpRes.RequireApproval;
