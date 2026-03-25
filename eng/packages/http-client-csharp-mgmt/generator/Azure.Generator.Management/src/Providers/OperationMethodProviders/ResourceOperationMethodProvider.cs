@@ -78,7 +78,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _serviceMethod = method;
             _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             _isAsync = isAsync;
-            _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
+            _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync)!;
             bool isLongRunningOperation = false;
             bool isFakeLongRunningOperation = false;
             InitializeLroFlags(

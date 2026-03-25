@@ -16,23 +16,23 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class ZoosGetZooAddressesAsyncCollectionResultOfT : AsyncPageable<SubResource>
+    internal partial class ZooAddressListOperationGetZooAddressesAsyncCollectionResultOfT : AsyncPageable<SubResource>
     {
-        private readonly Zoos _client;
+        private readonly ZooAddressListOperation _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _zooName;
         private readonly int? _maxpagesize;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ZoosGetZooAddressesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Zoos client used to send requests. </param>
+        /// <summary> Initializes a new instance of ZooAddressListOperationGetZooAddressesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ZooAddressListOperation client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="zooName"> The name of the Zoo. </param>
         /// <param name="maxpagesize"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ZoosGetZooAddressesAsyncCollectionResultOfT(Zoos client, Guid subscriptionId, string resourceGroupName, string zooName, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ZooAddressListOperationGetZooAddressesAsyncCollectionResultOfT(ZooAddressListOperation client, Guid subscriptionId, string resourceGroupName, string zooName, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,10 +42,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             _context = context;
         }
 
-        /// <summary> Gets the pages of ZoosGetZooAddressesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ZooAddressListOperationGetZooAddressesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ZoosGetZooAddressesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ZooAddressListOperationGetZooAddressesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<SubResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

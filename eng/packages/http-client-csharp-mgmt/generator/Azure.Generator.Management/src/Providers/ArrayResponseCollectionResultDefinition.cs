@@ -217,7 +217,7 @@ namespace Azure.Generator.Management.Providers
             // Since we're generating collection result, we just need to call the Create*Request method on the client
             // The method name is derived from the original convenience method name from the REST client, not the potentially customized _methodName
             // (e.g., operation "listDependencies" -> convenience method "GetDependencies" -> request method "CreateGetDependenciesRequest")
-            var convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, _isAsync);
+            var convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, _isAsync)!;
             var originalMethodName = convenienceMethod.Signature.Name;
             var baseName = originalMethodName.EndsWith("Async") ? originalMethodName.Substring(0, originalMethodName.Length - 5) : originalMethodName;
             var createRequestMethodName = $"Create{baseName}Request";

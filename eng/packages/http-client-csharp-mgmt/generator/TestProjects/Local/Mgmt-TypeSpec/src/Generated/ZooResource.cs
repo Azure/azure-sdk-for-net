@@ -31,6 +31,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly Zoos _zoosRestClient;
         private readonly ClientDiagnostics _zooRecommendationClientDiagnostics;
         private readonly ZooRecommendation _zooRecommendationRestClient;
+        private readonly ClientDiagnostics _zooAddressListOperationClientDiagnostics;
+        private readonly ZooAddressListOperation _zooAddressListOperationRestClient;
         private readonly ZooData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/zoos";
@@ -59,6 +61,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             _zoosRestClient = new Zoos(_zoosClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
             _zooRecommendationClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _zooRecommendationRestClient = new ZooRecommendation(_zooRecommendationClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
+            _zooAddressListOperationClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
+            _zooAddressListOperationRestClient = new ZooAddressListOperation(_zooAddressListOperationClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -536,8 +540,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new ZoosGetZooAddressesAsyncCollectionResultOfT(
-                _zoosRestClient,
+            return new ZooAddressListOperationGetZooAddressesAsyncCollectionResultOfT(
+                _zooAddressListOperationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -575,8 +579,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new ZoosGetZooAddressesCollectionResultOfT(
-                _zoosRestClient,
+            return new ZooAddressListOperationGetZooAddressesCollectionResultOfT(
+                _zooAddressListOperationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,

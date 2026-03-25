@@ -9,9 +9,13 @@ namespace Azure.Generator.Management.Utilities
 {
     internal static class ClientProviderExtensions
     {
-        public static MethodProvider GetConvenienceMethodByOperation(this ClientProvider clientProvider, InputOperation operation, bool isAsync)
+        public static MethodProvider? GetConvenienceMethodByOperation(this ClientProvider clientProvider, InputOperation operation, bool isAsync)
         {
             var methods = clientProvider.GetMethodCollectionByOperation(operation, clientProvider);
+            if (methods == null || methods.Count < 2)
+            {
+                return null;
+            }
             return isAsync ? methods[^1] : methods[^2];
         }
 

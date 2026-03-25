@@ -72,6 +72,10 @@ model ZooRecommendation {
 
 @@clientLocation(Zoos.recommend, "ZooRecommendation");
 @@clientName(Zoos.zooAddressList, "GetZooAddresses", "csharp");
+// Force zooAddressList onto a separate client to reproduce issue #57457:
+// When a paging action is on a separate REST client (not the main resource client),
+// the convenience method and CollectionDefinition are missing, causing the method to be silently dropped.
+@@clientLocation(Zoos.zooAddressList, "ZooAddressListOperation");
 
 /**
  * Test resource to reproduce issue #55436 - Missing constructor parameters in factory methods.

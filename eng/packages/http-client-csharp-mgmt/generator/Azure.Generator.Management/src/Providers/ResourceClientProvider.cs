@@ -371,6 +371,16 @@ namespace Azure.Generator.Management.Providers
 
                 if (method is InputPagingServiceMethod pagingMethod)
                 {
+                    // Skip paging methods when the convenience method is not available on the REST client.
+                    // This happens when the paging action is on a separate REST client that doesn't generate
+                    // convenience methods (e.g., action-specific clients created by @@clientLocation or TCGC splitting).
+                    // TODO: Generate pageable methods directly from paging metadata without requiring convenience methods.
+                    // See https://github.com/Azure/azure-sdk-for-net/issues/57457
+                    if (convenienceMethod == null || asyncConvenienceMethod == null)
+                    {
+                        continue;
+                    }
+
                     // Use PageableOperationMethodProvider for InputPagingServiceMethod
                     operationMethods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, true, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true, false)));
                     operationMethods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false, false)));
