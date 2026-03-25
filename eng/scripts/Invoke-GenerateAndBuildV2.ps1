@@ -211,9 +211,8 @@ if ($inputFileToGen) {
 
 $exitCode = 0
 # Signal to spec-gen-sdk-runner whether SDK Validation check should be required.
-# Only set to true for management plane packages using the new mgmt emitter
-# (@azure-typespec/http-client-csharp-mgmt). Data-plane TypeSpec and swagger-based
-# packages should remain optional for .NET.
+# Set to true for management plane packages using the new mgmt emitter
+# (@azure-typespec/http-client-csharp-mgmt) and data-plane TypeSpec packages.
 $isSpecGenSdkCheckRequired = $false
 # generate sdk from typespec file
 if ($relatedTypeSpecProjectFolder) {
@@ -292,9 +291,9 @@ if ($relatedTypeSpecProjectFolder) {
         if ($usesNewMgmtEmitter -or $serviceType -eq "data-plane") {
             $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
         }
-        # Mark SDK Validation as required only for new mgmt emitter packages.
+        # Mark SDK Validation as required for new mgmt emitter packages and data-plane TypeSpec packages.
         # This is read by spec-gen-sdk-runner to determine if the .NET check should block the PR.
-        if ($usesNewMgmtEmitter) {
+        if ($usesNewMgmtEmitter -or $serviceType -eq "data-plane") {
             $isSpecGenSdkCheckRequired = $true
         }
     }
