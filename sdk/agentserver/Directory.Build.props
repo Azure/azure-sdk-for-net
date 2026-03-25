@@ -9,9 +9,7 @@
     <Nullable>enable</Nullable>
 
     <ImplicitUsings>enable</ImplicitUsings>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
-    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+    <EnableClientSdkAnalyzers Condition="'$(IsTestProject)' != 'true'">true</EnableClientSdkAnalyzers>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 </Project>
