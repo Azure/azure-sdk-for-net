@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MonitorServiceDetails"/>. </summary>
-        public MonitorServiceDetails()
+        internal MonitorServiceDetails()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Monitor service name. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Monitor service display name. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; }
     }
 }

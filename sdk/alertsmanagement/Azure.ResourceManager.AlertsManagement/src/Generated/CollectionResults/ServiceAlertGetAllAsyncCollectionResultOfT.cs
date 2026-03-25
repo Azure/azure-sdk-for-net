@@ -15,9 +15,10 @@ using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    internal partial class AlertsGetAllTenantAsyncCollectionResultOfT : AsyncPageable<ServiceAlertData>
+    internal partial class ServiceAlertGetAllAsyncCollectionResultOfT : AsyncPageable<ServiceAlertData>
     {
-        private readonly Alerts _client;
+        private readonly ServiceAlert _client;
+        private readonly string _scope;
         private readonly string _targetResource;
         private readonly string _targetResourceType;
         private readonly string _targetResourceGroup;
@@ -37,8 +38,9 @@ namespace Azure.ResourceManager.AlertsManagement
         private readonly string _customTimeRange;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of AlertsGetAllTenantAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Alerts client used to send requests. </param>
+        /// <summary> Initializes a new instance of ServiceAlertGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ServiceAlert client used to send requests. </param>
+        /// <param name="scope"> undefined. </param>
         /// <param name="targetResource"> Filter by target resource( which is full ARM ID) Default value is select all. </param>
         /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
         /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
@@ -57,9 +59,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AlertsGetAllTenantAsyncCollectionResultOfT(Alerts client, string targetResource, string targetResourceType, string targetResourceGroup, string monitorService, string monitorCondition, string severity, string alertState, string alertRule, string smartGroupId, bool? includeContext, bool? includeEgressConfig, long? pageCount, string sortBy, string sortOrder, string @select, string timeRange, string customTimeRange, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ServiceAlertGetAllAsyncCollectionResultOfT(ServiceAlert client, string scope, string targetResource, string targetResourceType, string targetResourceGroup, string monitorService, string monitorCondition, string severity, string alertState, string alertRule, string smartGroupId, bool? includeContext, bool? includeEgressConfig, long? pageCount, string sortBy, string sortOrder, string @select, string timeRange, string customTimeRange, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
+            _scope = scope;
             _targetResource = targetResource;
             _targetResourceType = targetResourceType;
             _targetResourceGroup = targetResourceGroup;
@@ -80,10 +83,10 @@ namespace Azure.ResourceManager.AlertsManagement
             _context = context;
         }
 
-        /// <summary> Gets the pages of AlertsGetAllTenantAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ServiceAlertGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AlertsGetAllTenantAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ServiceAlertGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ServiceAlertData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -109,7 +112,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllTenantRequest(nextLink, _targetResource, _targetResourceType, _targetResourceGroup, _monitorService, _monitorCondition, _severity, _alertState, _alertRule, _smartGroupId, _includeContext, _includeEgressConfig, _pageCount, _sortBy, _sortOrder, _select, _timeRange, _customTimeRange, _context) : _client.CreateGetAllTenantRequest(_targetResource, _targetResourceType, _targetResourceGroup, _monitorService, _monitorCondition, _severity, _alertState, _alertRule, _smartGroupId, _includeContext, _includeEgressConfig, _pageCount, _sortBy, _sortOrder, _select, _timeRange, _customTimeRange, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _scope, _targetResource, _targetResourceType, _targetResourceGroup, _monitorService, _monitorCondition, _severity, _alertState, _alertRule, _smartGroupId, _includeContext, _includeEgressConfig, _pageCount, _sortBy, _sortOrder, _select, _timeRange, _customTimeRange, _context) : _client.CreateGetAllRequest(_scope, _targetResource, _targetResourceType, _targetResourceGroup, _monitorService, _monitorCondition, _severity, _alertState, _alertRule, _smartGroupId, _includeContext, _includeEgressConfig, _pageCount, _sortBy, _sortOrder, _select, _timeRange, _customTimeRange, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceAlertCollection.GetAll");
             scope.Start();
             try

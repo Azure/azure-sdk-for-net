@@ -12,13 +12,13 @@ using Azure.ResourceManager.AlertsManagement;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> The ActionSuppressedDetails. </summary>
-    public partial class ActionSuppressedDetails : BaseDetails
+    public partial class ActionSuppressedDetails : AlertsManagementBaseDetails
     {
         /// <summary> Initializes a new instance of <see cref="ActionSuppressedDetails"/>. </summary>
         public ActionSuppressedDetails() : base(AlertModificationType.ActionsSuppressed)
         {
             SuppressionActionRules = new ChangeTrackingList<string>();
-            SuppressedActionGroups = new ChangeTrackingList<TriggeredRule>();
+            SuppressedActionGroups = new ChangeTrackingList<AlertsManagementTriggeredRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ActionSuppressedDetails"/>. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="suppressionActionRules"> List of suppression action rules. </param>
         /// <param name="suppressedActionGroups"> List of suppressed action groups. </param>
-        internal ActionSuppressedDetails(AlertModificationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> suppressionActionRules, IList<TriggeredRule> suppressedActionGroups) : base(@type, additionalBinaryDataProperties)
+        internal ActionSuppressedDetails(AlertModificationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> suppressionActionRules, IList<AlertsManagementTriggeredRule> suppressedActionGroups) : base(@type, additionalBinaryDataProperties)
         {
             SuppressionActionRules = suppressionActionRules;
             SuppressedActionGroups = suppressedActionGroups;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public IList<string> SuppressionActionRules { get; }
 
         /// <summary> List of suppressed action groups. </summary>
-        public IList<TriggeredRule> SuppressedActionGroups { get; }
+        public IList<AlertsManagementTriggeredRule> SuppressedActionGroups { get; }
     }
 }

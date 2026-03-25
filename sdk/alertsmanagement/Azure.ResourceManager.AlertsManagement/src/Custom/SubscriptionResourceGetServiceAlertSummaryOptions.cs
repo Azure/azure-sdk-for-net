@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable CS1591
-
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     // Backward-compatible wrapper over the generated summary parameter overload.
@@ -27,5 +25,3 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string CustomTimeRange { get; set; }
     }
 }
-#pragma warning restore CS1591
-

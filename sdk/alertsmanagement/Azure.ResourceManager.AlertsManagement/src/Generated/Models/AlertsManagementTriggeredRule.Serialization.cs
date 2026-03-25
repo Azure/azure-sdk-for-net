@@ -13,52 +13,52 @@ using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The NotificationResult. </summary>
-    public partial class NotificationResult : IJsonModel<NotificationResult>
+    /// <summary> The AlertsManagementTriggeredRule. </summary>
+    public partial class AlertsManagementTriggeredRule : IJsonModel<AlertsManagementTriggeredRule>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NotificationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AlertsManagementTriggeredRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertsManagementTriggeredRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNotificationResult(document.RootElement, options);
+                        return DeserializeAlertsManagementTriggeredRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertsManagementTriggeredRule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertsManagementTriggeredRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertsManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertsManagementTriggeredRule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NotificationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AlertsManagementTriggeredRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NotificationResult IPersistableModel<NotificationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AlertsManagementTriggeredRule IPersistableModel<AlertsManagementTriggeredRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NotificationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AlertsManagementTriggeredRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NotificationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AlertsManagementTriggeredRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,25 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertsManagementTriggeredRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertsManagementTriggeredRule)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StatusURL))
+            if (Optional.IsDefined(ActionGroupId))
             {
-                writer.WritePropertyName("statusURL"u8);
-                writer.WriteStringValue(StatusURL);
+                writer.WritePropertyName("actionGroupId"u8);
+                writer.WriteStringValue(ActionGroupId);
             }
-            if (Optional.IsDefined(Status))
+            if (Optional.IsDefined(RuleId))
             {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WritePropertyName("ruleId"u8);
+                writer.WriteStringValue(RuleId);
+            }
+            if (Optional.IsDefined(RuleType))
+            {
+                writer.WritePropertyName("ruleType"u8);
+                writer.WriteStringValue(RuleType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,46 +108,52 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NotificationResult IJsonModel<NotificationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AlertsManagementTriggeredRule IJsonModel<AlertsManagementTriggeredRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NotificationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AlertsManagementTriggeredRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertsManagementTriggeredRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertsManagementTriggeredRule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNotificationResult(document.RootElement, options);
+            return DeserializeAlertsManagementTriggeredRule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NotificationResult DeserializeNotificationResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static AlertsManagementTriggeredRule DeserializeAlertsManagementTriggeredRule(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string statusURL = default;
-            ResultStatus? status = default;
+            string actionGroupId = default;
+            string ruleId = default;
+            AlertsManagementRuleType? ruleType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("statusURL"u8))
+                if (prop.NameEquals("actionGroupId"u8))
                 {
-                    statusURL = prop.Value.GetString();
+                    actionGroupId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
+                if (prop.NameEquals("ruleId"u8))
+                {
+                    ruleId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("ruleType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new ResultStatus(prop.Value.GetString());
+                    ruleType = new AlertsManagementRuleType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +161,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NotificationResult(statusURL, status, additionalBinaryDataProperties);
+            return new AlertsManagementTriggeredRule(actionGroupId, ruleId, ruleType, additionalBinaryDataProperties);
         }
     }
 }

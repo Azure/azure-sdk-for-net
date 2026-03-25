@@ -10,22 +10,22 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The NotificationResult. </summary>
-    public partial class NotificationResult
+    /// <summary> The AlertsManagementNotificationResult. </summary>
+    public partial class AlertsManagementNotificationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NotificationResult"/>. </summary>
-        public NotificationResult()
+        /// <summary> Initializes a new instance of <see cref="AlertsManagementNotificationResult"/>. </summary>
+        public AlertsManagementNotificationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertsManagementNotificationResult"/>. </summary>
         /// <param name="statusURL"> URL endpoint for checking notification delivery status. Only populated when status is 'Inline'. </param>
         /// <param name="status"> The status of the notification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationResult(string statusURL, ResultStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertsManagementNotificationResult(string statusURL, AlertsManagementResultStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StatusURL = statusURL;
             Status = status;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string StatusURL { get; set; }
 
         /// <summary> The status of the notification. </summary>
-        public ResultStatus? Status { get; set; }
+        public AlertsManagementResultStatus? Status { get; set; }
     }
 }

@@ -7,5 +7,6 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.AlertsManagement.</Description>
     <PackageTags>azure;management;arm;resource manager;alertsmanagement</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <NoWarn>$(NoWarn);CS1591;CS0612;CS0618;CS0619</NoWarn>
   </PropertyGroup>
 </Project>

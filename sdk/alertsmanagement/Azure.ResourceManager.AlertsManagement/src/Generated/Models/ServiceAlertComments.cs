@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Change alert state reason. </summary>
-    public partial class AlertComments
+    public partial class ServiceAlertComments
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AlertComments"/>. </summary>
-        public AlertComments()
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertComments"/>. </summary>
+        public ServiceAlertComments()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertComments"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertComments"/>. </summary>
         /// <param name="comments"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertComments(string comments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAlertComments(string comments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Comments = comments;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

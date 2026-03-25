@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable CS1591
-
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -12,10 +10,15 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
+    // Backward compatibility: the generated extension method is named GetServiceAlertResource
+    // (from the TypeSpec Alert renamed to ServiceAlert), but the old SDK exposed GetAlertResource.
+    // CodeGenSuppress removes the generated method and this file re-adds it with the old name.
+    // Also provides GetServiceAlertSummary/GetServiceAlertSummaryAsync extension methods on
+    // SubscriptionResource with both individual-parameter and options-object overloads.
     [CodeGenSuppress("GetAlertResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     public static partial class AlertsManagementExtensions
     {
-        public static AlertResource GetAlertResource(this ArmClient client, ResourceIdentifier id)
+        public static ServiceAlertResource GetAlertResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -102,5 +105,3 @@ namespace Azure.ResourceManager.AlertsManagement
         }
     }
 }
-#pragma warning restore CS1591
-

@@ -12,7 +12,7 @@ using Azure.ResourceManager.AlertsManagement;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> The status of the notification. </summary>
-    public readonly partial struct ResultStatus : IEquatable<ResultStatus>
+    public readonly partial struct AlertsManagementResultStatus : IEquatable<AlertsManagementResultStatus>
     {
         private readonly string _value;
         /// <summary> None. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> ThrottledBySubscription. </summary>
         private const string ThrottledBySubscriptionValue = "ThrottledBySubscription";
 
-        /// <summary> Initializes a new instance of <see cref="ResultStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertsManagementResultStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResultStatus(string value)
+        public AlertsManagementResultStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> None. </summary>
-        public static ResultStatus None { get; } = new ResultStatus(NoneValue);
+        public static AlertsManagementResultStatus None { get; } = new AlertsManagementResultStatus(NoneValue);
 
         /// <summary> Inline. </summary>
-        public static ResultStatus Inline { get; } = new ResultStatus(InlineValue);
+        public static AlertsManagementResultStatus Inline { get; } = new AlertsManagementResultStatus(InlineValue);
 
         /// <summary> Throttled. </summary>
-        public static ResultStatus Throttled { get; } = new ResultStatus(ThrottledValue);
+        public static AlertsManagementResultStatus Throttled { get; } = new AlertsManagementResultStatus(ThrottledValue);
 
         /// <summary> Failed. </summary>
-        public static ResultStatus Failed { get; } = new ResultStatus(FailedValue);
+        public static AlertsManagementResultStatus Failed { get; } = new AlertsManagementResultStatus(FailedValue);
 
         /// <summary> ThrottledByAlertRule. </summary>
-        public static ResultStatus ThrottledByAlertRule { get; } = new ResultStatus(ThrottledByAlertRuleValue);
+        public static AlertsManagementResultStatus ThrottledByAlertRule { get; } = new AlertsManagementResultStatus(ThrottledByAlertRuleValue);
 
         /// <summary> ThrottledBySubscription. </summary>
-        public static ResultStatus ThrottledBySubscription { get; } = new ResultStatus(ThrottledBySubscriptionValue);
+        public static AlertsManagementResultStatus ThrottledBySubscription { get; } = new AlertsManagementResultStatus(ThrottledBySubscriptionValue);
 
-        /// <summary> Determines if two <see cref="ResultStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AlertsManagementResultStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ResultStatus left, ResultStatus right) => left.Equals(right);
+        public static bool operator ==(AlertsManagementResultStatus left, AlertsManagementResultStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ResultStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AlertsManagementResultStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ResultStatus left, ResultStatus right) => !left.Equals(right);
+        public static bool operator !=(AlertsManagementResultStatus left, AlertsManagementResultStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ResultStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AlertsManagementResultStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResultStatus(string value) => new ResultStatus(value);
+        public static implicit operator AlertsManagementResultStatus(string value) => new AlertsManagementResultStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ResultStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AlertsManagementResultStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResultStatus?(string value) => value == null ? null : new ResultStatus(value);
+        public static implicit operator AlertsManagementResultStatus?(string value) => value == null ? null : new AlertsManagementResultStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ResultStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is AlertsManagementResultStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ResultStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AlertsManagementResultStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

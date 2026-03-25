@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="errorMessage"> The error message. Will be present only if the status is 'Failed'. </param>
         /// <param name="type"> The enrichment type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAlertEnrichmentItem(string title, string description, Status status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(title, description, status, errorMessage, @type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownAlertEnrichmentItem(string title, string description, AlertsManagementStatus status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(title, description, status, errorMessage, @type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -14,11 +14,11 @@ using Azure.ResourceManager.AlertsManagement;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> The PropertyChangeDetails. </summary>
-    public partial class PropertyChangeDetails : BaseDetails, IJsonModel<PropertyChangeDetails>
+    public partial class PropertyChangeDetails : AlertsManagementBaseDetails, IJsonModel<PropertyChangeDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AlertsManagementBaseDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PropertyChangeDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AlertsManagementBaseDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PropertyChangeDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

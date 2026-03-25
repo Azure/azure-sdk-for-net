@@ -14,11 +14,11 @@ using Azure.ResourceManager.AlertsManagement;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> The ActionTriggeredDetails. </summary>
-    public partial class ActionTriggeredDetails : BaseDetails, IJsonModel<ActionTriggeredDetails>
+    public partial class ActionTriggeredDetails : AlertsManagementBaseDetails, IJsonModel<ActionTriggeredDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AlertsManagementBaseDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ActionTriggeredDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AlertsManagementBaseDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ActionTriggeredDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             AlertModificationType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            TriggeredRule actionGroup = default;
-            NotificationResult notificationResult = default;
+            AlertsManagementTriggeredRule actionGroup = default;
+            AlertsManagementNotificationResult notificationResult = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    actionGroup = TriggeredRule.DeserializeTriggeredRule(prop.Value, options);
+                    actionGroup = AlertsManagementTriggeredRule.DeserializeAlertsManagementTriggeredRule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("notificationResult"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    notificationResult = NotificationResult.DeserializeNotificationResult(prop.Value, options);
+                    notificationResult = AlertsManagementNotificationResult.DeserializeAlertsManagementNotificationResult(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

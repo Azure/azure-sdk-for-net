@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
     /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableAlertsManagementTenantResource : ArmResource
     {
-        private ClientDiagnostics _alertsClientDiagnostics;
-        private Alerts _alertsRestClient;
+        private ClientDiagnostics _serviceAlertClientDiagnostics;
+        private ServiceAlert _serviceAlertRestClient;
 
         /// <summary> Initializes a new instance of MockableAlertsManagementTenantResource for mocking. </summary>
         protected MockableAlertsManagementTenantResource()
@@ -36,73 +36,15 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         {
         }
 
-        private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AlertsManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ServiceAlertClientDiagnostics => _serviceAlertClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AlertsManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Endpoint, "2025-05-25-preview");
+        private ServiceAlert ServiceAlertRestClient => _serviceAlertRestClient ??= new ServiceAlert(ServiceAlertClientDiagnostics, Pipeline, Endpoint, "2025-05-25-preview");
 
-        /// <summary> Gets a collection of Alerts in the <see cref="TenantResource"/>. </summary>
-        /// <returns> An object representing collection of Alerts and their operations over a AlertResource. </returns>
-        public virtual ServiceAlertCollection GetAlerts()
+        /// <summary> Gets a collection of ServiceAlerts in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceAlerts and their operations over a ServiceAlertResource. </returns>
+        public virtual ServiceAlertCollection GetServiceAlerts()
         {
             return this.GetCachedClient(client => new ServiceAlertCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get information related to a specific alert.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Alerts_GetByIdTenant. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-25-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="alertId"> Unique ID of an alert instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AlertResource>> GetAlertAsync(string alertId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
-
-            return await GetAlerts().GetAsync(alertId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get information related to a specific alert.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Alerts_GetByIdTenant. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-25-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="alertId"> Unique ID of an alert instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AlertResource> GetAlert(string alertId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
-
-            return GetAlerts().Get(alertId, cancellationToken);
         }
 
         /// <summary>
@@ -126,7 +68,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceAlertMetadata>> MetaDataAsync(RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = AlertsClientDiagnostics.CreateScope("MockableAlertsManagementTenantResource.MetaData");
+            using DiagnosticScope scope = ServiceAlertClientDiagnostics.CreateScope("MockableAlertsManagementTenantResource.MetaData");
             scope.Start();
             try
             {
@@ -134,7 +76,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AlertsRestClient.CreateMetaDataRequest(identifier.ToString(), context);
+                HttpMessage message = ServiceAlertRestClient.CreateMetaDataRequest(identifier.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertMetadata> response = Response.FromValue(ServiceAlertMetadata.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +113,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceAlertMetadata> MetaData(RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = AlertsClientDiagnostics.CreateScope("MockableAlertsManagementTenantResource.MetaData");
+            using DiagnosticScope scope = ServiceAlertClientDiagnostics.CreateScope("MockableAlertsManagementTenantResource.MetaData");
             scope.Start();
             try
             {
@@ -179,7 +121,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AlertsRestClient.CreateMetaDataRequest(identifier.ToString(), context);
+                HttpMessage message = ServiceAlertRestClient.CreateMetaDataRequest(identifier.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertMetadata> response = Response.FromValue(ServiceAlertMetadata.FromResponse(result), result);
                 if (response.Value == null)

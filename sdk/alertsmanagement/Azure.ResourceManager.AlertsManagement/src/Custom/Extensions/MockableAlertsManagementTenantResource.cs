@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable CS1591
-
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,5 +26,3 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         }
     }
 }
-
-#pragma warning restore CS1591

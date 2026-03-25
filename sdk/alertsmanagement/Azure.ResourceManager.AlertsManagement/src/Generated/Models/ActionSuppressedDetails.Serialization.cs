@@ -14,11 +14,11 @@ using Azure.ResourceManager.AlertsManagement;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> The ActionSuppressedDetails. </summary>
-    public partial class ActionSuppressedDetails : BaseDetails, IJsonModel<ActionSuppressedDetails>
+    public partial class ActionSuppressedDetails : AlertsManagementBaseDetails, IJsonModel<ActionSuppressedDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AlertsManagementBaseDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ActionSuppressedDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 writer.WritePropertyName("suppressedActionGroups"u8);
                 writer.WriteStartArray();
-                foreach (TriggeredRule item in SuppressedActionGroups)
+                foreach (AlertsManagementTriggeredRule item in SuppressedActionGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BaseDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AlertsManagementBaseDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ActionSuppressedDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             AlertModificationType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<string> suppressionActionRules = default;
-            IList<TriggeredRule> suppressedActionGroups = default;
+            IList<AlertsManagementTriggeredRule> suppressedActionGroups = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    List<TriggeredRule> array = new List<TriggeredRule>();
+                    List<AlertsManagementTriggeredRule> array = new List<AlertsManagementTriggeredRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TriggeredRule.DeserializeTriggeredRule(item, options));
+                        array.Add(AlertsManagementTriggeredRule.DeserializeAlertsManagementTriggeredRule(item, options));
                     }
                     suppressedActionGroups = array;
                     continue;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ActionSuppressedDetails(@type, additionalBinaryDataProperties, suppressionActionRules ?? new ChangeTrackingList<string>(), suppressedActionGroups ?? new ChangeTrackingList<TriggeredRule>());
+            return new ActionSuppressedDetails(@type, additionalBinaryDataProperties, suppressionActionRules ?? new ChangeTrackingList<string>(), suppressedActionGroups ?? new ChangeTrackingList<AlertsManagementTriggeredRule>());
         }
     }
 }

@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             string title = default;
             string description = default;
-            Status status = default;
+            AlertsManagementStatus status = default;
             string errorMessage = default;
             Type @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new Status(prop.Value.GetString());
+                    status = new AlertsManagementStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errorMessage"u8))

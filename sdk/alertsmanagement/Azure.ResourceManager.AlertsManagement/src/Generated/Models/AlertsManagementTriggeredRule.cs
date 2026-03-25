@@ -10,23 +10,23 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The TriggeredRule. </summary>
-    public partial class TriggeredRule
+    /// <summary> The AlertsManagementTriggeredRule. </summary>
+    public partial class AlertsManagementTriggeredRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TriggeredRule"/>. </summary>
-        public TriggeredRule()
+        /// <summary> Initializes a new instance of <see cref="AlertsManagementTriggeredRule"/>. </summary>
+        public AlertsManagementTriggeredRule()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriggeredRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertsManagementTriggeredRule"/>. </summary>
         /// <param name="actionGroupId"> The action group ID. </param>
         /// <param name="ruleId"> The rule ID. </param>
         /// <param name="ruleType"> The rule type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredRule(string actionGroupId, string ruleId, RuleType? ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertsManagementTriggeredRule(string actionGroupId, string ruleId, AlertsManagementRuleType? ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionGroupId = actionGroupId;
             RuleId = ruleId;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string RuleId { get; set; }
 
         /// <summary> The rule type. </summary>
-        public RuleType? RuleType { get; set; }
+        public AlertsManagementRuleType? RuleType { get; set; }
     }
 }

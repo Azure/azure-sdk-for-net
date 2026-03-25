@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable CS1591
-
 #nullable disable
 
 using System.Threading;
@@ -12,6 +10,10 @@ using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Mocking
 {
+    // Backward compatibility: the new generator places GetSummary on MockableAlertsManagementArmClient,
+    // but the old SDK had GetServiceAlertSummary on SubscriptionResource. This custom mockable extension
+    // provides the old method signatures (individual parameters and options object) on SubscriptionResource,
+    // delegating to the generated GetSummary via MockableAlertsManagementArmClient.
     public partial class MockableAlertsManagementSubscriptionResource : ArmResource
     {
         internal MockableAlertsManagementSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
@@ -122,5 +124,3 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         }
     }
 }
-#pragma warning restore CS1591
-

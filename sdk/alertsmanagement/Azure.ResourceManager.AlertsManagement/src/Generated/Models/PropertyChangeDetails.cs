@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> The PropertyChangeDetails. </summary>
-    public partial class PropertyChangeDetails : BaseDetails
+    public partial class PropertyChangeDetails : AlertsManagementBaseDetails
     {
         /// <summary> Initializes a new instance of <see cref="PropertyChangeDetails"/>. </summary>
         public PropertyChangeDetails() : base(AlertModificationType.PropertyChange)

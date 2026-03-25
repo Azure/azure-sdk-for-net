@@ -5,8 +5,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS0619
-
 using System;
 using System.ComponentModel;
 
@@ -18,5 +16,3 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS0619

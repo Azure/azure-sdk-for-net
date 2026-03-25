@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             string modifiedBy = default;
             string comments = default;
             string description = default;
-            BaseDetails details = default;
+            AlertsManagementBaseDetails details = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         details = null;
                         continue;
                     }
-                    details = BaseDetails.DeserializeBaseDetails(prop.Value, options);
+                    details = AlertsManagementBaseDetails.DeserializeAlertsManagementBaseDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

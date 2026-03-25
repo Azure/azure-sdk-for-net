@@ -12,7 +12,7 @@ using Azure.ResourceManager.AlertsManagement;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> The rule type. </summary>
-    public readonly partial struct RuleType : IEquatable<RuleType>
+    public readonly partial struct AlertsManagementRuleType : IEquatable<AlertsManagementRuleType>
     {
         private readonly string _value;
         /// <summary> AlertRule. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> ActionRule. </summary>
         private const string ActionRuleValue = "ActionRule";
 
-        /// <summary> Initializes a new instance of <see cref="RuleType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertsManagementRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RuleType(string value)
+        public AlertsManagementRuleType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> AlertRule. </summary>
-        public static RuleType AlertRule { get; } = new RuleType(AlertRuleValue);
+        public static AlertsManagementRuleType AlertRule { get; } = new AlertsManagementRuleType(AlertRuleValue);
 
         /// <summary> ActionRule. </summary>
-        public static RuleType ActionRule { get; } = new RuleType(ActionRuleValue);
+        public static AlertsManagementRuleType ActionRule { get; } = new AlertsManagementRuleType(ActionRuleValue);
 
-        /// <summary> Determines if two <see cref="RuleType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AlertsManagementRuleType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RuleType left, RuleType right) => left.Equals(right);
+        public static bool operator ==(AlertsManagementRuleType left, AlertsManagementRuleType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RuleType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AlertsManagementRuleType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RuleType left, RuleType right) => !left.Equals(right);
+        public static bool operator !=(AlertsManagementRuleType left, AlertsManagementRuleType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RuleType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AlertsManagementRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleType(string value) => new RuleType(value);
+        public static implicit operator AlertsManagementRuleType(string value) => new AlertsManagementRuleType(value);
 
-        /// <summary> Converts a string to a <see cref="RuleType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AlertsManagementRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleType?(string value) => value == null ? null : new RuleType(value);
+        public static implicit operator AlertsManagementRuleType?(string value) => value == null ? null : new AlertsManagementRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RuleType other && Equals(other);
+        public override bool Equals(object obj) => obj is AlertsManagementRuleType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RuleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AlertsManagementRuleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

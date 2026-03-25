@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
         /// <param name="grafanaExplorePath"> Partial link to the Grafana explore API. </param>
         /// <param name="query"> The Prometheus expression query. </param>
-        internal PrometheusEnrichmentItem(string title, string description, Status status, string linkToApi, IEnumerable<string> datasources, string grafanaExplorePath, string query) : base(title, description, status, Type.PrometheusEnrichmentItem)
+        internal PrometheusEnrichmentItem(string title, string description, AlertsManagementStatus status, string linkToApi, IEnumerable<string> datasources, string grafanaExplorePath, string query) : base(title, description, status, Type.PrometheusEnrichmentItem)
         {
             LinkToApi = linkToApi;
             Datasources = datasources.ToList();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
         /// <param name="grafanaExplorePath"> Partial link to the Grafana explore API. </param>
         /// <param name="query"> The Prometheus expression query. </param>
-        internal PrometheusEnrichmentItem(string title, string description, Status status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query) : base(title, description, status, errorMessage, @type, additionalBinaryDataProperties)
+        internal PrometheusEnrichmentItem(string title, string description, AlertsManagementStatus status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query) : base(title, description, status, errorMessage, @type, additionalBinaryDataProperties)
         {
             LinkToApi = linkToApi;
             Datasources = datasources;

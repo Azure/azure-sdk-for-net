@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> The ActionTriggeredDetails. </summary>
-    public partial class ActionTriggeredDetails : BaseDetails
+    public partial class ActionTriggeredDetails : AlertsManagementBaseDetails
     {
         /// <summary> Initializes a new instance of <see cref="ActionTriggeredDetails"/>. </summary>
         public ActionTriggeredDetails() : base(AlertModificationType.ActionsTriggered)
@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionGroup"> The action group that was triggered. </param>
         /// <param name="notificationResult"> The result of the notification delivery. </param>
-        internal ActionTriggeredDetails(AlertModificationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, TriggeredRule actionGroup, NotificationResult notificationResult) : base(@type, additionalBinaryDataProperties)
+        internal ActionTriggeredDetails(AlertModificationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertsManagementTriggeredRule actionGroup, AlertsManagementNotificationResult notificationResult) : base(@type, additionalBinaryDataProperties)
         {
             ActionGroup = actionGroup;
             NotificationResult = notificationResult;
         }
 
         /// <summary> The action group that was triggered. </summary>
-        public TriggeredRule ActionGroup { get; set; }
+        public AlertsManagementTriggeredRule ActionGroup { get; set; }
 
         /// <summary> The result of the notification delivery. </summary>
-        public NotificationResult NotificationResult { get; set; }
+        public AlertsManagementNotificationResult NotificationResult { get; set; }
     }
 }

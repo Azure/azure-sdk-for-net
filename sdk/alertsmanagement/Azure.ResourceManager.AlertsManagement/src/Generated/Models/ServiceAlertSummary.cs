@@ -7,25 +7,32 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Summary of alerts based on the input filters and 'groupby' parameters. </summary>
-    public partial class ServiceAlertSummary : AlertsManagementProxyResource
+    public partial class ServiceAlertSummary : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ServiceAlertSummary"/>. </summary>
         public ServiceAlertSummary()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertSummary"/>. </summary>
-        /// <param name="id"> Azure resource Id. </param>
-        /// <param name="type"> Azure resource type. </param>
-        /// <param name="name"> Azure resource name. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Group the result set. </param>
-        internal ServiceAlertSummary(string id, string @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceAlertSummaryGroup properties) : base(id, @type, name, additionalBinaryDataProperties)
+        internal ServiceAlertSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceAlertSummaryGroup properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 

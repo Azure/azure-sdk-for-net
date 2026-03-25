@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    internal partial class Alerts
+    internal partial class ServiceAlert
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of Alerts for mocking. </summary>
-        protected Alerts()
+        /// <summary> Initializes a new instance of ServiceAlert for mocking. </summary>
+        protected ServiceAlert()
         {
         }
 
-        /// <summary> Initializes a new instance of Alerts. </summary>
+        /// <summary> Initializes a new instance of ServiceAlert. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Alerts(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ServiceAlert(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByIdTenantRequest(string alertId, RequestContext context)
+        internal HttpMessage CreateGetByIdTenantRequest(Guid alertId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
-            uri.AppendPath(alertId, true);
+            uri.AppendPath(alertId.ToString(), true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.AlertsManagement
             return message;
         }
 
-        internal HttpMessage CreateGetHistoryTenantRequest(string alertId, RequestContext context)
+        internal HttpMessage CreateGetHistoryTenantRequest(Guid alertId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
-            uri.AppendPath(alertId, true);
+            uri.AppendPath(alertId.ToString(), true);
             uri.AppendPath("/history", false);
             if (_apiVersion != null)
             {
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.AlertsManagement
             return message;
         }
 
-        internal HttpMessage CreateChangeStateTenantRequest(string alertId, string newState, RequestContent content, RequestContext context)
+        internal HttpMessage CreateChangeStateTenantRequest(Guid alertId, string newState, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
-            uri.AppendPath(alertId, true);
+            uri.AppendPath(alertId.ToString(), true);
             uri.AppendPath("/changestate", false);
             if (_apiVersion != null)
             {
@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.AlertsManagement
             return message;
         }
 
-        internal HttpMessage CreateGetByIdRequest(string scope, string alertId, RequestContext context)
+        internal HttpMessage CreateGetByIdRequest(string scope, Guid alertId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, true);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
-            uri.AppendPath(alertId, true);
+            uri.AppendPath(alertId.ToString(), true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -341,14 +341,14 @@ namespace Azure.ResourceManager.AlertsManagement
             return message;
         }
 
-        internal HttpMessage CreateChangeStateRequest(string scope, string alertId, string newState, RequestContent content, RequestContext context)
+        internal HttpMessage CreateChangeStateRequest(string scope, Guid alertId, string newState, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, true);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
-            uri.AppendPath(alertId, true);
+            uri.AppendPath(alertId.ToString(), true);
             uri.AppendPath("/changestate", false);
             if (_apiVersion != null)
             {
@@ -368,14 +368,14 @@ namespace Azure.ResourceManager.AlertsManagement
             return message;
         }
 
-        internal HttpMessage CreateGetHistoryRequest(string scope, string alertId, RequestContext context)
+        internal HttpMessage CreateGetHistoryRequest(string scope, Guid alertId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, true);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
-            uri.AppendPath(alertId, true);
+            uri.AppendPath(alertId.ToString(), true);
             uri.AppendPath("/history", false);
             if (_apiVersion != null)
             {
@@ -389,14 +389,14 @@ namespace Azure.ResourceManager.AlertsManagement
             return message;
         }
 
-        internal HttpMessage CreateGetEnrichmentsRequest(string scope, string alertId, RequestContext context)
+        internal HttpMessage CreateGetEnrichmentsRequest(string scope, Guid alertId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, true);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
-            uri.AppendPath(alertId, true);
+            uri.AppendPath(alertId.ToString(), true);
             uri.AppendPath("/enrichments", false);
             if (_apiVersion != null)
             {
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.AlertsManagement
             return message;
         }
 
-        internal HttpMessage CreateNextGetEnrichmentsRequest(Uri nextPage, string scope, string alertId, RequestContext context)
+        internal HttpMessage CreateNextGetEnrichmentsRequest(Uri nextPage, string scope, Guid alertId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    internal partial class UnknownBaseDetails : BaseDetails
+    internal partial class UnknownAlertsManagementBaseDetails : AlertsManagementBaseDetails
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownBaseDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAlertsManagementBaseDetails"/>. </summary>
         /// <param name="type"> Type of modification details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownBaseDetails(AlertModificationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownAlertsManagementBaseDetails(AlertModificationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

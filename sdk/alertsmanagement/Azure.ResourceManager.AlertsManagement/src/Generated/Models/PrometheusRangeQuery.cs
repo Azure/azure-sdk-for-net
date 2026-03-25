@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="start"> The start evaluation date and time in ISO8601 format. </param>
         /// <param name="end"> The end evaluation date and time in ISO8601 format. </param>
         /// <param name="step"> Query resolution step width in ISO8601 format. </param>
-        internal PrometheusRangeQuery(string title, string description, Status status, string linkToApi, IEnumerable<string> datasources, string grafanaExplorePath, string query, DateTimeOffset start, DateTimeOffset end, string step) : base(title, description, status, Type.PrometheusRangeQuery)
+        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string linkToApi, IEnumerable<string> datasources, string grafanaExplorePath, string query, DateTimeOffset start, DateTimeOffset end, string step) : base(title, description, status, Type.PrometheusRangeQuery)
         {
             LinkToApi = linkToApi;
             Datasources = datasources.ToList();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="start"> The start evaluation date and time in ISO8601 format. </param>
         /// <param name="end"> The end evaluation date and time in ISO8601 format. </param>
         /// <param name="step"> Query resolution step width in ISO8601 format. </param>
-        internal PrometheusRangeQuery(string title, string description, Status status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query, DateTimeOffset start, DateTimeOffset end, string step) : base(title, description, status, errorMessage, @type, additionalBinaryDataProperties)
+        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query, DateTimeOffset start, DateTimeOffset end, string step) : base(title, description, status, errorMessage, @type, additionalBinaryDataProperties)
         {
             LinkToApi = linkToApi;
             Datasources = datasources;

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="description"> The enrichment description. </param>
         /// <param name="status"> The status of the evaluation of the enrichment. </param>
         /// <param name="type"> The enrichment type. </param>
-        private protected AlertEnrichmentItem(string title, string description, Status status, Type @type)
+        private protected AlertEnrichmentItem(string title, string description, AlertsManagementStatus status, Type @type)
         {
             Title = title;
             Description = description;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="errorMessage"> The error message. Will be present only if the status is 'Failed'. </param>
         /// <param name="type"> The enrichment type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertEnrichmentItem(string title, string description, Status status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertEnrichmentItem(string title, string description, AlertsManagementStatus status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string Description { get; }
 
         /// <summary> The status of the evaluation of the enrichment. </summary>
-        public Status Status { get; }
+        public AlertsManagementStatus Status { get; }
 
         /// <summary> The error message. Will be present only if the status is 'Failed'. </summary>
         public string ErrorMessage { get; }

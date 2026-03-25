@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="description"> Description of the modification. </param>
         /// <param name="details"> Base details class. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAlertModificationItemInfo(ServiceAlertModificationEvent? modificationEvent, string oldValue, string newValue, string modifiedAt, string modifiedBy, string comments, string description, BaseDetails details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAlertModificationItemInfo(ServiceAlertModificationEvent? modificationEvent, string oldValue, string newValue, string modifiedAt, string modifiedBy, string comments, string description, AlertsManagementBaseDetails details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModificationEvent = modificationEvent;
             OldValue = oldValue;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string Description { get; set; }
 
         /// <summary> Base details class. </summary>
-        public BaseDetails Details { get; set; }
+        public AlertsManagementBaseDetails Details { get; set; }
     }
 }

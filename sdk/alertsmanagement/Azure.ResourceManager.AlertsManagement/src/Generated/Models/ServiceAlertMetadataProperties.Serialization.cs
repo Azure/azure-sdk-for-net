@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     [PersistableModelProxy(typeof(UnknownServiceAlertMetadataProperties))]
     public abstract partial class ServiceAlertMetadataProperties : IJsonModel<ServiceAlertMetadataProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ServiceAlertMetadataProperties"/> for deserialization. </summary>
-        internal ServiceAlertMetadataProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ServiceAlertMetadataProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

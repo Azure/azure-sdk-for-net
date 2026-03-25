@@ -18,41 +18,41 @@ using Azure.ResourceManager.AlertsManagement.Models;
 namespace Azure.ResourceManager.AlertsManagement
 {
     /// <summary>
-    /// A class representing a Alert along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AlertResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAlerts method.
+    /// A class representing a ServiceAlert along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceAlertResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetServiceAlerts method.
     /// </summary>
-    public partial class AlertResource : ArmResource
+    public partial class ServiceAlertResource : ArmResource
     {
-        private readonly ClientDiagnostics _alertsClientDiagnostics;
-        private readonly Alerts _alertsRestClient;
+        private readonly ClientDiagnostics _serviceAlertClientDiagnostics;
+        private readonly ServiceAlert _serviceAlertRestClient;
         private readonly ServiceAlertData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AlertsManagement/alerts";
 
-        /// <summary> Initializes a new instance of AlertResource for mocking. </summary>
-        protected AlertResource()
+        /// <summary> Initializes a new instance of ServiceAlertResource for mocking. </summary>
+        protected ServiceAlertResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AlertResource(ArmClient client, ServiceAlertData data) : this(client, data.Id)
+        internal ServiceAlertResource(ArmClient client, ServiceAlertData data) : this(client, data.Id)
         {
             this.HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AlertResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ServiceAlertResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ResourceType, out string alertApiVersion);
-            _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", ResourceType.Namespace, Diagnostics);
-            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, alertApiVersion ?? "2025-05-25-preview");
-            AlertResource.ValidateResourceId(id);
+            this.TryGetApiVersion(ResourceType, out string serviceAlertApiVersion);
+            _serviceAlertClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", ResourceType.Namespace, Diagnostics);
+            _serviceAlertRestClient = new ServiceAlert(_serviceAlertClientDiagnostics, Pipeline, Endpoint, serviceAlertApiVersion ?? "2025-05-25-preview");
+            ServiceAlertResource.ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="scope"> The scope. </param>
         /// <param name="alertId"> The alertId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string scope, string alertId)
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, Guid alertId)
         {
             string resourceId = $"{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}";
             return new ResourceIdentifier(resourceId);
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertResource"/>. </description>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AlertResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("AlertResource.Get");
+            using DiagnosticScope scope = _serviceAlertClientDiagnostics.CreateScope("ServiceAlertResource.Get");
             scope.Start();
             try
             {
@@ -122,14 +122,14 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _serviceAlertRestClient.CreateGetByIdRequest(Id.Parent, Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertResource"/>. </description>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AlertResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("AlertResource.Get");
+            using DiagnosticScope scope = _serviceAlertClientDiagnostics.CreateScope("ServiceAlertResource.Get");
             scope.Start();
             try
             {
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _serviceAlertRestClient.CreateGetByIdRequest(Id.Parent, Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,16 +203,16 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertResource"/>. </description>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="newState"> New state of the alert. </param>
         /// <param name="comment"> reason of change alert state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AlertResource>> ChangeStateAsync(ServiceAlertState newState, AlertComments comment = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertResource>> ChangeStateAsync(ServiceAlertState newState, ServiceAlertComments comment = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("AlertResource.ChangeState");
+            using DiagnosticScope scope = _serviceAlertClientDiagnostics.CreateScope("ServiceAlertResource.ChangeState");
             scope.Start();
             try
             {
@@ -220,14 +220,14 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateChangeStateRequest(Id.Parent, Id.Name, newState.ToString(), AlertComments.ToRequestContent(comment), context);
+                HttpMessage message = _serviceAlertRestClient.CreateChangeStateRequest(Id.Parent, Guid.Parse(Id.Name), newState.ToString(), ServiceAlertComments.ToRequestContent(comment), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -253,16 +253,16 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertResource"/>. </description>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="newState"> New state of the alert. </param>
         /// <param name="comment"> reason of change alert state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AlertResource> ChangeState(ServiceAlertState newState, AlertComments comment = default, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertResource> ChangeState(ServiceAlertState newState, ServiceAlertComments comment = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("AlertResource.ChangeState");
+            using DiagnosticScope scope = _serviceAlertClientDiagnostics.CreateScope("ServiceAlertResource.ChangeState");
             scope.Start();
             try
             {
@@ -270,14 +270,14 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateChangeStateRequest(Id.Parent, Id.Name, newState.ToString(), AlertComments.ToRequestContent(comment), context);
+                HttpMessage message = _serviceAlertRestClient.CreateChangeStateRequest(Id.Parent, Guid.Parse(Id.Name), newState.ToString(), ServiceAlertComments.ToRequestContent(comment), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertResource"/>. </description>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AlertsGetEnrichmentsAsyncCollectionResultOfT(_alertsRestClient, Id.Parent, Id.Name, context);
+            return new ServiceAlertGetEnrichmentsAsyncCollectionResultOfT(_serviceAlertRestClient, Id.Parent, Guid.Parse(Id.Name), context);
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertResource"/>. </description>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AlertsGetEnrichmentsCollectionResultOfT(_alertsRestClient, Id.Parent, Id.Name, context);
+            return new ServiceAlertGetEnrichmentsCollectionResultOfT(_serviceAlertRestClient, Id.Parent, Guid.Parse(Id.Name), context);
         }
 
         /// <summary>
@@ -367,14 +367,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertResource"/>. </description>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceAlertModification>> GetHistoryAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("AlertResource.GetHistory");
+            using DiagnosticScope scope = _serviceAlertClientDiagnostics.CreateScope("ServiceAlertResource.GetHistory");
             scope.Start();
             try
             {
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetHistoryRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _serviceAlertRestClient.CreateGetHistoryRequest(Id.Parent, Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertModification> response = Response.FromValue(ServiceAlertModification.FromResponse(result), result);
                 if (response.Value == null)
@@ -415,14 +415,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertResource"/>. </description>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceAlertModification> GetHistory(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("AlertResource.GetHistory");
+            using DiagnosticScope scope = _serviceAlertClientDiagnostics.CreateScope("ServiceAlertResource.GetHistory");
             scope.Start();
             try
             {
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetHistoryRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _serviceAlertRestClient.CreateGetHistoryRequest(Id.Parent, Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertModification> response = Response.FromValue(ServiceAlertModification.FromResponse(result), result);
                 if (response.Value == null)

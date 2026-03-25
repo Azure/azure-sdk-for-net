@@ -16,57 +16,57 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// Base details class.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PropertyChangeDetails"/>, <see cref="ActionSuppressedDetails"/>, and <see cref="ActionTriggeredDetails"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownBaseDetails))]
-    public abstract partial class BaseDetails : IJsonModel<BaseDetails>
+    [PersistableModelProxy(typeof(UnknownAlertsManagementBaseDetails))]
+    public abstract partial class AlertsManagementBaseDetails : IJsonModel<AlertsManagementBaseDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="BaseDetails"/> for deserialization. </summary>
-        internal BaseDetails()
+        /// <summary> Initializes a new instance of <see cref="AlertsManagementBaseDetails"/> for deserialization. </summary>
+        internal AlertsManagementBaseDetails()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BaseDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AlertsManagementBaseDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BaseDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertsManagementBaseDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBaseDetails(document.RootElement, options);
+                        return DeserializeAlertsManagementBaseDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BaseDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertsManagementBaseDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BaseDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertsManagementBaseDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertsManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BaseDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertsManagementBaseDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BaseDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AlertsManagementBaseDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BaseDetails IPersistableModel<BaseDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AlertsManagementBaseDetails IPersistableModel<AlertsManagementBaseDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BaseDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AlertsManagementBaseDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BaseDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AlertsManagementBaseDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BaseDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertsManagementBaseDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BaseDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertsManagementBaseDetails)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BaseDetails IJsonModel<BaseDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AlertsManagementBaseDetails IJsonModel<AlertsManagementBaseDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BaseDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AlertsManagementBaseDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BaseDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertsManagementBaseDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BaseDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertsManagementBaseDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBaseDetails(document.RootElement, options);
+            return DeserializeAlertsManagementBaseDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BaseDetails DeserializeBaseDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static AlertsManagementBaseDetails DeserializeAlertsManagementBaseDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return ActionTriggeredDetails.DeserializeActionTriggeredDetails(element, options);
                 }
             }
-            return UnknownBaseDetails.DeserializeUnknownBaseDetails(element, options);
+            return UnknownAlertsManagementBaseDetails.DeserializeUnknownAlertsManagementBaseDetails(element, options);
         }
     }
 }

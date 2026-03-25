@@ -14,22 +14,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// Base details class.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PropertyChangeDetails"/>, <see cref="ActionSuppressedDetails"/>, and <see cref="ActionTriggeredDetails"/>.
     /// </summary>
-    public abstract partial class BaseDetails
+    public abstract partial class AlertsManagementBaseDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BaseDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertsManagementBaseDetails"/>. </summary>
         /// <param name="type"> Type of modification details. </param>
-        private protected BaseDetails(AlertModificationType @type)
+        private protected AlertsManagementBaseDetails(AlertModificationType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BaseDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertsManagementBaseDetails"/>. </summary>
         /// <param name="type"> Type of modification details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BaseDetails(AlertModificationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertsManagementBaseDetails(AlertModificationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

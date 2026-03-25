@@ -14,19 +14,19 @@ using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    internal partial class AlertsGetEnrichmentsCollectionResultOfT : Pageable<AlertEnrichmentResult>
+    internal partial class ServiceAlertGetEnrichmentsCollectionResultOfT : Pageable<AlertEnrichmentResult>
     {
-        private readonly Alerts _client;
+        private readonly ServiceAlert _client;
         private readonly string _scope;
-        private readonly string _alertId;
+        private readonly Guid _alertId;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of AlertsGetEnrichmentsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Alerts client used to send requests. </param>
+        /// <summary> Initializes a new instance of ServiceAlertGetEnrichmentsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ServiceAlert client used to send requests. </param>
         /// <param name="scope"> undefined. </param>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AlertsGetEnrichmentsCollectionResultOfT(Alerts client, string scope, string alertId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ServiceAlertGetEnrichmentsCollectionResultOfT(ServiceAlert client, string scope, Guid alertId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _scope = scope;
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.AlertsManagement
             _context = context;
         }
 
-        /// <summary> Gets the pages of AlertsGetEnrichmentsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ServiceAlertGetEnrichmentsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AlertsGetEnrichmentsCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ServiceAlertGetEnrichmentsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<AlertEnrichmentResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AlertsManagement
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetEnrichmentsRequest(nextLink, _scope, _alertId, _context) : _client.CreateGetEnrichmentsRequest(_scope, _alertId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AlertResource.GetEnrichments");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceAlertResource.GetEnrichments");
             scope.Start();
             try
             {

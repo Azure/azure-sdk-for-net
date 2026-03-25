@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable CS1591
-
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Mocking
@@ -14,9 +12,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ServiceAlertCollection GetServiceAlerts()
         {
-            return GetMockableAlertsManagementArmClient().GetAlerts(Id);
+            return GetMockableAlertsManagementArmClient().GetServiceAlerts(Id);
         }
     }
 }
-
-#pragma warning restore CS1591

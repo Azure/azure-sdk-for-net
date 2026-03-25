@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -17,11 +16,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         /// <summary> Initializes a new instance of <see cref="MonitorServiceList"/>. </summary>
         /// <param name="data"> Array of operations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public MonitorServiceList(IEnumerable<MonitorServiceDetails> data) : base(ServiceAlertMetadataIdentifier.MonitorServiceList)
+        internal MonitorServiceList(IEnumerable<MonitorServiceDetails> data) : base(ServiceAlertMetadataIdentifier.MonitorServiceList)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
             Data = data.ToList();
         }
 
