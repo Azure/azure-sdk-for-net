@@ -9,7 +9,7 @@
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
     <!-- Disable warning AZC0012: Single word class names (generated from management SDK) -->
     <!-- Disable warning AZC0034: Type name conflicts (generated from management SDK) -->
-    <NoWarn>CS1591;AZC0012;AZC0034</NoWarn>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

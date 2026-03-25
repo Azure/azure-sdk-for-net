@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <!-- Import common settings if not already imported (for Generator project to access LtsTargetFramework) -->
   <Import Project="$(RepoEngPath)\Directory.Build.Common.props" Condition="'$(LtsTargetFramework)' == ''" />
 

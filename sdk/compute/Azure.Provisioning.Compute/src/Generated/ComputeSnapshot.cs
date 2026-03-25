@@ -14,9 +14,9 @@ using System;
 namespace Azure.Provisioning.Compute;
 
 /// <summary>
-/// Snapshot.
+/// ComputeSnapshot.
 /// </summary>
-public partial class Snapshot : ProvisionableResource
+public partial class ComputeSnapshot : ProvisionableResource
 {
     /// <summary>
     /// The name of the snapshot that is being created. The name can&apos;t be
@@ -352,22 +352,22 @@ public partial class Snapshot : ProvisionableResource
     private BicepValue<string>? _uniqueId;
 
     /// <summary>
-    /// Creates a new Snapshot.
+    /// Creates a new ComputeSnapshot.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the Snapshot resource.  This can be
-    /// used to refer to the resource in expressions, but is not the Azure
-    /// name of the resource.  This value can contain letters, numbers, and
-    /// underscores.
+    /// The the Bicep identifier name of the ComputeSnapshot resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the Snapshot.</param>
-    public Snapshot(string bicepIdentifier, string? resourceVersion = default)
+    /// <param name="resourceVersion">Version of the ComputeSnapshot.</param>
+    public ComputeSnapshot(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Compute/snapshots", resourceVersion ?? "2025-01-02")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of Snapshot.
+    /// Define all the provisionable properties of ComputeSnapshot.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
@@ -407,7 +407,7 @@ public partial class Snapshot : ProvisionableResource
     }
 
     /// <summary>
-    /// Supported Snapshot resource versions.
+    /// Supported ComputeSnapshot resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -418,16 +418,16 @@ public partial class Snapshot : ProvisionableResource
     }
 
     /// <summary>
-    /// Creates a reference to an existing Snapshot.
+    /// Creates a reference to an existing ComputeSnapshot.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the Snapshot resource.  This can be
-    /// used to refer to the resource in expressions, but is not the Azure
-    /// name of the resource.  This value can contain letters, numbers, and
-    /// underscores.
+    /// The the Bicep identifier name of the ComputeSnapshot resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the Snapshot.</param>
-    /// <returns>The existing Snapshot resource.</returns>
-    public static Snapshot FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the ComputeSnapshot.</param>
+    /// <returns>The existing ComputeSnapshot resource.</returns>
+    public static ComputeSnapshot FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

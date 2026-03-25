@@ -142,14 +142,14 @@ public partial class GalleryApplication : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary>
-    /// Gets or sets a reference to the parent Gallery.
+    /// Gets or sets a reference to the parent ComputeGallery.
     /// </summary>
-    public Gallery? Parent
+    public ComputeGallery? Parent
     {
         get { Initialize(); return _parent!.Value; }
         set { Initialize(); _parent!.Value = value; }
     }
-    private ResourceReference<Gallery>? _parent;
+    private ResourceReference<ComputeGallery>? _parent;
 
     /// <summary>
     /// Creates a new GalleryApplication.
@@ -184,7 +184,7 @@ public partial class GalleryApplication : ProvisionableResource
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _parent = DefineResource<Gallery>("Parent", ["parent"], isRequired: true);
+        _parent = DefineResource<ComputeGallery>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

@@ -14,9 +14,9 @@ using System;
 namespace Azure.Provisioning.Compute;
 
 /// <summary>
-/// Gallery.
+/// ComputeGallery.
 /// </summary>
-public partial class Gallery : ProvisionableResource
+public partial class ComputeGallery : ProvisionableResource
 {
     /// <summary>
     /// The name of the Shared Image Gallery.
@@ -137,22 +137,22 @@ public partial class Gallery : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary>
-    /// Creates a new Gallery.
+    /// Creates a new ComputeGallery.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the Gallery resource.  This can be
-    /// used to refer to the resource in expressions, but is not the Azure
+    /// The the Bicep identifier name of the ComputeGallery resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the Gallery.</param>
-    public Gallery(string bicepIdentifier, string? resourceVersion = default)
+    /// <param name="resourceVersion">Version of the ComputeGallery.</param>
+    public ComputeGallery(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Compute/galleries", resourceVersion ?? "2025-03-03")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of Gallery.
+    /// Define all the provisionable properties of ComputeGallery.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
@@ -172,7 +172,7 @@ public partial class Gallery : ProvisionableResource
     }
 
     /// <summary>
-    /// Supported Gallery resource versions.
+    /// Supported ComputeGallery resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -180,24 +180,19 @@ public partial class Gallery : ProvisionableResource
         /// 2025-03-03.
         /// </summary>
         public static readonly string V2025_03_03 = "2025-03-03";
-
-        /// <summary>
-        /// 2024-03-03.
-        /// </summary>
-        public static readonly string V2024_03_03 = "2024-03-03";
     }
 
     /// <summary>
-    /// Creates a reference to an existing Gallery.
+    /// Creates a reference to an existing ComputeGallery.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the Gallery resource.  This can be
-    /// used to refer to the resource in expressions, but is not the Azure
+    /// The the Bicep identifier name of the ComputeGallery resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the Gallery.</param>
-    /// <returns>The existing Gallery resource.</returns>
-    public static Gallery FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the ComputeGallery.</param>
+    /// <returns>The existing ComputeGallery resource.</returns>
+    public static ComputeGallery FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

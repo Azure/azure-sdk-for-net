@@ -18,6 +18,10 @@ public class ComputeSpecification() :
 {
     protected override void Customize()
     {
+        // Rename single-word types to avoid AZC0012
+        CustomizeResource<GalleryResource>(r => r.Name = "ComputeGallery");
+        CustomizeResource<SnapshotResource>(r => r.Name = "ComputeSnapshot");
+
         // CloudService is being deprecated — exclude from first release
         RemoveModel<CloudServiceResource>();
 
