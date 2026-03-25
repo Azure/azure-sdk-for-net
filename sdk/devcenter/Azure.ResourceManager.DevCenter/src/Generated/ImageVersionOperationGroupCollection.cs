@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="ImageVersionOperationGroupResource"/> and their operations.
-    /// Each <see cref="ImageVersionOperationGroupResource"/> in the collection will belong to the same instance of <see cref="ImageOperationGroupResource"/>.
-    /// To get a <see cref="ImageVersionOperationGroupCollection"/> instance call the GetImageVersionOperationGroups method from an instance of <see cref="ImageOperationGroupResource"/>.
+    /// Each <see cref="ImageVersionOperationGroupResource"/> in the collection will belong to the same instance of <see cref="DevCenterImageOperationGroupResource"/>.
+    /// To get a <see cref="ImageVersionOperationGroupCollection"/> instance call the GetImageVersionOperationGroups method from an instance of <see cref="DevCenterImageOperationGroupResource"/>.
     /// </summary>
     public partial class ImageVersionOperationGroupCollection : ArmCollection, IEnumerable<ImageVersionOperationGroupResource>, IAsyncEnumerable<ImageVersionOperationGroupResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.DevCenter
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ImageOperationGroupResource.ResourceType)
+            if (id.ResourceType != DevCenterImageOperationGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ImageOperationGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevCenterImageOperationGroupResource.ResourceType), id);
             }
         }
 

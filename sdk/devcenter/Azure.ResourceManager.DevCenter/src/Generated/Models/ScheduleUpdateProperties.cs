@@ -7,29 +7,36 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Updatable properties of a Schedule. </summary>
-    internal partial class ScheduleUpdatePropertiesReplacement
+    internal partial class ScheduleUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleUpdatePropertiesReplacement"/>. </summary>
-        public ScheduleUpdatePropertiesReplacement()
+        /// <summary> Initializes a new instance of <see cref="ScheduleUpdateProperties"/>. </summary>
+        public ScheduleUpdateProperties()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleUpdatePropertiesReplacement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleUpdateProperties"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="scheduledType"> Supported type this scheduled task represents. </param>
         /// <param name="frequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
         /// <param name="state"> Indicates whether or not this scheduled task is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleUpdatePropertiesReplacement(DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduleUpdateProperties(IDictionary<string, string> tags, AzureLocation? location, DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Tags = tags;
+            Location = location;
             ScheduledType = scheduledType;
             Frequency = frequency;
             Time = time;
@@ -37,6 +44,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             State = state;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; } = new ChangeTrackingDictionary<string, string>();
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Supported type this scheduled task represents. </summary>
         public DevCenterScheduledType? ScheduledType { get; set; }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> The DevBoxDefinitionPatch. </summary>
+    /// <summary> Partial update of a Dev Box definition resource. </summary>
     public partial class DevBoxDefinitionPatch : DevCenterTrackedResourceUpdate, IJsonModel<DevBoxDefinitionPatch>
     {
         /// <param name="data"> The data to parse. </param>

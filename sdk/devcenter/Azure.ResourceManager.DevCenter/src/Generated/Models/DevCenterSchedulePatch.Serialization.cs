@@ -14,7 +14,7 @@ using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> The DevCenterSchedulePatch. </summary>
+    /// <summary> The schedule properties for partial update. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterSchedulePatch : DevCenterTrackedResourceUpdate, IJsonModel<DevCenterSchedulePatch>
     {
         /// <param name="data"> The data to parse. </param>

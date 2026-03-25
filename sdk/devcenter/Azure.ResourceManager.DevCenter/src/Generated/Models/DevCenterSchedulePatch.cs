@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> The DevCenterSchedulePatch. </summary>
+    /// <summary> The schedule properties for partial update. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterSchedulePatch : DevCenterTrackedResourceUpdate
     {
         /// <summary> Initializes a new instance of <see cref="DevCenterSchedulePatch"/>. </summary>

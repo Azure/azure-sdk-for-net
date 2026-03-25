@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevCenter
     /// <summary>
     /// A class representing a ImageVersionOperationGroup along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ImageVersionOperationGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ImageOperationGroupResource"/> using the GetImageVersionOperationGroups method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterImageOperationGroupResource"/> using the GetImageVersionOperationGroups method.
     /// </summary>
     public partial class ImageVersionOperationGroupResource : ArmResource
     {

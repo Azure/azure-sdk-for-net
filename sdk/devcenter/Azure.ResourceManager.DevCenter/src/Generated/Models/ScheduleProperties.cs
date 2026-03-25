@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The Schedule properties defining when and what to execute. </summary>
-    internal partial class ScheduleProperties : ScheduleUpdatePropertiesReplacement
+    internal partial class ScheduleProperties : ScheduleUpdateProperties
     {
         /// <summary> Initializes a new instance of <see cref="ScheduleProperties"/>. </summary>
         public ScheduleProperties()
@@ -19,6 +20,8 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduleProperties"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="scheduledType"> Supported type this scheduled task represents. </param>
         /// <param name="frequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="state"> Indicates whether or not this scheduled task is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal ScheduleProperties(DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state, IDictionary<string, BinaryData> additionalBinaryDataProperties, DevCenterProvisioningState? provisioningState) : base(scheduledType, frequency, time, timeZone, state, additionalBinaryDataProperties)
+        internal ScheduleProperties(IDictionary<string, string> tags, AzureLocation? location, DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state, IDictionary<string, BinaryData> additionalBinaryDataProperties, DevCenterProvisioningState? provisioningState) : base(tags, location, scheduledType, frequency, time, timeZone, state, additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
         }

@@ -8,10 +8,7 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// Backward compatibility: DomainJoinType was Nullable in the baseline SDK
-    /// but the new generator emits it as non-nullable. Suppress the generated property
-    /// and restore the nullable version.
     /// </summary>
-    [CodeGenSuppress("DomainJoinType")]
     public partial class DevCenterNetworkConnectionData
     {
         /// <summary> AAD Join type. </summary>

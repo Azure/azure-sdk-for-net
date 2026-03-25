@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// </summary>
     [CodeGenSuppress("DevCenterOperationStatus")]
     [CodeGenSuppress("DevCenterOperationStatus", typeof(IReadOnlyDictionary<string, BinaryData>), typeof(IDictionary<string, BinaryData>))]
-    [CodeGenSuppress("Properties")]
     public partial class DevCenterOperationStatus : OperationStatusResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

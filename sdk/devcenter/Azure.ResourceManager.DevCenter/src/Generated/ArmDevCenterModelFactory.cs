@@ -1115,6 +1115,8 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="scheduledType"> Supported type this scheduled task represents. </param>
         /// <param name="frequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
@@ -1122,7 +1124,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="state"> Indicates whether or not this scheduled task is enabled. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="DevCenter.DevCenterScheduleData"/> instance for mocking. </returns>
-        public static DevCenterScheduleData DevCenterScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevCenterScheduledType? scheduledType = default, DevCenterScheduledFrequency? frequency = default, string time = default, string timeZone = default, DevCenterScheduleEnableStatus? state = default, DevCenterProvisioningState? provisioningState = default)
+        public static DevCenterScheduleData DevCenterScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation? location = default, DevCenterScheduledType? scheduledType = default, DevCenterScheduledFrequency? frequency = default, string time = default, string timeZone = default, DevCenterScheduleEnableStatus? state = default, DevCenterProvisioningState? provisioningState = default)
         {
             return new DevCenterScheduleData(
                 id,
@@ -1130,7 +1132,9 @@ namespace Azure.ResourceManager.DevCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                scheduledType is null && frequency is null && time is null && timeZone is null && state is null && provisioningState is null ? default : new ScheduleProperties(
+                tags is null && location is null && scheduledType is null && frequency is null && time is null && timeZone is null && state is null && provisioningState is null ? default : new ScheduleProperties(
+                    tags,
+                    location,
                     scheduledType,
                     frequency,
                     time,
@@ -1601,6 +1605,24 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static DevCenterPoolData DevCenterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string devBoxDefinitionName, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, DevCenterHealthStatus? healthStatus, IEnumerable<DevCenterHealthStatusDetail> healthStatusDetails, DevCenterProvisioningState? provisioningState)
         {
             return DevCenterPoolData(id, name, resourceType, systemData, tags, location, devBoxDefinitionType: default, devBoxDefinitionName, devBoxDefinition: default, networkConnectionName, licenseType, localAdministrator, stopOnDisconnect, stopOnNoConnect: default, singleSignOnStatus: default, displayName: default, virtualNetworkType: default, managedVirtualNetworkRegions: default, activeHoursConfiguration: default, devBoxTunnelEnableStatus: default, healthStatus, healthStatusDetails, devBoxCount: default, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterScheduleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="scheduledType"> Supported type this scheduled task represents. </param>
+        /// <param name="frequency"> The frequency of this scheduled task. </param>
+        /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
+        /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
+        /// <param name="state"> Indicates whether or not this scheduled task is enabled. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="DevCenter.DevCenterScheduleData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevCenterScheduleData DevCenterScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state, DevCenterProvisioningState? provisioningState)
+        {
+            return DevCenterScheduleData(id, name, resourceType, systemData, tags: default, location: default, scheduledType, frequency, time, timeZone, state, provisioningState);
         }
     }
 }

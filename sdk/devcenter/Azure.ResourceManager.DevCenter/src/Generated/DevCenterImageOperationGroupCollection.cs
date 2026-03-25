@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ImageOperationGroupResource"/> and their operations.
-    /// Each <see cref="ImageOperationGroupResource"/> in the collection will belong to the same instance of <see cref="DevCenterProjectResource"/>.
-    /// To get a <see cref="ImageOperationGroupCollection"/> instance call the GetImageOperationGroups method from an instance of <see cref="DevCenterProjectResource"/>.
+    /// A class representing a collection of <see cref="DevCenterImageOperationGroupResource"/> and their operations.
+    /// Each <see cref="DevCenterImageOperationGroupResource"/> in the collection will belong to the same instance of <see cref="DevCenterProjectResource"/>.
+    /// To get a <see cref="DevCenterImageOperationGroupCollection"/> instance call the GetDevCenterImageOperationGroups method from an instance of <see cref="DevCenterProjectResource"/>.
     /// </summary>
-    public partial class ImageOperationGroupCollection : ArmCollection, IEnumerable<ImageOperationGroupResource>, IAsyncEnumerable<ImageOperationGroupResource>
+    public partial class DevCenterImageOperationGroupCollection : ArmCollection, IEnumerable<DevCenterImageOperationGroupResource>, IAsyncEnumerable<DevCenterImageOperationGroupResource>
     {
         private readonly ClientDiagnostics _imageOperationGroupClientDiagnostics;
         private readonly ImageOperationGroup _imageOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of ImageOperationGroupCollection for mocking. </summary>
-        protected ImageOperationGroupCollection()
+        /// <summary> Initializes a new instance of DevCenterImageOperationGroupCollection for mocking. </summary>
+        protected DevCenterImageOperationGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageOperationGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageOperationGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ImageOperationGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevCenterImageOperationGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ImageOperationGroupResource.ResourceType, out string imageOperationGroupApiVersion);
-            _imageOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ImageOperationGroupResource.ResourceType.Namespace, Diagnostics);
-            _imageOperationGroupRestClient = new ImageOperationGroup(_imageOperationGroupClientDiagnostics, Pipeline, Endpoint, imageOperationGroupApiVersion ?? "2026-01-01-preview");
+            TryGetApiVersion(DevCenterImageOperationGroupResource.ResourceType, out string devCenterImageOperationGroupApiVersion);
+            _imageOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterImageOperationGroupResource.ResourceType.Namespace, Diagnostics);
+            _imageOperationGroupRestClient = new ImageOperationGroup(_imageOperationGroupClientDiagnostics, Pipeline, Endpoint, devCenterImageOperationGroupApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ImageOperationGroupResource>> GetAsync(string imageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterImageOperationGroupResource>> GetAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("ImageOperationGroupCollection.Get");
+            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("DevCenterImageOperationGroupCollection.Get");
             scope.Start();
             try
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ImageOperationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterImageOperationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ImageOperationGroupResource> Get(string imageName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterImageOperationGroupResource> Get(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("ImageOperationGroupCollection.Get");
+            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("DevCenterImageOperationGroupCollection.Get");
             scope.Start();
             try
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ImageOperationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterImageOperationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ImageOperationGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ImageOperationGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevCenterImageOperationGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevCenterImageOperationGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterImageData, ImageOperationGroupResource>(new ImageOperationGroupGetByProjectAsyncCollectionResultOfT(_imageOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ImageOperationGroupResource(Client, data));
+            return new AsyncPageableWrapper<DevCenterImageData, DevCenterImageOperationGroupResource>(new ImageOperationGroupGetByProjectAsyncCollectionResultOfT(_imageOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DevCenterImageOperationGroupResource(Client, data));
         }
 
         /// <summary>
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ImageOperationGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ImageOperationGroupResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevCenterImageOperationGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterImageOperationGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterImageData, ImageOperationGroupResource>(new ImageOperationGroupGetByProjectCollectionResultOfT(_imageOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ImageOperationGroupResource(Client, data));
+            return new PageableWrapper<DevCenterImageData, DevCenterImageOperationGroupResource>(new ImageOperationGroupGetByProjectCollectionResultOfT(_imageOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DevCenterImageOperationGroupResource(Client, data));
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("ImageOperationGroupCollection.Exists");
+            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("DevCenterImageOperationGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("ImageOperationGroupCollection.Exists");
+            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("DevCenterImageOperationGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -343,11 +343,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ImageOperationGroupResource>> GetIfExistsAsync(string imageName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DevCenterImageOperationGroupResource>> GetIfExistsAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("ImageOperationGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("DevCenterImageOperationGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -372,9 +372,9 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ImageOperationGroupResource>(response.GetRawResponse());
+                    return new NoValueResponse<DevCenterImageOperationGroupResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ImageOperationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterImageOperationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -404,11 +404,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ImageOperationGroupResource> GetIfExists(string imageName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DevCenterImageOperationGroupResource> GetIfExists(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("ImageOperationGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("DevCenterImageOperationGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -433,9 +433,9 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ImageOperationGroupResource>(response.GetRawResponse());
+                    return new NoValueResponse<DevCenterImageOperationGroupResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ImageOperationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterImageOperationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        IEnumerator<ImageOperationGroupResource> IEnumerable<ImageOperationGroupResource>.GetEnumerator()
+        IEnumerator<DevCenterImageOperationGroupResource> IEnumerable<DevCenterImageOperationGroupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ImageOperationGroupResource> IAsyncEnumerable<ImageOperationGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DevCenterImageOperationGroupResource> IAsyncEnumerable<DevCenterImageOperationGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

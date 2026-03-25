@@ -14,7 +14,7 @@ using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> The DevCenterPoolPatch. </summary>
+    /// <summary> The pool properties for partial update. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterPoolPatch : DevCenterTrackedResourceUpdate, IJsonModel<DevCenterPoolPatch>
     {
         /// <param name="data"> The data to parse. </param>

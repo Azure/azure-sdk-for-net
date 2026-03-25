@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> The DevCenterPoolPatch. </summary>
+    /// <summary> The pool properties for partial update. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterPoolPatch : DevCenterTrackedResourceUpdate
     {
         /// <summary> Initializes a new instance of <see cref="DevCenterPoolPatch"/>. </summary>

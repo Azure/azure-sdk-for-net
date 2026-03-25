@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> The DevCenterProjectPatch. </summary>
+    /// <summary> The project properties for partial update. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterProjectPatch : DevCenterTrackedResourceUpdate, IJsonModel<DevCenterProjectPatch>
     {
         /// <param name="data"> The data to parse. </param>

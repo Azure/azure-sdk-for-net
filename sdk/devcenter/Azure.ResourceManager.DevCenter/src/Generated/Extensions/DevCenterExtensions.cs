@@ -219,21 +219,21 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ImageOperationGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DevCenterImageOperationGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetImageOperationGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterImageOperationGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ImageOperationGroupResource"/> object. </returns>
-        public static ImageOperationGroupResource GetImageOperationGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterImageOperationGroupResource"/> object. </returns>
+        public static DevCenterImageOperationGroupResource GetDevCenterImageOperationGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevCenterArmClient(client).GetImageOperationGroupResource(id);
+            return GetMockableDevCenterArmClient(client).GetDevCenterImageOperationGroupResource(id);
         }
 
         /// <summary>

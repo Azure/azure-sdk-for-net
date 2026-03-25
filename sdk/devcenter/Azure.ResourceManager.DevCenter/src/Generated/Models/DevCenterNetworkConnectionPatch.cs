@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> The DevCenterNetworkConnectionPatch. </summary>
+    /// <summary> The network connection properties for partial update. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterNetworkConnectionPatch : DevCenterTrackedResourceUpdate
     {
         /// <summary> Initializes a new instance of <see cref="DevCenterNetworkConnectionPatch"/>. </summary>

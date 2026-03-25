@@ -116,13 +116,13 @@ namespace Azure.ResourceManager.DevCenter.Mocking
             return new DevCenterGalleryResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ImageOperationGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DevCenterImageOperationGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ImageOperationGroupResource"/> object. </returns>
-        public virtual ImageOperationGroupResource GetImageOperationGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterImageOperationGroupResource"/> object. </returns>
+        public virtual DevCenterImageOperationGroupResource GetDevCenterImageOperationGroupResource(ResourceIdentifier id)
         {
-            ImageOperationGroupResource.ValidateResourceId(id);
-            return new ImageOperationGroupResource(Client, id);
+            DevCenterImageOperationGroupResource.ValidateResourceId(id);
+            return new DevCenterImageOperationGroupResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ImageVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -13,7 +13,7 @@ using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> The ScheduleUpdatePropertiesReplacement. </summary>
+    /// <summary> Updatable properties of a Schedule. </summary>
     internal partial class ScheduleUpdatePropertiesReplacement : IJsonModel<ScheduleUpdatePropertiesReplacement>
     {
         /// <param name="data"> The data to parse. </param>

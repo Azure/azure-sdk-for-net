@@ -40,6 +40,36 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Properties of a Schedule resource. </summary>
         internal ScheduleProperties Properties { get; set; }
 
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleProperties();
+                }
+                return Properties.Tags;
+            }
+        }
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Location;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleProperties();
+                }
+                Properties.Location = value.Value;
+            }
+        }
+
         /// <summary> Supported type this scheduled task represents. </summary>
         public DevCenterScheduledType? ScheduledType
         {
