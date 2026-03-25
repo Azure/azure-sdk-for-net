@@ -1,0 +1,23 @@
+# Unique identifier/name for this agent
+name: echo-agent
+# Brief description of what this agent does
+description: >
+  The simplest possible invocation handler: reads plain text input and echoes it back.
+  Demonstrates basic InvocationHandler usage with the Azure AI AgentServer SDK.
+metadata:
+  tags:
+    - AI Agent Hosting
+    - Azure AI AgentServer
+    - Invocations Protocol
+    - Echo
+    - Getting Started
+template:
+  name: echo-agent
+  kind: hosted
+  protocols:
+    - protocol: invocations
+      version: v1
+  environment_variables:
+    - name: AZURE_AI_PROJECT_ENDPOINT
+      value: ${AZURE_AI_PROJECT_ENDPOINT}
+resources: []

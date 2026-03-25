@@ -1,0 +1,22 @@
+name: agent-with-streaming
+description: >
+  Demonstrates server-sent events (SSE) streaming with the Invocations protocol.
+  The handler streams generated code tokens one at a time, producing a real-time
+  typing effect for the caller.
+metadata:
+  tags:
+    - AI Agent Hosting
+    - Azure AI AgentServer
+    - Invocations Protocol
+    - Server-Sent Events
+    - Streaming
+template:
+  name: agent-with-streaming
+  kind: hosted
+  protocols:
+    - protocol: invocations
+      version: v1
+  environment_variables:
+    - name: AZURE_AI_PROJECT_ENDPOINT
+      value: ${AZURE_AI_PROJECT_ENDPOINT}
+resources: []

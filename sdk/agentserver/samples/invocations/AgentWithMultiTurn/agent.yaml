@@ -1,0 +1,22 @@
+name: agent-with-multi-turn
+description: >
+  Demonstrates multi-turn conversation with the Invocations protocol.
+  Each request carries a session_id query parameter so the handler can
+  accumulate conversation history across turns.
+metadata:
+  tags:
+    - AI Agent Hosting
+    - Azure AI AgentServer
+    - Invocations Protocol
+    - Multi-turn Conversation
+    - Session Management
+template:
+  name: agent-with-multi-turn
+  kind: hosted
+  protocols:
+    - protocol: invocations
+      version: v1
+  environment_variables:
+    - name: AZURE_AI_PROJECT_ENDPOINT
+      value: ${AZURE_AI_PROJECT_ENDPOINT}
+resources: []

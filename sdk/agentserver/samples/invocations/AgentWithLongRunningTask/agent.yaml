@@ -1,0 +1,22 @@
+name: agent-with-long-running-task
+description: >
+  Demonstrates the long-running operations (LRO) pattern with the Invocations protocol.
+  Submit a document for analysis, poll for progress, and retrieve results when the analysis
+  is complete. Shows Submit → Poll → Complete/Cancel lifecycle.
+metadata:
+  tags:
+    - AI Agent Hosting
+    - Azure AI AgentServer
+    - Invocations Protocol
+    - Long Running Operations
+    - LRO
+template:
+  name: agent-with-long-running-task
+  kind: hosted
+  protocols:
+    - protocol: invocations
+      version: v1
+  environment_variables:
+    - name: AZURE_AI_PROJECT_ENDPOINT
+      value: ${AZURE_AI_PROJECT_ENDPOINT}
+resources: []
