@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.3-beta.22 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.3-beta.21 (Unreleased)
 
 ### Features Added
