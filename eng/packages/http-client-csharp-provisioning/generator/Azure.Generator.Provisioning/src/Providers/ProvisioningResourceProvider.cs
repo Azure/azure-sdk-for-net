@@ -5,7 +5,9 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Primitives;
 using Azure.Generator.Provisioning.Utilities;
 using Azure.Provisioning;
+using Azure.Provisioning.Authorization;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Roles;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -20,6 +22,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using BicepFunction = Azure.Provisioning.Expressions.BicepFunction;
+using BicepIdentifierExpression = Azure.Provisioning.Expressions.IdentifierExpression;
 
 namespace Azure.Generator.Provisioning.Providers
 {
@@ -280,6 +284,18 @@ namespace Azure.Generator.Provisioning.Providers
             if (nameRequirementsMethod != null)
             {
                 methods.Add(nameRequirementsMethod);
+            }
+
+            // CreateRoleAssignment() overloads — only for resources that have RBAC roles
+            if (_inputModel.DiscriminatorValue == null && _resourceMetadata?.RbacRoles?.Count > 0)
+            {
+                var outputLibrary = (ProvisioningOutputLibrary)ProvisioningGenerator.Instance.OutputLibrary;
+                var builtInRole = outputLibrary.BuiltInRole;
+                if (builtInRole != null)
+                {
+                    methods.Add(BuildCreateRoleAssignmentWithIdentityMethod(builtInRole.Type));
+                    methods.Add(BuildCreateRoleAssignmentWithPrincipalMethod(builtInRole.Type));
+                }
             }
 
             return [.. methods];
@@ -641,6 +657,149 @@ namespace Azure.Generator.Provisioning.Providers
                 result = new BinaryOperatorExpression("|", result, flags[i]);
             }
             return result;
+        }
+
+        // ── CreateRoleAssignment helpers ─────────────────────────────
+
+        /// <summary>
+        /// Builds: CreateRoleAssignment(XxxBuiltInRole role, UserAssignedIdentity identity)
+        /// </summary>
+        private MethodProvider BuildCreateRoleAssignmentWithIdentityMethod(CSharpType builtInRoleType)
+        {
+            var roleParam = new ParameterProvider("role", $"The role to grant.", builtInRoleType);
+            var identityParam = new ParameterProvider("identity", $"The <see cref=\"UserAssignedIdentity\"/>.", typeof(UserAssignedIdentity));
+
+            var sig = new MethodSignature(
+                "CreateRoleAssignment",
+                $"Creates a role assignment for a user-assigned identity that grants access to this {Name}.",
+                MethodSignatureModifiers.Public,
+                typeof(RoleAssignment),
+                $"The <see cref=\"RoleAssignment\"/>.",
+                [roleParam, identityParam]);
+
+            var resultVar = new VariableExpression(typeof(RoleAssignment), "result");
+            var roleNameVar = new VariableExpression(typeof(string), "roleName");
+
+            // string roleName = XxxBuiltInRole.GetBuiltInRoleName(role);
+            var getRoleName = Static(builtInRoleType).Invoke("GetBuiltInRoleName", [(ValueExpression)roleParam]);
+
+            // Constructor arg: $"{BicepIdentifier}_{identity.BicepIdentifier}_{roleName}"
+            var constructorArg = new FormattableStringExpression(
+                "{0}_{1}_{2}",
+                [
+                    new MemberExpression(null, "BicepIdentifier"),
+                    new MemberExpression(identityParam, "BicepIdentifier"),
+                    roleNameVar
+                ]);
+
+            // BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())
+            var roleDefId = Static(typeof(BicepFunction)).Invoke(
+                "GetSubscriptionResourceId",
+                [Literal("Microsoft.Authorization/roleDefinitions"), ((ValueExpression)roleParam).InvokeToString()]);
+
+            MethodBodyStatement[] body = [
+                Declare(roleNameVar, getRoleName),
+                Declare(resultVar, New.Instance(typeof(RoleAssignment), [constructorArg])),
+                resultVar.Property("Name").Assign(
+                    Static(typeof(BicepFunction)).Invoke("CreateGuid", [
+                        new MemberExpression(null, "Id"),
+                        new MemberExpression(identityParam, "PrincipalId"),
+                        roleDefId
+                    ])
+                ).Terminate(),
+                resultVar.Property("Scope").Assign(
+                    New.Instance(typeof(BicepIdentifierExpression), [new MemberExpression(null, "BicepIdentifier")])
+                ).Terminate(),
+                resultVar.Property("PrincipalType").Assign(
+                    new MemberExpression(Static(typeof(RoleManagementPrincipalType)), nameof(RoleManagementPrincipalType.ServicePrincipal))
+                ).Terminate(),
+                resultVar.Property("RoleDefinitionId").Assign(roleDefId).Terminate(),
+                resultVar.Property("PrincipalId").Assign(
+                    new MemberExpression(identityParam, "PrincipalId")
+                ).Terminate(),
+                Return(resultVar)
+            ];
+
+            return new MethodProvider(sig, body, this);
+        }
+
+        /// <summary>
+        /// Builds: CreateRoleAssignment(XxxBuiltInRole role, BicepValue&lt;RoleManagementPrincipalType&gt; principalType, BicepValue&lt;Guid&gt; principalId, string? bicepIdentifierSuffix)
+        /// </summary>
+        private MethodProvider BuildCreateRoleAssignmentWithPrincipalMethod(CSharpType builtInRoleType)
+        {
+            var roleParam = new ParameterProvider("role", $"The role to grant.", builtInRoleType);
+            var principalTypeParam = new ParameterProvider(
+                "principalType",
+                $"The type of the principal to assign to.",
+                new CSharpType(typeof(BicepValue<>)).MakeGenericType([typeof(RoleManagementPrincipalType)]));
+            var principalIdParam = new ParameterProvider(
+                "principalId",
+                $"The principal to assign to.",
+                new CSharpType(typeof(BicepValue<>)).MakeGenericType([typeof(Guid)]));
+            var suffixParam = new ParameterProvider(
+                "bicepIdentifierSuffix",
+                $"Optional role assignment identifier name suffix.",
+                new CSharpType(typeof(string), true),
+                DefaultOf(new CSharpType(typeof(string), true)));
+
+            var sig = new MethodSignature(
+                "CreateRoleAssignment",
+                $"Creates a role assignment for a principal that grants access to this {Name}.",
+                MethodSignatureModifiers.Public,
+                typeof(RoleAssignment),
+                $"The <see cref=\"RoleAssignment\"/>.",
+                [roleParam, principalTypeParam, principalIdParam, suffixParam]);
+
+            var resultVar = new VariableExpression(typeof(RoleAssignment), "result");
+            var roleNameVar = new VariableExpression(typeof(string), "roleName");
+            var suffixSepVar = new VariableExpression(typeof(string), "suffixSep");
+
+            // string roleName = XxxBuiltInRole.GetBuiltInRoleName(role);
+            var getRoleName = Static(builtInRoleType).Invoke("GetBuiltInRoleName", [(ValueExpression)roleParam]);
+
+            // string suffixSep = bicepIdentifierSuffix is null ? "" : "_";
+            var declareSuffixSep = Declare(suffixSepVar, new TernaryConditionalExpression(
+                ((ValueExpression)suffixParam).Is(Null),
+                Literal(""),
+                Literal("_")));
+
+            // Constructor arg: $"{BicepIdentifier}_{roleName}{suffixSep}{bicepIdentifierSuffix}"
+            var constructorArg = new FormattableStringExpression(
+                "{0}_{1}{2}{3}",
+                [
+                    new MemberExpression(null, "BicepIdentifier"),
+                    roleNameVar,
+                    suffixSepVar,
+                    (ValueExpression)suffixParam
+                ]);
+
+            // BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())
+            var roleDefId = Static(typeof(BicepFunction)).Invoke(
+                "GetSubscriptionResourceId",
+                [Literal("Microsoft.Authorization/roleDefinitions"), ((ValueExpression)roleParam).InvokeToString()]);
+
+            MethodBodyStatement[] body = [
+                Declare(roleNameVar, getRoleName),
+                declareSuffixSep,
+                Declare(resultVar, New.Instance(typeof(RoleAssignment), [constructorArg])),
+                resultVar.Property("Name").Assign(
+                    Static(typeof(BicepFunction)).Invoke("CreateGuid", [
+                        new MemberExpression(null, "Id"),
+                        (ValueExpression)principalIdParam,
+                        roleDefId
+                    ])
+                ).Terminate(),
+                resultVar.Property("Scope").Assign(
+                    New.Instance(typeof(BicepIdentifierExpression), [new MemberExpression(null, "BicepIdentifier")])
+                ).Terminate(),
+                resultVar.Property("PrincipalType").Assign((ValueExpression)principalTypeParam).Terminate(),
+                resultVar.Property("RoleDefinitionId").Assign(roleDefId).Terminate(),
+                resultVar.Property("PrincipalId").Assign((ValueExpression)principalIdParam).Terminate(),
+                Return(resultVar)
+            ];
+
+            return new MethodProvider(sig, body, this);
         }
 
         // ── Type resolution helpers ──────────────────────────────────

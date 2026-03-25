@@ -30,12 +30,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="query"> You can only use Salesforce Object Query Language (SOQL) query with limitations. For SOQL limitations, see this article: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/queries.htm#SOQL%20Considerations. If query is not specified, all the data of the Salesforce object specified in ObjectApiName/reportId in dataset will be retrieved. Type: string (or Expression with resultType string). </param>
         /// <param name="includeDeletedObjects"> This property control whether query result contains Deleted objects. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="pageSize"> Page size for each http request, too large pageSize will caused timeout, default 300,000. Type: integer (or Expression with resultType integer). </param>
-        internal SalesforceV2Source(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object soqlQuery, object query, object includeDeletedObjects, object pageSize) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
+        /// <param name="partitionOption"> Partition option for the SalesforceV2 connector in copy activity, AutoDetect or None. Type: string (or Expression with resultType string). </param>
+        internal SalesforceV2Source(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object soqlQuery, object query, object includeDeletedObjects, object pageSize, object partitionOption) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
         {
             SoqlQuery = soqlQuery;
             Query = query;
             IncludeDeletedObjects = includeDeletedObjects;
             PageSize = pageSize;
+            PartitionOption = partitionOption;
             Type = type ?? "SalesforceV2Source";
         }
 
@@ -47,5 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object IncludeDeletedObjects { get; set; }
         /// <summary> Page size for each http request, too large pageSize will caused timeout, default 300,000. Type: integer (or Expression with resultType integer). </summary>
         public object PageSize { get; set; }
+        /// <summary> Partition option for the SalesforceV2 connector in copy activity, AutoDetect or None. Type: string (or Expression with resultType string). </summary>
+        public object PartitionOption { get; set; }
     }
 }

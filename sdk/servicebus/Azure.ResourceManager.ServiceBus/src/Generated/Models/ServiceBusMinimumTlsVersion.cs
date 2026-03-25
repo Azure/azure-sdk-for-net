@@ -7,41 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
+    /// <summary> The minimum TLS version for the cluster to support, e.g. '1.3'. </summary>
     public readonly partial struct ServiceBusMinimumTlsVersion : IEquatable<ServiceBusMinimumTlsVersion>
     {
         private readonly string _value;
+        private const string Tls10Value = "1.0";
+        private const string Tls11Value = "1.1";
+        private const string Tls12Value = "1.2";
+        private const string Tls13Value = "1.3";
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusMinimumTlsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceBusMinimumTlsVersion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string Tls1_0Value = "1.0";
-        private const string Tls1_1Value = "1.1";
-        private const string Tls1_2Value = "1.2";
+        /// <summary> Gets the Tls10. </summary>
+        public static ServiceBusMinimumTlsVersion Tls10 { get; } = new ServiceBusMinimumTlsVersion(Tls10Value);
+
+        /// <summary> Gets the Tls11. </summary>
+        public static ServiceBusMinimumTlsVersion Tls11 { get; } = new ServiceBusMinimumTlsVersion(Tls11Value);
+
+        /// <summary> Gets the Tls12. </summary>
+        public static ServiceBusMinimumTlsVersion Tls12 { get; } = new ServiceBusMinimumTlsVersion(Tls12Value);
+
+        /// <summary> Gets the Tls13. </summary>
+        public static ServiceBusMinimumTlsVersion Tls13 { get; } = new ServiceBusMinimumTlsVersion(Tls13Value);
+
         /// <summary> Determines if two <see cref="ServiceBusMinimumTlsVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceBusMinimumTlsVersion left, ServiceBusMinimumTlsVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceBusMinimumTlsVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceBusMinimumTlsVersion left, ServiceBusMinimumTlsVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusMinimumTlsVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceBusMinimumTlsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceBusMinimumTlsVersion(string value) => new ServiceBusMinimumTlsVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceBusMinimumTlsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceBusMinimumTlsVersion?(string value) => value == null ? null : new ServiceBusMinimumTlsVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceBusMinimumTlsVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceBusMinimumTlsVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

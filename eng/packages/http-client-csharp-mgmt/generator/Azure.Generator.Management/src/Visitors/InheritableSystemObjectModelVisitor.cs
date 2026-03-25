@@ -201,13 +201,53 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return;
         }
 
-        // Update the constructor parameter to reference the same field.
-        var ctorParam = model.FullConstructor.Signature.Parameters
-            .FirstOrDefault(p => p.Name.Equals(RawDataParameterName));
-        if (ctorParam != null && ctorParam.Field != rawDataField)
+        var signature = model.FullConstructor.Signature;
+        var ctorParamIndex = -1;
+        for (int i = 0; i < signature.Parameters.Count; i++)
         {
-            ctorParam.Update(field: rawDataField);
+            if (signature.Parameters[i].Name.Equals(RawDataParameterName))
+            {
+                ctorParamIndex = i;
+                break;
+            }
         }
+
+        if (ctorParamIndex < 0 || signature.Parameters[ctorParamIndex].Field == rawDataField)
+        {
+            return;
+        }
+
+        // Create a model-owned parameter that references the correct field.
+        // IMPORTANT: Do NOT call ctorParam.Update(field:) on the existing parameter.
+        // Constructor parameters are shared across sibling models because
+        // BuildConstructorParameters copies references from the base constructor via
+        // AddRange. Mutating a shared parameter would corrupt unrelated models.
+        var newParam = rawDataField.AsParameter;
+
+        // Replace the parameter in the constructor signature.
+        var updatedParams = new List<ParameterProvider>(signature.Parameters);
+        updatedParams[ctorParamIndex] = newParam;
+
+        // Also update the base constructor initializer to use the new parameter's
+        // variable expression so the code writer doesn't disambiguate with a "0" suffix.
+        var initializer = signature.Initializer;
+        if (initializer is not null)
+        {
+            var updatedArgs = initializer.Arguments.Select(
+                arg => arg is VariableExpression ve && ve.Declaration.RequestedName == RawDataParameterName
+                    ? (ValueExpression)newParam
+                    : arg).ToArray();
+            initializer = new ConstructorInitializer(initializer.IsBase, updatedArgs);
+        }
+
+        var updatedSignature = new ConstructorSignature(
+            signature.Type,
+            signature.Description,
+            signature.Modifiers,
+            updatedParams,
+            signature.Attributes,
+            initializer);
+        model.FullConstructor.Update(signature: updatedSignature);
     }
 
     private static readonly HashSet<string> _methodNamesToUpdate = new(){ "JsonModelCreateCore", "PersistableModelCreateCore", "PersistableModelWriteCore" };

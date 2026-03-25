@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppEncryptionKeySource? encryptionKeySource = default;
             ResourceIdentifier keyVaultPrivateEndpointResourceId = default;
             bool? ldapEnabled = default;
-            LdapServerType? ldapServerType = default;
+            NetAppLdapServerType? ldapServerType = default;
             bool? coolAccess = default;
             int? coolnessPeriod = default;
             CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
@@ -561,11 +561,11 @@ namespace Azure.ResourceManager.NetApp.Models
             EnableNetAppSubvolume? enableSubvolumes = default;
             string provisionedAvailabilityZone = default;
             bool? isLargeVolume = default;
-            LargeVolumeType? largeVolumeType = default;
+            NetAppLargeVolumeType? largeVolumeType = default;
             ResourceIdentifier originatingResourceId = default;
             long? inheritedSizeInBytes = default;
             NetAppVolumeLanguage? language = default;
-            BreakthroughMode? breakthroughMode = default;
+            NetAppBreakthroughMode? breakthroughMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            ldapServerType = new LdapServerType(property0.Value.GetString());
+                            ldapServerType = new NetAppLdapServerType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("coolAccess"u8))
@@ -1147,7 +1147,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            largeVolumeType = new LargeVolumeType(property0.Value.GetString());
+                            largeVolumeType = new NetAppLargeVolumeType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("originatingResourceId"u8))
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            breakthroughMode = new BreakthroughMode(property0.Value.GetString());
+                            breakthroughMode = new NetAppBreakthroughMode(property0.Value.GetString());
                             continue;
                         }
                     }
