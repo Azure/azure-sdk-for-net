@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 new StorageTaskAssignmentData(assignmentProperties))).Value;
 
             // list TaskAssignmentInstancesReport
-            var reports = await taskAssignment.GetAllAsync(maxpagesize: 3, null).ToEnumerableAsync();
+            var reports = await taskAssignment.GetStorageTaskAssignmentInstancesReportsAsync(maxpagesize: 3, null).ToEnumerableAsync();
             Assert.AreEqual(0, reports.Count);
         }
     }

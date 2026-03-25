@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.Storage
     {
         private readonly ClientDiagnostics _storageTaskAssignmentsClientDiagnostics;
         private readonly StorageTaskAssignments _storageTaskAssignmentsRestClient;
-        private readonly ClientDiagnostics _storageTaskAssignmentInstancesReportClientDiagnostics;
-        private readonly StorageTaskAssignmentInstancesReport _storageTaskAssignmentInstancesReportRestClient;
         private readonly StorageTaskAssignmentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/storageTaskAssignments";
@@ -54,8 +52,6 @@ namespace Azure.ResourceManager.Storage
             TryGetApiVersion(ResourceType, out string storageTaskAssignmentApiVersion);
             _storageTaskAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
             _storageTaskAssignmentsRestClient = new StorageTaskAssignments(_storageTaskAssignmentsClientDiagnostics, Pipeline, Endpoint, storageTaskAssignmentApiVersion ?? "2025-08-01");
-            _storageTaskAssignmentInstancesReportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _storageTaskAssignmentInstancesReportRestClient = new StorageTaskAssignmentInstancesReport(_storageTaskAssignmentInstancesReportClientDiagnostics, Pipeline, Endpoint, storageTaskAssignmentApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 
@@ -504,6 +500,90 @@ namespace Azure.ResourceManager.Storage
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Fetch the report summary of a single storage task assignment's instances
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/storageTaskAssignments/{storageTaskAssignmentName}/reports. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTaskAssignments_StorageTaskAssignmentInstancesReportList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskAssignmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment instances to be included in the list response. </param>
+        /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. See [Constructing Filter Strings](https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings) for details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageTaskReportInstance"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageTaskReportInstance> GetStorageTaskAssignmentInstancesReportsAsync(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new StorageTaskAssignmentsGetStorageTaskAssignmentInstancesReportsAsyncCollectionResultOfT(
+                _storageTaskAssignmentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                maxpagesize,
+                filter,
+                context);
+        }
+
+        /// <summary>
+        /// Fetch the report summary of a single storage task assignment's instances
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/storageTaskAssignments/{storageTaskAssignmentName}/reports. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTaskAssignments_StorageTaskAssignmentInstancesReportList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskAssignmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment instances to be included in the list response. </param>
+        /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. See [Constructing Filter Strings](https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings) for details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageTaskReportInstance"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageTaskReportInstance> GetStorageTaskAssignmentInstancesReports(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new StorageTaskAssignmentsGetStorageTaskAssignmentInstancesReportsCollectionResultOfT(
+                _storageTaskAssignmentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                maxpagesize,
+                filter,
+                context);
         }
     }
 }
