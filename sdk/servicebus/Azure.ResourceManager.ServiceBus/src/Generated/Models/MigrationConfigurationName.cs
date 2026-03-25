@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> The MigrationConfigurationName. </summary>
+    /// <summary></summary>
     public readonly partial struct MigrationConfigurationName : IEquatable<MigrationConfigurationName>
     {
         private readonly string _value;
+        private const string DefaultValue = "$default";
 
         /// <summary> Initializes a new instance of <see cref="MigrationConfigurationName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MigrationConfigurationName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DefaultValue = "$default";
-
-        /// <summary> $default. </summary>
+        /// <summary> Gets the Default. </summary>
         public static MigrationConfigurationName Default { get; } = new MigrationConfigurationName(DefaultValue);
+
         /// <summary> Determines if two <see cref="MigrationConfigurationName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MigrationConfigurationName left, MigrationConfigurationName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MigrationConfigurationName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MigrationConfigurationName left, MigrationConfigurationName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MigrationConfigurationName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MigrationConfigurationName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MigrationConfigurationName(string value) => new MigrationConfigurationName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MigrationConfigurationName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MigrationConfigurationName?(string value) => value == null ? null : new MigrationConfigurationName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MigrationConfigurationName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MigrationConfigurationName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

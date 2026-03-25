@@ -14,6 +14,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public string? EndUserId;
         public string? UserAgent;
         public string? OperationName;
+        public string? SessionId;
+        public string? DeviceId;
+        public string? DeviceModel;
+        public string? DeviceType;
+        public string? DeviceOsVersion;
+        public string? SyntheticSource;
+        public string? UserAccountId;
 
         /// <summary>
         /// Returns true if any context field has been set.
@@ -23,6 +30,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             EndUserPseudoId != null ||
             EndUserId != null ||
             UserAgent != null ||
-            OperationName != null;
+            OperationName != null ||
+            SessionId != null ||
+            DeviceId != null ||
+            DeviceModel != null ||
+            DeviceType != null ||
+            DeviceOsVersion != null ||
+            SyntheticSource != null ||
+            UserAccountId != null;
     }
 }
