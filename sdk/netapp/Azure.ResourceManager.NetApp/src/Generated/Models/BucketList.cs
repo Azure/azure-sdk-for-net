@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="BucketList"/>. </summary>
         /// <param name="value"> The Bucket items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal BucketList(IEnumerable<BucketData> value)
+        internal BucketList(IEnumerable<NetAppBucketData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="value"> The Bucket items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BucketList(IReadOnlyList<BucketData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BucketList(IReadOnlyList<NetAppBucketData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The Bucket items on this page. </summary>
-        public IReadOnlyList<BucketData> Value { get; }
+        public IReadOnlyList<NetAppBucketData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

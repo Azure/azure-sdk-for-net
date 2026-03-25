@@ -38,6 +38,7 @@ internal static class Program
             new ApplicationInsightsSpecification(),
             new CdnSpecification(),
             new CommunicationSpecification(),
+            new ComputeSpecification(),
             new CognitiveServicesSpecification(),
             new ContainerRegistrySpecification(),
             new ContainerServiceSpecification(),
