@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (Policy is null)
                 {
-                    Policy = new ManagementPolicySchema();
+                    Policy = new ManagementPolicySchema(new ChangeTrackingList<ManagementPolicyRule>());
                 }
                 return Policy.Rules;
             }
