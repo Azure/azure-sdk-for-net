@@ -8,25 +8,20 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/provisioning/ci.data.yml
+    - sdk/provisioning/ci.yml
     - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
+    - sdk/provisioning/Azure.Provisioning.Deployment
     exclude:
     - sdk/provisioning/Generator/
-
-parameters:
-  - name: release_Azure_Provisioning
-    displayName: 'Azure.Provisioning'
-    type: boolean
-    default: false
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SdkType: data
     ServiceDirectory: provisioning
     ArtifactName: packages
     Artifacts:
     - name: Azure.Provisioning
       safeName: AzureProvisioning
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning }}
+    - name: Azure.Provisioning.Deployment
+      safeName: AzureProvisioningDeployment
