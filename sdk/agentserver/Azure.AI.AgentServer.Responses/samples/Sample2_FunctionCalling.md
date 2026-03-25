@@ -2,6 +2,12 @@
 
 This sample shows the two-turn function calling pattern where the server emits a function call on the first turn, receives the function output on the second turn, and returns a final text message.
 
+## Prerequisites
+
+```dotnetcli
+dotnet add package Azure.AI.AgentServer.Responses --prerelease
+```
+
 ## Implement the handler
 
 ```csharp
@@ -72,17 +78,10 @@ public class WeatherHandler : IResponseHandler
 }
 ```
 
-## Configure the server
+## Start the server
 
 ```csharp
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddResponsesServer();
-builder.Services.AddSingleton<IResponseHandler, WeatherHandler>();
-
-var app = builder.Build();
-app.MapResponsesServer();
-app.Run();
+AgentServer.Run<WeatherHandler>(args);
 ```
 
 ## Test the endpoint
@@ -90,7 +89,7 @@ app.Run();
 ### Turn 1 — request triggers a function call
 
 ```bash
-curl -X POST http://localhost:5000/responses \
+curl -X POST http://localhost:8088/responses \
   -H "Content-Type: application/json" \
   -d '{
     "model": "test",
@@ -104,7 +103,7 @@ The response will contain a `function_call` output item with `call_id` and argum
 ### Turn 2 — submit function output, receive text
 
 ```bash
-curl -X POST http://localhost:5000/responses \
+curl -X POST http://localhost:8088/responses \
   -H "Content-Type: application/json" \
   -d '{
     "model": "test",

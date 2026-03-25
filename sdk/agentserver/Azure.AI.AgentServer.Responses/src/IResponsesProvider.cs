@@ -37,7 +37,7 @@ public interface IResponsesProvider
     /// <param name="historyItemIds">The resolved history item IDs, or <c>null</c> if none.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     Task CreateResponseAsync(
-        Response response,
+        Models.Response response,
         IEnumerable<OutputItem>? inputItems,
         IEnumerable<string>? historyItemIds,
         CancellationToken cancellationToken = default);
@@ -49,7 +49,7 @@ public interface IResponsesProvider
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>The response.</returns>
     /// <exception cref="ResourceNotFoundException">Thrown when the response does not exist.</exception>
-    Task<Response> GetResponseAsync(string responseId, CancellationToken cancellationToken = default);
+    Task<Models.Response> GetResponseAsync(string responseId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Persists an updated response snapshot. Handles all state transitions
@@ -57,7 +57,7 @@ public interface IResponsesProvider
     /// </summary>
     /// <param name="response">The updated response snapshot.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
-    Task UpdateResponseAsync(Response response, CancellationToken cancellationToken = default);
+    Task UpdateResponseAsync(Models.Response response, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a response envelope by its identifier.

@@ -36,20 +36,9 @@ public static class ResponsesServerServiceCollectionExtensions
         // Register InMemoryProviderOptions with defaults
         services.Configure<InMemoryProviderOptions>(_ => { });
 
-        // PostConfigure: apply environment variable for SSE keep-alive if not set programmatically
+        // PostConfigure: apply environment variable overrides for SDK-level options
         services.PostConfigure<ResponsesServerOptions>(options =>
         {
-            if (options.SseKeepAliveInterval == Timeout.InfiniteTimeSpan)
-            {
-                var envValue = Environment.GetEnvironmentVariable(
-                    "SSE_KEEPALIVE_INTERVAL");
-                if (!string.IsNullOrEmpty(envValue)
-                    && int.TryParse(envValue, out var seconds) && seconds > 0)
-                {
-                    options.SseKeepAliveInterval = TimeSpan.FromSeconds(seconds);
-                }
-            }
-
             if (options.DefaultFetchHistoryCount == ResponsesServerOptions.DefaultFetchHistoryCountValue)
             {
                 var envValue = Environment.GetEnvironmentVariable(

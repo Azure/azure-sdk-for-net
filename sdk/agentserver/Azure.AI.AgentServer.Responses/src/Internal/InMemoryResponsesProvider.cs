@@ -33,7 +33,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponsesCancellationSignalProvider, IResponsesStreamProvider, IDisposable
 {
     // --- Response envelopes ---
-    private readonly ConcurrentDictionary<string, Response> _responses = new();
+    private readonly ConcurrentDictionary<string, Models.Response> _responses = new();
 
     // --- Item store (all items by ID) ---
     private readonly ConcurrentDictionary<string, OutputItem> _itemStore = new();
@@ -82,7 +82,7 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
 
     /// <inheritdoc/>
     public Task CreateResponseAsync(
-        Response response,
+        Models.Response response,
         IEnumerable<OutputItem>? inputItems,
         IEnumerable<string>? historyItemIds,
         CancellationToken cancellationToken = default)
@@ -131,7 +131,7 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
     }
 
     /// <inheritdoc/>
-    public Task<Response> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
+    public Task<Models.Response> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
     {
         // Deleted response → 400 (distinguish from never-existed → 404)
         bool isDeleted;
@@ -154,7 +154,7 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
     }
 
     /// <inheritdoc/>
-    public Task UpdateResponseAsync(Response response, CancellationToken cancellationToken = default)
+    public Task UpdateResponseAsync(Models.Response response, CancellationToken cancellationToken = default)
     {
         _responses[response.Id] = response;
 
@@ -361,10 +361,10 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
     };
 
     /// <summary>
-    /// Extracts output items from <see cref="Response.Output"/>, stores new ones in the item store,
+    /// Extracts output items from <see cref="Models.Response.Output"/>, stores new ones in the item store,
     /// and updates the output item ID list for the response.
     /// </summary>
-    private void StoreOutputItems(Response response)
+    private void StoreOutputItems(Models.Response response)
     {
         if (response.Output.Count == 0)
         {
@@ -392,7 +392,7 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
     /// Adds input and output item IDs to the conversation if the response has a conversation ID.
     /// Called on <see cref="CreateResponseAsync"/>.
     /// </summary>
-    private void AddToConversation(Response response)
+    private void AddToConversation(Models.Response response)
     {
         var conversationId = response.Conversation?.Id;
         if (conversationId is null)
@@ -415,7 +415,7 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
     /// The response should already have been added to the conversation via
     /// <see cref="AddToConversation"/> during create.
     /// </summary>
-    private void AddOutputToConversation(Response response)
+    private void AddOutputToConversation(Models.Response response)
     {
         var conversationId = response.Conversation?.Id;
         if (conversationId is null)

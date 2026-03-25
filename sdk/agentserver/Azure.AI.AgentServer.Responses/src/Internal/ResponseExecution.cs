@@ -52,7 +52,7 @@ internal sealed class ResponseExecution : IDisposable
     /// <c>null</c> until the handler yields <c>response.created</c> and
     /// <see cref="ResponseMutations.ReplaceResponse"/> sets it.
     /// </summary>
-    public Response? Response { get; set; }
+    public Models.Response? Response { get; set; }
 
     /// <summary>Gets the cancellation token source for this execution (used by StopAsync for shutdown).</summary>
     public CancellationTokenSource CancellationTokenSource { get; }
@@ -119,7 +119,7 @@ internal sealed class ResponseExecution : IDisposable
     /// emitting it. Used by the background non-streaming path to wait for the handler's
     /// response before returning to the client.
     /// </summary>
-    public TaskCompletionSource<Response> ResponseCreatedSignal { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+    public TaskCompletionSource<Models.Response> ResponseCreatedSignal { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
     public void Dispose()
     {
         CancellationTokenSource.Dispose();

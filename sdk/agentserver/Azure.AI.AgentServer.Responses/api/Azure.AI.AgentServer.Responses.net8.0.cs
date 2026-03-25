@@ -22,7 +22,9 @@ namespace Azure.AI.AgentServer.Responses
     }
     public partial interface IResponseContext
     {
+        System.Collections.Generic.IReadOnlyDictionary<string, string> ClientHeaders { get; }
         bool IsShutdownRequested { get; set; }
+        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Extensions.Primitives.StringValues> QueryParameters { get; }
         System.Text.Json.JsonElement RawBody { get; }
         string ResponseId { get; }
         System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Azure.AI.AgentServer.Responses.Models.OutputItem>> GetHistoryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -244,6 +246,11 @@ namespace Azure.AI.AgentServer.Responses
         public Azure.AI.AgentServer.Responses.Models.Error Error { get { throw null; } }
         public int StatusCode { get { throw null; } }
     }
+    public static partial class ResponsesBuilderExtensions
+    {
+        public static Azure.AI.AgentServer.Hosting.AgentServerBuilder AddResponses(this Azure.AI.AgentServer.Hosting.AgentServerBuilder builder, Azure.AI.AgentServer.Responses.IResponseHandler handler, System.Action<Azure.AI.AgentServer.Responses.ResponsesServerOptions>? configure = null) { throw null; }
+        public static Azure.AI.AgentServer.Hosting.AgentServerBuilder AddResponses<THandler>(this Azure.AI.AgentServer.Hosting.AgentServerBuilder builder, System.Action<Azure.AI.AgentServer.Responses.ResponsesServerOptions>? configure = null) where THandler : class, Azure.AI.AgentServer.Responses.IResponseHandler { throw null; }
+    }
     public static partial class ResponsesServerEndpointRouteBuilderExtensions
     {
         public static Microsoft.AspNetCore.Routing.RouteGroupBuilder MapResponsesServer(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder endpoints, string? prefix = null) { throw null; }
@@ -251,10 +258,8 @@ namespace Azure.AI.AgentServer.Responses
     public partial class ResponsesServerOptions
     {
         public ResponsesServerOptions() { }
-        public string? AdditionalServerIdentity { get { throw null; } set { } }
         public int DefaultFetchHistoryCount { get { throw null; } set { } }
         public string? DefaultModel { get { throw null; } set { } }
-        public System.TimeSpan SseKeepAliveInterval { get { throw null; } set { } }
     }
     public static partial class ResponsesServerServiceCollectionExtensions
     {

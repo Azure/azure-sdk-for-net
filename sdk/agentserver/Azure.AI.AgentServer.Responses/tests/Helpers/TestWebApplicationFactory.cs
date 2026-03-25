@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -21,7 +22,8 @@ public sealed class TestWebApplicationFactory : IDisposable
         TestHandler? handler = null,
         Action<ResponsesServerOptions>? configureOptions = null,
         string? routePrefix = null,
-        Action<IServiceCollection>? configureTestServices = null)
+        Action<IServiceCollection>? configureTestServices = null,
+        Action<AgentServerOptions>? configureHostOptions = null)
     {
         var testHandler = handler ?? new TestHandler();
 
@@ -32,12 +34,18 @@ public sealed class TestWebApplicationFactory : IDisposable
                 webHost.ConfigureServices(services =>
                 {
                     services.AddRouting();
+                    services.AddAgentServerUserAgent();
+                    if (configureHostOptions is not null)
+                    {
+                        services.Configure(configureHostOptions);
+                    }
                     services.AddSingleton<IResponseHandler>(testHandler);
                     configureTestServices?.Invoke(services);
                     services.AddResponsesServer(configureOptions);
                 });
                 webHost.Configure(app =>
                 {
+                    app.UseAgentServerUserAgent();
                     app.UseRouting();
                     app.UseEndpoints(endpoints =>
                     {

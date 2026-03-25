@@ -3,11 +3,13 @@
 
 using System.Diagnostics;
 using System.Text.Json;
+using Azure.AI.AgentServer.Hosting;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Validators;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
 
@@ -133,12 +135,19 @@ internal sealed class ResponseEndpointHandler
         });
 
         var execution = _tracker.Create(responseId, isBackground, isStreaming, store);
+
+        // Extract x-client-* headers and query parameters for IResponseContext
+        var clientHeaders = ExtractClientHeaders(httpContext.Request);
+        var queryParameters = ExtractQueryParameters(httpContext.Request);
+
         var context = new ResponseContextImpl(
             responseId,
             _provider,
             request,
             _options,
-            rawBody);
+            rawBody,
+            clientHeaders,
+            queryParameters);
         execution.Context = context;
 
         // Get cancellation token from provider (supports external cancel)
@@ -169,7 +178,7 @@ internal sealed class ResponseEndpointHandler
 
             return new SseResult(
                 result.Events!, execution, linkedCts,
-                SharedJsonOptions.Instance, _logger, _options.Value.SseKeepAliveInterval);
+                SharedJsonOptions.Instance, _logger, FoundryEnvironment.SseKeepAliveInterval);
         }
         else if (isBackground)
         {
@@ -265,7 +274,7 @@ internal sealed class ResponseEndpointHandler
 
             return new SseReplayResult(
                 _streamProvider, responseId, SharedJsonOptions.Instance, _logger,
-                _options.Value.SseKeepAliveInterval, startingAfter);
+                FoundryEnvironment.SseKeepAliveInterval, startingAfter);
         }
 
         // Delegate guard logic and snapshot to orchestrator
@@ -365,5 +374,36 @@ internal sealed class ResponseEndpointHandler
             responseId, limit, ascending, after, before, httpContext.RequestAborted);
 
         return Results.Json(result, SharedJsonOptions.Instance, statusCode: 200);
+    }
+
+    /// <summary>
+    /// Extracts headers prefixed with <c>x-client-</c> from the request.
+    /// </summary>
+    private static IReadOnlyDictionary<string, string> ExtractClientHeaders(HttpRequest request)
+    {
+        var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var header in request.Headers)
+        {
+            if (header.Key.StartsWith("x-client-", StringComparison.OrdinalIgnoreCase))
+            {
+                result[header.Key] = header.Value.ToString();
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Extracts all query parameters from the request.
+    /// </summary>
+    private static IReadOnlyDictionary<string, StringValues> ExtractQueryParameters(HttpRequest request)
+    {
+        var result = new Dictionary<string, StringValues>(StringComparer.OrdinalIgnoreCase);
+        foreach (var param in request.Query)
+        {
+            result[param.Key] = param.Value;
+        }
+
+        return result;
     }
 }

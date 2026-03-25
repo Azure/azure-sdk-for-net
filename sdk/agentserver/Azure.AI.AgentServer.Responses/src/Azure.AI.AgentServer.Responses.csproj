@@ -6,7 +6,7 @@
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Responses</RootNamespace>
     <Description>An SDK for building ASP.NET Core servers that implement the Azure AI Responses API.</Description>
-    <PackageTags>Azure.AI.AgentServer.Responses</PackageTags>
+    <PackageTags>Microsoft Azure AI Agent Server Responses API SSE Streaming</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
     <!-- AZC0100: Server-side hosting library on ASP.NET Core async pipeline — ConfigureAwait(false) is unnecessary and harmful.
@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Hosting\src\Azure.AI.AgentServer.Hosting.csproj" />
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Responses.Contracts\src\Azure.AI.AgentServer.Responses.Contracts.csproj" />
   </ItemGroup>
 

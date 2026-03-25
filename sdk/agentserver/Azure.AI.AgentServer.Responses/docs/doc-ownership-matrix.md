@@ -108,6 +108,8 @@ The documentation follows a **4-layer architecture**. The first three layers for
 | Distributed tracing | Code sample (ActivitySource registration) | API contract §B34 |
 | TTL eviction | Config code sample | API contract §B35 |
 | SSE keep-alive | Config code sample | API contract §B28 |
+| Client headers (`ClientHeaders`) | "Forwarded `x-client-*` headers from the original request" | Handler guide §IResponseContext |
+| Query parameters (`QueryParameters`) | "All query parameters from the original request" | Handler guide §IResponseContext |
 | Custom response provider | Cross-link to library spec + design doc | library spec §Persistence Contract, design/provider-contract.md |
 | Error shapes | "Throw BadRequestException for 400; unhandled → 500" | API contract §Error Shapes |
 
@@ -133,6 +135,32 @@ The documentation follows a **4-layer architecture**. The first three layers for
 | InMemoryProviderOptions | [design/provider-contract.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md) | [InMemoryProviderOptions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md#inmemoryprovideroptions) | .NET library contributors |
 | Persistence timing implementation | [design/provider-contract.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md) | [Persistence Timing](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md#persistence-timing-implementation) | .NET library contributors |
 | CancellationTokenSource management | [design/provider-contract.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md) | [CTS Management](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md#cancellationtokensource-management) | .NET library contributors |
+
+### Cross-Package: Hosting Concepts
+
+| Topic | Canonical Document | Section | Audience |
+|-------|-------------------|---------|----------|
+| `AgentServer` (static entry point) | [Hosting README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md) | [AgentServer](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md#agentserver) | Library consumers |
+| `AgentServerBuilder` | [Hosting README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md) | [AgentServerBuilder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md#agentserverbuilder) | Library consumers |
+| `AgentServerApp` | [Hosting README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md) | [AgentServerApp](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md#agentserverapp) | Library consumers |
+| `AgentServerOptions` | [Hosting README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md) | Key concepts | Library consumers |
+| `FoundryEnvironment` | [Hosting README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md) | [FoundryEnvironment](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md#foundryenvironment) | Library consumers |
+| Health endpoint (`/healthy`) | [Hosting README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md) | [Health endpoint](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md#health-endpoint) | Library consumers |
+| OpenTelemetry configuration | [Hosting README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md) | [Telemetry](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md#telemetry) | Library consumers |
+| `ServerUserAgentMiddleware` (server user-agent) | [Hosting README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md) | Key concepts | Library consumers |
+| `ServerUserAgentRegistry` (protocol identity) | [Hosting README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md) | Key concepts | Library consumers |
+| `RequestIdBaggagePropagator` | [Hosting README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md) | Key concepts | Library consumers |
+
+### Cross-Package: Invocations Concepts
+
+| Topic | Canonical Document | Section | Audience |
+|-------|-------------------|---------|----------|
+| `InvocationHandler` (abstract class) | [Invocations README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/README.md) | [InvocationHandler](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/README.md#invocationhandler) | Library consumers |
+| `InvocationContext` | [Invocations README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/README.md) | [InvocationContext](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/README.md#invocationcontext) | Library consumers |
+| `SessionIdResolver` | [Invocations README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/README.md) | [Session resolution](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/README.md#session-resolution) | Library consumers |
+| `ClientHeaderForwarder` | [Invocations README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/README.md) | [Client header forwarding](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/README.md#client-header-forwarding) | Library consumers |
+| `InvocationsActivitySource` | [Invocations README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/README.md) | Key concepts | Library consumers |
+| `InvocationsServerOptions` | [Invocations README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/README.md) | Key concepts | Library consumers |
 
 ### Project Governance
 

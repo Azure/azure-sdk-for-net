@@ -4,6 +4,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
+using Microsoft.Extensions.Primitives;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -55,4 +56,15 @@ public interface IResponseContext
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>The resolved history items, or an empty list if no conversation context exists.</returns>
     Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Gets the forwarded client headers (those prefixed with <c>x-client-</c>)
+    /// from the original HTTP request.
+    /// </summary>
+    IReadOnlyDictionary<string, string> ClientHeaders { get; }
+
+    /// <summary>
+    /// Gets the query parameters from the original HTTP request.
+    /// </summary>
+    IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
 }

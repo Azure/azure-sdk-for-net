@@ -15,7 +15,7 @@ namespace Azure.AI.AgentServer.Responses;
 public class ResponseEventStream
 {
     private readonly IResponseContext _context;
-    private readonly Response _response;
+    private readonly Models.Response _response;
     private long _sequenceNumber;
     private long _outputIndex;
 
@@ -30,7 +30,7 @@ public class ResponseEventStream
         ArgumentNullException.ThrowIfNull(request);
 
         var conversationId = request.GetConversationId();
-        _response = new Response(context.ResponseId, request.Model ?? string.Empty)
+        _response = new Models.Response(context.ResponseId, request.Model ?? string.Empty)
         {
             Metadata = request.Metadata!,
             AgentReference = request.AgentReference,
@@ -57,7 +57,7 @@ public class ResponseEventStream
     /// (e.g. <c>Metadata</c>, <c>Instructions</c>, <c>Temperature</c>)
     /// before calling <see cref="EmitCreated"/>.
     /// </summary>
-    public Response Response => _response;
+    public Models.Response Response => _response;
 
     // ── Internal Properties (used by auto-stamping) ───────────
 

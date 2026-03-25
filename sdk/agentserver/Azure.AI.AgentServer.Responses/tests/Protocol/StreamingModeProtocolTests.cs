@@ -4,6 +4,7 @@
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using Azure.AI.AgentServer.Hosting;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
@@ -159,24 +160,33 @@ public class StreamingModeProtocolTests : ProtocolTestBase
     // Validates: B28 — SSE keep-alive comments during pauses
     public async Task POST_Responses_Stream_KeepAlive_SentDuringPause()
     {
-        Handler.EventFactory = (req, ctx, ct) => SlowStream(ctx, ct);
-
-        // Configure a very short keep-alive interval for testing
-        using var factory = new TestWebApplicationFactory(Handler, options =>
+        // Set env var for 1-second keep-alive and reload
+        var previousSseEnv = Environment.GetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL");
+        try
         {
-            options.SseKeepAliveInterval = TimeSpan.FromMilliseconds(50);
-        });
-        using var client = factory.CreateClient();
+            Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", "1");
+            FoundryEnvironment.Reload();
 
-        var response = await client.PostAsync("/responses",
-            new System.Net.Http.StringContent(
-                System.Text.Json.JsonSerializer.Serialize(new { model = "test", stream = true }),
-                System.Text.Encoding.UTF8, "application/json"));
+            Handler.EventFactory = (req, ctx, ct) => SlowStream(ctx, ct);
 
-        var rawBody = await response.Content.ReadAsStringAsync();
+            using var factory = new TestWebApplicationFactory(Handler);
+            using var client = factory.CreateClient();
 
-        // Should contain at least one keep-alive comment
-        XAssert.Contains(": keep-alive", rawBody);
+            var response = await client.PostAsync("/responses",
+                new System.Net.Http.StringContent(
+                    System.Text.Json.JsonSerializer.Serialize(new { model = "test", stream = true }),
+                    System.Text.Encoding.UTF8, "application/json"));
+
+            var rawBody = await response.Content.ReadAsStringAsync();
+
+            // Should contain at least one keep-alive comment
+            XAssert.Contains(": keep-alive", rawBody);
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", previousSseEnv);
+            FoundryEnvironment.Reload();
+        }
     }
 
     // ── Helper event factories ─────────────────────────────────
@@ -213,8 +223,8 @@ public class StreamingModeProtocolTests : ProtocolTestBase
 
         yield return stream.EmitCreated();
 
-        // Delay long enough for keep-alive to fire
-        await Task.Delay(200, ct);
+        // Delay long enough for keep-alive to fire (interval is 1 second in test)
+        await Task.Delay(3000, ct);
 
         yield return stream.EmitCompleted();
     }

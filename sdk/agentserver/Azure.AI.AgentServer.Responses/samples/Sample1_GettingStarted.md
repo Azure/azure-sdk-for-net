@@ -1,6 +1,12 @@
-# Sample 1: Getting Started — Echo Handler
+# Sample 1: Getting Started — Q&A Assistant
 
-This sample shows the minimal implementation of `IResponseHandler` that echoes a message back to the caller.
+This sample shows the minimal implementation of `IResponseHandler` — a Q&A assistant that answers user questions by streaming a text response.
+
+## Prerequisites
+
+```dotnetcli
+dotnet add package Azure.AI.AgentServer.Responses --prerelease
+```
 
 ## Implement the handler
 
@@ -9,7 +15,7 @@ using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 
-public class EchoHandler : IResponseHandler
+public class QnAHandler : IResponseHandler
 {
     public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
@@ -28,8 +34,13 @@ public class EchoHandler : IResponseHandler
         var text = message.AddTextContent();
         yield return text.EmitAdded();
 
-        yield return text.EmitDelta("Hello from the echo handler!");
-        yield return text.EmitDone("Hello from the echo handler!");
+        // In a real agent, call your model or knowledge base here.
+        var question = request.GetInputText();
+        var answer = $"You asked: \"{question}\". " +
+                     "This is where your agent logic produces an answer.";
+
+        yield return text.EmitDelta(answer);
+        yield return text.EmitDone(answer);
 
         yield return message.EmitContentDone(text);
         yield return message.EmitDone();
@@ -39,24 +50,17 @@ public class EchoHandler : IResponseHandler
 }
 ```
 
-## Configure the server
+## Start the server
 
 ```csharp
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddResponsesServer();
-builder.Services.AddScoped<IResponseHandler, EchoHandler>();
-
-var app = builder.Build();
-app.MapResponsesServer();
-app.Run();
+AgentServer.Run<QnAHandler>(args);
 ```
 
 ## Test the endpoint
 
 ```bash
-curl -X POST http://localhost:5000/responses \
+curl -X POST http://localhost:8088/responses \
   -H "Content-Type: application/json" \
-  -d '{"model": "echo"}' \
+  -d '{"model": "qna", "input": "What is Azure AI Foundry?"}' \
   --no-buffer
 ```

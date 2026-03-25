@@ -32,7 +32,7 @@ public class AddResponsesServerTests
         var provider = services.BuildServiceProvider();
         var options = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value;
 
-        Assert.That(options.SseKeepAliveInterval, Is.EqualTo(Timeout.InfiniteTimeSpan));
+        Assert.That(options.DefaultFetchHistoryCount, Is.EqualTo(100));
     }
 
     [Test]
@@ -42,13 +42,13 @@ public class AddResponsesServerTests
         services.AddLogging();
         services.AddResponsesServer(options =>
         {
-            options.SseKeepAliveInterval = TimeSpan.FromSeconds(30);
+            options.DefaultFetchHistoryCount = 50;
         });
 
         var provider = services.BuildServiceProvider();
         var options = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value;
 
-        Assert.That(options.SseKeepAliveInterval, Is.EqualTo(TimeSpan.FromSeconds(30)));
+        Assert.That(options.DefaultFetchHistoryCount, Is.EqualTo(50));
     }
 
     [Test]

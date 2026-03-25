@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Hosting;
 using Azure.AI.AgentServer.Responses.Internal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -38,7 +39,15 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         var groupPrefix = string.IsNullOrEmpty(prefix) ? string.Empty : prefix.TrimEnd('/');
         var group = endpoints.MapGroup(groupPrefix);
 
-        group.AddEndpointFilter<SdkIdentityFilter>();
+        // Register Responses protocol identity with the user-agent registry (if available)
+        var registry = endpoints.ServiceProvider.GetService<ServerUserAgentRegistry>();
+        if (registry is not null)
+        {
+            registry.Register(ServerUserAgentRegistry.BuildIdentityString(
+                "azure-ai-agentserver-responses",
+                typeof(ResponsesServerEndpointRouteBuilderExtensions).Assembly));
+        }
+
         group.AddEndpointFilter<ResponsesExceptionFilter>();
 
         group.MapPost("/responses", async (HttpContext httpContext, ResponseEndpointHandler handler) =>
