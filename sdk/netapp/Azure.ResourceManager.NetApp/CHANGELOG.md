@@ -5,11 +5,11 @@
 ### Breaking Changes
 
 - Renaming of models to align with the Azure SDK naming convention: 
-- Added NetApp prefix to models: CacheResource, BucketResource, NetAppBucketResource, ActiveDirectoryConfigResource, SecretPassword, NetAppSecretPassword, LdapConfiguration, DayOfWeek renamed to NetAppDayOfWeek,
-- FileSystemUser, NfsUser, SmbSettings, PeeringPassphrases, OriginClusterInformation, ChangeZoneContent
+Added NetApp prefix to models: CacheResource, BucketResource, NetAppBucketResource, ActiveDirectoryConfigResource, SecretPassword, NetAppSecretPassword, LdapConfiguration, DayOfWeek renamed to NetAppDayOfWeek,
+FileSystemUser, NfsUser, SmbSettings, PeeringPassphrases, OriginClusterInformation, ChangeZoneContent
 - Added NetApp prefix to Enums: PolicyStatus, EncryptionState, CredentialsStatus, BreakthroughMode, VolumeSize, SnapshotUsage, KerberosState, GlobalFileLockingState, LargeVolumeType, SmbEncryptionState, CifsChangeNotifyState,
-- EnableWriteBackState, LdapServerType, LdapState, OnCertificateConflictAction, SnapshotDirectoryVisibility, ExternalReplicationSetupStatus
-- Standardized AVK abbreviation in models CertificateAkvDetails renamed to CertificateKeyVaultDetails, CredentialsAkvDetails renamed to CredentialsKeyVaultDetails, EntraIdAkvConfig renamed to EntraIdKeyVaultConfig, EntraIdAkvConfigPatch renamed to EntraIdKeyVaultConfigPatch
+EnableWriteBackState, LdapServerType, LdapState, OnCertificateConflictAction, SnapshotDirectoryVisibility, ExternalReplicationSetupStatus
+- Standardized AKV abbreviation in models CertificateAkvDetails renamed to CertificateKeyVaultDetails, CredentialsAkvDetails renamed to CredentialsKeyVaultDetails, EntraIdAkvConfig renamed to EntraIdKeyVaultConfig, EntraIdAkvConfigPatch renamed to EntraIdKeyVaultConfigPatch
 - Renamed KeyPairExpiry to KeyPairExpiresOn in BucketGenerateCredentials
 
 ## 1.16.0-beta.1 (2026-03-23)
