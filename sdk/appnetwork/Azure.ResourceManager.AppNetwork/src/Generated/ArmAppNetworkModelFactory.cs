@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <param name="kubernetesVersion"> Kubernetes version. </param>
         /// <param name="fullyManagedVersionsReleaseChannels"> Release channels. </param>
-        /// <param name="selfManagedVersions"> Istio versions. </param>
+        /// <param name="selfManagedVersionDetailVersions"> Istio versions. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="Models.AvailableVersionProperties"/> instance for mocking. </returns>
-        public static AvailableVersionProperties AvailableVersionProperties(string kubernetesVersion = default, IEnumerable<ReleaseChannelInfo> fullyManagedVersionsReleaseChannels = default, IEnumerable<VersionInfo> selfManagedVersions = default, ProvisioningState? provisioningState = default)
+        public static AvailableVersionProperties AvailableVersionProperties(string kubernetesVersion = default, IEnumerable<ReleaseChannelInfo> fullyManagedVersionsReleaseChannels = default, IEnumerable<VersionInfo> selfManagedVersionDetailVersions = default, ProvisioningState? provisioningState = default)
         {
-            return new AvailableVersionProperties(kubernetesVersion, fullyManagedVersionsReleaseChannels is null ? default : new FullyManagedVersions((fullyManagedVersionsReleaseChannels ?? new ChangeTrackingList<ReleaseChannelInfo>()).ToList(), null), selfManagedVersions is null ? default : new SelfManagedVersions((selfManagedVersions ?? new ChangeTrackingList<VersionInfo>()).ToList(), null), provisioningState, additionalBinaryDataProperties: null);
+            return new AvailableVersionProperties(kubernetesVersion, fullyManagedVersionsReleaseChannels is null ? default : new FullyManagedVersions((fullyManagedVersionsReleaseChannels ?? new ChangeTrackingList<ReleaseChannelInfo>()).ToList(), null), selfManagedVersionDetailVersions is null ? default : new SelfManagedVersions((selfManagedVersionDetailVersions ?? new ChangeTrackingList<VersionInfo>()).ToList(), null), provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Release channel information. </summary>

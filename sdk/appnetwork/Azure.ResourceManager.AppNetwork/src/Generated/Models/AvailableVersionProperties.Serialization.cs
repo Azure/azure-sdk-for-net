@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             writer.WritePropertyName("fullyManagedVersions"u8);
             writer.WriteObjectValue(FullyManagedVersions, options);
             writer.WritePropertyName("selfManagedVersions"u8);
-            writer.WriteObjectValue<SelfManagedVersions>(SelfManagedVersions, options);
+            writer.WriteObjectValue(SelfManagedVersionDetail, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             }
             string kubernetesVersion = default;
             FullyManagedVersions fullyManagedVersions = default;
-            SelfManagedVersions selfManagedVersions = default;
+            SelfManagedVersions selfManagedVersionDetail = default;
             ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 }
                 if (prop.NameEquals("selfManagedVersions"u8))
                 {
-                    selfManagedVersions = Models.SelfManagedVersions.DeserializeSelfManagedVersions(prop.Value, options);
+                    selfManagedVersionDetail = SelfManagedVersions.DeserializeSelfManagedVersions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AvailableVersionProperties(kubernetesVersion, fullyManagedVersions, selfManagedVersions, provisioningState, additionalBinaryDataProperties);
+            return new AvailableVersionProperties(kubernetesVersion, fullyManagedVersions, selfManagedVersionDetail, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

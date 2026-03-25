@@ -19,25 +19,25 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <summary> Initializes a new instance of <see cref="AvailableVersionProperties"/>. </summary>
         /// <param name="kubernetesVersion"> Kubernetes version. </param>
         /// <param name="fullyManagedVersions"> Fully managed versions. </param>
-        /// <param name="selfManagedVersions"> Self managed versions. </param>
-        internal AvailableVersionProperties(string kubernetesVersion, FullyManagedVersions fullyManagedVersions, SelfManagedVersions selfManagedVersions)
+        /// <param name="selfManagedVersionDetail"> Self managed versions. </param>
+        internal AvailableVersionProperties(string kubernetesVersion, FullyManagedVersions fullyManagedVersions, SelfManagedVersions selfManagedVersionDetail)
         {
             KubernetesVersion = kubernetesVersion;
             FullyManagedVersions = fullyManagedVersions;
-            SelfManagedVersions = selfManagedVersions;
+            SelfManagedVersionDetail = selfManagedVersionDetail;
         }
 
         /// <summary> Initializes a new instance of <see cref="AvailableVersionProperties"/>. </summary>
         /// <param name="kubernetesVersion"> Kubernetes version. </param>
         /// <param name="fullyManagedVersions"> Fully managed versions. </param>
-        /// <param name="selfManagedVersions"> Self managed versions. </param>
+        /// <param name="selfManagedVersionDetail"> Self managed versions. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailableVersionProperties(string kubernetesVersion, FullyManagedVersions fullyManagedVersions, SelfManagedVersions selfManagedVersions, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailableVersionProperties(string kubernetesVersion, FullyManagedVersions fullyManagedVersions, SelfManagedVersions selfManagedVersionDetail, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KubernetesVersion = kubernetesVersion;
             FullyManagedVersions = fullyManagedVersions;
-            SelfManagedVersions = selfManagedVersions;
+            SelfManagedVersionDetail = selfManagedVersionDetail;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         internal FullyManagedVersions FullyManagedVersions { get; }
 
         /// <summary> Self managed versions. </summary>
-        internal SelfManagedVersions SelfManagedVersions { get; }
+        internal SelfManagedVersions SelfManagedVersionDetail { get; }
 
         /// <summary> Provisioning state. </summary>
         public ProvisioningState? ProvisioningState { get; }
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> Istio versions. </summary>
-        public IList<VersionInfo> SelfManagedVersions
+        public IList<VersionInfo> SelfManagedVersionDetailVersions
         {
             get
             {
-                return this.SelfManagedVersions is null ? default : SelfManagedVersions.Versions;
+                return SelfManagedVersionDetail is null ? default : SelfManagedVersionDetail.Versions;
             }
         }
     }
