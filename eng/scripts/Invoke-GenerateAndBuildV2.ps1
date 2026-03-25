@@ -91,11 +91,11 @@ function Test-DpgSdkUsingNewGenerator {
 
     # Check for @azure-typespec/http-client-csharp (Azure-branded emitter)
     $isAzureDpgEmitter = $tspConfigContent -match '@azure-typespec/http-client-csharp'
-    $hasAzureEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*"?eng/azure-typespec-http-client-csharp-emitter-package.json"?'
+    $hasAzureEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*"?eng/azure-typespec-http-client-csharp-emitter-package\.json"?'
 
     # Check for @typespec/http-client-csharp (unbranded/core emitter)
     $isCoreDpgEmitter = $tspConfigContent -match '@typespec/http-client-csharp'
-    $hasCoreEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*"?eng/http-client-csharp-emitter-package.json"?'
+    $hasCoreEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*"?eng/http-client-csharp-emitter-package\.json"?'
 
     return (($isAzureDpgEmitter -and $hasAzureEmitterPackageJson) -or ($isCoreDpgEmitter -and $hasCoreEmitterPackageJson))
 }
@@ -244,7 +244,7 @@ $exitCode = 0
 # Signal to spec-gen-sdk-runner whether SDK Validation check should be required.
 # Set to true for management plane packages using the new mgmt emitter
 # (@azure-typespec/http-client-csharp-mgmt) and data-plane packages using the new
-# DPG emitter (@azure-typespec/http-client-csharp).
+# C# REST client emitters (@azure-typespec/http-client-csharp or @typespec/http-client-csharp).
 $isSpecGenSdkCheckRequired = $false
 # generate sdk from typespec file
 if ($relatedTypeSpecProjectFolder) {
@@ -324,7 +324,7 @@ if ($relatedTypeSpecProjectFolder) {
         if ($usesNewMgmtEmitter -or $usesNewDpgEmitter) {
             $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
         }
-        # Mark SDK Validation as required for new mgmt emitter packages and data-plane TypeSpec packages.
+        # Mark SDK Validation as required for packages using the new mgmt emitter or the new data-plane (DPG) emitter.
         # This is read by spec-gen-sdk-runner to determine if the .NET check should block the PR.
         if ($usesNewMgmtEmitter -or $usesNewDpgEmitter) {
             $isSpecGenSdkCheckRequired = $true
