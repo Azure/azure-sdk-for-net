@@ -9,7 +9,7 @@ Azure.Provisioning.Compute simplifies declarative resource provisioning in .NET.
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.Compute
+dotnet add package Azure.Provisioning.Compute --prerelease
 ```
 
 ### Prerequisites
