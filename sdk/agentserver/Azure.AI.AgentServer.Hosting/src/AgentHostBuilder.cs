@@ -141,10 +141,13 @@ public sealed class AgentHostBuilder
     {
         // Build a temporary service provider to resolve and validate options.
         // This uses the registrations accumulated so far (from Configure / ConfigureShutdown).
-        var tempProvider = _builder.Services.BuildServiceProvider();
-        var options = tempProvider.GetRequiredService<IOptions<AgentHostOptions>>().Value;
-        options.Validate();
-        var shutdownTimeout = options.ShutdownTimeout;
+        TimeSpan shutdownTimeout;
+        using (var tempProvider = _builder.Services.BuildServiceProvider())
+        {
+            var options = tempProvider.GetRequiredService<IOptions<AgentHostOptions>>().Value;
+            options.Validate();
+            shutdownTimeout = options.ShutdownTimeout;
+        }
 
         // Configure Kestrel — port comes from FoundryEnvironment (platform-controlled)
         var port = FoundryEnvironment.Port;

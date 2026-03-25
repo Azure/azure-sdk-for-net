@@ -22,7 +22,7 @@ public class HealthEndpointTests
         builder.Services.AddHealthChecks();
 
         var app = builder.Build();
-        Hosting.HealthEndpointExtensions.MapHealthEndpoint(app);
+        app.MapHealthEndpoint();
         await app.StartAsync();
 
         var client = app.GetTestClient();

@@ -25,7 +25,7 @@ public class ShutdownTests
         });
 
         var app = builder.Build();
-        Hosting.HealthEndpointExtensions.MapHealthEndpoint(app);
+        app.MapHealthEndpoint();
         await app.StartAsync();
 
         // Trigger graceful shutdown
