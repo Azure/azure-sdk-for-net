@@ -17,7 +17,7 @@ using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Replacement for CheckAvailabilityResult — uses TrackedResource base for C# backward compat. </summary>
+    /// <summary> Description of a CheckAvailability resource. </summary>
     public partial class NotificationHubAvailabilityResult : TrackedResourceData, IJsonModel<NotificationHubAvailabilityResult>
     {
         /// <summary> Initializes a new instance of <see cref="NotificationHubAvailabilityResult"/> for deserialization. </summary>
@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             bool? isAvailiable = default;
+            IDictionary<string, string> tags = default;
             NotificationHubSku sku = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,6 +171,20 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNotificationHubsContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("isAvailiable"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAvailiable = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -190,20 +204,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         }
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("isAvailiable"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isAvailiable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))
@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 isAvailiable,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 sku);
         }
     }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Replacement for PnsCredentialsResource — uses TrackedResource base for C# backward compat. </summary>
+    /// <summary>
+    /// Description of a NotificationHub PNS Credentials. This is a response of the POST requests that return namespace or hubs
+    /// PNS credentials.
+    /// </summary>
     public partial class NotificationHubPnsCredentials : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -30,10 +33,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Collection of Notification Hub or Notification Hub Namespace PNS credentials. </param>
-        internal NotificationHubPnsCredentials(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PnsCredentials properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="tags"> Deprecated - only for compatibility. </param>
+        internal NotificationHubPnsCredentials(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, PnsCredentials properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

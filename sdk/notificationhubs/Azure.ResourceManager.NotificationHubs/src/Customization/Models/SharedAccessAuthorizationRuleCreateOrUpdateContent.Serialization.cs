@@ -1,118 +1,27 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// This model has been deleted from the TypeSpec spec. The serialization interfaces are kept
+// only for backward API compatibility (ApiCompat). All methods throw NotSupportedException
+// because this type is obsolete and should not be serialized or deserialized directly.
+
 #nullable disable
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    // TODO: This model is completely missing from the TypeSpec spec — the generator produces NotificationHubAuthorizationRuleData instead.
-    // The hand-written serialization below is error-prone and not registered in AzureResourceManagerNotificationHubsContext.
-    // Consider throwing NotSupportedException in these interface implementations instead of maintaining hand-written serialization,
-    // since actual API calls go through the generated Data type serialization via ContentToData() in the Collection class.
-    public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent : IJsonModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>, IPersistableModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>
+    public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent : IJsonModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>
     {
-        void IJsonModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(SharedAccessAuthorizationRuleCreateOrUpdateContent)} does not support writing '{format}' format.");
-            }
+        void IJsonModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException($"{nameof(SharedAccessAuthorizationRuleCreateOrUpdateContent)} is obsolete and does not support serialization.");
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
-        }
+        SharedAccessAuthorizationRuleCreateOrUpdateContent IJsonModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException($"{nameof(SharedAccessAuthorizationRuleCreateOrUpdateContent)} is obsolete and does not support deserialization.");
 
-        SharedAccessAuthorizationRuleCreateOrUpdateContent IJsonModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(SharedAccessAuthorizationRuleCreateOrUpdateContent)} does not support reading '{format}' format.");
-            }
+        BinaryData IPersistableModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException($"{nameof(SharedAccessAuthorizationRuleCreateOrUpdateContent)} is obsolete and does not support serialization.");
 
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSharedAccessAuthorizationRuleCreateOrUpdateContent(document.RootElement, options);
-        }
-
-        internal static SharedAccessAuthorizationRuleCreateOrUpdateContent DeserializeSharedAccessAuthorizationRuleCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            SharedAccessAuthorizationRuleProperties properties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("properties"u8))
-                {
-                    properties = SharedAccessAuthorizationRuleProperties.DeserializeSharedAccessAuthorizationRuleProperties(property.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SharedAccessAuthorizationRuleCreateOrUpdateContent(properties, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNotificationHubsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SharedAccessAuthorizationRuleCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SharedAccessAuthorizationRuleCreateOrUpdateContent IPersistableModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSharedAccessAuthorizationRuleCreateOrUpdateContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SharedAccessAuthorizationRuleCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
-            }
-        }
+        SharedAccessAuthorizationRuleCreateOrUpdateContent IPersistableModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException($"{nameof(SharedAccessAuthorizationRuleCreateOrUpdateContent)} is obsolete and does not support deserialization.");
 
         string IPersistableModel<SharedAccessAuthorizationRuleCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }

@@ -17,7 +17,10 @@ using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Replacement for PnsCredentialsResource — uses TrackedResource base for C# backward compat. </summary>
+    /// <summary>
+    /// Description of a NotificationHub PNS Credentials. This is a response of the POST requests that return namespace or hubs
+    /// PNS credentials.
+    /// </summary>
     public partial class NotificationHubPnsCredentials : TrackedResourceData, IJsonModel<NotificationHubPnsCredentials>
     {
         /// <summary> Initializes a new instance of <see cref="NotificationHubPnsCredentials"/> for deserialization. </summary>
@@ -128,9 +131,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             PnsCredentials properties = default;
+            IDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -165,6 +168,20 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNotificationHubsContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = PnsCredentials.DeserializePnsCredentials(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -186,20 +203,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = PnsCredentials.DeserializePnsCredentials(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -211,9 +214,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

@@ -207,7 +207,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="admCredential"> Description of a NotificationHub AdmCredential. </param>
         /// <param name="apnsCredential"> Description of a NotificationHub ApnsCredential. </param>
@@ -218,8 +217,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="wnsCredential"> Description of a NotificationHub WnsCredential. </param>
         /// <param name="xiaomiCredential"> Description of a NotificationHub XiaomiCredential. </param>
         /// <param name="fcmV1Credential"> Description of a NotificationHub FcmV1Credential. </param>
+        /// <param name="tags"> Deprecated - only for compatibility. </param>
         /// <returns> A new <see cref="Models.NotificationHubPnsCredentials"/> instance for mocking. </returns>
-        public static NotificationHubPnsCredentials NotificationHubPnsCredentials(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NotificationHubAdmCredential admCredential = default, NotificationHubApnsCredential apnsCredential = default, NotificationHubBaiduCredential baiduCredential = default, BrowserCredential browserCredential = default, NotificationHubGcmCredential gcmCredential = default, NotificationHubMpnsCredential mpnsCredential = default, NotificationHubWnsCredential wnsCredential = default, XiaomiCredential xiaomiCredential = default, FcmV1Credential fcmV1Credential = default)
+        public static NotificationHubPnsCredentials NotificationHubPnsCredentials(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, NotificationHubAdmCredential admCredential = default, NotificationHubApnsCredential apnsCredential = default, NotificationHubBaiduCredential baiduCredential = default, BrowserCredential browserCredential = default, NotificationHubGcmCredential gcmCredential = default, NotificationHubMpnsCredential mpnsCredential = default, NotificationHubWnsCredential wnsCredential = default, XiaomiCredential xiaomiCredential = default, FcmV1Credential fcmV1Credential = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -229,7 +229,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
                 admCredential is null && apnsCredential is null && baiduCredential is null && browserCredential is null && gcmCredential is null && mpnsCredential is null && wnsCredential is null && xiaomiCredential is null && fcmV1Credential is null ? default : new PnsCredentials(
                     admCredential,
@@ -241,7 +240,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     wnsCredential,
                     xiaomiCredential,
                     fcmV1Credential,
-                    null));
+                    null),
+                tags);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -545,35 +545,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 sku);
         }
 
-        /// <summary> Replacement for CheckAvailabilityResult — uses TrackedResource base for C# backward compat. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="isAvailiable">
-        /// Gets or sets true if the name is available and can be used to
-        /// create new Namespace/NotificationHub. Otherwise false.
-        /// </param>
-        /// <param name="sku"> The Sku description for a namespace. </param>
-        /// <returns> A new <see cref="Models.NotificationHubAvailabilityResult"/> instance for mocking. </returns>
-        public static NotificationHubAvailabilityResult NotificationHubAvailabilityResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, bool? isAvailiable = default, NotificationHubSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NotificationHubAvailabilityResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                isAvailiable,
-                sku);
-        }
-
         /// <summary> A Private Link Arm Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -603,6 +574,32 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             requiredZoneNames ??= new ChangeTrackingList<string>();
 
             return new NotificationHubsPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationHubAvailabilityResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="isAvailiable"> True if the name is available and can be used to create new Namespace/NotificationHub. Otherwise false. </param>
+        /// <param name="sku"> The sku of the created namespace. </param>
+        /// <returns> A new <see cref="Models.NotificationHubAvailabilityResult"/> instance for mocking. </returns>
+        public static NotificationHubAvailabilityResult NotificationHubAvailabilityResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, bool? isAvailiable = default, NotificationHubSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NotificationHubAvailabilityResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                isAvailiable,
+                tags,
+                sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubs.NotificationHubNamespaceData"/>. </summary>
@@ -811,9 +808,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
-                default);
+                default,
+                tags);
         }
     }
 }

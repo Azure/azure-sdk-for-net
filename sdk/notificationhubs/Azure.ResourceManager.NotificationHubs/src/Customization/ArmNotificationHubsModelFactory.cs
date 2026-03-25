@@ -11,8 +11,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    // Backward-compat: baseline had factory methods for NotificationHubCreateOrUpdateContent
-    // and NotificationHubNamespaceCreateOrUpdateContent.
+    // These models have been deleted from the TypeSpec spec. Factory methods are kept only
+    // for backward API compatibility (ApiCompat). All methods throw NotSupportedException.
     public static partial class ArmNotificationHubsModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubCreateOrUpdateContent"/>. </summary>
@@ -35,12 +35,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             NotificationHubBaiduCredential baiduCredential = null,
             NotificationHubSku sku = null)
         {
-            tags ??= new Dictionary<string, string>();
-            authorizationRules ??= new List<SharedAccessAuthorizationRuleProperties>();
-
-            return new NotificationHubCreateOrUpdateContent(id, name, resourceType, systemData, tags, location,
-                notificationHubName, registrationTtl, new List<SharedAccessAuthorizationRuleProperties>(authorizationRules),
-                apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, sku, null);
+            throw new NotSupportedException($"{nameof(NotificationHubCreateOrUpdateContent)} is obsolete and not supported.");
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubNamespaceCreateOrUpdateContent"/>. </summary>
@@ -68,11 +63,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             NotificationHubNamespaceType? namespaceType = default,
             NotificationHubSku sku = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new NotificationHubNamespaceCreateOrUpdateContent(id, name, resourceType, systemData, tags, location,
-                namespaceName, provisioningState, region, metricId, status, createdOn, updatedOn, serviceBusEndpoint,
-                subscriptionId, scaleUnit, isEnabled, isCritical, dataCenter, namespaceType, sku, null);
+            throw new NotSupportedException($"{nameof(NotificationHubNamespaceCreateOrUpdateContent)} is obsolete and not supported.");
         }
     }
 }

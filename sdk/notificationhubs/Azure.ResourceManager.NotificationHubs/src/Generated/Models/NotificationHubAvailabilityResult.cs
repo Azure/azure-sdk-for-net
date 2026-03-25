@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Replacement for CheckAvailabilityResult — uses TrackedResource base for C# backward compat. </summary>
+    /// <summary> Description of a CheckAvailability resource. </summary>
     public partial class NotificationHubAvailabilityResult : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="isAvailiable">
         /// Gets or sets true if the name is available and can be used to
         /// create new Namespace/NotificationHub. Otherwise false.
         /// </param>
+        /// <param name="tags"> Deprecated - only for compatibility. </param>
         /// <param name="sku"> The Sku description for a namespace. </param>
-        internal NotificationHubAvailabilityResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, bool? isAvailiable, NotificationHubSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubAvailabilityResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, bool? isAvailiable, IDictionary<string, string> tags, NotificationHubSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             IsAvailiable = isAvailiable;
