@@ -54,6 +54,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (Policy is null)
                 {
+                    // Workaround: parameterless ctor doesn't initialize Rules.
+                    // https://github.com/Azure/azure-sdk-for-net/issues/57449
                     Policy = new ManagementPolicySchema(new ChangeTrackingList<ManagementPolicyRule>());
                 }
                 return Policy.Rules;
