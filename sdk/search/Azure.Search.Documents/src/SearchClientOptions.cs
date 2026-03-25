@@ -3,9 +3,11 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
+using Microsoft.Extensions.Configuration;
 using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -119,6 +121,26 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
+        /// Initializes a new instance of <see cref="SearchClientOptions"/> from configuration.
+        /// </summary>
+        /// <param name="section">The configuration section.</param>
+        [Experimental("SCME0002")]
+        internal SearchClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = LatestVersion;
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version && TryGetServiceVersion(version, out ServiceVersion serviceVersion))
+            {
+                Version = serviceVersion;
+            }
+            AddLoggingHeaders();
+            AddLoggingQueryParameters();
+        }
+
+        /// <summary>
         /// Create an <see cref="HttpPipeline"/> to send requests to the Search
         /// Service.
         /// </summary>
@@ -189,6 +211,37 @@ namespace Azure.Search.Documents
         private void AddLoggingQueryParameters()
         {
             Diagnostics.LoggedQueryParameters.Add("allowIndexDowntime");
+        }
+
+        /// <summary>
+        /// Attempts to parse a version string into a <see cref="ServiceVersion"/> value.
+        /// </summary>
+        /// <param name="version">The version string to parse (e.g. "2024-07-01").</param>
+        /// <param name="serviceVersion">When this method returns <c>true</c>, the parsed <see cref="ServiceVersion"/>.</param>
+        /// <returns><c>true</c> if the version string corresponds to a valid API version; otherwise, <c>false</c>.</returns>
+        internal static bool TryGetServiceVersion(string version, out ServiceVersion serviceVersion)
+        {
+            serviceVersion = default;
+            switch (version)
+            {
+                case "2020-06-30":
+                    serviceVersion = ServiceVersion.V2020_06_30;
+                    return true;
+                case "2023-11-01":
+                    serviceVersion = ServiceVersion.V2023_11_01;
+                    return true;
+                case "2024-07-01":
+                    serviceVersion = ServiceVersion.V2024_07_01;
+                    return true;
+                case "2025-09-01":
+                    serviceVersion = ServiceVersion.V2025_09_01;
+                    return true;
+                case "2025-11-01-preview":
+                    serviceVersion = ServiceVersion.V2025_11_01_Preview;
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 

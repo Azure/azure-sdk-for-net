@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added `KeyVaultAccessControlClientSettings` to support creating a `KeyVaultAccessControlClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `KeyVaultRestClientSettings` to support creating a `KeyVaultRestClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ### Breaking Changes
 
 ### Bugs Fixed

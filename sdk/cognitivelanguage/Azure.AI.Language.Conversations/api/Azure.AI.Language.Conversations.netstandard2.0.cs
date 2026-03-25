@@ -9,6 +9,7 @@ namespace Azure.AI.Language.Conversations
     public partial class ConversationAnalysisClient
     {
         protected ConversationAnalysisClient() { }
+        public ConversationAnalysisClient(Azure.AI.Language.Conversations.ConversationAnalysisClientSettings settings) { }
         public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Conversations.ConversationsClientOptions options) { }
         public ConversationAnalysisClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -35,6 +36,13 @@ namespace Azure.AI.Language.Conversations
         public virtual Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState> GetAnalyzeConversationJobStatus(System.Guid jobId, bool? showStatistics = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAnalyzeConversationJobStatusAsync(System.Guid jobId, bool? showStatistics, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState>> GetAnalyzeConversationJobStatusAsync(System.Guid jobId, bool? showStatistics = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ConversationAnalysisClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ConversationAnalysisClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Language.Conversations.ConversationsClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class ConversationsClientOptions : Azure.Core.ClientOptions
     {
