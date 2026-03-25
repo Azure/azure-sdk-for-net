@@ -350,15 +350,17 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
         return Task.FromResult(Enumerable.Empty<string>());
     }
 
-    private static string? GetItemId(OutputItem item) => item switch
+    private static string? GetItemId(OutputItem item)
     {
-        OutputItemMessage m => m.Id,
-        _ => item switch
+        try
         {
-            var i when i.GetType().GetProperty("Id")?.GetValue(i) is string id => id,
-            _ => null
+            return item.GetId();
         }
-    };
+        catch (InvalidOperationException)
+        {
+            return null;
+        }
+    }
 
     /// <summary>
     /// Extracts output items from <see cref="Models.Response.Output"/>, stores new ones in the item store,

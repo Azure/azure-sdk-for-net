@@ -20,7 +20,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
-    <PackageReference Include="Moq" />
+
   </ItemGroup>
 
   <!-- ASP.NET Core packages require net8.0 or later -->

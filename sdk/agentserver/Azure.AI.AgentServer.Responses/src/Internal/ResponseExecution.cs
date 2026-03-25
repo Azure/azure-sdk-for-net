@@ -120,8 +120,11 @@ internal sealed class ResponseExecution : IDisposable
     /// response before returning to the client.
     /// </summary>
     public TaskCompletionSource<Models.Response> ResponseCreatedSignal { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    /// <inheritdoc />
     public void Dispose()
     {
+        CancellationTokenSource.Cancel();
         CancellationTokenSource.Dispose();
     }
 }
