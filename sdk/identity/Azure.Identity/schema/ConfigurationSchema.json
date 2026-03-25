@@ -598,13 +598,16 @@
               },
               "ManagedIdentityIdKind": {
                 "type": "string",
-                "description": "The type of managed identity to use as the federated identity.",
+                "description": "The type of managed identity to use as the federated identity. SystemAssigned is not supported.",
                 "enum": [
-                  "SystemAssigned",
                   "ClientId",
                   "ResourceId",
                   "ObjectId"
                 ]
+              },
+              "ManagedIdentityId": {
+                "type": "string",
+                "description": "The managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdKind)."
               },
               "AzureCloud": {
                 "description": "The Azure cloud environment.",
@@ -628,31 +631,9 @@
                 "$ref": "#/definitions/diagnostics"
               }
             },
-            "allOf": [
-              {
-                "if": {
-                  "properties": {
-                    "ManagedIdentityIdKind": {
-                      "enum": [
-                        "ClientId",
-                        "ResourceId",
-                        "ObjectId"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "ManagedIdentityIdKind"
-                  ]
-                },
-                "then": {
-                  "properties": {
-                    "ManagedIdentityId": {
-                      "type": "string",
-                      "description": "The managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdKind)."
-                    }
-                  }
-                }
-              }
+            "required": [
+              "ManagedIdentityIdKind",
+              "ManagedIdentityId"
             ]
           }
         },
@@ -1175,13 +1156,16 @@
               },
               "ManagedIdentityIdKind": {
                 "type": "string",
-                "description": "The type of managed identity to use as the federated identity.",
+                "description": "The type of managed identity to use as the federated identity. SystemAssigned is not supported.",
                 "enum": [
-                  "SystemAssigned",
                   "ClientId",
                   "ResourceId",
                   "ObjectId"
                 ]
+              },
+              "ManagedIdentityId": {
+                "type": "string",
+                "description": "The managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdKind)."
               },
               "AzureCloud": {
                 "description": "The Azure cloud environment.",
@@ -1199,31 +1183,9 @@
                 ]
               }
             },
-            "allOf": [
-              {
-                "if": {
-                  "properties": {
-                    "ManagedIdentityIdKind": {
-                      "enum": [
-                        "ClientId",
-                        "ResourceId",
-                        "ObjectId"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "ManagedIdentityIdKind"
-                  ]
-                },
-                "then": {
-                  "properties": {
-                    "ManagedIdentityId": {
-                      "type": "string",
-                      "description": "The managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdKind)."
-                    }
-                  }
-                }
-              }
+            "required": [
+              "ManagedIdentityIdKind",
+              "ManagedIdentityId"
             ]
           }
         }
