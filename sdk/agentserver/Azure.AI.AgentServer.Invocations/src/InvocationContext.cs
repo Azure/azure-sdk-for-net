@@ -24,6 +24,11 @@ public sealed class InvocationContext
         IReadOnlyDictionary<string, string> clientHeaders,
         IReadOnlyDictionary<string, StringValues> queryParameters)
     {
+        ArgumentException.ThrowIfNullOrEmpty(invocationId);
+        ArgumentException.ThrowIfNullOrEmpty(sessionId);
+        ArgumentNullException.ThrowIfNull(clientHeaders);
+        ArgumentNullException.ThrowIfNull(queryParameters);
+
         InvocationId = invocationId;
         SessionId = sessionId;
         ClientHeaders = clientHeaders;

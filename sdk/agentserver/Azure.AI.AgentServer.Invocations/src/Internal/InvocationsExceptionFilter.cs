@@ -22,7 +22,6 @@ internal static class InvocationsExceptionFilter
         }
 
         activity.SetStatus(ActivityStatusCode.Error, exception.Message);
-        activity.SetTag("error", true);
         activity.SetTag("error.type", exception.GetType().FullName);
 
         // Add exception event per OTel semantic conventions

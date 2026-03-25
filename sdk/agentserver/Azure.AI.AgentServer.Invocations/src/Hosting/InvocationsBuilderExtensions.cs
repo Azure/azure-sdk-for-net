@@ -51,6 +51,8 @@ public static class InvocationsBuilderExtensions
         InvocationHandler handler,
         Action<InvocationsServerOptions>? configure = null)
     {
+        ArgumentNullException.ThrowIfNull(handler);
+
         builder.Services.AddInvocationsServer(configure);
         builder.Services.TryAddScoped<InvocationHandler>(_ => handler);
 

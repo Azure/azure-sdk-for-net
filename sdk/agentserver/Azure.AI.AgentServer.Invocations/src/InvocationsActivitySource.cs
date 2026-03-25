@@ -83,7 +83,8 @@ public class InvocationsActivitySource
             {
                 activity.SetTag("azure.ai.agentserver.x-request-id",
                     requestIdStr.Length > 256 ? requestIdStr[..256] : requestIdStr);
-                activity.SetBaggage("x-request-id", requestIdStr);
+                activity.SetBaggage("x-request-id",
+                    requestIdStr.Length > 256 ? requestIdStr[..256] : requestIdStr);
             }
         }
 
