@@ -223,10 +223,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Create source resource from snapshot
             BlockBlobClient snapshotBlob = sourceBlob.WithSnapshot(snapshotId);
-            BlobStorageResourceOptions snapshotOptions = new BlobStorageResourceOptions
-            {
-                Snapshot = snapshotId
-            };
             StorageResource sourceResource = new BlockBlobStorageResource(snapshotBlob, new BlockBlobStorageResourceOptions { Snapshot = snapshotId });
 
             // Create destination resource
