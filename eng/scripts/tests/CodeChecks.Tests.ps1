@@ -17,15 +17,7 @@
 Import-Module Pester
 
 BeforeAll {
-    # CodeChecks.ps1 is a full script with param() and side effects, so we can't
-    # dot-source it. Instead, use the PowerShell AST to extract just the function
-    # definitions and define them in the test scope without executing anything.
-    $scriptPath = "$PSScriptRoot/../CodeChecks.ps1"
-    $ast = [System.Management.Automation.Language.Parser]::ParseFile($scriptPath, [ref]$null, [ref]$null)
-    $functions = $ast.FindAll({ $args[0] -is [System.Management.Automation.Language.FunctionDefinitionAst] }, $false)
-    foreach ($fn in $functions) {
-        Invoke-Expression $fn.Extent.Text
-    }
+    . "$PSScriptRoot/../CodeChecks.Helpers.ps1"
 }
 
 # ─────────────────────────────────────────────
