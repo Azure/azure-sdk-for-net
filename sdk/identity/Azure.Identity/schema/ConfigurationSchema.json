@@ -1,0 +1,1268 @@
+{
+  "definitions": {
+    "credential": {
+      "type": "object",
+      "description": "Credential configuration. Available properties depend on the selected CredentialSource.",
+      "properties": {
+        "CredentialSource": {
+          "description": "The credential type to use for authentication.",
+          "enum": [
+            "AzureCliCredential",
+            "AzurePowerShellCredential",
+            "AzureDeveloperCliCredential",
+            "EnvironmentCredential",
+            "WorkloadIdentityCredential",
+            "ManagedIdentityCredential",
+            "InteractiveBrowserCredential",
+            "VisualStudioCredential",
+            "VisualStudioCodeCredential",
+            "BrokerCredential",
+            "AzurePipelinesCredential",
+            "ManagedIdentityAsFederatedIdentityCredential",
+            "ChainedTokenCredential"
+          ]
+        }
+      },
+      "required": [
+        "CredentialSource"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "ClientSecret"
+            ]
+          },
+          "then": {
+            "title": "⚠️ Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "description": "⚠️ Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "properties": {
+              "ClientSecret": {
+                "not": {},
+                "description": "⚠️ Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "ClientCertificatePassword"
+            ]
+          },
+          "then": {
+            "title": "⚠️ Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "description": "⚠️ Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "properties": {
+              "ClientCertificatePassword": {
+                "not": {},
+                "description": "⚠️ Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "Password"
+            ]
+          },
+          "then": {
+            "title": "⚠️ Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "description": "⚠️ Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "properties": {
+              "Password": {
+                "not": {},
+                "description": "⚠️ Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "AzureCliCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "Subscription": {
+                "type": "string",
+                "description": "The Azure subscription name or ID for Azure CLI."
+              },
+              "CredentialProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "AzurePowerShellCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "CredentialProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "AzureDeveloperCliCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "CredentialProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "EnvironmentCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "DisableInstanceDiscovery": {
+                "type": "boolean",
+                "description": "Skip Microsoft Entra instance discovery and validation."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "WorkloadIdentityCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "ClientId": {
+                "type": "string",
+                "description": "The client (application) ID."
+              },
+              "DisableInstanceDiscovery": {
+                "type": "boolean",
+                "description": "Skip Microsoft Entra instance discovery and validation."
+              },
+              "IsAzureProxyEnabled": {
+                "type": "boolean",
+                "description": "Enable Azure Kubernetes Service (AKS) proxy mode."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "ManagedIdentityCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ManagedIdentityIdKind": {
+                "type": "string",
+                "description": "The type of managed identity to use.",
+                "enum": [
+                  "SystemAssigned",
+                  "ClientId",
+                  "ResourceId",
+                  "ObjectId"
+                ]
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "ManagedIdentityIdKind": {
+                      "enum": [
+                        "ClientId",
+                        "ResourceId",
+                        "ObjectId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ManagedIdentityIdKind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "ManagedIdentityId": {
+                      "type": "string",
+                      "description": "The managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdKind)."
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "InteractiveBrowserCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "ClientId": {
+                "type": "string",
+                "description": "The client (application) ID."
+              },
+              "DisableInstanceDiscovery": {
+                "type": "boolean",
+                "description": "Skip Microsoft Entra instance discovery and validation."
+              },
+              "DisableAutomaticAuthentication": {
+                "type": "boolean",
+                "description": "Prevent automatic interactive authentication prompts."
+              },
+              "LoginHint": {
+                "type": "string",
+                "description": "Pre-populate the username/email in the login prompt."
+              },
+              "RedirectUri": {
+                "type": "string",
+                "description": "The redirect URI for the OAuth callback.",
+                "format": "uri"
+              },
+              "TokenCachePersistenceOptions": {
+                "$ref": "#/definitions/tokenCachePersistenceOptions"
+              },
+              "AuthenticationRecord": {
+                "$ref": "#/definitions/authenticationRecord"
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "VisualStudioCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "CredentialProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "VisualStudioCodeCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "BrokerCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "ClientId": {
+                "type": "string",
+                "description": "The client (application) ID."
+              },
+              "DisableInstanceDiscovery": {
+                "type": "boolean",
+                "description": "Skip Microsoft Entra instance discovery and validation."
+              },
+              "UseDefaultBrokerAccount": {
+                "type": "boolean",
+                "description": "Use the default broker account for authentication."
+              },
+              "IsLegacyMsaPassthroughEnabled": {
+                "type": "boolean",
+                "description": "Enable legacy Microsoft Account (MSA) passthrough."
+              },
+              "LoginHint": {
+                "type": "string",
+                "description": "Pre-populate the username/email in the login prompt."
+              },
+              "TokenCachePersistenceOptions": {
+                "$ref": "#/definitions/tokenCachePersistenceOptions"
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "AzurePipelinesCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "ClientId": {
+                "type": "string",
+                "description": "The client (application) ID."
+              },
+              "AzurePipelinesServiceConnectionId": {
+                "type": "string",
+                "description": "The Azure Pipelines service connection ID."
+              },
+              "AzurePipelinesSystemAccessToken": {
+                "type": "string",
+                "description": "The System.AccessToken value from the Azure Pipelines build."
+              },
+              "DisableInstanceDiscovery": {
+                "type": "boolean",
+                "description": "Skip Microsoft Entra instance discovery and validation."
+              },
+              "TokenCachePersistenceOptions": {
+                "$ref": "#/definitions/tokenCachePersistenceOptions"
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "ManagedIdentityAsFederatedIdentityCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "ClientId": {
+                "type": "string",
+                "description": "The client (application) ID."
+              },
+              "ManagedIdentityIdKind": {
+                "type": "string",
+                "description": "The type of managed identity to use as the federated identity.",
+                "enum": [
+                  "SystemAssigned",
+                  "ClientId",
+                  "ResourceId",
+                  "ObjectId"
+                ]
+              },
+              "AzureCloud": {
+                "description": "The Azure cloud environment.",
+                "anyOf": [
+                  {
+                    "enum": [
+                      "public",
+                      "usgov",
+                      "china"
+                    ]
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "ManagedIdentityIdKind": {
+                      "enum": [
+                        "ClientId",
+                        "ResourceId",
+                        "ObjectId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ManagedIdentityIdKind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "ManagedIdentityId": {
+                      "type": "string",
+                      "description": "The managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdKind)."
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "ChainedTokenCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "Sources": {
+                "type": "array",
+                "description": "Ordered list of credential configurations to chain.",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/definitions/chainableCredential"
+                }
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": true
+    },
+    "chainableCredential": {
+      "type": "object",
+      "description": "A credential source in a chain. ApiKeyCredential and ChainedTokenCredential cannot be used.",
+      "properties": {
+        "CredentialSource": {
+          "description": "The token credential type. ApiKeyCredential and ChainedTokenCredential are not allowed in a chain.",
+          "enum": [
+            "AzureCliCredential",
+            "AzurePowerShellCredential",
+            "AzureDeveloperCliCredential",
+            "EnvironmentCredential",
+            "WorkloadIdentityCredential",
+            "ManagedIdentityCredential",
+            "InteractiveBrowserCredential",
+            "VisualStudioCredential",
+            "VisualStudioCodeCredential",
+            "BrokerCredential",
+            "AzurePipelinesCredential",
+            "ManagedIdentityAsFederatedIdentityCredential"
+          ]
+        },
+        "Retry": {
+          "$ref": "#/definitions/retry"
+        },
+        "Diagnostics": {
+          "$ref": "#/definitions/diagnostics"
+        }
+      },
+      "required": [
+        "CredentialSource"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "AzureCliCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "Subscription": {
+                "type": "string",
+                "description": "The Azure subscription name or ID for Azure CLI."
+              },
+              "CredentialProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "AzurePowerShellCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "CredentialProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "AzureDeveloperCliCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "CredentialProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "EnvironmentCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "DisableInstanceDiscovery": {
+                "type": "boolean",
+                "description": "Skip Microsoft Entra instance discovery and validation."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "WorkloadIdentityCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "ClientId": {
+                "type": "string",
+                "description": "The client (application) ID."
+              },
+              "DisableInstanceDiscovery": {
+                "type": "boolean",
+                "description": "Skip Microsoft Entra instance discovery and validation."
+              },
+              "IsAzureProxyEnabled": {
+                "type": "boolean",
+                "description": "Enable Azure Kubernetes Service (AKS) proxy mode."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "ManagedIdentityCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ManagedIdentityIdKind": {
+                "type": "string",
+                "description": "The type of managed identity to use.",
+                "enum": [
+                  "SystemAssigned",
+                  "ClientId",
+                  "ResourceId",
+                  "ObjectId"
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "ManagedIdentityIdKind": {
+                      "enum": [
+                        "ClientId",
+                        "ResourceId",
+                        "ObjectId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ManagedIdentityIdKind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "ManagedIdentityId": {
+                      "type": "string",
+                      "description": "The managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdKind)."
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "InteractiveBrowserCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "ClientId": {
+                "type": "string",
+                "description": "The client (application) ID."
+              },
+              "DisableInstanceDiscovery": {
+                "type": "boolean",
+                "description": "Skip Microsoft Entra instance discovery and validation."
+              },
+              "DisableAutomaticAuthentication": {
+                "type": "boolean",
+                "description": "Prevent automatic interactive authentication prompts."
+              },
+              "LoginHint": {
+                "type": "string",
+                "description": "Pre-populate the username/email in the login prompt."
+              },
+              "RedirectUri": {
+                "type": "string",
+                "description": "The redirect URI for the OAuth callback.",
+                "format": "uri"
+              },
+              "TokenCachePersistenceOptions": {
+                "$ref": "#/definitions/tokenCachePersistenceOptions"
+              },
+              "AuthenticationRecord": {
+                "$ref": "#/definitions/authenticationRecord"
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "VisualStudioCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "CredentialProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "VisualStudioCodeCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "BrokerCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "ClientId": {
+                "type": "string",
+                "description": "The client (application) ID."
+              },
+              "DisableInstanceDiscovery": {
+                "type": "boolean",
+                "description": "Skip Microsoft Entra instance discovery and validation."
+              },
+              "UseDefaultBrokerAccount": {
+                "type": "boolean",
+                "description": "Use the default broker account for authentication."
+              },
+              "IsLegacyMsaPassthroughEnabled": {
+                "type": "boolean",
+                "description": "Enable legacy Microsoft Account (MSA) passthrough."
+              },
+              "LoginHint": {
+                "type": "string",
+                "description": "Pre-populate the username/email in the login prompt."
+              },
+              "TokenCachePersistenceOptions": {
+                "$ref": "#/definitions/tokenCachePersistenceOptions"
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "AzurePipelinesCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "ClientId": {
+                "type": "string",
+                "description": "The client (application) ID."
+              },
+              "AzurePipelinesServiceConnectionId": {
+                "type": "string",
+                "description": "The Azure Pipelines service connection ID."
+              },
+              "AzurePipelinesSystemAccessToken": {
+                "type": "string",
+                "description": "The System.AccessToken value from the Azure Pipelines build."
+              },
+              "DisableInstanceDiscovery": {
+                "type": "boolean",
+                "description": "Skip Microsoft Entra instance discovery and validation."
+              },
+              "TokenCachePersistenceOptions": {
+                "$ref": "#/definitions/tokenCachePersistenceOptions"
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "ManagedIdentityAsFederatedIdentityCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "ClientId": {
+                "type": "string",
+                "description": "The client (application) ID."
+              },
+              "ManagedIdentityIdKind": {
+                "type": "string",
+                "description": "The type of managed identity to use as the federated identity.",
+                "enum": [
+                  "SystemAssigned",
+                  "ClientId",
+                  "ResourceId",
+                  "ObjectId"
+                ]
+              },
+              "AzureCloud": {
+                "description": "The Azure cloud environment.",
+                "anyOf": [
+                  {
+                    "enum": [
+                      "public",
+                      "usgov",
+                      "china"
+                    ]
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "ManagedIdentityIdKind": {
+                      "enum": [
+                        "ClientId",
+                        "ResourceId",
+                        "ObjectId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ManagedIdentityIdKind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "ManagedIdentityId": {
+                      "type": "string",
+                      "description": "The managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdKind)."
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "additionalProperties": true
+    },
+    "tokenCachePersistenceOptions": {
+      "type": "object",
+      "description": "Options for persistent token caching.",
+      "properties": {
+        "Name": {
+          "type": "string",
+          "description": "Name uniquely identifying the token cache to avoid conflicts."
+        },
+        "UnsafeAllowUnencryptedStorage": {
+          "type": "boolean",
+          "description": "Allow unencrypted storage when OS-level encryption is unavailable."
+        }
+      },
+      "additionalProperties": false
+    },
+    "authenticationRecord": {
+      "type": "object",
+      "description": "A record of a previous authentication. Enables silently authenticating a previously logged-in account.",
+      "properties": {
+        "Username": {
+          "type": "string",
+          "description": "The user principal or service principal name."
+        },
+        "Authority": {
+          "type": "string",
+          "description": "The authority host used for authentication."
+        },
+        "HomeAccountId": {
+          "type": "string",
+          "description": "The unique account identifier."
+        },
+        "TenantId": {
+          "type": "string",
+          "description": "The tenant used for authentication."
+        },
+        "ClientId": {
+          "type": "string",
+          "description": "The client application ID used for authentication."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
