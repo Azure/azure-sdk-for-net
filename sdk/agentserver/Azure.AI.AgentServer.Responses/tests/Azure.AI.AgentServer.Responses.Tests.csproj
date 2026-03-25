@@ -9,8 +9,9 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
-  <!-- Mirror the global using that NuGet consumers get via Hosting's build props -->
-  <ItemGroup>
+  <!-- Mirror the global using that NuGet consumers get via Hosting's build props.
+       Hosting targets net8.0+, so the namespace doesn't exist on net462. -->
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <Using Include="Azure.AI.AgentServer.Hosting" />
   </ItemGroup>
 
