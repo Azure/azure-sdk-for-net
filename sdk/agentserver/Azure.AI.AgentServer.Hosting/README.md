@@ -78,8 +78,6 @@ The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Hosting` ac
 ## Next steps
 
 - [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Hosting/samples) — Getting started, multi-protocol composition
-- [Azure.AI.AgentServer.Responses](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses) — Responses protocol implementation
-- [Azure.AI.AgentServer.Invocations](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations) — Invocations protocol implementation
 
 ## Contributing
 
