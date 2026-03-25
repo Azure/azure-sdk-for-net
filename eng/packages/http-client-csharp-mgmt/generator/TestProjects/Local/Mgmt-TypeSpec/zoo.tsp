@@ -42,6 +42,7 @@ interface Zoos {
     ArmResponse<ZooRecommendation>>;
 
   @get
+  @list
   @action("ZooAddressList")
   zooAddressList is ArmResourceActionSync<
     Zoo,
@@ -70,6 +71,7 @@ model ZooRecommendation {
 }
 
 @@clientLocation(Zoos.recommend, "ZooRecommendation");
+@@clientName(Zoos.zooAddressList, "GetZooAddresses", "csharp");
 
 /**
  * Test resource to reproduce issue #55436 - Missing constructor parameters in factory methods.

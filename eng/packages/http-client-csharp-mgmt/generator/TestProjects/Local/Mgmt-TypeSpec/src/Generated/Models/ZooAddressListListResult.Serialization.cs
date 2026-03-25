@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Paged collection of ZooAddress items. </summary>
-    public partial class ZooAddressListListResult : IJsonModel<ZooAddressListListResult>
+    internal partial class ZooAddressListListResult : IJsonModel<ZooAddressListListResult>
     {
         /// <summary> Initializes a new instance of <see cref="ZooAddressListListResult"/> for deserialization. </summary>
         internal ZooAddressListListResult()

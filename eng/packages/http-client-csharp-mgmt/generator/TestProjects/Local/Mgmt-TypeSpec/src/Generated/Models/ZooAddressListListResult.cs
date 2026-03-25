@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Paged collection of ZooAddress items. </summary>
-    public partial class ZooAddressListListResult
+    internal partial class ZooAddressListListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
