@@ -102,7 +102,10 @@ try {
                     | % {
                             $proj = Join-Path $slnDir $_
                             if (-not (Test-Path $proj)) {
-                                LogError "Missing project. Solution references a project which does not exist: $proj. [$sln] "
+                                LogError `
+"Missing project. Solution '$sln' references a project which does not exist: $proj.`
+    To remove the stale reference, run: dotnet sln `"$sln`" remove `"$_`"`
+    Or restore the missing project file if it was deleted unintentionally."
                             }
                         }
             }
@@ -155,12 +158,18 @@ try {
 
             if ($readmeContent -Match "Install-Package")
             {
-                LogError "README files should use dotnet CLI for installation instructions. '$readmePath'"
+                LogError `
+"README '$readmePath' uses 'Install-Package' (NuGet Package Manager Console syntax).`
+    Replace with the dotnet CLI equivalent: dotnet add package <PackageName>`
+    See https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md for conventions."
             }
 
             if ($readmeContent -Match "dotnet add .*--version")
             {
-                LogError "Specific versions should not be specified in the installation instructions in '$readmePath'. For beta versions, include the --prerelease flag."
+                LogError `
+"README '$readmePath' pins a specific version with --version.`
+    Remove the --version flag so users always get the latest.`
+    For beta packages, use '--prerelease' instead of '--version <x.y.z-beta.n>'."
             }
 
             if ($readmeContent -Match "dotnet add")
@@ -190,9 +199,9 @@ try {
                     if (-Not ($readmeContent -Match "dotnet add (?!.*--prerelease)"))
                     {
                         LogError `
-"No GA installation instructions found in '$readmePath' but there was a GA entry in the Changelog '$changelogPath'. `
-    Ensure that there are installation instructions that do not contain the --prerelease flag. You may also include `
-    instructions for installing a beta that does include the --prerelease flag."
+"README '$readmePath' is missing GA installation instructions, but the changelog has a GA release.`
+    Add a line like: dotnet add package <PackageName>`
+    You may also include a separate beta install line with --prerelease."
                     }
                 }
                 elseif ($hasRelease)
@@ -200,8 +209,8 @@ try {
                     if (-Not ($readmeContent -Match "dotnet add .*--prerelease$"))
                     {
                         LogError `
-"No beta installation instructions found in '$readmePath' but there was a beta entry in the Changelog '$changelogPath'. `
-    Ensure that there are installation instructions that contain the --prerelease flag."
+"README '$readmePath' is missing beta installation instructions, but the changelog has a beta release.`
+    Add a line like: dotnet add package <PackageName> --prerelease"
                     }
                 }
             }
@@ -248,6 +257,11 @@ finally {
 
     foreach ($err in $errors) {
         Write-Host -f Red "error : $err"
+    }
+
+    if ($PreparePr -and $errors) {
+        Write-Host ""
+        Write-Host -f Yellow "The above $($errors.Length) issue(s) require manual attention and cannot be auto-fixed."
     }
 
     if ($errors) {
