@@ -35,6 +35,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="BackupResourceConfigResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackupResourceConfigResource.CreateResourceIdentifier" /> to create a <see cref="BackupResourceConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BackupResourceConfigResource"/> object. </returns>
+        public virtual BackupResourceConfigResource GetBackupResourceConfigResource(ResourceIdentifier id)
+        {
+            BackupResourceConfigResource.ValidateResourceId(id);
+            return new BackupResourceConfigResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="BackupProtectionIntentResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BackupProtectionIntentResource.CreateResourceIdentifier" /> to create a <see cref="BackupProtectionIntentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -44,6 +56,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         {
             BackupProtectionIntentResource.ValidateResourceId(id);
             return new BackupProtectionIntentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BackupResourceVaultConfigResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackupResourceVaultConfigResource.CreateResourceIdentifier" /> to create a <see cref="BackupResourceVaultConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BackupResourceVaultConfigResource"/> object. </returns>
+        public virtual BackupResourceVaultConfigResource GetBackupResourceVaultConfigResource(ResourceIdentifier id)
+        {
+            BackupResourceVaultConfigResource.ValidateResourceId(id);
+            return new BackupResourceVaultConfigResource(Client, id);
         }
 
         /// <summary>
@@ -59,27 +83,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BackupEngineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupEngineResource.CreateResourceIdentifier" /> to create a <see cref="BackupEngineResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="BackupPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackupPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="BackupPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupEngineResource"/> object. </returns>
-        public virtual BackupEngineResource GetBackupEngineResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BackupPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual BackupPrivateEndpointConnectionResource GetBackupPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            BackupEngineResource.ValidateResourceId(id);
-            return new BackupEngineResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="BackupProtectionContainerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupProtectionContainerResource.CreateResourceIdentifier" /> to create a <see cref="BackupProtectionContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupProtectionContainerResource"/> object. </returns>
-        public virtual BackupProtectionContainerResource GetBackupProtectionContainerResource(ResourceIdentifier id)
-        {
-            BackupProtectionContainerResource.ValidateResourceId(id);
-            return new BackupProtectionContainerResource(Client, id);
+            BackupPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new BackupPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary>
@@ -107,18 +119,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BackupJobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupJobResource.CreateResourceIdentifier" /> to create a <see cref="BackupJobResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupJobResource"/> object. </returns>
-        public virtual BackupJobResource GetBackupJobResource(ResourceIdentifier id)
-        {
-            BackupJobResource.ValidateResourceId(id);
-            return new BackupJobResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="BackupProtectionPolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BackupProtectionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BackupProtectionPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -131,6 +131,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="BackupJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackupJobResource.CreateResourceIdentifier" /> to create a <see cref="BackupJobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BackupJobResource"/> object. </returns>
+        public virtual BackupJobResource GetBackupJobResource(ResourceIdentifier id)
+        {
+            BackupJobResource.ValidateResourceId(id);
+            return new BackupJobResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BackupEngineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackupEngineResource.CreateResourceIdentifier" /> to create a <see cref="BackupEngineResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BackupEngineResource"/> object. </returns>
+        public virtual BackupEngineResource GetBackupEngineResource(ResourceIdentifier id)
+        {
+            BackupEngineResource.ValidateResourceId(id);
+            return new BackupEngineResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BackupProtectionContainerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackupProtectionContainerResource.CreateResourceIdentifier" /> to create a <see cref="BackupProtectionContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BackupProtectionContainerResource"/> object. </returns>
+        public virtual BackupProtectionContainerResource GetBackupProtectionContainerResource(ResourceIdentifier id)
+        {
+            BackupProtectionContainerResource.ValidateResourceId(id);
+            return new BackupProtectionContainerResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ResourceGuardProxyResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ResourceGuardProxyResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardProxyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -140,42 +176,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         {
             ResourceGuardProxyResource.ValidateResourceId(id);
             return new ResourceGuardProxyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="BackupResourceVaultConfigResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupResourceVaultConfigResource.CreateResourceIdentifier" /> to create a <see cref="BackupResourceVaultConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupResourceVaultConfigResource"/> object. </returns>
-        public virtual BackupResourceVaultConfigResource GetBackupResourceVaultConfigResource(ResourceIdentifier id)
-        {
-            BackupResourceVaultConfigResource.ValidateResourceId(id);
-            return new BackupResourceVaultConfigResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="BackupResourceConfigResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupResourceConfigResource.CreateResourceIdentifier" /> to create a <see cref="BackupResourceConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupResourceConfigResource"/> object. </returns>
-        public virtual BackupResourceConfigResource GetBackupResourceConfigResource(ResourceIdentifier id)
-        {
-            BackupResourceConfigResource.ValidateResourceId(id);
-            return new BackupResourceConfigResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="BackupPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="BackupPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual BackupPrivateEndpointConnectionResource GetBackupPrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            BackupPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new BackupPrivateEndpointConnectionResource(Client, id);
         }
     }
 }

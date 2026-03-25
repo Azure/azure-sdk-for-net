@@ -8,6 +8,7 @@
 using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
@@ -24,6 +25,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<PublicNetworkAccess> _publicNetworkAccess;
         private BicepValue<ConfigurationStoreSkuTier> _skuTier;
         private BicepValue<ConfigurationStoreCreateMode> _createMode;
+        private BicepList<SubResource> _linkedResources;
 
         /// <summary> Creates a new ConfigurationStoreProperties. </summary>
         public ConfigurationStoreProperties()
@@ -165,6 +167,21 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the LinkedResources. </summary>
+        public BicepList<SubResource> LinkedResources
+        {
+            get
+            {
+                Initialize();
+                return _linkedResources;
+            }
+            set
+            {
+                Initialize();
+                _linkedResources.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> SkuName
         {
@@ -196,6 +213,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _publicNetworkAccess = DefineProperty<PublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             _skuTier = DefineProperty<ConfigurationStoreSkuTier>(nameof(SkuTier), new string[] { "skuTier" });
             _createMode = DefineProperty<ConfigurationStoreCreateMode>(nameof(CreateMode), new string[] { "createMode" });
+            _linkedResources = DefineListProperty<SubResource>(nameof(LinkedResources), new string[] { "linkedResources" });
         }
     }
 }

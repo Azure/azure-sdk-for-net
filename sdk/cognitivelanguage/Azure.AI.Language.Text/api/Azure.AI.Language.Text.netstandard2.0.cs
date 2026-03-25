@@ -3389,6 +3389,7 @@ namespace Azure.AI.Language.Text
     public partial class TextAnalysisClient
     {
         protected TextAnalysisClient() { }
+        public TextAnalysisClient(Azure.AI.Language.Text.TextAnalysisClientSettings settings) { }
         public TextAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public TextAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Text.TextAnalysisClientOptions options) { }
         public TextAnalysisClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -3431,6 +3432,13 @@ namespace Azure.AI.Language.Text
             V2025_05_15_Preview = 5,
             V2025_11_15_Preview = 6,
         }
+    }
+    public partial class TextAnalysisClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public TextAnalysisClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Language.Text.TextAnalysisClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class TextAnalysisModelFactory
     {

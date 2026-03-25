@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -22,13 +23,16 @@ namespace Azure.Search.Documents.Indexes
     public partial class SearchIndexClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "api-key";
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
         private readonly string _apiVersion;
+
+        /// <summary> Initializes a new instance of SearchIndexClient from a <see cref="SearchIndexClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for SearchIndexClient. </param>
+        [Experimental("SCME0002")]
+        public SearchIndexClient(SearchIndexClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        {
+        }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
