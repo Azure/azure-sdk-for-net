@@ -35,10 +35,8 @@ namespace Azure.Storage.DataMovement.Blobs
         internal bool _isAccessTierSet = false;
 
         private string _snapshot = default;
-        internal bool _isSnapshotSet = false;
 
         private string _versionId = default;
-        internal bool _isVersionIdSet = false;
 
         /// <summary>
         /// Default constructor.
@@ -64,9 +62,7 @@ namespace Azure.Storage.DataMovement.Blobs
             AccessTier = other?.AccessTier;
             _isAccessTierSet = other?._isAccessTierSet ?? false;
             _snapshot = other?._snapshot;
-            _isSnapshotSet = other?._isSnapshotSet ?? false;
             _versionId = other?._versionId;
-            _isVersionIdSet = other?._isVersionIdSet ?? false;
         }
 
         internal BlobStorageResourceOptions(BlobDestinationCheckpointDetails checkpointDetails)
@@ -235,7 +231,6 @@ namespace Azure.Storage.DataMovement.Blobs
                         "Snapshot and VersionId cannot both be set.");
                 }
                 _snapshot = value;
-                _isSnapshotSet = true;
             }
         }
 
@@ -254,7 +249,6 @@ namespace Azure.Storage.DataMovement.Blobs
                         "VersionId and Snapshot cannot both be set.");
                 }
                 _versionId = value;
-                _isVersionIdSet = true;
             }
         }
     }

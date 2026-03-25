@@ -6,14 +6,12 @@ extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.Storage.Test;
 using BaseBlobs::Azure.Storage.Blobs.Models;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
-using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using Moq;
 using NUnit.Framework;
 
@@ -26,9 +24,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private const string DefaultContentLanguage = "en-US";
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";
-        private const string DefaultSnapshot = "2024-01-01T00:00:00.0000000Z";
-        private const string DefaultVersionId = "2024-01-02T12:30:45.1234567Z";
-        private const string DefaultBlobUri = "https://account.blob.core.windows.net/container/blob";
         private static string GetNewTransferId() => Guid.NewGuid().ToString();
         private static TokenCredential _tokenCredential = new DefaultAzureCredential();
 

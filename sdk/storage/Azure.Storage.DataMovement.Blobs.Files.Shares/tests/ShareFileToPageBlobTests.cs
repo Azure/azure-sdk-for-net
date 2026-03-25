@@ -353,8 +353,28 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         protected override ShareFileClient GetSnapshotObjectClient(
             ShareFileClient objectClient,
             string snapshotId)
+            => objectClient.WithSnapshot(snapshotId);
+
+        protected override Task<string> CreateVersionAsync(
+            ShareClient containerClient,
+            ShareFileClient objectClient,
+            CancellationToken cancellationToken = default)
         {
-            return objectClient.WithSnapshot(snapshotId);
+            throw new NotSupportedException("ShareFiles do not support versioning");
+        }
+
+        protected override ShareFileClient GetVersionObjectClient(
+            ShareFileClient objectClient,
+            string versionId)
+        {
+            throw new NotSupportedException("ShareFiles do not support versioning");
+        }
+
+        [Test]
+        [Ignore("ShareFiles do not support versioning")]
+        public override async Task StartTransfer_FromVersion_Copy()
+        {
+            await Task.CompletedTask;
         }
     }
 }

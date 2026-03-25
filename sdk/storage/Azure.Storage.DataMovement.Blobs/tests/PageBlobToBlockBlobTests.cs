@@ -297,8 +297,36 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         protected override PageBlobClient GetSnapshotObjectClient(
             PageBlobClient objectClient,
             string snapshotId)
+            => objectClient.WithSnapshot(snapshotId);
+
+        protected override async Task<string> CreateVersionAsync(
+            BlobContainerClient containerClient,
+            PageBlobClient objectClient,
+            CancellationToken cancellationToken = default)
         {
-            return objectClient.WithSnapshot(snapshotId);
+            // Get the current version ID before we modify the blob
+            Response<BlobProperties> propertiesResponse = await objectClient.GetPropertiesAsync(cancellationToken: cancellationToken);
+            string versionId = propertiesResponse.Value.VersionId;
+
+            // Modify the blob to create a new version
+            // Upload a single page to modify the blob
+            byte[] newData = new byte[Constants.KB];
+            using MemoryStream stream = new MemoryStream(newData);
+            await objectClient.UploadPagesAsync(stream, offset: 0, cancellationToken: cancellationToken);
+
+            // Return the version ID from before the modification
+            return versionId;
+        }
+
+        protected override PageBlobClient GetVersionObjectClient(
+            PageBlobClient objectClient,
+            string versionId)
+        {
+            PageBlobClient versionClient = objectClient.WithVersion(versionId);
+            Uri versionSasUri = versionClient.GenerateSasUri(
+                BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.Read,
+                Recording.UtcNow.AddDays(1));
+            return InstrumentClient(new PageBlobClient(versionSasUri, GetOptions()));
         }
 
         public BlobClientOptions GetOptions()

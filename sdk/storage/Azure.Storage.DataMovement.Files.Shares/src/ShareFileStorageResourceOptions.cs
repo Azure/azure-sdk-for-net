@@ -47,7 +47,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
         internal bool _isFileMetadataSet = false;
 
         private string _snapshot = default;
-        internal bool _isSnapshotSet = false;
 
         /// <summary>
         /// Optional. Specifies whether protocol validation for the resource should be skipped before starting the transfer.
@@ -298,11 +297,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public string Snapshot
         {
             get => _snapshot;
-            set
-            {
-                _snapshot = value;
-                _isSnapshotSet = true;
-            }
+            set => _snapshot = value;
         }
 
         /// <summary>
@@ -341,7 +336,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             _isFileMetadataSet = options?._isFileMetadataSet ?? false;
             SkipProtocolValidation = options?.SkipProtocolValidation ?? false;
             ShareProtocol = options?.ShareProtocol ?? ShareProtocol.Smb;
-            _isSnapshotSet = options?._isSnapshotSet ?? false;
             Snapshot = options?.Snapshot;
         }
     }

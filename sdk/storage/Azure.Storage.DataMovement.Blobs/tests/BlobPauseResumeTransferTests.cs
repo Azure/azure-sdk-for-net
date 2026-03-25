@@ -329,10 +329,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Create source resource from specific version
             BlockBlobClient versionBlob = sourceBlob.WithVersion(versionId);
-            BlobStorageResourceOptions versionOptions = new BlobStorageResourceOptions
-            {
-                VersionId = versionId
-            };
             StorageResource sourceResource = new BlockBlobStorageResource(versionBlob, new BlockBlobStorageResourceOptions { VersionId = versionId });
 
             // Create destination resource

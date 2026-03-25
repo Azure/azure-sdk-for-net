@@ -411,7 +411,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
         #endregion
 
-        #region Helper Methods
         /// <summary>
         /// Parses snapshot information from the URI and updates or validates the options.
         /// </summary>
@@ -446,7 +445,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             options.Snapshot = uriSnapshot;
             return options;
         }
-        #endregion
 
         private static ArgumentException BadCredentialTypeException(CredentialType credentialType)
             => new ArgumentException(

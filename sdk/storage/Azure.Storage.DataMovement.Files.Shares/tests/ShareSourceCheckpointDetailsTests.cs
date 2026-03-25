@@ -13,7 +13,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
     public class ShareSourceCheckpointDetailsTests
     {
         private static string defaultSnapshot = "2024-01-15T10:30:00.0000000Z";
-        private int defaultSnapshotLength = defaultSnapshot.Length;
         private byte[] CreateSerializedSetValues_LatestVersion()
         {
             using MemoryStream stream = new();
