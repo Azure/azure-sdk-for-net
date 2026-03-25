@@ -18,14 +18,18 @@ namespace Azure.Storage.Blobs.Models
         private readonly string _delimiter;
         private readonly string _prefix;
         private readonly string _startFrom;
+        private readonly string _endBefore;
+        private readonly bool _useApacheArrow;
 
         public GetBlobsByHierarchyAsyncCollection(
             BlobContainerClient client,
+            bool useApacheArrow,
             string delimiter,
             BlobTraits traits,
             BlobStates states,
             string prefix,
-            string startFrom)
+            string startFrom,
+            string endBefore)
         {
             _client = client;
             _delimiter = delimiter;
@@ -33,6 +37,8 @@ namespace Azure.Storage.Blobs.Models
             _states = states;
             _prefix = prefix;
             _startFrom = startFrom;
+            _endBefore = endBefore;
+            _useApacheArrow = useApacheArrow;
         }
 
         public override async ValueTask<Page<BlobHierarchyItem>> GetNextPageAsync(
@@ -46,12 +52,14 @@ namespace Azure.Storage.Blobs.Models
             if (async)
             {
                 response = await _client.GetBlobsByHierarchyInternal(
+                    useApacheArrow: _useApacheArrow,
                     marker: continuationToken,
                     delimiter: _delimiter,
                     traits: _traits,
                     states: _states,
                     prefix: _prefix,
                     startFrom: _startFrom,
+                    endBefore: _endBefore,
                     pageSizeHint: pageSizeHint,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -60,12 +68,14 @@ namespace Azure.Storage.Blobs.Models
             else
             {
                 response = _client.GetBlobsByHierarchyInternal(
+                    useApacheArrow: _useApacheArrow,
                     marker: continuationToken,
                     delimiter: _delimiter,
                     traits: _traits,
                     states: _states,
                     prefix: _prefix,
                     startFrom: _startFrom,
+                    endBefore: _endBefore,
                     pageSizeHint: pageSizeHint,
                     async: async,
                     cancellationToken: cancellationToken)

@@ -40,8 +40,8 @@ namespace Azure.Storage.Blobs.Models
         public string EndBefore { get; set; }
 
         /// <summary>
-        /// Optional.  Specifies whether we are using Apache Arrow to list blobs.
-        /// Defaults to false.
+        /// Optional.  Specifies whether we are using Apache Arrow, rather than XML,
+        /// to list blobs. Defaults to false.
         /// </summary>
         public bool UseApacheArrow { get; set; }
     }

@@ -2682,7 +2682,7 @@ namespace Azure.Storage.Blobs
         /// List Blobs</see>.
         /// </summary>
         /// <param name="useApacheArrow">
-        /// Specifies whether to use Apache Arrow for the operation.
+        /// Specifies whether to use Apache Arrow to list blobs.
         /// </param>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
@@ -2889,6 +2889,28 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
+            var (nextMarker, blobItems, _) = await ParseArrowBlobsResponse(
+                arrowStream,
+                async,
+                cancellationToken).ConfigureAwait(false);
+
+            return new ListBlobsFlatSegmentResponse(
+                serviceEndpoint: Uri.GetLeftPart(UriPartial.Authority),
+                containerName: Name,
+                prefix: prefix,
+                marker: marker,
+                maxResults: maxResults,
+                segment: new BlobFlatListSegment(blobItems),
+                nextMarker: nextMarker);
+        }
+        #endregion GetBlobs
+
+        #region ApacheArrowHelpers
+        private async Task<(string NextMarker, List<BlobItemInternal> BlobItems, List<BlobPrefix> BlobPrefixes)> ParseArrowBlobsResponse(
+            Stream arrowStream,
+            bool async,
+            CancellationToken cancellationToken)
+        {
             using var reader = new ArrowStreamReader(arrowStream);
 
             string nextMarker = null;
@@ -2898,6 +2920,7 @@ namespace Azure.Storage.Blobs
             }
 
             var blobItems = new List<BlobItemInternal>();
+            var blobPrefixes = new List<BlobPrefix>();
 
             while (true)
             {
@@ -2912,6 +2935,7 @@ namespace Azure.Storage.Blobs
 
                 // Blob-level columns
                 StringArray nameCol = GetArrowColumn(batch, "Name") as StringArray;
+                StringArray resourceTypeCol = GetArrowColumn(batch, "ResourceType") as StringArray;
                 BooleanArray deletedCol = GetArrowColumn(batch, "Deleted") as BooleanArray;
                 StringArray snapshotCol = GetArrowColumn(batch, "Snapshot") as StringArray;
                 StringArray versionIdCol = GetArrowColumn(batch, "VersionId") as StringArray;
@@ -2967,6 +2991,16 @@ namespace Azure.Storage.Blobs
 
                 for (int i = 0; i < batch.Length; i++)
                 {
+                    string resourceType = resourceTypeCol?.GetString(i);
+
+                    // BlobPrefix rows only have Name populated; all other columns are null
+                    if (string.Equals(resourceType, "blobprefix", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        blobPrefixes.Add(new BlobPrefix(
+                            new BlobName(encoded: false, content: nameCol?.GetString(i))));
+                        continue;
+                    }
+
                     string contentMD5Str = contentMD5Col?.GetString(i);
                     byte[] contentMD5 = contentMD5Str != null ? Convert.FromBase64String(contentMD5Str) : null;
 
@@ -3020,7 +3054,7 @@ namespace Azure.Storage.Blobs
                     IReadOnlyDictionary<string, string> tagsDict = ReadArrowMap(tagsCol, i);
                     if (tagsDict != null)
                     {
-                        var tagList = new List<BlobTag>();
+                        List<BlobTag> tagList = new List<BlobTag>();
                         foreach (KeyValuePair<string, string> kvp in tagsDict)
                         {
                             tagList.Add(new BlobTag(kvp.Key, kvp.Value));
@@ -3042,14 +3076,7 @@ namespace Azure.Storage.Blobs
                 }
             }
 
-            return new ListBlobsFlatSegmentResponse(
-                serviceEndpoint: Uri.GetLeftPart(UriPartial.Authority),
-                containerName: Name,
-                prefix: prefix,
-                marker: marker,
-                maxResults: maxResults,
-                segment: new BlobFlatListSegment(blobItems),
-                nextMarker: nextMarker);
+            return (nextMarker, blobItems, blobPrefixes);
         }
 
         private static IArrowArray GetArrowColumn(RecordBatch batch, string name)
@@ -3103,7 +3130,7 @@ namespace Azure.Storage.Blobs
             string value = array?.GetString(index);
             return value != null ? parse(value) : null;
         }
-        #endregion GetBlobs
+        #endregion ApacheArrowHelpers
 
         #region GetBlobsByHierarchy
         /// <summary>
@@ -3141,11 +3168,13 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             new GetBlobsByHierarchyAsyncCollection(
                 this,
+                useApacheArrow: options?.UseApacheArrow ?? false,
                 options?.Delimiter,
                 options?.Traits ?? BlobTraits.None,
                 options?.States ?? BlobStates.None,
                 options?.Prefix,
-                options?.StartFrom)
+                options?.StartFrom,
+                options?.EndBefore)
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -3183,11 +3212,13 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             new GetBlobsByHierarchyAsyncCollection(
                 this,
+                useApacheArrow: options?.UseApacheArrow ?? false,
                 options?.Delimiter,
                 options?.Traits ?? BlobTraits.None,
                 options?.States ?? BlobStates.None,
                 options?.Prefix,
-                options?.StartFrom)
+                options?.StartFrom,
+                options?.EndBefore)
             .ToAsyncCollection(cancellationToken);
 
         /// <summary>
@@ -3253,7 +3284,7 @@ namespace Azure.Storage.Blobs
             string delimiter,
             string prefix,
             CancellationToken cancellationToken = default) =>
-            new GetBlobsByHierarchyAsyncCollection(this, delimiter, traits, states, prefix, startFrom: default).ToSyncCollection(cancellationToken);
+            new GetBlobsByHierarchyAsyncCollection(this, false, delimiter, traits, states, prefix, startFrom: default, endBefore: default).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsByHierarchyAsync(BlobTraits, BlobStates, string, string, CancellationToken)"/>
@@ -3318,7 +3349,7 @@ namespace Azure.Storage.Blobs
             string delimiter,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobsByHierarchyAsyncCollection(this, delimiter, traits, states, prefix, startFrom: default).ToAsyncCollection(cancellationToken);
+            new GetBlobsByHierarchyAsyncCollection(this, false, delimiter, traits, states, prefix, startFrom: default, endBefore: default).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsByHierarchyInternal"/> operation returns
@@ -3336,6 +3367,9 @@ namespace Azure.Storage.Blobs
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
         /// List Blobs</see>.
         /// </summary>
+        /// <param name="useApacheArrow">
+        /// Specifies whether to use Apache Arrow to list blobs.
+        /// </param>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
         /// of blobs to be returned with the next listing operation.  The
@@ -3378,6 +3412,11 @@ namespace Azure.Storage.Blobs
         /// For non-recursive list, only one entity level is supported.
         /// For recursive list, multiple entity levels are supported. (Inclusive).
         /// </param>
+        /// <param name="endBefore">
+        /// Optional.  Specifies a fully qualified path within the container,
+        /// ending the listing when all results before have been returned.
+        /// This is only supported if <paramref name="useApacheArrow"/> is set to true.
+        /// </param>
         /// <param name="pageSizeHint">
         /// Gets or sets a value indicating the size of the page that should be
         /// requested.
@@ -3400,12 +3439,14 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<ListBlobsHierarchySegmentResponse>> GetBlobsByHierarchyInternal(
+            bool useApacheArrow,
             string marker,
             string delimiter,
             BlobTraits traits,
             BlobStates states,
             string prefix,
             string startFrom,
+            string endBefore,
             int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
@@ -3426,37 +3467,100 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders> response;
 
-                    if (async)
+                    ListBlobsHierarchySegmentResponse listblobHierachyResponse;
+                    Response rawResponse;
+
+                    if (useApacheArrow)
                     {
-                        response = await ContainerRestClient.ListBlobHierarchySegmentAsync(
-                            delimiter: delimiter,
-                            prefix: prefix,
-                            marker: marker,
-                            maxresults: pageSizeHint,
-                            include: BlobExtensions.AsIncludeItems(traits, states),
-                            startFrom: startFrom,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+                        ResponseWithHeaders<Stream, ContainerListBlobHierarchySegmentApacheArrowHeaders> arrowResponse;
+
+                        if (async)
+                        {
+                            arrowResponse = await ContainerRestClient.ListBlobHierarchySegmentApacheArrowAsync(
+                                prefix: prefix,
+                                delimiter: delimiter,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                endBefore: endBefore,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            arrowResponse = ContainerRestClient.ListBlobHierarchySegmentApacheArrow(
+                                prefix: prefix,
+                                delimiter: delimiter,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                endBefore: endBefore,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        rawResponse = arrowResponse.GetRawResponse();
+
+                        if (arrowResponse.Headers.ContentType == Constants.Blob.ApacheArrowContentType)
+                        {
+                            // Parse using Apache Arrow
+                            listblobHierachyResponse = await ParseArrowListBlobsHierarchyResponse(
+                                arrowResponse.Value,
+                                prefix,
+                                marker,
+                                pageSizeHint,
+                                delimiter,
+                                async,
+                                cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // XML fallback: server returned XML despite requesting Arrow
+                            listblobHierachyResponse = default;
+                            var document = XDocument.Load(arrowResponse.Value, LoadOptions.PreserveWhitespace);
+                            if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
+                            {
+                                listblobHierachyResponse = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(enumerationResultsElement);
+                            }
+                        }
                     }
                     else
                     {
-                        response = ContainerRestClient.ListBlobHierarchySegment(
-                            delimiter: delimiter,
-                            prefix: prefix,
-                            marker: marker,
-                            maxresults: pageSizeHint,
-                            include: BlobExtensions.AsIncludeItems(traits, states),
-                            startFrom: startFrom,
-                            cancellationToken: cancellationToken);
-                    }
+                        ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders> response;
 
-                    ListBlobsHierarchySegmentResponse listblobHierachyResponse = response.Value;
+                        if (async)
+                        {
+                            response = await ContainerRestClient.ListBlobHierarchySegmentAsync(
+                                delimiter: delimiter,
+                                prefix: prefix,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = ContainerRestClient.ListBlobHierarchySegment(
+                                delimiter: delimiter,
+                                prefix: prefix,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        listblobHierachyResponse = response.Value;
+                        rawResponse = response.GetRawResponse();
+                    }
 
                     if ((traits & BlobTraits.Metadata) != BlobTraits.Metadata)
                     {
-                        List<BlobItemInternal> blobItemInternals = response.Value.Segment.BlobItems.Select(r => new BlobItemInternal(
+                        List<BlobItemInternal> blobItemInternals = listblobHierachyResponse.Segment.BlobItems.Select(r => new BlobItemInternal(
                             r.Name,
                             r.Deleted,
                             r.Snapshot,
@@ -3472,7 +3576,7 @@ namespace Azure.Storage.Blobs
 
                     return Response.FromValue(
                         listblobHierachyResponse,
-                        response.GetRawResponse());
+                        rawResponse);
                 }
                 catch (Exception ex)
                 {
@@ -3486,6 +3590,31 @@ namespace Azure.Storage.Blobs
                     scope.Dispose();
                 }
             }
+        }
+
+        private async Task<ListBlobsHierarchySegmentResponse> ParseArrowListBlobsHierarchyResponse(
+            Stream arrowStream,
+            string prefix,
+            string marker,
+            int? maxResults,
+            string delimiter,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            var (nextMarker, blobItems, blobPrefixes) = await ParseArrowBlobsResponse(
+                arrowStream,
+                async,
+                cancellationToken).ConfigureAwait(false);
+
+            return new ListBlobsHierarchySegmentResponse(
+                serviceEndpoint: Uri.GetLeftPart(UriPartial.Authority),
+                containerName: Name,
+                prefix: prefix,
+                marker: marker,
+                maxResults: maxResults,
+                delimiter: delimiter,
+                segment: new BlobHierarchyListSegment(blobPrefixes, blobItems),
+                nextMarker: nextMarker);
         }
         #endregion GetBlobsByHierarchy
 
