@@ -9,7 +9,7 @@ using System.ClientModel.Primitives;
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    public partial class Evaluators
+    public partial class ProjectsEvaluators
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
         private static PipelineMessageClassifier _pipelineMessageClassifier201;

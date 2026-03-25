@@ -10,22 +10,22 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The Evaluators sub-client. </summary>
-    public partial class Evaluators
+    /// <summary> The ProjectsEvaluators sub-client. </summary>
+    public partial class ProjectsEvaluators
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of Evaluators for mocking. </summary>
-        protected Evaluators()
+        /// <summary> Initializes a new instance of ProjectsEvaluators for mocking. </summary>
+        protected ProjectsEvaluators()
         {
         }
 
-        /// <summary> Initializes a new instance of Evaluators. </summary>
+        /// <summary> Initializes a new instance of ProjectsEvaluators. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Evaluators(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ProjectsEvaluators(ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -55,7 +55,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new EvaluatorsGetVersionsCollectionResult(this, name, @type, limit, options);
+            return new ProjectsEvaluatorsGetVersionsCollectionResult(this, name, @type, limit, options);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new EvaluatorsGetVersionsAsyncCollectionResult(this, name, @type, limit, options);
+            return new ProjectsEvaluatorsGetVersionsAsyncCollectionResult(this, name, @type, limit, options);
         }
 
         /// <summary> List all versions of the given evaluator. </summary>
@@ -93,7 +93,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new EvaluatorsGetVersionsCollectionResultOfT(this, name, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
+            return new ProjectsEvaluatorsGetVersionsCollectionResultOfT(this, name, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all versions of the given evaluator. </summary>
@@ -108,7 +108,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new EvaluatorsGetVersionsAsyncCollectionResultOfT(this, name, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
+            return new ProjectsEvaluatorsGetVersionsAsyncCollectionResultOfT(this, name, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetLatestVersions(string @type, int? limit, RequestOptions options)
         {
-            return new EvaluatorsGetLatestVersionsCollectionResult(this, @type, limit, options);
+            return new ProjectsEvaluatorsGetLatestVersionsCollectionResult(this, @type, limit, options);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetLatestVersionsAsync(string @type, int? limit, RequestOptions options)
         {
-            return new EvaluatorsGetLatestVersionsAsyncCollectionResult(this, @type, limit, options);
+            return new ProjectsEvaluatorsGetLatestVersionsAsyncCollectionResult(this, @type, limit, options);
         }
 
         /// <summary> List the latest version of each evaluator. </summary>
@@ -154,7 +154,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual CollectionResult<EvaluatorVersion> GetLatestVersions(ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
         {
-            return new EvaluatorsGetLatestVersionsCollectionResultOfT(this, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
+            return new ProjectsEvaluatorsGetLatestVersionsCollectionResultOfT(this, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List the latest version of each evaluator. </summary>
@@ -164,7 +164,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual AsyncCollectionResult<EvaluatorVersion> GetLatestVersionsAsync(ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
         {
-            return new EvaluatorsGetLatestVersionsAsyncCollectionResultOfT(this, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
+            return new ProjectsEvaluatorsGetLatestVersionsAsyncCollectionResultOfT(this, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>

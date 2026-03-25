@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects;
 
 [Experimental("AAIP001")]
-public partial class Evaluators
+[CodeGenType("Evaluators")]
+public partial class ProjectsEvaluators
 {
 }

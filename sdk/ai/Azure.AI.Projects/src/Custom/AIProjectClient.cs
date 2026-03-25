@@ -165,10 +165,10 @@ namespace Azure.AI.Projects
             return Volatile.Read(ref _cachedEvaluationTaxonomies) ?? Interlocked.CompareExchange(ref _cachedEvaluationTaxonomies, new EvaluationTaxonomies(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluationTaxonomies;
         }
 
-        /// <summary> Initializes a new instance of Evaluators. </summary>
-        internal virtual Evaluators GetEvaluatorsClient()
+        /// <summary> Initializes a new instance of ProjectsEvaluators. </summary>
+        internal virtual ProjectsEvaluators GetEvaluatorsClient()
         {
-            return Volatile.Read(ref _cachedEvaluators) ?? Interlocked.CompareExchange(ref _cachedEvaluators, new Evaluators(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluators;
+            return Volatile.Read(ref _cachedProjectsEvaluators) ?? Interlocked.CompareExchange(ref _cachedProjectsEvaluators, new ProjectsEvaluators(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectsEvaluators;
         }
 
         /// <summary> Initializes a new instance of Insights. </summary>
@@ -203,7 +203,7 @@ namespace Azure.AI.Projects
         public virtual RedTeams RedTeams => GetRedTeamsClient();
         public virtual EvaluationRules EvaluationRules => GetEvaluationRulesClient();
         public virtual EvaluationTaxonomies EvaluationTaxonomies => GetEvaluationTaxonomiesClient();
-        public virtual Evaluators Evaluators => GetEvaluatorsClient();
+        public virtual ProjectsEvaluators Evaluators => GetEvaluatorsClient();
         public virtual ProjectsInsights Insights => GetInsightsClient();
         public virtual ProjectsSchedules Schedules => GetSchedulesClient();
         /// <summary> Gets the client for telemetry operations. </summary>

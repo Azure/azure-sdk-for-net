@@ -9,52 +9,51 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Input image. </summary>
-    public partial class InputImageContentParamAutoParam : IJsonModel<InputImageContentParamAutoParam>
+    internal partial class InternalInputImageContentParamAutoParam : IJsonModel<InternalInputImageContentParamAutoParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InputImageContentParamAutoParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual InternalInputImageContentParamAutoParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InputImageContentParamAutoParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InternalInputImageContentParamAutoParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInputImageContentParamAutoParam(document.RootElement, options);
+                        return DeserializeInternalInputImageContentParamAutoParam(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InputImageContentParamAutoParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalInputImageContentParamAutoParam)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InputImageContentParamAutoParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InternalInputImageContentParamAutoParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InputImageContentParamAutoParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalInputImageContentParamAutoParam)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InputImageContentParamAutoParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<InternalInputImageContentParamAutoParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InputImageContentParamAutoParam IPersistableModel<InputImageContentParamAutoParam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InternalInputImageContentParamAutoParam IPersistableModel<InternalInputImageContentParamAutoParam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InputImageContentParamAutoParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InternalInputImageContentParamAutoParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InputImageContentParamAutoParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InternalInputImageContentParamAutoParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -65,10 +64,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InputImageContentParamAutoParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InternalInputImageContentParamAutoParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InputImageContentParamAutoParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalInputImageContentParamAutoParam)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -106,24 +105,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InputImageContentParamAutoParam IJsonModel<InputImageContentParamAutoParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InternalInputImageContentParamAutoParam IJsonModel<InternalInputImageContentParamAutoParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InputImageContentParamAutoParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual InternalInputImageContentParamAutoParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InputImageContentParamAutoParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InternalInputImageContentParamAutoParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InputImageContentParamAutoParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalInputImageContentParamAutoParam)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInputImageContentParamAutoParam(document.RootElement, options);
+            return DeserializeInternalInputImageContentParamAutoParam(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static InputImageContentParamAutoParam DeserializeInputImageContentParamAutoParam(JsonElement element, ModelReaderWriterOptions options)
+        internal static InternalInputImageContentParamAutoParam DeserializeInternalInputImageContentParamAutoParam(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -132,7 +131,7 @@ namespace Azure.AI.Projects
             string @type = default;
             Uri imageUrl = default;
             string fileId = default;
-            DetailEnum? detail = default;
+            InternalImageDetailLevel? detail = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +167,7 @@ namespace Azure.AI.Projects
                         detail = null;
                         continue;
                     }
-                    detail = prop.Value.GetString().ToDetailEnum();
+                    detail = prop.Value.GetString().ToInternalImageDetailLevel();
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +175,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InputImageContentParamAutoParam(@type, imageUrl, fileId, detail, additionalBinaryDataProperties);
+            return new InternalInputImageContentParamAutoParam(@type, imageUrl, fileId, detail, additionalBinaryDataProperties);
         }
     }
 }

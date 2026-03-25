@@ -13,6 +13,9 @@
 - `Trigger` was renamed to `ScheduleTrigger`.
 - `AzureAIAgentTarget` and `AzureAIModelTarget` became internal.
 - `ScheduleTask` was renamed to `ProjectsScheduleTask`.
+- `Evaluators` client was renamed to `ProjectsEvaluators`.
+- `DetailEnum` was renamed to `InternalImageDetailLevel` and made internal.
+- `InputImageContentParamAutoParam` was renamed to `InternalInputImageContentParamAutoParam` and made internal.
 
 ### Bugs Fixed
 

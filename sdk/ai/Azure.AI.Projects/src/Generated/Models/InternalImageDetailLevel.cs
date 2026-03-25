@@ -4,8 +4,7 @@
 
 namespace Azure.AI.Projects
 {
-    /// <summary></summary>
-    public enum DetailEnum
+    internal enum InternalImageDetailLevel
     {
         /// <summary> Low. </summary>
         Low,

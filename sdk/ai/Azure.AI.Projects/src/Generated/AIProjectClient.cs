@@ -30,13 +30,19 @@ namespace Azure.AI.Projects
         private RedTeams _cachedRedTeams;
         private EvaluationRules _cachedEvaluationRules;
         private EvaluationTaxonomies _cachedEvaluationTaxonomies;
-        private Evaluators _cachedEvaluators;
+        private ProjectsEvaluators _cachedProjectsEvaluators;
         private ProjectsInsights _cachedProjectsInsights;
         private ProjectsSchedules _cachedProjectsSchedules;
         private AIProjectMemoryStoresOperations _cachedAIProjectMemoryStoresOperations;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> Initializes a new instance of ProjectsEvaluators. </summary>
+        public virtual ProjectsEvaluators GetProjectsEvaluatorsClient()
+        {
+            return Volatile.Read(ref _cachedProjectsEvaluators) ?? Interlocked.CompareExchange(ref _cachedProjectsEvaluators, new ProjectsEvaluators(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectsEvaluators;
+        }
 
         /// <summary> Initializes a new instance of ProjectsInsights. </summary>
         public virtual ProjectsInsights GetProjectsInsightsClient()

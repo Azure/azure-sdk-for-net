@@ -6,26 +6,28 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class EvaluatorsGetLatestVersionsAsyncCollectionResultOfT : AsyncCollectionResult<EvaluatorVersion>
+    internal partial class ProjectsEvaluatorsGetVersionsCollectionResultOfT : CollectionResult<EvaluatorVersion>
     {
-        private readonly Evaluators _client;
+        private readonly ProjectsEvaluators _client;
+        private readonly string _name;
         private readonly string _type;
         private readonly int? _limit;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of EvaluatorsGetLatestVersionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Evaluators client used to send requests. </param>
+        /// <summary> Initializes a new instance of ProjectsEvaluatorsGetVersionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectsEvaluators client used to send requests. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EvaluatorsGetLatestVersionsAsyncCollectionResultOfT(Evaluators client, string @type, int? limit, RequestOptions options)
+        public ProjectsEvaluatorsGetVersionsCollectionResultOfT(ProjectsEvaluators client, string name, string @type, int? limit, RequestOptions options)
         {
             _client = client;
+            _name = name;
             _type = @type;
             _limit = limit;
             _options = options;
@@ -33,13 +35,13 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetLatestVersionsRequest(_type, _limit, _options);
+            PipelineMessage message = _client.CreateGetVersionsRequest(_name, _type, _limit, _options);
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
                 nextPageUri = ((PagedEvaluatorVersion)result).NextLink;
@@ -47,7 +49,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetLatestVersionsRequest(nextPageUri, _type, _limit, _options);
+                message = _client.CreateNextGetVersionsRequest(nextPageUri, _name, _type, _limit, _options);
             }
         }
 
@@ -70,13 +72,9 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<EvaluatorVersion> GetValuesFromPageAsync(ClientResult page)
+        protected override IEnumerable<EvaluatorVersion> GetValuesFromPage(ClientResult page)
         {
-            foreach (EvaluatorVersion item in ((PagedEvaluatorVersion)page).Value)
-            {
-                yield return item;
-                await Task.Yield();
-            }
+            return ((PagedEvaluatorVersion)page).Value;
         }
     }
 }

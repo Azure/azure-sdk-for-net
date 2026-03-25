@@ -1333,16 +1333,6 @@ namespace Azure.AI.Projects
             return new InputTextContentParam("input_text", text, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Input image. </summary>
-        /// <param name="imageUrl"></param>
-        /// <param name="fileId"></param>
-        /// <param name="detail"></param>
-        /// <returns> A new <see cref="Projects.InputImageContentParamAutoParam"/> instance for mocking. </returns>
-        public static InputImageContentParamAutoParam InputImageContentParamAutoParam(Uri imageUrl = default, string fileId = default, DetailEnum? detail = default)
-        {
-            return new InputImageContentParamAutoParam("input_image", imageUrl, fileId, detail, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Input file. </summary>
         /// <param name="fileId"></param>
         /// <param name="filename"></param>

@@ -7,24 +7,23 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Input image. </summary>
-    public partial class InputImageContentParamAutoParam
+    internal partial class InternalInputImageContentParamAutoParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InputImageContentParamAutoParam"/>. </summary>
-        public InputImageContentParamAutoParam()
+        /// <summary> Initializes a new instance of <see cref="InternalInputImageContentParamAutoParam"/>. </summary>
+        public InternalInputImageContentParamAutoParam()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InputImageContentParamAutoParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalInputImageContentParamAutoParam"/>. </summary>
         /// <param name="type"> The type of the input item. Always `input_image`. </param>
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
         /// <param name="detail"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputImageContentParamAutoParam(string @type, Uri imageUrl, string fileId, DetailEnum? detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalInputImageContentParamAutoParam(string @type, Uri imageUrl, string fileId, InternalImageDetailLevel? detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ImageUrl = imageUrl;
@@ -43,6 +42,6 @@ namespace Azure.AI.Projects
         public string FileId { get; set; }
 
         /// <summary> Gets or sets the Detail. </summary>
-        public DetailEnum? Detail { get; set; }
+        public InternalImageDetailLevel? Detail { get; set; }
     }
 }

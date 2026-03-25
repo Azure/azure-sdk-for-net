@@ -10,24 +10,21 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class EvaluatorsGetVersionsCollectionResult : CollectionResult
+    internal partial class ProjectsEvaluatorsGetLatestVersionsCollectionResult : CollectionResult
     {
-        private readonly Evaluators _client;
-        private readonly string _name;
+        private readonly ProjectsEvaluators _client;
         private readonly string _type;
         private readonly int? _limit;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of EvaluatorsGetVersionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Evaluators client used to send requests. </param>
-        /// <param name="name"> The name of the resource. </param>
+        /// <summary> Initializes a new instance of ProjectsEvaluatorsGetLatestVersionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectsEvaluators client used to send requests. </param>
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EvaluatorsGetVersionsCollectionResult(Evaluators client, string name, string @type, int? limit, RequestOptions options)
+        public ProjectsEvaluatorsGetLatestVersionsCollectionResult(ProjectsEvaluators client, string @type, int? limit, RequestOptions options)
         {
             _client = client;
-            _name = name;
             _type = @type;
             _limit = limit;
             _options = options;
@@ -37,7 +34,7 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetVersionsRequest(_name, _type, _limit, _options);
+            PipelineMessage message = _client.CreateGetLatestVersionsRequest(_type, _limit, _options);
             Uri nextPageUri = null;
             while (true)
             {
@@ -49,7 +46,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetVersionsRequest(nextPageUri, _name, _type, _limit, _options);
+                message = _client.CreateNextGetLatestVersionsRequest(nextPageUri, _type, _limit, _options);
             }
         }
 
