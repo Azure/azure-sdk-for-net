@@ -180,10 +180,10 @@ public class ProviderDiIntegrationTests : IDisposable
 
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public Task CreateResponseAsync(Models.Response response, IEnumerable<OutputItem>? inputItems, IEnumerable<string>? historyItemIds, CancellationToken cancellationToken = default)
+        public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken cancellationToken = default)
         {
             Calls.Add("CreateResponseAsync");
-            _responses.TryAdd(response.Id, response);
+            _responses.TryAdd(request.Response.Id, request.Response);
             return Task.CompletedTask;
         }
 
@@ -590,10 +590,10 @@ public class PartialProviderOverrideTests : IDisposable
 
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public Task CreateResponseAsync(Models.Response response, IEnumerable<OutputItem>? inputItems, IEnumerable<string>? historyItemIds, CancellationToken cancellationToken = default)
+        public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken cancellationToken = default)
         {
             Calls.Add("CreateResponseAsync");
-            _responses.TryAdd(response.Id, response);
+            _responses.TryAdd(request.Response.Id, request.Response);
             return Task.CompletedTask;
         }
 
