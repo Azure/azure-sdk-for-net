@@ -12,7 +12,7 @@ using Azure.ResourceManager.AppNetwork;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> Provisioning state of the resource. </summary>
-    public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
+    public readonly partial struct AppLinkProvisioningState : IEquatable<AppLinkProvisioningState>
     {
         private readonly string _value;
         /// <summary> Resource has been created. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <summary> Resource has been Accepted. </summary>
         private const string AcceptedValue = "Accepted";
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProvisioningState(string value)
+        public AppLinkProvisioningState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -41,50 +41,50 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> Resource has been created. </summary>
-        public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
+        public static AppLinkProvisioningState Succeeded { get; } = new AppLinkProvisioningState(SucceededValue);
 
         /// <summary> Resource creation failed. </summary>
-        public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
+        public static AppLinkProvisioningState Failed { get; } = new AppLinkProvisioningState(FailedValue);
 
         /// <summary> Resource creation was canceled. </summary>
-        public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
+        public static AppLinkProvisioningState Canceled { get; } = new AppLinkProvisioningState(CanceledValue);
 
         /// <summary> Resource is getting provisioned. </summary>
-        public static ProvisioningState Provisioning { get; } = new ProvisioningState(ProvisioningValue);
+        public static AppLinkProvisioningState Provisioning { get; } = new AppLinkProvisioningState(ProvisioningValue);
 
         /// <summary> Resource is Updating. </summary>
-        public static ProvisioningState Updating { get; } = new ProvisioningState(UpdatingValue);
+        public static AppLinkProvisioningState Updating { get; } = new AppLinkProvisioningState(UpdatingValue);
 
         /// <summary> Resource is Deleting. </summary>
-        public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
+        public static AppLinkProvisioningState Deleting { get; } = new AppLinkProvisioningState(DeletingValue);
 
         /// <summary> Resource has been Accepted. </summary>
-        public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
+        public static AppLinkProvisioningState Accepted { get; } = new AppLinkProvisioningState(AcceptedValue);
 
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AppLinkProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
+        public static bool operator ==(AppLinkProvisioningState left, AppLinkProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AppLinkProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ProvisioningState left, ProvisioningState right) => !left.Equals(right);
+        public static bool operator !=(AppLinkProvisioningState left, AppLinkProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AppLinkProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningState(string value) => new ProvisioningState(value);
+        public static implicit operator AppLinkProvisioningState(string value) => new AppLinkProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AppLinkProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningState?(string value) => value == null ? null : new ProvisioningState(value);
+        public static implicit operator AppLinkProvisioningState?(string value) => value == null ? null : new AppLinkProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is AppLinkProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AppLinkProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

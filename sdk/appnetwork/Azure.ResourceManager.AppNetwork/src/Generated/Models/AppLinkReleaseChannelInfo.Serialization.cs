@@ -14,56 +14,56 @@ using Azure.ResourceManager.AppNetwork;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> Release channel information. </summary>
-    public partial class ReleaseChannelInfo : IJsonModel<ReleaseChannelInfo>
+    public partial class AppLinkReleaseChannelInfo : IJsonModel<AppLinkReleaseChannelInfo>
     {
-        /// <summary> Initializes a new instance of <see cref="ReleaseChannelInfo"/> for deserialization. </summary>
-        internal ReleaseChannelInfo()
+        /// <summary> Initializes a new instance of <see cref="AppLinkReleaseChannelInfo"/> for deserialization. </summary>
+        internal AppLinkReleaseChannelInfo()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReleaseChannelInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AppLinkReleaseChannelInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReleaseChannelInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkReleaseChannelInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeReleaseChannelInfo(document.RootElement, options);
+                        return DeserializeAppLinkReleaseChannelInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReleaseChannelInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppLinkReleaseChannelInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReleaseChannelInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkReleaseChannelInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ReleaseChannelInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppLinkReleaseChannelInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ReleaseChannelInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AppLinkReleaseChannelInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReleaseChannelInfo IPersistableModel<ReleaseChannelInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AppLinkReleaseChannelInfo IPersistableModel<AppLinkReleaseChannelInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ReleaseChannelInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppLinkReleaseChannelInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ReleaseChannelInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppLinkReleaseChannelInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReleaseChannelInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkReleaseChannelInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReleaseChannelInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppLinkReleaseChannelInfo)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("releaseChannel"u8);
             writer.WriteStringValue(ReleaseChannel);
@@ -102,24 +102,24 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReleaseChannelInfo IJsonModel<ReleaseChannelInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AppLinkReleaseChannelInfo IJsonModel<AppLinkReleaseChannelInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReleaseChannelInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AppLinkReleaseChannelInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReleaseChannelInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkReleaseChannelInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReleaseChannelInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppLinkReleaseChannelInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReleaseChannelInfo(document.RootElement, options);
+            return DeserializeAppLinkReleaseChannelInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ReleaseChannelInfo DeserializeReleaseChannelInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppLinkReleaseChannelInfo DeserializeAppLinkReleaseChannelInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ReleaseChannelInfo(releaseChannel, version, additionalBinaryDataProperties);
+            return new AppLinkReleaseChannelInfo(releaseChannel, version, additionalBinaryDataProperties);
         }
     }
 }

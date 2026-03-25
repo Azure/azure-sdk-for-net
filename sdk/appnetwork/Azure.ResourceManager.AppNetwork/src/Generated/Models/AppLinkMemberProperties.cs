@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="connectivityProfile"> Connectivity profile. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppLinkMemberProperties(ClusterType? clusterType, Metadata metadata, UpgradeProfile upgradeProfile, ObservabilityProfile observabilityProfile, ConnectivityProfile connectivityProfile, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppLinkMemberProperties(AppLinkClusterType? clusterType, Metadata metadata, AppLinkUpgradeProfile upgradeProfile, ObservabilityProfile observabilityProfile, AppLinkConnectivityProfile connectivityProfile, AppLinkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterType = clusterType;
             Metadata = metadata;
@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> Cluster type. </summary>
-        public ClusterType? ClusterType { get; set; }
+        public AppLinkClusterType? ClusterType { get; set; }
 
         /// <summary> AppLink Member Metadata. </summary>
         internal Metadata Metadata { get; set; }
 
         /// <summary> Upgrade profile. </summary>
-        public UpgradeProfile UpgradeProfile { get; set; }
+        public AppLinkUpgradeProfile UpgradeProfile { get; set; }
 
         /// <summary> Observability profile. </summary>
         internal ObservabilityProfile ObservabilityProfile { get; set; }
 
         /// <summary> Connectivity profile. </summary>
-        public ConnectivityProfile ConnectivityProfile { get; set; }
+        public AppLinkConnectivityProfile ConnectivityProfile { get; set; }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public AppLinkProvisioningState? ProvisioningState { get; }
 
         /// <summary> Resource ID. </summary>
         public ResourceIdentifier MetadataResourceId

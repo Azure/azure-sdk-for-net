@@ -12,7 +12,7 @@ using Azure.ResourceManager.AppNetwork;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> AppLinkMember upgrade release channel. </summary>
-    public readonly partial struct UpgradeReleaseChannel : IEquatable<UpgradeReleaseChannel>
+    public readonly partial struct AppLinkUpgradeReleaseChannel : IEquatable<AppLinkUpgradeReleaseChannel>
     {
         private readonly string _value;
         /// <summary> Rapid release channel. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <summary> Stable release channel. </summary>
         private const string StableValue = "Stable";
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeReleaseChannel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkUpgradeReleaseChannel"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UpgradeReleaseChannel(string value)
+        public AppLinkUpgradeReleaseChannel(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> Rapid release channel. </summary>
-        public static UpgradeReleaseChannel Rapid { get; } = new UpgradeReleaseChannel(RapidValue);
+        public static AppLinkUpgradeReleaseChannel Rapid { get; } = new AppLinkUpgradeReleaseChannel(RapidValue);
 
         /// <summary> Stable release channel. </summary>
-        public static UpgradeReleaseChannel Stable { get; } = new UpgradeReleaseChannel(StableValue);
+        public static AppLinkUpgradeReleaseChannel Stable { get; } = new AppLinkUpgradeReleaseChannel(StableValue);
 
-        /// <summary> Determines if two <see cref="UpgradeReleaseChannel"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AppLinkUpgradeReleaseChannel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(UpgradeReleaseChannel left, UpgradeReleaseChannel right) => left.Equals(right);
+        public static bool operator ==(AppLinkUpgradeReleaseChannel left, AppLinkUpgradeReleaseChannel right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="UpgradeReleaseChannel"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AppLinkUpgradeReleaseChannel"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(UpgradeReleaseChannel left, UpgradeReleaseChannel right) => !left.Equals(right);
+        public static bool operator !=(AppLinkUpgradeReleaseChannel left, AppLinkUpgradeReleaseChannel right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="UpgradeReleaseChannel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AppLinkUpgradeReleaseChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeReleaseChannel(string value) => new UpgradeReleaseChannel(value);
+        public static implicit operator AppLinkUpgradeReleaseChannel(string value) => new AppLinkUpgradeReleaseChannel(value);
 
-        /// <summary> Converts a string to a <see cref="UpgradeReleaseChannel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AppLinkUpgradeReleaseChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeReleaseChannel?(string value) => value == null ? null : new UpgradeReleaseChannel(value);
+        public static implicit operator AppLinkUpgradeReleaseChannel?(string value) => value == null ? null : new AppLinkUpgradeReleaseChannel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is UpgradeReleaseChannel other && Equals(other);
+        public override bool Equals(object obj) => obj is AppLinkUpgradeReleaseChannel other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(UpgradeReleaseChannel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AppLinkUpgradeReleaseChannel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

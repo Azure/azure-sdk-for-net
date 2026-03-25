@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             }
             writer.WritePropertyName("releaseChannels"u8);
             writer.WriteStartArray();
-            foreach (ReleaseChannelInfo item in ReleaseChannels)
+            foreach (AppLinkReleaseChannelInfo item in ReleaseChannels)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -128,16 +128,16 @@ namespace Azure.ResourceManager.AppNetwork.Models
             {
                 return null;
             }
-            IList<ReleaseChannelInfo> releaseChannels = default;
+            IList<AppLinkReleaseChannelInfo> releaseChannels = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("releaseChannels"u8))
                 {
-                    List<ReleaseChannelInfo> array = new List<ReleaseChannelInfo>();
+                    List<AppLinkReleaseChannelInfo> array = new List<AppLinkReleaseChannelInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ReleaseChannelInfo.DeserializeReleaseChannelInfo(item, options));
+                        array.Add(AppLinkReleaseChannelInfo.DeserializeAppLinkReleaseChannelInfo(item, options));
                     }
                     releaseChannels = array;
                     continue;

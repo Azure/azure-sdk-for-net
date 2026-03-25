@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.AppNetwork.Models
             {
                 return null;
             }
-            UpgradeReleaseChannel releaseChannel = default;
+            AppLinkUpgradeReleaseChannel releaseChannel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("releaseChannel"u8))
                 {
-                    releaseChannel = new UpgradeReleaseChannel(prop.Value.GetString());
+                    releaseChannel = new AppLinkUpgradeReleaseChannel(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

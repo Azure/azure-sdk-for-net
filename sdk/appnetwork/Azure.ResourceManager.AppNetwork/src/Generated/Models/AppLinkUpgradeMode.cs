@@ -12,7 +12,7 @@ using Azure.ResourceManager.AppNetwork;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> AppLinkMember upgrade mode. </summary>
-    public readonly partial struct UpgradeMode : IEquatable<UpgradeMode>
+    public readonly partial struct AppLinkUpgradeMode : IEquatable<AppLinkUpgradeMode>
     {
         private readonly string _value;
         /// <summary> Fully managed upgrade mode. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <summary> Self managed upgrade mode. </summary>
         private const string SelfManagedValue = "SelfManaged";
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkUpgradeMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UpgradeMode(string value)
+        public AppLinkUpgradeMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> Fully managed upgrade mode. </summary>
-        public static UpgradeMode FullyManaged { get; } = new UpgradeMode(FullyManagedValue);
+        public static AppLinkUpgradeMode FullyManaged { get; } = new AppLinkUpgradeMode(FullyManagedValue);
 
         /// <summary> Self managed upgrade mode. </summary>
-        public static UpgradeMode SelfManaged { get; } = new UpgradeMode(SelfManagedValue);
+        public static AppLinkUpgradeMode SelfManaged { get; } = new AppLinkUpgradeMode(SelfManagedValue);
 
-        /// <summary> Determines if two <see cref="UpgradeMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AppLinkUpgradeMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(UpgradeMode left, UpgradeMode right) => left.Equals(right);
+        public static bool operator ==(AppLinkUpgradeMode left, AppLinkUpgradeMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="UpgradeMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AppLinkUpgradeMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(UpgradeMode left, UpgradeMode right) => !left.Equals(right);
+        public static bool operator !=(AppLinkUpgradeMode left, AppLinkUpgradeMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="UpgradeMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AppLinkUpgradeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeMode(string value) => new UpgradeMode(value);
+        public static implicit operator AppLinkUpgradeMode(string value) => new AppLinkUpgradeMode(value);
 
-        /// <summary> Converts a string to a <see cref="UpgradeMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AppLinkUpgradeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeMode?(string value) => value == null ? null : new UpgradeMode(value);
+        public static implicit operator AppLinkUpgradeMode?(string value) => value == null ? null : new AppLinkUpgradeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is UpgradeMode other && Equals(other);
+        public override bool Equals(object obj) => obj is AppLinkUpgradeMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(UpgradeMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AppLinkUpgradeMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

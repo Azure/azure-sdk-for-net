@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="FullyManagedUpgradeProfile"/>. </summary>
         /// <param name="releaseChannel"> Release channel. </param>
-        public FullyManagedUpgradeProfile(UpgradeReleaseChannel releaseChannel)
+        public FullyManagedUpgradeProfile(AppLinkUpgradeReleaseChannel releaseChannel)
         {
             ReleaseChannel = releaseChannel;
         }
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <summary> Initializes a new instance of <see cref="FullyManagedUpgradeProfile"/>. </summary>
         /// <param name="releaseChannel"> Release channel. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FullyManagedUpgradeProfile(UpgradeReleaseChannel releaseChannel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FullyManagedUpgradeProfile(AppLinkUpgradeReleaseChannel releaseChannel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReleaseChannel = releaseChannel;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Release channel. </summary>
-        public UpgradeReleaseChannel ReleaseChannel { get; set; }
+        public AppLinkUpgradeReleaseChannel ReleaseChannel { get; set; }
     }
 }

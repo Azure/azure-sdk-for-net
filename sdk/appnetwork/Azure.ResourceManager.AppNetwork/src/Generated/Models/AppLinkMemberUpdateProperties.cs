@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="observabilityProfile"> Observability profile. </param>
         /// <param name="connectivityProfile"> Connectivity profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppLinkMemberUpdateProperties(UpgradeProfile upgradeProfile, ObservabilityProfile observabilityProfile, ConnectivityProfile connectivityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppLinkMemberUpdateProperties(AppLinkUpgradeProfile upgradeProfile, ObservabilityProfile observabilityProfile, AppLinkConnectivityProfile connectivityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpgradeProfile = upgradeProfile;
             ObservabilityProfile = observabilityProfile;
@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> Upgrade profile. </summary>
-        public UpgradeProfile UpgradeProfile { get; set; }
+        public AppLinkUpgradeProfile UpgradeProfile { get; set; }
 
         /// <summary> Observability profile. </summary>
         internal ObservabilityProfile ObservabilityProfile { get; set; }
 
         /// <summary> Connectivity profile. </summary>
-        public ConnectivityProfile ConnectivityProfile { get; set; }
+        public AppLinkConnectivityProfile ConnectivityProfile { get; set; }
 
         /// <summary> Metrics endpoint URL. </summary>
         public string ObservabilityMetricsEndpoint

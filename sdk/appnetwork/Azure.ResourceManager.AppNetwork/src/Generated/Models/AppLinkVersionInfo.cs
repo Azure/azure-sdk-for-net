@@ -12,25 +12,25 @@ using System.Linq;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> Version information. </summary>
-    public partial class VersionInfo
+    public partial class AppLinkVersionInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VersionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkVersionInfo"/>. </summary>
         /// <param name="version"> Istio version. </param>
         /// <param name="upgrades"> Available upgrades. </param>
-        internal VersionInfo(string version, IEnumerable<string> upgrades)
+        internal AppLinkVersionInfo(string version, IEnumerable<string> upgrades)
         {
             Version = version;
             Upgrades = upgrades.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VersionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkVersionInfo"/>. </summary>
         /// <param name="version"> Istio version. </param>
         /// <param name="upgrades"> Available upgrades. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VersionInfo(string version, IList<string> upgrades, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppLinkVersionInfo(string version, IList<string> upgrades, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             Upgrades = upgrades;

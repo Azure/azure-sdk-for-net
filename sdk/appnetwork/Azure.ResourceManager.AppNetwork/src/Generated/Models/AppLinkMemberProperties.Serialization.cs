@@ -148,12 +148,12 @@ namespace Azure.ResourceManager.AppNetwork.Models
             {
                 return null;
             }
-            ClusterType? clusterType = default;
+            AppLinkClusterType? clusterType = default;
             Metadata metadata = default;
-            UpgradeProfile upgradeProfile = default;
+            AppLinkUpgradeProfile upgradeProfile = default;
             ObservabilityProfile observabilityProfile = default;
-            ConnectivityProfile connectivityProfile = default;
-            ProvisioningState? provisioningState = default;
+            AppLinkConnectivityProfile connectivityProfile = default;
+            AppLinkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     {
                         continue;
                     }
-                    clusterType = new ClusterType(prop.Value.GetString());
+                    clusterType = new AppLinkClusterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     {
                         continue;
                     }
-                    upgradeProfile = UpgradeProfile.DeserializeUpgradeProfile(prop.Value, options);
+                    upgradeProfile = AppLinkUpgradeProfile.DeserializeAppLinkUpgradeProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("observabilityProfile"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     {
                         continue;
                     }
-                    connectivityProfile = ConnectivityProfile.DeserializeConnectivityProfile(prop.Value, options);
+                    connectivityProfile = AppLinkConnectivityProfile.DeserializeAppLinkConnectivityProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new AppLinkProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

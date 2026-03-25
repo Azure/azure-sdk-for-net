@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> AppLinkMember upgrade profile. </summary>
-    public partial class UpgradeProfile
+    public partial class AppLinkUpgradeProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkUpgradeProfile"/>. </summary>
         /// <param name="mode"> Upgrade mode. </param>
-        public UpgradeProfile(UpgradeMode mode)
+        public AppLinkUpgradeProfile(AppLinkUpgradeMode mode)
         {
             Mode = mode;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkUpgradeProfile"/>. </summary>
         /// <param name="mode"> Upgrade mode. </param>
         /// <param name="fullyManagedUpgradeProfile"> Fully managed upgrade profile. </param>
         /// <param name="selfManagedUpgradeProfile"> Self managed upgrade profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradeProfile(UpgradeMode mode, FullyManagedUpgradeProfile fullyManagedUpgradeProfile, SelfManagedUpgradeProfile selfManagedUpgradeProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppLinkUpgradeProfile(AppLinkUpgradeMode mode, FullyManagedUpgradeProfile fullyManagedUpgradeProfile, SelfManagedUpgradeProfile selfManagedUpgradeProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             FullyManagedUpgradeProfile = fullyManagedUpgradeProfile;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> Upgrade mode. </summary>
-        public UpgradeMode Mode { get; set; }
+        public AppLinkUpgradeMode Mode { get; set; }
 
         /// <summary> Fully managed upgrade profile. </summary>
         internal FullyManagedUpgradeProfile FullyManagedUpgradeProfile { get; set; }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         internal SelfManagedUpgradeProfile SelfManagedUpgradeProfile { get; set; }
 
         /// <summary> Release channel. </summary>
-        public UpgradeReleaseChannel? FullyManagedUpgradeReleaseChannel
+        public AppLinkUpgradeReleaseChannel? FullyManagedUpgradeReleaseChannel
         {
             get
             {

@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 throw new FormatException($"The model {nameof(UpgradeHistoryProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("startTimestamp"u8);
-            writer.WriteStringValue(StartTimestamp, "O");
-            if (Optional.IsDefined(EndTimestamp))
+            writer.WriteStringValue(StartOn, "O");
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTimestamp"u8);
-                writer.WriteStringValue(EndTimestamp.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             writer.WritePropertyName("initiatedBy"u8);
             writer.WriteStringValue(InitiatedBy);
@@ -139,18 +139,18 @@ namespace Azure.ResourceManager.AppNetwork.Models
             {
                 return null;
             }
-            DateTimeOffset startTimestamp = default;
-            DateTimeOffset? endTimestamp = default;
+            DateTimeOffset startOn = default;
+            DateTimeOffset? endOn = default;
             string initiatedBy = default;
             string fromVersion = default;
             string toVersion = default;
-            ProvisioningState? provisioningState = default;
+            AppLinkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("startTimestamp"u8))
                 {
-                    startTimestamp = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimestamp"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     {
                         continue;
                     }
-                    endTimestamp = prop.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("initiatedBy"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new AppLinkProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 }
             }
             return new UpgradeHistoryProperties(
-                startTimestamp,
-                endTimestamp,
+                startOn,
+                endOn,
                 initiatedBy,
                 fromVersion,
                 toVersion,
