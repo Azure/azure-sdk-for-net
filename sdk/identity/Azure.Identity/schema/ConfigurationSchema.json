@@ -259,6 +259,10 @@
                 "type": "boolean",
                 "description": "Enable Azure Kubernetes Service (AKS) proxy mode."
               },
+              "TokenFilePath": {
+                "type": "string",
+                "description": "The path to the file containing the workload identity token."
+              },
               "AdditionallyAllowedTenants": {
                 "type": "array",
                 "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
@@ -873,6 +877,10 @@
               "IsAzureProxyEnabled": {
                 "type": "boolean",
                 "description": "Enable Azure Kubernetes Service (AKS) proxy mode."
+              },
+              "TokenFilePath": {
+                "type": "string",
+                "description": "The path to the file containing the workload identity token."
               },
               "AdditionallyAllowedTenants": {
                 "type": "array",
