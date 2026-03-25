@@ -41,6 +41,21 @@ function LogError([string]$message) {
     $script:errors += $message
 }
 
+# Parses a single git status --porcelain line and returns the path(s) it contains.
+# For renames ("old -> new"), returns both paths. Returns an empty array for blank/malformed lines.
+function Get-PorcelainPaths([string]$line) {
+    if ([string]::IsNullOrWhiteSpace($line)) { return @() }
+    $trimmed = $line.Trim()
+    if ($trimmed.Length -le 3) { return @() }
+    # Skip the two status characters and the following space to get the path portion.
+    $pathPart = $trimmed.Substring(3)
+    # Handle renames of the form "oldpath -> newpath".
+    if ($pathPart -match '(.+?)\s->\s(.+)$') {
+        return @($matches[1], $matches[2])
+    }
+    return @($pathPart)
+}
+
 function Invoke-Block([scriptblock]$cmd) {
     $cmd | Out-String | Write-Verbose
     & $cmd
@@ -64,23 +79,7 @@ try {
     if ($PreparePr) {
         $statusLines = git status --porcelain
         foreach ($line in $statusLines) {
-            if ([string]::IsNullOrWhiteSpace($line)) {
-                continue
-            }
-            $trimmed = $line.Trim()
-            if ($trimmed.Length -le 3) {
-                continue
-            }
-            # Skip the two status characters and the following space to get the path portion.
-            $pathPart = $trimmed.Substring(3)
-            # Handle renames of the form "oldpath -> newpath".
-            if ($pathPart -match '(.+?)\s->\s(.+)$') {
-                $preExistingChanges += $matches[1]
-                $preExistingChanges += $matches[2]
-            }
-            else {
-                $preExistingChanges += $pathPart
-            }
+            $preExistingChanges += Get-PorcelainPaths $line
         }
         $preExistingChanges = $preExistingChanges | Sort-Object -Unique
     }
@@ -232,15 +231,10 @@ try {
                 $currentStatusLines = git status --porcelain
                 $newStatusLines = @()
                 foreach ($line in $currentStatusLines) {
-                    if ([string]::IsNullOrWhiteSpace($line)) { continue }
-                    $trimmed = $line.Trim()
-                    if ($trimmed.Length -le 3) { continue }
-                    $pathPart = $trimmed.Substring(3)
-                    # For renames, check the destination path against pre-existing changes.
-                    $checkPath = $pathPart
-                    if ($pathPart -match '.+?\s->\s(.+)$') {
-                        $checkPath = $matches[1]
-                    }
+                    $paths = Get-PorcelainPaths $line
+                    if (-not $paths) { continue }
+                    # For renames, check the destination (last) path against pre-existing changes.
+                    $checkPath = $paths[-1]
                     if ($checkPath -notin $preExistingChanges) {
                         $newStatusLines += $line
                     }
