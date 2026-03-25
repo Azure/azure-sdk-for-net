@@ -144,7 +144,7 @@ $resolvedVersion = Resolve-CsprojVersion -MainVersion $mainVersion -ReleaseVersi
 
 if ($resolvedVersion -ne $releaseVersion) {
   # Main version is higher (hotfix scenario) — overwrite working tree with main's csproj
-  $mainCsprojContent | Set-Content -LiteralPath $csprojPath -NoNewline
+  [System.IO.File]::WriteAllText($csprojPath, $mainCsprojContent + "`n", [System.Text.Encoding]::UTF8)
   Write-Host "Synced $csprojGitPath from $MainRef (version $mainVersion)"
 }
 else {
