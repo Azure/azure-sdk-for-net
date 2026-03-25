@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Storage
                 };
                 HttpMessage message = _storageTaskAssignmentsRestClient.CreateStopAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                StorageArmOperation operation = new StorageArmOperation(_storageTaskAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                StorageArmOperation operation = new StorageArmOperation(_storageTaskAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Storage
                 };
                 HttpMessage message = _storageTaskAssignmentsRestClient.CreateStopAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                StorageArmOperation operation = new StorageArmOperation(_storageTaskAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                StorageArmOperation operation = new StorageArmOperation(_storageTaskAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

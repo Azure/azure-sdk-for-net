@@ -19,8 +19,18 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageDataShareProperties"/>. </summary>
-        /// <param name="accessPolicies"> List of access policies that specify the permission allowed to a managed identity. </param>
-        /// <param name="assets"> List of assets that specify the properties of the shared resources. </param>
+        /// <param name="accessPolicies">
+        /// List of access policies that specify the permission allowed to a managed identity.
+        /// For Create - This property is required and cannot be null. If no access policies are provided at creation time, specify an empty array.
+        /// For Update - This property is optional. If set to null or not passed, the existing access policies are left unchanged.
+        /// If provided with a non-null value, the existing access policies are replaced with the specified list.
+        /// </param>
+        /// <param name="assets">
+        /// List of assets that specify the properties of the shared resources.
+        /// For Create - This property is required and cannot be null. If no assets are provided at creation time, specify an empty array.
+        /// For Update - This property is optional. If set to null or not passed, the existing assets are left unchanged.
+        /// If provided with a non-null value, the existing assets are replaced with the specified list.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicies"/> or <paramref name="assets"/> is null. </exception>
         public StorageDataShareProperties(IEnumerable<StorageDataShareAccessPolicy> accessPolicies, IEnumerable<StorageDataShareAsset> assets)
         {
@@ -38,8 +48,18 @@ namespace Azure.ResourceManager.Storage.Models
         /// The DataShare URI to be shared with the consumer.
         /// URI Format - 'azds://&lt;location&gt;:&lt;dataShareName&gt;:&lt;dataShareIdentifier&gt;'.
         /// </param>
-        /// <param name="accessPolicies"> List of access policies that specify the permission allowed to a managed identity. </param>
-        /// <param name="assets"> List of assets that specify the properties of the shared resources. </param>
+        /// <param name="accessPolicies">
+        /// List of access policies that specify the permission allowed to a managed identity.
+        /// For Create - This property is required and cannot be null. If no access policies are provided at creation time, specify an empty array.
+        /// For Update - This property is optional. If set to null or not passed, the existing access policies are left unchanged.
+        /// If provided with a non-null value, the existing access policies are replaced with the specified list.
+        /// </param>
+        /// <param name="assets">
+        /// List of assets that specify the properties of the shared resources.
+        /// For Create - This property is required and cannot be null. If no assets are provided at creation time, specify an empty array.
+        /// For Update - This property is optional. If set to null or not passed, the existing assets are left unchanged.
+        /// If provided with a non-null value, the existing assets are replaced with the specified list.
+        /// </param>
         /// <param name="provisioningState"> Represents the provisioning state of the storage datashare. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal StorageDataShareProperties(string dataShareIdentifier, string description, string dataShareUri, IList<StorageDataShareAccessPolicy> accessPolicies, IList<StorageDataShareAsset> assets, NativeDataSharingProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -68,11 +88,21 @@ namespace Azure.ResourceManager.Storage.Models
         [WirePath("dataShareUri")]
         public string DataShareUri { get; }
 
-        /// <summary> List of access policies that specify the permission allowed to a managed identity. </summary>
+        /// <summary>
+        /// List of access policies that specify the permission allowed to a managed identity.
+        /// For Create - This property is required and cannot be null. If no access policies are provided at creation time, specify an empty array.
+        /// For Update - This property is optional. If set to null or not passed, the existing access policies are left unchanged.
+        /// If provided with a non-null value, the existing access policies are replaced with the specified list.
+        /// </summary>
         [WirePath("accessPolicies")]
         public IList<StorageDataShareAccessPolicy> AccessPolicies { get; }
 
-        /// <summary> List of assets that specify the properties of the shared resources. </summary>
+        /// <summary>
+        /// List of assets that specify the properties of the shared resources.
+        /// For Create - This property is required and cannot be null. If no assets are provided at creation time, specify an empty array.
+        /// For Update - This property is optional. If set to null or not passed, the existing assets are left unchanged.
+        /// If provided with a non-null value, the existing assets are replaced with the specified list.
+        /// </summary>
         [WirePath("assets")]
         public IList<StorageDataShareAsset> Assets { get; }
 

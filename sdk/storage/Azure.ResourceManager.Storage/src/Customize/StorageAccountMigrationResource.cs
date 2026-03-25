@@ -3,8 +3,13 @@
 
 #nullable disable
 
-// Structural fix: Adds string-id constructor bridge needed by generated code.
-// StorageAccountMigrationData shadows ResourceData.Id with a string for backward compatibility.
+// The prior GA SDK's StorageAccountMigrationData shadows ResourceData.Id
+// with `new string Id` for backward compatibility (the spec defines Id as
+// a plain string, not an ARM resource identifier). The generated
+// constructor chain `(ArmClient, StorageAccountMigrationData data) :
+// this(client, data.Id)` therefore passes a string, but the base
+// ArmResource only accepts ResourceIdentifier. This overload bridges the
+// gap by converting the string to a ResourceIdentifier.
 
 using Azure.Core;
 using Azure.ResourceManager;

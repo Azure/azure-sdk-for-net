@@ -1,9 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward-compat: Flattens nested StoragePrivateEndpointConnectionProperties
-// (ConnectionState, ProvisioningState, PrivateEndpointId) onto the data type
-// to preserve the prior GA API surface.
+// Backward-compat: The prior GA SDK flattened the nested
+// StoragePrivateEndpointConnectionProperties bag so that ConnectionState,
+// ProvisioningState, and PrivateEndpointId were top-level properties on
+// the data class. The TypeSpec-generated code keeps them under a
+// Properties object. This customization re-exposes the flattened
+// accessors so existing callers that reference e.g.
+//   data.ConnectionState
+//   data.ProvisioningState
+//   data.PrivateEndpointId
+// continue to compile and work without changes.
 
 #nullable disable
 

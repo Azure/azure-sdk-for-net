@@ -1506,8 +1506,18 @@ namespace Azure.ResourceManager.Storage.Models
         /// The DataShare URI to be shared with the consumer.
         /// URI Format - 'azds://&lt;location&gt;:&lt;dataShareName&gt;:&lt;dataShareIdentifier&gt;'.
         /// </param>
-        /// <param name="accessPolicies"> List of access policies that specify the permission allowed to a managed identity. </param>
-        /// <param name="assets"> List of assets that specify the properties of the shared resources. </param>
+        /// <param name="accessPolicies">
+        /// List of access policies that specify the permission allowed to a managed identity.
+        /// For Create - This property is required and cannot be null. If no access policies are provided at creation time, specify an empty array.
+        /// For Update - This property is optional. If set to null or not passed, the existing access policies are left unchanged.
+        /// If provided with a non-null value, the existing access policies are replaced with the specified list.
+        /// </param>
+        /// <param name="assets">
+        /// List of assets that specify the properties of the shared resources.
+        /// For Create - This property is required and cannot be null. If no assets are provided at creation time, specify an empty array.
+        /// For Update - This property is optional. If set to null or not passed, the existing assets are left unchanged.
+        /// If provided with a non-null value, the existing assets are replaced with the specified list.
+        /// </param>
         /// <param name="provisioningState"> Represents the provisioning state of the storage datashare. </param>
         /// <returns> A new <see cref="Models.StorageDataShareProperties"/> instance for mocking. </returns>
         public static StorageDataShareProperties StorageDataShareProperties(string dataShareIdentifier = default, string description = default, string dataShareUri = default, IEnumerable<StorageDataShareAccessPolicy> accessPolicies = default, IEnumerable<StorageDataShareAsset> assets = default, NativeDataSharingProvisioningState? provisioningState = default)

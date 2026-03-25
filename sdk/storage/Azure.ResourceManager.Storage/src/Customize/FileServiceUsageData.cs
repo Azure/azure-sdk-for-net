@@ -5,7 +5,6 @@
 
 // Backward-compat (Compile Remove replacement): Replaces generated file to keep Properties
 // public and parameterless constructor public. Generator makes these internal.
-// TODO: Generator bug - internal parameterless constructors break subclassability.
 
 #nullable disable
 

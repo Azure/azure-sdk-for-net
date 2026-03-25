@@ -9,8 +9,6 @@
 
 ### Breaking Changes
 
-- This release migrates from AutoRest to TypeSpec code generation. Many model types, properties, and method signatures have changed.
-
 ### Bugs Fixed
 
 ### Other Changes

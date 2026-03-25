@@ -21,8 +21,13 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Initializes a new instance of <see cref="ConnectorData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public ConnectorData(AzureLocation location) : base(location)
+        /// <param name="properties"> The properties of the Storage Connector. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public ConnectorData(AzureLocation location, StorageConnectorProperties properties) : base(location)
         {
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectorData"/>. </summary>

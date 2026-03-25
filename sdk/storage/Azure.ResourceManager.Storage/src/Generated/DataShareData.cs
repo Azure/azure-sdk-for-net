@@ -21,8 +21,13 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Initializes a new instance of <see cref="DataShareData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public DataShareData(AzureLocation location) : base(location)
+        /// <param name="properties"> The properties of the Storage DataShare. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DataShareData(AzureLocation location, StorageDataShareProperties properties) : base(location)
         {
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataShareData"/>. </summary>

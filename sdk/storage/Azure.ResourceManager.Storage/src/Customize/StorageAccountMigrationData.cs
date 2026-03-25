@@ -17,7 +17,6 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    [SuppressMessage("StyleCop.CSharp.NamingRules", "AZC0032:DisallowedModelNameSuffix")]
     public partial class StorageAccountMigrationData
     {
         // Constructor overload to fix generator backward-compat factory method bug:

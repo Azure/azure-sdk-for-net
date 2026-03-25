@@ -101,11 +101,8 @@ namespace Azure.ResourceManager.Storage
                 throw new FormatException($"The model {nameof(DataShareData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -203,10 +200,6 @@ namespace Azure.ResourceManager.Storage
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = StorageDataShareProperties.DeserializeStorageDataShareProperties(prop.Value, options);
                     continue;
                 }

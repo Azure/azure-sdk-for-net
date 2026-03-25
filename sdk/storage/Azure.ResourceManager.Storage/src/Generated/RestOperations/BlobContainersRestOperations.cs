@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Storage
             return message;
         }
 
-        internal HttpMessage CreateObjectLevelWormRequest(Guid subscriptionId, string resourceGroupName, string accountName, string containerName, RequestContext context)
+        internal HttpMessage CreateEnableVersionLevelImmutabilityRequest(Guid subscriptionId, string resourceGroupName, string accountName, string containerName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
