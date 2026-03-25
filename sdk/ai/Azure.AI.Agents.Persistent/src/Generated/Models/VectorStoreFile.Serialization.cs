@@ -152,7 +152,7 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             string id = default;
-            string @object = default;
+            VectorStoreFileObject @object = default;
             int usageBytes = default;
             DateTimeOffset createdAt = default;
             string vectorStoreId = default;
@@ -169,7 +169,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("object"u8))
                 {
-                    @object = prop.Value.GetString();
+                    @object = new VectorStoreFileObject(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("usage_bytes"u8))

@@ -27,14 +27,12 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="type"> The type of the content. </param>
         /// <param name="text"> The text content of the file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSearchToolCallContent(string @type, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileSearchToolCallContent(FileSearchToolCallContentType @type, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Text = text;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-
 
         /// <summary> The text content of the file. </summary>
         public string Text { get; }

@@ -39,7 +39,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
         public PersistentAgentsAdministrationClient(string endpoint, TokenCredential credential, PersistentAgentsAdministrationClientOptions options)
         {
-            // TODO: Remve this code when 1DP endpoint will be available and just call the upsteam constructor.
+            // TODO: Remove this code when 1DP endpoint will be available and just call the upstream constructor.
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PersistentAgentsAdministrationClientOptions();
@@ -47,16 +47,14 @@ namespace Azure.AI.Agents.Persistent
             if (s_is_test_run && endpoint.Split(';').Length == 4)
             {
                 ClientDiagnostics = new ClientDiagnostics(options, true);
-                _tokenCredential = credential;
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, ["https://management.azure.com/.default"]) }, new ResponseClassifier());
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, "https://management.azure.com/.default") }, new ResponseClassifier());
                 _endpoint = new Uri($"{ClientHelper.ParseConnectionString(endpoint, "endpoint")}/agents/v1.0/subscriptions/{ClientHelper.ParseConnectionString(endpoint, "subscriptionid")}/resourceGroups/{ClientHelper.ParseConnectionString(endpoint, "resourcegroupname")}/providers/Microsoft.MachineLearningServices/workspaces/{ClientHelper.ParseConnectionString(endpoint, "projectname")}");
                 _apiVersion = options.Version;
             }
             else
             {
                 ClientDiagnostics = new ClientDiagnostics(options, true);
-                _tokenCredential = credential;
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes) }, new ResponseClassifier());
                 _endpoint = new Uri(endpoint);
                 _apiVersion = options.Version;
             }
@@ -124,7 +122,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of RunsClient. </summary>
         internal virtual ThreadRuns GetThreadRunsClient()
         {
-            return Volatile.Read(ref _cachedThreadRuns) ?? Interlocked.CompareExchange(ref _cachedThreadRuns, new ThreadRuns(ClientDiagnostics, Pipeline, _tokenCredential, _endpoint, _apiVersion, GetThreadRunStepsClient()), null) ?? _cachedThreadRuns;
+            return Volatile.Read(ref _cachedThreadRuns) ?? Interlocked.CompareExchange(ref _cachedThreadRuns, new ThreadRuns(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedThreadRuns;
         }
 
         /// <summary> Initializes a new instance of RunStepsClient. </summary>

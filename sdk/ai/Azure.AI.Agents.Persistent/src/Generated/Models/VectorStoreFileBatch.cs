@@ -39,7 +39,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="status"> The status of the vector store files batch, which can be either `in_progress`, `completed`, `cancelled` or `failed`. </param>
         /// <param name="fileCounts"> Files count grouped by status processed or being processed by this vector store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreFileBatch(string id, string @object, DateTimeOffset createdAt, string vectorStoreId, VectorStoreFileBatchStatus status, VectorStoreFileCount fileCounts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorStoreFileBatch(string id, VectorStoreFileBatchObject @object, DateTimeOffset createdAt, string vectorStoreId, VectorStoreFileBatchStatus status, VectorStoreFileCount fileCounts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;
@@ -52,8 +52,6 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The identifier, which can be referenced in API endpoints. </summary>
         public string Id { get; }
-
-
 
         /// <summary> The Unix timestamp (in seconds) for when the vector store files batch was created. </summary>
         public DateTimeOffset CreatedAt { get; }

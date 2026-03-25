@@ -124,14 +124,14 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
-            string @type = default;
+            ResponseFormatJsonSchemaTypeType @type = default;
             ResponseFormatJsonSchema jsonSchema = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new ResponseFormatJsonSchemaTypeType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("json_schema"u8))

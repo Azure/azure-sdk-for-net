@@ -124,14 +124,14 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
-            string @type = default;
+            AzureFunctionBindingType @type = default;
             AzureFunctionStorageQueue storageQueue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new AzureFunctionBindingType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storage_queue"u8))

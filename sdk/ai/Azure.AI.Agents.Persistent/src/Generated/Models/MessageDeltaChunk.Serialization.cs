@@ -127,7 +127,7 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             string id = default;
-            string @object = default;
+            MessageDeltaChunkObject @object = default;
             MessageDelta delta = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("object"u8))
                 {
-                    @object = prop.Value.GetString();
+                    @object = new MessageDeltaChunkObject(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("delta"u8))

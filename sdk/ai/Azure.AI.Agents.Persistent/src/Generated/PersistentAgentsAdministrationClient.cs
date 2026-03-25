@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,8 +21,6 @@ namespace Azure.AI.Agents.Persistent
     public partial class PersistentAgentsAdministrationClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly string _apiVersion;
         private Threads _cachedThreads;
@@ -47,22 +46,42 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> Initializes a new instance of PersistentAgentsAdministrationClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PersistentAgentsAdministrationClient(Uri endpoint, TokenCredential credential, PersistentAgentsAdministrationClientOptions options)
+        internal PersistentAgentsAdministrationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PersistentAgentsAdministrationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new PersistentAgentsAdministrationClientOptions();
 
             _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of PersistentAgentsAdministrationClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public PersistentAgentsAdministrationClient(Uri endpoint, TokenCredential credential, PersistentAgentsAdministrationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of PersistentAgentsAdministrationClient from a <see cref="PersistentAgentsAdministrationClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for PersistentAgentsAdministrationClient. </param>
+        [Experimental("SCME0002")]
+        public PersistentAgentsAdministrationClient(PersistentAgentsAdministrationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -397,9 +416,9 @@ namespace Azure.AI.Agents.Persistent
             CreateThreadAndRunRequest spreadModel = new CreateThreadAndRunRequest(
                 assistantId,
                 thread,
-                default,
-                default,
-                default,
+                overrideModelName,
+                overrideInstructions,
+                overrideTools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
                 toolResources,
                 stream,
                 temperature,
@@ -459,9 +478,9 @@ namespace Azure.AI.Agents.Persistent
             CreateThreadAndRunRequest spreadModel = new CreateThreadAndRunRequest(
                 assistantId,
                 thread,
-                default,
-                default,
-                default,
+                overrideModelName,
+                overrideInstructions,
+                overrideTools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
                 toolResources,
                 stream,
                 temperature,

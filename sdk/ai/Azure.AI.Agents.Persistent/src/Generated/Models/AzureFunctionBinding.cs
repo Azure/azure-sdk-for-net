@@ -30,13 +30,11 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
         /// <param name="storageQueue"> Storage queue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFunctionBinding(string @type, AzureFunctionStorageQueue storageQueue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFunctionBinding(AzureFunctionBindingType @type, AzureFunctionStorageQueue storageQueue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             StorageQueue = storageQueue;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-
     }
 }

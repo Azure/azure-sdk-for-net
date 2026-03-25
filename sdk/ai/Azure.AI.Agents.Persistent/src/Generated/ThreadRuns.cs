@@ -98,12 +98,12 @@ namespace Azure.AI.Agents.Persistent
         {
             CreateRunRequest spreadModel = new CreateRunRequest(
                 assistantId,
-                default,
-                default,
+                overrideModelName,
+                overrideInstructions,
                 additionalInstructions,
                 additionalMessages?.ToList() as IList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
-                default,
-                default,
+                overrideTools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                toolResources,
                 stream,
                 temperature,
                 topP,
@@ -171,12 +171,12 @@ namespace Azure.AI.Agents.Persistent
         {
             CreateRunRequest spreadModel = new CreateRunRequest(
                 assistantId,
-                default,
-                default,
+                overrideModelName,
+                overrideInstructions,
                 additionalInstructions,
                 additionalMessages?.ToList() as IList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
-                default,
-                default,
+                overrideTools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                toolResources,
                 stream,
                 temperature,
                 topP,

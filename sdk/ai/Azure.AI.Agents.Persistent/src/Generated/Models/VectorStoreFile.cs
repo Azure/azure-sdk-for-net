@@ -51,7 +51,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="lastError"> The last error associated with this vector store file. Will be `null` if there are no errors. </param>
         /// <param name="chunkingStrategy"> The strategy used to chunk the file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreFile(string id, string @object, int usageBytes, DateTimeOffset createdAt, string vectorStoreId, VectorStoreFileStatus status, VectorStoreFileError lastError, VectorStoreChunkingStrategyResponse chunkingStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorStoreFile(string id, VectorStoreFileObject @object, int usageBytes, DateTimeOffset createdAt, string vectorStoreId, VectorStoreFileStatus status, VectorStoreFileError lastError, VectorStoreChunkingStrategyResponse chunkingStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;
@@ -66,8 +66,6 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> The identifier, which can be referenced in API endpoints. </summary>
         public string Id { get; }
-
-
 
         /// <summary>
         /// The total vector store usage in bytes. Note that this may be different from the original file

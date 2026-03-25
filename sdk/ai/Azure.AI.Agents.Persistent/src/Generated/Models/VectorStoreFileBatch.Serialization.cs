@@ -141,7 +141,7 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             string id = default;
-            string @object = default;
+            VectorStoreFileBatchObject @object = default;
             DateTimeOffset createdAt = default;
             string vectorStoreId = default;
             VectorStoreFileBatchStatus status = default;
@@ -156,7 +156,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("object"u8))
                 {
-                    @object = prop.Value.GetString();
+                    @object = new VectorStoreFileBatchObject(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("created_at"u8))

@@ -1773,6 +1773,8 @@ namespace Azure.AI.Agents.Persistent
     public partial class PersistentAgentsAdministrationClient
     {
         protected PersistentAgentsAdministrationClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public PersistentAgentsAdministrationClient(Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientSettings settings) { }
         public PersistentAgentsAdministrationClient(string endpoint, Azure.Core.TokenCredential credential) { }
         public PersistentAgentsAdministrationClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions options) { }
         public PersistentAgentsAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -1808,6 +1810,14 @@ namespace Azure.AI.Agents.Persistent
             V1 = 2,
             V2025_05_15_Preview = 3,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class PersistentAgentsAdministrationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public PersistentAgentsAdministrationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class PersistentAgentsClient
     {

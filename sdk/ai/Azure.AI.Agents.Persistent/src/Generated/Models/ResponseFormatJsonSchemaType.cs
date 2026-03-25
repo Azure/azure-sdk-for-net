@@ -30,14 +30,12 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="type"> Type. </param>
         /// <param name="jsonSchema"> The JSON schema, describing response format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseFormatJsonSchemaType(string @type, ResponseFormatJsonSchema jsonSchema, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseFormatJsonSchemaType(ResponseFormatJsonSchemaTypeType @type, ResponseFormatJsonSchema jsonSchema, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             JsonSchema = jsonSchema;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-
 
         /// <summary> The JSON schema, describing response format. </summary>
         public ResponseFormatJsonSchema JsonSchema { get; set; }
