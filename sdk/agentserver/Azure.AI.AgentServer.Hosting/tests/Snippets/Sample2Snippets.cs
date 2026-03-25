@@ -23,7 +23,7 @@ namespace Azure.AI.AgentServer.Hosting.Tests.Snippets
         {
             #region Snippet:Hosting_Sample2_Compose
 
-var builder = AgentHost.CreateBuilder();
+            var builder = AgentHost.CreateBuilder();
 
             // Register the Responses protocol for streaming chat.
             builder.AddResponses<ChatHandler>();

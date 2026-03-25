@@ -145,24 +145,26 @@ dotnet format Azure.AI.AgentServer.sln
 
 ### Pre-commit checks
 
-Before committing changes, run the pre-commit validations for the `agentserver` service directory.
+Before committing changes, run the pre-commit validations **in this exact order**
+for the `agentserver` service directory. Order matters — `dotnet format` must run
+**last** so it catches formatting issues introduced by earlier steps (snippet updates, sed replacements, etc.).
+
 See [pre-commit-checks SKILL.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/pre-commit-checks/SKILL.md) for the full procedure. Summary:
 
 ```powershell
-# Format
-dotnet format Azure.AI.AgentServer.sln
-
-# Export public API
+# 1. Export public API
 eng/scripts/Export-API.ps1 agentserver
 
-# Update doc snippets
+# 2. Update doc snippets (syncs #region blocks into markdown)
 eng/scripts/Update-Snippets.ps1 agentserver
 
-# Build snippets (reproduces the CI "Build snippets" step locally)
-# This defines the SNIPPET constant and verifies all #region Snippet:Name
-# code compiles. MUST be run before committing snippet changes.
+# 3. Build snippets (reproduces the CI "Build snippets" step locally).
+#    Defines the SNIPPET constant — verifies all #region Snippet:Name code compiles.
 cd sdk/agentserver
 dotnet build Azure.AI.AgentServer.sln /p:BuildSnippets=true
+
+# 4. Format LAST — catches indent/whitespace issues from all prior steps
+dotnet format Azure.AI.AgentServer.sln
 ```
 
 ### Regenerate Contracts (TypeSpec)

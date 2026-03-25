@@ -19,7 +19,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         {
             #region Snippet:Invocations_Sample4_StartServer
 
-AgentHost.Run<TravelPlannerHandler>();
+            AgentHost.Run<TravelPlannerHandler>();
 
             #endregion
         }

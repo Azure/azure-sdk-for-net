@@ -20,7 +20,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         {
             #region Snippet:Invocations_Sample3_StartServer
 
-AgentHost.Run<CodeGenHandler>();
+            AgentHost.Run<CodeGenHandler>();
 
             #endregion
         }

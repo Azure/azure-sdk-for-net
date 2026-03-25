@@ -21,7 +21,7 @@ namespace Azure.AI.AgentServer.Hosting.Tests.Snippets
         {
             #region Snippet:Hosting_ReadMe_Tier1
 
-AgentHost.Run<MyHandler>();
+            AgentHost.Run<MyHandler>();
 
             #endregion
         }
@@ -31,7 +31,7 @@ AgentHost.Run<MyHandler>();
         {
             #region Snippet:Hosting_ReadMe_Tier2
 
-var builder = AgentHost.CreateBuilder();
+            var builder = AgentHost.CreateBuilder();
             builder.AddResponses<MyHandler>();
             var app = builder.Build();
             app.Run();

@@ -21,7 +21,7 @@ namespace Azure.AI.AgentServer.Hosting.Tests.Snippets
         {
             #region Snippet:Hosting_Sample3_SelfHost
 
-var builder = WebApplication.CreateBuilder();
+            var builder = WebApplication.CreateBuilder();
 
             // Your existing services.
             builder.Services.AddSingleton<MyExistingService>();
@@ -30,7 +30,7 @@ var builder = WebApplication.CreateBuilder();
             builder.Services.AddInvocationsServer();
             builder.Services.AddScoped<InvocationHandler, SummaryHandler>();
 
-var app = builder.Build();
+            var app = builder.Build();
 
             // Your existing endpoints.
             app.MapGet("/", () => "My existing app");
