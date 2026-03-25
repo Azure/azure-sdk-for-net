@@ -6,11 +6,9 @@ Namespaces for this example:
 ```C# Snippet:Manage_IaaSVM_Protection_Namespaces
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServicesBackup;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 ```
 
@@ -174,7 +172,7 @@ Console.WriteLine($"Protection stopped (data retained). Resource ID: {operation.
 
 ### Using the base class `IaasVmProtectedItem` directly
 
-```csharp
+```C# Snippet:Manage_IaaSVM_DoNotUse
 // *** INCORRECT - DO NOT DO THIS ***
 BackupProtectedItemData data = new BackupProtectedItemData(default)
 {

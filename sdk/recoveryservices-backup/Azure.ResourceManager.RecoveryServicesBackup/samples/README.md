@@ -11,4 +11,4 @@ description: Samples for the Azure.ResourceManager.RecoveryServicesBackup client
 
 # Azure.ResourceManager.RecoveryServicesBackup Samples
 
-- [Managing IaaS VM Backup Protection](./Sample1_ManagingIaaSVMProtection.md)
+- [Managing IaaS VM Backup Protection](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup/samples/Sample1_ManagingIaaSVMProtection.md)
