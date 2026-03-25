@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
 namespace Azure.AI.AgentServer.Hosting;
@@ -13,12 +12,13 @@ namespace Azure.AI.AgentServer.Hosting;
 internal static class HealthEndpointExtensions
 {
     /// <summary>
-    /// Maps the <c>GET /healthy</c> liveness probe endpoint that returns HTTP 200.
+    /// Maps the <c>GET /healthy</c> health probe endpoint that executes all
+    /// registered <see cref="Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck"/>
+    /// instances and returns the aggregate status (200 Healthy, 503 Unhealthy).
     /// </summary>
     internal static IEndpointRouteBuilder MapHealthEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("/healthy", () => Results.Ok())
-            .ExcludeFromDescription();
+        endpoints.MapHealthChecks("/healthy");
 
         return endpoints;
     }

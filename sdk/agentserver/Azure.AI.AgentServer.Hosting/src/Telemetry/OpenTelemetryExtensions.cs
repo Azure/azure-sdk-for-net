@@ -60,11 +60,21 @@ internal static class OpenTelemetryExtensions
         }
 
         services.AddOpenTelemetry()
-            .ConfigureResource(r => r.AddDetector(new FoundryResourceDetector()))
+            .ConfigureResource(r =>
+            {
+                r.AddDetector(new FoundryResourceDetector());
+                r.AddAttributes(resourceBuilder.Build().Attributes);
+            })
             .WithTracing(tracing =>
             {
-                tracing.SetResourceBuilder(resourceBuilder);
-                tracing.AddAspNetCoreInstrumentation();
+                // Only add ASP.NET Core instrumentation when UseAzureMonitor is not active,
+                // because UseAzureMonitor already registers it and adding it again would
+                // produce duplicate spans.
+                if (!hasAppInsights)
+                {
+                    tracing.AddAspNetCoreInstrumentation();
+                }
+
                 tracing.AddSource(AgentHostTelemetry.ResponsesSourceName);
                 tracing.AddSource(AgentHostTelemetry.InvocationsSourceName);
 
@@ -77,8 +87,12 @@ internal static class OpenTelemetryExtensions
             })
             .WithMetrics(metrics =>
             {
-                metrics.SetResourceBuilder(resourceBuilder);
-                metrics.AddAspNetCoreInstrumentation();
+                // Same guard — UseAzureMonitor already adds ASP.NET Core metrics.
+                if (!hasAppInsights)
+                {
+                    metrics.AddAspNetCoreInstrumentation();
+                }
+
                 metrics.AddMeter(AgentHostTelemetry.ResponsesMeterName);
                 metrics.AddMeter(AgentHostTelemetry.InvocationsMeterName);
 
