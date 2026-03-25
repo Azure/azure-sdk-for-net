@@ -23,3 +23,5 @@ extends:
         safeName: AzureAIAgentServerContracts
       - name: Azure.AI.AgentServer.AgentFramework
         safeName: AzureAIAgentServerAgentFramework
+      - name: Azure.AI.AgentServer.Hosting
+        safeName: AzureAIAgentServerHosting
