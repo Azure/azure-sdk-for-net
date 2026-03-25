@@ -52,7 +52,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateConversation_Async
         ProjectConversation conversation
-            = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
+            = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync();
         #endregion
 
         #region Snippet:Sample_CreateSimpleResponse_Async
@@ -67,7 +67,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_Async
-        await projectClient.OpenAI.Conversations.DeleteConversationAsync(conversationId: conversation.Id);
+        await projectClient.OpenAI.GetProjectConversationsClient().DeleteConversationAsync(conversationId: conversation.Id);
         await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
@@ -105,7 +105,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateConversation_Sync
         ProjectConversation conversation
-            = projectClient.OpenAI.Conversations.CreateProjectConversation();
+            = projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversation();
         #endregion
 
         #region Snippet:Sample_CreateSimpleResponse_Sync
@@ -120,7 +120,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_Sync
-        projectClient.OpenAI.Conversations.DeleteConversation(conversationId: conversation.Id);
+        projectClient.OpenAI.GetProjectConversationsClient().DeleteConversation(conversationId: conversation.Id);
         projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }

@@ -8,8 +8,12 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
+    /// <summary>
+    /// Base class for targets with discriminator support.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownEvaluationTarget))]
-    internal abstract partial class EvaluationTarget : IJsonModel<EvaluationTarget>
+    public abstract partial class EvaluationTarget : IJsonModel<EvaluationTarget>
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationTarget"/> for deserialization. </summary>
         internal EvaluationTarget()

@@ -565,13 +565,35 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Input configuration for the evaluation taxonomy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentTaxonomyInput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentTaxonomyInput"/>.
         /// </summary>
         /// <param name="type"> Input type of the evaluation taxonomy. </param>
         /// <returns> A new <see cref="Projects.EvaluationTaxonomyInput"/> instance for mocking. </returns>
         public static EvaluationTaxonomyInput EvaluationTaxonomyInput(string @type = default)
         {
             return new UnknownEvaluationTaxonomyInput(new EvaluationTaxonomyInputType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input configuration for the evaluation taxonomy when the input type is agent. </summary>
+        /// <param name="target"> Target configuration for the agent. </param>
+        /// <param name="riskCategories"> List of risk categories to evaluate against. </param>
+        /// <returns> A new <see cref="Projects.AgentTaxonomyInput"/> instance for mocking. </returns>
+        public static AgentTaxonomyInput AgentTaxonomyInput(EvaluationTarget target = default, IEnumerable<RiskCategory> riskCategories = default)
+        {
+            riskCategories ??= new ChangeTrackingList<RiskCategory>();
+
+            return new AgentTaxonomyInput(EvaluationTaxonomyInputType.Agent, additionalBinaryDataProperties: null, target, riskCategories.ToList());
+        }
+
+        /// <summary>
+        /// Base class for targets with discriminator support.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: 
+        /// </summary>
+        /// <param name="type"> The type of target. </param>
+        /// <returns> A new <see cref="Projects.EvaluationTarget"/> instance for mocking. </returns>
+        public static EvaluationTarget EvaluationTarget(string @type = default)
+        {
+            return new UnknownEvaluationTarget(@type, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Taxonomy category definition. </summary>
