@@ -80,7 +80,8 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     {
         if (value.IsRequired && value.Kind == BicepValueKind.Unset)
         {
-            throw new InvalidOperationException($"{GetType().Name} definition is missing required property {value.Self?.PropertyName}");
+            string identifier = this is NamedProvisionableConstruct named ? $"'{named.BicepIdentifier}' " : "";
+            throw new InvalidOperationException($"{GetType().Name} {identifier}definition is missing required property {value.Self?.PropertyName}");
         }
     }
 
