@@ -13,10 +13,10 @@ using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    internal partial class UnknownAlertsMetaDataProperties : ServiceAlertMetadataProperties, IJsonModel<ServiceAlertMetadataProperties>
+    internal partial class UnknownServiceAlertMetadataProperties : ServiceAlertMetadataProperties, IJsonModel<ServiceAlertMetadataProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAlertsMetaDataProperties"/> for deserialization. </summary>
-        internal UnknownAlertsMetaDataProperties()
+        /// <summary> Initializes a new instance of <see cref="UnknownServiceAlertMetadataProperties"/> for deserialization. </summary>
+        internal UnknownServiceAlertMetadataProperties()
         {
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownAlertsMetaDataProperties DeserializeUnknownAlertsMetaDataProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownServiceAlertMetadataProperties DeserializeUnknownServiceAlertMetadataProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownAlertsMetaDataProperties(metadataIdentifier, additionalBinaryDataProperties);
+            return new UnknownServiceAlertMetadataProperties(metadataIdentifier, additionalBinaryDataProperties);
         }
     }
 }

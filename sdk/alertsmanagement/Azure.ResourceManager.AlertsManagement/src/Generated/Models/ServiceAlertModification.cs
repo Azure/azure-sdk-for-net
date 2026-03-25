@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Alert Modification details. </summary>
-    public partial class ServiceAlertModification : Azure.ResourceManager.Models.ResourceData
+    public partial class ServiceAlertModification : AlertsManagementProxyResource
     {
         /// <summary> Initializes a new instance of <see cref="ServiceAlertModification"/>. </summary>
         public ServiceAlertModification()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="name"> Azure resource name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Alert modification history properties. </param>
-        internal ServiceAlertModification(string id, string @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceAlertModificationProperties properties)
+        internal ServiceAlertModification(string id, string @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceAlertModificationProperties properties) : base(id, @type, name, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

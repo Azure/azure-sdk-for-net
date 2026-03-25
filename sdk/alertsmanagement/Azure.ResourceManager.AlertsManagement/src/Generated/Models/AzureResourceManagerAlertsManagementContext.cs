@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AlertsManagement
     [ModelReaderWriterBuildable(typeof(TriggeredRule))]
     [ModelReaderWriterBuildable(typeof(UnknownAlertEnrichmentItem))]
     [ModelReaderWriterBuildable(typeof(UnknownBaseDetails))]
-    [ModelReaderWriterBuildable(typeof(UnknownAlertsMetaDataProperties))]
+    [ModelReaderWriterBuildable(typeof(UnknownServiceAlertMetadataProperties))]
     public partial class AzureResourceManagerAlertsManagementContext : ModelReaderWriterContext
     {
     }

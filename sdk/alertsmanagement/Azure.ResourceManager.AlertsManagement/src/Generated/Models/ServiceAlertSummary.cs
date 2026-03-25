@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Summary of alerts based on the input filters and 'groupby' parameters. </summary>
-    public partial class ServiceAlertSummary : Azure.ResourceManager.Models.ResourceData
+    public partial class ServiceAlertSummary : AlertsManagementProxyResource
     {
         /// <summary> Initializes a new instance of <see cref="ServiceAlertSummary"/>. </summary>
         public ServiceAlertSummary()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="name"> Azure resource name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Group the result set. </param>
-        internal ServiceAlertSummary(string id, string @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceAlertSummaryGroup properties)
+        internal ServiceAlertSummary(string id, string @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceAlertSummaryGroup properties) : base(id, @type, name, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

@@ -15,11 +15,11 @@ using Azure.ResourceManager.AlertsManagement;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Alert Modification details. </summary>
-    public partial class ServiceAlertModification : Azure.ResourceManager.Models.ResourceData, IJsonModel<ServiceAlertModification>
+    public partial class ServiceAlertModification : AlertsManagementProxyResource, IJsonModel<ServiceAlertModification>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServiceAlertModification PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AlertsManagementProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertModification>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertModification>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceAlertModification IPersistableModel<ServiceAlertModification>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ServiceAlertModification IPersistableModel<ServiceAlertModification>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceAlertModification)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServiceAlertModification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceAlertModification IJsonModel<ServiceAlertModification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ServiceAlertModification IJsonModel<ServiceAlertModification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServiceAlertModification)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServiceAlertModification JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AlertsManagementProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertModification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
