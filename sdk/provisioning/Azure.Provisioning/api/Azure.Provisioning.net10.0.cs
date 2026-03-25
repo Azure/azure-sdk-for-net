@@ -767,6 +767,7 @@ namespace Azure.Provisioning.Expressions
     {
         public ResourceStatement(string name, Azure.Provisioning.Expressions.BicepExpression type, Azure.Provisioning.Expressions.BicepExpression body) { }
         public Azure.Provisioning.Expressions.BicepExpression Body { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression? Condition { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.DecoratorExpression> Decorators { get { throw null; } }
         public bool Existing { get { throw null; } set { } }
         public string Name { get { throw null; } }
@@ -940,6 +941,7 @@ namespace Azure.Provisioning.Primitives
     {
         public ResourceBicepMetadata() { }
         public uint? BatchSize { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> Condition { get { throw null; } set { } }
         public string? Description { get { throw null; } set { } }
         public bool OnlyIfNotExists { get { throw null; } set { } }
     }

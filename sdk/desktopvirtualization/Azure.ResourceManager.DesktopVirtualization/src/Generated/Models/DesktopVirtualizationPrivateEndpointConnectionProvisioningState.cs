@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct DesktopVirtualizationPrivateEndpointConnectionProvisioningState : IEquatable<DesktopVirtualizationPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Provisioning was successful. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> A PrivateEndpointConnection is being created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> A PrivateEndpointConnection is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Provisioning failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DesktopVirtualizationPrivateEndpointConnectionProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string CreatingValue = "Creating";
-        private const string DeletingValue = "Deleting";
-        private const string FailedValue = "Failed";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> Provisioning was successful. </summary>
         public static DesktopVirtualizationPrivateEndpointConnectionProvisioningState Succeeded { get; } = new DesktopVirtualizationPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> A PrivateEndpointConnection is being created. </summary>
         public static DesktopVirtualizationPrivateEndpointConnectionProvisioningState Creating { get; } = new DesktopVirtualizationPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> A PrivateEndpointConnection is being deleted. </summary>
         public static DesktopVirtualizationPrivateEndpointConnectionProvisioningState Deleting { get; } = new DesktopVirtualizationPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Provisioning failed. </summary>
         public static DesktopVirtualizationPrivateEndpointConnectionProvisioningState Failed { get; } = new DesktopVirtualizationPrivateEndpointConnectionProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="DesktopVirtualizationPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DesktopVirtualizationPrivateEndpointConnectionProvisioningState left, DesktopVirtualizationPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DesktopVirtualizationPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DesktopVirtualizationPrivateEndpointConnectionProvisioningState left, DesktopVirtualizationPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DesktopVirtualizationPrivateEndpointConnectionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DesktopVirtualizationPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DesktopVirtualizationPrivateEndpointConnectionProvisioningState(string value) => new DesktopVirtualizationPrivateEndpointConnectionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DesktopVirtualizationPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DesktopVirtualizationPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new DesktopVirtualizationPrivateEndpointConnectionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DesktopVirtualizationPrivateEndpointConnectionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DesktopVirtualizationPrivateEndpointConnectionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -679,6 +679,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
+        /// <summary> Determines whether to skip the assignment of the managed network security group (SF-NSG) to the cluster subnet when using a bring-your-own virtual network (BYOVNET) configuration. The default value is false. </summary>
+        public bool? SkipManagedNsgAssignment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SkipManagedNsgAssignment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.SkipManagedNsgAssignment = value.Value;
+            }
+        }
+
         /// <summary> Number of unused versions per application type to keep. </summary>
         public int? MaxUnusedVersionsToKeep
         {

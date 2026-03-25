@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2023-07-01"
+  "apiVersions": {
+    "SchemaRegistry": "2023-07-01"
+  }
 }

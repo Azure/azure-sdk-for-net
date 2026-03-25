@@ -57,10 +57,13 @@ namespace Azure.Identity
                 return;
             }
 
-            CredentialSource = settings.CredentialSource;
+            if (settings.CredentialSource is not null)
+            {
+                CredentialSource = settings.CredentialSource;
+            }
             ApiKey = settings.Key;
 
-            if (section is null)
+            if (section is null || !section.Exists())
             {
                 return;
             }
@@ -115,6 +118,41 @@ namespace Azure.Identity
             if (bool.TryParse(section[nameof(WorkloadIdentityCredentialOptions.IsAzureProxyEnabled)], out bool isAzureProxyEnabled))
             {
                 IsAzureProxyEnabled = isAzureProxyEnabled;
+            }
+
+            if (section[nameof(EnvironmentCredentialOptions.ClientSecret)] is string clientSecret)
+            {
+                EnvironmentClientSecret = clientSecret;
+            }
+
+            if (section[nameof(EnvironmentCredentialOptions.ClientCertificatePath)] is string clientCertificatePath)
+            {
+                EnvironmentClientCertificatePath = clientCertificatePath;
+            }
+
+            if (section[nameof(EnvironmentCredentialOptions.ClientCertificatePassword)] is string clientCertificatePassword)
+            {
+                EnvironmentClientCertificatePassword = clientCertificatePassword;
+            }
+
+            if (bool.TryParse(section[nameof(EnvironmentCredentialOptions.SendCertificateChain)], out bool sendCertificateChain))
+            {
+                EnvironmentSendCertificateChain = sendCertificateChain;
+            }
+
+            if (section[nameof(EnvironmentCredentialOptions.Username)] is string username)
+            {
+                EnvironmentUsername = username;
+            }
+
+            if (section[nameof(EnvironmentCredentialOptions.Password)] is string password)
+            {
+                EnvironmentPassword = password;
+            }
+
+            if (section[nameof(WorkloadIdentityCredentialOptions.TokenFilePath)] is string tokenFilePath)
+            {
+                WorkloadTokenFilePath = tokenFilePath;
             }
 
             if (section[nameof(AzurePipelinesServiceConnectionId)] is string azurePipelinesServiceConnectionId)
@@ -174,6 +212,19 @@ namespace Azure.Identity
             {
                 IsLegacyMsaPassthroughEnabled = isLegacyMsaPassthroughEnabled;
             }
+
+            // Parse Sources array for ChainedTokenCredential configuration — each child is a credential config object
+            var sourcesSection = section.GetSection(nameof(Sources));
+            if (sourcesSection != null)
+            {
+                var children = sourcesSection.GetChildren().ToArray();
+                if (children.Length > 0)
+                {
+                    Sources = children
+                        .Select(child => new DefaultAzureCredentialOptions(new CredentialSettings(child), child))
+                        .ToArray();
+                }
+            }
         }
 
         private UpdateTracker<string> _tenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
@@ -195,6 +246,13 @@ namespace Azure.Identity
         }
 
         internal string ApiKey { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the array of credential source configurations for ChainedTokenCredential.
+        /// Used when CredentialSource is "ChainedTokenCredential". Each element is a full credential
+        /// configuration with its own CredentialSource and properties.
+        /// </summary>
+        internal DefaultAzureCredentialOptions[] Sources { get; private set; }
 
         internal static string ConvertCredentialSource(string value)
         {
@@ -226,7 +284,9 @@ namespace Azure.Identity
                 Constants.AzurePipelinesCredential => Constants.AzurePipelinesCredential,
                 Constants.ManagedIdentityAsFederatedIdentityCredential => Constants.ManagedIdentityAsFederatedIdentityCredential,
                 Constants.ApiKeyCredential => Constants.ApiKeyCredential,
+                Constants.ChainedTokenCredential => Constants.ChainedTokenCredential,
                 // Short names (back-compat)
+                "chainedtoken" => Constants.ChainedTokenCredential,
                 "visualstudio" => Constants.VisualStudioCredential,
                 "visualstudiocode" => Constants.VisualStudioCodeCredential,
                 "azurecli" => Constants.AzureCliCredential,
@@ -546,6 +606,41 @@ namespace Azure.Identity
         /// </summary>
         internal string AzureCloud { get; set; }
 
+        /// <summary>
+        /// Specifies the client secret for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentClientSecret { get; set; }
+
+        /// <summary>
+        /// Specifies the client certificate path for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentClientCertificatePath { get; set; }
+
+        /// <summary>
+        /// Specifies the client certificate password for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentClientCertificatePassword { get; set; }
+
+        /// <summary>
+        /// Specifies whether to send the certificate chain for the EnvironmentCredential.
+        /// </summary>
+        internal bool? EnvironmentSendCertificateChain { get; set; }
+
+        /// <summary>
+        /// Specifies the username for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentUsername { get; set; }
+
+        /// <summary>
+        /// Specifies the password for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentPassword { get; set; }
+
+        /// <summary>
+        /// Specifies the token file path for the WorkloadIdentityCredential.
+        /// </summary>
+        internal string WorkloadTokenFilePath { get; set; }
+
         internal bool DisableAutomaticAuthentication { get; set; }
 
         internal string LoginHint { get; set; }
@@ -601,6 +696,7 @@ namespace Azure.Identity
                 {
                     dacClone.CredentialSource = CredentialSource;
                 }
+                dacClone.Sources = Sources;
                 dacClone.ApiKey = ApiKey;
                 if (!string.IsNullOrEmpty(Subscription))
                 {
@@ -622,6 +718,13 @@ namespace Azure.Identity
                 dacClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions;
                 dacClone.UseDefaultBrokerAccount = UseDefaultBrokerAccount;
                 dacClone.IsLegacyMsaPassthroughEnabled = IsLegacyMsaPassthroughEnabled;
+                dacClone.EnvironmentClientSecret = EnvironmentClientSecret;
+                dacClone.EnvironmentClientCertificatePath = EnvironmentClientCertificatePath;
+                dacClone.EnvironmentClientCertificatePassword = EnvironmentClientCertificatePassword;
+                dacClone.EnvironmentSendCertificateChain = EnvironmentSendCertificateChain;
+                dacClone.EnvironmentUsername = EnvironmentUsername;
+                dacClone.EnvironmentPassword = EnvironmentPassword;
+                dacClone.WorkloadTokenFilePath = WorkloadTokenFilePath;
             }
             else if (clone is InteractiveBrowserCredentialOptions ibcClone)
             {

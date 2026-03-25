@@ -934,6 +934,7 @@ namespace Azure.ResourceManager.AppContainers
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppContainers.ContainerAppPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppEnvironmentProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        [System.ObsoleteAttribute("SkuName is no longer supported by the service and will be removed in a future release.")]
         public Azure.ResourceManager.AppContainers.Models.AppContainersSkuName? SkuName { get { throw null; } set { } }
         public System.Net.IPAddress StaticIP { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppVnetConfiguration VnetConfiguration { get { throw null; } set { } }
@@ -1670,9 +1671,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.AppContainerResources>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.AppContainerResources>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, Size=1)]
+    [System.ObsoleteAttribute("AppContainersSkuName is no longer supported by the service and will be removed in a future release.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AppContainersSkuName : System.IEquatable<Azure.ResourceManager.AppContainers.Models.AppContainersSkuName>
     {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public AppContainersSkuName(string value) { throw null; }
         public static Azure.ResourceManager.AppContainers.Models.AppContainersSkuName Consumption { get { throw null; } }
         public static Azure.ResourceManager.AppContainers.Models.AppContainersSkuName Premium { get { throw null; } }

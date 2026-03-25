@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Encode.Numeric._Property;
 
@@ -15,7 +16,12 @@ namespace Encode.Numeric
     {
         public NumericClient() : this(new Uri("http://localhost:3000"), new NumericClientOptions()) => throw null;
 
-        public NumericClient(Uri endpoint, NumericClientOptions options) => throw null;
+        internal NumericClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, NumericClientOptions options) => throw null;
+
+        public NumericClient(Uri endpoint, NumericClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public NumericClient(NumericClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

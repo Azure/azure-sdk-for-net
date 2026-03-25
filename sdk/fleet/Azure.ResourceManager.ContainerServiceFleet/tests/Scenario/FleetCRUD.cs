@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
         }
 
         [TestCase]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/56422")]
         public async Task FleetCRUDTest()
         {
             Console.WriteLine("starting FleetCRUDTest");

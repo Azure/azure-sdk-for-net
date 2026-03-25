@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Search.Models
     public readonly partial struct SearchServicePublicInternetAccess : IEquatable<SearchServicePublicInternetAccess>
     {
         private readonly string _value;
+        /// <summary> The search service is accessible from traffic originating from the public internet. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> The search service is not accessible from traffic originating from the public internet. Access is only permitted over approved private endpoint connections. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> The network security perimeter configuration rules allow or disallow public network access to the resource. Requires an associated network security perimeter. </summary>
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Initializes a new instance of <see cref="SearchServicePublicInternetAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchServicePublicInternetAccess(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
+            _value = value;
+        }
 
         /// <summary> The search service is accessible from traffic originating from the public internet. </summary>
         public static SearchServicePublicInternetAccess Enabled { get; } = new SearchServicePublicInternetAccess(EnabledValue);
+
         /// <summary> The search service is not accessible from traffic originating from the public internet. Access is only permitted over approved private endpoint connections. </summary>
         public static SearchServicePublicInternetAccess Disabled { get; } = new SearchServicePublicInternetAccess(DisabledValue);
+
         /// <summary> The network security perimeter configuration rules allow or disallow public network access to the resource. Requires an associated network security perimeter. </summary>
         public static SearchServicePublicInternetAccess SecuredByPerimeter { get; } = new SearchServicePublicInternetAccess(SecuredByPerimeterValue);
+
         /// <summary> Determines if two <see cref="SearchServicePublicInternetAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchServicePublicInternetAccess left, SearchServicePublicInternetAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SearchServicePublicInternetAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchServicePublicInternetAccess left, SearchServicePublicInternetAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchServicePublicInternetAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SearchServicePublicInternetAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SearchServicePublicInternetAccess(string value) => new SearchServicePublicInternetAccess(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SearchServicePublicInternetAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SearchServicePublicInternetAccess?(string value) => value == null ? null : new SearchServicePublicInternetAccess(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchServicePublicInternetAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SearchServicePublicInternetAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

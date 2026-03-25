@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { isVariableSegment, findLongestPrefixMatch } from "./utils.js";
+import {
+  isVariableSegment,
+  findLongestPrefixMatch,
+  countProviderSegments
+} from "./utils.js";
+import {
+  DecoratedType,
+  getClientOptions
+} from "@azure-tools/typespec-client-generator-core";
 
 const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
@@ -40,6 +48,28 @@ export enum ResourceScope {
   Extension = "Extension"
 }
 
+/**
+ * Constraints on the resource name from TypeSpec @pattern, @minLength, @maxLength decorators.
+ */
+export interface NameConstraints {
+  /** The regex pattern constraint for the resource name, from @pattern decorator */
+  pattern?: string;
+  /** The minimum length constraint for the resource name, from @minLength decorator */
+  minLength?: number;
+  /** The maximum length constraint for the resource name, from @maxLength decorator */
+  maxLength?: number;
+}
+
+/**
+ * Represents a single RBAC role definition for a resource.
+ */
+export interface RbacRole {
+  /** The role name (e.g., "KeyVaultContributor") */
+  name: string;
+  /** The role GUID (e.g., "f25e0fa2-a7c8-4377-a976-54943a77a395") */
+  value: string;
+}
+
 export interface ResourceMetadata {
   resourceIdPattern: string;
   resourceType: string;
@@ -49,6 +79,12 @@ export interface ResourceMetadata {
   parentResourceModelId?: string;
   singletonResourceName?: string;
   resourceName: string;
+  /** The name constraints for the resource, from TypeSpec decorators */
+  nameConstraints: NameConstraints;
+  /** The API versions that this resource is available in */
+  apiVersions: string[];
+  /** The RBAC roles defined for this resource via @@clientOption */
+  rbacRoles: RbacRole[];
 }
 
 export function convertResourceMetadataToArguments(
@@ -65,10 +101,31 @@ export function convertResourceMetadataToArguments(
   };
 }
 
+const rbacRolesKey = "resource-rbac-roles";
+
+/**
+ * Extracts RBAC roles from a model's @@clientOption decorator with key "resource-rbac-roles".
+ * Uses TCGC's getClientOptions API which handles scope filtering.
+ * The value is expected to be a record of role name to role GUID.
+ */
+export function extractRbacRoles(model: DecoratedType | undefined): RbacRole[] {
+  if (!model) return [];
+  const value = getClientOptions(model, rbacRolesKey);
+  if (!value || typeof value !== "object") return [];
+  return Object.entries(value as Record<string, string>).map(
+    ([name, guid]) => ({
+      name,
+      value: guid
+    })
+  );
+}
+
 export interface NonResourceMethod {
   methodId: string;
   operationPath: string;
   operationScope: ResourceScope;
+  /** The cross-language definition ID of the resource model this method originally belonged to */
+  resourceModelId?: string;
 }
 
 export function convertMethodMetadataToArguments(
@@ -115,6 +172,27 @@ export enum ResourceOperationKind {
   Read = "Read",
   List = "List",
   Update = "Update"
+}
+
+/**
+ * Resolves the API versions for a resource from its methods.
+ * Uses the Create method's versions if available, otherwise falls back to the Read method's versions.
+ * @param methods - The resource's methods
+ * @param methodApiVersionsMap - A map from methodId to its API versions
+ * @returns The API versions for the resource
+ */
+export function resolveResourceApiVersions(
+  methods: ResourceMethod[],
+  methodApiVersionsMap: Map<string, string[]>
+): string[] {
+  const createMethod = methods.find(
+    (m) => m.kind === ResourceOperationKind.Create
+  );
+  const readMethod = methods.find((m) => m.kind === ResourceOperationKind.Read);
+  const primaryMethod = createMethod ?? readMethod;
+  return primaryMethod
+    ? methodApiVersionsMap.get(primaryMethod.methodId) ?? []
+    : [];
 }
 
 /**
@@ -208,7 +286,10 @@ export function convertArmProviderSchemaToArguments(
       resourceScope: r.metadata.resourceScope,
       parentResourceId: r.metadata.parentResourceId,
       singletonResourceName: r.metadata.singletonResourceName,
-      resourceName: r.metadata.resourceName
+      resourceName: r.metadata.resourceName,
+      nameConstraints: r.metadata.nameConstraints,
+      apiVersions: r.metadata.apiVersions,
+      rbacRoles: r.metadata.rbacRoles
     })),
     nonResourceMethods: schema.nonResourceMethods.map((m) => ({
       methodId: m.methodId,
@@ -263,6 +344,12 @@ export function postProcessArmResources(
   }
 
   for (const resource of resources) {
+    // Skip if parentResourceId was already set by the caller (e.g., path-based detection
+    // in legacy resource detection). This preserves scope-accurate parent assignments for
+    // cross-scope resources where the same model exists at multiple scopes (e.g., tenant
+    // and subscription), since path-based detection picks the correct scope variant.
+    if (resource.metadata.parentResourceId) continue;
+
     // Use the provided parent lookup context to find parent
     const parentResource = parentLookup.getParentResource(resource);
     if (
@@ -312,7 +399,8 @@ export function postProcessArmResources(
         nonResourceMethods.push({
           methodId: method.methodId,
           operationPath: method.operationPath,
-          operationScope: method.operationScope
+          operationScope: method.operationScope,
+          resourceModelId: resource.resourceModelId
         });
       }
     }
@@ -413,7 +501,8 @@ export function postProcessArmResources(
           nonResourceMethods.push({
             methodId: method.methodId,
             operationPath: method.operationPath,
-            operationScope: method.operationScope
+            operationScope: method.operationScope,
+            resourceModelId: resource.resourceModelId
           });
         }
       }
@@ -431,10 +520,18 @@ export function postProcessArmResources(
 }
 
 /**
- * Assigns non-resource methods to resources based on operationPath prefix matching.
- * If a non-resource method's operationPath has a prefix that matches a resource's
- * resourceIdPattern, the method is moved to that resource as an Action.
- * If multiple resources match, the one with the longest prefix (most segments) wins.
+ * Assigns non-resource methods to resources based on three matching strategies:
+ * 1. Prefix matching: if the method's operationPath has a prefix that matches a resource's
+ *    resourceIdPattern, the method is moved to that resource as an Action.
+ * 2. Resource model ID matching: if prefix matching fails but the method has a resourceModelId,
+ *    it is matched to a valid resource with the same model ID and assigned as a List operation.
+ *    This handles extension resources where list paths have different parent structures.
+ * 3. Resource type matching: if both prefix and model ID matching fail, the resource type
+ *    is extracted from the operation path using calculateResourceTypeFromPath (which includes
+ *    the provider namespace) and compared against each resource's metadata.resourceType.
+ *    The provider hierarchy depth must also match to prevent cross-scope false matches.
+ *    This handles operations from resolveArmResources that lack resourceModelId but share
+ *    a resource type with a known resource.
  *
  * @param resources - The list of valid resources
  * @param nonResourceMethods - The array of non-resource methods (will be mutated: matched methods are removed)
@@ -462,6 +559,58 @@ export function assignNonResourceMethodsToResources(
         resourceScope: bestMatch.metadata.resourceIdPattern
       });
       methodsToRemove.add(method.methodId);
+    } else if (method.resourceModelId) {
+      // Prefix matching failed — try matching by resource model ID.
+      // This handles extension resources where the list path and resource ID pattern
+      // have different parent path structures but originate from the same resource type.
+      const match = resources.find(
+        (r) => r.resourceModelId === method.resourceModelId
+      );
+      if (match) {
+        match.metadata.methods.push({
+          methodId: method.methodId,
+          kind: ResourceOperationKind.List,
+          operationPath: method.operationPath,
+          operationScope: method.operationScope,
+          resourceScope: undefined
+        });
+        methodsToRemove.add(method.methodId);
+      }
+    } else {
+      // Both prefix and model ID matching failed — try matching by resource type.
+      // Extension resource list paths may have fewer parent segments than the resource
+      // ID pattern, causing a structural length mismatch that prefix matching cannot resolve.
+      // As a final fallback, compare the resource type (extracted via calculateResourceTypeFromPath,
+      // which includes the provider namespace) against each resource's metadata.resourceType.
+      // The provider hierarchy depth must also match to prevent cross-scope false matches
+      // (e.g., RG-scoped list matching a VM-scoped extension resource).
+      if (method.operationPath.includes("/providers/")) {
+        const operationType = calculateResourceTypeFromPath(
+          method.operationPath
+        );
+        const operationProviderDepth = countProviderSegments(
+          method.operationPath
+        );
+        const match = resources.find((r) => {
+          if (
+            countProviderSegments(r.metadata.resourceIdPattern) !==
+            operationProviderDepth
+          ) {
+            return false;
+          }
+          return r.metadata.resourceType === operationType;
+        });
+        if (match) {
+          match.metadata.methods.push({
+            methodId: method.methodId,
+            kind: ResourceOperationKind.List,
+            operationPath: method.operationPath,
+            operationScope: method.operationScope,
+            resourceScope: undefined
+          });
+          methodsToRemove.add(method.methodId);
+        }
+      }
     }
   }
 

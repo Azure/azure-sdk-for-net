@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-03-21"
+  "apiVersions": {
+    "Dell.Storage": "2025-03-21"
+  }
 }

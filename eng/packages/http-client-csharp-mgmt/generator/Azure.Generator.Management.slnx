@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Azure.Generator.Management/src/Azure.Generator.Management.csproj" />
+  <Project Path="Azure.Generator.Management/test/Azure.Generator.Mgmt.Tests.csproj" />
+  <Project Path="Azure.Generator.Management/test/Common/Azure.Generator.Management.Tests.Common.csproj" />
+</Solution>

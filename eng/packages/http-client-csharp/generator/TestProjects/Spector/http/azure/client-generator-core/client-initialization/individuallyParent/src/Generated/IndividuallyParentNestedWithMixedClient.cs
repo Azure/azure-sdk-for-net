@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,9 +18,18 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyPar
     {
         protected IndividuallyParentNestedWithMixedClient() => throw null;
 
+        internal IndividuallyParentNestedWithMixedClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string name) => throw null;
+
         public IndividuallyParentNestedWithMixedClient(string name) : this(new Uri("http://localhost:3000"), name, new IndividuallyParentClientOptions()) => throw null;
 
-        public IndividuallyParentNestedWithMixedClient(Uri endpoint, string name, IndividuallyParentClientOptions options) => throw null;
+        public IndividuallyParentNestedWithMixedClient(string name, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), name, options) => throw null;
+
+        internal IndividuallyParentNestedWithMixedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, IndividuallyParentClientOptions options) => throw null;
+
+        public IndividuallyParentNestedWithMixedClient(Uri endpoint, string name, IndividuallyParentClientOptions options) : this(null, endpoint, name, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public IndividuallyParentNestedWithMixedClient(IndividuallyParentNestedWithMixedClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

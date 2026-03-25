@@ -4,7 +4,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.Agents;
+using Azure.AI.Extensions.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
@@ -27,7 +28,7 @@ public class AgentsSmokeTests : AgentsTestBase
             new Uri("https://ai.azure.com/mock/endpoint/api/projects/myProject"),
             new MockCredential());
         Assert.That(projectClient, Is.Not.Null);
-        AIProjectAgentsOperations agentClient = projectClient.Agents;
+        AgentAdministrationClient agentClient = projectClient.Agents;
         Assert.That(agentClient, Is.Not.Null);
         ProjectOpenAIClient openAIClient = projectClient.OpenAI;
         Assert.That(openAIClient, Is.Not.Null);
@@ -175,7 +176,7 @@ public class AgentsSmokeTests : AgentsTestBase
     [Test]
     public void TestPromptAgentSerialization()
     {
-        PromptAgentDefinition agent = new(model: "test-model");
+        DeclarativeAgentDefinition agent = new(model: "test-model");
         Assert.That(ModelReaderWriter.Write(agent).ToString(), Does.Contain("kind"));
 
         agent = new("test-model")

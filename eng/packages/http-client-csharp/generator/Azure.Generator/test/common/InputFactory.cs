@@ -683,6 +683,13 @@ namespace Azure.Generator.Tests.Common
                 clientChildren,
                 []);
             _childClientsCache[client] = clientChildren;
+            // Top-level clients (no parent) should be individually initializable by default
+            if (parent == null)
+            {
+                var initializedByProperty = typeof(InputClient).GetProperty(nameof(InputClient.InitializedBy));
+                var setMethod = initializedByProperty?.GetSetMethod(true);
+                setMethod!.Invoke(client, [InputClientInitializedBy.Individually]);
+            }
             // when we have a parent, we need to find the children list of this parent client and update accordingly.
             if (parent != null && _childClientsCache.TryGetValue(parent, out var children))
             {

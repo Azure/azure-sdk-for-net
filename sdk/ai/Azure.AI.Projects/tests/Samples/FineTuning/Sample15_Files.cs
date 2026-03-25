@@ -8,7 +8,7 @@ using System;
 using System.ClientModel;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
 using NUnit.Framework;
 using OpenAI.Files;
@@ -26,7 +26,7 @@ public class Sample15_Files : SamplesBase
 #else
         string trainFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
 #endif
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ProjectOpenAIClient oaiClient = projectClient.OpenAI;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
@@ -82,7 +82,7 @@ public class Sample15_Files : SamplesBase
 #else
         string trainFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
 #endif
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ProjectOpenAIClient oaiClient = projectClient.OpenAI;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();

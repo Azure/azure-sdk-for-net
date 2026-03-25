@@ -55,16 +55,16 @@ namespace Azure.Search.Documents.Tests
         }
 
         public FacetResult MakeRangeFacet(int count, object from, object to) =>
-            new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: new Dictionary<string, IList<FacetResult>>(), additionalProperties: new Dictionary<string, object>()
+            SearchModelFactory.FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: new Dictionary<string, IList<FacetResult>>(), additionalProperties: new Dictionary<string, BinaryData>()
             {
-                ["from"] = from,
-                ["to"] = to
+                ["from"] = BinaryData.FromObjectAsJson(from),
+                ["to"] = BinaryData.FromObjectAsJson(to)
             });
 
         public FacetResult MakeValueFacet(int count, object value) =>
-            new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: new Dictionary<string, IList<FacetResult>>(), new Dictionary<string, object>()
+            SearchModelFactory.FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: new Dictionary<string, IList<FacetResult>>(), new Dictionary<string, BinaryData>()
             {
-                ["value"] = value
+                ["value"] = BinaryData.FromObjectAsJson(value)
             });
 
         private void AssertFacetsEqual(

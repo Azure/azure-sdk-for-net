@@ -4,17 +4,17 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Tests_Samples_Namespaces
-using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 #endregion Snippet:Azure_Search_Tests_Samples_Namespaces
+using System.Threading;
 using NUnit.Framework;
+using Azure.Core.Pipeline;
+using System.Net.Http;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
@@ -217,7 +217,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Make sure our synonym map gets deleted, which is not deleted when our
                 // index is deleted when our SearchResources goes out of scope.
-                cleanUpTasks.Push(() => indexClient.DeleteSynonymMapAsync(synonymMapName));
+                cleanUpTasks.Push(() => indexClient.DeleteSynonymMapAsync(synonymMapName, cancellationToken: CancellationToken.None));
 
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_CreateIndex
                 // Create the index
@@ -253,7 +253,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Make sure our synonym map gets deleted, which is not deleted when our
                 // index is deleted when our SearchResources goes out of scope.
-                cleanUpTasks.Push(() => indexClient.DeleteIndexAsync(indexName));
+                cleanUpTasks.Push(() => indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None));
 
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_CreateDataSourceConnection
                 // Create a new SearchIndexerClient
@@ -277,7 +277,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Make sure our data source gets deleted, which is not deleted when our
                 // index is deleted when our SearchResources goes out of scope.
-                cleanUpTasks.Push(() => indexerClient.DeleteDataSourceConnectionAsync(dataSourceConnectionName));
+                cleanUpTasks.Push(() => indexerClient.DeleteDataSourceConnectionAsync(dataSourceConnectionName, cancellationToken: CancellationToken.None));
 
 #if SNIPPET
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_SearchClientOptions
@@ -357,7 +357,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Make sure our skillset gets deleted, which is not deleted when our
                 // index is deleted when our SearchResources goes out of scope.
-                cleanUpTasks.Push(() => indexerClient.DeleteSkillsetAsync(skillsetName));
+                cleanUpTasks.Push(() => indexerClient.DeleteSkillsetAsync(skillsetName, cancellationToken: CancellationToken.None));
 
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_CreateIndexer
                 string indexerName = "hotels";
@@ -399,7 +399,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Make sure our indexer gets deleted, which is not deleted when our
                 // index is deleted when our SearchResources goes out of scope.
-                cleanUpTasks.Push(() => indexerClient.DeleteIndexerAsync(indexerName));
+                cleanUpTasks.Push(() => indexerClient.DeleteIndexerAsync(indexerName, cancellationToken: CancellationToken.None));
 
                 // Wait till the indexer is done.
                 await WaitForIndexingAsync(indexerClient, indexerName);

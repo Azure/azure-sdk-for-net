@@ -9,7 +9,8 @@ using System.ClientModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.Agents;
+using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices;
@@ -34,8 +35,8 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase
         string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
         string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_validation_set.jsonl");
 #endif
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ProjectOpenAIClient oaiClient = projectClient.OpenAI;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
@@ -171,8 +172,8 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase
         string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
         string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_validation_set.jsonl");
 #endif
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ProjectOpenAIClient oaiClient = projectClient.OpenAI;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
@@ -302,7 +303,7 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase
     {
         #region Snippet:AI_Projects_FineTuning_DeployModelAsync
         // Get the completed fine-tuning job
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         FineTuningClient fineTuningClient = projectClient.OpenAI.GetFineTuningClient();
 
@@ -356,7 +357,7 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase
     {
         #region Snippet:AI_Projects_FineTuning_DeployModel
         // Get the completed fine-tuning job
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         FineTuningClient fineTuningClient = projectClient.OpenAI.GetFineTuningClient();
 
@@ -412,7 +413,7 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase
         // Get the deployed fine-tuned model
         string deploymentName = "your-deployment-name";
 
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
         // Get responses client for the specific deployment
@@ -440,7 +441,7 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase
         // Get the deployed fine-tuned model
         string deploymentName = "your-deployment-name";
 
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
         // Get responses client for the specific deployment

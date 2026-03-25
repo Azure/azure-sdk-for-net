@@ -69,10 +69,10 @@ namespace Microsoft.Extensions.Azure
         public static IAzureClientBuilder<IndividuallyNestedWithMixedClient, IndividuallyNestedWithMixedClientOptions> AddIndividuallyNestedWithMixedClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<IndividuallyNestedWithParamAliasClient, IndividuallyNestedWithParamAliasClientOptions> AddIndividuallyNestedWithParamAliasClient<TBuilder>(this TBuilder builder, string blobName, string blob)
+        public static IAzureClientBuilder<IndividuallyNestedWithParamAliasClient, IndividuallyNestedWithParamAliasClientOptions> AddIndividuallyNestedWithParamAliasClient<TBuilder>(this TBuilder builder, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<IndividuallyNestedWithParamAliasClient, IndividuallyNestedWithParamAliasClientOptions> AddIndividuallyNestedWithParamAliasClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName, string blob)
+        public static IAzureClientBuilder<IndividuallyNestedWithParamAliasClient, IndividuallyNestedWithParamAliasClientOptions> AddIndividuallyNestedWithParamAliasClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
