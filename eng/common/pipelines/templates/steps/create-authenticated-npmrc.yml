@@ -21,7 +21,7 @@ steps:
       New-Item -Path $parentFolder -ItemType Directory | Out-Null
     }
 
-    $content = "registry=${{ parameters.registryUrl }}`n`nalways-auth=true"
+    $content = "registry=${{ parameters.registryUrl }}"
     $content | Out-File '${{ parameters.npmrcPath }}'
   displayName: 'Create .npmrc'
   condition: ${{ parameters.CustomCondition }}

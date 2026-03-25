@@ -51,6 +51,8 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             Assert.AreEqual(expected.StandbyPoolName, actual.Data.Name);
             Assert.AreEqual(expected.MaxReadyCapacity, actual.Data.Properties.ElasticityProfile.MaxReadyCapacity);
             Assert.AreEqual(expected.MinReadyCapacity, actual.Data.Properties.ElasticityProfile.MinReadyCapacity);
+            Assert.AreEqual(expected.PostProvisioningDelay, actual.Data.Properties.ElasticityProfile.PostProvisioningDelay);
+            Assert.AreEqual(expected.DynamicSizingEnabled, actual.Data.Properties.ElasticityProfile.DynamicSizingEnabled);
             Assert.AreEqual(expected.AttachedVirtualMachineScaleSetId, actual.Data.Properties.AttachedVirtualMachineScaleSetId);
 
             if (expected.Id != null)
@@ -85,7 +87,9 @@ namespace Azure.ResourceManager.StandbyPool.Tests
                 location: location,
                 vmssId: standbyVirtualMachinePoolResourceProperties.AttachedVirtualMachineScaleSetId,
                 minReadyCapacity: standbyVirtualMachinePoolResourceProperties.MinReadyCapacity,
-                virtualMachineState: standbyVirtualMachinePoolResourceProperties.StandbyVirtualMachineState.ToString());
+                virtualMachineState: standbyVirtualMachinePoolResourceProperties.StandbyVirtualMachineState.ToString(),
+                postProvisioningDelay: standbyVirtualMachinePoolResourceProperties.PostProvisioningDelay,
+                dynamicSizingEnabled: standbyVirtualMachinePoolResourceProperties.DynamicSizingEnabled);
 
             VerifyStandbyVirtualMachinePool(standbyVirtualMachinePoolResourceProperties, standbyVirtualMachinePool_CREATE);
 
@@ -124,6 +128,8 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             standbyVirtualMachinePoolResourceProperties.StandbyPoolName = standbyPoolName;
             standbyVirtualMachinePoolResourceProperties.MaxReadyCapacity = 2;
             standbyVirtualMachinePoolResourceProperties.MinReadyCapacity = 2;
+            standbyVirtualMachinePoolResourceProperties.PostProvisioningDelay = "PT10S";
+            standbyVirtualMachinePoolResourceProperties.DynamicSizingEnabled = true;
             standbyVirtualMachinePoolResourceProperties.StandbyVirtualMachineState = StandbyVirtualMachineState.Running;
             standbyVirtualMachinePoolResourceProperties.ResourceGroup = await CreateResourceGroup(subscription, resourceGroupName, location);
 
@@ -141,6 +147,8 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         {
             public long MaxReadyCapacity { get; set; }
             public long MinReadyCapacity { get; set; }
+            public string PostProvisioningDelay { get; set; }
+            public bool? DynamicSizingEnabled { get; set; }
             public ResourceIdentifier Id { get; set; }
             public ResourceIdentifier AttachedVirtualMachineScaleSetId { get; set; }
             public ResourceIdentifier StandbyVirtualMachinePoolRuntimeViewResourceId { get; set; }

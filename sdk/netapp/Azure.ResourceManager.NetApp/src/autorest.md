@@ -69,32 +69,62 @@ override-operation-name:
   NetAppResourceQuotaLimits_Get: GetNetAppQuotaLimit
   NetAppResourceQuotaLimits_List: GetNetAppQuotaLimits
   Volumes_ReplicationStatus: GetReplicationStatus
-  Backups_GetStatus: GetBackupStatus
-  Backups_GetVolumeRestoreStatus: GetRestoreStatus
   VolumeGroups_ListByNetAppAccount: GetVolumeGroups
-  QueryRegionInfoNetAppResource: QueryRegionInfoNetApp
+  ElasticCapacityPools_CheckVolumeFilePathAvailability: CheckElasticVolumeFilePathAvailability
+  Buckets_GenerateAkvCredentials: GenerateKeyVaultCredentials
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
 
 prepend-rp-prefix:
+  - ActiveDirectoryConfig
+  - ActiveDirectoryConfigProperties
   - Backup
   - BackupType
   - BackupPolicy
+  - Bucket
+  - BucketPermissions
+  - BucketPatchPermissions
+  - BucketServerProperties
+  - BucketServerPatchProperties
+  - Cache
+  - CacheProperties
+  - CacheProvisioningState
   - EndpointType
+  - ElasticAccount
+  - ElasticAccountProperties
+  - ElasticBackup
+  - ElasticBackupProperties
+  - ElasticBackupPolicy
+  - ElasticBackupPolicyProperties
+  - ElasticBackupType
+  - ElasticBackupVault
+  - ElasticBackupVaultProperties
+  - ElasticCapacityPool
+  - ElasticCapacityPoolProperties
+  - ElasticSnapshot
+  - ElasticSnapshotProperties
+  - ElasticSnapshotPolicy
+  - ElasticSnapshotPolicyProperties
+  - ElasticVolume
+  - ElasticVolumeProperties
+  - EntraIdConfig
+  - EntraIdConfigPatch
+  - LdapConfiguration
+  - LdapConfigurationPatch
   - Volume
   - VolumeQuotaRule
-  - Vault
   - RestoreStatus
   - ApplicationType
   - AvsDataStore
   - ChownMode
   - EncryptionKeySource
   - MirrorState
-  - RelationshipStatus
-  - ProvisioningState
   - ReplicationObject
   - ReplicationSchedule
+  - SecretPassword
+  - SecretPasswordIdentity
+  - SecretPasswordKeyVaultProperties
   - VolumeStorageToNetworkProximity
   - AccountEncryption
   - KeySource
@@ -109,8 +139,21 @@ prepend-rp-prefix:
   - KeyVaultPrivateEndpoint
   - ReplicationType
   - VolumeLanguage
+  - ElasticEncryption
+  - ManagedServiceIdentityType
+  - BucketCredentialsExpiry
+  - BucketGenerateCredentials
+  - CacheMountTargetProperties
+  - CacheLifeCycleState
 
 rename-mapping:
+  AzureKeyVaultDetails: NetAppKeyVaultDetails
+  AzureKeyVaultDetails.certificateAkvDetails: CertificateKeyVaultDetails
+  AzureKeyVaultDetails.credentialsAkvDetails: CredentialsKeyVaultDetails
+  Bucket.properties.akvDetails: KeyVaultDetails
+  BucketPatch.properties.akvDetails: KeyVaultDetails
+  EntraIdConfig.entraIdAkvConfig: EntraIdKeyVaultConfig
+  EntraIdConfigPatch.entraIdAkvConfig: EntraIdKeyVaultConfig
   CapacityPool.properties.poolId: -|uuid
   FilePathAvailabilityRequest.subnetId: -|arm-id
   MountTargetProperties.mountTargetId: -|uuid
@@ -183,9 +226,7 @@ rename-mapping:
   ReplicationObject.remoteVolumeResourceId: -|arm-id
   VolumeBackupProperties.backupPolicyId: -|arm-id
   VolumeBackupProperties.policyEnforced: IsPolicyEnforced
-  VolumeBackupProperties.vaultId: -|arm-id
   VolumeBackupProperties.backupVaultId: -|arm-id
-  VolumeBackupProperties.backupEnabled: IsBackupEnabled
   VolumeGroupDetails: NetAppVolumeGroup
   QosType: CapacityPoolQosType
   ServiceLevel: NetAppFileServiceLevel
@@ -203,7 +244,6 @@ rename-mapping:
   Exclude: ExcludeReplicationsFilter
   Snapshot: NetAppVolumeSnapshot
   QuotaItem: NetAppSubscriptionQuotaItem
-  SubscriptionQuotaItem: NetAppSubscriptionQuotaItem
   SubvolumeInfo: NetAppSubvolumeInfo
   Replication: NetAppVolumeReplication
   BackupStatus: NetAppVolumeBackupStatus
@@ -213,7 +253,6 @@ rename-mapping:
   BreakReplicationRequest: NetAppVolumeBreakReplicationContent
   DailySchedule: SnapshotPolicyDailySchedule
   EnableSubvolumes: EnableNetAppSubvolume
-  EncryptionType: CapacityPoolEncryptionType
   ExportPolicyRule: NetAppVolumeExportPolicyRule
   HourlySchedule: SnapshotPolicyHourlySchedule
   MonthlySchedule: SnapshotPolicyMonthlySchedule
@@ -269,7 +308,51 @@ rename-mapping:
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
-  CheckElasticResourceAvailabilityResponse: CheckElasticResourceAvailabilityResponseResult
+  ElasticResourceAvailabilityStatus: NetAppElasticResourceAvailabilityState
+  CheckElasticVolumeFilePathAvailabilityRequest: ElasticVolumeFilePathAvailabilityContent
+  CheckElasticResourceAvailabilityResponse: ElasticResourceAvailabilityResult
+  CheckElasticResourceAvailabilityStatus: ElasticResourceAvailabilityStatus
+  CheckElasticResourceAvailabilityReason: ElasticResourceAvailabilityReason
+  BreakthroughMode: NetAppBreakthroughMode
+  CertificateAkvDetails: CertificateKeyVaultDetails
+  CifsChangeNotifyState: NetAppCifsChangeNotifyState
+  CredentialsAkvDetails: CredentialsKeyVaultDetails
+  CredentialsStatus: NetAppCredentialsStatus
+  DayOfWeek: NetAppDayOfWeek
+  EnableWriteBackState: NetAppEnableWriteBackState
+  EncryptionState: NetAppEncryptionState
+  EntraIdAkvConfig: EntraIdKeyVaultConfig
+  EntraIdAkvConfigPatch: EntraIdKeyVaultConfigPatch
+  ExternalReplicationSetupStatus: NetAppExternalReplicationSetupStatus
+  FileSystemUser: NetAppFileSystemUser
+  GlobalFileLockingState: NetAppGlobalFileLockingState
+  KerberosState: NetAppKerberosState
+  LargeVolumeType: NetAppLargeVolumeType
+  LdapServerType: NetAppLdapServerType
+  LdapState: NetAppLdapState
+  NfsUser: NetAppNfsUser
+  OnCertificateConflictAction: NetAppOnCertificateConflictAction
+  OriginClusterInformation: NetAppOriginClusterInformation
+  PeeringPassphrases: NetAppPeeringPassphrases
+  PolicyStatus: NetAppPolicyStatus
+  SmbEncryptionState: NetAppSmbEncryptionState
+  SmbSettings: NetAppSmbSettings
+  SnapshotDirectoryVisibility: NetAppSnapshotDirectoryVisibility
+  SnapshotUsage: NetAppSnapshotUsage
+  VolumeSize: NetAppBackupVolumeSize
+  BucketGenerateCredentials.keyPairExpiry: KeyPairExpiresOn
+  ChangeZoneRequest: ElasticCapacityPoolChangeZoneContent
+  ElasticProtocolType: NetAppElasticProtocolType
+  ElasticProtocolType.NFSv3: Nfsv3
+  ElasticProtocolType.NFSv4: Nfsv4
+  ElasticProtocolType.SMB: Smb
+  ProtocolTypes: NetAppProtocolType
+  ProtocolTypes.NFSv3: Nfsv3
+  ProtocolTypes.NFSv4: Nfsv4
+  ProtocolTypes.SMB: Smb
+  SecretPasswordUpdate: NetAppSecretPasswordPatch
+  LdapConfiguration.ldapOverTLS: IsLdapOverTlsEnabled
+  LdapConfigurationPatch.ldapOverTLS: IsLdapOverTlsEnabled
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
