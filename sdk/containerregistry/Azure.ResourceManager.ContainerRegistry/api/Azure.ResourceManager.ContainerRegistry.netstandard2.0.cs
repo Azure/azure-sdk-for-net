@@ -4076,7 +4076,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public partial class GarbageCollectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.GarbageCollectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.GarbageCollectionProperties>
     {
         public GarbageCollectionProperties() { }
-        [System.ObsoleteAttribute("Enabled is deprecated, use IsEnabled instead.")]
         public bool? Enabled { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public string Schedule { get { throw null; } set { } }

@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -12,7 +11,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         /// <summary> Indicates whether garbage collection is enabled for the connected registry. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Enabled is deprecated, use IsEnabled instead.")]
         [WirePath("enabled")]
         public bool? Enabled
         {
