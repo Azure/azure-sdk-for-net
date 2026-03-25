@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="selfManagedVersionDetail"> Self managed versions. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailableVersionProperties(string kubernetesVersion, FullyManagedVersions fullyManagedVersions, SelfManagedVersions selfManagedVersionDetail, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailableVersionProperties(string kubernetesVersion, FullyManagedVersions fullyManagedVersions, SelfManagedVersions selfManagedVersionDetail, AppLinkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KubernetesVersion = kubernetesVersion;
             FullyManagedVersions = fullyManagedVersions;
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         internal SelfManagedVersions SelfManagedVersionDetail { get; }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public AppLinkProvisioningState? ProvisioningState { get; }
 
         /// <summary> Release channels. </summary>
-        public IList<ReleaseChannelInfo> FullyManagedVersionsReleaseChannels
+        public IList<AppLinkReleaseChannelInfo> FullyManagedVersionsReleaseChannels
         {
             get
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> Istio versions. </summary>
-        public IList<VersionInfo> SelfManagedVersionDetailVersions
+        public IList<AppLinkVersionInfo> SelfManagedVersionDetailVersions
         {
             get
             {

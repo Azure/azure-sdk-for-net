@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppNetwork
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? AppLinkProvisioningState
+        public AppLinkProvisioningState? AppLinkProvisioningState
         {
             get
             {

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="appLinkProvisioningState"> Provisioning state. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="AppNetwork.AppLinkData"/> instance for mocking. </returns>
-        public static AppLinkData AppLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ProvisioningState? appLinkProvisioningState = default, ManagedServiceIdentity identity = default)
+        public static AppLinkData AppLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AppLinkProvisioningState? appLinkProvisioningState = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="connectivityProfile"> Connectivity profile. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="Models.AppLinkMemberProperties"/> instance for mocking. </returns>
-        public static AppLinkMemberProperties AppLinkMemberProperties(ClusterType? clusterType = default, ResourceIdentifier metadataResourceId = default, UpgradeProfile upgradeProfile = default, string observabilityMetricsEndpoint = default, ConnectivityProfile connectivityProfile = default, ProvisioningState? provisioningState = default)
+        public static AppLinkMemberProperties AppLinkMemberProperties(AppLinkClusterType? clusterType = default, ResourceIdentifier metadataResourceId = default, AppLinkUpgradeProfile upgradeProfile = default, string observabilityMetricsEndpoint = default, AppLinkConnectivityProfile connectivityProfile = default, AppLinkProvisioningState? provisioningState = default)
         {
             return new AppLinkMemberProperties(
                 clusterType,
@@ -127,18 +127,18 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> AppLinkMember upgrade history properties. </summary>
-        /// <param name="startTimestamp"> Start timestamp. </param>
-        /// <param name="endTimestamp"> End timestamp. </param>
+        /// <param name="startOn"> Start timestamp. </param>
+        /// <param name="endOn"> End timestamp. </param>
         /// <param name="initiatedBy"> Upgrade initiator. </param>
         /// <param name="fromVersion"> Version upgraded from. </param>
         /// <param name="toVersion"> Version upgraded to. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="Models.UpgradeHistoryProperties"/> instance for mocking. </returns>
-        public static UpgradeHistoryProperties UpgradeHistoryProperties(DateTimeOffset startTimestamp = default, DateTimeOffset? endTimestamp = default, string initiatedBy = default, string fromVersion = default, string toVersion = default, ProvisioningState? provisioningState = default)
+        public static UpgradeHistoryProperties UpgradeHistoryProperties(DateTimeOffset startOn = default, DateTimeOffset? endOn = default, string initiatedBy = default, string fromVersion = default, string toVersion = default, AppLinkProvisioningState? provisioningState = default)
         {
             return new UpgradeHistoryProperties(
-                startTimestamp,
-                endTimestamp,
+                startOn,
+                endOn,
                 initiatedBy,
                 fromVersion,
                 toVersion,
@@ -169,29 +169,29 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="selfManagedVersionDetailVersions"> Istio versions. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="Models.AvailableVersionProperties"/> instance for mocking. </returns>
-        public static AvailableVersionProperties AvailableVersionProperties(string kubernetesVersion = default, IEnumerable<ReleaseChannelInfo> fullyManagedVersionsReleaseChannels = default, IEnumerable<VersionInfo> selfManagedVersionDetailVersions = default, ProvisioningState? provisioningState = default)
+        public static AvailableVersionProperties AvailableVersionProperties(string kubernetesVersion = default, IEnumerable<AppLinkReleaseChannelInfo> fullyManagedVersionsReleaseChannels = default, IEnumerable<AppLinkVersionInfo> selfManagedVersionDetailVersions = default, AppLinkProvisioningState? provisioningState = default)
         {
-            return new AvailableVersionProperties(kubernetesVersion, fullyManagedVersionsReleaseChannels is null ? default : new FullyManagedVersions((fullyManagedVersionsReleaseChannels ?? new ChangeTrackingList<ReleaseChannelInfo>()).ToList(), null), selfManagedVersionDetailVersions is null ? default : new SelfManagedVersions((selfManagedVersionDetailVersions ?? new ChangeTrackingList<VersionInfo>()).ToList(), null), provisioningState, additionalBinaryDataProperties: null);
+            return new AvailableVersionProperties(kubernetesVersion, fullyManagedVersionsReleaseChannels is null ? default : new FullyManagedVersions((fullyManagedVersionsReleaseChannels ?? new ChangeTrackingList<AppLinkReleaseChannelInfo>()).ToList(), null), selfManagedVersionDetailVersions is null ? default : new SelfManagedVersions((selfManagedVersionDetailVersions ?? new ChangeTrackingList<AppLinkVersionInfo>()).ToList(), null), provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Release channel information. </summary>
         /// <param name="releaseChannel"> Release channel. </param>
         /// <param name="version"> Istio version behind release channel. </param>
-        /// <returns> A new <see cref="Models.ReleaseChannelInfo"/> instance for mocking. </returns>
-        public static ReleaseChannelInfo ReleaseChannelInfo(string releaseChannel = default, string version = default)
+        /// <returns> A new <see cref="Models.AppLinkReleaseChannelInfo"/> instance for mocking. </returns>
+        public static AppLinkReleaseChannelInfo AppLinkReleaseChannelInfo(string releaseChannel = default, string version = default)
         {
-            return new ReleaseChannelInfo(releaseChannel, version, additionalBinaryDataProperties: null);
+            return new AppLinkReleaseChannelInfo(releaseChannel, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Version information. </summary>
         /// <param name="version"> Istio version. </param>
         /// <param name="upgrades"> Available upgrades. </param>
-        /// <returns> A new <see cref="Models.VersionInfo"/> instance for mocking. </returns>
-        public static VersionInfo VersionInfo(string version = default, IEnumerable<string> upgrades = default)
+        /// <returns> A new <see cref="Models.AppLinkVersionInfo"/> instance for mocking. </returns>
+        public static AppLinkVersionInfo AppLinkVersionInfo(string version = default, IEnumerable<string> upgrades = default)
         {
             upgrades ??= new ChangeTrackingList<string>();
 
-            return new VersionInfo(version, upgrades.ToList(), additionalBinaryDataProperties: null);
+            return new AppLinkVersionInfo(version, upgrades.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

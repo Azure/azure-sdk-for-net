@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> AppLinkMember connectivity profile. </summary>
-    public partial class ConnectivityProfile
+    public partial class AppLinkConnectivityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectivityProfile"/>. </summary>
-        public ConnectivityProfile()
+        /// <summary> Initializes a new instance of <see cref="AppLinkConnectivityProfile"/>. </summary>
+        public AppLinkConnectivityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectivityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkConnectivityProfile"/>. </summary>
         /// <param name="eastWestGateway"> East-West gateway profile. </param>
         /// <param name="privateConnect"> Private connect profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityProfile(EastWestGatewayProfile eastWestGateway, PrivateConnectProfile privateConnect, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppLinkConnectivityProfile(EastWestGatewayProfile eastWestGateway, PrivateConnectProfile privateConnect, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EastWestGateway = eastWestGateway;
             PrivateConnect = privateConnect;

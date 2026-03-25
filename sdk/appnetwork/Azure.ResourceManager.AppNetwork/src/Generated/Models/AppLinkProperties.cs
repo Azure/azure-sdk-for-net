@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <summary> Initializes a new instance of <see cref="AppLinkProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppLinkProperties(ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppLinkProperties(AppLinkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public AppLinkProvisioningState? ProvisioningState { get; }
     }
 }

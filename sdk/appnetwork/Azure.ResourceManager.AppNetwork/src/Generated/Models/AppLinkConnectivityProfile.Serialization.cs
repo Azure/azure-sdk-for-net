@@ -13,57 +13,52 @@ using Azure.ResourceManager.AppNetwork;
 
 namespace Azure.ResourceManager.AppNetwork.Models
 {
-    /// <summary> Version information. </summary>
-    public partial class VersionInfo : IJsonModel<VersionInfo>
+    /// <summary> AppLinkMember connectivity profile. </summary>
+    public partial class AppLinkConnectivityProfile : IJsonModel<AppLinkConnectivityProfile>
     {
-        /// <summary> Initializes a new instance of <see cref="VersionInfo"/> for deserialization. </summary>
-        internal VersionInfo()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VersionInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AppLinkConnectivityProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VersionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkConnectivityProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVersionInfo(document.RootElement, options);
+                        return DeserializeAppLinkConnectivityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VersionInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppLinkConnectivityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VersionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkConnectivityProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VersionInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppLinkConnectivityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VersionInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AppLinkConnectivityProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VersionInfo IPersistableModel<VersionInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AppLinkConnectivityProfile IPersistableModel<AppLinkConnectivityProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VersionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppLinkConnectivityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VersionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppLinkConnectivityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,25 +69,21 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VersionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkConnectivityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VersionInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppLinkConnectivityProfile)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("version"u8);
-            writer.WriteStringValue(Version);
-            writer.WritePropertyName("upgrades"u8);
-            writer.WriteStartArray();
-            foreach (string item in Upgrades)
+            if (Optional.IsDefined(EastWestGateway))
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("eastWestGateway"u8);
+                writer.WriteObjectValue(EastWestGateway, options);
             }
-            writer.WriteEndArray();
+            if (Optional.IsDefined(PrivateConnect))
+            {
+                writer.WritePropertyName("privateConnect"u8);
+                writer.WriteObjectValue(PrivateConnect, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -112,54 +103,50 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VersionInfo IJsonModel<VersionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AppLinkConnectivityProfile IJsonModel<AppLinkConnectivityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VersionInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AppLinkConnectivityProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VersionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkConnectivityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VersionInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppLinkConnectivityProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVersionInfo(document.RootElement, options);
+            return DeserializeAppLinkConnectivityProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VersionInfo DeserializeVersionInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppLinkConnectivityProfile DeserializeAppLinkConnectivityProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string version = default;
-            IList<string> upgrades = default;
+            EastWestGatewayProfile eastWestGateway = default;
+            PrivateConnectProfile privateConnect = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("version"u8))
+                if (prop.NameEquals("eastWestGateway"u8))
                 {
-                    version = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eastWestGateway = EastWestGatewayProfile.DeserializeEastWestGatewayProfile(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("upgrades"u8))
+                if (prop.NameEquals("privateConnect"u8))
                 {
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        continue;
                     }
-                    upgrades = array;
+                    privateConnect = PrivateConnectProfile.DeserializePrivateConnectProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +154,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VersionInfo(version, upgrades, additionalBinaryDataProperties);
+            return new AppLinkConnectivityProfile(eastWestGateway, privateConnect, additionalBinaryDataProperties);
         }
     }
 }

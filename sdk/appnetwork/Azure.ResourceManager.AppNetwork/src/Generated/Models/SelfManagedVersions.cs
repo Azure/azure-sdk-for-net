@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="SelfManagedVersions"/>. </summary>
         /// <param name="versions"> Istio versions. </param>
-        internal SelfManagedVersions(IEnumerable<VersionInfo> versions)
+        internal SelfManagedVersions(IEnumerable<AppLinkVersionInfo> versions)
         {
             Versions = versions.ToList();
         }
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <summary> Initializes a new instance of <see cref="SelfManagedVersions"/>. </summary>
         /// <param name="versions"> Istio versions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SelfManagedVersions(IList<VersionInfo> versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SelfManagedVersions(IList<AppLinkVersionInfo> versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Versions = versions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Istio versions. </summary>
-        public IList<VersionInfo> Versions { get; }
+        public IList<AppLinkVersionInfo> Versions { get; }
     }
 }

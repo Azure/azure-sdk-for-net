@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="FullyManagedVersions"/>. </summary>
         /// <param name="releaseChannels"> Release channels. </param>
-        internal FullyManagedVersions(IEnumerable<ReleaseChannelInfo> releaseChannels)
+        internal FullyManagedVersions(IEnumerable<AppLinkReleaseChannelInfo> releaseChannels)
         {
             ReleaseChannels = releaseChannels.ToList();
         }
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <summary> Initializes a new instance of <see cref="FullyManagedVersions"/>. </summary>
         /// <param name="releaseChannels"> Release channels. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FullyManagedVersions(IList<ReleaseChannelInfo> releaseChannels, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FullyManagedVersions(IList<AppLinkReleaseChannelInfo> releaseChannels, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReleaseChannels = releaseChannels;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Release channels. </summary>
-        public IList<ReleaseChannelInfo> ReleaseChannels { get; }
+        public IList<AppLinkReleaseChannelInfo> ReleaseChannels { get; }
     }
 }
