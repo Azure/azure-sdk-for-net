@@ -10,12 +10,10 @@ namespace System.ClientModel.Primitives;
 
 internal class ClientBuilder : IClientBuilder
 {
-    private readonly IHostApplicationBuilder _host;
     private readonly ReferenceConfigurationSection _section;
 
     public ClientBuilder(IHostApplicationBuilder host, IConfigurationSection section)
     {
-        _host = host;
         _section = new(host.Configuration, section.Path);
     }
 
