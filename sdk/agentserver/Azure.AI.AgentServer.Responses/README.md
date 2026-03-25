@@ -35,12 +35,12 @@ Alternatively, register the library services manually in your `Program.cs`:
 ```C# Snippet:Responses_ReadMe_ConfigureServer_Manual
 var builder = WebApplication.CreateBuilder();
 
-            builder.Services.AddResponsesServer();
-            builder.Services.AddScoped<IResponseHandler, EchoHandler>();
+builder.Services.AddResponsesServer();
+builder.Services.AddScoped<IResponseHandler, EchoHandler>();
 
-            var app = builder.Build();
-            app.MapResponsesServer();
-            app.Run();
+var app = builder.Build();
+app.MapResponsesServer();
+app.Run();
 ```
 
 ## Key concepts

@@ -26,9 +26,9 @@ Register the Invocations protocol on an `AgentHostBuilder`:
 
 ```C# Snippet:Invocations_ReadMe_Builder
 var builder = AgentHost.CreateBuilder();
-            builder.AddInvocations<MyHandler>();
-            var app = builder.Build();
-            app.Run();
+builder.AddInvocations<MyHandler>();
+var app = builder.Build();
+app.Run();
 ```
 
 Or use the one-line Tier 1 startup if Invocations is the only protocol:

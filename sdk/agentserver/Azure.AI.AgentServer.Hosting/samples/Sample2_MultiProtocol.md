@@ -16,20 +16,20 @@ This example builds a customer support agent that exposes both protocols — the
 ```C# Snippet:Hosting_Sample2_Compose
 var builder = AgentHost.CreateBuilder();
 
-            // Register the Responses protocol for streaming chat.
-            builder.AddResponses<ChatHandler>();
+// Register the Responses protocol for streaming chat.
+builder.AddResponses<ChatHandler>();
 
-            // Register the Invocations protocol for ticket submission.
-            builder.AddInvocations<TicketHandler>();
+// Register the Invocations protocol for ticket submission.
+builder.AddInvocations<TicketHandler>();
 
-            // Add a custom tracing source for your business logic.
-            builder.ConfigureTracing(tracing =>
-            {
-                tracing.AddSource("CustomerSupport.BusinessLogic");
-            });
+// Add a custom tracing source for your business logic.
+builder.ConfigureTracing(tracing =>
+{
+    tracing.AddSource("CustomerSupport.BusinessLogic");
+});
 
-            var app = builder.Build();
-            app.Run();
+var app = builder.Build();
+app.Run();
 ```
 
 ## Handler implementations

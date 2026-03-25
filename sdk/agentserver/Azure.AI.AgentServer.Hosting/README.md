@@ -35,9 +35,9 @@ For more control, use the builder pattern:
 
 ```C# Snippet:Hosting_ReadMe_Tier2
 var builder = AgentHost.CreateBuilder();
-            builder.AddResponses<MyHandler>();
-            var app = builder.Build();
-            app.Run();
+builder.AddResponses<MyHandler>();
+var app = builder.Build();
+app.Run();
 ```
 
 ## Key concepts
