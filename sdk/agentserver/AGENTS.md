@@ -289,7 +289,7 @@ Inline (non-snippet) code blocks in markdown are only acceptable for non-C# cont
 
 See [CONTRIBUTING.md — Updating Sample Snippets](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets).
 
-**Golden rule:** Never edit code inside `` ```C# Snippet:Name `` fences in markdown.
+**Golden rule:** Never edit code inside snippet-backed code fences in markdown.
 Edit the `.cs` source file, then run `eng/scripts/Update-Snippets.ps1 agentserver`.
 
 ### Snippet file conventions
@@ -298,8 +298,8 @@ Edit the `.cs` source file, then run `eng/scripts/Update-Snippets.ps1 agentserve
 |---|---|
 | Location | `<Package>/tests/Snippets/<SampleN>Snippets.cs` per sample, `ReadMeSnippets.cs` per README |
 | Test attribute | `[Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]` |
-| Handler snippets | Nested types **outside** test methods, wrapped in `#region Snippet:Name` |
-| Startup snippets | **Inside** test methods, wrapped in `#region Snippet:Name` |
+| Handler snippets | Nested types **outside** test methods, wrapped in named `#region` / `#endregion` blocks |
+| Startup snippets | **Inside** test methods, wrapped in named `#region` / `#endregion` blocks |
 | `#if SNIPPET` | **Never** — code must compile in both normal and `BuildSnippets=true` modes (see below) |
 | `args` parameter | Use parameterless overloads: `AgentHost.Run<T>()`, `AgentHost.CreateBuilder()` |
 | Local verification | `dotnet build /p:BuildSnippets=true` before every commit |
