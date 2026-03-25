@@ -103,6 +103,24 @@ $tmp = $env:TEMP ? $env:TEMP : [System.IO.Path]::GetTempPath()
 $guid = [System.Guid]::NewGuid()
 $tempInstallDirectory = Join-Path $tmp "azsdk-install-$($guid)"
 
+# If already installed, use first class version mechanism
+$azsdkCmd = Get-Command -ErrorAction SilentlyContinue 'azsdk'
+if ($azsdkCmd) {
+    $upgrade = azsdk upgrade --check --output json | out-string
+    if (!$LASTEXITCODE) {
+        $localVersion = $upgrade | ConvertFrom-Json -AsHashtable
+        if ($localVersion.old_version -eq $localVersion.new_version) {
+            log "Version up to date at $($localVersion.old_version)"
+            if ($Run) {
+                $proc = Start-Process -PassThru -WorkingDirectory $RunDirectory -FilePath $azsdkCmd.Source -ArgumentList 'mcp' -NoNewWindow -Wait
+                exit $proc.ExitCode
+            }
+            exit 0
+        }
+        log "Version not up to date at " + $localVersion.old_version
+    }
+}
+
 if ($mcpMode) {
     try {
         # Swallow all output and re-log so we can wrap any
@@ -175,5 +193,5 @@ else {
 }
 
 if ($Run) {
-    Start-Process -WorkingDirectory $RunDirectory -FilePath $exeDestination -ArgumentList 'start' -NoNewWindow -Wait
+    Start-Process -WorkingDirectory $RunDirectory -FilePath $exeDestination -ArgumentList 'mcp' -NoNewWindow -Wait
 }
