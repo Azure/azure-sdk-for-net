@@ -1056,8 +1056,66 @@ public static class DeterministicFixRegistry
             Description = "ApiCompat: convenience method changed IReadOnlyDictionary<string,string> to IDictionary<string,string>. " +
                           "Create forwarding overloads in Custom/BackwardCompat/ClientMethodShims.cs with the old IReadOnlyDictionary " +
                           "parameter type that convert and delegate to the new IDictionary method. " +
-                          "Add #pragma warning disable AZC0002 if overloads lack CancellationToken.",
+                          "Add #pragma warning disable AZC0002 if overloads lack CancellationToken. " +
+                          "For async forwarding methods, use ConfigureAwait(false) on the awaited call.",
             ExtractArgs = (err, m) => new Dictionary<string, string>()
+        });
+
+        // --- MembersMustExist: ModelFactory overload lost enum parameter ---
+        // The new generator may remove enum-typed parameters from ModelFactory methods when the
+        // enum type no longer exists (e.g., MessageDeltaChunkObject). Fix by creating forwarding
+        // overloads in Custom/BackwardCompat/ModelFactoryBackwardCompat.cs that accept the old
+        // enum parameter and delegate to the new method, discarding the removed parameter.
+        rules.Add(new FixRule
+        {
+            ErrorCode = "MembersMustExist",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"Member '(?<fullType>[^']+ModelFactory)\.(?<method>[^(]+)\((?<params>[^)]*)\)' does not exist in the implementation",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "ApiCompat: ModelFactory method signature changed (usually a parameter was removed because its " +
+                          "enum type no longer exists in the new generator). Create a forwarding overload in " +
+                          "Custom/BackwardCompat/ModelFactoryBackwardCompat.cs with the old signature that accepts the " +
+                          "removed parameter and delegates to the new method, discarding it. Mark with " +
+                          "[EditorBrowsable(EditorBrowsableState.Never)]. If the removed parameter was an enum type " +
+                          "that no longer exists, create a stub enum struct in Custom/BackwardCompat/MissingEnumTypes.cs.",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["factoryType"] = m.Groups["fullType"].Value,
+                ["methodName"] = m.Groups["method"].Value,
+                ["oldParams"] = m.Groups["params"].Value
+            }
+        });
+
+        // --- MembersMustExist: SerializedAdditionalRawData field renamed ---
+        // The new generator renames the protected field `SerializedAdditionalRawData` to
+        // `_additionalBinaryDataProperties`. Fix by re-declaring the old field name in
+        // Custom/BackwardCompat/SerializedAdditionalRawDataShims.cs.
+        rules.Add(new FixRule
+        {
+            ErrorCode = "MembersMustExist",
+            IsDeterministic = false,
+            MessagePattern = new Regex(
+                @"Member '(?<fullType>[^']+)\.SerializedAdditionalRawData' does not exist in the implementation",
+                RegexOptions.Compiled),
+            ToolName = null,
+            Description = "ApiCompat: protected field 'SerializedAdditionalRawData' was renamed to " +
+                          "'_additionalBinaryDataProperties' by the new generator. Create a backward-compat shim in " +
+                          "Custom/BackwardCompat/SerializedAdditionalRawDataShims.cs that re-declares the old field: " +
+                          "#pragma warning disable SA1307 SA1401, then " +
+                          "protected internal IDictionary<string, BinaryData> SerializedAdditionalRawData; " +
+                          "#pragma warning restore. Mark the class as partial and use the correct namespace.",
+            ExtractArgs = (err, m) =>
+            {
+                var fullType = m.Groups["fullType"].Value;
+                var typeName = fullType.Contains('.') ? fullType[(fullType.LastIndexOf('.') + 1)..] : fullType;
+                return new Dictionary<string, string>
+                {
+                    ["typeName"] = typeName,
+                    ["fullTypeName"] = fullType
+                };
+            }
         });
 
         // --- CannotSealType + MembersMustExist: protected constructor removed ---

@@ -937,6 +937,55 @@ public class DeterministicFixRegistryTests
     }
 
     [Test]
+    public void Classify_MembersMustExist_ModelFactory_IsClassified()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\nuget\Microsoft.DotNet.ApiCompat.targets",
+            Line = 82,
+            Code = "MembersMustExist",
+            Message = "MembersMustExist : Member 'Azure.AI.Agents.Persistent.PersistentAgentsModelFactory.MessageDeltaChunk(System.String, Azure.AI.Agents.Persistent.MessageDeltaChunkObject, Azure.AI.Agents.Persistent.MessageDelta)' does not exist in the implementation but it does exist in the contract.",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.ToolName, Is.Null);
+            Assert.That(result.Reason, Does.Contain("ModelFactory"));
+            Assert.That(result.ToolArgs!["factoryType"], Is.EqualTo("Azure.AI.Agents.Persistent.PersistentAgentsModelFactory"));
+            Assert.That(result.ToolArgs["methodName"], Is.EqualTo("MessageDeltaChunk"));
+            Assert.That(result.ToolArgs, Does.ContainKey("oldParams"));
+        });
+    }
+
+    [Test]
+    public void Classify_MembersMustExist_SerializedAdditionalRawData_IsClassified()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\nuget\Microsoft.DotNet.ApiCompat.targets",
+            Line = 82,
+            Code = "MembersMustExist",
+            Message = "MembersMustExist : Member 'Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation.SerializedAdditionalRawData' does not exist in the implementation but it does exist in the contract.",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.False);
+            Assert.That(result.ToolName, Is.Null);
+            Assert.That(result.Reason, Does.Contain("SerializedAdditionalRawData"));
+            Assert.That(result.ToolArgs!["typeName"], Is.EqualTo("MessageDeltaTextAnnotation"));
+            Assert.That(result.ToolArgs["fullTypeName"], Is.EqualTo("Azure.AI.Agents.Persistent.MessageDeltaTextAnnotation"));
+        });
+    }
+
+    [Test]
     public void Classify_CannotChangeAttribute_IsClassified()
     {
         var error = new BuildError
