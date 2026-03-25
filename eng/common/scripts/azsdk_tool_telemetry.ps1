@@ -154,7 +154,6 @@ if ($shouldTrack)
     # Build MCP command arguments
     $cliArgs = @(
         "ingest-telemetry",
-        "--timestamp", $timestamp,
         "--client-type", $clientType
     )
 
