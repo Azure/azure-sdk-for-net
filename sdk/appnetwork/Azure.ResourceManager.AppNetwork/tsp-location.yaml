@@ -1,0 +1,6 @@
+directory: specification/applink/AppLink.Management
+commit: bf394b468f3f3cf9d0c678282d7efdf9b3411132
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
