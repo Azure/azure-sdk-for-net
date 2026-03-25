@@ -10,6 +10,17 @@
 
 ### Other Changes
 
+## 1.3.1 (2026-03-20)
+
+### Features Added
+
+- Make `Azure.ResourceManager.RecoveryServicesBackup` AOT-compatible.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.51.1.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
+
 ## 1.3.0 (2025-04-24)
 
 ### Features Added

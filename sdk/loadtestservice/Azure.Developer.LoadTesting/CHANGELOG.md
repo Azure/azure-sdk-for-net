@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added `LoadTestAdministrationClientSettings` to support creating a `LoadTestAdministrationClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `LoadTestRunClientSettings` to support creating a `LoadTestRunClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ### Breaking Changes
 
 ### Bugs Fixed

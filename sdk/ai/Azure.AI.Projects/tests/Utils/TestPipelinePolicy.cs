@@ -20,14 +20,30 @@ internal partial class TestPipelinePolicy : PipelinePolicy
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         _processMessageAction(message); // for request
-        ProcessNext(message, pipeline, currentIndex);
+        System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        try
+        {
+            ProcessNext(message, pipeline, currentIndex);
+        }
+        finally
+        {
+            Console.WriteLine($"Response time {stopwatch.Elapsed.TotalMilliseconds} ms");
+        }
         _processMessageAction(message); // for response
     }
 
     public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         _processMessageAction(message); // for request
-        await ProcessNextAsync(message, pipeline, currentIndex);
+        System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        try
+        {
+            await ProcessNextAsync(message, pipeline, currentIndex);
+        }
+        finally
+        {
+            Console.WriteLine($"Response time {stopwatch.Elapsed.TotalMilliseconds} ms");
+        }
         _processMessageAction(message); // for response
     }
 }

@@ -68,7 +68,7 @@ public class Sample_AzureFunction : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_CreateAgent_AzureFunction_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful support agent. Use the provided function any "
                 + "time the prompt contains the string 'What would foo say?'. When you invoke "
@@ -117,7 +117,7 @@ public class Sample_AzureFunction : ProjectsOpenAITestBase
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_CreateAgent_AzureFunction_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful support agent. Use the provided function any "
                 + "time the prompt contains the string 'What would foo say?'. When you invoke "

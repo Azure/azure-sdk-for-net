@@ -233,7 +233,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
             scope.SetTagMaybe(GenAiAgentType, agentType);
             scope.SetTagMaybe(GenAiAgentNameKey, agentName);
 
-            if (agentDefinition is PromptAgentDefinition promptAgentDefinition)
+            if (agentDefinition is DeclarativeAgentDefinition promptAgentDefinition)
             {
                 scope.SetTagMaybe(GenAiRequestModelKey, promptAgentDefinition.Model);
                 scope.SetTagMaybe(GenAiRequestTemperatureKey, promptAgentDefinition.Temperature);
@@ -373,7 +373,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
             }
 
             // Check for prompt agent
-            if (agentDefinition is PromptAgentDefinition)
+            if (agentDefinition is DeclarativeAgentDefinition)
             {
                 return AgentTypePrompt;
             }

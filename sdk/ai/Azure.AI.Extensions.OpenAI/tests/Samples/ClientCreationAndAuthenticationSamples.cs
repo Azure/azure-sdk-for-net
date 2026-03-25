@@ -22,7 +22,7 @@ public class ClientCreationAndAuthenticationSamples : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(
             endpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
             tokenProvider: new AzureCliCredential());
-        AgentsClient agentClient = projectClient.Agents;
+        AgentAdministrationClient agentClient = projectClient.Agents;
         #endregion
     }
 

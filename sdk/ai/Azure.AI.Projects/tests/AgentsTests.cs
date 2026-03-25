@@ -41,7 +41,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestAgentCRUD()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        AgentDefinition emptyAgentDefinition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
+        AgentDefinition emptyAgentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
 
         const string emptyPromptAgentName = "TestNoVersionAgentFromDotnetTests";
         try
@@ -73,7 +73,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(agentVersion.Description, Is.Empty);
         Assert.That(agentVersion.Metadata, Is.Empty);
         // TODO: uncomment this code when the ADO work item 4740406
-        // agentVersionObject_ = await projectClient.Agents.CreateAgentVersionAsync(AGENT_NAME2, new PromptAgentDefinition(MODEL_DEPLOYMENT));
+        // agentVersionObject_ = await projectClient.Agents.CreateAgentVersionAsync(AGENT_NAME2, new DeclarativeAgentDefinition(MODEL_DEPLOYMENT));
         // List<string> agentNames = [.. (await projectClient.Agents.GetAgentsAsync().ToEnumerableAsync()).Select((agv) => agv.Name).Where((name) => name.StartsWith(AGENT_NAME))];
         // AssertListEqual([AGENT_NAME, AGENT_NAME2], agentNames);
         await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
@@ -96,7 +96,7 @@ public class AgentsTests : AgentsTestBase
         {
             for (int i = ids.Count; i < agentLimit; i++)
             {
-                AgentDefinition definition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
+                AgentDefinition definition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
                 AgentVersion agent = await projectClient.Agents.CreateAgentVersionAsync($"MyAgent{i}", new AgentVersionCreationOptions(definition));
                 ids.Add(agent.Id);
             }
@@ -315,7 +315,7 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
+        AgentDefinition agentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
@@ -343,7 +343,7 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient(useDefaultEndpoint: useDefaultEndpoint);
 
-        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
+        AgentDefinition agentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
@@ -362,7 +362,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestConversationNoInput()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
+        AgentDefinition agentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
@@ -422,7 +422,7 @@ public class AgentsTests : AgentsTestBase
                 jsonSchema: calendatSchema
             )
         };
-        PromptAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
+        DeclarativeAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful assistant that extracts calendar event information from the input user messages," +
                            "and returns it in the desired structured output format.",
@@ -909,7 +909,7 @@ public class AgentsTests : AgentsTestBase
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             new AgentVersionCreationOptions(
-                new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
+                new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
                 {
                     Instructions = "Always greet the user by name when possible.",
                     Tools = { new FunctionTool("get_name_of_user", BinaryData.FromString("{}"), strictModeEnabled: false) }
@@ -1261,7 +1261,7 @@ public class AgentsTests : AgentsTestBase
 
         if (agentIsPresent)
         {
-            AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
+            AgentDefinition agentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
             {
                 Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
             };
@@ -1305,7 +1305,7 @@ public class AgentsTests : AgentsTestBase
 
         CancellationTokenSource cts = new(TimeSpan.FromSeconds(60));
 
-        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
+        AgentDefinition agentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that happens to always talk like a pirate.",
             Tools =
@@ -1457,7 +1457,7 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        PromptAgentDefinition agentDefinition = new(TestEnvironment.FOUNDRY_MODEL_NAME)
+        DeclarativeAgentDefinition agentDefinition = new(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that uses tools to answer questions.",
         };

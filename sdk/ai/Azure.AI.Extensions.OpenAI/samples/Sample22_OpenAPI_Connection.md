@@ -34,7 +34,7 @@ OpenApiFunctionDefinition toolDefinition = new(
 toolDefinition.Description = "Trip Advisor API to get travel information.";
 OpenAPITool openapiTool = new(toolDefinition);
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { openapiTool }
@@ -58,7 +58,7 @@ OpenApiFunctionDefinition toolDefinition = new(
 toolDefinition.Description = "Trip Advisor API to get travel information.";
 OpenAPITool openapiTool = new(toolDefinition);
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = {openapiTool}

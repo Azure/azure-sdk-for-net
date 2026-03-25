@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
@@ -14,90 +15,70 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
-    /// <summary>
-    /// A class representing the AzureTrafficCollector data model.
-    /// Azure Traffic Collector resource.
-    /// </summary>
+    /// <summary> Azure Traffic Collector resource. </summary>
     public partial class AzureTrafficCollectorData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public AzureTrafficCollectorData(AzureLocation location) : base(location)
         {
-            CollectorPolicies = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="collectorPolicies"> Collector Policies for Azure Traffic Collector. </param>
-        /// <param name="virtualHub"> The virtualHub to which the Azure Traffic Collector belongs. </param>
-        /// <param name="provisioningState"> The provisioning state of the application rule collection resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IReadOnlyList<SubResource> collectorPolicies, SubResource virtualHub, CollectorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the Azure Traffic Collector. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal AzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, AzureTrafficCollectorPropertiesFormat properties, IDictionary<string, string> tags, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            CollectorPolicies = collectorPolicies;
-            VirtualHub = virtualHub;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorData"/> for deserialization. </summary>
-        internal AzureTrafficCollectorData()
-        {
-        }
+        /// <summary> Properties of the Azure Traffic Collector. </summary>
+        internal AzureTrafficCollectorPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
+
         /// <summary> Collector Policies for Azure Traffic Collector. </summary>
-        public IReadOnlyList<SubResource> CollectorPolicies { get; }
-        /// <summary> The virtualHub to which the Azure Traffic Collector belongs. </summary>
-        internal SubResource VirtualHub { get; set; }
-        /// <summary> Gets Id. </summary>
-        public ResourceIdentifier VirtualHubId
+        public IReadOnlyList<SubResource> CollectorPolicies
         {
-            get => VirtualHub is null ? default : VirtualHub.Id;
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureTrafficCollectorPropertiesFormat();
+                }
+                return Properties.CollectorPolicies;
+            }
         }
 
         /// <summary> The provisioning state of the application rule collection resource. </summary>
-        public CollectorProvisioningState? ProvisioningState { get; }
+        public CollectorProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier VirtualHubId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualHubId;
+            }
+        }
     }
 }

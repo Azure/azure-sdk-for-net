@@ -9,7 +9,7 @@ csharp: true
 library-name: RecoveryServicesBackup
 namespace: Azure.ResourceManager.RecoveryServicesBackup
 # tag: package-2025-02
-require: https://github.com/Azure/azure-rest-api-specs/blob/8960d93f363955d7dc079a90248e6addd30afd31/specification/recoveryservicesbackup/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/5dff72b9a6e8b5d7ad03509cdd8da14e60aef854/specification/recoveryservicesbackup/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -491,6 +491,11 @@ directive:
     where: $.definitions.RecoveryPointTierStatus
     transform: >
       $['x-ms-enum']['modelAsString'] = false;
+  - from: bms.json
+    where: $.parameters.AzureRegion
+    transform: >
+      $["x-ms-format"] = 'azure-location';
+      $['x-ms-client-name'] = 'location';
   # Here the parameter format isn't specified in swagger, hence adding it explicitly
   - from: bms.json
     where: $.paths..parameters[?(@.name == 'azureRegion')]

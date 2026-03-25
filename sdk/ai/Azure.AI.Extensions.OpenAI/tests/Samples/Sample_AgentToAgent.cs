@@ -49,7 +49,7 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
             }
             a2aTool.BaseUri = new Uri(a2aBaseUri);
         }
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
             Tools = { a2aTool }
@@ -114,7 +114,7 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
             }
             a2aTool.BaseUri = new Uri(a2aBaseUri);
         }
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
             Tools = { a2aTool }
