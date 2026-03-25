@@ -47,7 +47,6 @@ internal static class Program
             new EventGridSpecification(),
             new EventHubsSpecification(),
             new FrontDoorSpecification(),
-
             new KubernetesSpecification(),
             new KubernetesConfigurationSpecification(),
             new KustoSpecification(),
