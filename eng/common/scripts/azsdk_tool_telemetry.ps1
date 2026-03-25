@@ -21,8 +21,7 @@ if (-not (Test-Path $cliPath))
 # Skip telemetry if opted out
 if ($env:AZSDKTOOLS_COLLECT_TELEMETRY -eq "false")
 {
-    Write-Output '{"continue":true}'
-    exit 0
+    Write-Success
 }
 
 $toolsToIgnore = @( "run_in_terminal", "apply_patch")
@@ -139,21 +138,6 @@ if ($toolName -eq "view" -or $toolName -eq "read_file")
                 $shouldTrack = $true
         }
     }
-}
-
-# Find property from tool input or output
-function Get-Property
-{
-    param (
-        [object]$Object,
-        [string]$PropertyName
-    )
-
-    if ($Object -and $Object.PSObject.Properties[$PropertyName])
-    {
-        return $Object.PSObject.Properties[$PropertyName].Value
-    }
-    return $null
 }
 
 # Check for Azure SDK Tools MCP invocation
