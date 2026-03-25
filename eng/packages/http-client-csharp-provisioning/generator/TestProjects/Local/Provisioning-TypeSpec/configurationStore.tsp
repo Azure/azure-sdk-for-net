@@ -54,9 +54,6 @@ model ConfigurationStoreProperties {
 
   /** The linked resources of the configuration store. */
   linkedResources?: LinkedResource[];
-
-  /** Default item properties for new items (test: keeps ItemProperties alive after flatten). */
-  defaultItemProperties?: ItemProperties;
 }
 
 /** A linked resource reference. */
