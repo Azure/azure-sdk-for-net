@@ -412,12 +412,12 @@ This comment should be concise: a brief routing message and the @mentions only; 
 ```
 IF AzureSdkOwners were identified in Step 4:
     - Use `mention_owners` with:
-        message: "//cc:"
+        message: "//cc: "
         owners: "owner1, owner2"
 
 ELSE IF ServiceOwners were identified in Step 4 (Service Attention path):
     - Use `mention_owners` with:
-        message: "//cc:"
+        message: "//cc: "
         owners: "owner1, owner2"
 
 ELSE:
