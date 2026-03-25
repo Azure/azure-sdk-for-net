@@ -53,13 +53,9 @@ dotnet add package Azure.AI.Extensions.OpenAI --prerelease
 To be able to create, update and delete Agents, please use `AgentsClient`. It is a good practice to only allow this operation for users with elevated permissions, for example, administrators.
 
 ```C# Snippet:Sample_Agents_CreateAgentClientCRUD
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentsClientOptions options = new()
-{
-    Endpoint = new Uri(projectEndpoint)
-};
-AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -73,12 +69,8 @@ When clients send REST requests to the endpoint, one of the query parameters is 
 The API version may be set supplying `version` parameter to `AgentClientOptions` constructor as shown in the example code below.
 
 ```C# Snippet:Sample_Agents_API_version
-AgentsClientOptions options = new()
-{
-    Endpoint = new Uri(projectEndpoint),
-    ApiVersion = "2025-11-15-preview"
-};
-AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClientOptions options = new(version: AgentAdministrationClientOptions.ServiceVersion.V1);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
 ### Additional concepts
@@ -86,7 +78,7 @@ The Azure.AI.Projects.Agents framework organized in a way that for each call, re
 
 Synchronous call:
 ```C# Snippet:Sample_Agents_CreateAgentVersionCRUD_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
@@ -103,7 +95,7 @@ Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.
 Asynchronous call:
 
 ```C# Snippet:Sample_Agents_CreateAgentVersionCRUD_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
@@ -126,7 +118,7 @@ In the most of code snippets we will show only asynchronous sample for brevity. 
 When creating the Agents we need to supply Agent definitions to its constructor. To create a declarative prompt Agent, use the `PromptAgentDefinition`:
 
 ```C# Snippet:Sample_Agents_CreateAgentVersionCRUD_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };

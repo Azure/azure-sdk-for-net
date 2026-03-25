@@ -6,9 +6,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Patch Request content for Microsoft.DataProtection resources. </summary>
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Gets or sets the alert settings for all job failures. </summary>
         public AzureMonitorAlertsState? AlertSettingsForAllJobFailures
         {
-            get => Properties is null ? default : Properties.AlertSettingsForAllJobFailures;
+            get => Properties is null ? default : Properties.MonitoringSettings.AlertSettingsForAllJobFailures;
             set
             {
                 if (Properties is null)
                     Properties = new DataProtectionBackupVaultPatchProperties();
-                Properties.AlertSettingsForAllJobFailures = value;
+                Properties.MonitoringSettings.AlertSettingsForAllJobFailures = value;
             }
         }
 

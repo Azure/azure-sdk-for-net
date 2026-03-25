@@ -261,7 +261,10 @@ function New-MarkdownReport {
     $dataPercentage = if ($dataTypeSpecTotal -gt 0) { [math]::Round(($dataMigrated / $dataTypeSpecTotal) * 100, 1) } else { 0 }
 
     $report = @()
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss UTC" -AsUTC
     $report += "# Azure SDK for .NET Libraries Inventory`n"
+    $report += "> **Auto-generated** by ``Library_Inventory`` on $timestamp."
+    $report += "> Run that script to refresh this file.`n"
 
     # Table of Contents
     $report += "## Table of Contents`n"

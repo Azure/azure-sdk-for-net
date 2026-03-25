@@ -19,16 +19,16 @@ public class Sample_RedTeam : SamplesBase
         #region Snippet:Sample_CreateClient_RedTeam
 #if SNIPPET
         // Sample : https://<account_name>.services.ai.azure.com/api/projects/<project_name>
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         // Sample : https://<account_name>.services.ai.azure.com
         var modelEndpoint = System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT");
         var modelApiKey = System.Environment.GetEnvironmentVariable("MODEL_API_KEY");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelEndpoint = TestEnvironment.MODEL_ENDPOINT;
         var modelApiKey = TestEnvironment.MODEL_API_KEY;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
@@ -70,16 +70,16 @@ public class Sample_RedTeam : SamplesBase
     {
 #if SNIPPET
         // Sample : https://<account_name>.services.ai.azure.com/api/projects/<project_name>
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         // Sample : https://<account_name>.services.ai.azure.com
         var modelEndpoint = System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT");
         var modelApiKey = System.Environment.GetEnvironmentVariable("MODEL_API_KEY");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelEndpoint = TestEnvironment.MODEL_ENDPOINT;
         var modelApiKey = TestEnvironment.MODEL_API_KEY;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 

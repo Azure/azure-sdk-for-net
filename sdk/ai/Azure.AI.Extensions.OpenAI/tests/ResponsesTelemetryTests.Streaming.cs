@@ -25,7 +25,7 @@ public partial class ResponsesTelemetryTests
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 
         CreateResponseOptions options = new()
@@ -81,7 +81,7 @@ public partial class ResponsesTelemetryTests
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 
         var deltaTexts = new List<string>();
@@ -134,7 +134,7 @@ public partial class ResponsesTelemetryTests
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 
         var deltaTexts = new List<string>();
@@ -162,9 +162,9 @@ public partial class ResponsesTelemetryTests
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant."
         };

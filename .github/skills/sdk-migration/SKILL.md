@@ -47,9 +47,115 @@ For the purposes of diagnosing generator bugs, the management-plane emitter is l
 
 ---
 
-## Phase 0 — Sync Repositories
+## Migration Status File
 
-Before any migration work, merge the latest `main` branch into all 3 repos:
+Migrations often span multiple sessions and machines. To enable seamless pickup, a **`migration-status.md`** file is stored in the SDK package directory and committed to the migration branch.
+
+### Location
+
+```
+{LIBRARY_PATH}/migration-status.md
+```
+
+Example: `sdk/apimanagement/Azure.ResourceManager.ApiManagement/migration-status.md`
+
+### Template
+
+````markdown
+# Migration Status — {PACKAGE_NAME}
+
+**Tracking Issue:** [#{ISSUE_NUMBER}](https://github.com/Azure/azure-sdk-for-net/issues/{ISSUE_NUMBER})
+**Last Updated:** {DATE}
+
+## PRs
+
+| PR | URL | Status |
+|----|-----|--------|
+| **Spec** | {URL or "Not created"} | {Draft/Open/Merged} |
+| **SDK** | {URL or "Not created"} | {Draft/Open/Merged} |
+| **Generator** | {URL or "N/A"} | {Draft/Open/Merged/N/A} |
+
+## Branches
+
+| Repo | Branch | Fork Remote |
+|------|--------|-------------|
+| azure-sdk-for-net | `{branch}` | `{remote}` |
+| azure-rest-api-specs | `{branch}` | `{remote}` |
+
+## Phase Tracker
+
+**Status legend:** ✅ Done | 🔄 In Progress | ❌ Blocked | ⏭️ Not Started
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| Phase 0 — Sync & Resume | {status} | |
+| Phase 1 — Discovery | {status} | |
+| Phase 2 — tsp-location.yaml | {status} | |
+| Phase 3 — Legacy config removed | {status} | |
+| Phase 4 — Custom code updated | {status} | |
+| Phase 5 — Code generation | {status} | |
+| Phase 6 — Build-Fix Cycle | {status} | |
+| Phase 7 — CI & Changelog | {status} | |
+| Phase 8 — Test project build | {status} | |
+| Phase 9 — Test execution | {status} | |
+| Phase 10 — Finalization | {status} | |
+| Phase 11 — Create PRs | {status} | |
+| Phase 12 — Verify | {status} | |
+
+## ApiCompat Baseline Summary
+
+| Error Type | Count | Action |
+|-----------|-------|--------|
+| MembersMustExist | {N} | Fix with custom code |
+| TypesMustExist | {N} | Fix with @@clientName |
+| CannotChangeAttribute | {N} | Acceptable to baseline |
+| ... | | |
+
+## Known Issues
+
+- {issue description and link}
+
+## Next Steps
+
+1. {next action}
+````
+
+### When to Save
+
+Commit and push `migration-status.md` to the migration branch at these points:
+1. **After Phase 0** — create the initial `migration-status.md` (or update if resuming)
+2. **After any phase completes** — update phase status
+3. **Before ending a session** — always save current progress
+4. **After creating PRs** — update PR links
+
+### Save Command
+
+```bash
+git add {LIBRARY_PATH}/migration-status.md
+git commit -m "Update migration status for {PACKAGE_NAME}"
+git push
+```
+
+### When to Delete
+
+Remove `migration-status.md` from the branch when the migration is complete (Phase 12). It should **not** be included in the final PR merge to `main`.
+
+---
+
+## Phase 0 — Sync & Resume
+
+Before any migration work:
+
+### Resume Check
+1. Check if `{LIBRARY_PATH}/migration-status.md` exists on the current branch.
+   - **If it exists**: Read and parse the status file. Report the current phase to the user and resume from the first incomplete phase.
+   - **If it does not exist**: This is a fresh migration — proceed with sync and Phase 1.
+
+### Sync Repositories
+Merge the latest `main` branch into all repos.
+
+### Save Status
+Create `migration-status.md` with all phases marked ⏭️ (or update existing with Phase 0 marked ✅). Commit and push to the migration branch.
 
 ---
 
@@ -66,6 +172,8 @@ Use **explore** agents in parallel:
 7. **Review naming conventions**: Consult the `azure-sdk-mgmt-pr-review` skill.
 
 Present a summary plan and **ask the user** to confirm.
+
+After confirmation, update `migration-status.md` to mark Phase 1 as ✅ and save.
 
 ---
 
@@ -209,7 +317,7 @@ After generation, additionally:
 
 1. Check `src/Generated/` for output files — verify file contents changed, not just file names.
 2. Use `git diff --stat` to confirm the scope of changes. A typical migration touches hundreds of files with significant content changes.
-3. Verify no compile errors: `dotnet build`. ApiCompat errors (`MembersMustExist`, `TypesMustExist`) indicate **breaking changes** — these must be investigated and fixed, not skipped.
+3. Verify no compile errors: `dotnet build`. Then run `dotnet pack --no-restore` to check for ApiCompat errors (`CannotRemoveAttribute`, `MembersMustExist`, `TypesMustExist`) — these indicate **breaking changes** that must be investigated and fixed through spec-side fixes or custom code shims, **never** by creating `ApiCompatBaseline.txt` or disabling ApiCompat in the `.csproj`. See the ApiCompat Error → Fix Table in error-reference.md.
 4. Run existing tests if available: `dotnet test`.
 5.**Export the API surface** after all errors are fixed:
    ```powershell
@@ -374,6 +482,7 @@ These patterns are specific to data-plane migrations. Apply them during the shar
 | AZC0030 (forbidden suffix) | Naming analyzer rejects name | `@@clientName` to old name |
 | AZC0032 (forbidden 'Data' suffix) | Doesn't inherit `ResourceData` | `@@clientName` to old name |
 | ApiCompat MembersMustExist | Changed return type / missing member | `[CodeGenSuppress]` + custom shim (never use ApiCompatBaseline.txt) |
+| ApiCompat CannotRemoveAttribute (WirePathAttribute) | Old SDK had `WirePathAttribute` but new generation doesn't | See `mitigate-breaking-changes` skill |
 | ApiCompat TypesMustExist | Missing type | `@@clientName` to restore old name |
 
 ### MPG Fix Decision Tree [MPG only]
@@ -588,11 +697,12 @@ During the iteration loop, changes fall into three categories. Identify which on
 
 ### Step 5 — Report Summary
 
-After all PRs are created, report:
+After all PRs are created:
 1. **Spec PR**: Link and summary of decorators added.
 2. **Generator PR**: Link and summary of fixes (if any).
 3. **SDK PR**: Link and summary of migration changes.
 4. **Manual follow-up**: Any remaining items that need human review (naming decisions, breaking changes, etc.).
+5. **Update `migration-status.md`** with all PR links and mark Phase 11 as done. Commit and push.
 
 ---
 
@@ -602,6 +712,12 @@ After all PRs are created, report:
 2. Note any `CodeGenType` attributes needing manual review.
 3. Remind user to review with `git diff` before committing.
 4. Suggest running the `pre-commit-checks` skill.
+5. **Remove `migration-status.md`** from the branch — it should not be included in the final merge to `main`:
+   ```bash
+   git rm {LIBRARY_PATH}/migration-status.md
+   git commit -m "Remove migration status file — migration complete"
+   git push
+   ```
 
 ---
 
@@ -644,10 +760,11 @@ Report: error messages, generated code snippet, repro steps. Do NOT manually fix
 1. **Never edit files under `Generated/`** — they are overwritten by codegen.
 2. **Never hand-edit `metadata.json`** — it is auto-generated.
 3. **Never use `tsp-client update`** — use `dotnet build /t:GenerateCode`.
-4. **Never add entries to `ApiCompatBaseline.txt`** without explicit user approval.
-5. **Never bump the major version** of an Azure SDK package.
-6. **Preserve git history** — prefer renames over delete+create.
-7. **Never manually edit files under `src/Generated/`** — this is strictly forbidden. All generated code must come from the generator. If generated code has a bug (e.g., references a non-existent method, wrong type), fix it through:
+4. **Never create or add entries to `ApiCompatBaseline.txt`** — this file must never be used to bypass breaking changes. Always mitigate ApiCompat errors through spec-side fixes (`@@clientName`) or SDK custom code shims (see error-reference.md). If you encounter ApiCompat errors, follow the ApiCompat Error → Fix Table — do NOT suppress them via baseline files.
+5. **Never disable ApiCompat or package validation in `.csproj`** — do NOT set `<EnablePackageValidation>false</EnablePackageValidation>`, `<RunApiCompat>false</RunApiCompat>`, or any other property that disables API compatibility checks. These checks exist to catch breaking changes and must always remain enabled. Fix the underlying breaking changes instead.
+6. **Never bump the major version** of an Azure SDK package.
+7. **Preserve git history** — prefer renames over delete+create.
+8. **Never manually edit files under `src/Generated/`** — this is strictly forbidden. All generated code must come from the generator. If generated code has a bug (e.g., references a non-existent method, wrong type), fix it through:
    - **TypeSpec decorators** (`@@clientName`, `@@alternateType`, `@@access`) in `client.tsp`
    - **Custom partial classes** with `[CodeGenSuppress]` in `src/Custom/` to suppress the broken member and provide a corrected replacement
    - **Generator bug fix** if no decorator or customization can resolve it
@@ -672,8 +789,7 @@ These actions **require explicit user approval** (use `ask_user`):
 1. **Modifying spec `.tsp` files beyond `client.tsp`** — e.g., changing `main.tsp`, model definitions, or operation signatures. These affect all languages, not just C#.
 2. **Generator code changes** that affect other SDKs — run `Generate.ps1` to verify scope first.
 3. **Removing public API surface** with no backward-compat option (true breaking change).
-4. **Adding `ApiCompatBaseline.txt` entries** — this should almost never be done.
-5. **Deleting existing custom code files** — may lose manually-written logic.
+4. **Deleting existing custom code files** — may lose manually-written logic.
 
 ### Escalation Criteria
 
@@ -683,6 +799,10 @@ Proceed **without asking the user** except when:
 3. Generator fix affects other SDKs.
 4. 5 consecutive failed attempts for the same error.
 5. Error count increases after a fix.
+
+### Session End Rule
+
+**Always update and push `migration-status.md` before ending a session**, even if the migration is incomplete. This ensures the next session (possibly on a different machine) can resume from the exact point where work stopped.
 
 ---
 

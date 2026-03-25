@@ -13,8 +13,8 @@ TripAdvisor service requires key-based authentication. To create a connection, i
 
 1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
 ```C# Snippet:Sample_CreateProjectClient_OpenAPIProjectConnection
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
@@ -34,7 +34,7 @@ OpenApiFunctionDefinition toolDefinition = new(
 toolDefinition.Description = "Trip Advisor API to get travel information.";
 OpenAPITool openapiTool = new(toolDefinition);
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { openapiTool }
@@ -58,7 +58,7 @@ OpenApiFunctionDefinition toolDefinition = new(
 toolDefinition.Description = "Trip Advisor API to get travel information.";
 OpenAPITool openapiTool = new(toolDefinition);
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = {openapiTool}

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.2 (Unreleased)
+## 1.5.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0-beta.2 (2026-03-19)
+
+### Features Added
+
+- Upgraded Registry api-version to 2026-01-01-preview.
 
 ## 1.5.0-beta.1 (2025-12-10)
 

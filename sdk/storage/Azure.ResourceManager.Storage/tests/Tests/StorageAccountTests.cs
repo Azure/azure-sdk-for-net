@@ -2547,6 +2547,73 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
+        public async Task StorageAccountNonGuidFormatDomainGuid()
+        {
+            // E2E test for issue https://github.com/Azure/azure-sdk-for-net/issues/56903
+            //create storage account
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+
+            // With domainName = " ", domainId = Guid.Empty, can create a storage account which server returns domainId as " ".
+            // If re-record this case, need check the record file to make sure server still return domainId as " ".
+            // We still don't find a way to set domainId to other non-GUID value on server with .net SDK, but has unit test to cover other value in test class StorageActiveDirectoryPropertiesSerializationTests.
+            string domainName = " ";
+            var domainId = Guid.Empty;
+            var data = new FilesIdentityBasedAuthentication(DirectoryServiceOption.Aadkerb)
+            {
+                ActiveDirectoryProperties = new StorageActiveDirectoryProperties(domainName, domainId)
+            };
+            var parameters = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.StandardLrs),
+                StorageKind.StorageV2,
+                DefaultLocation
+                )
+            {
+                AzureFilesIdentityBasedAuthentication = data
+            };
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
+            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+
+            // Get  storage account
+            account = (await storageAccountCollection.GetAsync(accountName)).Value;
+            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+
+            // Update storage account
+            var updateParameters = new StorageAccountPatch
+            {
+                AzureFilesIdentityBasedAuthentication = data
+            };
+            account = (await account.UpdateAsync(updateParameters)).Value;
+            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+
+            // List storage account
+            account = null;
+            await foreach (StorageAccountResource account1 in _resourceGroup.GetStorageAccounts().GetAllAsync())
+            {
+                if (account1.Id.Name == accountName)
+                {
+                    account = account1;
+                }
+            }
+            Assert.IsNotNull(account);
+            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task StorageAccountCreateSetGetFileSmbOauth()
         {
             //create storage account

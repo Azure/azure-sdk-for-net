@@ -83,6 +83,31 @@ When the spec uses older common types that generate incorrect C# types (e.g., `s
 @@alternateType(MyModel.resourceId, Azure.ResourceManager.CommonTypes.ArmResourceIdentifier, "csharp");
 ```
 
+## WirePathAttribute Breaking Changes [MPG only]
+
+When the previous SDK version included `WirePathAttribute` on model properties (used by Azure.Provisioning libraries), migrating to TypeSpec may produce ApiCompat `CannotRemoveAttribute` errors for the missing attribute — because the emitter defaults to **not** generating it.
+
+### How to detect
+
+- ApiCompat `CannotRemoveAttribute` errors referencing `WirePathAttribute` on model properties
+- These errors appear during `dotnet pack --no-restore` when the previous SDK release had `WirePathAttribute` on properties but the new generation does not
+
+### Fix
+
+Add `enable-wire-path-attribute: true` to the **mgmt emitter options** in `tspconfig.yaml` (in the spec repo):
+
+```yaml
+options:
+  "@azure-typespec/http-client-csharp-mgmt":
+    emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+    namespace: "Azure.ResourceManager.<Service>"
+    enable-wire-path-attribute: true
+```
+
+Then regenerate the SDK.
+
+**Avoid** attempting to fix this by creating `ApiCompatBaseline.txt` or disabling ApiCompat. The emitter option is the correct solution.
+
 ## Extension Resources
 
 Extension resources (deployed onto parent resources from different providers) require special handling.

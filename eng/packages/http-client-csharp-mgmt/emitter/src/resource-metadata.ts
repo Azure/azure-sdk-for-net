@@ -6,6 +6,10 @@ import {
   findLongestPrefixMatch,
   countProviderSegments
 } from "./utils.js";
+import {
+  DecoratedType,
+  getClientOptions
+} from "@azure-tools/typespec-client-generator-core";
 
 const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
@@ -56,6 +60,16 @@ export interface NameConstraints {
   maxLength?: number;
 }
 
+/**
+ * Represents a single RBAC role definition for a resource.
+ */
+export interface RbacRole {
+  /** The role name (e.g., "KeyVaultContributor") */
+  name: string;
+  /** The role GUID (e.g., "f25e0fa2-a7c8-4377-a976-54943a77a395") */
+  value: string;
+}
+
 export interface ResourceMetadata {
   resourceIdPattern: string;
   resourceType: string;
@@ -67,6 +81,10 @@ export interface ResourceMetadata {
   resourceName: string;
   /** The name constraints for the resource, from TypeSpec decorators */
   nameConstraints: NameConstraints;
+  /** The API versions that this resource is available in */
+  apiVersions: string[];
+  /** The RBAC roles defined for this resource via @@clientOption */
+  rbacRoles: RbacRole[];
 }
 
 export function convertResourceMetadataToArguments(
@@ -81,6 +99,25 @@ export function convertResourceMetadataToArguments(
     singletonResourceName: metadata.singletonResourceName,
     resourceName: metadata.resourceName
   };
+}
+
+const rbacRolesKey = "resource-rbac-roles";
+
+/**
+ * Extracts RBAC roles from a model's @@clientOption decorator with key "resource-rbac-roles".
+ * Uses TCGC's getClientOptions API which handles scope filtering.
+ * The value is expected to be a record of role name to role GUID.
+ */
+export function extractRbacRoles(model: DecoratedType | undefined): RbacRole[] {
+  if (!model) return [];
+  const value = getClientOptions(model, rbacRolesKey);
+  if (!value || typeof value !== "object") return [];
+  return Object.entries(value as Record<string, string>).map(
+    ([name, guid]) => ({
+      name,
+      value: guid
+    })
+  );
 }
 
 export interface NonResourceMethod {
@@ -135,6 +172,27 @@ export enum ResourceOperationKind {
   Read = "Read",
   List = "List",
   Update = "Update"
+}
+
+/**
+ * Resolves the API versions for a resource from its methods.
+ * Uses the Create method's versions if available, otherwise falls back to the Read method's versions.
+ * @param methods - The resource's methods
+ * @param methodApiVersionsMap - A map from methodId to its API versions
+ * @returns The API versions for the resource
+ */
+export function resolveResourceApiVersions(
+  methods: ResourceMethod[],
+  methodApiVersionsMap: Map<string, string[]>
+): string[] {
+  const createMethod = methods.find(
+    (m) => m.kind === ResourceOperationKind.Create
+  );
+  const readMethod = methods.find((m) => m.kind === ResourceOperationKind.Read);
+  const primaryMethod = createMethod ?? readMethod;
+  return primaryMethod
+    ? methodApiVersionsMap.get(primaryMethod.methodId) ?? []
+    : [];
 }
 
 /**
@@ -229,7 +287,9 @@ export function convertArmProviderSchemaToArguments(
       parentResourceId: r.metadata.parentResourceId,
       singletonResourceName: r.metadata.singletonResourceName,
       resourceName: r.metadata.resourceName,
-      nameConstraints: r.metadata.nameConstraints
+      nameConstraints: r.metadata.nameConstraints,
+      apiVersions: r.metadata.apiVersions,
+      rbacRoles: r.metadata.rbacRoles
     })),
     nonResourceMethods: schema.nonResourceMethods.map((m) => ({
       methodId: m.methodId,
