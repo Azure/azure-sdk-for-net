@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, int? maxpagesize, string filter, RequestContext context)
+        internal HttpMessage CreateGetStorageTaskAssignmentInstancesReportsRequest(Guid subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, int? maxpagesize, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, int? maxpagesize, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetStorageTaskAssignmentInstancesReportsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, int? maxpagesize, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

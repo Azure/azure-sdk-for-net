@@ -11,7 +11,6 @@ using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The Storage Account ManagementPolicy properties. </summary>
     internal partial class ManagementPolicyProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -19,11 +18,8 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagementPolicyProperties"/>. </summary>
         /// <param name="rules"> The Storage Account ManagementPolicies Rules. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rules"/> is null. </exception>
         public ManagementPolicyProperties(IEnumerable<ManagementPolicyRule> rules)
         {
-            Argument.AssertNotNull(rules, nameof(rules));
-
             Policy = new ManagementPolicySchema(rules);
         }
 
@@ -45,21 +41,5 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The Storage Account ManagementPolicy, in JSON format. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </summary>
         [WirePath("policy")]
         internal ManagementPolicySchema Policy { get; set; }
-
-        /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </summary>
-        [WirePath("policy.rules")]
-        public IList<ManagementPolicyRule> Rules
-        {
-            get
-            {
-                if (Policy is null)
-                {
-                    // Workaround: parameterless ctor doesn't initialize Rules.
-                    // https://github.com/Azure/azure-sdk-for-net/issues/57449
-                    Policy = new ManagementPolicySchema(new ChangeTrackingList<ManagementPolicyRule>());
-                }
-                return Policy.Rules;
-            }
-        }
     }
 }

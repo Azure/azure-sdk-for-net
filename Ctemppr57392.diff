@@ -1,0 +1,777 @@
+diff --git a/eng/packages/http-client-csharp-provisioning/generator/Azure.Generator.Provisioning/src/Providers/BuiltInRoleProvider.cs b/eng/packages/http-client-csharp-provisioning/generator/Azure.Generator.Provisioning/src/Providers/BuiltInRoleProvider.cs
+new file mode 100644
+index 000000000000..a0d926e04734
+--- /dev/null
++++ b/eng/packages/http-client-csharp-provisioning/generator/Azure.Generator.Provisioning/src/Providers/BuiltInRoleProvider.cs
+@@ -0,0 +1,336 @@
++// Copyright (c) Microsoft Corporation. All rights reserved.
++// Licensed under the MIT License.
++
++using Azure.Generator.Management.Models;
++using Microsoft.TypeSpec.Generator;
++using Microsoft.TypeSpec.Generator.Expressions;
++using Microsoft.TypeSpec.Generator.Input.Extensions;
++using Microsoft.TypeSpec.Generator.Primitives;
++using Microsoft.TypeSpec.Generator.Providers;
++using Microsoft.TypeSpec.Generator.Statements;
++using System;
++using System.Collections.Generic;
++using System.ComponentModel;
++using System.IO;
++using System.Linq;
++using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
++
++namespace Azure.Generator.Provisioning.Providers
++{
++    /// <summary>
++    /// Generates a readonly struct that defines built-in RBAC roles for a provisioning service.
++    /// The struct follows the pattern of existing BuiltInRole types (e.g., StorageBuiltInRole)
++    /// and aggregates roles from all resources in the service.
++    /// </summary>
++    internal class BuiltInRoleProvider : TypeProvider
++    {
++        private readonly string _serviceName;
++        private readonly IReadOnlyList<(string Name, string Value)> _roles;
++
++        private static readonly ValueExpression EditorNeverAttribute = new MemberExpression(
++            Static(typeof(EditorBrowsableState)),
++            nameof(EditorBrowsableState.Never));
++
++        /// <summary>
++        /// Creates a BuiltInRoleProvider if there are any RBAC roles across the given resources.
++        /// Returns null if no roles are defined.
++        /// </summary>
++        internal static BuiltInRoleProvider? TryCreate(
++            string serviceName,
++            IEnumerable<ArmResourceMetadata> resources)
++        {
++            // Aggregate all roles across all resources, deduplicating by value (GUID)
++            var rolesByValue = new Dictionary<string, ArmResourceRbacRole>(StringComparer.OrdinalIgnoreCase);
++            foreach (var resource in resources)
++            {
++                foreach (var role in resource.RbacRoles)
++                {
++                    if (rolesByValue.TryGetValue(role.Value, out var existingRole))
++                    {
++                        if (!string.Equals(role.Name, existingRole.Name, StringComparison.Ordinal))
++                        {
++                            ProvisioningGenerator.Instance.Emitter.ReportDiagnostic(
++                                "rbac-role-guid-conflict",
++                                $"RBAC role GUID '{role.Value}' has conflicting names: '{existingRole.Name}' and '{role.Name}'. Using '{existingRole.Name}'.");
++                        }
++                    }
++                    else
++                    {
++                        rolesByValue.Add(role.Value, role);
++                    }
++                }
++            }
++
++            if (rolesByValue.Count == 0)
++                return null;
++
++            // Sort by name for deterministic output
++            var sortedRoles = rolesByValue.Values
++                .OrderBy(r => r.Name, StringComparer.Ordinal)
++                .Select(r => (Name: r.Name.ToIdentifierName(), r.Value))
++                .ToList();
++            return new BuiltInRoleProvider(serviceName, sortedRoles);
++        }
++
++        private BuiltInRoleProvider(string serviceName, IReadOnlyList<(string Name, string Value)> roles)
++        {
++            _serviceName = serviceName;
++            _roles = roles;
++        }
++
++        protected override string BuildName() => $"{_serviceName}BuiltInRole";
++
++        protected override FormattableString BuildDescription()
++            => $"Defines the built-in roles for {_serviceName} resources.";
++
++        protected override string BuildNamespace()
++            => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
++
++        protected override string BuildRelativeFilePath()
++            => Path.Combine("src", "Generated", $"{Name}.cs");
++
++        protected override TypeSignatureModifiers BuildDeclarationModifiers()
++            => TypeSignatureModifiers.Public | TypeSignatureModifiers.ReadOnly | TypeSignatureModifiers.Struct;
++
++        protected override CSharpType[] BuildImplements()
++            => [new CSharpType(typeof(IEquatable<>)).MakeGenericType([Type])];
++
++        protected override ConstructorProvider[] BuildConstructors()
++        {
++            var valueParam = new ParameterProvider("value", $"The ID value of the role.", typeof(string));
++            var sig = new ConstructorSignature(
++                Type,
++                null,
++                MethodSignatureModifiers.Public,
++                [valueParam],
++                null,
++                null);
++
++            MethodBodyStatement body = new MethodBodyStatement[]
++            {
++                new AssignmentExpression(
++                    new MemberExpression(null, "_value"),
++                    new BinaryOperatorExpression("??",
++                        (ValueExpression)valueParam,
++                        ThrowExpression(New.Instance(typeof(ArgumentNullException), [Nameof(valueParam)])))).Terminate()
++            };
++
++            return [new ConstructorProvider(sig, body, this)];
++        }
++
++        protected override FieldProvider[] BuildFields()
++        {
++            var fields = new List<FieldProvider>();
++
++            // Private _value field
++            fields.Add(new FieldProvider(
++                FieldModifiers.Private | FieldModifiers.ReadOnly,
++                typeof(string),
++                "_value",
++                this));
++
++            // For each role: an internal const string
++            foreach (var role in _roles)
++            {
++                var constFieldName = $"{role.Name}Value";
++
++                // internal const string XxxValue = "guid";
++                fields.Add(new FieldProvider(
++                    FieldModifiers.Internal | FieldModifiers.Const,
++                    typeof(string),
++                    constFieldName,
++                    this,
++                    initializationValue: Literal(role.Value)));
++            }
++
++            return [.. fields];
++        }
++
++        protected override PropertyProvider[] BuildProperties()
++        {
++            var properties = new List<PropertyProvider>();
++
++            foreach (var role in _roles)
++            {
++                var constFieldName = $"{role.Name}Value";
++
++                properties.Add(new PropertyProvider(
++                    null,
++                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
++                    Type,
++                    role.Name,
++                    new ExpressionPropertyBody(New.Instance(Type, [new MemberExpression(null, constFieldName)])),
++                    this));
++            }
++
++            return [.. properties];
++        }
++
++        protected override MethodProvider[] BuildMethods()
++        {
++            var methods = new List<MethodProvider>();
++
++            // GetBuiltInRoleName static method
++            methods.Add(BuildGetBuiltInRoleNameMethod());
++
++            // Equality operators and methods
++            methods.Add(BuildEqualsOperator(true));
++            methods.Add(BuildEqualsOperator(false));
++            methods.Add(BuildImplicitStringOperator());
++            methods.Add(BuildEqualsObjectMethod());
++            methods.Add(BuildEqualsTypedMethod());
++            methods.Add(BuildGetHashCodeMethod());
++            methods.Add(BuildToStringMethod());
++
++            return [.. methods];
++        }
++
++        private MethodProvider BuildGetBuiltInRoleNameMethod()
++        {
++            var valueParam = new ParameterProvider("value", $"The role value.", Type);
++
++            var switchCases = new List<SwitchCaseExpression>();
++            foreach (var role in _roles)
++            {
++                switchCases.Add(new SwitchCaseExpression(
++                    new MemberExpression(null, $"{role.Name}Value"),
++                    Nameof(new MemberExpression(null, role.Name))));
++            }
++            // Default case returns value._value
++            switchCases.Add(SwitchCaseExpression.Default(
++                new MemberExpression(valueParam, "_value")));
++
++            var switchExpr = new SwitchExpression(
++                new MemberExpression(valueParam, "_value"),
++                [.. switchCases]);
++
++            var sig = new MethodSignature(
++                "GetBuiltInRoleName",
++                $"Try to get the name of a built-in {_serviceName} role from its ID value.",
++                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
++                typeof(string),
++                $"The name of the built-in {_serviceName} role if known, otherwise the ID will be returned.",
++                [valueParam],
++                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), [EditorNeverAttribute])]);
++
++            return new MethodProvider(sig, switchExpr, this);
++        }
++
++        private MethodProvider BuildEqualsOperator(bool equals)
++        {
++            var left = new ParameterProvider("left", $"The first {Name} to compare.", Type);
++            var right = new ParameterProvider("right", $"The second {Name} to compare.", Type);
++            var opName = equals ? "==" : "!=";
++
++            var sig = new MethodSignature(
++                opName,
++                $"Determines if two {Name} values are {(equals ? "the same" : "different")}.",
++                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static | MethodSignatureModifiers.Operator,
++                typeof(bool),
++                $"True if <paramref name=\"left\"/> and <paramref name=\"right\"/> are {(equals ? "the same" : "different")}; otherwise, false.",
++                [left, right]);
++
++            ValueExpression leftExpr = left;
++            ValueExpression rightExpr = right;
++            ValueExpression body = equals
++                ? leftExpr.Invoke("Equals", [rightExpr])
++                : new UnaryOperatorExpression("!", leftExpr.Invoke("Equals", [rightExpr]), false);
++
++            return new MethodProvider(sig, body, this);
++        }
++
++        private MethodProvider BuildImplicitStringOperator()
++        {
++            var valueParam = new ParameterProvider("value", $"The string value to convert.", typeof(string));
++
++            var sig = new MethodSignature(
++                "implicit operator",
++                $"Converts a string to a {Name}.",
++                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static | MethodSignatureModifiers.Implicit | MethodSignatureModifiers.Operator,
++                Type,
++                null,
++                [valueParam]);
++
++            return new MethodProvider(sig, New.Instance(Type, [(ValueExpression)valueParam]), this);
++        }
++
++        private MethodProvider BuildEqualsObjectMethod()
++        {
++            var objParam = new ParameterProvider("obj", $"The object to compare.", typeof(object));
++
++            var sig = new MethodSignature(
++                "Equals",
++                null,
++                MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
++                typeof(bool),
++                null,
++                [objParam],
++                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), [EditorNeverAttribute])]);
++
++            // obj is XxxBuiltInRole other && Equals(other)
++            ValueExpression objExpr = objParam;
++            var isCheck = objExpr.Is(new DeclarationExpression(Type, "other", out var otherVar));
++            var body = new BinaryOperatorExpression("&&",
++                isCheck,
++                This.Invoke("Equals", [otherVar]));
++
++            return new MethodProvider(sig, body, this);
++        }
++
++        private MethodProvider BuildEqualsTypedMethod()
++        {
++            var otherParam = new ParameterProvider("other", $"The value to compare.", Type);
++
++            var sig = new MethodSignature(
++                "Equals",
++                null,
++                MethodSignatureModifiers.Public,
++                typeof(bool),
++                null,
++                [otherParam]);
++
++            // string.Equals(_value, other._value, StringComparison.Ordinal)
++            var body = Static(typeof(string)).Invoke(
++                "Equals",
++                [
++                    new MemberExpression(null, "_value"),
++                    new MemberExpression(otherParam, "_value"),
++                    new MemberExpression(Static(typeof(StringComparison)), nameof(StringComparison.Ordinal))
++                ]);
++
++            return new MethodProvider(sig, body, this);
++        }
++
++        private MethodProvider BuildGetHashCodeMethod()
++        {
++            var sig = new MethodSignature(
++                "GetHashCode",
++                $"Returns the hash code for this {Name}.",
++                MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
++                typeof(int),
++                null,
++                [],
++                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), [EditorNeverAttribute])]);
++
++            // _value?.GetHashCode() ?? 0
++            var body = new BinaryOperatorExpression("??",
++                new MemberExpression(null, "_value").NullConditional().Invoke("GetHashCode", []),
++                Literal(0));
++
++            return new MethodProvider(sig, body, this);
++        }
++
++        private MethodProvider BuildToStringMethod()
++        {
++            var sig = new MethodSignature(
++                "ToString",
++                $"Returns the string representation of this {Name}.",
++                MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
++                typeof(string),
++                null,
++                []);
++
++            return new MethodProvider(sig, new MemberExpression(null, "_value"), this);
++        }
++    }
++}
+diff --git a/eng/packages/http-client-csharp-provisioning/generator/Azure.Generator.Provisioning/src/Providers/ProvisioningResourceProvider.cs b/eng/packages/http-client-csharp-provisioning/generator/Azure.Generator.Provisioning/src/Providers/ProvisioningResourceProvider.cs
+index 99a02198a354..396402078fd8 100644
+--- a/eng/packages/http-client-csharp-provisioning/generator/Azure.Generator.Provisioning/src/Providers/ProvisioningResourceProvider.cs
++++ b/eng/packages/http-client-csharp-provisioning/generator/Azure.Generator.Provisioning/src/Providers/ProvisioningResourceProvider.cs
+@@ -5,7 +5,9 @@
+ using Azure.Generator.Provisioning.Primitives;
+ using Azure.Generator.Provisioning.Utilities;
+ using Azure.Provisioning;
++using Azure.Provisioning.Authorization;
+ using Azure.Provisioning.Primitives;
++using Azure.Provisioning.Roles;
+ using Microsoft.TypeSpec.Generator;
+ using Microsoft.TypeSpec.Generator.Expressions;
+ using Microsoft.TypeSpec.Generator.Input;
+@@ -20,6 +22,8 @@
+ using System.IO;
+ using System.Linq;
+ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
++using BicepFunction = Azure.Provisioning.Expressions.BicepFunction;
++using BicepIdentifierExpression = Azure.Provisioning.Expressions.IdentifierExpression;
+ 
+ namespace Azure.Generator.Provisioning.Providers
+ {
+@@ -282,6 +286,18 @@ protected override MethodProvider[] BuildMethods()
+                 methods.Add(nameRequirementsMethod);
+             }
+ 
++            // CreateRoleAssignment() overloads — only for resources that have RBAC roles
++            if (_inputModel.DiscriminatorValue == null && _resourceMetadata?.RbacRoles?.Count > 0)
++            {
++                var outputLibrary = (ProvisioningOutputLibrary)ProvisioningGenerator.Instance.OutputLibrary;
++                var builtInRole = outputLibrary.BuiltInRole;
++                if (builtInRole != null)
++                {
++                    methods.Add(BuildCreateRoleAssignmentWithIdentityMethod(builtInRole.Type));
++                    methods.Add(BuildCreateRoleAssignmentWithPrincipalMethod(builtInRole.Type));
++                }
++            }
++
+             return [.. methods];
+         }
+ 
+@@ -643,6 +659,149 @@ private static ValueExpression BuildResourceNameCharactersExpression(ResourceNam
+             return result;
+         }
+ 
++        // ── CreateRoleAssignment helpers ─────────────────────────────
++
++        /// <summary>
++        /// Builds: CreateRoleAssignment(XxxBuiltInRole role, UserAssignedIdentity identity)
++        /// </summary>
++        private MethodProvider BuildCreateRoleAssignmentWithIdentityMethod(CSharpType builtInRoleType)
++        {
++            var roleParam = new ParameterProvider("role", $"The role to grant.", builtInRoleType);
++            var identityParam = new ParameterProvider("identity", $"The <see cref=\"UserAssignedIdentity\"/>.", typeof(UserAssignedIdentity));
++
++            var sig = new MethodSignature(
++                "CreateRoleAssignment",
++                $"Creates a role assignment for a user-assigned identity that grants access to this {Name}.",
++                MethodSignatureModifiers.Public,
++                typeof(RoleAssignment),
++                $"The <see cref=\"RoleAssignment\"/>.",
++                [roleParam, identityParam]);
++
++            var resultVar = new VariableExpression(typeof(RoleAssignment), "result");
++            var roleNameVar = new VariableExpression(typeof(string), "roleName");
++
++            // string roleName = XxxBuiltInRole.GetBuiltInRoleName(role);
++            var getRoleName = Static(builtInRoleType).Invoke("GetBuiltInRoleName", [(ValueExpression)roleParam]);
++
++            // Constructor arg: $"{BicepIdentifier}_{identity.BicepIdentifier}_{roleName}"
++            var constructorArg = new FormattableStringExpression(
++                "{0}_{1}_{2}",
++                [
++                    new MemberExpression(null, "BicepIdentifier"),
++                    new MemberExpression(identityParam, "BicepIdentifier"),
++                    roleNameVar
++                ]);
++
++            // BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())
++            var roleDefId = Static(typeof(BicepFunction)).Invoke(
++                "GetSubscriptionResourceId",
++                [Literal("Microsoft.Authorization/roleDefinitions"), ((ValueExpression)roleParam).InvokeToString()]);
++
++            MethodBodyStatement[] body = [
++                Declare(roleNameVar, getRoleName),
++                Declare(resultVar, New.Instance(typeof(RoleAssignment), [constructorArg])),
++                resultVar.Property("Name").Assign(
++                    Static(typeof(BicepFunction)).Invoke("CreateGuid", [
++                        new MemberExpression(null, "Id"),
++                        new MemberExpression(identityParam, "PrincipalId"),
++                        roleDefId
++                    ])
++                ).Terminate(),
++                resultVar.Property("Scope").Assign(
++                    New.Instance(typeof(BicepIdentifierExpression), [new MemberExpression(null, "BicepIdentifier")])
++                ).Terminate(),
++                resultVar.Property("PrincipalType").Assign(
++                    new MemberExpression(Static(typeof(RoleManagementPrincipalType)), nameof(RoleManagementPrincipalType.ServicePrincipal))
++                ).Terminate(),
++                resultVar.Property("RoleDefinitionId").Assign(roleDefId).Terminate(),
++                resultVar.Property("PrincipalId").Assign(
++                    new MemberExpression(identityParam, "PrincipalId")
++                ).Terminate(),
++                Return(resultVar)
++            ];
++
++            return new MethodProvider(sig, body, this);
++        }
++
++        /// <summary>
++        /// Builds: CreateRoleAssignment(XxxBuiltInRole role, BicepValue&lt;RoleManagementPrincipalType&gt; principalType, BicepValue&lt;Guid&gt; principalId, string? bicepIdentifierSuffix)
++        /// </summary>
++        private MethodProvider BuildCreateRoleAssignmentWithPrincipalMethod(CSharpType builtInRoleType)
++        {
++            var roleParam = new ParameterProvider("role", $"The role to grant.", builtInRoleType);
++            var principalTypeParam = new ParameterProvider(
++                "principalType",
++                $"The type of the principal to assign to.",
++                new CSharpType(typeof(BicepValue<>)).MakeGenericType([typeof(RoleManagementPrincipalType)]));
++            var principalIdParam = new ParameterProvider(
++                "principalId",
++                $"The principal to assign to.",
++                new CSharpType(typeof(BicepValue<>)).MakeGenericType([typeof(Guid)]));
++            var suffixParam = new ParameterProvider(
++                "bicepIdentifierSuffix",
++                $"Optional role assignment identifier name suffix.",
++                new CSharpType(typeof(string), true),
++                DefaultOf(new CSharpType(typeof(string), true)));
++
++            var sig = new MethodSignature(
++                "CreateRoleAssignment",
++                $"Creates a role assignment for a principal that grants access to this {Name}.",
++                MethodSignatureModifiers.Public,
++                typeof(RoleAssignment),
++                $"The <see cref=\"RoleAssignment\"/>.",
++                [roleParam, principalTypeParam, principalIdParam, suffixParam]);
++
++            var resultVar = new VariableExpression(typeof(RoleAssignment), "result");
++            var roleNameVar = new VariableExpression(typeof(string), "roleName");
++            var suffixSepVar = new VariableExpression(typeof(string), "suffixSep");
++
++            // string roleName = XxxBuiltInRole.GetBuiltInRoleName(role);
++            var getRoleName = Static(builtInRoleType).Invoke("GetBuiltInRoleName", [(ValueExpression)roleParam]);
++
++            // string suffixSep = bicepIdentifierSuffix is null ? "" : "_";
++            var declareSuffixSep = Declare(suffixSepVar, new TernaryConditionalExpression(
++                ((ValueExpression)suffixParam).Is(Null),
++                Literal(""),
++                Literal("_")));
++
++            // Constructor arg: $"{BicepIdentifier}_{roleName}{suffixSep}{bicepIdentifierSuffix}"
++            var constructorArg = new FormattableStringExpression(
++                "{0}_{1}{2}{3}",
++                [
++                    new MemberExpression(null, "BicepIdentifier"),
++                    roleNameVar,
++                    suffixSepVar,
++                    (ValueExpression)suffixParam
++                ]);
++
++            // BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())
++            var roleDefId = Static(typeof(BicepFunction)).Invoke(
++                "GetSubscriptionResourceId",
++                [Literal("Microsoft.Authorization/roleDefinitions"), ((ValueExpression)roleParam).InvokeToString()]);
++
++            MethodBodyStatement[] body = [
++                Declare(roleNameVar, getRoleName),
++                declareSuffixSep,
++                Declare(resultVar, New.Instance(typeof(RoleAssignment), [constructorArg])),
++                resultVar.Property("Name").Assign(
++                    Static(typeof(BicepFunction)).Invoke("CreateGuid", [
++                        new MemberExpression(null, "Id"),
++                        (ValueExpression)principalIdParam,
++                        roleDefId
++                    ])
++                ).Terminate(),
++                resultVar.Property("Scope").Assign(
++                    New.Instance(typeof(BicepIdentifierExpression), [new MemberExpression(null, "BicepIdentifier")])
++                ).Terminate(),
++                resultVar.Property("PrincipalType").Assign((ValueExpression)principalTypeParam).Terminate(),
++                resultVar.Property("RoleDefinitionId").Assign(roleDefId).Terminate(),
++                resultVar.Property("PrincipalId").Assign((ValueExpression)principalIdParam).Terminate(),
++                Return(resultVar)
++            ];
++
++            return new MethodProvider(sig, body, this);
++        }
++
+         // ── Type resolution helpers ──────────────────────────────────
+ 
+         private CSharpType GetPropertyType(InputModelProperty prop)
+diff --git a/eng/packages/http-client-csharp-provisioning/generator/Azure.Generator.Provisioning/src/ProvisioningOutputLibrary.cs b/eng/packages/http-client-csharp-provisioning/generator/Azure.Generator.Provisioning/src/ProvisioningOutputLibrary.cs
+index fcbde5b4b74c..6f7871e4c5b3 100644
+--- a/eng/packages/http-client-csharp-provisioning/generator/Azure.Generator.Provisioning/src/ProvisioningOutputLibrary.cs
++++ b/eng/packages/http-client-csharp-provisioning/generator/Azure.Generator.Provisioning/src/ProvisioningOutputLibrary.cs
+@@ -22,6 +22,13 @@ public class ProvisioningOutputLibrary : ManagementOutputLibrary
+         private Dictionary<string, ProvisioningResourceProvider>? _resourcesByIdPattern;
+         private Dictionary<InputModelType, List<ProvisioningResourceProvider>>? _resourcesByModel;
+ 
++        /// <summary>
++        /// Gets the BuiltInRole type provider if any resources define RBAC roles.
++        /// Set during <see cref="BuildTypeProviders"/> and accessed by resource providers
++        /// to generate CreateRoleAssignment methods.
++        /// </summary>
++        internal BuiltInRoleProvider? BuiltInRole { get; private set; }
++
+         private T GetValue<T>(ref T? field) where T : class
+         {
+             InitializeResources(ref _resources, ref _resourcesByIdPattern, ref _resourcesByModel);
+@@ -112,6 +119,16 @@ protected override TypeProvider[] BuildTypeProviders()
+                 ProvisioningGenerator.Instance.AddTypeToKeep(resource.Name);
+             }
+ 
++            // Add BuiltInRole struct if any resources have RBAC roles defined.
++            var serviceName = ProvisioningGenerator.Instance.TypeFactory.ResourceProviderName;
++            BuiltInRole = BuiltInRoleProvider.TryCreate(
++                serviceName,
++                ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources);
++            if (BuiltInRole != null)
++            {
++                providers.Add(BuiltInRole);
++            }
++
+             // Build models and enums via TypeFactory — our overridden CreateModel/CreateEnum
+             // return ProvisioningModelProvider/ProvisioningResourceProvider/EnumProvider.
+             var inputLib = ProvisioningGenerator.Instance.InputLibrary;
+diff --git a/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/main.tsp b/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/main.tsp
+index 47a28097f5d1..4e1f08061cd0 100644
+--- a/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/main.tsp
++++ b/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/main.tsp
+@@ -26,3 +26,11 @@ namespace ProvisioningTypeSpec {
+     v2024_05_01: "2024-05-01",
+   }
+ }
++
++// Define RBAC roles for testing BuiltInRole and CreateRoleAssignment generation
++#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles for provisioning"
++@@clientOption(ProvisioningTypeSpec.ConfigurationStore, "resource-rbac-roles", #{
++  ConfigStoreContributor: "00000000-0000-0000-0000-000000000001",
++  ConfigStoreReader: "00000000-0000-0000-0000-000000000002",
++  ConfigStoreDataOperator: "00000000-0000-0000-0000-000000000003",
++}, "csharp");
+diff --git a/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/src/Generated/ConfigurationStore.cs b/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/src/Generated/ConfigurationStore.cs
+index 0f360fa0c142..2aed10a29ffb 100644
+--- a/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/src/Generated/ConfigurationStore.cs
++++ b/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/src/Generated/ConfigurationStore.cs
+@@ -5,12 +5,16 @@
+ 
+ #nullable disable
+ 
++using System;
+ using System.ComponentModel;
+ using System.Diagnostics.CodeAnalysis;
+ using Azure.Core;
+ using Azure.Provisioning;
++using Azure.Provisioning.Authorization;
++using Azure.Provisioning.Expressions;
+ using Azure.Provisioning.Primitives;
+ using Azure.Provisioning.Resources;
++using Azure.Provisioning.Roles;
+ 
+ namespace Azure.Provisioning.ProvisioningTypeSpec
+ {
+@@ -154,6 +158,41 @@ public static ConfigurationStore FromExisting(string bicepIdentifier, string res
+         [EditorBrowsable(EditorBrowsableState.Never)]
+         public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 24, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
+ 
++        /// <summary> Creates a role assignment for a user-assigned identity that grants access to this ConfigurationStore. </summary>
++        /// <param name="role"> The role to grant. </param>
++        /// <param name="identity"> The <see cref="UserAssignedIdentity"/>. </param>
++        /// <returns> The <see cref="RoleAssignment"/>. </returns>
++        public RoleAssignment CreateRoleAssignment(ProvisioningTypeSpecBuiltInRole role, UserAssignedIdentity identity)
++        {
++            string roleName = ProvisioningTypeSpecBuiltInRole.GetBuiltInRoleName(role);
++            RoleAssignment result = new RoleAssignment($"{BicepIdentifier}_{identity.BicepIdentifier}_{roleName}");
++            result.Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
++            result.Scope = new IdentifierExpression(BicepIdentifier);
++            result.PrincipalType = RoleManagementPrincipalType.ServicePrincipal;
++            result.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString());
++            result.PrincipalId = identity.PrincipalId;
++            return result;
++        }
++
++        /// <summary> Creates a role assignment for a principal that grants access to this ConfigurationStore. </summary>
++        /// <param name="role"> The role to grant. </param>
++        /// <param name="principalType"> The type of the principal to assign to. </param>
++        /// <param name="principalId"> The principal to assign to. </param>
++        /// <param name="bicepIdentifierSuffix"> Optional role assignment identifier name suffix. </param>
++        /// <returns> The <see cref="RoleAssignment"/>. </returns>
++        public RoleAssignment CreateRoleAssignment(ProvisioningTypeSpecBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string bicepIdentifierSuffix = null)
++        {
++            string roleName = ProvisioningTypeSpecBuiltInRole.GetBuiltInRoleName(role);
++            string suffixSep = bicepIdentifierSuffix is null ? "" : "_";
++            RoleAssignment result = new RoleAssignment($"{BicepIdentifier}_{roleName}{suffixSep}{bicepIdentifierSuffix}");
++            result.Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
++            result.Scope = new IdentifierExpression(BicepIdentifier);
++            result.PrincipalType = principalType;
++            result.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString());
++            result.PrincipalId = principalId;
++            return result;
++        }
++
+         /// <summary></summary>
+         public static partial class ResourceVersions
+         {
+diff --git a/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/src/Generated/ProvisioningTypeSpecBuiltInRole.cs b/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/src/Generated/ProvisioningTypeSpecBuiltInRole.cs
+new file mode 100644
+index 000000000000..e754910ff52c
+--- /dev/null
++++ b/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/src/Generated/ProvisioningTypeSpecBuiltInRole.cs
+@@ -0,0 +1,78 @@
++// Copyright (c) Microsoft Corporation. All rights reserved.
++// Licensed under the MIT License.
++
++// <auto-generated/>
++
++#nullable disable
++
++using System;
++using System.ComponentModel;
++
++namespace Azure.Provisioning.ProvisioningTypeSpec
++{
++    /// <summary> Defines the built-in roles for ProvisioningTypeSpec resources. </summary>
++    public readonly partial struct ProvisioningTypeSpecBuiltInRole : IEquatable<ProvisioningTypeSpecBuiltInRole>
++    {
++        private readonly string _value;
++        internal const string ConfigStoreContributorValue = "00000000-0000-0000-0000-000000000001";
++        internal const string ConfigStoreDataOperatorValue = "00000000-0000-0000-0000-000000000003";
++        internal const string ConfigStoreReaderValue = "00000000-0000-0000-0000-000000000002";
++
++        /// <param name="value"> The ID value of the role. </param>
++        public ProvisioningTypeSpecBuiltInRole(string value)
++        {
++            _value = value ?? throw new ArgumentNullException(nameof(value));
++        }
++
++        /// <summary> Gets the ConfigStoreContributor. </summary>
++        public static ProvisioningTypeSpecBuiltInRole ConfigStoreContributor => new ProvisioningTypeSpecBuiltInRole(ConfigStoreContributorValue);
++
++        /// <summary> Gets the ConfigStoreDataOperator. </summary>
++        public static ProvisioningTypeSpecBuiltInRole ConfigStoreDataOperator => new ProvisioningTypeSpecBuiltInRole(ConfigStoreDataOperatorValue);
++
++        /// <summary> Gets the ConfigStoreReader. </summary>
++        public static ProvisioningTypeSpecBuiltInRole ConfigStoreReader => new ProvisioningTypeSpecBuiltInRole(ConfigStoreReaderValue);
++
++        /// <summary> Try to get the name of a built-in ProvisioningTypeSpec role from its ID value. </summary>
++        /// <param name="value"> The role value. </param>
++        /// <returns> The name of the built-in ProvisioningTypeSpec role if known, otherwise the ID will be returned. </returns>
++        [EditorBrowsable(EditorBrowsableState.Never)]
++        public static string GetBuiltInRoleName(ProvisioningTypeSpecBuiltInRole value) => value._value switch
++        {
++            ConfigStoreContributorValue => nameof(ConfigStoreContributor),
++            ConfigStoreDataOperatorValue => nameof(ConfigStoreDataOperator),
++            ConfigStoreReaderValue => nameof(ConfigStoreReader),
++            _ => value._value
++        };
++
++        /// <summary> Determines if two ProvisioningTypeSpecBuiltInRole values are the same. </summary>
++        /// <param name="left"> The first ProvisioningTypeSpecBuiltInRole to compare. </param>
++        /// <param name="right"> The second ProvisioningTypeSpecBuiltInRole to compare. </param>
++        /// <returns> True if &lt;paramref name="left"/&gt; and &lt;paramref name="right"/&gt; are the same; otherwise, false. </returns>
++        public static bool operator ==(ProvisioningTypeSpecBuiltInRole left, ProvisioningTypeSpecBuiltInRole right) => left.Equals(right);
++
++        /// <summary> Determines if two ProvisioningTypeSpecBuiltInRole values are different. </summary>
++        /// <param name="left"> The first ProvisioningTypeSpecBuiltInRole to compare. </param>
++        /// <param name="right"> The second ProvisioningTypeSpecBuiltInRole to compare. </param>
++        /// <returns> True if &lt;paramref name="left"/&gt; and &lt;paramref name="right"/&gt; are different; otherwise, false. </returns>
++        public static bool operator !=(ProvisioningTypeSpecBuiltInRole left, ProvisioningTypeSpecBuiltInRole right) => !left.Equals(right);
++
++        /// <summary> Converts a string to a ProvisioningTypeSpecBuiltInRole. </summary>
++        /// <param name="value"> The string value to convert. </param>
++        public static implicit operator ProvisioningTypeSpecBuiltInRole(string value) => new ProvisioningTypeSpecBuiltInRole(value);
++
++        /// <param name="obj"> The object to compare. </param>
++        [EditorBrowsable(EditorBrowsableState.Never)]
++        public override bool Equals(object obj) => obj is ProvisioningTypeSpecBuiltInRole other && Equals(other);
++
++        /// <param name="other"> The value to compare. </param>
++        public bool Equals(ProvisioningTypeSpecBuiltInRole other) => string.Equals(_value, other._value, StringComparison.Ordinal);
++
++        /// <summary> Returns the hash code for this ProvisioningTypeSpecBuiltInRole. </summary>
++        [EditorBrowsable(EditorBrowsableState.Never)]
++        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
++
++        /// <summary> Returns the string representation of this ProvisioningTypeSpecBuiltInRole. </summary>
++        public override string ToString() => _value;
++    }
++}
+diff --git a/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/tspCodeModel.json b/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/tspCodeModel.json
+index a534ec5653ea..7cca789241f1 100644
+--- a/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/tspCodeModel.json
++++ b/eng/packages/http-client-csharp-provisioning/generator/TestProjects/Local/Provisioning-TypeSpec/tspCodeModel.json
+@@ -1543,6 +1543,18 @@
+         {
+           "name": "Azure.ResourceManager.Private.@armResourceInternal",
+           "arguments": {}
++        },
++        {
++          "name": "Azure.ClientGenerator.Core.@clientOption",
++          "arguments": {
++            "name": "resource-rbac-roles",
++            "value": {
++              "ConfigStoreContributor": "00000000-0000-0000-0000-000000000001",
++              "ConfigStoreReader": "00000000-0000-0000-0000-000000000002",
++              "ConfigStoreDataOperator": "00000000-0000-0000-0000-000000000003"
++            },
++            "scope": "csharp"
++          }
+         }
+       ],
+       "serializationOptions": {
+@@ -3880,7 +3892,20 @@
+                   "2024-04-01",
+                   "2024-05-01"
+                 ],
+-                "rbacRoles": []
++                "rbacRoles": [
++                  {
++                    "name": "ConfigStoreContributor",
++                    "value": "00000000-0000-0000-0000-000000000001"
++                  },
++                  {
++                    "name": "ConfigStoreReader",
++                    "value": "00000000-0000-0000-0000-000000000002"
++                  },
++                  {
++                    "name": "ConfigStoreDataOperator",
++                    "value": "00000000-0000-0000-0000-000000000003"
++                  }
++                ]
+               },
+               {
+                 "resourceModelId": "ProvisioningTypeSpec.KeyValue",

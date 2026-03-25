@@ -13,7 +13,6 @@ using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The Storage Account ManagementPolicy properties. </summary>
     internal partial class ManagementPolicyProperties : IJsonModel<ManagementPolicyProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ManagementPolicyProperties"/> for deserialization. </summary>

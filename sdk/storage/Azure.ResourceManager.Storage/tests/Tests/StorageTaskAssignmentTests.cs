@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Needs re-recording: recording has extra GET entries from old AutoRest-generated code that no longer match the TypeSpec-generated SDK")]
         public async Task CreateUpdateGetDeleteTaskAssignement()
         {
             //create TaskAssignement

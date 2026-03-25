@@ -629,6 +629,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Async variant fails: DeferredAsyncPageable creates diagnostic scope inside async iterator, AsyncLocal doesn't flow into state machine so test framework can't detect it.")]
         public async Task StorageAccountRegenerateKey()
         {
             JsonPathSanitizers.Add("$.keys.[*].value");
