@@ -12,6 +12,7 @@
 - `Target` was renamed to `EvaluationTarget`.
 - `Trigger` was renamed to `ScheduleTrigger`.
 - `AzureAIAgentTarget` and `AzureAIModelTarget` became internal.
+- `ScheduleTask` was renamed to `ProjectsScheduleTask`.
 
 ### Bugs Fixed
 
