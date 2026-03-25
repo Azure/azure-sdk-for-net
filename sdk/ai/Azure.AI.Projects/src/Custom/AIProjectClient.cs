@@ -172,15 +172,15 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of Insights. </summary>
-        internal virtual Insights GetInsightsClient()
+        internal virtual ProjectsInsights GetInsightsClient()
         {
-            return Volatile.Read(ref _cachedInsights) ?? Interlocked.CompareExchange(ref _cachedInsights, new Insights(Pipeline, _endpoint, _apiVersion), null) ?? _cachedInsights;
+            return Volatile.Read(ref _cachedProjectsInsights) ?? Interlocked.CompareExchange(ref _cachedProjectsInsights, new ProjectsInsights(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectsInsights;
         }
 
         /// <summary> Initializes a new instance of Schedules. </summary>
-        internal virtual Schedules GetSchedulesClient()
+        internal virtual ProjectsSchedules GetSchedulesClient()
         {
-            return Volatile.Read(ref _cachedSchedules) ?? Interlocked.CompareExchange(ref _cachedSchedules, new Schedules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedSchedules;
+            return Volatile.Read(ref _cachedProjectsSchedules) ?? Interlocked.CompareExchange(ref _cachedProjectsSchedules, new ProjectsSchedules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectsSchedules;
         }
 
         /// <summary> Initializes a new instance of AIProjectMemoryStoresOperations. </summary>
@@ -204,8 +204,8 @@ namespace Azure.AI.Projects
         public virtual EvaluationRules EvaluationRules => GetEvaluationRulesClient();
         public virtual EvaluationTaxonomies EvaluationTaxonomies => GetEvaluationTaxonomiesClient();
         public virtual Evaluators Evaluators => GetEvaluatorsClient();
-        public virtual Insights Insights => GetInsightsClient();
-        public virtual Schedules Schedules => GetSchedulesClient();
+        public virtual ProjectsInsights Insights => GetInsightsClient();
+        public virtual ProjectsSchedules Schedules => GetSchedulesClient();
         /// <summary> Gets the client for telemetry operations. </summary>
         public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
 

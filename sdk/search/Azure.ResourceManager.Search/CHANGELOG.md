@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Migrated from Swagger/AutoRest to TypeSpec-based generation (API version 2025-05-01).
+
 ### Breaking Changes
 
 ### Bugs Fixed

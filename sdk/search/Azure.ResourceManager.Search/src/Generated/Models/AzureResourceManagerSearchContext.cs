@@ -6,20 +6,21 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(DataPlaneAadOrApiKeyAuthOption))]
     [ModelReaderWriterBuildable(typeof(ListQueryKeysResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationListResult))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionPropertiesPrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesResult))]
     [ModelReaderWriterBuildable(typeof(QuotaUsageResult))]
     [ModelReaderWriterBuildable(typeof(QuotaUsageResultName))]
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(SearchServicePatch))]
     [ModelReaderWriterBuildable(typeof(SearchServicePrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(SearchServicePrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(SearchServiceProperties))]
     [ModelReaderWriterBuildable(typeof(SearchServiceQueryKey))]
     [ModelReaderWriterBuildable(typeof(SearchServiceResource))]
     [ModelReaderWriterBuildable(typeof(SearchSku))]
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(SharedSearchServicePrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerSearchContext : ModelReaderWriterContext
     {
     }

@@ -7,6 +7,7 @@ import "./item.tsp";
 
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
+using Azure.ClientGenerator.Core.Legacy;
 using Azure.ResourceManager;
 
 @armProviderNamespace
@@ -28,9 +29,25 @@ namespace ProvisioningTypeSpec {
 
   // Test that SubResource inside a list is correctly resolved to Azure.Provisioning.Resources.SubResource
   @@alternateType(ConfigurationStoreProperties.linkedResources, Azure.ResourceManager.Models.SubResource[], "csharp");
+
+  // Test that @flattenProperty on the properties envelope correctly flattens
+  // child properties onto the resource while the standalone model keeps
+  // unqualified paths (regression test for double-flatten bug).
+  // We apply @flattenProperty to Item.properties (not KeyValue.properties)
+  // because ItemProperties is also referenced by ItemCreateOrUpdateParameters,
+  // so it survives as a standalone model — exposing the double-flatten bug.
+  @@flattenProperty(Item.properties);
 }
 
 // Dummy models to test alternateType replacement with SubResource
 namespace Azure.ResourceManager.Models {
   model SubResource { }
 }
+
+// Define RBAC roles for testing BuiltInRole and CreateRoleAssignment generation
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles for provisioning"
+@@clientOption(ProvisioningTypeSpec.ConfigurationStore, "resource-rbac-roles", #{
+  ConfigStoreContributor: "00000000-0000-0000-0000-000000000001",
+  ConfigStoreReader: "00000000-0000-0000-0000-000000000002",
+  ConfigStoreDataOperator: "00000000-0000-0000-0000-000000000003",
+}, "csharp");

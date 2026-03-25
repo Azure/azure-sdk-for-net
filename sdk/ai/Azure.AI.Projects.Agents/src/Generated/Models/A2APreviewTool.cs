@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An agent implementing the A2A protocol. </summary>
-    public partial class A2APreviewTool : AgentTool
+    public partial class A2APreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="A2APreviewTool"/>. </summary>
         public A2APreviewTool() : base(ToolType.A2aPreview)

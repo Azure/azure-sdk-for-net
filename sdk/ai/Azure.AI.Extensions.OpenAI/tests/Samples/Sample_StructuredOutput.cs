@@ -73,7 +73,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
                            "and returns it in the desired structured output format.",
             TextOptions = textOptions
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -83,13 +83,13 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
         {
             Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
         };
-        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(options);
+        ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync(options);
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
         ResponseResult response = await responseClient.CreateResponseAsync(options: new());
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_CleanUp_StructuredOutput_Async
-        await projectClient.OpenAI.Conversations.DeleteConversationAsync(conversation.Id);
+        await projectClient.OpenAI.GetProjectConversationsClient().DeleteConversationAsync(conversation.Id);
         await projectClient.Agents.DeleteAgentAsync(agentName: "myAgent");
         #endregion
     }
@@ -123,7 +123,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
                            "and returns it in the desired structured output format.",
             TextOptions = textOptions
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -133,13 +133,13 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
         {
             Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
         };
-        ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation(options);
+        ProjectConversation conversation = projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversation(options);
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
         ResponseResult response = responseClient.CreateResponse(options: new());
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_CleanUp_StructuredOutput_Sync
-        projectClient.OpenAI.Conversations.DeleteConversation(conversation.Id);
+        projectClient.OpenAI.GetProjectConversationsClient().DeleteConversation(conversation.Id);
         projectClient.Agents.DeleteAgent(agentName: "myAgent");
         #endregion
     }
