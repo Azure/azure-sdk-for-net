@@ -110,13 +110,15 @@ $Step++
 Write-Host "[$Step/$TotalSteps] Checking uv (Python package manager)..." -ForegroundColor Yellow
 
 if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
-    Write-Host "  Installing uv..." -ForegroundColor DarkGray
+    Write-Host "  Installing uv via pip (checksum-verified from PyPI)..." -ForegroundColor DarkGray
 
+    # Install uv from PyPI using pip. PyPI downloads are integrity-checked
+    # (TUF + PEP 476), avoiding the supply-chain risk of piping remote
+    # scripts into a shell (curl | bash / irm | iex).
+    & $pythonCmd.Source -m pip install --user --quiet uv 2>&1 | ForEach-Object { Write-Host "    $_" -ForegroundColor DarkGray }
+
+    # Ensure pip --user bin directory is on PATH for this session
     if ($IsLinux -or $IsMacOS) {
-        # Download and pipe to bash
-        & bash -c 'curl -LsSf https://astral.sh/uv/install.sh | bash' 2>&1 | ForEach-Object { Write-Host "    $_" -ForegroundColor DarkGray }
-
-        # Add to PATH for this session
         foreach ($binDir in @("$env:HOME/.local/bin", "$env:HOME/.cargo/bin")) {
             if (Test-Path $binDir) {
                 $env:PATH = "${binDir}:$($env:PATH)"
@@ -124,9 +126,8 @@ if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
         }
     }
     else {
-        & powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex" 2>&1 | ForEach-Object { Write-Host "    $_" -ForegroundColor DarkGray }
-        $uvBin = Join-Path $env:USERPROFILE '.local\bin'
-        if (Test-Path $uvBin) { $env:PATH = "${uvBin};$($env:PATH)" }
+        $uvBin = & $pythonCmd.Source -c "import sysconfig; print(sysconfig.get_path('scripts', 'nt_user'))" 2>$null
+        if ($uvBin -and (Test-Path $uvBin)) { $env:PATH = "${uvBin};$($env:PATH)" }
     }
 
     if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
