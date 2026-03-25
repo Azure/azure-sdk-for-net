@@ -1,6 +1,9 @@
 <Project>
   <ItemGroup>
     <PackageVersion Include="Azure.Monitor.OpenTelemetry.AspNetCore" Version="1.4.0"/>
+    <!-- Remove+Include is required here because NuGet restore cannot resolve the
+         PackageVersion declared in Directory.Support.Packages.props through the
+         auto-import override mechanism. Using Update alone causes NU1010. -->
     <PackageVersion Remove="OpenTelemetry.Exporter.OpenTelemetryProtocol"/>
     <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.14.0"/>
   </ItemGroup>
