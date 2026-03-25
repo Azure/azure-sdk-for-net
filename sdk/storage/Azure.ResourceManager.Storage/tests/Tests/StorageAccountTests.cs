@@ -1444,8 +1444,8 @@ namespace Azure.ResourceManager.Storage.Tests
             };
 
             //create and get policy, the name of blob inventory policy should always be default
-            BlobInventoryPolicyResource blobInventoryPolicy = account.GetBlobInventoryPolicy(BlobInventoryPolicyName.Default);
-            blobInventoryPolicy = (await blobInventoryPolicy.UpdateAsync(WaitUntil.Completed, parameter)).Value;
+            BlobInventoryPolicyCollection blobInventoryPolicyCollection = account.GetBlobInventoryPolicies();
+            BlobInventoryPolicyResource blobInventoryPolicy = (await blobInventoryPolicyCollection.CreateOrUpdateAsync(WaitUntil.Completed, BlobInventoryPolicyName.Default, parameter)).Value;
             blobInventoryPolicy = await blobInventoryPolicy.GetAsync();
             Assert.AreEqual(blobInventoryPolicy.Data.PolicySchema.Rules.Count, 2);
 
