@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         {
             TryGetApiVersion(PlanetaryComputerGeoCatalogResource.ResourceType, out string planetaryComputerGeoCatalogApiVersion);
             _geoCatalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer", PlanetaryComputerGeoCatalogResource.ResourceType.Namespace, Diagnostics);
-            _geoCatalogsRestClient = new GeoCatalogs(_geoCatalogsClientDiagnostics, Pipeline, Endpoint, planetaryComputerGeoCatalogApiVersion ?? "2025-02-11-preview");
+            _geoCatalogsRestClient = new GeoCatalogs(_geoCatalogsClientDiagnostics, Pipeline, Endpoint, planetaryComputerGeoCatalogApiVersion ?? "2026-04-15");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
