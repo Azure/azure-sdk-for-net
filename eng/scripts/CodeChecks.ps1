@@ -45,15 +45,43 @@ function LogError([string]$message) {
 # For renames ("old -> new"), returns both paths. Returns an empty array for blank/malformed lines.
 function Get-PorcelainPaths([string]$line) {
     if ([string]::IsNullOrWhiteSpace($line)) { return @() }
-    $trimmed = $line.Trim()
-    if ($trimmed.Length -le 3) { return @() }
-    # Skip the two status characters and the following space to get the path portion.
-    $pathPart = $trimmed.Substring(3)
+    if ($line.Length -le 3) { return @() }
+    # The porcelain format is "XY path" where XY are the two status characters.
+    # Skip exactly 3 characters (XY + space) to get the path portion.
+    $pathPart = $line.Substring(3)
     # Handle renames of the form "oldpath -> newpath".
     if ($pathPart -match '(.+?)\s->\s(.+)$') {
         return @($matches[1], $matches[2])
     }
     return @($pathPart)
+}
+
+# Given the current git status --porcelain lines and a list of pre-existing changed paths,
+# returns an object describing which status lines are new (produced by code checks) versus
+# which were already present before code checks ran.
+function Get-CodeCheckSummary {
+    param(
+        [string[]]$CurrentStatusLines,
+        [string[]]$PreExistingChanges
+    )
+
+    $newStatusLines = @()
+    foreach ($line in $CurrentStatusLines) {
+        # Wrap in @() to prevent PowerShell from unwrapping single-element arrays
+        # to strings, which would cause $paths[-1] to return a character instead of a path.
+        $paths = @(Get-PorcelainPaths $line)
+        if (-not $paths) { continue }
+        # For renames, check the destination (last) path against pre-existing changes.
+        $checkPath = $paths[-1]
+        if ($checkPath -notin $PreExistingChanges) {
+            $newStatusLines += $line
+        }
+    }
+
+    return @{
+        NewStatusLines   = $newStatusLines
+        PreExistingCount = ($PreExistingChanges | Measure-Object).Count
+    }
 }
 
 function Invoke-Block([scriptblock]$cmd) {
@@ -228,26 +256,16 @@ try {
         & git -c core.safecrlf=false diff --ignore-space-at-eol --exit-code
         if ($LastExitCode -ne 0) {
             if ($PreparePr) {
-                $currentStatusLines = git status --porcelain
-                $newStatusLines = @()
-                foreach ($line in $currentStatusLines) {
-                    $paths = Get-PorcelainPaths $line
-                    if (-not $paths) { continue }
-                    # For renames, check the destination (last) path against pre-existing changes.
-                    $checkPath = $paths[-1]
-                    if ($checkPath -notin $preExistingChanges) {
-                        $newStatusLines += $line
-                    }
-                }
-                if ($newStatusLines) {
-                    $newStatus = ($newStatusLines | ForEach-Object { "    $_" }) -join "`n"
+                $summary = Get-CodeCheckSummary -CurrentStatusLines (git status --porcelain) -PreExistingChanges $preExistingChanges
+                if ($summary.NewStatusLines) {
+                    $newStatus = ($summary.NewStatusLines | ForEach-Object { "    $_" }) -join "`n"
                     Write-Host ""
                     Write-Host -f Green "The following files were updated by code checks and should be included in your commit:"
                     Write-Host -f Yellow $newStatus
                 }
-                if ($preExistingChanges) {
+                if ($summary.PreExistingCount -gt 0) {
                     Write-Host ""
-                    Write-Host -f Cyan "Note: $($preExistingChanges.Count) file(s) already had changes before code checks ran and were excluded from the list above."
+                    Write-Host -f Cyan "Note: $($summary.PreExistingCount) file(s) already had changes before code checks ran and were excluded from the list above."
                 }
             }
             else {
