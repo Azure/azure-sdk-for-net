@@ -16,15 +16,15 @@ public class OpenTelemetryExtensionsTests
     }
 
     [Test]
-    public void AgentServerTelemetry_HasDefaultSourceName()
+    public void AgentHostTelemetry_HasDefaultSourceName()
     {
-        Assert.That(AgentServerTelemetry.ResponsesSourceName, Is.Not.Null.And.Not.Empty);
+        Assert.That(AgentHostTelemetry.ResponsesSourceName, Is.Not.Null.And.Not.Empty);
     }
 
     [Test]
-    public void AgentServerTelemetry_HasDefaultMeterName()
+    public void AgentHostTelemetry_HasDefaultMeterName()
     {
-        Assert.That(AgentServerTelemetry.ResponsesMeterName, Is.Not.Null.And.Not.Empty);
+        Assert.That(AgentHostTelemetry.ResponsesMeterName, Is.Not.Null.And.Not.Empty);
     }
 
     [Test]

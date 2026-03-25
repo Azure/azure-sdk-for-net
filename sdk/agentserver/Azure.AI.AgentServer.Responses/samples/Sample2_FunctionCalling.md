@@ -10,12 +10,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Implement the handler
 
-```csharp
-using System.Runtime.CompilerServices;
-using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
-using Azure.AI.AgentServer.Responses.Models;
-
+```C# Snippet:Responses_Sample2_WeatherHandler
 public class WeatherHandler : IResponseHandler
 {
     public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -80,8 +75,8 @@ public class WeatherHandler : IResponseHandler
 
 ## Start the server
 
-```csharp
-AgentServer.Run<WeatherHandler>(args);
+```C# Snippet:Responses_Sample2_StartServer
+AgentHost.Run<WeatherHandler>(args);
 ```
 
 ## Test the endpoint

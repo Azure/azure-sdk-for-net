@@ -16,7 +16,7 @@ public class MultiProtocolCompositionTests
     [Test]
     public async Task DualProtocol_BothEndpointsReachable()
     {
-        var builder = AgentServer.CreateBuilder();
+        var builder = AgentHost.CreateBuilder();
         builder.WebApplicationBuilder.WebHost.UseTestServer();
         builder.AddInvocations<TestInvocationHandler>();
 
@@ -39,7 +39,7 @@ public class MultiProtocolCompositionTests
     [Test]
     public void DuplicateProtocol_ThrowsInvalidOperationException()
     {
-        var builder = AgentServer.CreateBuilder();
+        var builder = AgentHost.CreateBuilder();
         builder.AddInvocations<TestInvocationHandler>();
 
         Assert.Throws<InvalidOperationException>(() =>

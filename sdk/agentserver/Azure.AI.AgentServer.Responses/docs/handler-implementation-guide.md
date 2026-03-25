@@ -845,10 +845,9 @@ See [Token Usage (B33)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk
 The simplest way to start a Responses server is with the `Azure.AI.AgentServer.Hosting` package:
 
 ```csharp
-using Azure.AI.AgentServer.Hosting;
 using Azure.AI.AgentServer.Responses;
 
-AgentServer.Run<MyHandler>(args);
+AgentHost.Run<MyHandler>(args);
 ```
 
 This creates a Kestrel host with OpenTelemetry, health checks, identity headers, and the Responses protocol endpoints — all in one line.
@@ -858,10 +857,9 @@ This creates a Kestrel host with OpenTelemetry, health checks, identity headers,
 For more control over the host configuration:
 
 ```csharp
-using Azure.AI.AgentServer.Hosting;
 using Azure.AI.AgentServer.Responses;
 
-var builder = AgentServer.CreateBuilder(args);
+var builder = AgentHost.CreateBuilder(args);
 builder.AddResponses<MyHandler>();
 var app = builder.Build();
 app.Run();
@@ -991,7 +989,7 @@ This happens transparently — no handler code is needed.
 The server automatically adds an `x-platform-server` identity header to all responses via the `ServerUserAgentMiddleware` in the Hosting package. Each protocol registers its own identity segment (e.g., `azure-ai-agentserver-responses/{version}`) with the `ServerUserAgentRegistry` during route mapping. To append custom identity information, use the hosting options:
 
 ```csharp
-var builder = AgentServer.CreateBuilder(args);
+var builder = AgentHost.CreateBuilder(args);
 builder.Configure(options =>
 {
     options.AdditionalServerIdentity = "my-app/1.0";

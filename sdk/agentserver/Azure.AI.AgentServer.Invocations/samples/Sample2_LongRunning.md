@@ -12,10 +12,7 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 
 Override `HandleAsync` to accept the job and `GetAsync` to report status. Optionally override `CancelAsync` to support cancellation.
 
-```csharp
-using System.Text.Json;
-using Azure.AI.AgentServer.Invocations;
-
+```C# Snippet:Invocations_Sample2_DocumentAnalysisHandler
 public class DocumentAnalysisHandler : InvocationHandler
 {
     private JobState? _currentJob;
@@ -103,14 +100,14 @@ public class DocumentAnalysisHandler : InvocationHandler
     }
 }
 
-record AnalysisInput(string DocumentUrl);
-record JobState(string InvocationId, string DocumentUrl, string Status, string? Result = null);
+public record AnalysisInput(string DocumentUrl);
+public record JobState(string InvocationId, string DocumentUrl, string Status, string? Result = null);
 ```
 
 ## Start the server
 
-```csharp
-AgentServer.Run<DocumentAnalysisHandler>(args);
+```C# Snippet:Invocations_Sample2_StartServer
+AgentHost.Run<DocumentAnalysisHandler>(args);
 ```
 
 ## Test the endpoint

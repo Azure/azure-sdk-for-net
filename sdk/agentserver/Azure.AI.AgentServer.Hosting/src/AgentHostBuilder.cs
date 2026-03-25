@@ -20,7 +20,7 @@ namespace Azure.AI.AgentServer.Hosting;
 /// (via <see cref="WebApplication.CreateSlimBuilder(string[])"/>) and exposes
 /// protocol registration, health checks, tracing, shutdown, and escape hatches.
 /// </summary>
-public sealed class AgentServerBuilder
+public sealed class AgentHostBuilder
 {
     private readonly WebApplicationBuilder _builder;
     private readonly HashSet<string> _registeredProtocols = new(StringComparer.OrdinalIgnoreCase);
@@ -30,9 +30,9 @@ public sealed class AgentServerBuilder
     private TimeSpan? _shutdownTimeout;
 
     /// <summary>
-    /// Initializes a new <see cref="AgentServerBuilder"/> from command-line arguments.
+    /// Initializes a new <see cref="AgentHostBuilder"/> from command-line arguments.
     /// </summary>
-    internal AgentServerBuilder(string[]? args)
+    internal AgentHostBuilder(string[]? args)
     {
         _builder = WebApplication.CreateSlimBuilder(args ?? Array.Empty<string>());
 
@@ -43,7 +43,7 @@ public sealed class AgentServerBuilder
         _builder.Services.AddSingleton<RequestIdBaggagePropagator>();
 
         // Register default options
-        _builder.Services.Configure<AgentServerOptions>(_ => { });
+        _builder.Services.Configure<AgentHostOptions>(_ => { });
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ public sealed class AgentServerBuilder
     /// </summary>
     /// <param name="configure">The configuration callback.</param>
     /// <returns>This builder for chaining.</returns>
-    public AgentServerBuilder Configure(Action<AgentServerOptions> configure)
+    public AgentHostBuilder Configure(Action<AgentHostOptions> configure)
     {
         _builder.Services.Configure(configure);
         return this;
@@ -84,7 +84,7 @@ public sealed class AgentServerBuilder
     /// </summary>
     /// <param name="configure">The health check configuration callback.</param>
     /// <returns>This builder for chaining.</returns>
-    public AgentServerBuilder ConfigureHealth(Action<IHealthChecksBuilder> configure)
+    public AgentHostBuilder ConfigureHealth(Action<IHealthChecksBuilder> configure)
     {
         _healthConfigure = configure;
         return this;
@@ -95,7 +95,7 @@ public sealed class AgentServerBuilder
     /// </summary>
     /// <param name="configure">The tracing configuration callback.</param>
     /// <returns>This builder for chaining.</returns>
-    public AgentServerBuilder ConfigureTracing(Action<TracerProviderBuilder> configure)
+    public AgentHostBuilder ConfigureTracing(Action<TracerProviderBuilder> configure)
     {
         _tracingConfigure = configure;
         return this;
@@ -106,7 +106,7 @@ public sealed class AgentServerBuilder
     /// </summary>
     /// <param name="timeout">The maximum duration to wait for in-flight requests during shutdown.</param>
     /// <returns>This builder for chaining.</returns>
-    public AgentServerBuilder ConfigureShutdown(TimeSpan timeout)
+    public AgentHostBuilder ConfigureShutdown(TimeSpan timeout)
     {
         _shutdownTimeout = timeout;
         return this;
@@ -130,10 +130,10 @@ public sealed class AgentServerBuilder
     }
 
     /// <summary>
-    /// Finalize configuration and build the runnable <see cref="AgentServerApp"/>.
+    /// Finalize configuration and build the runnable <see cref="AgentHostApp"/>.
     /// </summary>
-    /// <returns>A configured <see cref="AgentServerApp"/> ready to run.</returns>
-    public AgentServerApp Build()
+    /// <returns>A configured <see cref="AgentHostApp"/> ready to run.</returns>
+    public AgentHostApp Build()
     {
         // Resolve shutdown timeout
         var shutdownTimeout = _shutdownTimeout ?? TimeSpan.FromSeconds(30);
@@ -159,7 +159,7 @@ public sealed class AgentServerBuilder
         _healthConfigure?.Invoke(healthBuilder);
 
         // OpenTelemetry
-        _builder.Services.AddAgentServerTelemetry(_tracingConfigure);
+        _builder.Services.AddAgentHostTelemetry(_tracingConfigure);
 
         // Build the WebApplication
         var app = _builder.Build();
@@ -177,6 +177,6 @@ public sealed class AgentServerBuilder
             mapper(app);
         }
 
-        return new AgentServerApp(app);
+        return new AgentHostApp(app);
     }
 }

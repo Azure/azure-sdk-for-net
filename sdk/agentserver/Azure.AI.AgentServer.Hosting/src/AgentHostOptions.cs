@@ -6,7 +6,7 @@ namespace Azure.AI.AgentServer.Hosting;
 /// <summary>
 /// Configuration options for the agent server host.
 /// </summary>
-public class AgentServerOptions
+public class AgentHostOptions
 {
     /// <summary>
     /// Graceful shutdown timeout. Default: 30 seconds.

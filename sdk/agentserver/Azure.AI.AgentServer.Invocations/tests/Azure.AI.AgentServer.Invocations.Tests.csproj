@@ -7,22 +7,28 @@
     <Nullable>annotations</Nullable>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
+
+  <!-- Mirror the global using that NuGet consumers get via Hosting's build props -->
+  <ItemGroup>
+    <Using Include="Azure.AI.AgentServer.Hosting" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework) != 'net462'">
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework) != 'net462'">
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <ProjectReference Include="..\src\Azure.AI.AgentServer.Invocations.csproj" />
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Hosting\src\Azure.AI.AgentServer.Hosting.csproj" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework) == 'net462'">
+  <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <Compile Remove="**\*.cs" />
   </ItemGroup>
 </Project>

@@ -10,10 +10,7 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 
 ## Implement the handler
 
-```csharp
-using System.Text.Json;
-using Azure.AI.AgentServer.Invocations;
-
+```C# Snippet:Invocations_Sample3_CodeGenHandler
 public class CodeGenHandler : InvocationHandler
 {
     public override async Task HandleAsync(
@@ -65,13 +62,13 @@ public class CodeGenHandler : InvocationHandler
     }
 }
 
-record CodeGenInput(string Prompt);
+public record CodeGenInput(string Prompt);
 ```
 
 ## Start the server
 
-```csharp
-AgentServer.Run<CodeGenHandler>(args);
+```C# Snippet:Invocations_Sample3_StartServer
+AgentHost.Run<CodeGenHandler>(args);
 ```
 
 ## Test the endpoint

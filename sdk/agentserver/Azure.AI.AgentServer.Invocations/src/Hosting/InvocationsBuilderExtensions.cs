@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 namespace Azure.AI.AgentServer.Invocations;
 
 /// <summary>
-/// Extension methods for <see cref="AgentServerBuilder"/> to register
+/// Extension methods for <see cref="AgentHostBuilder"/> to register
 /// the Invocations protocol for one-line startup.
 /// </summary>
 public static class InvocationsBuilderExtensions
@@ -23,8 +23,8 @@ public static class InvocationsBuilderExtensions
     /// <param name="builder">The agent server builder.</param>
     /// <param name="configure">Optional callback to configure <see cref="InvocationsServerOptions"/>.</param>
     /// <returns>The builder for chaining.</returns>
-    public static AgentServerBuilder AddInvocations<THandler>(
-        this AgentServerBuilder builder,
+    public static AgentHostBuilder AddInvocations<THandler>(
+        this AgentHostBuilder builder,
         Action<InvocationsServerOptions>? configure = null)
         where THandler : InvocationHandler
     {
@@ -46,8 +46,8 @@ public static class InvocationsBuilderExtensions
     /// <param name="handler">The handler instance.</param>
     /// <param name="configure">Optional callback to configure <see cref="InvocationsServerOptions"/>.</param>
     /// <returns>The builder for chaining.</returns>
-    public static AgentServerBuilder AddInvocations(
-        this AgentServerBuilder builder,
+    public static AgentHostBuilder AddInvocations(
+        this AgentHostBuilder builder,
         InvocationHandler handler,
         Action<InvocationsServerOptions>? configure = null)
     {

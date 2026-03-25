@@ -13,17 +13,18 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework) != 'net462'">
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework) != 'net462'">
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <ProjectReference Include="..\src\Azure.AI.AgentServer.Hosting.csproj" />
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Invocations\src\Azure.AI.AgentServer.Invocations.csproj" />
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Responses\src\Azure.AI.AgentServer.Responses.csproj" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework) == 'net462'">
+  <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <Compile Remove="**\*.cs" />
   </ItemGroup>
 </Project>

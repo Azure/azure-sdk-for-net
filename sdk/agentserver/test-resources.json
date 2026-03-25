@@ -1,6 +1,9 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_comment": "Azure.AI.AgentServer is a server-side hosting library. Tests use WebApplicationFactory<T> for in-process protocol testing and do not require live Azure resources. This file satisfies CI pipeline structure requirements."
+  },
   "parameters": {
     "baseName": {
       "type": "string",

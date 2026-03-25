@@ -10,11 +10,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Implement the handler
 
-```csharp
-using System.Runtime.CompilerServices;
-using Azure.AI.AgentServer.Responses;
-using Azure.AI.AgentServer.Responses.Models;
-
+```C# Snippet:Responses_Sample4_MathSolverHandler
 public class MathSolverHandler : IResponseHandler
 {
     public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -36,7 +32,7 @@ public class MathSolverHandler : IResponseHandler
         var summary = reasoning.AddSummaryPart();
         yield return summary.EmitAdded();
 
-        // In a real agent, this would be the model’s chain-of-thought.
+        // In a real agent, this would be the model's chain-of-thought.
         var thought = $"The user asked: \"{question}\". " +
                       "I need to identify the mathematical operation, " +
                       "compute the result, and explain the steps.";
@@ -54,7 +50,7 @@ public class MathSolverHandler : IResponseHandler
         var text = message.AddTextContent();
         yield return text.EmitAdded();
 
-        var answer = "The answer is 42. Here’s how: " +
+        var answer = "The answer is 42. Here's how: " +
                      "6 × 7 = 42. The multiplication of 6 and 7 gives 42.";
         yield return text.EmitDelta(answer);
         yield return text.EmitDone(answer);
@@ -69,8 +65,8 @@ public class MathSolverHandler : IResponseHandler
 
 ## Start the server
 
-```csharp
-AgentServer.Run<MathSolverHandler>(args);
+```C# Snippet:Responses_Sample4_StartServer
+AgentHost.Run<MathSolverHandler>(args);
 ```
 
 ## Test the endpoint

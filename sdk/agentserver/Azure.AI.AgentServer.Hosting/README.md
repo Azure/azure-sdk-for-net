@@ -21,13 +21,12 @@ dotnet add package Azure.AI.AgentServer.Hosting --prerelease
 
 ### Start a server (Tier 1 — recommended)
 
-The simplest way to create an agent server is with the one-line `AgentServer.Run<THandler>()` API. You'll also need a protocol package such as `Azure.AI.AgentServer.Responses`:
+The simplest way to create an agent server is with the one-line `AgentHost.Run<THandler>()` API. You'll also need a protocol package such as `Azure.AI.AgentServer.Responses`:
 
-```csharp
-using Azure.AI.AgentServer.Hosting;
+```C# Snippet:Hosting_ReadMe_Tier1
 using Azure.AI.AgentServer.Responses;
 
-AgentServer.Run<MyHandler>(args);
+AgentHost.Run<MyHandler>(args);
 ```
 
 This starts a Kestrel server with OpenTelemetry, a `/healthy` health endpoint, server user-agent headers, and your handler wired up to the Responses protocol.
@@ -36,11 +35,10 @@ This starts a Kestrel server with OpenTelemetry, a `/healthy` health endpoint, s
 
 For more control, use the builder pattern:
 
-```csharp
-using Azure.AI.AgentServer.Hosting;
+```C# Snippet:Hosting_ReadMe_Tier2
 using Azure.AI.AgentServer.Responses;
 
-var builder = AgentServer.CreateBuilder(args);
+var builder = AgentHost.CreateBuilder(args);
 builder.AddResponses<MyHandler>();
 var app = builder.Build();
 app.Run();
@@ -48,15 +46,15 @@ app.Run();
 
 ## Key concepts
 
-### AgentServer
+### AgentHost
 
-The static entry point. `AgentServer.Run<THandler>()` is the fastest path to a working server — one line of code. `AgentServer.CreateBuilder()` returns an `AgentServerBuilder` for progressive customisation.
+The static entry point. `AgentHost.Run<THandler>()` is the fastest path to a working server — one line of code. `AgentHost.CreateBuilder()` returns an `AgentHostBuilder` for progressive customisation.
 
-### AgentServerBuilder
+### AgentHostBuilder
 
 Configures the underlying ASP.NET Core host with sensible defaults: Kestrel on the `PORT` environment variable (or 8088), OpenTelemetry traces and metrics, a `/healthy` health endpoint, and `x-platform-server` user-agent header via `ServerUserAgentMiddleware`. Use `.AddResponses<T>()` and `.AddInvocations<T>()` to compose protocol packages on a single host — each protocol registers its identity segment with the `ServerUserAgentRegistry`.
 
-### AgentServerApp
+### AgentHostApp
 
 The built application. Call `Run()` to start listening. Wraps `WebApplication` with server-specific configuration applied.
 
@@ -66,7 +64,7 @@ Reads Azure AI Foundry platform variables (`AZF_*`) to resolve endpoint URLs, de
 
 ### Telemetry
 
-OpenTelemetry is configured automatically via `Azure.Monitor.OpenTelemetry.AspNetCore`. The `AgentServerTelemetry` class exposes the shared `ActivitySource` for custom trace spans. OTLP export is enabled when the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable is set.
+OpenTelemetry is configured automatically via `Azure.Monitor.OpenTelemetry.AspNetCore`. The `AgentHostTelemetry` class exposes the shared `ActivitySource` for custom trace spans. OTLP export is enabled when the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable is set.
 
 ### Health endpoint
 
@@ -81,7 +79,7 @@ You can familiarise yourself with different APIs using [Samples](https://github.
 ### Common errors
 
 - **Port already in use**: The server defaults to port 8088 (or the `PORT` environment variable). If the port is occupied, set `PORT` to another value or configure Kestrel directly via the builder.
-- **No protocol registered**: If you call `AgentServer.Run<THandler>()` without also installing a protocol package (e.g., `Azure.AI.AgentServer.Responses`), the server will start but will have no protocol endpoints mapped.
+- **No protocol registered**: If you call `AgentHost.Run<THandler>()` without also installing a protocol package (e.g., `Azure.AI.AgentServer.Responses`), the server will start but will have no protocol endpoints mapped.
 
 ### Logging
 

@@ -10,11 +10,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Implement the handler
 
-```csharp
-using System.Runtime.CompilerServices;
-using Azure.AI.AgentServer.Responses;
-using Azure.AI.AgentServer.Responses.Models;
-
+```C# Snippet:Responses_Sample3_StudyTutorHandler
 public class StudyTutorHandler : IResponseHandler
 {
     public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -74,11 +70,10 @@ public class StudyTutorHandler : IResponseHandler
 
 This sample uses the Tier 2 builder pattern to configure `DefaultFetchHistoryCount`:
 
-```csharp
-using Azure.AI.AgentServer.Hosting;
+```C# Snippet:Responses_Sample3_BuilderConfig
 using Azure.AI.AgentServer.Responses;
 
-var builder = AgentServer.CreateBuilder(args);
+var builder = AgentHost.CreateBuilder(args);
 builder.AddResponses<StudyTutorHandler>(options =>
 {
     options.DefaultFetchHistoryCount = 20;

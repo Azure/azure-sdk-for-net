@@ -10,10 +10,7 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 
 ## Implement the handler
 
-```csharp
-using System.Text.Json;
-using Azure.AI.AgentServer.Invocations;
-
+```C# Snippet:Invocations_Sample4_TravelPlannerHandler
 public class TravelPlannerHandler : InvocationHandler
 {
     private readonly List<string> _history = new();
@@ -56,13 +53,13 @@ public class TravelPlannerHandler : InvocationHandler
     }
 }
 
-record TravelInput(string Message);
+public record TravelInput(string Message);
 ```
 
 ## Start the server
 
-```csharp
-AgentServer.Run<TravelPlannerHandler>(args);
+```C# Snippet:Invocations_Sample4_StartServer
+AgentHost.Run<TravelPlannerHandler>(args);
 ```
 
 ## Test the endpoint

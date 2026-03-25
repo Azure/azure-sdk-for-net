@@ -22,7 +22,7 @@ internal sealed class ServerUserAgentMiddleware : IMiddleware
     /// Initializes a new instance of <see cref="ServerUserAgentMiddleware"/>.
     /// </summary>
     public ServerUserAgentMiddleware(
-        IOptions<AgentServerOptions> options,
+        IOptions<AgentHostOptions> options,
         ServerUserAgentRegistry registry)
     {
         var version = typeof(ServerUserAgentMiddleware).Assembly

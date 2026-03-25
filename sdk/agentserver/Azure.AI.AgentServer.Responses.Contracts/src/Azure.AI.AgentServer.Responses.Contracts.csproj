@@ -8,9 +8,6 @@
     <PackageTags>Azure.AI.AgentServer.Responses.Contracts</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
-    <!-- Generated model names (Response, Error, Item, Metadata) trigger AZC0012;
-         Generated validators expose System.Text.Json types triggering AZC0014. -->
-    <NoWarn>$(NoWarn);AZC0012;AZC0014</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

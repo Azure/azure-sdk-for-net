@@ -10,9 +10,7 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 
 ## Implement the handler
 
-```csharp
-using Azure.AI.AgentServer.Invocations;
-
+```C# Snippet:Invocations_Sample1_EchoHandler
 public class EchoHandler : InvocationHandler
 {
     public override async Task HandleAsync(
@@ -27,8 +25,8 @@ public class EchoHandler : InvocationHandler
 
 ## Start the server
 
-```csharp
-AgentServer.Run<EchoHandler>(args);
+```C# Snippet:Invocations_Sample1_StartServer
+AgentHost.Run<EchoHandler>(args);
 ```
 
 ## Test it

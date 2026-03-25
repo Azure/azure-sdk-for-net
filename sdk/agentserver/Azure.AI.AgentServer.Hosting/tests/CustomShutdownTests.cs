@@ -18,7 +18,7 @@ public class CustomShutdownTests
     {
         var customTimeout = TimeSpan.FromSeconds(2);
 
-        var builder = AgentServer.CreateBuilder();
+        var builder = AgentHost.CreateBuilder();
         builder.WebApplicationBuilder.WebHost.UseTestServer();
         builder.ConfigureShutdown(customTimeout);
         builder.AddInvocations<TestInvocationHandler>();

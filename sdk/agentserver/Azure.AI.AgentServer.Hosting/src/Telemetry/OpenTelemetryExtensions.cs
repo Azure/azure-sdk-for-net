@@ -21,7 +21,7 @@ internal static class OpenTelemetryExtensions
     /// <summary>
     /// Registers OpenTelemetry providers and conditional exporters.
     /// </summary>
-    internal static IServiceCollection AddAgentServerTelemetry(
+    internal static IServiceCollection AddAgentHostTelemetry(
         this IServiceCollection services,
         Action<TracerProviderBuilder>? configureTracing = null)
     {
@@ -65,8 +65,8 @@ internal static class OpenTelemetryExtensions
             {
                 tracing.SetResourceBuilder(resourceBuilder);
                 tracing.AddAspNetCoreInstrumentation();
-                tracing.AddSource(AgentServerTelemetry.ResponsesSourceName);
-                tracing.AddSource(AgentServerTelemetry.InvocationsSourceName);
+                tracing.AddSource(AgentHostTelemetry.ResponsesSourceName);
+                tracing.AddSource(AgentHostTelemetry.InvocationsSourceName);
 
                 configureTracing?.Invoke(tracing);
 
@@ -79,8 +79,8 @@ internal static class OpenTelemetryExtensions
             {
                 metrics.SetResourceBuilder(resourceBuilder);
                 metrics.AddAspNetCoreInstrumentation();
-                metrics.AddMeter(AgentServerTelemetry.ResponsesMeterName);
-                metrics.AddMeter(AgentServerTelemetry.InvocationsMeterName);
+                metrics.AddMeter(AgentHostTelemetry.ResponsesMeterName);
+                metrics.AddMeter(AgentHostTelemetry.InvocationsMeterName);
 
                 if (hasOtlp)
                 {

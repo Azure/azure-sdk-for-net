@@ -8,17 +8,17 @@ namespace Azure.AI.AgentServer.Hosting;
 /// Provides <see cref="CreateBuilder"/> for composable Tier 2 usage
 /// and <see cref="Run{THandler}"/> for one-line Tier 1 startup.
 /// </summary>
-public static class AgentServer
+public static class AgentHost
 {
     /// <summary>
-    /// Creates a new <see cref="AgentServerBuilder"/> for composing protocols
+    /// Creates a new <see cref="AgentHostBuilder"/> for composing protocols
     /// and configuring the agent server.
     /// </summary>
     /// <param name="args">Optional command-line arguments.</param>
     /// <returns>A new builder instance.</returns>
-    public static AgentServerBuilder CreateBuilder(string[]? args = null)
+    public static AgentHostBuilder CreateBuilder(string[]? args = null)
     {
-        return new AgentServerBuilder(args);
+        return new AgentHostBuilder(args);
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ public static class AgentServer
     /// <param name="configure">Optional callback to configure the builder before running.</param>
     public static void Run<THandler>(
         string[]? args = null,
-        Action<AgentServerBuilder>? configure = null)
+        Action<AgentHostBuilder>? configure = null)
         where THandler : class
     {
         var builder = CreateBuilder(args);

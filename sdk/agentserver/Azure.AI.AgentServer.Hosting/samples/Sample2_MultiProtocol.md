@@ -1,6 +1,6 @@
 # Sample 2: Tier 2 — Builder with Multi-Protocol Composition
 
-This sample demonstrates the **Tier 2** developer experience: use `AgentServer.CreateBuilder()` to compose multiple protocols, customize health checks, configure tracing, and control shutdown behavior. The builder gives you the same infrastructure as Tier 1 with full control over composition.
+This sample demonstrates the **Tier 2** developer experience: use `AgentHost.CreateBuilder()` to compose multiple protocols, customize health checks, configure tracing, and control shutdown behavior. The builder gives you the same infrastructure as Tier 1 with full control over composition.
 
 ## Prerequisites
 
@@ -13,12 +13,11 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 
 This example builds a customer support agent that exposes both protocols — the Responses API for streaming chat and Invocations for ticket submission:
 
-```csharp
-using Azure.AI.AgentServer.Hosting;
+```C# Snippet:Hosting_Sample2_Compose
 using Azure.AI.AgentServer.Invocations;
 using Azure.AI.AgentServer.Responses;
 
-var builder = AgentServer.CreateBuilder(args);
+var builder = AgentHost.CreateBuilder(args);
 
 // Register the Responses protocol for streaming chat.
 builder.AddResponses<ChatHandler>();
@@ -30,7 +29,7 @@ builder.AddInvocations<TicketHandler>();
 builder.ConfigureHealth(health =>
 {
     health.AddCheck("knowledge_base", () =>
-        Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy());
+        HealthCheckResult.Healthy());
 });
 
 // Add a custom tracing source for your business logic.
@@ -47,11 +46,7 @@ app.Run();
 
 The chat handler streams responses via the Responses API:
 
-```csharp
-using System.Runtime.CompilerServices;
-using Azure.AI.AgentServer.Responses;
-using Azure.AI.AgentServer.Responses.Models;
-
+```C# Snippet:Hosting_Sample2_ChatHandler
 public class ChatHandler : IResponseHandler
 {
     public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -82,9 +77,7 @@ public class ChatHandler : IResponseHandler
 
 The ticket handler accepts structured JSON via the Invocations protocol:
 
-```csharp
-using Azure.AI.AgentServer.Invocations;
-
+```C# Snippet:Hosting_Sample2_TicketHandler
 public class TicketHandler : InvocationHandler
 {
     public override async Task HandleAsync(
@@ -104,7 +97,7 @@ public class TicketHandler : InvocationHandler
     }
 }
 
-record TicketInput(string Subject, string Description);
+public record TicketInput(string Subject, string Description);
 ```
 
 ## Endpoints
@@ -117,7 +110,7 @@ The composed server exposes endpoints for both protocols on a single port:
 
 ## When to use Tier 2
 
-Use `AgentServer.CreateBuilder()` when you need to:
+Use `AgentHost.CreateBuilder()` when you need to:
 - Host **multiple protocols** on a single server
 - Add **custom health checks**, tracing sources, or middleware
 - Override **shutdown timeout** or **port binding**

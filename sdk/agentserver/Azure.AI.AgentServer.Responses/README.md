@@ -24,22 +24,19 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 The recommended way to start a Responses server is with the Hosting package's one-line API:
 
-```csharp
-using Azure.AI.AgentServer.Hosting;
-using Azure.AI.AgentServer.Responses;
-
-AgentServer.Run<MyHandler>(args);
+```C# Snippet:Responses_ReadMe_ConfigureServer_Tier1
+AgentHost.Run<EchoHandler>(args);
 ```
 
 This starts a Kestrel server with OpenTelemetry, health checks, server user-agent headers, and your handler mapped to the Responses API endpoints. Install the `Azure.AI.AgentServer.Hosting` package for this approach.
 
 Alternatively, register the library services manually in your `Program.cs`:
 
-```csharp
+```C# Snippet:Responses_ReadMe_ConfigureServer_Manual
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddResponsesServer();
-builder.Services.AddScoped<IResponseHandler, MyHandler>();
+builder.Services.AddScoped<IResponseHandler, EchoHandler>();
 
 var app = builder.Build();
 app.MapResponsesServer();
@@ -52,7 +49,7 @@ app.Run();
 
 The core abstraction you implement. The library calls `CreateAsync` for each incoming request and delivers the returned `IAsyncEnumerable<ResponseStreamEvent>` to clients via SSE:
 
-```csharp
+```C# Snippet:Responses_ReadMe_EchoHandler
 public class EchoHandler : IResponseHandler
 {
     public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -97,8 +94,6 @@ For detailed handler implementation guidance, see [docs/handler-implementation-g
 ### Thread safety
 
 All service instances registered via `AddResponsesServer()` are thread-safe. Handler instances are scoped per-request.
-
-
 
 ## Examples
 

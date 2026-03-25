@@ -15,17 +15,16 @@ The Azure AI Agent Server libraries let you build ASP.NET Core servers that impl
 - **Hosting** is the foundation — install it when you need a server host. It is automatically referenced by both protocol packages.
 - **Responses** implements the Azure AI Responses API (SSE streaming, function calling, conversation history). Use it when your agent communicates via the Responses protocol.
 - **Invocations** implements the Azure AI Invocations protocol (request/response handler pattern). Use it when your agent communicates via the Invocations protocol.
-- **Both protocols together**: Use `AgentServerBuilder` with `.AddResponses<T>()` and `.AddInvocations<T>()` to compose both protocols on a single host.
+- **Both protocols together**: Use `AgentHostBuilder` with `.AddResponses<T>()` and `.AddInvocations<T>()` to compose both protocols on a single host.
 
 ## Getting started
 
 The fastest way to get a server running:
 
 ```csharp
-using Azure.AI.AgentServer.Hosting;
 using Azure.AI.AgentServer.Responses;
 
-AgentServer.Run<MyHandler>(args);
+AgentHost.Run<MyHandler>(args);
 ```
 
 See each package's README for detailed getting started instructions.

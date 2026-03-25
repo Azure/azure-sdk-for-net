@@ -10,11 +10,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Implement the handler
 
-```csharp
-using System.Runtime.CompilerServices;
-using Azure.AI.AgentServer.Responses;
-using Azure.AI.AgentServer.Responses.Models;
-
+```C# Snippet:Responses_Sample1_QnAHandler
 public class QnAHandler : IResponseHandler
 {
     public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -52,8 +48,8 @@ public class QnAHandler : IResponseHandler
 
 ## Start the server
 
-```csharp
-AgentServer.Run<QnAHandler>(args);
+```C# Snippet:Responses_Sample1_StartServer
+AgentHost.Run<QnAHandler>(args);
 ```
 
 ## Test the endpoint

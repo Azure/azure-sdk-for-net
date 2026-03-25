@@ -17,10 +17,10 @@ namespace Azure.AI.AgentServer.Invocations.Tests;
 public class Tier1InvocationsStartupTests
 {
     [Test]
-    public async Task AgentServerBuilder_WithInvocations_StartsSuccessfully()
+    public async Task AgentHostBuilder_WithInvocations_StartsSuccessfully()
     {
-        // Use builder API (Tier 2) since Tier 1 AgentServer.Run requires actual port binding
-        var appBuilder = Azure.AI.AgentServer.Hosting.AgentServer.CreateBuilder();
+        // Use builder API (Tier 2) since Tier 1 AgentHost.Run requires actual port binding
+        var appBuilder = AgentHost.CreateBuilder();
         appBuilder.WebApplicationBuilder.WebHost.UseTestServer();
         appBuilder.AddInvocations<TestHandler>();
 

@@ -19,4 +19,9 @@
     <PackageReference Include="Azure.Monitor.OpenTelemetry.AspNetCore" />
     <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
   </ItemGroup>
+  <!-- Ship a global using so consumers can write AgentHost.Run<T>() with zero usings. -->
+  <ItemGroup>
+    <None Include="build\Azure.AI.AgentServer.Hosting.props" Pack="true" PackagePath="build\" />
+    <None Include="buildTransitive\Azure.AI.AgentServer.Hosting.props" Pack="true" PackagePath="buildTransitive\" />
+  </ItemGroup>
 </Project>

@@ -23,7 +23,7 @@ public sealed class TestWebApplicationFactory : IDisposable
         Action<ResponsesServerOptions>? configureOptions = null,
         string? routePrefix = null,
         Action<IServiceCollection>? configureTestServices = null,
-        Action<AgentServerOptions>? configureHostOptions = null)
+        Action<AgentHostOptions>? configureHostOptions = null)
     {
         var testHandler = handler ?? new TestHandler();
 

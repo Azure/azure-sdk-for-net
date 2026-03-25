@@ -10,7 +10,7 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 
 ## Add the Invocations protocol to your existing app
 
-```csharp
+```C# Snippet:Hosting_Sample3_SelfHost
 using Azure.AI.AgentServer.Invocations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,9 +44,7 @@ app.Run();
 
 This handler summarizes text — a simple but realistic agent task:
 
-```csharp
-using Azure.AI.AgentServer.Invocations;
-
+```C# Snippet:Hosting_Sample3_SummaryHandler
 public class SummaryHandler : InvocationHandler
 {
     public override async Task HandleAsync(
@@ -72,7 +70,7 @@ public class SummaryHandler : InvocationHandler
     }
 }
 
-record SummaryInput(string Text);
+public record SummaryInput(string Text);
 ```
 
 ## Test the endpoint

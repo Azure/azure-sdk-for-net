@@ -17,7 +17,7 @@ public class CustomMiddlewareTests
     [Test]
     public async Task CustomRoute_WorksAlongsideProtocol()
     {
-        var builder = AgentServer.CreateBuilder();
+        var builder = AgentHost.CreateBuilder();
         builder.WebApplicationBuilder.WebHost.UseTestServer();
         builder.AddInvocations<TestInvocationHandler>();
 

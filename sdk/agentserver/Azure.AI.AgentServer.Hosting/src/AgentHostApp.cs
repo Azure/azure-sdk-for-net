@@ -10,12 +10,12 @@ namespace Azure.AI.AgentServer.Hosting;
 /// Wraps the underlying <see cref="WebApplication"/> and provides
 /// escape-hatch access for advanced scenarios.
 /// </summary>
-public sealed class AgentServerApp
+public sealed class AgentHostApp
 {
     /// <summary>
-    /// Initializes a new instance of <see cref="AgentServerApp"/>.
+    /// Initializes a new instance of <see cref="AgentHostApp"/>.
     /// </summary>
-    internal AgentServerApp(WebApplication app)
+    internal AgentHostApp(WebApplication app)
     {
         App = app;
     }

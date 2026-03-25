@@ -22,13 +22,12 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 
 ### Configure the server
 
-Register the Invocations protocol on an `AgentServerBuilder`:
+Register the Invocations protocol on an `AgentHostBuilder`:
 
-```csharp
-using Azure.AI.AgentServer.Hosting;
+```C# Snippet:Invocations_ReadMe_Builder
 using Azure.AI.AgentServer.Invocations;
 
-var builder = AgentServer.CreateBuilder(args);
+var builder = AgentHost.CreateBuilder(args);
 builder.AddInvocations<MyHandler>();
 var app = builder.Build();
 app.Run();
@@ -36,15 +35,13 @@ app.Run();
 
 Or use the one-line Tier 1 startup if Invocations is the only protocol:
 
-```csharp
-AgentServer.Run<MyHandler>(args);
+```C# Snippet:Invocations_ReadMe_Tier1
+AgentHost.Run<MyHandler>(args);
 ```
 
 ### Implement a handler
 
-```csharp
-using Azure.AI.AgentServer.Invocations;
-
+```C# Snippet:Invocations_ReadMe_Handler
 public class MyHandler : InvocationHandler
 {
     public override async Task HandleAsync(
@@ -86,7 +83,7 @@ You can familiarise yourself with different APIs using [Samples](https://github.
 ### Common errors
 
 - **404 on invocation endpoint**: Ensure your handler is registered via `AddInvocations<THandler>()` on the builder. If you registered on `IServiceCollection` directly without mapping endpoints, the routes will not be created.
-- **Handler not found**: The Invocations protocol requires `Azure.AI.AgentServer.Hosting` for the underlying host. If you see startup errors, verify that you are using `AgentServer.CreateBuilder()` or `AgentServer.Run<THandler>()`.
+- **Handler not found**: The Invocations protocol requires `Azure.AI.AgentServer.Hosting` for the underlying host. If you see startup errors, verify that you are using `AgentHost.CreateBuilder()` or `AgentHost.Run<THandler>()`.
 
 ### Logging
 

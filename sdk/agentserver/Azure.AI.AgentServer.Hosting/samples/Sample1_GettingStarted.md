@@ -10,19 +10,15 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## The entire Program.cs
 
-```csharp
-AgentServer.Run<QnAHandler>(args);
+```C# Snippet:Hosting_Sample1_StartServer
+AgentHost.Run<QnAHandler>(args);
 ```
 
 That's it. The framework configures everything else.
 
 ## Implement the handler
 
-```csharp
-using System.Runtime.CompilerServices;
-using Azure.AI.AgentServer.Responses;
-using Azure.AI.AgentServer.Responses.Models;
-
+```C# Snippet:Hosting_Sample1_QnAHandler
 public class QnAHandler : IResponseHandler
 {
     public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -78,4 +74,4 @@ curl -X POST http://localhost:8088/responses \
 
 ## When to use Tier 1
 
-Use `AgentServer.Run<THandler>()` when you have a **single-protocol agent** and need no customization. This covers the vast majority of hosted agent scenarios.
+Use `AgentHost.Run<THandler>()` when you have a **single-protocol agent** and need no customization. This covers the vast majority of hosted agent scenarios.

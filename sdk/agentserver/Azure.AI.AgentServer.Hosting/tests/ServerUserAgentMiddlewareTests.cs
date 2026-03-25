@@ -53,7 +53,7 @@ public class ServerUserAgentMiddlewareTests
         builder.WebHost.UseTestServer();
         builder.Services.AddSingleton(registry);
         builder.Services.AddSingleton<ServerUserAgentMiddleware>();
-        builder.Services.Configure<AgentServerOptions>(_ => { });
+        builder.Services.Configure<AgentHostOptions>(_ => { });
 
         var app = builder.Build();
         app.UseAgentServerUserAgent();
@@ -77,7 +77,7 @@ public class ServerUserAgentMiddlewareTests
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
         builder.Services.AddAgentServerUserAgent();
-        builder.Services.Configure<AgentServerOptions>(o => o.AdditionalServerIdentity = "custom/2.0");
+        builder.Services.Configure<AgentHostOptions>(o => o.AdditionalServerIdentity = "custom/2.0");
 
         var app = builder.Build();
         app.UseAgentServerUserAgent();

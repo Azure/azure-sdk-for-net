@@ -83,7 +83,7 @@ These principles govern **all** work under `sdk/agentserver/`, across every prot
 
 | Project | Path | Description |
 |---|---|---|
-| **Hosting** | `Azure.AI.AgentServer.Hosting/src/` | Shared hosting foundation: AgentServer, AgentServerBuilder, OpenTelemetry, server user-agent header, health endpoint |
+| **Hosting** | `Azure.AI.AgentServer.Hosting/src/` | Shared hosting foundation: AgentHost, AgentHostBuilder, OpenTelemetry, server user-agent header, health endpoint |
 | **Hosting Tests** | `Azure.AI.AgentServer.Hosting/tests/` | NUnit tests for Hosting |
 | **Invocations** | `Azure.AI.AgentServer.Invocations/src/` | Invocations protocol library: InvocationHandler, session resolution, client header forwarding |
 | **Invocations Tests** | `Azure.AI.AgentServer.Invocations/tests/` | NUnit tests for Invocations |
@@ -171,7 +171,69 @@ TypeSpec dependencies are resolved from the repo-level emitter package
 (`eng/http-client-csharp-emitter-package.json`) via `emitterPackageJsonPath`
 in `tsp-location.yaml`. There is no standalone `package.json` in this directory.
 
-## 4. Do NOT
+## 4. Samples & Snippet System
+
+### How compiled snippets work
+
+Samples in markdown are sourced from compiled C# test files via the repo's snippet system.
+See [CONTRIBUTING.md — Updating Sample Snippets](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) for the canonical reference, including `#region Snippet:Name`, `#if SNIPPET` directives, and the `Update-Snippets.ps1` tool.
+
+**Key rule:** Never edit code inside `` ```C# Snippet:Name `` fences in markdown. Edit the `.cs` source file, then run `eng/scripts/Update-Snippets.ps1 agentserver`.
+
+### `AgentHost` namespace design and global using
+
+All Hosting types — `AgentHost`, `AgentHostBuilder`, `AgentHostApp`, `AgentHostOptions`, `AgentHostTelemetry`, and `AgentHostMiddlewareExtensions` — live in namespace `Azure.AI.AgentServer.Hosting`.
+
+The Hosting NuGet package ships `build/` and `buildTransitive/` `.props` files that inject a **global using** for this namespace. This means:
+
+- **Zero-import one-liner**: consumers who install any protocol package (Responses, Invocations) get `AgentHost` resolved automatically — no `using` statement needed for the entry point.
+- **Transitive reach**: because `buildTransitive/` is included, the global using flows to consumers who never directly reference `Azure.AI.AgentServer.Hosting`.
+
+For **test projects** that use `<ProjectReference>` (which does _not_ trigger NuGet build props), each test `.csproj` adds `<Using Include="Azure.AI.AgentServer.Hosting" />` to mirror the NuGet consumer experience.
+
+### Snippet test project references
+
+Snippet tests may reference types from **other** AgentServer packages (e.g., Invocations snippets using `AgentHost.Run` from Hosting, or Hosting snippets using `IResponseHandler` from Responses). The test `.csproj` must include project references to all packages used by snippet code. Current required references:
+
+| Test Project | Extra References Needed |
+|---|---|
+| `Responses.Tests` | `Hosting` (for `AgentHost.Run`, `AgentHost.CreateBuilder`) |
+| `Invocations.Tests` | `Hosting` (for `AgentHost.Run`, `AgentHost.CreateBuilder`) |
+| `Hosting.Tests` | `Responses` (for `IResponseHandler`, `ResponseEventStream`), `Invocations` (already present) |
+
+### Snippet test conventions
+
+- Mark snippet test classes with `[Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]`
+- Handler classes used as snippets go **outside** test methods as nested types wrapped in `#region Snippet:Name`
+- Server startup code goes **inside** test methods with `#if SNIPPET` / `#else` guards
+- Each sample markdown file gets its own `<SampleN>Snippets.cs` backing file
+- Each README gets a `ReadMeSnippets.cs` backing file
+
+## 5. Analyzer Suppression Rules
+
+### AZC0012 (single-word type names)
+
+TypeSpec-generated models with generic names (e.g., `Response`, `Error`, `Prompt`) trigger AZC0012. Suppress these with **type-scoped** `[assembly: SuppressMessage]` entries in `Responses.Contracts/src/Suppression.cs` — never use blanket `<NoWarn>` in the `.csproj`.
+
+**When adding new generated types:** check if any new type name triggers AZC0012 by building. If so, add a scoped entry to `Suppression.cs`. The full list of suppressed types must be maintained there.
+
+### AZC0014 (generic parameter names)
+
+Validator files in `Generated/Validators/` use generic parameter names that trigger AZC0014. Each validator file has `#pragma warning disable AZC0014` in its header. The `scripts/generate-validators.py` generator emits this pragma automatically. Never suppress AZC0014 via `<NoWarn>` in the `.csproj`.
+
+### Target framework conditions
+
+Use `$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))` — **never** `$(TargetFramework) != 'net462'` or similar brittle string comparisons.
+
+## 6. `.docsettings.yml` Rules
+
+- **Never modify the `required_readme_sections` regex** in `eng/.docsettings.yml`. It is shared repo-wide.
+- Our README titles use "library for .NET" (not "client library for .NET") because these are server-side hosting libraries. This intentionally doesn't match the title regex.
+- Our READMEs omit "Authenticate the Client" because there is no client to authenticate.
+- Both issues are suppressed via `known_content_issues` entries with the reason: `'Server-side library - title and auth section do not match client SDK pattern'`.
+- If you add a new package, add its README to `known_content_issues` with the same reason.
+
+## 7. Do NOT
 
 - Expose internal implementation details in the public API.
 - Add NuGet dependencies without justification (see Principle III).
@@ -184,7 +246,7 @@ in `tsp-location.yaml`. There is no standalone `package.json` in this directory.
 - Use blind `Task.Delay()` for test synchronization (Principle IV).
 - Add `InternalsVisibleTo` for non-test assemblies. `InternalsVisibleTo` must only grant access to test assemblies (e.g., `*.Tests`). When another production assembly needs to construct types with `internal` constructors, use the public model factory (`AzureAIAgentServerResponsesModelFactory` via `static using`) or add a public constructor/factory method via partial-class customization.
 
-## 5. Governance
+## 8. Governance
 
 - This `AGENTS.md` (including Section 0: Core Principles) is the **supreme governing document** for the AgentServer library. It supersedes informal practices and ad-hoc decisions.
 - Per-protocol `AGENTS.md` files inherit and extend these principles for their specific protocol. They may add protocol-specific rules but may **not** weaken or override the core principles.

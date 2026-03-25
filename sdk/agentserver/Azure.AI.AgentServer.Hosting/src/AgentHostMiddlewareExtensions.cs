@@ -10,16 +10,16 @@ namespace Azure.AI.AgentServer.Hosting;
 
 /// <summary>
 /// Extension methods for standalone (Tier 3) server setups that do not use
-/// <see cref="AgentServerBuilder"/>. Registers the <c>x-platform-server</c>
+/// <see cref="AgentHostBuilder"/>. Registers the <c>x-platform-server</c>
 /// user-agent middleware and its dependencies.
 /// </summary>
-public static class AgentServerMiddlewareExtensions
+public static class AgentHostMiddlewareExtensions
 {
     /// <summary>
     /// Registers the server user-agent services (<see cref="ServerUserAgentRegistry"/>
     /// and middleware) required for the <c>x-platform-server</c> response header.
     /// Call this before <see cref="UseAgentServerUserAgent"/> when not using
-    /// <see cref="AgentServerBuilder"/>.
+    /// <see cref="AgentHostBuilder"/>.
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <returns>The service collection for chaining.</returns>
@@ -27,7 +27,7 @@ public static class AgentServerMiddlewareExtensions
     {
         services.TryAddSingleton<ServerUserAgentRegistry>();
         services.TryAddSingleton<ServerUserAgentMiddleware>();
-        services.Configure<AgentServerOptions>(_ => { });
+        services.Configure<AgentHostOptions>(_ => { });
         return services;
     }
 

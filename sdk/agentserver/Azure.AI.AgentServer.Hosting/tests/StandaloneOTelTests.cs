@@ -12,12 +12,12 @@ namespace Azure.AI.AgentServer.Hosting.Tests;
 public class StandaloneOTelTests
 {
     [Test]
-    public void AgentServerTelemetry_ConstantsAvailable()
+    public void AgentHostTelemetry_ConstantsAvailable()
     {
         // Shared constants accessible directly from Hosting
-        Assert.That(AgentServerTelemetry.ResponsesSourceName, Is.EqualTo("Azure.AI.AgentServer.Responses"));
-        Assert.That(AgentServerTelemetry.InvocationsSourceName, Is.EqualTo("Azure.AI.AgentServer.Invocations"));
-        Assert.That(AgentServerTelemetry.ResponsesMeterName, Is.EqualTo("Azure.AI.AgentServer.Responses"));
-        Assert.That(AgentServerTelemetry.InvocationsMeterName, Is.EqualTo("Azure.AI.AgentServer.Invocations"));
+        Assert.That(AgentHostTelemetry.ResponsesSourceName, Is.EqualTo("Azure.AI.AgentServer.Responses"));
+        Assert.That(AgentHostTelemetry.InvocationsSourceName, Is.EqualTo("Azure.AI.AgentServer.Invocations"));
+        Assert.That(AgentHostTelemetry.ResponsesMeterName, Is.EqualTo("Azure.AI.AgentServer.Responses"));
+        Assert.That(AgentHostTelemetry.InvocationsMeterName, Is.EqualTo("Azure.AI.AgentServer.Invocations"));
     }
 }
