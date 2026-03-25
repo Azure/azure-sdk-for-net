@@ -11,8 +11,10 @@ lands on the release commit.  This script:
   2. Merges changelog entries from main into the release changelog so that
      entries from both branches are preserved in the correct version order.
 
-When the pipeline runs on main both operations are no-ops because the working
-tree already matches the MainRef.
+When the pipeline runs on main the versions and changelog entries will
+typically match, making this effectively a no-op.  If main has advanced
+since the build started, the script still produces the correct result by
+taking the higher version and merging changelog entries from both sides.
 
 .PARAMETER PackageName
 The name of the package (e.g. Azure.Core).
