@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Library-owned hosting foundation via `AgentHost.Run<THandler>()` (Tier 1) and `AgentHostBuilder` (Tier 2).
+- Library-owned hosting foundation via `AgentHostBuilder` (composable builder pattern).
 - OpenTelemetry integration with `Azure.Monitor.OpenTelemetry.AspNetCore` and OTLP exporter support.
 - Health endpoint at `/healthy` for liveness and readiness probes.
 - Multi-protocol composition via `AgentHostBuilder.AddResponses<T>()` and `AddInvocations<T>()`.

@@ -24,7 +24,7 @@ The fastest way to get a server running:
 ```csharp
 using Azure.AI.AgentServer.Responses;
 
-AgentHost.Run<MyHandler>(args);
+ResponsesServer.Run<MyHandler>();
 ```
 
 See each package's README for detailed getting started instructions.

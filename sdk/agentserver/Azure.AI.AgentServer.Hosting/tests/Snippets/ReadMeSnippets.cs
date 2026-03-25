@@ -17,16 +17,6 @@ namespace Azure.AI.AgentServer.Hosting.Tests.Snippets
     public class ReadMeSnippets
     {
         [Test]
-        public void Tier1_Startup()
-        {
-            #region Snippet:Hosting_ReadMe_Tier1
-
-            AgentHost.Run<MyHandler>();
-
-            #endregion
-        }
-
-        [Test]
         public void Tier2_Builder()
         {
             #region Snippet:Hosting_ReadMe_Tier2

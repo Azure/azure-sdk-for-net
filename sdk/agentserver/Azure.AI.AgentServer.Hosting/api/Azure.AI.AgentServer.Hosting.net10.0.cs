@@ -3,7 +3,6 @@ namespace Azure.AI.AgentServer.Hosting
     public static partial class AgentHost
     {
         public static Azure.AI.AgentServer.Hosting.AgentHostBuilder CreateBuilder(string[]? args = null) { throw null; }
-        public static void Run<THandler>(string[]? args = null, System.Action<Azure.AI.AgentServer.Hosting.AgentHostBuilder>? configure = null) where THandler : class { }
     }
     public sealed partial class AgentHostApp
     {

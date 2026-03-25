@@ -11,7 +11,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 ## The entire Program.cs
 
 ```C# Snippet:Hosting_Sample1_StartServer
-AgentHost.Run<QnAHandler>();
+ResponsesServer.Run<QnAHandler>();
 ```
 
 That's it. The framework configures everything else.
@@ -74,4 +74,4 @@ curl -X POST http://localhost:8088/responses \
 
 ## When to use Tier 1
 
-Use `AgentHost.Run<THandler>()` when you have a **single-protocol agent** and need no customization. This covers the vast majority of hosted agent scenarios.
+Use `ResponsesServer.Run<THandler>()` when you have a **single-protocol agent** and need no customization. This covers the vast majority of hosted agent scenarios.

@@ -301,7 +301,7 @@ Edit the `.cs` source file, then run `eng/scripts/Update-Snippets.ps1 agentserve
 | Handler snippets | Nested types **outside** test methods, wrapped in named `#region` / `#endregion` blocks |
 | Startup snippets | **Inside** test methods, wrapped in named `#region` / `#endregion` blocks |
 | `#if SNIPPET` | **Never** — code must compile in both normal and `BuildSnippets=true` modes (see below) |
-| `args` parameter | Use parameterless overloads: `AgentHost.Run<T>()`, `AgentHost.CreateBuilder()` |
+| `args` parameter | Use parameterless overloads: `ResponsesServer.Run<T>()`, `AgentHost.CreateBuilder()` |
 | Local verification | `dotnet build /p:BuildSnippets=true` before every commit |
 
 ### Why `#if SNIPPET` is banned
@@ -314,7 +314,7 @@ blocks must compile in that mode, but:
 - **`args`** only exists in top-level statements, not inside test methods, causing CS0103.
 - **Extension methods** from packages not available in the test context cause CS1061.
 
-Since `AgentHost.Run<T>()` and `AgentHost.CreateBuilder()` accept optional `string[]? args = null`, no workaround is needed — write snippet code that compiles directly.
+Since `ResponsesServer.Run<T>()`, `InvocationsServer.Run<T>()`, and `AgentHost.CreateBuilder()` accept optional `string[]? args = null`, no workaround is needed — write snippet code that compiles directly.
 
 ### `AgentHost` global using
 
@@ -341,8 +341,8 @@ must include `<ProjectReference>` entries for all packages used.
 
 | Test Project | Extra References Needed |
 |---|---|
-| Responses.Tests | Hosting (`AgentHost.Run`, `AgentHost.CreateBuilder`) |
-| Invocations.Tests | Hosting (`AgentHost.Run`, `AgentHost.CreateBuilder`) |
+| Responses.Tests | Hosting (`AgentHost.CreateBuilder`) |
+| Invocations.Tests | Hosting (`AgentHost.CreateBuilder`) |
 | Hosting.Tests | Responses (`IResponseHandler`, `ResponseEventStream`), Invocations |
 
 ---
@@ -396,7 +396,7 @@ avoid repeating them.
 | Mistake | Fix |
 |---|---|
 | `#if SNIPPET` blocks with `using` directives | Remove all `#if SNIPPET` blocks; write code that compiles in both modes |
-| Passing `args` or `args: null` in snippets | Use parameterless overloads: `AgentHost.Run<T>()` |
+| Passing `args` or `args: null` in snippets | Use parameterless overloads: `ResponsesServer.Run<T>()` |
 | Snippet-only code (e.g., `ConfigureHealth`) unavailable in test context | Remove or provide the dependency in the test project |
 | Not running `dotnet build /p:BuildSnippets=true` locally | Add to pre-commit checklist (step 3) |
 

@@ -19,19 +19,9 @@ dotnet add package Azure.AI.AgentServer.Hosting --prerelease
 - An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
 - [.NET 8](https://dotnet.microsoft.com/download) or later
 
-### Start a server (Tier 1 — recommended)
+### Start a server (recommended)
 
-The simplest way to create an agent server is with the one-line `AgentHost.Run<THandler>()` API. You'll also need a protocol package such as `Azure.AI.AgentServer.Responses`:
-
-```C# Snippet:Hosting_ReadMe_Tier1
-AgentHost.Run<MyHandler>();
-```
-
-This starts a Kestrel server with OpenTelemetry, a `/healthy` health endpoint, server user-agent headers, and your handler wired up to the Responses protocol.
-
-### Start a server (Tier 2 — builder pattern)
-
-For more control, use the builder pattern:
+Use the builder pattern to compose protocols on your server. You'll need a protocol package such as `Azure.AI.AgentServer.Responses`:
 
 ```C# Snippet:Hosting_ReadMe_Tier2
 var builder = AgentHost.CreateBuilder();
@@ -40,11 +30,15 @@ var app = builder.Build();
 app.Run();
 ```
 
+This starts a Kestrel server with OpenTelemetry, a `/healthy` health endpoint, server user-agent headers, and your handler wired up to the Responses protocol.
+
+For even simpler one-line startup, protocol packages provide their own `Run` methods (e.g., `ResponsesServer.Run<MyHandler>()`).
+
 ## Key concepts
 
 ### AgentHost
 
-The static entry point. `AgentHost.Run<THandler>()` is the fastest path to a working server — one line of code. `AgentHost.CreateBuilder()` returns an `AgentHostBuilder` for progressive customisation.
+The static entry point. `AgentHost.CreateBuilder()` returns an `AgentHostBuilder` for composing protocols and configuring the server. For one-line startup, protocol packages provide their own convenience methods (e.g., `ResponsesServer.Run<T>()`).
 
 ### AgentHostBuilder
 
@@ -75,7 +69,7 @@ You can familiarise yourself with different APIs using [Samples](https://github.
 ### Common errors
 
 - **Port already in use**: The server defaults to port 8088 (or the `PORT` environment variable). If the port is occupied, set `PORT` to another value or configure Kestrel directly via the builder.
-- **No protocol registered**: If you call `AgentHost.Run<THandler>()` without also installing a protocol package (e.g., `Azure.AI.AgentServer.Responses`), the server will start but will have no protocol endpoints mapped.
+- **No protocol registered**: If you use `AgentHost.CreateBuilder()` without calling a protocol registration method (e.g., `builder.AddResponses<T>()`), the server will start but will have no protocol endpoints mapped.
 
 ### Logging
 

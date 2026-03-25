@@ -4,9 +4,10 @@
 namespace Azure.AI.AgentServer.Hosting;
 
 /// <summary>
-/// Static entry point for creating and running agent servers.
-/// Provides <see cref="CreateBuilder"/> for composable Tier 2 usage
-/// and <see cref="Run{THandler}"/> for one-line Tier 1 startup.
+/// Static entry point for creating agent servers.
+/// Use <see cref="CreateBuilder"/> to compose protocols and build the server.
+/// For one-line startup, use the protocol-specific <c>Run</c> methods provided
+/// by each protocol package (e.g., <c>ResponsesServer.Run&lt;T&gt;()</c>).
 /// </summary>
 public static class AgentHost
 {
@@ -19,27 +20,5 @@ public static class AgentHost
     public static AgentHostBuilder CreateBuilder(string[]? args = null)
     {
         return new AgentHostBuilder(args);
-    }
-
-    /// <summary>
-    /// One-line entrypoint: builds and runs a single-protocol server.
-    /// The <typeparamref name="THandler"/> is registered in DI and the protocol
-    /// is selected by the extension method that constrains <typeparamref name="THandler"/>.
-    /// </summary>
-    /// <typeparam name="THandler">
-    /// The handler type. Must implement a protocol handler interface
-    /// (e.g., <c>IResponseHandler</c>) or extend a protocol handler base class
-    /// (e.g., <c>InvocationHandler</c>).
-    /// </typeparam>
-    /// <param name="args">Optional command-line arguments.</param>
-    /// <param name="configure">Optional callback to configure the builder before running.</param>
-    public static void Run<THandler>(
-        string[]? args = null,
-        Action<AgentHostBuilder>? configure = null)
-        where THandler : class
-    {
-        var builder = CreateBuilder(args);
-        configure?.Invoke(builder);
-        builder.Build().Run();
     }
 }
