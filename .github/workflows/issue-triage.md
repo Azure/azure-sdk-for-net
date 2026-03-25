@@ -106,10 +106,16 @@ safe-outputs:
                 }
 
                 const mentions = item.owners
-                  .split(',')
+                  .split(/[\s,]+/)
                   .map(s => s.trim())
                   .filter(Boolean)
-                  .map(u => `@${u}`);
+                  .map(raw => {
+                    const normalized = raw.replace(/^\\?@/, '');
+                    if (/\r|\n/.test(normalized)) return null;
+                    if (!/^[A-Za-z0-9-]+(?:\/[A-Za-z0-9-]+)?$/.test(normalized)) return null;
+                    return `@${normalized}`;
+                  })
+                  .filter(Boolean);
 
                 if (mentions.length === 0) {
                   await failSafe('No valid owners after parsing owners field');
