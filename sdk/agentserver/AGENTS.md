@@ -5,129 +5,223 @@
 
 ---
 
-## 0. Core Principles (Constitution)
+## 0. Core principles
 
-These principles govern **all** work under `sdk/agentserver/`, across every protocol and project. They are the **supreme governing rules** — they supersede informal practices and ad-hoc decisions. When principles conflict, resolve in this priority order: **Protocol Fidelity > Developer Experience > Minimal API Surface > Simplicity**.
+These principles govern **all** work under `sdk/agentserver/`. They are the **supreme
+governing rules** — they supersede informal practices and ad-hoc decisions. When
+principles conflict, resolve in this priority order:
+**Protocol Fidelity > Developer Experience > Minimal API Surface > Simplicity**.
 
-### I. Library-First (Library, Never Application)
+### I. Library-first (library, never application)
 
-- This project produces **class libraries** distributed via NuGet. It is never a standalone executable.
+- This project produces **class libraries** distributed via NuGet, never a standalone executable.
 - Every public type must be designed for consumption by external developers building their own ASP.NET Core hosts.
 - The library owns protocol concerns (request/response models, routing, serialization, error shapes). The consumer owns business logic (tool implementations, agent behaviour).
 - No global state, static mutable singletons, or assumptions about the host process.
 
-### II. Developer Experience Above All
+### II. Developer experience above all
 
 - The primary measure of success is how quickly a developer can go from `dotnet add package` to a working server.
 - Integration follows standard ASP.NET Core conventions: `IServiceCollection` extensions for registration, `IEndpointRouteBuilder` extensions for routing.
 - Provide sensible defaults with progressive disclosure of complexity — simple things must be simple, advanced scenarios must be possible.
 - XML documentation comments are required on **all** `public` and `protected` members.
 
-### III. Minimal Public API Surface
+### III. Minimal public API surface
 
 - Default visibility is `internal`. Only promote to `public` when there is a clear, justified consumer need.
 - Every public type, method, and property must earn its place. Prefer fewer, well-designed abstractions over a sprawling API.
 - Use `[EditorBrowsable(EditorBrowsableState.Never)]` for types that must be public for technical reasons but are not intended for direct consumer use.
 - Avoid leaking implementation details into the public API.
 
-### IV. Test-First (NON-NEGOTIABLE)
+### IV. Test-first (non-negotiable)
 
 - **TDD is mandatory.** Write test → see it fail (red) → implement → see it pass (green) → refactor.
 - All public API contracts must have corresponding unit tests.
 - **E2E protocol tests are mandatory for API behaviour changes.** Any change to endpoint logic, SSE event contract, error shapes, status transitions, response headers, or HTTP status codes MUST include protocol tests that exercise the full HTTP pipeline. Unit tests alone are insufficient.
 - **Deterministic synchronization is mandatory.** Never use blind `Task.Delay()` to wait for async state changes. Use `TaskCompletionSource` gates, `WaitAsync(TimeSpan)`, or polling loops with explicit timeout assertions. `Task.Delay` is acceptable only to simulate slow work in handlers.
-- **Transient test failures must be fixed immediately.** A flaky test is a bug. Diagnose the root cause and fix with deterministic synchronization before proceeding.
+- **Transient test failures must be fixed immediately.** A flaky test is a bug.
 
-### V. Protocol Fidelity
+### V. Protocol fidelity
 
 - Each protocol library must faithfully implement its specification. Deviations from the spec are bugs.
 - API models (request/response shapes, error codes, headers) must match the specification exactly.
-- The authoritative contract documents win over the code. Fix the code, not the contract. Each protocol's AGENTS.md defines its authoritative documents.
+- The authoritative contract documents win over the code. Fix the code, not the contract.
 
-### VI. Async-All-the-Way
+### VI. Async-all-the-way
 
 - The library is **async-only**. All public service methods are asynchronous.
-- **AZC0004 exemption**: Azure SDK rule AZC0004 requires both sync and async variants for HTTP/REST client libraries. This library is exempt because it is a **server-side hosting library** running on the inherently async ASP.NET Core pipeline (similar to the AMQP exemption for Event Hubs/Service Bus). If an analyzer flags AZC0004, suppress it with justification in `AssemblyInfo.cs`.
+- **AZC0004 exemption**: this is a **server-side hosting library** on the inherently async ASP.NET Core pipeline (similar to Event Hubs / Service Bus AMQP exemption). Suppress AZC0004 with justification in `AssemblyInfo.cs` if flagged.
 - All async methods MUST accept `CancellationToken cancellationToken = default` as the last parameter.
 - Never block on async code (`Task.Result`, `.Wait()`, `.GetAwaiter().GetResult()`).
 
-### VII. Thread Safety & Immutability
+### VII. Thread safety & immutability
 
-- Public service types must be **thread-safe** — instances may be shared across threads and stored as singletons in DI containers.
+- Public service types must be **thread-safe** — instances may be shared across threads as DI singletons.
 - Service types should be effectively immutable after construction.
 
-### VIII. Designed for Testability & Mocking
+### VIII. Designed for testability & mocking
 
-- Consumers must be able to mock library types in their own test suites without calling real services.
 - Provide `protected` parameterless constructors on public types to enable mocking frameworks.
 - Make all public service methods `virtual` so they can be overridden in mocks.
 - Provide a static model factory for constructing model types that have no public constructors.
 
-### IX. Observability & Security
+### IX. Observability & security
 
-- Use `Microsoft.Extensions.Logging.ILogger` for all diagnostic output. Never write to `Console`.
+- Use `ILogger` for all diagnostic output. Never write to `Console`.
 - Use structured logging placeholders (`{RequestId}`, not string interpolation).
-- Instrument key operations with `System.Diagnostics.Activity` for OpenTelemetry-compatible distributed tracing.
-- **Never** log credentials, tokens, keys, or PII. Sanitize error messages exposed to callers.
+- Instrument key operations with `System.Diagnostics.Activity` for distributed tracing.
+- **Never** log credentials, tokens, keys, or PII.
 
 ### X. Simplicity & YAGNI
 
 - Start with the simplest correct implementation. Do not build speculative features.
 - Prefer composition over inheritance. Prefer interfaces over abstract base classes.
-- If a design decision can be deferred without harm, defer it.
-- Code should be readable by an unfamiliar developer within 5 minutes of opening a file.
+- Code should be readable by an unfamiliar developer within 5 minutes.
 
 ---
 
-## 1. Project Architecture
+## 1. Project architecture
 
 | Project | Path | Description |
 |---|---|---|
-| **Hosting** | `Azure.AI.AgentServer.Hosting/src/` | Shared hosting foundation: AgentHost, AgentHostBuilder, OpenTelemetry, server user-agent header, health endpoint |
+| **Hosting** | `Azure.AI.AgentServer.Hosting/src/` | Shared hosting foundation: `AgentHost`, `AgentHostBuilder`, OpenTelemetry, user-agent header, health endpoint |
 | **Hosting Tests** | `Azure.AI.AgentServer.Hosting/tests/` | NUnit tests for Hosting |
-| **Invocations** | `Azure.AI.AgentServer.Invocations/src/` | Invocations protocol library: InvocationHandler, session resolution, client header forwarding |
+| **Invocations** | `Azure.AI.AgentServer.Invocations/src/` | Invocations protocol: `InvocationHandler`, session resolution, client header forwarding |
 | **Invocations Tests** | `Azure.AI.AgentServer.Invocations/tests/` | NUnit tests for Invocations |
 | **Responses.Contracts** | `Azure.AI.AgentServer.Responses.Contracts/src/` | TypeSpec-generated model contracts for Responses protocol |
-| **Responses** | `Azure.AI.AgentServer.Responses/src/` | Responses protocol library (hosting extensions, streaming, handlers) |
-| **Responses Tests** | `Azure.AI.AgentServer.Responses/tests/` | NUnit tests for Responses protocol |
+| **Responses** | `Azure.AI.AgentServer.Responses/src/` | Responses protocol: hosting extensions, SSE streaming, handlers |
+| **Responses Tests** | `Azure.AI.AgentServer.Responses/tests/` | NUnit tests for Responses |
 
-> **Out of scope**: `Azure.AI.AgentServer.Core`, `Azure.AI.AgentServer.Contracts`, and `Azure.AI.AgentServer.AgentFramework` are legacy projects slated for deprecation. Do not invest effort in them.
+> **Out of scope**: `Azure.AI.AgentServer.Core`, `Azure.AI.AgentServer.Contracts`, and
+> `Azure.AI.AgentServer.AgentFramework` are legacy projects slated for deprecation.
 
-Solution file: `Azure.AI.AgentServer.sln`
+**Solution file**: `Azure.AI.AgentServer.sln`
 
-### Per-protocol AGENTS.md files
+### Per-protocol AGENTS.md
 
-Each protocol has its own `AGENTS.md` with protocol-specific contract compliance, package rules, and implementation details:
-
-| Protocol | AGENTS.md | Status |
+| Protocol | Location | Notes |
 |---|---|---|
-| **Hosting** | Covered by this top-level AGENTS.md | Active |
-| **Invocations** | Covered by this top-level AGENTS.md | Active |
-| **Responses** | [Azure.AI.AgentServer.Responses/AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/AGENTS.md) | Active |
+| Hosting / Invocations | This file | — |
+| Responses | `Azure.AI.AgentServer.Responses/AGENTS.md` | Contract compliance (B1–B37, S-001–S-046) |
 
-> When adding a new protocol, create an `AGENTS.md` in the protocol project directory following the same structure.
+> When adding a new protocol, create an `AGENTS.md` in the protocol directory.
 
-## 2. Azure SDK Compliance References
+---
 
-Do **not** duplicate repo-wide rules here. Instead, consult these canonical sources:
+## 2. Repository conventions
 
-| Topic | Canonical Source |
+This section codifies the Azure SDK for .NET repository rules that apply to `sdk/agentserver/`. Violating these rules will block PR merge.
+
+### 2.1 Use the repo standard — no custom overrides
+
+| Do NOT create | Why |
 |---|---|
-| Contributing & prerequisites | [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) |
-| Code style (StyleCop) | [eng/stylecop.json](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/stylecop.json) |
-| Code analysis rules | [eng/CodeAnalysis.ruleset](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/CodeAnalysis.ruleset) |
-| Target frameworks (`RequiredTargetFrameworks`, etc.) | [eng/Directory.Build.Common.props](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/Directory.Build.Common.props) |
-| Library project template & conventions | [sdk/template/Azure.Template/](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) |
-| Central package management | [eng/centralpackagemanagement/README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/centralpackagemanagement/README.md) |
-| Pre-commit checks (`dotnet format`, API export, snippets) | [.github/skills/pre-commit-checks/SKILL.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/pre-commit-checks/SKILL.md) |
-| Test framework (recorded tests, mocking) | [sdk/core/Azure.Core.TestFramework/README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md) |
-| Copilot / agent-specific instructions | [.github/copilot-instructions.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/copilot-instructions.md) |
-| Versioning strategy | [doc/dev/Versioning.md](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/Versioning.md) |
-| API listing targets | [eng/ApiListing.targets](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/ApiListing.targets) |
+| Custom `.editorconfig` | Use the repo-wide config |
+| Custom `.devcontainer/` | Use the repo-wide definition; propose additions via PR if needed |
+| `Makefile` | All scripts must be PowerShell (`.ps1`) for cross-platform parity |
+| Shell scripts (`.sh`) in production | PowerShell only; `.sh` is acceptable only for test helpers that will not ship |
 
-## 3. Build, Test & Finalize
+### 2.2 Target frameworks
 
-All commands run from `sdk/agentserver/`:
+| Project type | Property to use | Example |
+|---|---|---|
+| Class libraries (Contracts) | `$(RequiredTargetFrameworks)` | `netstandard2.0;net8.0;net10.0` |
+| ASP.NET libraries (Hosting, Responses, Invocations) | `$(RequiredRunnableTargetFrameworks)` | `net8.0;net10.0` |
+| Test projects | Inherited from repo defaults | — |
+
+**Never hard-code target framework monikers.** The variables are defined in
+`eng/Directory.Build.Common.props` and track the repo's supported TFM set.
+
+For conditional `<ItemGroup>` blocks, use
+`$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))` — never
+string comparisons like `$(TargetFramework) != 'net462'`.
+
+### 2.3 Analyzer suppressions
+
+**Blanket `<NoWarn>` in production `.csproj` files is forbidden.** Suppress only via:
+
+| Mechanism | When to use | Example |
+|---|---|---|
+| `[assembly: SuppressMessage]` in `Suppression.cs` | Type-scoped rules (AZC0012) | `Responses.Contracts/src/Suppression.cs` |
+| `#pragma warning disable` in file header | Generated file rules (AZC0014) | Emitted by `generate-validators.py` |
+| `<DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>` | Projects that are 90%+ generated code | `Responses.Contracts` csproj |
+| `Generated/Directory.Build.props` | Suppress rules for entire `Generated/` folder | StyleCop, CS1591 in generated code |
+
+**Test `.csproj` NoWarn** — match the repo template exactly: `<NoWarn>$(NoWarn);CS1591</NoWarn>`. No extra codes. If a test triggers an analyzer, fix the code rather than suppressing.
+
+**Client SDK analyzers** — enable only for production code. In `Directory.Build.props`:
+
+```xml
+<EnableClientSdkAnalyzers Condition="'$(IsTestProject)' != 'true'">true</EnableClientSdkAnalyzers>
+```
+
+**AZC0012** (single-word type names) — suppress with type-scoped `[assembly: SuppressMessage]` entries in `Suppression.cs`. When adding a new generated type, build and check for warnings; add to `Suppression.cs` if triggered.
+
+**AZC0014** (STJ types in public API) — Azure SDK libraries must not expose `System.Text.Json` types publicly. For generated validators that accept `JsonElement` (server-side JSON validation, not client serialization), the `#pragma` is emitted by the generator. If the architects flag this, be prepared to discuss the server-side rationale.
+
+**AZC0150** (AOT compatibility) — fix, don't suppress. Use `AzureAIAgentServerResponsesContext.Default` for `ModelReaderWriter` calls.
+
+### 2.4 Central package management
+
+- **Production dependencies** → `eng/centralpackagemanagement/Directory.Packages.props`
+- **Test-only dependencies** → `eng/centralpackagemanagement/Directory.Support.Packages.props`
+- **Package-specific overrides** (e.g., NUnit 4.4) → `eng/centralpackagemanagement/overrides/<PackageName>.Packages.props`
+- **Alpha/preview dependencies** are not permitted in stable releases and require architect sign-off for beta.
+- **Unapproved dependencies** must be isolated to package-specific overrides, not added globally.
+
+### 2.5 InternalsVisibleTo
+
+`InternalsVisibleTo` must only grant access to **test assemblies** (`*.Tests`).
+
+When another production assembly needs internal types, eliminate the cross-library dependency:
+- Add `@@usage(..., Usage.input | Usage.output)` in `client.tsp` for public constructors on generated models.
+- Use the public model factory (`AzureAIAgentServerResponsesModelFactory`).
+- Add a public constructor or factory method via partial-class customization.
+
+### 2.6 Copyright headers
+
+Every `.cs` file — hand-written and generated — must start with:
+
+```csharp
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+```
+
+Code generators (`Generate-Contracts.ps1`, `generate-validators.py`) must emit this header automatically.
+
+### 2.7 Documentation and branding
+
+| Rule | Correct | Wrong |
+|---|---|---|
+| Individual package | "library" or "client library" | "SDK" (reserved for the collection) |
+| Heading style | Sentence case: "Getting started" | Title Case: "Getting Started" |
+| Style guide | [Microsoft Writing Style Guide](https://learn.microsoft.com/style-guide/welcome/) | — |
+| README template | [sdk/template/Azure.Template/README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/README.md) | Free-form layout |
+
+**`.docsettings.yml` rules:**
+- Never modify the `required_readme_sections` regex in `eng/.docsettings.yml` — it is repo-wide.
+- Our READMEs use "library for .NET" (not "client library for .NET") — these are server-side hosting libraries.
+- Our READMEs omit "Authenticate the Client" — there is no client.
+- Both are suppressed via `known_content_issues` entries.
+- When adding a new package, add its README with the same suppression reason.
+
+### 2.8 NUnit version
+
+Use **NUnit 4.4** with `Assert.That()` constraint-based syntax. Override via:
+
+```
+eng/centralpackagemanagement/overrides/Azure.AI.AgentServer.Responses.Packages.props
+```
+
+All assertions must use the constraint model (`Assert.That(x, Is.EqualTo(y))`), never the classic API (`Assert.AreEqual`).
+
+---
+
+## 3. Build, test & pre-commit
+
+All commands run from `sdk/agentserver/`.
+
+### Quick reference
 
 ```bash
 # Build
@@ -136,20 +230,17 @@ dotnet build Azure.AI.AgentServer.sln
 # Test (excludes live tests)
 dotnet test Azure.AI.AgentServer.sln --filter TestCategory!=Live
 
-# Lint (verify formatting — fails on violations)
+# Verify formatting (fails on violations)
 dotnet format Azure.AI.AgentServer.sln --verify-no-changes
 
 # Fix formatting
 dotnet format Azure.AI.AgentServer.sln
 ```
 
-### Pre-commit checks
+### Pre-commit checks (strict ordering)
 
-Before committing changes, run the pre-commit validations **in this exact order**
-for the `agentserver` service directory. Order matters — `dotnet format` must run
-**last** so it catches formatting issues introduced by earlier steps (snippet updates, sed replacements, etc.).
-
-See [pre-commit-checks SKILL.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/pre-commit-checks/SKILL.md) for the full procedure. Summary:
+Run these **in this exact order** before every commit. Order matters — `dotnet format`
+must run **last** so it catches formatting issues introduced by earlier steps.
 
 ```powershell
 # 1. Export public API
@@ -158,93 +249,191 @@ eng/scripts/Export-API.ps1 agentserver
 # 2. Update doc snippets (syncs #region blocks into markdown)
 eng/scripts/Update-Snippets.ps1 agentserver
 
-# 3. Build snippets (reproduces the CI "Build snippets" step locally).
-#    Defines the SNIPPET constant — verifies all #region Snippet:Name code compiles.
+# 3. Build snippets (reproduces the CI "Build snippets" step locally)
 cd sdk/agentserver
 dotnet build Azure.AI.AgentServer.sln /p:BuildSnippets=true
 
-# 4. Format LAST — catches indent/whitespace issues from all prior steps
+# 4. Format LAST — catches indent/whitespace from all prior steps
 dotnet format Azure.AI.AgentServer.sln
 ```
 
-### Regenerate Contracts (TypeSpec)
+**Why format last?** Steps 1–3 may modify files (API listings, snippet markdown, or
+code via scripts like `sed`). Running format first would miss those changes. The CI
+"Build snippets" step defines the `SNIPPET` preprocessor constant — snippet code must
+compile in that mode.
+
+See [pre-commit-checks SKILL.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/pre-commit-checks/SKILL.md) for the full procedure.
+
+### Regenerate contracts (TypeSpec)
 
 ```powershell
-# Prerequisites: Node.js, Python 3 + pyyaml
-# Regenerate (deps installed automatically via tsp-client sync + npm install)
 ./scripts/Generate-Contracts.ps1
 ```
 
-TypeSpec dependencies are resolved from the repo-level emitter package
-(`eng/http-client-csharp-emitter-package.json`) via `emitterPackageJsonPath`
-in `tsp-location.yaml`. There is no standalone `package.json` in this directory.
+Prerequisites: Node.js, Python 3 + `pyyaml`. Dependencies are installed automatically
+via `tsp-client sync` + `npm install`. TypeSpec dependencies resolve from the repo-level
+emitter package (`eng/http-client-csharp-emitter-package.json`) via `emitterPackageJsonPath`
+in `tsp-location.yaml`.
 
-## 4. Samples & Snippet System
+---
+
+## 4. Samples & snippet system
 
 ### How compiled snippets work
 
-Samples in markdown are sourced from compiled C# test files via the repo's snippet system.
-See [CONTRIBUTING.md — Updating Sample Snippets](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) for the canonical reference, including `#region Snippet:Name` and the `Update-Snippets.ps1` tool.
+All C# code in markdown must be **compiled snippets** with backing `.cs` test files.
+Inline (non-snippet) code blocks in markdown are only acceptable for non-C# content
+(e.g., `curl` commands, `dotnetcli` install commands).
 
-**Key rule:** Never edit code inside `` ```C# Snippet:Name `` fences in markdown. Edit the `.cs` source file, then run `eng/scripts/Update-Snippets.ps1 agentserver`.
+See [CONTRIBUTING.md — Updating Sample Snippets](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets).
 
-**No `#if SNIPPET` blocks.** CI builds snippet files with `/p:BuildSnippets=true`, which defines the `SNIPPET` preprocessor constant. Code inside `#if SNIPPET` blocks must compile in that mode, but method-scoped `using` directives and references to `args` (which only exists in top-level statements) are illegal. Instead, write snippet code that compiles directly — `AgentHost.Run<T>()` and `AgentHost.CreateBuilder()` accept optional `args` so no workaround is needed.
+**Golden rule:** Never edit code inside `` ```C# Snippet:Name `` fences in markdown.
+Edit the `.cs` source file, then run `eng/scripts/Update-Snippets.ps1 agentserver`.
 
-### `AgentHost` namespace design and global using
+### Snippet file conventions
 
-All Hosting types — `AgentHost`, `AgentHostBuilder`, `AgentHostApp`, `AgentHostOptions`, `AgentHostTelemetry`, and `AgentHostMiddlewareExtensions` — live in namespace `Azure.AI.AgentServer.Hosting`.
+| Rule | Detail |
+|---|---|
+| Location | `<Package>/tests/Snippets/<SampleN>Snippets.cs` per sample, `ReadMeSnippets.cs` per README |
+| Test attribute | `[Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]` |
+| Handler snippets | Nested types **outside** test methods, wrapped in `#region Snippet:Name` |
+| Startup snippets | **Inside** test methods, wrapped in `#region Snippet:Name` |
+| `#if SNIPPET` | **Never** — code must compile in both normal and `BuildSnippets=true` modes (see below) |
+| `args` parameter | Use parameterless overloads: `AgentHost.Run<T>()`, `AgentHost.CreateBuilder()` |
+| Local verification | `dotnet build /p:BuildSnippets=true` before every commit |
 
-The Hosting NuGet package ships `build/` and `buildTransitive/` `.props` files that inject a **global using** for this namespace. This means:
+### Why `#if SNIPPET` is banned
 
-- **Zero-import one-liner**: consumers who install any protocol package (Responses, Invocations) get `AgentHost` resolved automatically — no `using` statement needed for the entry point.
-- **Transitive reach**: because `buildTransitive/` is included, the global using flows to consumers who never directly reference `Azure.AI.AgentServer.Hosting`.
+CI builds snippet files with `/p:BuildSnippets=true`, which defines the `SNIPPET`
+preprocessor constant via `eng/Directory.Build.Common.props`. Code inside `#if SNIPPET`
+blocks must compile in that mode, but:
 
-For **test projects** that use `<ProjectReference>` (which does _not_ trigger NuGet build props), each test `.csproj` adds `<Using Include="Azure.AI.AgentServer.Hosting" />` to mirror the NuGet consumer experience.
+- **`using` directives** inside method bodies are parsed as C# 14 "using declarations" (variable disposal), causing CS1001.
+- **`args`** only exists in top-level statements, not inside test methods, causing CS0103.
+- **Extension methods** from packages not available in the test context cause CS1061.
 
-### Snippet test project references
+Since `AgentHost.Run<T>()` and `AgentHost.CreateBuilder()` accept optional `string[]? args = null`, no workaround is needed — write snippet code that compiles directly.
 
-Snippet tests may reference types from **other** AgentServer packages (e.g., Invocations snippets using `AgentHost.Run` from Hosting, or Hosting snippets using `IResponseHandler` from Responses). The test `.csproj` must include project references to all packages used by snippet code. Current required references:
+### `AgentHost` global using
+
+The Hosting NuGet package ships `build/` and `buildTransitive/` `.props` files that
+inject a global `using Azure.AI.AgentServer.Hosting;`. This gives consumers a
+zero-import one-liner experience.
+
+For **test projects** (which use `<ProjectReference>`, not triggering NuGet build props),
+add `<Using Include="Azure.AI.AgentServer.Hosting" />` in the test `.csproj`, gated on:
+
+```xml
+<ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+  <Using Include="Azure.AI.AgentServer.Hosting" />
+</ItemGroup>
+```
+
+**Note:** The `build/` directory is matched by the root `.gitignore`. Use
+`git add -f Azure.AI.AgentServer.Hosting/build/` to force-add those files.
+
+### Cross-package snippet references
+
+Snippet tests may reference types from other AgentServer packages. The test `.csproj`
+must include `<ProjectReference>` entries for all packages used.
 
 | Test Project | Extra References Needed |
 |---|---|
-| `Responses.Tests` | `Hosting` (for `AgentHost.Run`, `AgentHost.CreateBuilder`) |
-| `Invocations.Tests` | `Hosting` (for `AgentHost.Run`, `AgentHost.CreateBuilder`) |
-| `Hosting.Tests` | `Responses` (for `IResponseHandler`, `ResponseEventStream`), `Invocations` (already present) |
+| Responses.Tests | Hosting (`AgentHost.Run`, `AgentHost.CreateBuilder`) |
+| Invocations.Tests | Hosting (`AgentHost.Run`, `AgentHost.CreateBuilder`) |
+| Hosting.Tests | Responses (`IResponseHandler`, `ResponseEventStream`), Invocations |
 
-### Snippet test conventions
+---
 
-- Mark snippet test classes with `[Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]`
-- Handler classes used as snippets go **outside** test methods as nested types wrapped in `#region Snippet:Name`
-- Server startup code goes **inside** test methods wrapped in `#region Snippet:Name`
-- **Never use `#if SNIPPET`** — write code that compiles in both normal and snippet build modes
-- Use parameterless overloads (`AgentHost.Run<T>()`, `AgentHost.CreateBuilder()`) instead of passing `args`
-- Each sample markdown file gets its own `<SampleN>Snippets.cs` backing file
-- Each README gets a `ReadMeSnippets.cs` backing file
-- **Always verify locally** with `dotnet build /p:BuildSnippets=true` before committing
+## 5. Common pitfalls
 
-## 5. Analyzer Suppression Rules
+Mistakes encountered during PR #57206 development. These are codified here to prevent
+recurrence.
 
-### AZC0012 (single-word type names)
+### 5.1 Target framework mistakes
 
-TypeSpec-generated models with generic names (e.g., `Response`, `Error`, `Prompt`) trigger AZC0012. Suppress these with **type-scoped** `[assembly: SuppressMessage]` entries in `Responses.Contracts/src/Suppression.cs` — never use blanket `<NoWarn>` in the `.csproj`.
+| Mistake | Fix |
+|---|---|
+| Hard-coded `<TargetFrameworks>net8.0;net10.0</TargetFrameworks>` | Use `$(RequiredRunnableTargetFrameworks)` or `$(RequiredTargetFrameworks)` |
+| `Condition="$(TargetFramework) != 'net462'"` | Use `$([MSBuild]::IsTargetFrameworkCompatible(...))` |
 
-**When adding new generated types:** check if any new type name triggers AZC0012 by building. If so, add a scoped entry to `Suppression.cs`. The full list of suppressed types must be maintained there.
+### 5.2 Blanket analyzer suppressions
 
-### AZC0014 (generic parameter names)
+| Mistake | Fix |
+|---|---|
+| `<NoWarn>AZC0011;AZC0012;AZC0014;...</NoWarn>` in `.csproj` | Type-scoped `[SuppressMessage]` in `Suppression.cs` |
+| Suppressing AZC0150 | Fix the code: use explicit `JsonModelReaderWriterOptions` with source-gen context |
+| Extra NoWarn codes in test `.csproj` | Match repo template: `$(NoWarn);CS1591` only; fix test code instead |
 
-Validator files in `Generated/Validators/` use generic parameter names that trigger AZC0014. Each validator file has `#pragma warning disable AZC0014` in its header. The `scripts/generate-validators.py` generator emits this pragma automatically. Never suppress AZC0014 via `<NoWarn>` in the `.csproj`.
+### 5.3 Dependency management errors
 
-### Target framework conditions
+| Mistake | Fix |
+|---|---|
+| Adding test deps to `Directory.Packages.props` | Use `Directory.Support.Packages.props` for test-only deps |
+| Adding alpha packages globally | Isolate to `overrides/<PackageName>.Packages.props`; require architect sign-off |
+| Adding unapproved external deps (e.g., `System.Reactive.Async`) | Implement internally or get approval |
 
-Use `$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))` — **never** `$(TargetFramework) != 'net462'` or similar brittle string comparisons.
+### 5.4 Cross-library InternalsVisibleTo
 
-## 6. `.docsettings.yml` Rules
+| Mistake | Fix |
+|---|---|
+| `InternalsVisibleTo` from Contracts → Responses | Eliminate by adding `@@usage(..., Usage.input \| Usage.output)` in `client.tsp` or using public model factory |
 
-- **Never modify the `required_readme_sections` regex** in `eng/.docsettings.yml`. It is shared repo-wide.
-- Our README titles use "library for .NET" (not "client library for .NET") because these are server-side hosting libraries. This intentionally doesn't match the title regex.
-- Our READMEs omit "Authenticate the Client" because there is no client to authenticate.
-- Both issues are suppressed via `known_content_issues` entries with the reason: `'Server-side library - title and auth section do not match client SDK pattern'`.
-- If you add a new package, add its README to `known_content_issues` with the same reason.
+### 5.5 Documentation mistakes
+
+| Mistake | Fix |
+|---|---|
+| Title Case headings ("Getting Started") | Sentence case ("Getting started") per Microsoft Writing Style Guide |
+| Using "SDK" for individual packages | Use "library" |
+| Free-form README layout | Follow the repo README template |
+| Code blocks without snippet backing | Every C# block must be a compiled snippet |
+| Standalone sample projects (`.csproj` + `Program.cs`) | Markdown-based samples with compiled snippet backing |
+
+### 5.6 Snippet build failures
+
+| Mistake | Fix |
+|---|---|
+| `#if SNIPPET` blocks with `using` directives | Remove all `#if SNIPPET` blocks; write code that compiles in both modes |
+| Passing `args` or `args: null` in snippets | Use parameterless overloads: `AgentHost.Run<T>()` |
+| Snippet-only code (e.g., `ConfigureHealth`) unavailable in test context | Remove or provide the dependency in the test project |
+| Not running `dotnet build /p:BuildSnippets=true` locally | Add to pre-commit checklist (step 3) |
+
+### 5.7 Formatting and whitespace
+
+| Mistake | Fix |
+|---|---|
+| Running `dotnet format` before file-modifying steps | Format must run **last** in pre-commit — after Export-API, Update-Snippets, and BuildSnippets |
+| Using `sed` for code changes (strips indentation) | If `sed` is unavoidable, always run `dotnet format` afterwards |
+
+### 5.8 git and CI gotchas
+
+| Mistake | Fix |
+|---|---|
+| `build/` directory not committed (root `.gitignore`) | Use `git add -f` for `build/` and `buildTransitive/` props |
+| Not testing CI snippet build locally | Always run `dotnet build /p:BuildSnippets=true` before pushing |
+| CI "Analyze PRBatch" / "Set diagnostic arguments" flake | Repo-wide infrastructure issue; not caused by our changes; retry |
+
+---
+
+## 6. Reference links
+
+Do **not** duplicate repo-wide rules here. Consult these canonical sources:
+
+| Topic | Canonical source |
+|---|---|
+| Contributing & prerequisites | [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) |
+| Code style (StyleCop) | [eng/stylecop.json](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/stylecop.json) |
+| Code analysis rules | [eng/CodeAnalysis.ruleset](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/CodeAnalysis.ruleset) |
+| Target frameworks | [eng/Directory.Build.Common.props](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/Directory.Build.Common.props) |
+| Library project template | [sdk/template/Azure.Template/](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) |
+| Central package management | [eng/centralpackagemanagement/README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/centralpackagemanagement/README.md) |
+| Pre-commit checks | [.github/skills/pre-commit-checks/SKILL.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/pre-commit-checks/SKILL.md) |
+| Test framework | [sdk/core/Azure.Core.TestFramework/README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md) |
+| Copilot / agent instructions | [.github/copilot-instructions.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/copilot-instructions.md) |
+| Versioning | [doc/dev/Versioning.md](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/Versioning.md) |
+| API listing targets | [eng/ApiListing.targets](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/ApiListing.targets) |
+
+---
 
 ## 7. Do NOT
 
@@ -257,11 +446,21 @@ Use `$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))` 
 - Log credentials, tokens, keys, or PII (Principle IX).
 - Modify contract docs to match code — fix the code instead (Principle V).
 - Use blind `Task.Delay()` for test synchronization (Principle IV).
-- Add `InternalsVisibleTo` for non-test assemblies. `InternalsVisibleTo` must only grant access to test assemblies (e.g., `*.Tests`). When another production assembly needs to construct types with `internal` constructors, use the public model factory (`AzureAIAgentServerResponsesModelFactory` via `static using`) or add a public constructor/factory method via partial-class customization.
+- Add `InternalsVisibleTo` for non-test assemblies (see §2.5).
+- Use blanket `<NoWarn>` in production `.csproj` files (see §2.3).
+- Create custom `.editorconfig`, `.devcontainer`, or `Makefile` (see §2.1).
+- Hard-code target framework monikers in `.csproj` (see §2.2).
+- Use `#if SNIPPET` blocks in snippet test files (see §4).
+- Add alpha/preview packages to global package management (see §2.4).
+
+---
 
 ## 8. Governance
 
-- This `AGENTS.md` (including Section 0: Core Principles) is the **supreme governing document** for the AgentServer library. It supersedes informal practices and ad-hoc decisions.
-- Per-protocol `AGENTS.md` files inherit and extend these principles for their specific protocol. They may add protocol-specific rules but may **not** weaken or override the core principles.
+- This `AGENTS.md` (including Section 0) is the **supreme governing document** for the
+  AgentServer library. It supersedes informal practices and ad-hoc decisions.
+- Per-protocol `AGENTS.md` files inherit and extend these principles. They may add
+  protocol-specific rules but may **not** weaken or override the core principles.
 - All PRs and code reviews must verify compliance with these principles.
-- Amendments require: (1) written proposal with rationale, (2) update to any affected docs for consistency.
+- Amendments require: (1) written proposal with rationale, (2) update to any affected
+  docs for consistency.
