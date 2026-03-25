@@ -108,9 +108,11 @@ principles conflict, resolve in this priority order:
 
 ---
 
-## 2. Repository conventions
+## 2. Azure SDK compliance (mandatory)
 
-This section codifies the Azure SDK for .NET repository rules that apply to `sdk/agentserver/`. Violating these rules will block PR merge.
+This library is part of the Azure SDK for .NET. All code under `sdk/agentserver/` **must**
+comply with the repository-wide rules below. These are not guidelines — they are
+merge requirements enforced by CI, code review, and the Azure SDK architects.
 
 ### 2.1 Use the repo standard — no custom overrides
 
@@ -347,8 +349,8 @@ must include `<ProjectReference>` entries for all packages used.
 
 ## 5. Common pitfalls
 
-Mistakes encountered during PR #57206 development. These are codified here to prevent
-recurrence.
+Mistakes encountered during development, codified here so agents and contributors
+avoid repeating them.
 
 ### 5.1 Target framework mistakes
 
