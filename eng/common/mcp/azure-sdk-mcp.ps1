@@ -105,7 +105,7 @@ $tempInstallDirectory = Join-Path $tmp "azsdk-install-$($guid)"
 
 # If already installed, use first class version mechanism
 $azsdkCmd = Get-Command -ErrorAction SilentlyContinue 'azsdk'
-if ($azsdkCmd) {
+if ($azsdkCmd -and !$Version -and !$InstallDirectory) {
     $upgrade = azsdk upgrade --check --output json | out-string
     if (!$LASTEXITCODE) {
         $localVersion = $upgrade | ConvertFrom-Json -AsHashtable
