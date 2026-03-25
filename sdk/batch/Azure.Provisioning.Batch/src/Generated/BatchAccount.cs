@@ -16,23 +16,7 @@ namespace Azure.Provisioning.Batch
     /// <summary> Contains information about an Azure Batch account. </summary>
     public partial class BatchAccount : ProvisionableResource
     {
-        private BicepValue<string> _accountEndpoint;
-        private BicepValue<string> _nodeManagementEndpoint;
-        private BicepValue<BatchProvisioningState> _provisioningState;
-        private BicepValue<BatchAccountPoolAllocationMode> _poolAllocationMode;
-        private BatchKeyVaultReference _keyVaultReference;
-        private BicepValue<BicepValue<BatchPublicNetworkAccess>> _publicNetworkAccess;
-        private BicepValue<BatchNetworkProfile> _networkProfile;
-        private BicepValue<BicepList<BatchPrivateEndpointConnection>> _privateEndpointConnections;
-        private BatchAccountAutoStorageConfiguration _autoStorage;
-        private BatchAccountEncryptionConfiguration _encryption;
-        private BicepValue<BicepValue<int>> _dedicatedCoreQuota;
-        private BicepValue<BicepValue<int>> _lowPriorityCoreQuota;
-        private BicepValue<BicepList<BatchVmFamilyCoreQuota>> _dedicatedCoreQuotaPerVmFamily;
-        private BicepValue<bool> _isDedicatedCoreQuotaPerVmFamilyEnforced;
-        private BicepValue<int> _poolQuota;
-        private BicepValue<int> _activeJobAndJobScheduleQuota;
-        private BicepValue<BicepList<BatchAuthenticationMode>> _allowedAuthenticationModes;
+        private BatchAccountProperties _properties;
         private BicepValue<string> _name;
         private ManagedServiceIdentity _identity;
         private BicepDictionary<string> _tags;
@@ -47,183 +31,18 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets the AccountEndpoint. </summary>
-        public BicepValue<string> AccountEndpoint
+        /// <summary> Gets or sets the Properties. </summary>
+        internal BatchAccountProperties Properties
         {
             get
             {
                 Initialize();
-                return _accountEndpoint;
-            }
-        }
-
-        /// <summary> Gets the NodeManagementEndpoint. </summary>
-        public BicepValue<string> NodeManagementEndpoint
-        {
-            get
-            {
-                Initialize();
-                return _nodeManagementEndpoint;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<BatchProvisioningState> ProvisioningState
-        {
-            get
-            {
-                Initialize();
-                return _provisioningState;
-            }
-        }
-
-        /// <summary> Gets the PoolAllocationMode. </summary>
-        public BicepValue<BatchAccountPoolAllocationMode> PoolAllocationMode
-        {
-            get
-            {
-                Initialize();
-                return _poolAllocationMode;
-            }
-        }
-
-        /// <summary> Gets the KeyVaultReference. </summary>
-        public BatchKeyVaultReference KeyVaultReference
-        {
-            get
-            {
-                Initialize();
-                return _keyVaultReference;
-            }
-        }
-
-        /// <summary> Gets or sets the PublicNetworkAccess. </summary>
-        public BicepValue<BicepValue<BatchPublicNetworkAccess>> PublicNetworkAccess
-        {
-            get
-            {
-                Initialize();
-                return _publicNetworkAccess;
+                return _properties;
             }
             set
             {
                 Initialize();
-                _publicNetworkAccess.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the NetworkProfile. </summary>
-        public BicepValue<BatchNetworkProfile> NetworkProfile
-        {
-            get
-            {
-                Initialize();
-                return _networkProfile;
-            }
-            set
-            {
-                Initialize();
-                _networkProfile.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepValue<BicepList<BatchPrivateEndpointConnection>> PrivateEndpointConnections
-        {
-            get
-            {
-                Initialize();
-                return _privateEndpointConnections;
-            }
-        }
-
-        /// <summary> Gets the AutoStorage. </summary>
-        public BatchAccountAutoStorageConfiguration AutoStorage
-        {
-            get
-            {
-                Initialize();
-                return _autoStorage;
-            }
-        }
-
-        /// <summary> Gets the Encryption. </summary>
-        public BatchAccountEncryptionConfiguration Encryption
-        {
-            get
-            {
-                Initialize();
-                return _encryption;
-            }
-        }
-
-        /// <summary> Gets the DedicatedCoreQuota. </summary>
-        public BicepValue<BicepValue<int>> DedicatedCoreQuota
-        {
-            get
-            {
-                Initialize();
-                return _dedicatedCoreQuota;
-            }
-        }
-
-        /// <summary> Gets the LowPriorityCoreQuota. </summary>
-        public BicepValue<BicepValue<int>> LowPriorityCoreQuota
-        {
-            get
-            {
-                Initialize();
-                return _lowPriorityCoreQuota;
-            }
-        }
-
-        /// <summary> Gets the DedicatedCoreQuotaPerVmFamily. </summary>
-        public BicepValue<BicepList<BatchVmFamilyCoreQuota>> DedicatedCoreQuotaPerVmFamily
-        {
-            get
-            {
-                Initialize();
-                return _dedicatedCoreQuotaPerVmFamily;
-            }
-        }
-
-        /// <summary> Gets the IsDedicatedCoreQuotaPerVmFamilyEnforced. </summary>
-        public BicepValue<bool> IsDedicatedCoreQuotaPerVmFamilyEnforced
-        {
-            get
-            {
-                Initialize();
-                return _isDedicatedCoreQuotaPerVmFamilyEnforced;
-            }
-        }
-
-        /// <summary> Gets the PoolQuota. </summary>
-        public BicepValue<int> PoolQuota
-        {
-            get
-            {
-                Initialize();
-                return _poolQuota;
-            }
-        }
-
-        /// <summary> Gets the ActiveJobAndJobScheduleQuota. </summary>
-        public BicepValue<int> ActiveJobAndJobScheduleQuota
-        {
-            get
-            {
-                Initialize();
-                return _activeJobAndJobScheduleQuota;
-            }
-        }
-
-        /// <summary> Gets the AllowedAuthenticationModes. </summary>
-        public BicepValue<BicepList<BatchAuthenticationMode>> AllowedAuthenticationModes
-        {
-            get
-            {
-                Initialize();
-                return _allowedAuthenticationModes;
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -307,27 +126,228 @@ namespace Azure.Provisioning.Batch
             }
         }
 
+        /// <summary> Gets the AccountEndpoint. </summary>
+        public BicepValue<string> AccountEndpoint
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.AccountEndpoint;
+            }
+        }
+
+        /// <summary> Gets the NodeManagementEndpoint. </summary>
+        public BicepValue<string> NodeManagementEndpoint
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.NodeManagementEndpoint;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<BatchProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the PoolAllocationMode. </summary>
+        public BicepValue<BatchAccountPoolAllocationMode> PoolAllocationMode
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.PoolAllocationMode;
+            }
+        }
+
+        /// <summary> Gets the KeyVaultReference. </summary>
+        public BatchKeyVaultReference KeyVaultReference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultReference;
+            }
+        }
+
+        /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        public BicepValue<BicepValue<BatchPublicNetworkAccess>> PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
+        }
+
+        /// <summary> Gets or sets the NetworkProfile. </summary>
+        public BicepValue<BatchNetworkProfile> NetworkProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                Properties.NetworkProfile = value;
+            }
+        }
+
+        /// <summary> Gets the PrivateEndpointConnections. </summary>
+        public BicepValue<BicepList<BatchPrivateEndpointConnection>> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> Gets the AutoStorage. </summary>
+        public BatchAccountAutoStorageConfiguration AutoStorage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoStorage;
+            }
+        }
+
+        /// <summary> Gets the Encryption. </summary>
+        public BatchAccountEncryptionConfiguration Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+        }
+
+        /// <summary> Gets the DedicatedCoreQuota. </summary>
+        public BicepValue<BicepValue<int>> DedicatedCoreQuota
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.DedicatedCoreQuota;
+            }
+        }
+
+        /// <summary> Gets the LowPriorityCoreQuota. </summary>
+        public BicepValue<BicepValue<int>> LowPriorityCoreQuota
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.LowPriorityCoreQuota;
+            }
+        }
+
+        /// <summary> Gets the DedicatedCoreQuotaPerVmFamily. </summary>
+        public BicepValue<BicepList<BatchVmFamilyCoreQuota>> DedicatedCoreQuotaPerVmFamily
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.DedicatedCoreQuotaPerVmFamily;
+            }
+        }
+
+        /// <summary> Gets the IsDedicatedCoreQuotaPerVmFamilyEnforced. </summary>
+        public BicepValue<bool> IsDedicatedCoreQuotaPerVmFamilyEnforced
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.IsDedicatedCoreQuotaPerVmFamilyEnforced;
+            }
+        }
+
+        /// <summary> Gets the PoolQuota. </summary>
+        public BicepValue<int> PoolQuota
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.PoolQuota;
+            }
+        }
+
+        /// <summary> Gets the ActiveJobAndJobScheduleQuota. </summary>
+        public BicepValue<int> ActiveJobAndJobScheduleQuota
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.ActiveJobAndJobScheduleQuota;
+            }
+        }
+
+        /// <summary> Gets the AllowedAuthenticationModes. </summary>
+        public BicepValue<BicepList<BatchAuthenticationMode>> AllowedAuthenticationModes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.AllowedAuthenticationModes;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for BatchAccount. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _accountEndpoint = DefineProperty<string>(nameof(AccountEndpoint), new string[] { "properties", "accountEndpoint" }, isOutput: true);
-            _nodeManagementEndpoint = DefineProperty<string>(nameof(NodeManagementEndpoint), new string[] { "properties", "nodeManagementEndpoint" }, isOutput: true);
-            _provisioningState = DefineProperty<BatchProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
-            _poolAllocationMode = DefineProperty<BatchAccountPoolAllocationMode>(nameof(PoolAllocationMode), new string[] { "properties", "poolAllocationMode" }, isOutput: true);
-            _keyVaultReference = DefineModelProperty<BatchKeyVaultReference>(nameof(KeyVaultReference), new string[] { "properties", "keyVaultReference" }, isOutput: true);
-            _publicNetworkAccess = DefineProperty<BicepValue<BatchPublicNetworkAccess>>(nameof(PublicNetworkAccess), new string[] { "properties", "publicNetworkAccess" });
-            _networkProfile = DefineProperty<BatchNetworkProfile>(nameof(NetworkProfile), new string[] { "properties", "networkProfile" });
-            _privateEndpointConnections = DefineProperty<BicepList<BatchPrivateEndpointConnection>>(nameof(PrivateEndpointConnections), new string[] { "properties", "privateEndpointConnections" }, isOutput: true);
-            _autoStorage = DefineModelProperty<BatchAccountAutoStorageConfiguration>(nameof(AutoStorage), new string[] { "properties", "autoStorage" }, isOutput: true);
-            _encryption = DefineModelProperty<BatchAccountEncryptionConfiguration>(nameof(Encryption), new string[] { "properties", "encryption" }, isOutput: true);
-            _dedicatedCoreQuota = DefineProperty<BicepValue<int>>(nameof(DedicatedCoreQuota), new string[] { "properties", "dedicatedCoreQuota" }, isOutput: true);
-            _lowPriorityCoreQuota = DefineProperty<BicepValue<int>>(nameof(LowPriorityCoreQuota), new string[] { "properties", "lowPriorityCoreQuota" }, isOutput: true);
-            _dedicatedCoreQuotaPerVmFamily = DefineProperty<BicepList<BatchVmFamilyCoreQuota>>(nameof(DedicatedCoreQuotaPerVmFamily), new string[] { "properties", "dedicatedCoreQuotaPerVMFamily" }, isOutput: true);
-            _isDedicatedCoreQuotaPerVmFamilyEnforced = DefineProperty<bool>(nameof(IsDedicatedCoreQuotaPerVmFamilyEnforced), new string[] { "properties", "dedicatedCoreQuotaPerVMFamilyEnforced" }, isOutput: true);
-            _poolQuota = DefineProperty<int>(nameof(PoolQuota), new string[] { "properties", "poolQuota" }, isOutput: true);
-            _activeJobAndJobScheduleQuota = DefineProperty<int>(nameof(ActiveJobAndJobScheduleQuota), new string[] { "properties", "activeJobAndJobScheduleQuota" }, isOutput: true);
-            _allowedAuthenticationModes = DefineProperty<BicepList<BatchAuthenticationMode>>(nameof(AllowedAuthenticationModes), new string[] { "properties", "allowedAuthenticationModes" }, isOutput: true);
+            _properties = DefineModelProperty<BatchAccountProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });

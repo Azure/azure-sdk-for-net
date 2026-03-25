@@ -17,9 +17,7 @@ namespace Azure.Provisioning.Batch
     /// <summary> Contains information about a private link resource. </summary>
     public partial class BatchPrivateLinkResource : ProvisionableResource
     {
-        private BicepValue<string> _groupId;
-        private BicepList<string> _requiredMembers;
-        private BicepList<string> _requiredZoneNames;
+        private BatchPrivateLinkResourceProperties _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
         private BicepDictionary<string> _tags;
@@ -34,33 +32,18 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets the GroupId. </summary>
-        public BicepValue<string> GroupId
+        /// <summary> Gets or sets the Properties. </summary>
+        internal BatchPrivateLinkResourceProperties Properties
         {
             get
             {
                 Initialize();
-                return _groupId;
+                return _properties;
             }
-        }
-
-        /// <summary> Gets the RequiredMembers. </summary>
-        public BicepList<string> RequiredMembers
-        {
-            get
+            set
             {
                 Initialize();
-                return _requiredMembers;
-            }
-        }
-
-        /// <summary> Gets the RequiredZoneNames. </summary>
-        public BicepList<string> RequiredZoneNames
-        {
-            get
-            {
-                Initialize();
-                return _requiredZoneNames;
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -139,13 +122,50 @@ namespace Azure.Provisioning.Batch
             }
         }
 
+        /// <summary> Gets the GroupId. </summary>
+        public BicepValue<string> GroupId
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchPrivateLinkResourceProperties();
+                }
+                return Properties.GroupId;
+            }
+        }
+
+        /// <summary> Gets the RequiredMembers. </summary>
+        public BicepList<string> RequiredMembers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchPrivateLinkResourceProperties();
+                }
+                return Properties.RequiredMembers;
+            }
+        }
+
+        /// <summary> Gets the RequiredZoneNames. </summary>
+        public BicepList<string> RequiredZoneNames
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchPrivateLinkResourceProperties();
+                }
+                return Properties.RequiredZoneNames;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for BatchPrivateLinkResource. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _groupId = DefineProperty<string>(nameof(GroupId), new string[] { "properties", "groupId" }, isOutput: true);
-            _requiredMembers = DefineListProperty<string>(nameof(RequiredMembers), new string[] { "properties", "requiredMembers" }, isOutput: true);
-            _requiredZoneNames = DefineListProperty<string>(nameof(RequiredZoneNames), new string[] { "properties", "requiredZoneNames" }, isOutput: true);
+            _properties = DefineModelProperty<BatchPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });

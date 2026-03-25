@@ -17,10 +17,7 @@ namespace Azure.Provisioning.Batch
     /// <summary> Contains information about a private link resource. </summary>
     public partial class BatchPrivateEndpointConnection : ProvisionableResource
     {
-        private BicepValue<BatchPrivateEndpointConnectionProvisioningState> _provisioningState;
-        private PrivateEndpoint _privateEndpoint;
-        private BicepList<string> _groupIds;
-        private BatchPrivateLinkServiceConnectionState _connectionState;
+        private PrivateEndpointConnectionProperties _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
         private BicepDictionary<string> _tags;
@@ -35,48 +32,18 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<BatchPrivateEndpointConnectionProvisioningState> ProvisioningState
+        /// <summary> Gets or sets the Properties. </summary>
+        internal PrivateEndpointConnectionProperties Properties
         {
             get
             {
                 Initialize();
-                return _provisioningState;
-            }
-        }
-
-        /// <summary> Gets the PrivateEndpoint. </summary>
-        internal PrivateEndpoint PrivateEndpoint
-        {
-            get
-            {
-                Initialize();
-                return _privateEndpoint;
-            }
-        }
-
-        /// <summary> Gets the GroupIds. </summary>
-        public BicepList<string> GroupIds
-        {
-            get
-            {
-                Initialize();
-                return _groupIds;
-            }
-        }
-
-        /// <summary> Gets or sets the ConnectionState. </summary>
-        public BatchPrivateLinkServiceConnectionState ConnectionState
-        {
-            get
-            {
-                Initialize();
-                return _connectionState;
+                return _properties;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _connectionState, value);
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -155,12 +122,59 @@ namespace Azure.Provisioning.Batch
             }
         }
 
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<BatchPrivateEndpointConnectionProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the GroupIds. </summary>
+        public BicepList<string> GroupIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                return Properties.GroupIds;
+            }
+        }
+
+        /// <summary> Gets or sets the ConnectionState. </summary>
+        public BatchPrivateLinkServiceConnectionState ConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.ConnectionState = value;
+            }
+        }
+
         /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get
             {
-                return PrivateEndpoint.Id;
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                return Properties.PrivateEndpointId;
             }
         }
 
@@ -168,10 +182,7 @@ namespace Azure.Provisioning.Batch
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _provisioningState = DefineProperty<BatchPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
-            _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "properties", "privateEndpoint" }, isOutput: true);
-            _groupIds = DefineListProperty<string>(nameof(GroupIds), new string[] { "properties", "groupIds" }, isOutput: true);
-            _connectionState = DefineModelProperty<BatchPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "properties", "privateLinkServiceConnectionState" });
+            _properties = DefineModelProperty<PrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });

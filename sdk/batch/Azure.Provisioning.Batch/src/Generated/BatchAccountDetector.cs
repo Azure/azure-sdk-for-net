@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Batch
     /// <summary> Contains the information for a detector. </summary>
     public partial class BatchAccountDetector : ProvisionableResource
     {
-        private BicepValue<string> _value;
+        private DetectorResponseProperties _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
         private BicepDictionary<string> _tags;
@@ -31,18 +31,18 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the Value. </summary>
-        public BicepValue<string> Value
+        /// <summary> Gets or sets the Properties. </summary>
+        internal DetectorResponseProperties Properties
         {
             get
             {
                 Initialize();
-                return _value;
+                return _properties;
             }
             set
             {
                 Initialize();
-                _value.Assign(value);
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -121,11 +121,28 @@ namespace Azure.Provisioning.Batch
             }
         }
 
+        /// <summary> Gets or sets the Value. </summary>
+        public BicepValue<string> Value
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Value;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DetectorResponseProperties();
+                }
+                Properties.Value = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for BatchAccountDetector. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _value = DefineProperty<string>(nameof(Value), new string[] { "properties", "value" });
+            _properties = DefineModelProperty<DetectorResponseProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });

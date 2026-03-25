@@ -17,9 +17,7 @@ namespace Azure.Provisioning.Batch
     /// <summary> Contains information about an application in a Batch account. </summary>
     public partial class BatchApplication : ProvisionableResource
     {
-        private BicepValue<string> _displayName;
-        private BicepValue<bool> _allowUpdates;
-        private BicepValue<string> _defaultVersion;
+        private ApplicationProperties _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
         private BicepDictionary<string> _tags;
@@ -34,48 +32,18 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the DisplayName. </summary>
-        public BicepValue<string> DisplayName
+        /// <summary> Gets or sets the Properties. </summary>
+        internal ApplicationProperties Properties
         {
             get
             {
                 Initialize();
-                return _displayName;
+                return _properties;
             }
             set
             {
                 Initialize();
-                _displayName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the AllowUpdates. </summary>
-        public BicepValue<bool> AllowUpdates
-        {
-            get
-            {
-                Initialize();
-                return _allowUpdates;
-            }
-            set
-            {
-                Initialize();
-                _allowUpdates.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the DefaultVersion. </summary>
-        public BicepValue<string> DefaultVersion
-        {
-            get
-            {
-                Initialize();
-                return _defaultVersion;
-            }
-            set
-            {
-                Initialize();
-                _defaultVersion.Assign(value);
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -154,13 +122,62 @@ namespace Azure.Provisioning.Batch
             }
         }
 
+        /// <summary> Gets or sets the DisplayName. </summary>
+        public BicepValue<string> DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> Gets or sets the AllowUpdates. </summary>
+        public BicepValue<bool> AllowUpdates
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowUpdates;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationProperties();
+                }
+                Properties.AllowUpdates = value;
+            }
+        }
+
+        /// <summary> Gets or sets the DefaultVersion. </summary>
+        public BicepValue<string> DefaultVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationProperties();
+                }
+                Properties.DefaultVersion = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for BatchApplication. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "properties", "displayName" });
-            _allowUpdates = DefineProperty<bool>(nameof(AllowUpdates), new string[] { "properties", "allowUpdates" });
-            _defaultVersion = DefineProperty<string>(nameof(DefaultVersion), new string[] { "properties", "defaultVersion" });
+            _properties = DefineModelProperty<ApplicationProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });

@@ -18,30 +18,7 @@ namespace Azure.Provisioning.Batch
     /// <summary> Contains information about a pool. </summary>
     public partial class BatchAccountPool : ProvisionableResource
     {
-        private BicepValue<string> _displayName;
-        private BicepValue<DateTimeOffset> _lastModifiedOn;
-        private BicepValue<DateTimeOffset> _createdOn;
-        private BicepValue<BatchAccountPoolProvisioningState> _provisioningState;
-        private BicepValue<DateTimeOffset> _provisioningStateTransitOn;
-        private BicepValue<BatchAccountPoolAllocationState> _allocationState;
-        private BicepValue<DateTimeOffset> _allocationStateTransitionOn;
-        private BicepValue<string> _vmSize;
-        private BatchDeploymentConfiguration _deploymentConfiguration;
-        private BicepValue<int> _currentDedicatedNodes;
-        private BicepValue<int> _currentLowPriorityNodes;
-        private BatchAccountPoolScaleSettings _scaleSettings;
-        private BatchAccountPoolAutoScaleRun _autoScaleRun;
-        private BicepValue<InterNodeCommunicationState> _interNodeCommunication;
-        private BatchNetworkConfiguration _networkConfiguration;
-        private BicepValue<int> _taskSlotsPerNode;
-        private BatchTaskSchedulingPolicy _taskSchedulingPolicy;
-        private BicepList<BatchUserAccount> _userAccounts;
-        private BicepList<BatchAccountPoolMetadataItem> _metadata;
-        private BatchAccountPoolStartTask _startTask;
-        private BicepList<BatchApplicationPackageReference> _applicationPackages;
-        private BatchResizeOperationStatus _resizeOperationStatus;
-        private BicepList<BatchMountConfiguration> _mountConfiguration;
-        private UpgradePolicy _upgradePolicy;
+        private PoolProperties _properties;
         private BicepValue<string> _name;
         private ManagedServiceIdentity _identity;
         private BicepValue<ETag> _eTag;
@@ -57,313 +34,18 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the DisplayName. </summary>
-        public BicepValue<string> DisplayName
+        /// <summary> Gets or sets the Properties. </summary>
+        internal PoolProperties Properties
         {
             get
             {
                 Initialize();
-                return _displayName;
+                return _properties;
             }
             set
             {
                 Initialize();
-                _displayName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the LastModifiedOn. </summary>
-        public BicepValue<DateTimeOffset> LastModifiedOn
-        {
-            get
-            {
-                Initialize();
-                return _lastModifiedOn;
-            }
-        }
-
-        /// <summary> Gets the CreatedOn. </summary>
-        public BicepValue<DateTimeOffset> CreatedOn
-        {
-            get
-            {
-                Initialize();
-                return _createdOn;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<BatchAccountPoolProvisioningState> ProvisioningState
-        {
-            get
-            {
-                Initialize();
-                return _provisioningState;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningStateTransitOn. </summary>
-        public BicepValue<DateTimeOffset> ProvisioningStateTransitOn
-        {
-            get
-            {
-                Initialize();
-                return _provisioningStateTransitOn;
-            }
-        }
-
-        /// <summary> Gets the AllocationState. </summary>
-        public BicepValue<BatchAccountPoolAllocationState> AllocationState
-        {
-            get
-            {
-                Initialize();
-                return _allocationState;
-            }
-        }
-
-        /// <summary> Gets the AllocationStateTransitionOn. </summary>
-        public BicepValue<DateTimeOffset> AllocationStateTransitionOn
-        {
-            get
-            {
-                Initialize();
-                return _allocationStateTransitionOn;
-            }
-        }
-
-        /// <summary> Gets or sets the VmSize. </summary>
-        public BicepValue<string> VmSize
-        {
-            get
-            {
-                Initialize();
-                return _vmSize;
-            }
-            set
-            {
-                Initialize();
-                _vmSize.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the DeploymentConfiguration. </summary>
-        internal BatchDeploymentConfiguration DeploymentConfiguration
-        {
-            get
-            {
-                Initialize();
-                return _deploymentConfiguration;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _deploymentConfiguration, value);
-            }
-        }
-
-        /// <summary> Gets the CurrentDedicatedNodes. </summary>
-        public BicepValue<int> CurrentDedicatedNodes
-        {
-            get
-            {
-                Initialize();
-                return _currentDedicatedNodes;
-            }
-        }
-
-        /// <summary> Gets the CurrentLowPriorityNodes. </summary>
-        public BicepValue<int> CurrentLowPriorityNodes
-        {
-            get
-            {
-                Initialize();
-                return _currentLowPriorityNodes;
-            }
-        }
-
-        /// <summary> Gets or sets the ScaleSettings. </summary>
-        public BatchAccountPoolScaleSettings ScaleSettings
-        {
-            get
-            {
-                Initialize();
-                return _scaleSettings;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _scaleSettings, value);
-            }
-        }
-
-        /// <summary> Gets the AutoScaleRun. </summary>
-        public BatchAccountPoolAutoScaleRun AutoScaleRun
-        {
-            get
-            {
-                Initialize();
-                return _autoScaleRun;
-            }
-        }
-
-        /// <summary> Gets or sets the InterNodeCommunication. </summary>
-        public BicepValue<InterNodeCommunicationState> InterNodeCommunication
-        {
-            get
-            {
-                Initialize();
-                return _interNodeCommunication;
-            }
-            set
-            {
-                Initialize();
-                _interNodeCommunication.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the NetworkConfiguration. </summary>
-        public BatchNetworkConfiguration NetworkConfiguration
-        {
-            get
-            {
-                Initialize();
-                return _networkConfiguration;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _networkConfiguration, value);
-            }
-        }
-
-        /// <summary> Gets or sets the TaskSlotsPerNode. </summary>
-        public BicepValue<int> TaskSlotsPerNode
-        {
-            get
-            {
-                Initialize();
-                return _taskSlotsPerNode;
-            }
-            set
-            {
-                Initialize();
-                _taskSlotsPerNode.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the TaskSchedulingPolicy. </summary>
-        public BatchTaskSchedulingPolicy TaskSchedulingPolicy
-        {
-            get
-            {
-                Initialize();
-                return _taskSchedulingPolicy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _taskSchedulingPolicy, value);
-            }
-        }
-
-        /// <summary> Gets or sets the UserAccounts. </summary>
-        public BicepList<BatchUserAccount> UserAccounts
-        {
-            get
-            {
-                Initialize();
-                return _userAccounts;
-            }
-            set
-            {
-                Initialize();
-                _userAccounts.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Metadata. </summary>
-        public BicepList<BatchAccountPoolMetadataItem> Metadata
-        {
-            get
-            {
-                Initialize();
-                return _metadata;
-            }
-            set
-            {
-                Initialize();
-                _metadata.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the StartTask. </summary>
-        public BatchAccountPoolStartTask StartTask
-        {
-            get
-            {
-                Initialize();
-                return _startTask;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _startTask, value);
-            }
-        }
-
-        /// <summary> Gets or sets the ApplicationPackages. </summary>
-        public BicepList<BatchApplicationPackageReference> ApplicationPackages
-        {
-            get
-            {
-                Initialize();
-                return _applicationPackages;
-            }
-            set
-            {
-                Initialize();
-                _applicationPackages.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the ResizeOperationStatus. </summary>
-        public BatchResizeOperationStatus ResizeOperationStatus
-        {
-            get
-            {
-                Initialize();
-                return _resizeOperationStatus;
-            }
-        }
-
-        /// <summary> Gets or sets the MountConfiguration. </summary>
-        public BicepList<BatchMountConfiguration> MountConfiguration
-        {
-            get
-            {
-                Initialize();
-                return _mountConfiguration;
-            }
-            set
-            {
-                Initialize();
-                _mountConfiguration.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the UpgradePolicy. </summary>
-        public UpgradePolicy UpgradePolicy
-        {
-            get
-            {
-                Initialize();
-                return _upgradePolicy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _upgradePolicy, value);
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -457,20 +139,363 @@ namespace Azure.Provisioning.Batch
             }
         }
 
+        /// <summary> Gets or sets the DisplayName. </summary>
+        public BicepValue<string> DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> Gets the LastModifiedOn. </summary>
+        public BicepValue<DateTimeOffset> LastModifiedOn
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                return Properties.LastModifiedOn;
+            }
+        }
+
+        /// <summary> Gets the CreatedOn. </summary>
+        public BicepValue<DateTimeOffset> CreatedOn
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                return Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<BatchAccountPoolProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningStateTransitOn. </summary>
+        public BicepValue<DateTimeOffset> ProvisioningStateTransitOn
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                return Properties.ProvisioningStateTransitOn;
+            }
+        }
+
+        /// <summary> Gets the AllocationState. </summary>
+        public BicepValue<BatchAccountPoolAllocationState> AllocationState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                return Properties.AllocationState;
+            }
+        }
+
+        /// <summary> Gets the AllocationStateTransitionOn. </summary>
+        public BicepValue<DateTimeOffset> AllocationStateTransitionOn
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                return Properties.AllocationStateTransitionOn;
+            }
+        }
+
+        /// <summary> Gets or sets the VmSize. </summary>
+        public BicepValue<string> VmSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmSize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.VmSize = value;
+            }
+        }
+
+        /// <summary> Gets the CurrentDedicatedNodes. </summary>
+        public BicepValue<int> CurrentDedicatedNodes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                return Properties.CurrentDedicatedNodes;
+            }
+        }
+
+        /// <summary> Gets the CurrentLowPriorityNodes. </summary>
+        public BicepValue<int> CurrentLowPriorityNodes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                return Properties.CurrentLowPriorityNodes;
+            }
+        }
+
+        /// <summary> Gets or sets the ScaleSettings. </summary>
+        public BatchAccountPoolScaleSettings ScaleSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScaleSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.ScaleSettings = value;
+            }
+        }
+
+        /// <summary> Gets the AutoScaleRun. </summary>
+        public BatchAccountPoolAutoScaleRun AutoScaleRun
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoScaleRun;
+            }
+        }
+
+        /// <summary> Gets or sets the InterNodeCommunication. </summary>
+        public BicepValue<InterNodeCommunicationState> InterNodeCommunication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InterNodeCommunication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.InterNodeCommunication = value;
+            }
+        }
+
+        /// <summary> Gets or sets the NetworkConfiguration. </summary>
+        public BatchNetworkConfiguration NetworkConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.NetworkConfiguration = value;
+            }
+        }
+
+        /// <summary> Gets or sets the TaskSlotsPerNode. </summary>
+        public BicepValue<int> TaskSlotsPerNode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TaskSlotsPerNode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.TaskSlotsPerNode = value;
+            }
+        }
+
+        /// <summary> Gets or sets the TaskSchedulingPolicy. </summary>
+        public BatchTaskSchedulingPolicy TaskSchedulingPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TaskSchedulingPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.TaskSchedulingPolicy = value;
+            }
+        }
+
+        /// <summary> Gets or sets the UserAccounts. </summary>
+        public BicepList<BatchUserAccount> UserAccounts
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserAccounts;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.UserAccounts = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Metadata. </summary>
+        public BicepList<BatchAccountPoolMetadataItem> Metadata
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Metadata;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.Metadata = value;
+            }
+        }
+
+        /// <summary> Gets or sets the StartTask. </summary>
+        public BatchAccountPoolStartTask StartTask
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartTask;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.StartTask = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ApplicationPackages. </summary>
+        public BicepList<BatchApplicationPackageReference> ApplicationPackages
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicationPackages;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.ApplicationPackages = value;
+            }
+        }
+
+        /// <summary> Gets the ResizeOperationStatus. </summary>
+        public BatchResizeOperationStatus ResizeOperationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResizeOperationStatus;
+            }
+        }
+
+        /// <summary> Gets or sets the MountConfiguration. </summary>
+        public BicepList<BatchMountConfiguration> MountConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MountConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.MountConfiguration = value;
+            }
+        }
+
+        /// <summary> Gets or sets the UpgradePolicy. </summary>
+        public UpgradePolicy UpgradePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpgradePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.UpgradePolicy = value;
+            }
+        }
+
         /// <summary> Gets or sets the VmConfiguration. </summary>
         public BatchVmConfiguration DeploymentVmConfiguration
         {
             get
             {
-                return DeploymentConfiguration is null ? default : DeploymentConfiguration.VmConfiguration;
+                return Properties is null ? default : Properties.DeploymentVmConfiguration;
             }
             set
             {
-                if (DeploymentConfiguration is null)
+                if (Properties is null)
                 {
-                    DeploymentConfiguration = new BatchDeploymentConfiguration();
+                    Properties = new PoolProperties();
                 }
-                DeploymentConfiguration.VmConfiguration = value;
+                Properties.DeploymentVmConfiguration = value;
             }
         }
 
@@ -478,30 +503,7 @@ namespace Azure.Provisioning.Batch
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "properties", "displayName" });
-            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "properties", "lastModified" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "properties", "creationTime" }, isOutput: true);
-            _provisioningState = DefineProperty<BatchAccountPoolProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
-            _provisioningStateTransitOn = DefineProperty<DateTimeOffset>(nameof(ProvisioningStateTransitOn), new string[] { "properties", "provisioningStateTransitionTime" }, isOutput: true);
-            _allocationState = DefineProperty<BatchAccountPoolAllocationState>(nameof(AllocationState), new string[] { "properties", "allocationState" }, isOutput: true);
-            _allocationStateTransitionOn = DefineProperty<DateTimeOffset>(nameof(AllocationStateTransitionOn), new string[] { "properties", "allocationStateTransitionTime" }, isOutput: true);
-            _vmSize = DefineProperty<string>(nameof(VmSize), new string[] { "properties", "vmSize" });
-            _deploymentConfiguration = DefineModelProperty<BatchDeploymentConfiguration>(nameof(DeploymentConfiguration), new string[] { "properties", "deploymentConfiguration" });
-            _currentDedicatedNodes = DefineProperty<int>(nameof(CurrentDedicatedNodes), new string[] { "properties", "currentDedicatedNodes" }, isOutput: true);
-            _currentLowPriorityNodes = DefineProperty<int>(nameof(CurrentLowPriorityNodes), new string[] { "properties", "currentLowPriorityNodes" }, isOutput: true);
-            _scaleSettings = DefineModelProperty<BatchAccountPoolScaleSettings>(nameof(ScaleSettings), new string[] { "properties", "scaleSettings" });
-            _autoScaleRun = DefineModelProperty<BatchAccountPoolAutoScaleRun>(nameof(AutoScaleRun), new string[] { "properties", "autoScaleRun" }, isOutput: true);
-            _interNodeCommunication = DefineProperty<InterNodeCommunicationState>(nameof(InterNodeCommunication), new string[] { "properties", "interNodeCommunication" });
-            _networkConfiguration = DefineModelProperty<BatchNetworkConfiguration>(nameof(NetworkConfiguration), new string[] { "properties", "networkConfiguration" });
-            _taskSlotsPerNode = DefineProperty<int>(nameof(TaskSlotsPerNode), new string[] { "properties", "taskSlotsPerNode" });
-            _taskSchedulingPolicy = DefineModelProperty<BatchTaskSchedulingPolicy>(nameof(TaskSchedulingPolicy), new string[] { "properties", "taskSchedulingPolicy" });
-            _userAccounts = DefineListProperty<BatchUserAccount>(nameof(UserAccounts), new string[] { "properties", "userAccounts" });
-            _metadata = DefineListProperty<BatchAccountPoolMetadataItem>(nameof(Metadata), new string[] { "properties", "metadata" });
-            _startTask = DefineModelProperty<BatchAccountPoolStartTask>(nameof(StartTask), new string[] { "properties", "startTask" });
-            _applicationPackages = DefineListProperty<BatchApplicationPackageReference>(nameof(ApplicationPackages), new string[] { "properties", "applicationPackages" });
-            _resizeOperationStatus = DefineModelProperty<BatchResizeOperationStatus>(nameof(ResizeOperationStatus), new string[] { "properties", "resizeOperationStatus" }, isOutput: true);
-            _mountConfiguration = DefineListProperty<BatchMountConfiguration>(nameof(MountConfiguration), new string[] { "properties", "mountConfiguration" });
-            _upgradePolicy = DefineModelProperty<UpgradePolicy>(nameof(UpgradePolicy), new string[] { "properties", "upgradePolicy" });
+            _properties = DefineModelProperty<PoolProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);

@@ -18,11 +18,7 @@ namespace Azure.Provisioning.Batch
     /// <summary> An application package which represents a particular version of an application. </summary>
     public partial class BatchApplicationPackage : ProvisionableResource
     {
-        private BicepValue<BatchApplicationPackageState> _state;
-        private BicepValue<string> _format;
-        private BicepValue<Uri> _storageUri;
-        private BicepValue<DateTimeOffset> _storageUriExpireOn;
-        private BicepValue<DateTimeOffset> _lastActivatedOn;
+        private ApplicationPackageProperties _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
         private BicepDictionary<string> _tags;
@@ -37,53 +33,18 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets the State. </summary>
-        public BicepValue<BatchApplicationPackageState> State
+        /// <summary> Gets or sets the Properties. </summary>
+        internal ApplicationPackageProperties Properties
         {
             get
             {
                 Initialize();
-                return _state;
+                return _properties;
             }
-        }
-
-        /// <summary> Gets the Format. </summary>
-        public BicepValue<string> Format
-        {
-            get
+            set
             {
                 Initialize();
-                return _format;
-            }
-        }
-
-        /// <summary> Gets the StorageUri. </summary>
-        public BicepValue<Uri> StorageUri
-        {
-            get
-            {
-                Initialize();
-                return _storageUri;
-            }
-        }
-
-        /// <summary> Gets the StorageUriExpireOn. </summary>
-        public BicepValue<DateTimeOffset> StorageUriExpireOn
-        {
-            get
-            {
-                Initialize();
-                return _storageUriExpireOn;
-            }
-        }
-
-        /// <summary> Gets the LastActivatedOn. </summary>
-        public BicepValue<DateTimeOffset> LastActivatedOn
-        {
-            get
-            {
-                Initialize();
-                return _lastActivatedOn;
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -162,15 +123,76 @@ namespace Azure.Provisioning.Batch
             }
         }
 
+        /// <summary> Gets the State. </summary>
+        public BicepValue<BatchApplicationPackageState> State
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPackageProperties();
+                }
+                return Properties.State;
+            }
+        }
+
+        /// <summary> Gets the Format. </summary>
+        public BicepValue<string> Format
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPackageProperties();
+                }
+                return Properties.Format;
+            }
+        }
+
+        /// <summary> Gets the StorageUri. </summary>
+        public BicepValue<Uri> StorageUri
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPackageProperties();
+                }
+                return Properties.StorageUri;
+            }
+        }
+
+        /// <summary> Gets the StorageUriExpireOn. </summary>
+        public BicepValue<DateTimeOffset> StorageUriExpireOn
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPackageProperties();
+                }
+                return Properties.StorageUriExpireOn;
+            }
+        }
+
+        /// <summary> Gets the LastActivatedOn. </summary>
+        public BicepValue<DateTimeOffset> LastActivatedOn
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPackageProperties();
+                }
+                return Properties.LastActivatedOn;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for BatchApplicationPackage. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _state = DefineProperty<BatchApplicationPackageState>(nameof(State), new string[] { "properties", "state" }, isOutput: true);
-            _format = DefineProperty<string>(nameof(Format), new string[] { "properties", "format" }, isOutput: true);
-            _storageUri = DefineProperty<Uri>(nameof(StorageUri), new string[] { "properties", "storageUrl" }, isOutput: true);
-            _storageUriExpireOn = DefineProperty<DateTimeOffset>(nameof(StorageUriExpireOn), new string[] { "properties", "storageUrlExpiry" }, isOutput: true);
-            _lastActivatedOn = DefineProperty<DateTimeOffset>(nameof(LastActivatedOn), new string[] { "properties", "lastActivationTime" }, isOutput: true);
+            _properties = DefineModelProperty<ApplicationPackageProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
