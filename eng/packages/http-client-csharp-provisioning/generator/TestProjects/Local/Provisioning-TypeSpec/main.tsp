@@ -34,3 +34,11 @@ namespace ProvisioningTypeSpec {
 namespace Azure.ResourceManager.Models {
   model SubResource { }
 }
+
+// Define RBAC roles for testing BuiltInRole and CreateRoleAssignment generation
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles for provisioning"
+@@clientOption(ProvisioningTypeSpec.ConfigurationStore, "resource-rbac-roles", #{
+  ConfigStoreContributor: "00000000-0000-0000-0000-000000000001",
+  ConfigStoreReader: "00000000-0000-0000-0000-000000000002",
+  ConfigStoreDataOperator: "00000000-0000-0000-0000-000000000003",
+}, "csharp");

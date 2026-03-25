@@ -1543,6 +1543,18 @@
         {
           "name": "Azure.ResourceManager.Private.@armResourceInternal",
           "arguments": {}
+        },
+        {
+          "name": "Azure.ClientGenerator.Core.@clientOption",
+          "arguments": {
+            "name": "resource-rbac-roles",
+            "value": {
+              "ConfigStoreContributor": "00000000-0000-0000-0000-000000000001",
+              "ConfigStoreReader": "00000000-0000-0000-0000-000000000002",
+              "ConfigStoreDataOperator": "00000000-0000-0000-0000-000000000003"
+            },
+            "scope": "csharp"
+          }
         }
       ],
       "serializationOptions": {
@@ -3929,7 +3941,20 @@
                   "2024-04-01",
                   "2024-05-01"
                 ],
-                "rbacRoles": []
+                "rbacRoles": [
+                  {
+                    "name": "ConfigStoreContributor",
+                    "value": "00000000-0000-0000-0000-000000000001"
+                  },
+                  {
+                    "name": "ConfigStoreReader",
+                    "value": "00000000-0000-0000-0000-000000000002"
+                  },
+                  {
+                    "name": "ConfigStoreDataOperator",
+                    "value": "00000000-0000-0000-0000-000000000003"
+                  }
+                ]
               },
               {
                 "resourceModelId": "ProvisioningTypeSpec.KeyValue",
