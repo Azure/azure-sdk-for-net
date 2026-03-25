@@ -210,6 +210,11 @@ if ($inputFileToGen) {
 }
 
 $exitCode = 0
+# Signal to spec-gen-sdk-runner whether SDK Validation check should be required.
+# Only set to true for management plane packages using the new mgmt emitter
+# (@azure-typespec/http-client-csharp-mgmt). Data-plane TypeSpec and swagger-based
+# packages should remain optional for .NET.
+$isSpecGenSdkCheckRequired = $false
 # generate sdk from typespec file
 if ($relatedTypeSpecProjectFolder) {
     foreach ($typespecRelativeFolder in $relatedTypeSpecProjectFolder) {
@@ -250,12 +255,7 @@ if ($relatedTypeSpecProjectFolder) {
             $tspclientCommand += " --local-spec-repo $typespecFolder"
         }
         if ($apiVersion) {
-            # Validate apiVersion format to prevent command injection - allow alphanumeric, dots, and dashes
-            if ($apiVersion -match '^[a-zA-Z0-9.-]+$') {
-                $tspclientCommand += " --emitter-options `"api-version=$apiVersion`""
-            } else {
-                Write-Warning "apiVersion '$apiVersion' contains invalid characters and will be skipped. Only alphanumeric characters, dots, and dashes are allowed."
-            }
+            Write-Warning "apiVersion '$apiVersion' is not supported for .NET SDK generation. The api-version from tspconfig.yaml will be used instead."
         }
         Write-Host $tspclientCommand
         Invoke-Expression $tspclientCommand
@@ -287,13 +287,21 @@ if ($relatedTypeSpecProjectFolder) {
             -specRepoRoot $swaggerDir
         }
 
-        if ((Test-MgmtSdkUsingNewGenerator -serviceType $serviceType -tspConfigFile $tspConfigFile -sdkProjectFolder $sdkProjectFolder) -or $serviceType -eq "data-plane") {
+        $usesNewMgmtEmitter = Test-MgmtSdkUsingNewGenerator -serviceType $serviceType -tspConfigFile $tspConfigFile -sdkProjectFolder $sdkProjectFolder
+
+        if ($usesNewMgmtEmitter -or $serviceType -eq "data-plane") {
             $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
+        }
+        # Mark SDK Validation as required only for new mgmt emitter packages.
+        # This is read by spec-gen-sdk-runner to determine if the .NET check should block the PR.
+        if ($usesNewMgmtEmitter) {
+            $isSpecGenSdkCheckRequired = $true
         }
     }
 }
 $outputJson = [PSCustomObject]@{
     packages = $generatedSDKPackages
+    isSpecGenSdkCheckRequired = $isSpecGenSdkCheckRequired
 }
 $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
 exit $exitCode

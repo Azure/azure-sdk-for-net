@@ -26,6 +26,7 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -218,7 +219,7 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _applicationGatewayBackendAddressPools = DefineListProperty<ApplicationGatewayBackendAddressPool>("ApplicationGatewayBackendAddressPools", ["properties", "applicationGatewayBackendAddressPools"], isOutput: true);
         _applicationSecurityGroups = DefineListProperty<ApplicationSecurityGroup>("ApplicationSecurityGroups", ["properties", "applicationSecurityGroups"], isOutput: true);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);

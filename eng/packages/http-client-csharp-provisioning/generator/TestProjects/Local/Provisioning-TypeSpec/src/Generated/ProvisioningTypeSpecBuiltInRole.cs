@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> Defines the built-in roles for ProvisioningTypeSpec resources. </summary>
     public readonly partial struct ProvisioningTypeSpecBuiltInRole : IEquatable<ProvisioningTypeSpecBuiltInRole>
     {
         private readonly string _value;

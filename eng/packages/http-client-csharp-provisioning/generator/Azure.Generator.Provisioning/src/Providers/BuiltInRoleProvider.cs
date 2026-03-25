@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Models;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -24,7 +25,7 @@ namespace Azure.Generator.Provisioning.Providers
     internal class BuiltInRoleProvider : TypeProvider
     {
         private readonly string _serviceName;
-        private readonly IReadOnlyList<ArmResourceRbacRole> _roles;
+        private readonly IReadOnlyList<(string Name, string Value)> _roles;
 
         private static readonly ValueExpression EditorNeverAttribute = new MemberExpression(
             Static(typeof(EditorBrowsableState)),
@@ -38,31 +39,87 @@ namespace Azure.Generator.Provisioning.Providers
             string serviceName,
             IEnumerable<ArmResourceMetadata> resources)
         {
-            // Aggregate all roles across all resources, deduplicating by value (GUID)
-            var rolesByValue = new Dictionary<string, ArmResourceRbacRole>(StringComparer.OrdinalIgnoreCase);
+            // Step 1: Collect all roles with sanitized names
+            var allRoles = new List<(string Name, string Value)>();
             foreach (var resource in resources)
             {
                 foreach (var role in resource.RbacRoles)
                 {
-                    rolesByValue.TryAdd(role.Value, role);
+                    allRoles.Add((Name: role.Name.ToIdentifierName(), Value: role.Value));
                 }
             }
 
-            if (rolesByValue.Count == 0)
+            if (allRoles.Count == 0)
                 return null;
 
-            // Sort by name for deterministic output
-            var sortedRoles = rolesByValue.Values.OrderBy(r => r.Name, StringComparer.Ordinal).ToList();
+            // Step 2: Deduplicate by value (GUID). If two entries share the same GUID
+            // but have different names, warn and keep the first one.
+            var rolesByValue = new Dictionary<string, (string Name, string Value)>(StringComparer.OrdinalIgnoreCase);
+            foreach (var role in allRoles)
+            {
+                if (rolesByValue.TryGetValue(role.Value, out var existing))
+                {
+                    if (!string.Equals(role.Name, existing.Name, StringComparison.Ordinal))
+                    {
+                        ProvisioningGenerator.Instance.Emitter.ReportDiagnostic(
+                            "rbac-role-guid-conflict",
+                            $"RBAC role GUID '{role.Value}' has conflicting names: '{existing.Name}' and '{role.Name}'. Using '{existing.Name}'.");
+                    }
+                }
+                else
+                {
+                    rolesByValue.Add(role.Value, role);
+                }
+            }
+
+            // Step 3: Deduplicate by name. If two entries share the same sanitized name
+            // but have different GUIDs, this is an error — stop generation for this type.
+            // Report all collisions so users can fix them all at once.
+            var guidsByName = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+            foreach (var role in rolesByValue.Values)
+            {
+                if (!guidsByName.TryGetValue(role.Name, out var guids))
+                {
+                    guids = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                    guidsByName[role.Name] = guids;
+                }
+                guids.Add(role.Value);
+            }
+
+            bool hasNameCollision = false;
+            foreach (var (name, guids) in guidsByName)
+            {
+                if (guids.Count > 1)
+                {
+                    hasNameCollision = true;
+                    ProvisioningGenerator.Instance.Emitter.ReportDiagnostic(
+                        "rbac-role-name-collision",
+                        $"RBAC role name collision: '{name}' maps to different GUIDs [{string.Join(", ", guids.Select(g => $"'{g}'"))}]. Cannot generate BuiltInRole type.");
+                }
+            }
+
+            if (hasNameCollision)
+                return null;
+
+            // Sort by name for deterministic output — take one entry per name from rolesByValue
+            var sortedRoles = rolesByValue.Values
+                .GroupBy(r => r.Name, StringComparer.Ordinal)
+                .Select(g => g.First())
+                .OrderBy(r => r.Name, StringComparer.Ordinal)
+                .ToList();
             return new BuiltInRoleProvider(serviceName, sortedRoles);
         }
 
-        private BuiltInRoleProvider(string serviceName, IReadOnlyList<ArmResourceRbacRole> roles)
+        private BuiltInRoleProvider(string serviceName, IReadOnlyList<(string Name, string Value)> roles)
         {
             _serviceName = serviceName;
             _roles = roles;
         }
 
         protected override string BuildName() => $"{_serviceName}BuiltInRole";
+
+        protected override FormattableString BuildDescription()
+            => $"Defines the built-in roles for {_serviceName} resources.";
 
         protected override string BuildNamespace()
             => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
