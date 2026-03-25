@@ -26,6 +26,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<ConfigurationStoreSkuTier> _skuTier;
         private BicepValue<ConfigurationStoreCreateMode> _createMode;
         private BicepList<SubResource> _linkedResources;
+        private ItemProperties _defaultItemProperties;
 
         /// <summary> Creates a new ConfigurationStoreProperties. </summary>
         public ConfigurationStoreProperties()
@@ -182,6 +183,21 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the DefaultItemProperties. </summary>
+        public ItemProperties DefaultItemProperties
+        {
+            get
+            {
+                Initialize();
+                return _defaultItemProperties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _defaultItemProperties, value);
+            }
+        }
+
         /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> SkuName
         {
@@ -214,6 +230,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _skuTier = DefineProperty<ConfigurationStoreSkuTier>(nameof(SkuTier), new string[] { "skuTier" });
             _createMode = DefineProperty<ConfigurationStoreCreateMode>(nameof(CreateMode), new string[] { "createMode" });
             _linkedResources = DefineListProperty<SubResource>(nameof(LinkedResources), new string[] { "linkedResources" });
+            _defaultItemProperties = DefineModelProperty<ItemProperties>(nameof(DefaultItemProperties), new string[] { "defaultItemProperties" });
         }
     }
 }

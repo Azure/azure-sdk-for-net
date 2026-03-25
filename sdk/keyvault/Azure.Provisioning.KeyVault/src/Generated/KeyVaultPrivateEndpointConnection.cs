@@ -16,9 +16,7 @@ namespace Azure.Provisioning.KeyVault
     /// <summary> Private endpoint connection resource. </summary>
     public partial class KeyVaultPrivateEndpointConnection : ProvisionableResource
     {
-        private PrivateEndpoint _privateEndpoint;
-        private KeyVaultPrivateLinkServiceConnectionState _connectionState;
-        private BicepValue<KeyVaultPrivateEndpointConnectionProvisioningState> _provisioningState;
+        private PrivateEndpointConnectionProperties _properties;
         private BicepValue<string> _name;
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
@@ -34,43 +32,18 @@ namespace Azure.Provisioning.KeyVault
         {
         }
 
-        /// <summary> Gets or sets the PrivateEndpoint. </summary>
-        internal PrivateEndpoint PrivateEndpoint
+        /// <summary> Gets or sets the Properties. </summary>
+        internal PrivateEndpointConnectionProperties Properties
         {
             get
             {
                 Initialize();
-                return _privateEndpoint;
+                return _properties;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _privateEndpoint, value);
-            }
-        }
-
-        /// <summary> Gets or sets the ConnectionState. </summary>
-        public KeyVaultPrivateLinkServiceConnectionState ConnectionState
-        {
-            get
-            {
-                Initialize();
-                return _connectionState;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _connectionState, value);
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<KeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState
-        {
-            get
-            {
-                Initialize();
-                return _provisioningState;
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -164,16 +137,46 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
+        /// <summary> Gets or sets the ConnectionState. </summary>
+        public KeyVaultPrivateLinkServiceConnectionState ConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.ConnectionState = value;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<KeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get
             {
-                if (PrivateEndpoint is null)
+                if (Properties is null)
                 {
-                    PrivateEndpoint = new PrivateEndpoint();
+                    Properties = new PrivateEndpointConnectionProperties();
                 }
-                return PrivateEndpoint.Id;
+                return Properties.PrivateEndpointId;
             }
         }
 
@@ -181,9 +184,7 @@ namespace Azure.Provisioning.KeyVault
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "properties", "privateEndpoint" });
-            _connectionState = DefineModelProperty<KeyVaultPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "properties", "privateLinkServiceConnectionState" });
-            _provisioningState = DefineProperty<KeyVaultPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
+            _properties = DefineModelProperty<PrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" }, isOutput: true);

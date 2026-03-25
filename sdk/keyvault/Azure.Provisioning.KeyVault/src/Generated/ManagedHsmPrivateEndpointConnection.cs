@@ -16,9 +16,7 @@ namespace Azure.Provisioning.KeyVault
     /// <summary> Private endpoint connection resource. </summary>
     public partial class ManagedHsmPrivateEndpointConnection : ProvisionableResource
     {
-        private ManagedHsmPrivateEndpoint _privateEndpoint;
-        private ManagedHsmPrivateLinkServiceConnectionState _privateLinkServiceConnectionState;
-        private BicepValue<ManagedHsmPrivateEndpointConnectionProvisioningState> _provisioningState;
+        private ManagedHsmPrivateEndpointConnectionProperties _properties;
         private BicepValue<string> _name;
         private ManagedHsmSku _sku;
         private ManagedServiceIdentity _identity;
@@ -36,43 +34,18 @@ namespace Azure.Provisioning.KeyVault
         {
         }
 
-        /// <summary> Gets or sets the PrivateEndpoint. </summary>
-        internal ManagedHsmPrivateEndpoint PrivateEndpoint
+        /// <summary> Gets or sets the Properties. </summary>
+        internal ManagedHsmPrivateEndpointConnectionProperties Properties
         {
             get
             {
                 Initialize();
-                return _privateEndpoint;
+                return _properties;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _privateEndpoint, value);
-            }
-        }
-
-        /// <summary> Gets or sets the PrivateLinkServiceConnectionState. </summary>
-        public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
-        {
-            get
-            {
-                Initialize();
-                return _privateLinkServiceConnectionState;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _privateLinkServiceConnectionState, value);
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<ManagedHsmPrivateEndpointConnectionProvisioningState> ProvisioningState
-        {
-            get
-            {
-                Initialize();
-                return _provisioningState;
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -201,16 +174,46 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
+        /// <summary> Gets or sets the PrivateLinkServiceConnectionState. </summary>
+        public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedHsmPrivateEndpointConnectionProperties();
+                }
+                Properties.PrivateLinkServiceConnectionState = value;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<ManagedHsmPrivateEndpointConnectionProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedHsmPrivateEndpointConnectionProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get
             {
-                if (PrivateEndpoint is null)
+                if (Properties is null)
                 {
-                    PrivateEndpoint = new ManagedHsmPrivateEndpoint();
+                    Properties = new ManagedHsmPrivateEndpointConnectionProperties();
                 }
-                return PrivateEndpoint.Id;
+                return Properties.PrivateEndpointId;
             }
         }
 
@@ -218,9 +221,7 @@ namespace Azure.Provisioning.KeyVault
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _privateEndpoint = DefineModelProperty<ManagedHsmPrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "properties", "privateEndpoint" });
-            _privateLinkServiceConnectionState = DefineModelProperty<ManagedHsmPrivateLinkServiceConnectionState>(nameof(PrivateLinkServiceConnectionState), new string[] { "properties", "privateLinkServiceConnectionState" });
-            _provisioningState = DefineProperty<ManagedHsmPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
+            _properties = DefineModelProperty<ManagedHsmPrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _sku = DefineModelProperty<ManagedHsmSku>(nameof(Sku), new string[] { "sku" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });

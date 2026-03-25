@@ -91,7 +91,11 @@ namespace Azure.Provisioning.KeyVault
         {
             get
             {
-                return Properties is null ? default : Properties.ProvisioningState;
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                return Properties.ProvisioningState;
             }
         }
 

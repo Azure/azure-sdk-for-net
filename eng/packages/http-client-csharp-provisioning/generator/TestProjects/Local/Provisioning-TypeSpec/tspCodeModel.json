@@ -2587,6 +2587,290 @@
                   }
                 },
                 "isHttpMetadata": false
+              },
+              {
+                "$id": "199",
+                "kind": "property",
+                "name": "defaultItemProperties",
+                "serializedName": "defaultItemProperties",
+                "doc": "Default item properties for new items (test: keeps ItemProperties alive after flatten).",
+                "type": {
+                  "$id": "200",
+                  "kind": "model",
+                  "name": "ItemProperties",
+                  "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
+                  "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemProperties",
+                  "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+                  "doc": "Properties of an item.",
+                  "decorators": [
+                    {
+                      "name": "Azure.ResourceManager.@armProviderNamespace",
+                      "arguments": {}
+                    }
+                  ],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "ItemProperties"
+                    }
+                  },
+                  "properties": [
+                    {
+                      "$id": "201",
+                      "kind": "property",
+                      "name": "value",
+                      "serializedName": "value",
+                      "doc": "The value of the item.",
+                      "type": {
+                        "$id": "202",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemProperties.value",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "value"
+                        }
+                      },
+                      "isHttpMetadata": false
+                    },
+                    {
+                      "$id": "203",
+                      "kind": "property",
+                      "name": "contentType",
+                      "serializedName": "contentType",
+                      "doc": "The content type of the item.",
+                      "type": {
+                        "$id": "204",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemProperties.contentType",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "contentType"
+                        }
+                      },
+                      "isHttpMetadata": false
+                    },
+                    {
+                      "$id": "205",
+                      "kind": "property",
+                      "name": "attributes",
+                      "serializedName": "attributes",
+                      "doc": "The attributes of the item.",
+                      "type": {
+                        "$id": "206",
+                        "kind": "model",
+                        "name": "ItemAttributes",
+                        "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
+                        "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemAttributes",
+                        "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+                        "doc": "Item-specific attributes that inherit all base properties.",
+                        "decorators": [
+                          {
+                            "name": "Azure.ResourceManager.@armProviderNamespace",
+                            "arguments": {}
+                          }
+                        ],
+                        "serializationOptions": {
+                          "json": {
+                            "name": "ItemAttributes"
+                          }
+                        },
+                        "baseModel": {
+                          "$id": "207",
+                          "kind": "model",
+                          "name": "BaseItemAttributes",
+                          "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
+                          "crossLanguageDefinitionId": "ProvisioningTypeSpec.BaseItemAttributes",
+                          "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+                          "doc": "Base attributes for items.",
+                          "decorators": [
+                            {
+                              "name": "Azure.ResourceManager.@armProviderNamespace",
+                              "arguments": {}
+                            }
+                          ],
+                          "serializationOptions": {
+                            "json": {
+                              "name": "BaseItemAttributes"
+                            }
+                          },
+                          "properties": [
+                            {
+                              "$id": "208",
+                              "kind": "property",
+                              "name": "enabled",
+                              "serializedName": "enabled",
+                              "doc": "Whether the item is enabled.",
+                              "type": {
+                                "$id": "209",
+                                "kind": "boolean",
+                                "name": "boolean",
+                                "crossLanguageDefinitionId": "TypeSpec.boolean",
+                                "decorators": []
+                              },
+                              "optional": true,
+                              "readOnly": false,
+                              "discriminator": false,
+                              "flatten": false,
+                              "decorators": [],
+                              "crossLanguageDefinitionId": "ProvisioningTypeSpec.BaseItemAttributes.enabled",
+                              "serializationOptions": {
+                                "json": {
+                                  "name": "enabled"
+                                }
+                              },
+                              "isHttpMetadata": false
+                            },
+                            {
+                              "$id": "210",
+                              "kind": "property",
+                              "name": "created",
+                              "serializedName": "created",
+                              "doc": "The creation date.",
+                              "type": {
+                                "$id": "211",
+                                "kind": "utcDateTime",
+                                "name": "utcDateTime",
+                                "encode": "rfc3339",
+                                "wireType": {
+                                  "$id": "212",
+                                  "kind": "string",
+                                  "name": "string",
+                                  "crossLanguageDefinitionId": "TypeSpec.string",
+                                  "decorators": []
+                                },
+                                "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                                "decorators": []
+                              },
+                              "optional": true,
+                              "readOnly": true,
+                              "discriminator": false,
+                              "flatten": false,
+                              "decorators": [],
+                              "crossLanguageDefinitionId": "ProvisioningTypeSpec.BaseItemAttributes.created",
+                              "serializationOptions": {
+                                "json": {
+                                  "name": "created"
+                                }
+                              },
+                              "isHttpMetadata": false
+                            },
+                            {
+                              "$id": "213",
+                              "kind": "property",
+                              "name": "updated",
+                              "serializedName": "updated",
+                              "doc": "The last updated date.",
+                              "type": {
+                                "$id": "214",
+                                "kind": "utcDateTime",
+                                "name": "utcDateTime",
+                                "encode": "rfc3339",
+                                "wireType": {
+                                  "$id": "215",
+                                  "kind": "string",
+                                  "name": "string",
+                                  "crossLanguageDefinitionId": "TypeSpec.string",
+                                  "decorators": []
+                                },
+                                "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                                "decorators": []
+                              },
+                              "optional": true,
+                              "readOnly": true,
+                              "discriminator": false,
+                              "flatten": false,
+                              "decorators": [],
+                              "crossLanguageDefinitionId": "ProvisioningTypeSpec.BaseItemAttributes.updated",
+                              "serializationOptions": {
+                                "json": {
+                                  "name": "updated"
+                                }
+                              },
+                              "isHttpMetadata": false
+                            }
+                          ]
+                        },
+                        "properties": [
+                          {
+                            "$id": "216",
+                            "kind": "property",
+                            "name": "expires",
+                            "serializedName": "expires",
+                            "doc": "The expiry date.",
+                            "type": {
+                              "$id": "217",
+                              "kind": "utcDateTime",
+                              "name": "utcDateTime",
+                              "encode": "rfc3339",
+                              "wireType": {
+                                "$id": "218",
+                                "kind": "string",
+                                "name": "string",
+                                "crossLanguageDefinitionId": "TypeSpec.string",
+                                "decorators": []
+                              },
+                              "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                              "decorators": []
+                            },
+                            "optional": true,
+                            "readOnly": false,
+                            "discriminator": false,
+                            "flatten": false,
+                            "decorators": [],
+                            "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemAttributes.expires",
+                            "serializationOptions": {
+                              "json": {
+                                "name": "expires"
+                              }
+                            },
+                            "isHttpMetadata": false
+                          }
+                        ]
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemProperties.attributes",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "attributes"
+                        }
+                      },
+                      "isHttpMetadata": false
+                    }
+                  ]
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStoreProperties.defaultItemProperties",
+                "serializationOptions": {
+                  "json": {
+                    "name": "defaultItemProperties"
+                  }
+                },
+                "isHttpMetadata": false
               }
             ]
           },
@@ -2604,13 +2888,13 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "199",
+          "$id": "219",
           "kind": "property",
           "name": "name",
           "serializedName": "name",
           "doc": "The name of the ConfigurationStore",
           "type": {
-            "$id": "200",
+            "$id": "220",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2637,13 +2921,13 @@
           "isHttpMetadata": true
         },
         {
-          "$id": "201",
+          "$id": "221",
           "kind": "property",
           "name": "eTag",
           "serializedName": "eTag",
           "doc": "If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.",
           "type": {
-            "$id": "202",
+            "$id": "222",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2683,6 +2967,15 @@
       "$ref": "198"
     },
     {
+      "$ref": "200"
+    },
+    {
+      "$ref": "206"
+    },
+    {
+      "$ref": "207"
+    },
+    {
       "$ref": "130"
     },
     {
@@ -2692,7 +2985,7 @@
       "$ref": "141"
     },
     {
-      "$id": "203",
+      "$id": "223",
       "kind": "model",
       "name": "ArmOperationStatusResourceProvisioningState",
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -2712,7 +3005,7 @@
       },
       "properties": [
         {
-          "$id": "204",
+          "$id": "224",
           "kind": "property",
           "name": "status",
           "serializedName": "status",
@@ -2734,13 +3027,13 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "205",
+          "$id": "225",
           "kind": "property",
           "name": "id",
           "serializedName": "id",
           "doc": "The unique identifier for the operationStatus resource",
           "type": {
-            "$id": "206",
+            "$id": "226",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2760,13 +3053,13 @@
           "isHttpMetadata": true
         },
         {
-          "$id": "207",
+          "$id": "227",
           "kind": "property",
           "name": "name",
           "serializedName": "name",
           "doc": "The name of the  operationStatus resource",
           "type": {
-            "$id": "208",
+            "$id": "228",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2786,18 +3079,18 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "209",
+          "$id": "229",
           "kind": "property",
           "name": "startTime",
           "serializedName": "startTime",
           "doc": "Operation start time",
           "type": {
-            "$id": "210",
+            "$id": "230",
             "kind": "utcDateTime",
             "name": "utcDateTime",
             "encode": "rfc3339",
             "wireType": {
-              "$id": "211",
+              "$id": "231",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2820,18 +3113,18 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "212",
+          "$id": "232",
           "kind": "property",
           "name": "endTime",
           "serializedName": "endTime",
           "doc": "Operation complete time",
           "type": {
-            "$id": "213",
+            "$id": "233",
             "kind": "utcDateTime",
             "name": "utcDateTime",
             "encode": "rfc3339",
             "wireType": {
-              "$id": "214",
+              "$id": "234",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2854,13 +3147,13 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "215",
+          "$id": "235",
           "kind": "property",
           "name": "percentComplete",
           "serializedName": "percentComplete",
           "doc": "The progress made toward completing the operation",
           "type": {
-            "$id": "216",
+            "$id": "236",
             "kind": "float64",
             "name": "float64",
             "crossLanguageDefinitionId": "TypeSpec.float64",
@@ -2880,7 +3173,7 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "217",
+          "$id": "237",
           "kind": "property",
           "name": "error",
           "serializedName": "error",
@@ -2904,7 +3197,7 @@
       ]
     },
     {
-      "$id": "218",
+      "$id": "238",
       "kind": "model",
       "name": "ConfigurationStoreListResult",
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -2924,13 +3217,13 @@
       },
       "properties": [
         {
-          "$id": "219",
+          "$id": "239",
           "kind": "property",
           "name": "value",
           "serializedName": "value",
           "doc": "The ConfigurationStore items on this page",
           "type": {
-            "$id": "220",
+            "$id": "240",
             "kind": "array",
             "name": "ArrayConfigurationStore",
             "valueType": {
@@ -2953,18 +3246,18 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "221",
+          "$id": "241",
           "kind": "property",
           "name": "nextLink",
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {
-            "$id": "222",
+            "$id": "242",
             "kind": "url",
             "name": "ResourceLocation",
             "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
             "baseType": {
-              "$id": "223",
+              "$id": "243",
               "kind": "url",
               "name": "url",
               "crossLanguageDefinitionId": "TypeSpec.url",
@@ -2988,7 +3281,7 @@
       ]
     },
     {
-      "$id": "224",
+      "$id": "244",
       "kind": "model",
       "name": "KeyValue",
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -3015,7 +3308,7 @@
         }
       },
       "baseModel": {
-        "$id": "225",
+        "$id": "245",
         "kind": "model",
         "name": "ProxyResource",
         "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -3041,13 +3334,13 @@
       },
       "properties": [
         {
-          "$id": "226",
+          "$id": "246",
           "kind": "property",
           "name": "properties",
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$id": "227",
+            "$id": "247",
             "kind": "model",
             "name": "KeyValueProperties",
             "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -3067,13 +3360,13 @@
             },
             "properties": [
               {
-                "$id": "228",
+                "$id": "248",
                 "kind": "property",
                 "name": "value",
                 "serializedName": "value",
                 "doc": "The value of the key-value.",
                 "type": {
-                  "$id": "229",
+                  "$id": "249",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3093,13 +3386,13 @@
                 "isHttpMetadata": false
               },
               {
-                "$id": "230",
+                "$id": "250",
                 "kind": "property",
                 "name": "contentType",
                 "serializedName": "contentType",
                 "doc": "The content type of the key-value.",
                 "type": {
-                  "$id": "231",
+                  "$id": "251",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3134,13 +3427,13 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "232",
+          "$id": "252",
           "kind": "property",
           "name": "name",
           "serializedName": "name",
           "doc": "The name of the KeyValue",
           "type": {
-            "$id": "233",
+            "$id": "253",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3169,13 +3462,13 @@
       ]
     },
     {
-      "$ref": "227"
+      "$ref": "247"
     },
     {
-      "$ref": "225"
+      "$ref": "245"
     },
     {
-      "$id": "234",
+      "$id": "254",
       "kind": "model",
       "name": "KeyValueListResult",
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -3195,17 +3488,17 @@
       },
       "properties": [
         {
-          "$id": "235",
+          "$id": "255",
           "kind": "property",
           "name": "value",
           "serializedName": "value",
           "doc": "The KeyValue items on this page",
           "type": {
-            "$id": "236",
+            "$id": "256",
             "kind": "array",
             "name": "ArrayKeyValue",
             "valueType": {
-              "$ref": "224"
+              "$ref": "244"
             },
             "crossLanguageDefinitionId": "TypeSpec.Array",
             "decorators": []
@@ -3224,18 +3517,18 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "237",
+          "$id": "257",
           "kind": "property",
           "name": "nextLink",
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {
-            "$id": "238",
+            "$id": "258",
             "kind": "url",
             "name": "ResourceLocation",
             "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
             "baseType": {
-              "$id": "239",
+              "$id": "259",
               "kind": "url",
               "name": "url",
               "crossLanguageDefinitionId": "TypeSpec.url",
@@ -3259,7 +3552,7 @@
       ]
     },
     {
-      "$id": "240",
+      "$id": "260",
       "kind": "model",
       "name": "Item",
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -3286,285 +3579,28 @@
         }
       },
       "baseModel": {
-        "$ref": "225"
+        "$ref": "245"
       },
       "properties": [
         {
-          "$id": "241",
+          "$id": "261",
           "kind": "property",
           "name": "properties",
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$id": "242",
-            "kind": "model",
-            "name": "ItemProperties",
-            "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
-            "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemProperties",
-            "usage": "Input,Output,Json",
-            "doc": "Properties of an item.",
-            "decorators": [
-              {
-                "name": "Azure.ResourceManager.@armProviderNamespace",
-                "arguments": {}
-              }
-            ],
-            "serializationOptions": {
-              "json": {
-                "name": "ItemProperties"
-              }
-            },
-            "properties": [
-              {
-                "$id": "243",
-                "kind": "property",
-                "name": "value",
-                "serializedName": "value",
-                "doc": "The value of the item.",
-                "type": {
-                  "$id": "244",
-                  "kind": "string",
-                  "name": "string",
-                  "crossLanguageDefinitionId": "TypeSpec.string",
-                  "decorators": []
-                },
-                "optional": true,
-                "readOnly": false,
-                "discriminator": false,
-                "flatten": false,
-                "decorators": [],
-                "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemProperties.value",
-                "serializationOptions": {
-                  "json": {
-                    "name": "value"
-                  }
-                },
-                "isHttpMetadata": false
-              },
-              {
-                "$id": "245",
-                "kind": "property",
-                "name": "contentType",
-                "serializedName": "contentType",
-                "doc": "The content type of the item.",
-                "type": {
-                  "$id": "246",
-                  "kind": "string",
-                  "name": "string",
-                  "crossLanguageDefinitionId": "TypeSpec.string",
-                  "decorators": []
-                },
-                "optional": true,
-                "readOnly": false,
-                "discriminator": false,
-                "flatten": false,
-                "decorators": [],
-                "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemProperties.contentType",
-                "serializationOptions": {
-                  "json": {
-                    "name": "contentType"
-                  }
-                },
-                "isHttpMetadata": false
-              },
-              {
-                "$id": "247",
-                "kind": "property",
-                "name": "attributes",
-                "serializedName": "attributes",
-                "doc": "The attributes of the item.",
-                "type": {
-                  "$id": "248",
-                  "kind": "model",
-                  "name": "ItemAttributes",
-                  "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
-                  "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemAttributes",
-                  "usage": "Input,Output,Json",
-                  "doc": "Item-specific attributes that inherit all base properties.",
-                  "decorators": [
-                    {
-                      "name": "Azure.ResourceManager.@armProviderNamespace",
-                      "arguments": {}
-                    }
-                  ],
-                  "serializationOptions": {
-                    "json": {
-                      "name": "ItemAttributes"
-                    }
-                  },
-                  "baseModel": {
-                    "$id": "249",
-                    "kind": "model",
-                    "name": "BaseItemAttributes",
-                    "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
-                    "crossLanguageDefinitionId": "ProvisioningTypeSpec.BaseItemAttributes",
-                    "usage": "Input,Output,Json",
-                    "doc": "Base attributes for items.",
-                    "decorators": [
-                      {
-                        "name": "Azure.ResourceManager.@armProviderNamespace",
-                        "arguments": {}
-                      }
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "BaseItemAttributes"
-                      }
-                    },
-                    "properties": [
-                      {
-                        "$id": "250",
-                        "kind": "property",
-                        "name": "enabled",
-                        "serializedName": "enabled",
-                        "doc": "Whether the item is enabled.",
-                        "type": {
-                          "$id": "251",
-                          "kind": "boolean",
-                          "name": "boolean",
-                          "crossLanguageDefinitionId": "TypeSpec.boolean",
-                          "decorators": []
-                        },
-                        "optional": true,
-                        "readOnly": false,
-                        "discriminator": false,
-                        "flatten": false,
-                        "decorators": [],
-                        "crossLanguageDefinitionId": "ProvisioningTypeSpec.BaseItemAttributes.enabled",
-                        "serializationOptions": {
-                          "json": {
-                            "name": "enabled"
-                          }
-                        },
-                        "isHttpMetadata": false
-                      },
-                      {
-                        "$id": "252",
-                        "kind": "property",
-                        "name": "created",
-                        "serializedName": "created",
-                        "doc": "The creation date.",
-                        "type": {
-                          "$id": "253",
-                          "kind": "utcDateTime",
-                          "name": "utcDateTime",
-                          "encode": "rfc3339",
-                          "wireType": {
-                            "$id": "254",
-                            "kind": "string",
-                            "name": "string",
-                            "crossLanguageDefinitionId": "TypeSpec.string",
-                            "decorators": []
-                          },
-                          "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
-                          "decorators": []
-                        },
-                        "optional": true,
-                        "readOnly": true,
-                        "discriminator": false,
-                        "flatten": false,
-                        "decorators": [],
-                        "crossLanguageDefinitionId": "ProvisioningTypeSpec.BaseItemAttributes.created",
-                        "serializationOptions": {
-                          "json": {
-                            "name": "created"
-                          }
-                        },
-                        "isHttpMetadata": false
-                      },
-                      {
-                        "$id": "255",
-                        "kind": "property",
-                        "name": "updated",
-                        "serializedName": "updated",
-                        "doc": "The last updated date.",
-                        "type": {
-                          "$id": "256",
-                          "kind": "utcDateTime",
-                          "name": "utcDateTime",
-                          "encode": "rfc3339",
-                          "wireType": {
-                            "$id": "257",
-                            "kind": "string",
-                            "name": "string",
-                            "crossLanguageDefinitionId": "TypeSpec.string",
-                            "decorators": []
-                          },
-                          "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
-                          "decorators": []
-                        },
-                        "optional": true,
-                        "readOnly": true,
-                        "discriminator": false,
-                        "flatten": false,
-                        "decorators": [],
-                        "crossLanguageDefinitionId": "ProvisioningTypeSpec.BaseItemAttributes.updated",
-                        "serializationOptions": {
-                          "json": {
-                            "name": "updated"
-                          }
-                        },
-                        "isHttpMetadata": false
-                      }
-                    ]
-                  },
-                  "properties": [
-                    {
-                      "$id": "258",
-                      "kind": "property",
-                      "name": "expires",
-                      "serializedName": "expires",
-                      "doc": "The expiry date.",
-                      "type": {
-                        "$id": "259",
-                        "kind": "utcDateTime",
-                        "name": "utcDateTime",
-                        "encode": "rfc3339",
-                        "wireType": {
-                          "$id": "260",
-                          "kind": "string",
-                          "name": "string",
-                          "crossLanguageDefinitionId": "TypeSpec.string",
-                          "decorators": []
-                        },
-                        "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
-                        "decorators": []
-                      },
-                      "optional": true,
-                      "readOnly": false,
-                      "discriminator": false,
-                      "flatten": false,
-                      "decorators": [],
-                      "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemAttributes.expires",
-                      "serializationOptions": {
-                        "json": {
-                          "name": "expires"
-                        }
-                      },
-                      "isHttpMetadata": false
-                    }
-                  ]
-                },
-                "optional": true,
-                "readOnly": false,
-                "discriminator": false,
-                "flatten": false,
-                "decorators": [],
-                "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemProperties.attributes",
-                "serializationOptions": {
-                  "json": {
-                    "name": "attributes"
-                  }
-                },
-                "isHttpMetadata": false
-              }
-            ]
+            "$ref": "200"
           },
           "optional": true,
           "readOnly": false,
           "discriminator": false,
-          "flatten": false,
-          "decorators": [],
+          "flatten": true,
+          "decorators": [
+            {
+              "name": "Azure.ResourceManager.@flattenProperty",
+              "arguments": {}
+            }
+          ],
           "crossLanguageDefinitionId": "ProvisioningTypeSpec.Item.properties",
           "serializationOptions": {
             "json": {
@@ -3574,13 +3610,13 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "261",
+          "$id": "262",
           "kind": "property",
           "name": "name",
           "serializedName": "name",
           "doc": "The name of the Item",
           "type": {
-            "$id": "262",
+            "$id": "263",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3607,7 +3643,7 @@
           "isHttpMetadata": true
         },
         {
-          "$id": "263",
+          "$id": "264",
           "kind": "property",
           "name": "tags",
           "serializedName": "tags",
@@ -3631,16 +3667,7 @@
       ]
     },
     {
-      "$ref": "242"
-    },
-    {
-      "$ref": "248"
-    },
-    {
-      "$ref": "249"
-    },
-    {
-      "$id": "264",
+      "$id": "265",
       "kind": "model",
       "name": "ItemCreateOrUpdateParameters",
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -3660,7 +3687,7 @@
       },
       "properties": [
         {
-          "$id": "265",
+          "$id": "266",
           "kind": "property",
           "name": "tags",
           "serializedName": "tags",
@@ -3682,13 +3709,13 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "266",
+          "$id": "267",
           "kind": "property",
           "name": "properties",
           "serializedName": "properties",
           "doc": "Properties of the item.",
           "type": {
-            "$ref": "242"
+            "$ref": "200"
           },
           "optional": false,
           "readOnly": false,
@@ -3706,7 +3733,7 @@
       ]
     },
     {
-      "$id": "267",
+      "$id": "268",
       "kind": "model",
       "name": "ItemListResult",
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -3726,17 +3753,17 @@
       },
       "properties": [
         {
-          "$id": "268",
+          "$id": "269",
           "kind": "property",
           "name": "value",
           "serializedName": "value",
           "doc": "The Item items on this page",
           "type": {
-            "$id": "269",
+            "$id": "270",
             "kind": "array",
             "name": "ArrayItem",
             "valueType": {
-              "$ref": "240"
+              "$ref": "260"
             },
             "crossLanguageDefinitionId": "TypeSpec.Array",
             "decorators": []
@@ -3755,18 +3782,18 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "270",
+          "$id": "271",
           "kind": "property",
           "name": "nextLink",
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {
-            "$id": "271",
+            "$id": "272",
             "kind": "url",
             "name": "ResourceLocation",
             "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
             "baseType": {
-              "$id": "272",
+              "$id": "273",
               "kind": "url",
               "name": "url",
               "crossLanguageDefinitionId": "TypeSpec.url",
@@ -3792,20 +3819,20 @@
   ],
   "clients": [
     {
-      "$id": "273",
+      "$id": "274",
       "kind": "client",
       "name": "ProvisioningTypeSpecClient",
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "methods": [],
       "parameters": [
         {
-          "$id": "274",
+          "$id": "275",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "275",
+            "$id": "276",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -3816,7 +3843,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "276",
+              "$id": "277",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3829,13 +3856,13 @@
           "crossLanguageDefinitionId": "ProvisioningTypeSpec.endpoint"
         },
         {
-          "$id": "277",
+          "$id": "278",
           "kind": "method",
           "name": "apiVersion",
           "serializedName": "apiVersion",
           "doc": "The API version to use for this operation.",
           "type": {
-            "$id": "278",
+            "$id": "279",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3845,7 +3872,7 @@
           "isApiVersion": true,
           "defaultValue": {
             "type": {
-              "$id": "279",
+              "$id": "280",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3885,7 +3912,7 @@
                 "resourceType": "ProvisioningTypeSpec/configurationStores",
                 "methods": [
                   {
-                    "$id": "280",
+                    "$id": "281",
                     "methodId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
@@ -3893,7 +3920,7 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}"
                   },
                   {
-                    "$id": "281",
+                    "$id": "282",
                     "methodId": "ProvisioningTypeSpec.ConfigurationStores.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
@@ -3901,7 +3928,7 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}"
                   },
                   {
-                    "$id": "282",
+                    "$id": "283",
                     "methodId": "ProvisioningTypeSpec.ConfigurationStores.update",
                     "kind": "Update",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
@@ -3909,7 +3936,7 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}"
                   },
                   {
-                    "$id": "283",
+                    "$id": "284",
                     "methodId": "ProvisioningTypeSpec.ConfigurationStores.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
@@ -3917,14 +3944,14 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}"
                   },
                   {
-                    "$id": "284",
+                    "$id": "285",
                     "methodId": "ProvisioningTypeSpec.ConfigurationStores.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores",
                     "operationScope": "ResourceGroup"
                   },
                   {
-                    "$id": "285",
+                    "$id": "286",
                     "methodId": "ProvisioningTypeSpec.ConfigurationStores.listBySubscription",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/providers/ProvisioningTypeSpec/configurationStores",
@@ -3962,7 +3989,7 @@
                 "resourceType": "ProvisioningTypeSpec/configurationStores/keyValues",
                 "methods": [
                   {
-                    "$id": "286",
+                    "$id": "287",
                     "methodId": "ProvisioningTypeSpec.KeyValues.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
@@ -3970,7 +3997,7 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}"
                   },
                   {
-                    "$id": "287",
+                    "$id": "288",
                     "methodId": "ProvisioningTypeSpec.KeyValues.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
@@ -3978,7 +4005,7 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}"
                   },
                   {
-                    "$id": "288",
+                    "$id": "289",
                     "methodId": "ProvisioningTypeSpec.KeyValues.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
@@ -3986,7 +4013,7 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}"
                   },
                   {
-                    "$id": "289",
+                    "$id": "290",
                     "methodId": "ProvisioningTypeSpec.KeyValues.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues",
@@ -4013,7 +4040,7 @@
                 "resourceType": "ProvisioningTypeSpec/configurationStores/items",
                 "methods": [
                   {
-                    "$id": "290",
+                    "$id": "291",
                     "methodId": "ProvisioningTypeSpec.Items.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}",
@@ -4021,7 +4048,7 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}"
                   },
                   {
-                    "$id": "291",
+                    "$id": "292",
                     "methodId": "ProvisioningTypeSpec.Items.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}",
@@ -4029,7 +4056,7 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}"
                   },
                   {
-                    "$id": "292",
+                    "$id": "293",
                     "methodId": "ProvisioningTypeSpec.Items.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items",
@@ -4069,13 +4096,13 @@
       ],
       "children": [
         {
-          "$id": "293",
+          "$id": "294",
           "kind": "client",
           "name": "Operations",
           "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "methods": [
             {
-              "$id": "294",
+              "$id": "295",
               "kind": "paging",
               "name": "list",
               "accessibility": "public",
@@ -4086,20 +4113,20 @@
               ],
               "doc": "List the operations for the provider",
               "operation": {
-                "$id": "295",
+                "$id": "296",
                 "name": "list",
                 "resourceName": "Operations",
                 "doc": "List the operations for the provider",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "296",
+                    "$id": "297",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "297",
+                      "$id": "298",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4109,7 +4136,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "298",
+                        "$id": "299",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4132,12 +4159,12 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "277"
+                        "$ref": "278"
                       }
                     ]
                   },
                   {
-                    "$id": "299",
+                    "$id": "300",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -4153,7 +4180,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.Operations.list.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "300",
+                        "$id": "301",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -4199,7 +4226,7 @@
               },
               "parameters": [
                 {
-                  "$ref": "300"
+                  "$ref": "301"
                 }
               ],
               "response": {
@@ -4230,13 +4257,13 @@
           ],
           "parameters": [
             {
-              "$id": "301",
+              "$id": "302",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "302",
+                "$id": "303",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -4247,7 +4274,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "303",
+                  "$id": "304",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4260,7 +4287,7 @@
               "crossLanguageDefinitionId": "ProvisioningTypeSpec.Operations.endpoint"
             },
             {
-              "$ref": "277"
+              "$ref": "278"
             }
           ],
           "initializedBy": 0,
@@ -4272,18 +4299,18 @@
             "2024-05-01"
           ],
           "parent": {
-            "$ref": "273"
+            "$ref": "274"
           },
           "isMultiServiceClient": false
         },
         {
-          "$id": "304",
+          "$id": "305",
           "kind": "client",
           "name": "ConfigurationStores",
           "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "methods": [
             {
-              "$id": "305",
+              "$id": "306",
               "kind": "lro",
               "name": "createOrUpdate",
               "accessibility": "public",
@@ -4294,20 +4321,20 @@
               ],
               "doc": "Create a ConfigurationStore",
               "operation": {
-                "$id": "306",
+                "$id": "307",
                 "name": "createOrUpdate",
                 "resourceName": "ConfigurationStore",
                 "doc": "Create a ConfigurationStore",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "307",
+                    "$id": "308",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "308",
+                      "$id": "309",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4317,7 +4344,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "309",
+                        "$id": "310",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4340,13 +4367,13 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "310",
+                        "$id": "311",
                         "kind": "method",
                         "name": "apiVersion",
                         "serializedName": "apiVersion",
                         "doc": "The API version to use for this operation.",
                         "type": {
-                          "$id": "311",
+                          "$id": "312",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4356,7 +4383,7 @@
                         "isApiVersion": true,
                         "defaultValue": {
                           "type": {
-                            "$id": "312",
+                            "$id": "313",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4382,18 +4409,18 @@
                     ]
                   },
                   {
-                    "$id": "313",
+                    "$id": "314",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "314",
+                      "$id": "315",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "315",
+                        "$id": "316",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4422,18 +4449,18 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "316",
+                        "$id": "317",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "317",
+                          "$id": "318",
                           "kind": "string",
                           "name": "uuid",
                           "crossLanguageDefinitionId": "Azure.Core.uuid",
                           "baseType": {
-                            "$id": "318",
+                            "$id": "319",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4462,13 +4489,13 @@
                     ]
                   },
                   {
-                    "$id": "319",
+                    "$id": "320",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "320",
+                      "$id": "321",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4509,13 +4536,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "321",
+                        "$id": "322",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "322",
+                          "$id": "323",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4556,13 +4583,13 @@
                     ]
                   },
                   {
-                    "$id": "323",
+                    "$id": "324",
                     "kind": "path",
                     "name": "configurationStoreName",
                     "serializedName": "configurationStoreName",
                     "doc": "The name of the ConfigurationStore",
                     "type": {
-                      "$id": "324",
+                      "$id": "325",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4587,13 +4614,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.configurationStoreName",
                     "methodParameterSegments": [
                       {
-                        "$id": "325",
+                        "$id": "326",
                         "kind": "method",
                         "name": "configurationStoreName",
                         "serializedName": "configurationStoreName",
                         "doc": "The name of the ConfigurationStore",
                         "type": {
-                          "$id": "326",
+                          "$id": "327",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4618,7 +4645,7 @@
                     ]
                   },
                   {
-                    "$id": "327",
+                    "$id": "328",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -4635,7 +4662,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "328",
+                        "$id": "329",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
@@ -4655,7 +4682,7 @@
                     ]
                   },
                   {
-                    "$id": "329",
+                    "$id": "330",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -4671,7 +4698,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "330",
+                        "$id": "331",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -4690,7 +4717,7 @@
                     ]
                   },
                   {
-                    "$id": "331",
+                    "$id": "332",
                     "kind": "body",
                     "name": "resource",
                     "serializedName": "resource",
@@ -4710,7 +4737,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.resource",
                     "methodParameterSegments": [
                       {
-                        "$id": "332",
+                        "$id": "333",
                         "kind": "method",
                         "name": "resource",
                         "serializedName": "resource",
@@ -4757,7 +4784,7 @@
                         "nameInResponse": "Azure-AsyncOperation",
                         "doc": "A link to the status monitor",
                         "type": {
-                          "$id": "333",
+                          "$id": "334",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4769,7 +4796,7 @@
                         "nameInResponse": "Retry-After",
                         "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                         "type": {
-                          "$id": "334",
+                          "$id": "335",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -4803,27 +4830,27 @@
               },
               "parameters": [
                 {
-                  "$ref": "321"
+                  "$ref": "322"
                 },
                 {
-                  "$ref": "325"
+                  "$ref": "326"
                 },
                 {
-                  "$ref": "332"
+                  "$ref": "333"
                 },
                 {
-                  "$ref": "328"
+                  "$ref": "329"
                 },
                 {
-                  "$ref": "330"
+                  "$ref": "331"
                 },
                 {
-                  "$id": "335",
+                  "$id": "336",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "314"
+                    "$ref": "315"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -4856,7 +4883,7 @@
               }
             },
             {
-              "$id": "336",
+              "$id": "337",
               "kind": "basic",
               "name": "get",
               "accessibility": "public",
@@ -4867,20 +4894,20 @@
               ],
               "doc": "Get a ConfigurationStore",
               "operation": {
-                "$id": "337",
+                "$id": "338",
                 "name": "get",
                 "resourceName": "ConfigurationStore",
                 "doc": "Get a ConfigurationStore",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "338",
+                    "$id": "339",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "339",
+                      "$id": "340",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4890,7 +4917,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "340",
+                        "$id": "341",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4913,23 +4940,23 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "310"
+                        "$ref": "311"
                       }
                     ]
                   },
                   {
-                    "$id": "341",
+                    "$id": "342",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "342",
+                      "$id": "343",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "343",
+                        "$id": "344",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4958,18 +4985,18 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.get.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "316"
+                        "$ref": "317"
                       }
                     ]
                   },
                   {
-                    "$id": "344",
+                    "$id": "345",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "345",
+                      "$id": "346",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5010,13 +5037,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.get.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "346",
+                        "$id": "347",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "347",
+                          "$id": "348",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5057,13 +5084,13 @@
                     ]
                   },
                   {
-                    "$id": "348",
+                    "$id": "349",
                     "kind": "path",
                     "name": "configurationStoreName",
                     "serializedName": "configurationStoreName",
                     "doc": "The name of the ConfigurationStore",
                     "type": {
-                      "$id": "349",
+                      "$id": "350",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5088,13 +5115,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.get.configurationStoreName",
                     "methodParameterSegments": [
                       {
-                        "$id": "350",
+                        "$id": "351",
                         "kind": "method",
                         "name": "configurationStoreName",
                         "serializedName": "configurationStoreName",
                         "doc": "The name of the ConfigurationStore",
                         "type": {
-                          "$id": "351",
+                          "$id": "352",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5119,7 +5146,7 @@
                     ]
                   },
                   {
-                    "$id": "352",
+                    "$id": "353",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -5135,7 +5162,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.get.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "353",
+                        "$id": "354",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -5186,21 +5213,21 @@
               },
               "parameters": [
                 {
-                  "$ref": "346"
+                  "$ref": "347"
                 },
                 {
-                  "$ref": "350"
+                  "$ref": "351"
                 },
                 {
-                  "$ref": "353"
+                  "$ref": "354"
                 },
                 {
-                  "$id": "354",
+                  "$id": "355",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "342"
+                    "$ref": "343"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -5222,7 +5249,7 @@
               "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.get"
             },
             {
-              "$id": "355",
+              "$id": "356",
               "kind": "lro",
               "name": "update",
               "accessibility": "public",
@@ -5233,20 +5260,20 @@
               ],
               "doc": "Update a ConfigurationStore",
               "operation": {
-                "$id": "356",
+                "$id": "357",
                 "name": "update",
                 "resourceName": "ConfigurationStore",
                 "doc": "Update a ConfigurationStore",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "357",
+                    "$id": "358",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "358",
+                      "$id": "359",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5256,7 +5283,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "359",
+                        "$id": "360",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -5279,23 +5306,23 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "310"
+                        "$ref": "311"
                       }
                     ]
                   },
                   {
-                    "$id": "360",
+                    "$id": "361",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "361",
+                      "$id": "362",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "362",
+                        "$id": "363",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5324,18 +5351,18 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "316"
+                        "$ref": "317"
                       }
                     ]
                   },
                   {
-                    "$id": "363",
+                    "$id": "364",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "364",
+                      "$id": "365",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5376,13 +5403,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "365",
+                        "$id": "366",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "366",
+                          "$id": "367",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5423,13 +5450,13 @@
                     ]
                   },
                   {
-                    "$id": "367",
+                    "$id": "368",
                     "kind": "path",
                     "name": "configurationStoreName",
                     "serializedName": "configurationStoreName",
                     "doc": "The name of the ConfigurationStore",
                     "type": {
-                      "$id": "368",
+                      "$id": "369",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5454,13 +5481,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.configurationStoreName",
                     "methodParameterSegments": [
                       {
-                        "$id": "369",
+                        "$id": "370",
                         "kind": "method",
                         "name": "configurationStoreName",
                         "serializedName": "configurationStoreName",
                         "doc": "The name of the ConfigurationStore",
                         "type": {
-                          "$id": "370",
+                          "$id": "371",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5485,7 +5512,7 @@
                     ]
                   },
                   {
-                    "$id": "371",
+                    "$id": "372",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -5502,7 +5529,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "372",
+                        "$id": "373",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
@@ -5522,7 +5549,7 @@
                     ]
                   },
                   {
-                    "$id": "373",
+                    "$id": "374",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -5538,7 +5565,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "374",
+                        "$id": "375",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -5557,7 +5584,7 @@
                     ]
                   },
                   {
-                    "$id": "375",
+                    "$id": "376",
                     "kind": "body",
                     "name": "properties",
                     "serializedName": "properties",
@@ -5577,7 +5604,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.properties",
                     "methodParameterSegments": [
                       {
-                        "$id": "376",
+                        "$id": "377",
                         "kind": "method",
                         "name": "properties",
                         "serializedName": "properties",
@@ -5621,7 +5648,7 @@
                         "nameInResponse": "Location",
                         "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
                         "type": {
-                          "$id": "377",
+                          "$id": "378",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5633,7 +5660,7 @@
                         "nameInResponse": "Retry-After",
                         "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                         "type": {
-                          "$id": "378",
+                          "$id": "379",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -5664,27 +5691,27 @@
               },
               "parameters": [
                 {
-                  "$ref": "365"
+                  "$ref": "366"
                 },
                 {
-                  "$ref": "369"
+                  "$ref": "370"
                 },
                 {
-                  "$ref": "376"
+                  "$ref": "377"
                 },
                 {
-                  "$ref": "372"
+                  "$ref": "373"
                 },
                 {
-                  "$ref": "374"
+                  "$ref": "375"
                 },
                 {
-                  "$id": "379",
+                  "$id": "380",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "361"
+                    "$ref": "362"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -5717,7 +5744,7 @@
               }
             },
             {
-              "$id": "380",
+              "$id": "381",
               "kind": "lro",
               "name": "delete",
               "accessibility": "public",
@@ -5728,20 +5755,20 @@
               ],
               "doc": "Delete a ConfigurationStore",
               "operation": {
-                "$id": "381",
+                "$id": "382",
                 "name": "delete",
                 "resourceName": "ConfigurationStore",
                 "doc": "Delete a ConfigurationStore",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "382",
+                    "$id": "383",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "383",
+                      "$id": "384",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5751,7 +5778,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "384",
+                        "$id": "385",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -5774,23 +5801,23 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "310"
+                        "$ref": "311"
                       }
                     ]
                   },
                   {
-                    "$id": "385",
+                    "$id": "386",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "386",
+                      "$id": "387",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "387",
+                        "$id": "388",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5819,18 +5846,18 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.delete.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "316"
+                        "$ref": "317"
                       }
                     ]
                   },
                   {
-                    "$id": "388",
+                    "$id": "389",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "389",
+                      "$id": "390",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5871,13 +5898,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.delete.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "390",
+                        "$id": "391",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "391",
+                          "$id": "392",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5918,13 +5945,13 @@
                     ]
                   },
                   {
-                    "$id": "392",
+                    "$id": "393",
                     "kind": "path",
                     "name": "configurationStoreName",
                     "serializedName": "configurationStoreName",
                     "doc": "The name of the ConfigurationStore",
                     "type": {
-                      "$id": "393",
+                      "$id": "394",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5949,13 +5976,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.delete.configurationStoreName",
                     "methodParameterSegments": [
                       {
-                        "$id": "394",
+                        "$id": "395",
                         "kind": "method",
                         "name": "configurationStoreName",
                         "serializedName": "configurationStoreName",
                         "doc": "The name of the ConfigurationStore",
                         "type": {
-                          "$id": "395",
+                          "$id": "396",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5991,7 +6018,7 @@
                         "nameInResponse": "Location",
                         "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
                         "type": {
-                          "$id": "396",
+                          "$id": "397",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6003,7 +6030,7 @@
                         "nameInResponse": "Retry-After",
                         "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                         "type": {
-                          "$id": "397",
+                          "$id": "398",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -6038,18 +6065,18 @@
               },
               "parameters": [
                 {
-                  "$ref": "390"
+                  "$ref": "391"
                 },
                 {
-                  "$ref": "394"
+                  "$ref": "395"
                 },
                 {
-                  "$id": "398",
+                  "$id": "399",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "386"
+                    "$ref": "387"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -6075,7 +6102,7 @@
               }
             },
             {
-              "$id": "399",
+              "$id": "400",
               "kind": "paging",
               "name": "list",
               "accessibility": "public",
@@ -6086,20 +6113,20 @@
               ],
               "doc": "List ConfigurationStore resources by resource group",
               "operation": {
-                "$id": "400",
+                "$id": "401",
                 "name": "list",
                 "resourceName": "ConfigurationStore",
                 "doc": "List ConfigurationStore resources by resource group",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "401",
+                    "$id": "402",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "402",
+                      "$id": "403",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6109,7 +6136,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "403",
+                        "$id": "404",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -6132,23 +6159,23 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "310"
+                        "$ref": "311"
                       }
                     ]
                   },
                   {
-                    "$id": "404",
+                    "$id": "405",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "405",
+                      "$id": "406",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "406",
+                        "$id": "407",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6177,18 +6204,18 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.list.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "316"
+                        "$ref": "317"
                       }
                     ]
                   },
                   {
-                    "$id": "407",
+                    "$id": "408",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "408",
+                      "$id": "409",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6229,13 +6256,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.list.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "409",
+                        "$id": "410",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "410",
+                          "$id": "411",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6276,7 +6303,7 @@
                     ]
                   },
                   {
-                    "$id": "411",
+                    "$id": "412",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -6292,7 +6319,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.list.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "412",
+                        "$id": "413",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -6317,7 +6344,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "218"
+                      "$ref": "238"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -6343,18 +6370,18 @@
               },
               "parameters": [
                 {
-                  "$ref": "409"
+                  "$ref": "410"
                 },
                 {
-                  "$ref": "412"
+                  "$ref": "413"
                 },
                 {
-                  "$id": "413",
+                  "$id": "414",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "405"
+                    "$ref": "406"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -6367,7 +6394,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "220"
+                  "$ref": "240"
                 },
                 "resultSegments": [
                   "value"
@@ -6391,7 +6418,7 @@
               }
             },
             {
-              "$id": "414",
+              "$id": "415",
               "kind": "paging",
               "name": "listBySubscription",
               "accessibility": "public",
@@ -6402,20 +6429,20 @@
               ],
               "doc": "List ConfigurationStore resources by subscription ID",
               "operation": {
-                "$id": "415",
+                "$id": "416",
                 "name": "listBySubscription",
                 "resourceName": "ConfigurationStore",
                 "doc": "List ConfigurationStore resources by subscription ID",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "416",
+                    "$id": "417",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "417",
+                      "$id": "418",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6425,7 +6452,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "418",
+                        "$id": "419",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -6448,23 +6475,23 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "310"
+                        "$ref": "311"
                       }
                     ]
                   },
                   {
-                    "$id": "419",
+                    "$id": "420",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "420",
+                      "$id": "421",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "421",
+                        "$id": "422",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6493,12 +6520,12 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.listBySubscription.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "316"
+                        "$ref": "317"
                       }
                     ]
                   },
                   {
-                    "$id": "422",
+                    "$id": "423",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -6514,7 +6541,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.listBySubscription.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "423",
+                        "$id": "424",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -6539,7 +6566,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "218"
+                      "$ref": "238"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -6565,15 +6592,15 @@
               },
               "parameters": [
                 {
-                  "$ref": "423"
+                  "$ref": "424"
                 },
                 {
-                  "$id": "424",
+                  "$id": "425",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "420"
+                    "$ref": "421"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -6586,7 +6613,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "220"
+                  "$ref": "240"
                 },
                 "resultSegments": [
                   "value"
@@ -6612,13 +6639,13 @@
           ],
           "parameters": [
             {
-              "$id": "425",
+              "$id": "426",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "426",
+                "$id": "427",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -6629,7 +6656,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "427",
+                  "$id": "428",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -6642,7 +6669,7 @@
               "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.endpoint"
             },
             {
-              "$ref": "310"
+              "$ref": "311"
             }
           ],
           "initializedBy": 0,
@@ -6659,18 +6686,18 @@
             "2024-05-01"
           ],
           "parent": {
-            "$ref": "273"
+            "$ref": "274"
           },
           "isMultiServiceClient": false
         },
         {
-          "$id": "428",
+          "$id": "429",
           "kind": "client",
           "name": "KeyValues",
           "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "methods": [
             {
-              "$id": "429",
+              "$id": "430",
               "kind": "basic",
               "name": "createOrUpdate",
               "accessibility": "public",
@@ -6681,20 +6708,20 @@
               ],
               "doc": "Create a KeyValue",
               "operation": {
-                "$id": "430",
+                "$id": "431",
                 "name": "createOrUpdate",
                 "resourceName": "KeyValue",
                 "doc": "Create a KeyValue",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "431",
+                    "$id": "432",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "432",
+                      "$id": "433",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6704,7 +6731,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "433",
+                        "$id": "434",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -6727,13 +6754,13 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "434",
+                        "$id": "435",
                         "kind": "method",
                         "name": "apiVersion",
                         "serializedName": "apiVersion",
                         "doc": "The API version to use for this operation.",
                         "type": {
-                          "$id": "435",
+                          "$id": "436",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6743,7 +6770,7 @@
                         "isApiVersion": true,
                         "defaultValue": {
                           "type": {
-                            "$id": "436",
+                            "$id": "437",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -6769,18 +6796,18 @@
                     ]
                   },
                   {
-                    "$id": "437",
+                    "$id": "438",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "438",
+                      "$id": "439",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "439",
+                        "$id": "440",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6809,18 +6836,18 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "440",
+                        "$id": "441",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "441",
+                          "$id": "442",
                           "kind": "string",
                           "name": "uuid",
                           "crossLanguageDefinitionId": "Azure.Core.uuid",
                           "baseType": {
-                            "$id": "442",
+                            "$id": "443",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6849,13 +6876,13 @@
                     ]
                   },
                   {
-                    "$id": "443",
+                    "$id": "444",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "444",
+                      "$id": "445",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6896,13 +6923,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "445",
+                        "$id": "446",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "446",
+                          "$id": "447",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6943,13 +6970,13 @@
                     ]
                   },
                   {
-                    "$id": "447",
+                    "$id": "448",
                     "kind": "path",
                     "name": "configurationStoreName",
                     "serializedName": "configurationStoreName",
                     "doc": "The name of the ConfigurationStore",
                     "type": {
-                      "$id": "448",
+                      "$id": "449",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6974,13 +7001,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.configurationStoreName",
                     "methodParameterSegments": [
                       {
-                        "$id": "449",
+                        "$id": "450",
                         "kind": "method",
                         "name": "configurationStoreName",
                         "serializedName": "configurationStoreName",
                         "doc": "The name of the ConfigurationStore",
                         "type": {
-                          "$id": "450",
+                          "$id": "451",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7005,13 +7032,13 @@
                     ]
                   },
                   {
-                    "$id": "451",
+                    "$id": "452",
                     "kind": "path",
                     "name": "keyValueName",
                     "serializedName": "keyValueName",
                     "doc": "The name of the KeyValue",
                     "type": {
-                      "$id": "452",
+                      "$id": "453",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7036,13 +7063,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.keyValueName",
                     "methodParameterSegments": [
                       {
-                        "$id": "453",
+                        "$id": "454",
                         "kind": "method",
                         "name": "keyValueName",
                         "serializedName": "keyValueName",
                         "doc": "The name of the KeyValue",
                         "type": {
-                          "$id": "454",
+                          "$id": "455",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7067,7 +7094,7 @@
                     ]
                   },
                   {
-                    "$id": "455",
+                    "$id": "456",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -7084,7 +7111,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "456",
+                        "$id": "457",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
@@ -7104,7 +7131,7 @@
                     ]
                   },
                   {
-                    "$id": "457",
+                    "$id": "458",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -7120,7 +7147,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "458",
+                        "$id": "459",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -7139,13 +7166,13 @@
                     ]
                   },
                   {
-                    "$id": "459",
+                    "$id": "460",
                     "kind": "body",
                     "name": "resource",
                     "serializedName": "resource",
                     "doc": "Resource create parameters.",
                     "type": {
-                      "$ref": "224"
+                      "$ref": "244"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -7159,13 +7186,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.resource",
                     "methodParameterSegments": [
                       {
-                        "$id": "460",
+                        "$id": "461",
                         "kind": "method",
                         "name": "resource",
                         "serializedName": "resource",
                         "doc": "Resource create parameters.",
                         "type": {
-                          "$ref": "224"
+                          "$ref": "244"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -7185,7 +7212,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "224"
+                      "$ref": "244"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -7214,30 +7241,30 @@
               },
               "parameters": [
                 {
-                  "$ref": "445"
+                  "$ref": "446"
                 },
                 {
-                  "$ref": "449"
+                  "$ref": "450"
                 },
                 {
-                  "$ref": "453"
+                  "$ref": "454"
                 },
                 {
-                  "$ref": "460"
+                  "$ref": "461"
                 },
                 {
-                  "$ref": "456"
+                  "$ref": "457"
                 },
                 {
-                  "$ref": "458"
+                  "$ref": "459"
                 },
                 {
-                  "$id": "461",
+                  "$id": "462",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "438"
+                    "$ref": "439"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -7250,7 +7277,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "224"
+                  "$ref": "244"
                 }
               },
               "isOverride": false,
@@ -7259,7 +7286,7 @@
               "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate"
             },
             {
-              "$id": "462",
+              "$id": "463",
               "kind": "basic",
               "name": "get",
               "accessibility": "public",
@@ -7270,20 +7297,20 @@
               ],
               "doc": "Get a KeyValue",
               "operation": {
-                "$id": "463",
+                "$id": "464",
                 "name": "get",
                 "resourceName": "KeyValue",
                 "doc": "Get a KeyValue",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "464",
+                    "$id": "465",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "465",
+                      "$id": "466",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7293,7 +7320,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "466",
+                        "$id": "467",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -7316,23 +7343,23 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "434"
+                        "$ref": "435"
                       }
                     ]
                   },
                   {
-                    "$id": "467",
+                    "$id": "468",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "468",
+                      "$id": "469",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "469",
+                        "$id": "470",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7361,18 +7388,18 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "440"
+                        "$ref": "441"
                       }
                     ]
                   },
                   {
-                    "$id": "470",
+                    "$id": "471",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "471",
+                      "$id": "472",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7413,13 +7440,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "472",
+                        "$id": "473",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "473",
+                          "$id": "474",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7460,13 +7487,13 @@
                     ]
                   },
                   {
-                    "$id": "474",
+                    "$id": "475",
                     "kind": "path",
                     "name": "configurationStoreName",
                     "serializedName": "configurationStoreName",
                     "doc": "The name of the ConfigurationStore",
                     "type": {
-                      "$id": "475",
+                      "$id": "476",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7491,13 +7518,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get.configurationStoreName",
                     "methodParameterSegments": [
                       {
-                        "$id": "476",
+                        "$id": "477",
                         "kind": "method",
                         "name": "configurationStoreName",
                         "serializedName": "configurationStoreName",
                         "doc": "The name of the ConfigurationStore",
                         "type": {
-                          "$id": "477",
+                          "$id": "478",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7522,13 +7549,13 @@
                     ]
                   },
                   {
-                    "$id": "478",
+                    "$id": "479",
                     "kind": "path",
                     "name": "keyValueName",
                     "serializedName": "keyValueName",
                     "doc": "The name of the KeyValue",
                     "type": {
-                      "$id": "479",
+                      "$id": "480",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7553,13 +7580,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get.keyValueName",
                     "methodParameterSegments": [
                       {
-                        "$id": "480",
+                        "$id": "481",
                         "kind": "method",
                         "name": "keyValueName",
                         "serializedName": "keyValueName",
                         "doc": "The name of the KeyValue",
                         "type": {
-                          "$id": "481",
+                          "$id": "482",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7584,7 +7611,7 @@
                     ]
                   },
                   {
-                    "$id": "482",
+                    "$id": "483",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -7600,7 +7627,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "483",
+                        "$id": "484",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -7625,7 +7652,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "224"
+                      "$ref": "244"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -7651,24 +7678,24 @@
               },
               "parameters": [
                 {
-                  "$ref": "472"
+                  "$ref": "473"
                 },
                 {
-                  "$ref": "476"
+                  "$ref": "477"
                 },
                 {
-                  "$ref": "480"
+                  "$ref": "481"
                 },
                 {
-                  "$ref": "483"
+                  "$ref": "484"
                 },
                 {
-                  "$id": "484",
+                  "$id": "485",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "468"
+                    "$ref": "469"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -7681,7 +7708,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "224"
+                  "$ref": "244"
                 }
               },
               "isOverride": false,
@@ -7690,7 +7717,7 @@
               "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get"
             },
             {
-              "$id": "485",
+              "$id": "486",
               "kind": "basic",
               "name": "delete",
               "accessibility": "public",
@@ -7701,20 +7728,20 @@
               ],
               "doc": "Delete a KeyValue",
               "operation": {
-                "$id": "486",
+                "$id": "487",
                 "name": "delete",
                 "resourceName": "KeyValue",
                 "doc": "Delete a KeyValue",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "487",
+                    "$id": "488",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "488",
+                      "$id": "489",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7724,7 +7751,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "489",
+                        "$id": "490",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -7747,23 +7774,23 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "434"
+                        "$ref": "435"
                       }
                     ]
                   },
                   {
-                    "$id": "490",
+                    "$id": "491",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "491",
+                      "$id": "492",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "492",
+                        "$id": "493",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7792,18 +7819,18 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.delete.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "440"
+                        "$ref": "441"
                       }
                     ]
                   },
                   {
-                    "$id": "493",
+                    "$id": "494",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "494",
+                      "$id": "495",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7844,13 +7871,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.delete.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "495",
+                        "$id": "496",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "496",
+                          "$id": "497",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7891,13 +7918,13 @@
                     ]
                   },
                   {
-                    "$id": "497",
+                    "$id": "498",
                     "kind": "path",
                     "name": "configurationStoreName",
                     "serializedName": "configurationStoreName",
                     "doc": "The name of the ConfigurationStore",
                     "type": {
-                      "$id": "498",
+                      "$id": "499",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7922,13 +7949,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.delete.configurationStoreName",
                     "methodParameterSegments": [
                       {
-                        "$id": "499",
+                        "$id": "500",
                         "kind": "method",
                         "name": "configurationStoreName",
                         "serializedName": "configurationStoreName",
                         "doc": "The name of the ConfigurationStore",
                         "type": {
-                          "$id": "500",
+                          "$id": "501",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7953,13 +7980,13 @@
                     ]
                   },
                   {
-                    "$id": "501",
+                    "$id": "502",
                     "kind": "path",
                     "name": "keyValueName",
                     "serializedName": "keyValueName",
                     "doc": "The name of the KeyValue",
                     "type": {
-                      "$id": "502",
+                      "$id": "503",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7984,13 +8011,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.delete.keyValueName",
                     "methodParameterSegments": [
                       {
-                        "$id": "503",
+                        "$id": "504",
                         "kind": "method",
                         "name": "keyValueName",
                         "serializedName": "keyValueName",
                         "doc": "The name of the KeyValue",
                         "type": {
-                          "$id": "504",
+                          "$id": "505",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8048,21 +8075,21 @@
               },
               "parameters": [
                 {
-                  "$ref": "495"
+                  "$ref": "496"
                 },
                 {
-                  "$ref": "499"
+                  "$ref": "500"
                 },
                 {
-                  "$ref": "503"
+                  "$ref": "504"
                 },
                 {
-                  "$id": "505",
+                  "$id": "506",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "491"
+                    "$ref": "492"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -8080,7 +8107,7 @@
               "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.delete"
             },
             {
-              "$id": "506",
+              "$id": "507",
               "kind": "paging",
               "name": "list",
               "accessibility": "public",
@@ -8091,20 +8118,20 @@
               ],
               "doc": "List KeyValue resources by ConfigurationStore",
               "operation": {
-                "$id": "507",
+                "$id": "508",
                 "name": "list",
                 "resourceName": "KeyValue",
                 "doc": "List KeyValue resources by ConfigurationStore",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "508",
+                    "$id": "509",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "509",
+                      "$id": "510",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8114,7 +8141,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "510",
+                        "$id": "511",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -8137,23 +8164,23 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "434"
+                        "$ref": "435"
                       }
                     ]
                   },
                   {
-                    "$id": "511",
+                    "$id": "512",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "512",
+                      "$id": "513",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "513",
+                        "$id": "514",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8182,18 +8209,18 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.list.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "440"
+                        "$ref": "441"
                       }
                     ]
                   },
                   {
-                    "$id": "514",
+                    "$id": "515",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "515",
+                      "$id": "516",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8234,13 +8261,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.list.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "516",
+                        "$id": "517",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "517",
+                          "$id": "518",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8281,13 +8308,13 @@
                     ]
                   },
                   {
-                    "$id": "518",
+                    "$id": "519",
                     "kind": "path",
                     "name": "configurationStoreName",
                     "serializedName": "configurationStoreName",
                     "doc": "The name of the ConfigurationStore",
                     "type": {
-                      "$id": "519",
+                      "$id": "520",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8312,13 +8339,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.list.configurationStoreName",
                     "methodParameterSegments": [
                       {
-                        "$id": "520",
+                        "$id": "521",
                         "kind": "method",
                         "name": "configurationStoreName",
                         "serializedName": "configurationStoreName",
                         "doc": "The name of the ConfigurationStore",
                         "type": {
-                          "$id": "521",
+                          "$id": "522",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8343,7 +8370,7 @@
                     ]
                   },
                   {
-                    "$id": "522",
+                    "$id": "523",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -8359,7 +8386,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.list.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "523",
+                        "$id": "524",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -8384,7 +8411,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "234"
+                      "$ref": "254"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -8410,21 +8437,21 @@
               },
               "parameters": [
                 {
-                  "$ref": "516"
+                  "$ref": "517"
                 },
                 {
-                  "$ref": "520"
+                  "$ref": "521"
                 },
                 {
-                  "$ref": "523"
+                  "$ref": "524"
                 },
                 {
-                  "$id": "524",
+                  "$id": "525",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "512"
+                    "$ref": "513"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -8437,7 +8464,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "236"
+                  "$ref": "256"
                 },
                 "resultSegments": [
                   "value"
@@ -8463,13 +8490,13 @@
           ],
           "parameters": [
             {
-              "$id": "525",
+              "$id": "526",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "526",
+                "$id": "527",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -8480,7 +8507,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "527",
+                  "$id": "528",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -8493,7 +8520,7 @@
               "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.endpoint"
             },
             {
-              "$ref": "434"
+              "$ref": "435"
             }
           ],
           "initializedBy": 0,
@@ -8510,18 +8537,18 @@
             "2024-05-01"
           ],
           "parent": {
-            "$ref": "273"
+            "$ref": "274"
           },
           "isMultiServiceClient": false
         },
         {
-          "$id": "528",
+          "$id": "529",
           "kind": "client",
           "name": "Items",
           "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "methods": [
             {
-              "$id": "529",
+              "$id": "530",
               "kind": "basic",
               "name": "get",
               "accessibility": "public",
@@ -8532,20 +8559,20 @@
               ],
               "doc": "Get a Item",
               "operation": {
-                "$id": "530",
+                "$id": "531",
                 "name": "get",
                 "resourceName": "Item",
                 "doc": "Get a Item",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "531",
+                    "$id": "532",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "532",
+                      "$id": "533",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8555,7 +8582,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "533",
+                        "$id": "534",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -8578,13 +8605,13 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "534",
+                        "$id": "535",
                         "kind": "method",
                         "name": "apiVersion",
                         "serializedName": "apiVersion",
                         "doc": "The API version to use for this operation.",
                         "type": {
-                          "$id": "535",
+                          "$id": "536",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8594,7 +8621,7 @@
                         "isApiVersion": true,
                         "defaultValue": {
                           "type": {
-                            "$id": "536",
+                            "$id": "537",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -8620,18 +8647,18 @@
                     ]
                   },
                   {
-                    "$id": "537",
+                    "$id": "538",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "538",
+                      "$id": "539",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "539",
+                        "$id": "540",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8660,18 +8687,18 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.get.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "540",
+                        "$id": "541",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "541",
+                          "$id": "542",
                           "kind": "string",
                           "name": "uuid",
                           "crossLanguageDefinitionId": "Azure.Core.uuid",
                           "baseType": {
-                            "$id": "542",
+                            "$id": "543",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8700,13 +8727,13 @@
                     ]
                   },
                   {
-                    "$id": "543",
+                    "$id": "544",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "544",
+                      "$id": "545",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8747,13 +8774,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.get.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "545",
+                        "$id": "546",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "546",
+                          "$id": "547",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8794,13 +8821,13 @@
                     ]
                   },
                   {
-                    "$id": "547",
+                    "$id": "548",
                     "kind": "path",
                     "name": "configurationStoreName",
                     "serializedName": "configurationStoreName",
                     "doc": "The name of the ConfigurationStore",
                     "type": {
-                      "$id": "548",
+                      "$id": "549",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8825,13 +8852,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.get.configurationStoreName",
                     "methodParameterSegments": [
                       {
-                        "$id": "549",
+                        "$id": "550",
                         "kind": "method",
                         "name": "configurationStoreName",
                         "serializedName": "configurationStoreName",
                         "doc": "The name of the ConfigurationStore",
                         "type": {
-                          "$id": "550",
+                          "$id": "551",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8856,13 +8883,13 @@
                     ]
                   },
                   {
-                    "$id": "551",
+                    "$id": "552",
                     "kind": "path",
                     "name": "itemName",
                     "serializedName": "itemName",
                     "doc": "The name of the Item",
                     "type": {
-                      "$id": "552",
+                      "$id": "553",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8887,13 +8914,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.get.itemName",
                     "methodParameterSegments": [
                       {
-                        "$id": "553",
+                        "$id": "554",
                         "kind": "method",
                         "name": "itemName",
                         "serializedName": "itemName",
                         "doc": "The name of the Item",
                         "type": {
-                          "$id": "554",
+                          "$id": "555",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8918,7 +8945,7 @@
                     ]
                   },
                   {
-                    "$id": "555",
+                    "$id": "556",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -8934,7 +8961,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.get.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "556",
+                        "$id": "557",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -8959,7 +8986,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "240"
+                      "$ref": "260"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -8985,24 +9012,24 @@
               },
               "parameters": [
                 {
-                  "$ref": "545"
+                  "$ref": "546"
                 },
                 {
-                  "$ref": "549"
+                  "$ref": "550"
                 },
                 {
-                  "$ref": "553"
+                  "$ref": "554"
                 },
                 {
-                  "$ref": "556"
+                  "$ref": "557"
                 },
                 {
-                  "$id": "557",
+                  "$id": "558",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "538"
+                    "$ref": "539"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -9015,7 +9042,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "240"
+                  "$ref": "260"
                 }
               },
               "isOverride": false,
@@ -9024,7 +9051,7 @@
               "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.get"
             },
             {
-              "$id": "558",
+              "$id": "559",
               "kind": "basic",
               "name": "createOrUpdate",
               "accessibility": "public",
@@ -9034,19 +9061,19 @@
                 "2024-05-01"
               ],
               "operation": {
-                "$id": "559",
+                "$id": "560",
                 "name": "createOrUpdate",
                 "resourceName": "Item",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "560",
+                    "$id": "561",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "561",
+                      "$id": "562",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9056,7 +9083,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "562",
+                        "$id": "563",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -9079,23 +9106,23 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "534"
+                        "$ref": "535"
                       }
                     ]
                   },
                   {
-                    "$id": "563",
+                    "$id": "564",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "564",
+                      "$id": "565",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "565",
+                        "$id": "566",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9124,18 +9151,18 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.createOrUpdate.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "540"
+                        "$ref": "541"
                       }
                     ]
                   },
                   {
-                    "$id": "566",
+                    "$id": "567",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "567",
+                      "$id": "568",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9176,13 +9203,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.createOrUpdate.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "568",
+                        "$id": "569",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "569",
+                          "$id": "570",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9223,13 +9250,13 @@
                     ]
                   },
                   {
-                    "$id": "570",
+                    "$id": "571",
                     "kind": "path",
                     "name": "configurationStoreName",
                     "serializedName": "configurationStoreName",
                     "doc": "The name of the ConfigurationStore",
                     "type": {
-                      "$id": "571",
+                      "$id": "572",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9254,13 +9281,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.createOrUpdate.configurationStoreName",
                     "methodParameterSegments": [
                       {
-                        "$id": "572",
+                        "$id": "573",
                         "kind": "method",
                         "name": "configurationStoreName",
                         "serializedName": "configurationStoreName",
                         "doc": "The name of the ConfigurationStore",
                         "type": {
-                          "$id": "573",
+                          "$id": "574",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9285,13 +9312,13 @@
                     ]
                   },
                   {
-                    "$id": "574",
+                    "$id": "575",
                     "kind": "path",
                     "name": "itemName",
                     "serializedName": "itemName",
                     "doc": "The name of the Item",
                     "type": {
-                      "$id": "575",
+                      "$id": "576",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9316,13 +9343,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.createOrUpdate.itemName",
                     "methodParameterSegments": [
                       {
-                        "$id": "576",
+                        "$id": "577",
                         "kind": "method",
                         "name": "itemName",
                         "serializedName": "itemName",
                         "doc": "The name of the Item",
                         "type": {
-                          "$id": "577",
+                          "$id": "578",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9347,7 +9374,7 @@
                     ]
                   },
                   {
-                    "$id": "578",
+                    "$id": "579",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -9364,7 +9391,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.createOrUpdate.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "579",
+                        "$id": "580",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
@@ -9384,7 +9411,7 @@
                     ]
                   },
                   {
-                    "$id": "580",
+                    "$id": "581",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -9400,7 +9427,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.createOrUpdate.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "581",
+                        "$id": "582",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -9419,13 +9446,13 @@
                     ]
                   },
                   {
-                    "$id": "582",
+                    "$id": "583",
                     "kind": "body",
                     "name": "resource",
                     "serializedName": "resource",
                     "doc": "Resource create parameters.",
                     "type": {
-                      "$ref": "264"
+                      "$ref": "265"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -9439,13 +9466,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.createOrUpdate.resource",
                     "methodParameterSegments": [
                       {
-                        "$id": "583",
+                        "$id": "584",
                         "kind": "method",
                         "name": "resource",
                         "serializedName": "resource",
                         "doc": "Resource create parameters.",
                         "type": {
-                          "$ref": "264"
+                          "$ref": "265"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -9465,7 +9492,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "240"
+                      "$ref": "260"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -9478,7 +9505,7 @@
                       201
                     ],
                     "bodyType": {
-                      "$ref": "240"
+                      "$ref": "260"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -9507,30 +9534,30 @@
               },
               "parameters": [
                 {
-                  "$ref": "568"
+                  "$ref": "569"
                 },
                 {
-                  "$ref": "572"
+                  "$ref": "573"
                 },
                 {
-                  "$ref": "576"
+                  "$ref": "577"
                 },
                 {
-                  "$ref": "583"
+                  "$ref": "584"
                 },
                 {
-                  "$ref": "579"
+                  "$ref": "580"
                 },
                 {
-                  "$ref": "581"
+                  "$ref": "582"
                 },
                 {
-                  "$id": "584",
+                  "$id": "585",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "564"
+                    "$ref": "565"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -9543,7 +9570,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "240"
+                  "$ref": "260"
                 }
               },
               "isOverride": false,
@@ -9552,7 +9579,7 @@
               "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.createOrUpdate"
             },
             {
-              "$id": "585",
+              "$id": "586",
               "kind": "paging",
               "name": "list",
               "accessibility": "public",
@@ -9563,20 +9590,20 @@
               ],
               "doc": "List Item resources by ConfigurationStore",
               "operation": {
-                "$id": "586",
+                "$id": "587",
                 "name": "list",
                 "resourceName": "Item",
                 "doc": "List Item resources by ConfigurationStore",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "587",
+                    "$id": "588",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "588",
+                      "$id": "589",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9586,7 +9613,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "589",
+                        "$id": "590",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -9609,23 +9636,23 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "534"
+                        "$ref": "535"
                       }
                     ]
                   },
                   {
-                    "$id": "590",
+                    "$id": "591",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "591",
+                      "$id": "592",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "592",
+                        "$id": "593",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9654,18 +9681,18 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.list.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "540"
+                        "$ref": "541"
                       }
                     ]
                   },
                   {
-                    "$id": "593",
+                    "$id": "594",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "594",
+                      "$id": "595",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9706,13 +9733,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.list.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "595",
+                        "$id": "596",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "596",
+                          "$id": "597",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9753,13 +9780,13 @@
                     ]
                   },
                   {
-                    "$id": "597",
+                    "$id": "598",
                     "kind": "path",
                     "name": "configurationStoreName",
                     "serializedName": "configurationStoreName",
                     "doc": "The name of the ConfigurationStore",
                     "type": {
-                      "$id": "598",
+                      "$id": "599",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9784,13 +9811,13 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.list.configurationStoreName",
                     "methodParameterSegments": [
                       {
-                        "$id": "599",
+                        "$id": "600",
                         "kind": "method",
                         "name": "configurationStoreName",
                         "serializedName": "configurationStoreName",
                         "doc": "The name of the ConfigurationStore",
                         "type": {
-                          "$id": "600",
+                          "$id": "601",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9815,7 +9842,7 @@
                     ]
                   },
                   {
-                    "$id": "601",
+                    "$id": "602",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -9831,7 +9858,7 @@
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.list.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "602",
+                        "$id": "603",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -9856,7 +9883,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "267"
+                      "$ref": "268"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -9882,21 +9909,21 @@
               },
               "parameters": [
                 {
-                  "$ref": "595"
+                  "$ref": "596"
                 },
                 {
-                  "$ref": "599"
+                  "$ref": "600"
                 },
                 {
-                  "$ref": "602"
+                  "$ref": "603"
                 },
                 {
-                  "$id": "603",
+                  "$id": "604",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "591"
+                    "$ref": "592"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -9909,7 +9936,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "269"
+                  "$ref": "270"
                 },
                 "resultSegments": [
                   "value"
@@ -9935,13 +9962,13 @@
           ],
           "parameters": [
             {
-              "$id": "604",
+              "$id": "605",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "605",
+                "$id": "606",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -9952,7 +9979,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "606",
+                  "$id": "607",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -9965,7 +9992,7 @@
               "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.endpoint"
             },
             {
-              "$ref": "534"
+              "$ref": "535"
             }
           ],
           "initializedBy": 0,
@@ -9982,7 +10009,7 @@
             "2024-05-01"
           ],
           "parent": {
-            "$ref": "273"
+            "$ref": "274"
           },
           "isMultiServiceClient": false
         }

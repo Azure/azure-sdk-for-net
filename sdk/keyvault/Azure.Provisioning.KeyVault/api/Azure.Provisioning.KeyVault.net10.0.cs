@@ -208,6 +208,34 @@ namespace Azure.Provisioning.KeyVault
     {
         None = 0,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultBuiltInRole : System.IEquatable<Azure.Provisioning.KeyVault.KeyVaultBuiltInRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeyVaultBuiltInRole(string value) { throw null; }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultAdministrator { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultCertificatesOfficer { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultCertificateUser { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultContributor { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultCryptoOfficer { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultCryptoServiceEncryptionUser { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultCryptoServiceReleaseUser { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultCryptoUser { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultDataAccessAdministrator { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultReader { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultSecretsOfficer { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultSecretsUser { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole ManagedHsmContributor { get { throw null; } }
+        public bool Equals(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public static string GetBuiltInRoleName(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole value) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole left, Azure.Provisioning.KeyVault.KeyVaultBuiltInRole right) { throw null; }
+        public static implicit operator Azure.Provisioning.KeyVault.KeyVaultBuiltInRole (string value) { throw null; }
+        public static bool operator !=(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole left, Azure.Provisioning.KeyVault.KeyVaultBuiltInRole right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public enum KeyVaultCreateMode
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="default")]
@@ -369,6 +397,8 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.KeyVault.KeyVaultProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.KeyVault.KeyVaultService FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -423,6 +453,8 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.KeyVault.ManagedHsmSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.KeyVault.ManagedHsm FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions

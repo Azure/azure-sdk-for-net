@@ -80,9 +80,9 @@ namespace Azure.Provisioning.KeyVault
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "properties", "privateEndpoint" });
-            _connectionState = DefineModelProperty<KeyVaultPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "properties", "privateLinkServiceConnectionState" });
-            _provisioningState = DefineProperty<KeyVaultPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
+            _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "privateEndpoint" });
+            _connectionState = DefineModelProperty<KeyVaultPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "privateLinkServiceConnectionState" });
+            _provisioningState = DefineProperty<KeyVaultPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
         }
     }
 }
