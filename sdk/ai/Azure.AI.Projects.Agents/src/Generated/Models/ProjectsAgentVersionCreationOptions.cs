@@ -7,16 +7,16 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The AgentVersionCreationOptions. </summary>
-    public partial class AgentVersionCreationOptions
+    /// <summary> The ProjectsAgentVersionCreationOptions. </summary>
+    public partial class ProjectsAgentVersionCreationOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentVersionCreationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectsAgentVersionCreationOptions"/>. </summary>
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="definition"/> is null. </exception>
-        public AgentVersionCreationOptions(AgentDefinition definition)
+        public ProjectsAgentVersionCreationOptions(ProjectsAgentDefinition definition)
         {
             Argument.AssertNotNull(definition, nameof(definition));
 
@@ -24,7 +24,7 @@ namespace Azure.AI.Projects.Agents
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentVersionCreationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectsAgentVersionCreationOptions"/>. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the agent. </param>
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentVersionCreationOptions(IDictionary<string, string> metadata, string description, AgentDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Description = description;

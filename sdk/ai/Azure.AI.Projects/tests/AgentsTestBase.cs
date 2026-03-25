@@ -429,7 +429,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     /// </summary>
     /// <param name="toolType"></param>
     /// <returns></returns>
-    protected async Task<AgentDefinition> GetAgentToolDefinition(ToolType toolType, AIProjectClient projectClient, string model = default)
+    protected async Task<ProjectsAgentDefinition> GetAgentToolDefinition(ToolType toolType, AIProjectClient projectClient, string model = default)
     {
         ResponseTool tool = toolType switch
         {
@@ -584,11 +584,11 @@ public class AgentsTestBase : ProjectsClientTestBase
         //    oaiVctStoreClient.DeleteVectorStore(vectorStoreId: vct.Id);
         //}
         // Remove Agents.
-        foreach (AgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME))
         {
             projectClient.Agents.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        foreach (AgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME2))
+        foreach (ProjectsAgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME2))
         {
             projectClient.Agents.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }

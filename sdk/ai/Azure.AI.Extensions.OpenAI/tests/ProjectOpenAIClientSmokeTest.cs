@@ -86,7 +86,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         {
             await agentsClient.CreateAgentVersionAsync(
                 agentName: "foobar",
-                options: new AgentVersionCreationOptions(
+                options: new ProjectsAgentVersionCreationOptions(
                     definition: new DeclarativeAgentDefinition("mock-model")));
         }
 
@@ -135,7 +135,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
         // Remove Agents.
-        foreach (AgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: FOUNDRY_AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: FOUNDRY_AGENT_NAME))
         {
             projectClient.Agents.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }

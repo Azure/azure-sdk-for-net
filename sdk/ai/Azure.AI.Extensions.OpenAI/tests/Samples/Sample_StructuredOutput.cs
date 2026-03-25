@@ -73,7 +73,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
                            "and returns it in the desired structured output format.",
             TextOptions = textOptions
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -123,7 +123,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
                            "and returns it in the desired structured output format.",
             TextOptions = textOptions
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition)
         );

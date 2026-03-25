@@ -38,13 +38,13 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_ListAgentVersions_Async
         var agentVersions = projectClient.Agents.GetAgentVersionsAsync(agentName: "myAgent");
-        await foreach (AgentVersion oneAgentVersion in agentVersions)
+        await foreach (ProjectsAgentVersion oneAgentVersion in agentVersions)
         {
             Console.WriteLine($"Agent: {oneAgentVersion.Id}, Name: {oneAgentVersion.Name}, Version: {oneAgentVersion.Version}");
         }
@@ -91,13 +91,13 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_ListAgentVersions_Sync
         var agentVersions = projectClient.Agents.GetAgentVersions(agentName: "myAgent");
-        foreach (AgentVersion oneAgentVersion in agentVersions)
+        foreach (ProjectsAgentVersion oneAgentVersion in agentVersions)
         {
             Console.WriteLine($"Agent: {oneAgentVersion.Id}, Name: {oneAgentVersion.Name}, Version: {oneAgentVersion.Version}");
         }

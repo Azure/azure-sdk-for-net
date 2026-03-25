@@ -12,22 +12,22 @@ namespace Azure.AI.Projects.Agents
     /// A tool that can be used to generate a response.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, and <see cref="MemorySearchPreviewTool"/>.
     /// </summary>
-    public abstract partial class AgentTool
+    public abstract partial class ProjectsAgentTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectsAgentTool"/>. </summary>
         /// <param name="type"></param>
-        private protected AgentTool(ToolType @type)
+        private protected ProjectsAgentTool(ToolType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectsAgentTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

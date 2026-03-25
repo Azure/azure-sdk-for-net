@@ -119,7 +119,7 @@ When clients send REST requests to the endpoint, one of the query parameters is 
 
 #### Select a service API version
 
-The API version may be set supplying `version` parameter to `AgentClientOptions` constructor as shown in the example code below.
+The API version may be set supplying `version` parameter to `ProjectOpenAIClientOptions` constructor as shown in the example code below.
 
 ```C# Snippet:SelectAPIVersion
 ProjectOpenAIClientOptions option = new()
@@ -156,7 +156,7 @@ In the most of code snippets we will show only asynchronous sample for brevity. 
 #### Agents
 
 **Note:** Please install `Azure.AI.Projects` to manipulate Agents.
-When creating the Agents we need to supply Agent definitions to its constructor. To create a declarative prompt Agent, use the `PromptAgentDefinition`:
+When creating the Agents we need to supply Agent definitions to its constructor. To create a declarative prompt Agent, use the `DeclarativeAgentDefinition`:
 
 ```C# Snippet:CreateAPromptAgent
 string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("AZURE_AI_FOUNDRY_FOUNDRY_PROJECT_ENDPOINT")
@@ -168,18 +168,18 @@ string FOUNDRY_AGENT_NAME = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_NA
 
 AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential());
 
-AgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
+ProjectsAgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
 {
     Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
 };
 
-AgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: FOUNDRY_AGENT_NAME,
     options: new(agentDefinition));
 Console.WriteLine($"Created new agent version: {newAgentVersion.Name}");
 ```
 
-The code above will result in creation of `AgentVersion` object, which is the data object containing Agent's name and version.
+The code above will result in creation of `ProjectsAgentVersion` object, which is the data object containing Agent's name and version.
 
 #### Responses
 
@@ -219,14 +219,14 @@ await foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateR
 }
 ```
 
-Responses can be used with the agents. First we need to create an `AgentVersion` object.
+Responses can be used with the agents. First we need to create an `ProjectsAgentVersion` object.
 
 ```C# Snippet:CreateAgent_Basic_Async
 DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a physics teacher with a sense of humor.",
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -267,7 +267,7 @@ Previously created responses can also be listed, typically to find all responses
 
 ```C# Snippet:Sample_ListResponses_Async
 await foreach (ResponseResult response
-    in projectClient.OpenAI.Responses.GetProjectResponsesAsync(agent: new AgentReference(agentName), conversationId: conversationId))
+    in projectClient.OpenAI.GetProjectResponsesClient().GetProjectResponsesAsync(agent: new AgentReference(agentName), conversationId: conversationId))
 {
     Console.WriteLine($"Matching response: {response.Id}");
 }
@@ -281,7 +281,7 @@ set the conversation parameter while calling `GetProjectResponsesClientForAgent`
 ```C# Snippet:ConversationClient
 CreateResponseOptions CreateResponseOptions = new();
 // Optionally, use a conversation to automatically maintain state between calls.
-ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
+ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync();
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation);
 ```
 
@@ -299,14 +299,14 @@ ProjectConversationCreationOptions conversationOptions = new()
     Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
     Metadata = { ["foo"] = "bar" },
 };
-ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(conversationOptions);
+ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync(conversationOptions);
 
 //
 // Add items to an existing conversation to supplement the interaction state
 //
 string EXISTING_CONVERSATION_ID = conversation.Id;
 
-_ = await projectClient.OpenAI.Conversations.CreateProjectConversationItemsAsync(
+_ = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationItemsAsync(
     EXISTING_CONVERSATION_ID,
     [ResponseItem.CreateSystemMessageItem(inputTextContent: "Story theme to use: department of licensing.")]);
 //
@@ -495,7 +495,7 @@ To create the hosted agent, please use the `HostedAgentDefinition` while creatin
 private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
     HostedAgentDefinition agentDefinition = new(
-        versions: [new ProtocolVersionRecord(AgentProtocol.ActivityProtocol, "v1")],
+        versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.ActivityProtocol, "v1")],
         cpu: "1",
         memory: "2Gi"
     )
@@ -562,7 +562,7 @@ private static readonly BinaryData s_calendarSchema = BinaryData.FromObjectAsJso
 );
 ```
 
-We can provide it to the Agent through `TextOptions` property of `PromptAgentDefinition` to get the Agent output in JSON format.
+We can provide it to the Agent through `TextOptions` property of `DeclarativeAgentDefinition` to get the Agent output in JSON format.
 
 ```C# Snippet:Sample_CreateAgent_StructuredOutput_Async
 var textOptions = new ResponseTextOptions()
@@ -578,7 +578,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
                    "and returns it in the desired structured output format.",
     TextOptions = textOptions
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -619,7 +619,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent that can help fetch data from files you know about.",
     Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -641,7 +641,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -712,7 +712,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -958,7 +958,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             + "nicknames for cities whenever possible.",
     Tools = { getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1018,7 +1018,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant that can search the web",
     Tools = { ResponseTool.CreateWebSearchTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1035,7 +1035,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent.",
     Tools = { webSearchTool }
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1063,7 +1063,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
     Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1164,7 +1164,7 @@ Console.WriteLine($"{text}{annotation}");
 ### Bing Grounding
 
 To support the response returned by the Agent, Bing grounding can be used. To implement it,
-create the `BingGroundingTool` and use it in `PromptAgentDefinition` object.
+create the `BingGroundingTool` and use it in `DeclarativeAgentDefinition` object.
 
 ```C# Snippet:Sample_CreateAgent_BingGrounding_Sync
 AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
@@ -1177,7 +1177,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent.",
     Tools = { bingGroundingAgentTool, }
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1230,7 +1230,7 @@ Console.WriteLine($"{text}{annotation}");
 ### Bing Custom Search (preview)<a id="bing-custom-search"></a>
 
 Along with bing grounding, Agents can use the custom search. To implement it,
-create the `BingCustomSearchPreviewTool` and use it in `PromptAgentDefinition` object. The
+create the `BingCustomSearchPreviewTool` and use it in `DeclarativeAgentDefinition` object. The
 use of this tool is like Bing Grounding, however it requires ID of Grounding with Bing
 Custom Search and the name of a search configuration. In this scenario, we use Bing to search
 en.wikipedia.org. This configuration is called "wikipedia" its search URL is configured through Azure.
@@ -1246,7 +1246,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent.",
     Tools = { customBingSearchAgentTool, }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1267,7 +1267,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
     )) }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1319,7 +1319,7 @@ Console.WriteLine(latestResponse.GetOutputText());
 Running MCP tool with project connection allows you to connect to an MCP server that requires authentication. The only difference from
 the previous example is that we need to provide the connection name. To create connection valid for GitHub please log in to your GitHub profile, click on the profile picture at the upper right corner and select "Settings". At the left panel click "Developer Settings", select "Personal access tokens > Tokens (classic)". At the top choose "Generate new token" and enter password and create a token, which can read public repositories. **Save the token, or keep the page open as once the page is closed, token cannot be shown again!**
 In the Azure portal open Microsoft Foundry you are using, at the left panel select "Management center" and then select "Connected resources". Create new connection of "Custom keys" type; name it and add a key value pair. Set the key name `Authorization` and the value should have a form of `Bearer your_github_token`.
-When the connection is created, we can set it on the MCPTool and use it in `PromptAgentDefinition`.
+When the connection is created, we can set it on the MCPTool and use it in `DeclarativeAgentDefinition`.
 
 ```C# Snippet:Sample_CreateAgent_MCPTool_ProjectConnection_Async
 McpTool tool = ResponseTool.CreateMcpTool(
@@ -1333,7 +1333,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
     Tools = { tool }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1360,7 +1360,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant.",
     Tools = {openapiTool}
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1400,7 +1400,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant.",
     Tools = { openapiTool }
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1472,7 +1472,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     "related to web browsing using the Browser Automation tool available to you.",
     Tools = {playwrightTool}
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1515,7 +1515,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant.",
     Tools = { new SharepointPreviewTool(sharepointToolOption), }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1605,7 +1605,7 @@ After we have created the Fabric data Agent, we can connect fabric to our Micros
 
 #### Using Microsoft Fabric tool
 
-To use the Agent with Microsoft Fabric tool, we need to include `MicrosoftFabricPreviewTool` into `PromptAgentDefinition`.
+To use the Agent with Microsoft Fabric tool, we need to include `MicrosoftFabricPreviewTool` into `DeclarativeAgentDefinition`.
 
 ```C# Snippet:Sample_CreateAgent_Fabric_Async
 AIProjectConnection fabricConnection = await projectClient.Connections.GetConnectionAsync(fabricConnectionName);
@@ -1618,7 +1618,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant.",
     Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1655,7 +1655,7 @@ If we are using the Agent2agent connection, we do not need to provide the endpoi
 
 #### Using A2A Tool
 
-To use the Agent with A2A tool, we need to include `A2APreviewTool` into `PromptAgentDefinition`.
+To use the Agent with A2A tool, we need to include `A2APreviewTool` into `DeclarativeAgentDefinition`.
 
 ```C# Snippet:Sample_CreateAgent_AgentToAgent_Async
 AIProjectConnection a2aConnection = projectClient.Connections.GetConnection(a2aConnectionName);
@@ -1676,7 +1676,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant.",
     Tools = { a2aTool }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1684,7 +1684,7 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 ### Memory search tool (preview)<a id="memory-search-tool"></a>
 
 Memory in Foundry Agent Service is a managed, long-term memory solution. It enables Agent continuity across sessions, devices, and workflows.
-Agents can use Memory Stores by defining `MemorySearchPreviewTool` in `PromptAgentDefinition`.
+Agents can use Memory Stores by defining `MemorySearchPreviewTool` in `DeclarativeAgentDefinition`.
 
 ```C# Snippet:Sample_CreateAgentWithTool_MemoryTool_Async
 agentDefinition = new(model: modelDeploymentName)
@@ -1692,7 +1692,7 @@ agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a prompt agent capable to access memorized conversation.",
 };
 agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
-AgentVersion agentVersionWithMemory = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersionWithMemory = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "agentWithMemory",
     options: new(agentDefinition));
 ```
@@ -1836,7 +1836,7 @@ public class Sample_AzureFunction : ProjectsOpenAITestBase
     }
 ```
 
-This tool should be used by `PromptAgentDefinition` so Agent can use the Azure Function when required.
+This tool should be used by `DeclarativeAgentDefinition` so Agent can use the Azure Function when required.
 
 ```C# Snippet:Sample_CreateAgent_AzureFunction_Async
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1848,7 +1848,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         + "\"Foo says\" and then the response from the tool.",
     Tools = { GetFunctionTool(storageQueueUri) },
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1934,7 +1934,7 @@ Any operation that fails will throw a [ClientResultException][ClientResultExcept
 ```C# Snippet:ErrorHandling
 try
 {
-    AgentVersion agent = await projectClient.Agents.GetAgentVersionAsync(
+    ProjectsAgentVersion agent = await projectClient.Agents.GetAgentVersionAsync(
         agentName: "agent_which_dies_not_exist", agentVersion: "1");
 }
 catch (ClientResultException e) when (e.Status == 404)

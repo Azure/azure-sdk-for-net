@@ -5,6 +5,13 @@
 ### Features Added
 
 ### Breaking Changes
+- `Insights` were renamed to `ProjectsInsights`.
+- `Insight` was renamed to `ProjectsInsight`.
+- `Schedules` were renamed to `ProjectsSchedules`.
+- `Schedule` was renamed to `ProjectsSchedule`.
+- `Target` was renamed to `EvaluationTarget`.
+- `Trigger` was renamed to `ScheduleTrigger`.
+- `AzureAIAgentTarget` and `AzureAIModelTarget` became internal.
 
 ### Bugs Fixed
 

@@ -13,7 +13,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects.Agents;
 
 [CodeGenType("Tool")]
-public abstract partial class AgentTool
+public abstract partial class ProjectsAgentTool
 {
     public static BingGroundingTool CreateBingGroundingTool(BingGroundingSearchToolOptions options) => new BingGroundingTool(options);
     public static MicrosoftFabricPreviewTool CreateMicrosoftFabricTool(FabricDataAgentToolOptions options) => new MicrosoftFabricPreviewTool(options);
@@ -28,7 +28,7 @@ public abstract partial class AgentTool
         AgentCardPath = agentCardPath,
     };
 
-    public static implicit operator ResponseTool(AgentTool agentTool)
+    public static implicit operator ResponseTool(ProjectsAgentTool agentTool)
     {
         return ModelReaderWriter.Read<ResponseTool>(
             ModelReaderWriter.Write(

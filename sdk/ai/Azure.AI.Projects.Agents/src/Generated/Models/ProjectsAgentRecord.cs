@@ -7,30 +7,30 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The AgentRecord. </summary>
-    public partial class AgentRecord
+    /// <summary> The ProjectsAgentRecord. </summary>
+    public partial class ProjectsAgentRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectsAgentRecord"/>. </summary>
         /// <param name="id"> The unique identifier of the agent. </param>
         /// <param name="name"> The name of the agent. </param>
         /// <param name="versions"> The latest version of the agent. </param>
-        internal AgentRecord(string id, string name, AgentObjectVersions versions)
+        internal ProjectsAgentRecord(string id, string name, AgentObjectVersions versions)
         {
             Id = id;
             Name = name;
             Versions = versions;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectsAgentRecord"/>. </summary>
         /// <param name="object"> The object type, which is always 'agent'. </param>
         /// <param name="id"> The unique identifier of the agent. </param>
         /// <param name="name"> The name of the agent. </param>
         /// <param name="versions"> The latest version of the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentRecord(string @object, string id, string name, AgentObjectVersions versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentRecord(string @object, string id, string name, AgentObjectVersions versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
             Id = id;

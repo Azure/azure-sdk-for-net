@@ -36,12 +36,12 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
 
         AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential());
 
-        AgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
+        ProjectsAgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
         {
             Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
         };
 
-        AgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: FOUNDRY_AGENT_NAME,
             options: new(agentDefinition));
         Console.WriteLine($"Created new agent version: {newAgentVersion.Name}");
@@ -69,7 +69,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -118,7 +118,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -194,11 +194,11 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         // Create an agent version for a new prompt agent
         //
 
-        AgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
+        ProjectsAgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
         {
             Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
         };
-        AgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: FOUNDRY_AGENT_NAME,
             options: new(agentDefinition));
 
@@ -261,7 +261,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         #region Snippet:ErrorHandling
         try
         {
-            AgentVersion agent = await projectClient.Agents.GetAgentVersionAsync(
+            ProjectsAgentVersion agent = await projectClient.Agents.GetAgentVersionAsync(
                 agentName: "agent_which_dies_not_exist", agentVersion: "1");
         }
         catch (ClientResultException e) when (e.Status == 404)

@@ -8,26 +8,26 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary>
-    /// The AgentDefinition.
+    /// The ProjectsAgentDefinition.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeclarativeAgentDefinition"/>, <see cref="WorkflowAgentDefinition"/>, and <see cref="HostedAgentDefinition"/>.
     /// </summary>
-    public abstract partial class AgentDefinition
+    public abstract partial class ProjectsAgentDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectsAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
-        private protected AgentDefinition(AgentKind kind)
+        private protected ProjectsAgentDefinition(ProjectsAgentKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectsAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             ContentFilterConfiguration = contentFilterConfiguration;
@@ -35,6 +35,6 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Gets or sets the Kind. </summary>
-        internal AgentKind Kind { get; set; }
+        internal ProjectsAgentKind Kind { get; set; }
     }
 }

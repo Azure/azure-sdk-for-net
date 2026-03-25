@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents;
 
 [CodeGenType("AgentDefinition")]
-public abstract partial class AgentDefinition
+public abstract partial class ProjectsAgentDefinition
 {
     /// <summary> Configuration for Responsible AI (RAI) content filtering and safety features. </summary>
     [CodeGenMember("RaiConfig")]

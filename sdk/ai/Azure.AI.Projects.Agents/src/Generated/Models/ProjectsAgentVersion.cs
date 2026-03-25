@@ -7,13 +7,13 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The AgentVersion. </summary>
-    public partial class AgentVersion
+    /// <summary> The ProjectsAgentVersion. </summary>
+    public partial class ProjectsAgentVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectsAgentVersion"/>. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="version"> The version identifier of the agent. Agents are immutable and every update creates a new version while keeping the name same. </param>
         /// <param name="createdAt"> The Unix timestamp (seconds) when the agent was created. </param>
         /// <param name="definition"></param>
-        internal AgentVersion(IDictionary<string, string> metadata, string id, string name, string version, DateTimeOffset createdAt, AgentDefinition definition)
+        internal ProjectsAgentVersion(IDictionary<string, string> metadata, string id, string name, string version, DateTimeOffset createdAt, ProjectsAgentDefinition definition)
         {
             Metadata = metadata;
             Id = id;
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.Agents
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectsAgentVersion"/>. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="createdAt"> The Unix timestamp (seconds) when the agent was created. </param>
         /// <param name="definition"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentVersion(IDictionary<string, string> metadata, string @object, string id, string name, string version, string description, DateTimeOffset createdAt, AgentDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentVersion(IDictionary<string, string> metadata, string @object, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Object = @object;
@@ -90,6 +90,6 @@ namespace Azure.AI.Projects.Agents
         public DateTimeOffset CreatedAt { get; }
 
         /// <summary> Gets the Definition. </summary>
-        public AgentDefinition Definition { get; }
+        public ProjectsAgentDefinition Definition { get; }
     }
 }

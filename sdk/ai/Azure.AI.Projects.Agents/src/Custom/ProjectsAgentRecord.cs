@@ -6,9 +6,9 @@ using System.Threading;
 
 namespace Azure.AI.Projects.Agents;
 
-public partial class AgentRecord
+public partial class ProjectsAgentRecord
 {
     internal AgentObjectVersions Versions { get; }
 
-    public AgentVersion GetLatestVersion() => Versions.Latest;
+    public ProjectsAgentVersion GetLatestVersion() => Versions.Latest;
 }

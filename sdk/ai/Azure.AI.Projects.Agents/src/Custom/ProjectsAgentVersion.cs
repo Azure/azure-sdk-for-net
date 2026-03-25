@@ -3,8 +3,8 @@
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenType("AgentVersionObject")]
-public partial class AgentVersion
+[CodeGenType("ProjectsAgentVersion")]
+public partial class ProjectsAgentVersion
 {
     /// <summary> The object type, which is always 'agent.version'. </summary>
     [CodeGenMember("Object")]
