@@ -59,6 +59,11 @@ namespace Azure.Data.AppConfiguration
         Tags = 0x0080,
 
         /// <summary>
+        /// The description of the configuration setting.
+        /// </summary>
+        Description = 0x0100,
+
+        /// <summary>
         /// Allows for all the properties of a ConfigurationSetting to be retrieved.
         /// </summary>
         All = uint.MaxValue

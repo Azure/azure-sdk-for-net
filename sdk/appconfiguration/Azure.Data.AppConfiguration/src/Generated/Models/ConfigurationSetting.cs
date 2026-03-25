@@ -24,10 +24,11 @@ namespace Azure.Data.AppConfiguration
         /// <param name="value"> The value of the key-value. </param>
         /// <param name="lastModified"> A date representing the last time the key-value was modified. </param>
         /// <param name="tags"> The tags of the key-value. </param>
+        /// <param name="description"> The description of the key-value. </param>
         /// <param name="isReadOnly"> Indicates whether the key-value is locked. </param>
         /// <param name="eTag"> A value representing the current state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationSetting(string key, string label, string contentType, string value, DateTimeOffset? lastModified, IDictionary<string, string> tags, bool? isReadOnly, ETag eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfigurationSetting(string key, string label, string contentType, string value, DateTimeOffset? lastModified, IDictionary<string, string> tags, string description, bool? isReadOnly, ETag eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Label = label;
@@ -35,9 +36,13 @@ namespace Azure.Data.AppConfiguration
             Value = value;
             LastModified = lastModified;
             Tags = tags;
+            Description = description;
             IsReadOnly = isReadOnly;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The description of the key-value. </summary>
+        public string Description { get; set; }
     }
 }

@@ -117,7 +117,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Gets or sets a description of the feature.
         /// </summary>
-        public string Description
+        public new string Description
         {
             get
             {
