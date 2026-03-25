@@ -19,7 +19,7 @@ public class Tier1InvocationsStartupTests
     [Test]
     public async Task AgentHostBuilder_WithInvocations_StartsSuccessfully()
     {
-        // Use builder API (Tier 2) since Tier 1 AgentHost.Run requires actual port binding
+        // Use builder API (Tier 2) since Tier 1 InvocationsServer.Run requires actual port binding
         var appBuilder = AgentHost.CreateBuilder();
         appBuilder.WebApplicationBuilder.WebHost.UseTestServer();
         appBuilder.AddInvocations<TestHandler>();

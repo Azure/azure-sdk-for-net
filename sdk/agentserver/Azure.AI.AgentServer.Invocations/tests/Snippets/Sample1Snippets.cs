@@ -19,7 +19,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         {
             #region Snippet:Invocations_Sample1_StartServer
 
-            AgentHost.Run<EchoHandler>();
+            InvocationsServer.Run<EchoHandler>();
 
             #endregion
         }

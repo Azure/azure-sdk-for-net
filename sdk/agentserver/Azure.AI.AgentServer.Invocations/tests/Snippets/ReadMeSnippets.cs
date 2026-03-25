@@ -33,7 +33,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         {
             #region Snippet:Invocations_ReadMe_Tier1
 
-            AgentHost.Run<MyHandler>();
+            InvocationsServer.Run<MyHandler>();
 
             #endregion
         }

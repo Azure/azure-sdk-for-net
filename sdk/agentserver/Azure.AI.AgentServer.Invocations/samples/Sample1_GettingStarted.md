@@ -26,7 +26,7 @@ public class EchoHandler : InvocationHandler
 ## Start the server
 
 ```C# Snippet:Invocations_Sample1_StartServer
-AgentHost.Run<EchoHandler>();
+InvocationsServer.Run<EchoHandler>();
 ```
 
 ## Test it

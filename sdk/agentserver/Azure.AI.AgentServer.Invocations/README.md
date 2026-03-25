@@ -34,7 +34,7 @@ app.Run();
 Or use the one-line Tier 1 startup if Invocations is the only protocol:
 
 ```C# Snippet:Invocations_ReadMe_Tier1
-AgentHost.Run<MyHandler>();
+InvocationsServer.Run<MyHandler>();
 ```
 
 ### Implement a handler
@@ -81,7 +81,7 @@ You can familiarise yourself with different APIs using [Samples](https://github.
 ### Common errors
 
 - **404 on invocation endpoint**: Ensure your handler is registered via `AddInvocations<THandler>()` on the builder. If you registered on `IServiceCollection` directly without mapping endpoints, the routes will not be created.
-- **Handler not found**: The Invocations protocol requires `Azure.AI.AgentServer.Hosting` for the underlying host. If you see startup errors, verify that you are using `AgentHost.CreateBuilder()` or `AgentHost.Run<THandler>()`.
+- **Handler not found**: The Invocations protocol requires `Azure.AI.AgentServer.Hosting` for the underlying host. If you see startup errors, verify that you are using `AgentHost.CreateBuilder()` or `InvocationsServer.Run<THandler>()`.
 
 ### Logging
 

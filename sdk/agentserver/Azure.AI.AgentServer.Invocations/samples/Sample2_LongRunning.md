@@ -107,7 +107,7 @@ public record JobState(string InvocationId, string DocumentUrl, string Status, s
 ## Start the server
 
 ```C# Snippet:Invocations_Sample2_StartServer
-AgentHost.Run<DocumentAnalysisHandler>();
+InvocationsServer.Run<DocumentAnalysisHandler>();
 ```
 
 ## Test the endpoint
