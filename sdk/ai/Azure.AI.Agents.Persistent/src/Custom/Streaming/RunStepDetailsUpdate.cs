@@ -77,7 +77,7 @@ public class RunStepDetailsUpdate : StreamingUpdate
         StreamingUpdateReason updateKind,
         ModelReaderWriterOptions options = null)
     {
-        RunStepDeltaChunk stepDelta = RunStepDeltaChunk.DeserializeRunStepDeltaChunk(element, options);
+        RunStepDeltaChunk stepDelta = RunStepDeltaChunk.DeserializeRunStepDeltaChunk(element, options ?? ModelSerializationExtensions.WireOptions);
         List<RunStepDetailsUpdate> updates = [];
         if (stepDelta?.Delta?.StepDetails is RunStepDeltaMessageCreation)
         {

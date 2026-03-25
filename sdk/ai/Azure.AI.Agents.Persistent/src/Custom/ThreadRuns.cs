@@ -20,11 +20,10 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of ThreadRuns. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
+        /// <param name="endpoint"> Project endpoint. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <param name="threadRunStepsClient">The thread run steps client to be used.</param>
-        internal ThreadRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion, ThreadRunSteps threadRunStepsClient) : this(
+        internal ThreadRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion, ThreadRunSteps threadRunStepsClient) : this(
                 clientDiagnostics: clientDiagnostics,
                 pipeline: pipeline,
                 endpoint: endpoint,
