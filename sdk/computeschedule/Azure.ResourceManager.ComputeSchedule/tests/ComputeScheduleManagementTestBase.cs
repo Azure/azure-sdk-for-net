@@ -43,7 +43,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                Client = GetArmClient();
+                var options = new ArmClientOptions
+                {
+                    Environment = new ArmEnvironment(new Uri("https://brazilus.management.azure.com"), "https://management.core.windows.net/")
+                };
+                Client = GetArmClient(options);
                 SubscriptionResource subIdRes = await Client.GetDefaultSubscriptionAsync();
                 DefaultSubscription = Client.GetSubscriptionResource(subIdRes.Id);
                 DefaultResourceGroupResource = await DefaultSubscription.GetResourceGroupAsync(TestEnvironment.ResourceGroup);
@@ -517,6 +521,29 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             try
             {
                 result = await subscriptionResource.ExecuteVirtualMachineCreateOperationAsync(location, content);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException?.Message);
+                throw;
+            }
+            return result;
+        }
+
+        protected static async Task<CreateFlexResourceOperationResult> TestExecuteCreateFlexAsync(AzureLocation location, ExecuteCreateFlexContent executeCreateFlexRequest, string subid, ArmClient client)
+        {
+            SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
+            ExecuteCreateFlexContent content = executeCreateFlexRequest;
+            CreateFlexResourceOperationResult result;
+
+            try
+            {
+                result = await subscriptionResource.VirtualMachinesExecuteCreateFlexAsync(location, content);
             }
             catch (RequestFailedException ex)
             {
