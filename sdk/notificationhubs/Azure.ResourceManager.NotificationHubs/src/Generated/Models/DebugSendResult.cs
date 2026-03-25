@@ -12,7 +12,7 @@ using Azure.ResourceManager.NotificationHubs;
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Result of DebugSend operations. </summary>
-    public partial class DebugSendResult
+    internal partial class DebugSendResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public long? Failure { get; }
 
         /// <summary> Gets or sets actual failure description. </summary>
-        public IReadOnlyList<NotificationHubPubRegistrationResult> FailureDescription { get; }
+        public IReadOnlyList<NotificationHubPubRegistrationResult> FailureDescription { get; } = new ChangeTrackingList<NotificationHubPubRegistrationResult>();
     }
 }

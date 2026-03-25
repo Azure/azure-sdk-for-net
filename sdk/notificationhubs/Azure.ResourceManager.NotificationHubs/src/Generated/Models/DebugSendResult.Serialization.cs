@@ -14,7 +14,7 @@ using Azure.ResourceManager.NotificationHubs;
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Result of DebugSend operations. </summary>
-    public partial class DebugSendResult : IJsonModel<DebugSendResult>
+    internal partial class DebugSendResult : IJsonModel<DebugSendResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

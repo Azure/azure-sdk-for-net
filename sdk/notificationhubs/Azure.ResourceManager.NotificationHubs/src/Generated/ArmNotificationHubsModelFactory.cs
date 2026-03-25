@@ -156,16 +156,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 sku);
         }
 
-        /// <summary> Replacement for DebugSendResponse — uses TrackedResource base for C# backward compat. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Result of DebugSend operations. </param>
+        /// <param name="success"> Gets or sets successful send. </param>
+        /// <param name="failure"> Gets or sets send failure. </param>
+        /// <param name="failureDescription"> Gets or sets actual failure description. </param>
+        /// <param name="tags"> Deprecated - only for compatibility. </param>
         /// <returns> A new <see cref="Models.NotificationHubTestSendResult"/> instance for mocking. </returns>
-        public static NotificationHubTestSendResult NotificationHubTestSendResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DebugSendResult properties = default)
+        public static NotificationHubTestSendResult NotificationHubTestSendResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, long? success = default, long? failure = default, IEnumerable<NotificationHubPubRegistrationResult> failureDescription = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -175,21 +176,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
-                properties);
-        }
-
-        /// <summary> Result of DebugSend operations. </summary>
-        /// <param name="success"> Gets or sets successful send. </param>
-        /// <param name="failure"> Gets or sets send failure. </param>
-        /// <param name="failureDescription"> Gets or sets actual failure description. </param>
-        /// <returns> A new <see cref="Models.DebugSendResult"/> instance for mocking. </returns>
-        public static DebugSendResult DebugSendResult(long? success = default, long? failure = default, IEnumerable<NotificationHubPubRegistrationResult> failureDescription = default)
-        {
-            failureDescription ??= new ChangeTrackingList<NotificationHubPubRegistrationResult>();
-
-            return new DebugSendResult(success, failure, failureDescription.ToList(), additionalBinaryDataProperties: null);
+                success is null && failure is null && failureDescription is null ? default : new DebugSendResult(success, failure, (failureDescription ?? new ChangeTrackingList<NotificationHubPubRegistrationResult>()).ToList(), null),
+                tags);
         }
 
         /// <summary> Notification result for a single registration. </summary>
@@ -519,7 +508,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             return new NotificationHubNamespacePatch(sku, properties, tags, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Replacement for CheckAvailabilityParameters — uses TrackedResource base for C# backward compat. </summary>
+        /// <summary>
+        /// Parameters supplied to the Check Name Availability for Namespace and
+        /// NotificationHubs.
+        /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -777,9 +769,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
-                default);
+                default,
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubPnsCredentials"/>. </summary>

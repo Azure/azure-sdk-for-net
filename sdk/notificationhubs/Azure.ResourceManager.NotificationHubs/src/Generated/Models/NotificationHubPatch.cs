@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Replacement for NotificationHubPatchParameters — uses TrackedResource base for C# backward compat. </summary>
+    /// <summary> Patch parameter for NamespaceResource. </summary>
     public partial class NotificationHubPatch : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

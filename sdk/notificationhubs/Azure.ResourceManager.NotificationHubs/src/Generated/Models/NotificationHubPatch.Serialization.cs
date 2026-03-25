@@ -16,7 +16,7 @@ using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Replacement for NotificationHubPatchParameters — uses TrackedResource base for C# backward compat. </summary>
+    /// <summary> Patch parameter for NamespaceResource. </summary>
     public partial class NotificationHubPatch : TrackedResourceData, IJsonModel<NotificationHubPatch>
     {
         /// <summary> Initializes a new instance of <see cref="NotificationHubPatch"/> for deserialization. </summary>

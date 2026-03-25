@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Replacement for CheckAvailabilityParameters — uses TrackedResource base for C# backward compat. </summary>
+    /// <summary>
+    /// Parameters supplied to the Check Name Availability for Namespace and
+    /// NotificationHubs.
+    /// </summary>
     public partial class NotificationHubAvailabilityContent : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
