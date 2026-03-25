@@ -36,7 +36,7 @@ namespace Azure.Generator.Providers
         private static readonly ParameterProvider PageSizeHintParameter =
             new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
         private static readonly ParameterProvider ScopeParameter =
-            new("scope", $"The diagnostic scope name.", new CSharpType(typeof(string)));
+            new("diagnosticScope", $"The diagnostic scope name.", new CSharpType(typeof(string)));
 
         private readonly bool _isProtocol;
         private readonly FieldProvider _scopeField;
@@ -55,7 +55,7 @@ namespace Azure.Generator.Providers
             _scopeField = new FieldProvider(
                 FieldModifiers.Private | FieldModifiers.ReadOnly,
                 typeof(string),
-                "_scope",
+                "_diagnosticScope",
                 this);
         }
 
@@ -66,7 +66,27 @@ namespace Azure.Generator.Providers
             => Client.RestClient.GetCreateRequestMethod(_operation).Signature.Name;
 
         protected override FieldProvider[] BuildFields()
-            => [.. base.BuildFields(), _scopeField];
+        {
+            var baseFields = base.BuildFields();
+            var existingNames = new HashSet<string>(baseFields.Select(f => f.Name));
+
+            // If a base field already uses our desired name (e.g. an API parameter named "diagnosticScope"),
+            // update the field name to avoid collision. Without this, the framework's field declaration
+            // deduplication would rename the declaration but leave references (via AsValueExpression)
+            // pointing to the original name, causing incorrect assignments and CreateScope calls.
+            if (existingNames.Contains(_scopeField.Name))
+            {
+                var uniqueName = _scopeField.Name;
+                do
+                {
+                    uniqueName += "0";
+                } while (existingNames.Contains(uniqueName));
+
+                _scopeField.Update(name: uniqueName);
+            }
+
+            return [.. baseFields, _scopeField];
+        }
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;

@@ -18,24 +18,21 @@ namespace Samples
     internal partial class CatClientGetCatsCollectionResult : global::Azure.Pageable<global::System.BinaryData>
     {
         private readonly global::Samples.CatClient _client;
-        private readonly string _myToken;
-        private readonly int _maxPageSize;
-        private readonly global::Azure.RequestContext _context;
         private readonly string _diagnosticScope;
+        private readonly global::Azure.RequestContext _context;
+        private readonly string _diagnosticScope0;
 
         /// <summary> Initializes a new instance of CatClientGetCatsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CatClient client used to send requests. </param>
-        /// <param name="myToken"> myToken description. </param>
-        /// <param name="maxPageSize"> maxpagesize description. </param>
+        /// <param name="diagnosticScope"> diagnosticScope description. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, string myToken, int maxPageSize, global::Azure.RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
+        /// <param name="diagnosticScope0"> The diagnostic scope name. </param>
+        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, string diagnosticScope, global::Azure.RequestContext context, string diagnosticScope0) : base((context?.CancellationToken ?? default))
         {
             _client = client;
-            _myToken = myToken;
-            _maxPageSize = maxPageSize;
-            _context = context;
             _diagnosticScope = diagnosticScope;
+            _context = context;
+            _diagnosticScope0 = diagnosticScope0;
         }
 
         /// <summary> Gets the pages of CatClientGetCatsCollectionResult as an enumerable collection. </summary>
@@ -44,27 +41,14 @@ namespace Samples
         /// <returns> The pages of CatClientGetCatsCollectionResult as an enumerable collection. </returns>
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            string nextPage = (continuationToken ?? _myToken);
-            while (true)
+            global::Azure.Response response = this.GetNextResponse(pageSizeHint, null);
+            global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
+            global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
+            foreach (var item in result.Cats)
             {
-                global::Azure.Response response = this.GetNextResponse(pageSizeHint, nextPage);
-                if ((response is null))
-                {
-                    yield break;
-                }
-                global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
-                global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
-                foreach (var item in result.Cats)
-                {
-                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default));
-                }
-                yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage, response);
-                nextPage = result.NextPage;
-                if ((nextPage == null))
-                {
-                    yield break;
-                }
+                items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default));
             }
+            yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -72,9 +56,8 @@ namespace Samples
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private global::Azure.Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            int pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
-            global::Azure.Core.HttpMessage message = _client.CreateGetCatsRequest(continuationToken, pageSize, _context);
-            using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
+            global::Azure.Core.HttpMessage message = _client.CreateGetCatsRequest(_diagnosticScope, _context);
+            using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope0);
             scope.Start();
             try
             {

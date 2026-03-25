@@ -14,27 +14,30 @@ using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT : AsyncPageable<ThingModel>
+    internal partial class BasicTypeSpecClientGetWithDiagnosticScopeParamAsyncCollectionResultOfT : AsyncPageable<ThingModel>
     {
         private readonly BasicTypeSpecClient _client;
-        private readonly RequestContext _context;
         private readonly string _diagnosticScope;
+        private readonly RequestContext _context;
+        private readonly string _diagnosticScope0;
 
-        /// <summary> Initializes a new instance of BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BasicTypeSpecClientGetWithDiagnosticScopeParamAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
+        /// <param name="diagnosticScope"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT(BasicTypeSpecClient client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope0"> The diagnostic scope name. </param>
+        public BasicTypeSpecClientGetWithDiagnosticScopeParamAsyncCollectionResultOfT(BasicTypeSpecClient client, string diagnosticScope, RequestContext context, string diagnosticScope0) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _context = context;
             _diagnosticScope = diagnosticScope;
+            _context = context;
+            _diagnosticScope0 = diagnosticScope0;
         }
 
-        /// <summary> Gets the pages of BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BasicTypeSpecClientGetWithDiagnosticScopeParamAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of BasicTypeSpecClientGetWithDiagnosticScopeParamAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
@@ -47,8 +50,8 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = _client.CreateGetWithPagingRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
+            HttpMessage message = _client.CreateGetWithDiagnosticScopeParamRequest(_diagnosticScope, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope0);
             scope.Start();
             try
             {

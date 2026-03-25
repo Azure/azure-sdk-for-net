@@ -2018,6 +2018,74 @@ namespace BasicTypeSpec
         }
 
         /// <summary>
+        /// [Protocol Method] List things with a diagnosticScope query parameter that collides with the generator's diagnostic scope field name
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diagnosticScope"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticScope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticScope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetWithDiagnosticScopeParam(string diagnosticScope, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(diagnosticScope, nameof(diagnosticScope));
+
+            return new BasicTypeSpecClientGetWithDiagnosticScopeParamCollectionResult(this, diagnosticScope, context, "BasicTypeSpecClient.GetWithDiagnosticScopeParam");
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with a diagnosticScope query parameter that collides with the generator's diagnostic scope field name
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diagnosticScope"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticScope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticScope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetWithDiagnosticScopeParamAsync(string diagnosticScope, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(diagnosticScope, nameof(diagnosticScope));
+
+            return new BasicTypeSpecClientGetWithDiagnosticScopeParamAsyncCollectionResult(this, diagnosticScope, context, "BasicTypeSpecClient.GetWithDiagnosticScopeParam");
+        }
+
+        /// <summary> List things with a diagnosticScope query parameter that collides with the generator's diagnostic scope field name. </summary>
+        /// <param name="diagnosticScope"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticScope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticScope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<ThingModel> GetWithDiagnosticScopeParam(string diagnosticScope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diagnosticScope, nameof(diagnosticScope));
+
+            return new BasicTypeSpecClientGetWithDiagnosticScopeParamCollectionResultOfT(this, diagnosticScope, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithDiagnosticScopeParam");
+        }
+
+        /// <summary> List things with a diagnosticScope query parameter that collides with the generator's diagnostic scope field name. </summary>
+        /// <param name="diagnosticScope"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticScope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticScope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<ThingModel> GetWithDiagnosticScopeParamAsync(string diagnosticScope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diagnosticScope, nameof(diagnosticScope));
+
+            return new BasicTypeSpecClientGetWithDiagnosticScopeParamAsyncCollectionResultOfT(this, diagnosticScope, cancellationToken.ToRequestContext(), "BasicTypeSpecClient.GetWithDiagnosticScopeParam");
+        }
+
+        /// <summary>
         /// [Protocol Method] A sample operation with conditional requests
         /// <list type="bullet">
         /// <item>

@@ -647,6 +647,12 @@ model Page<T> {
 @list
 op ListWithPaging(): Page<ThingModel>;
 
+@route("list/scope-collision")
+@doc("List things with a diagnosticScope query parameter that collides with the generator's diagnostic scope field name")
+@convenientAPI(true)
+@list
+op ListWithDiagnosticScopeParam(@query diagnosticScope: string): Page<ThingModel>;
+
 @route("conditionalrequest")
 @doc("A sample operation with conditional requests")
 @convenientAPI(true)

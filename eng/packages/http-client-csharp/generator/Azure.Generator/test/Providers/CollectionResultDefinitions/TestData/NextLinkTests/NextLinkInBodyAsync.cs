@@ -20,17 +20,17 @@ namespace Samples
     {
         private readonly global::Samples.CatClient _client;
         private readonly global::Azure.RequestContext _context;
-        private readonly string _scope;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CatClientGetCatsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CatClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="scope"> The diagnostic scope name. </param>
-        public CatClientGetCatsAsyncCollectionResult(global::Samples.CatClient client, global::Azure.RequestContext context, string scope) : base((context?.CancellationToken ?? default))
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CatClientGetCatsAsyncCollectionResult(global::Samples.CatClient client, global::Azure.RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _context = context;
-            _scope = scope;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CatClientGetCatsAsyncCollectionResult as an enumerable collection. </summary>
@@ -68,7 +68,7 @@ namespace Samples
         private async global::System.Threading.Tasks.ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, global::System.Uri nextLink)
         {
             global::Azure.Core.HttpMessage message = (nextLink != null) ? _client.CreateNextGetCatsRequest(nextLink, _context) : _client.CreateGetCatsRequest(_context);
-            using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_scope);
+            using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

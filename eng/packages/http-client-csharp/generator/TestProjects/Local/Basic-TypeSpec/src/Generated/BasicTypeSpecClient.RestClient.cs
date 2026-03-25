@@ -479,6 +479,20 @@ namespace BasicTypeSpec
             return message;
         }
 
+        internal HttpMessage CreateGetWithDiagnosticScopeParamRequest(string diagnosticScope, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/list/scope-collision", false);
+            uri.AppendQuery("diagnosticScope", diagnosticScope, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateConditionalRequestRequest(MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

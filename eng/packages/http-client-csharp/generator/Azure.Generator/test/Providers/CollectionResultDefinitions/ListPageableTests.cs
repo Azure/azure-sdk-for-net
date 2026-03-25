@@ -69,6 +69,20 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
         }
 
+        [Test]
+        public void ScopeFieldCollision()
+        {
+            CreatePagingOperationWithScopeParameter();
+
+            var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
+                t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
+            Assert.IsNotNull(collectionResultDefinition);
+
+            var writer = new TypeProviderWriter(collectionResultDefinition!);
+            var file = writer.Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
         private static void CreatePagingOperation()
         {
             var inputModel = InputFactory.Model("cat", properties:
@@ -76,6 +90,31 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
                 InputFactory.Property("color", InputPrimitiveType.String, isRequired: true),
             ]);
             var parameter = InputFactory.QueryParameter("animalKind", InputPrimitiveType.String, isRequired: true);
+            var pagingMetadata = InputFactory.PagingMetadata(["cats"], null, null);
+            var response = InputFactory.OperationResponse(
+                [200],
+                InputFactory.Model(
+                    "page",
+                    properties: [InputFactory.Property("cats", InputFactory.Array(inputModel))]));
+            var operation = InputFactory.Operation("getCats", parameters: [parameter], responses: [response]);
+            var inputServiceMethod = InputFactory.PagingServiceMethod("getCats", operation, pagingMetadata: pagingMetadata);
+            var client = InputFactory.Client("catClient", methods: [inputServiceMethod]);
+
+            MockHelpers.LoadMockGenerator(inputModels: () => [inputModel], clients: () => [client]);
+        }
+
+        /// <summary>
+        /// Creates a paging operation where the query parameter is named "diagnosticScope",
+        /// which would collide with the generator's diagnostic scope field name.
+        /// Validates that BuildFields() collision detection correctly deduplicates.
+        /// </summary>
+        private static void CreatePagingOperationWithScopeParameter()
+        {
+            var inputModel = InputFactory.Model("cat", properties:
+            [
+                InputFactory.Property("color", InputPrimitiveType.String, isRequired: true),
+            ]);
+            var parameter = InputFactory.QueryParameter("diagnosticScope", InputPrimitiveType.String, isRequired: true);
             var pagingMetadata = InputFactory.PagingMetadata(["cats"], null, null);
             var response = InputFactory.OperationResponse(
                 [200],
