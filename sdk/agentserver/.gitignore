@@ -1,9 +1,3 @@
-# TypeSpec emitter output (intermediate; committed files are in Generated/)
-Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/**
-!Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/src/Custom/
-# Keep compiled OpenAPI spec (includes client.tsp customizations; used by -ValidatorsOnly)
-!Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/openapi.virtual-public-preview.yaml
-
 # Python bytecode
 __pycache__/
 *.pyc
