@@ -112,7 +112,7 @@ if ($azsdkCmd) {
         if ($localVersion.old_version -eq $localVersion.new_version) {
             log "Version up to date at $($localVersion.old_version)"
             if ($Run) {
-                $proc = Start-Process -PassThru -WorkingDirectory $RunDirectory -FilePath $azsdkCmd.Source -ArgumentList 'mcp' -NoNewWindow -Wait
+                $proc = Start-Process -PassThru -WorkingDirectory $RunDirectory -FilePath $azsdkCmd.Path -ArgumentList 'mcp' -NoNewWindow -Wait
                 exit $proc.ExitCode
             }
             exit 0
