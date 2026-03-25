@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using OpenTelemetry.Trace;
 
 namespace Azure.AI.AgentServer.Hosting;
@@ -27,7 +28,6 @@ public sealed class AgentHostBuilder
     private readonly List<Action<IEndpointRouteBuilder>> _endpointMappers = new();
     private Action<TracerProviderBuilder>? _tracingConfigure;
     private Action<IHealthChecksBuilder>? _healthConfigure;
-    private TimeSpan? _shutdownTimeout;
 
     /// <summary>
     /// Initializes a new <see cref="AgentHostBuilder"/> from command-line arguments.
@@ -103,12 +103,13 @@ public sealed class AgentHostBuilder
 
     /// <summary>
     /// Set the graceful shutdown timeout.
+    /// This is a convenience shorthand for <c>Configure(o =&gt; o.ShutdownTimeout = timeout)</c>.
     /// </summary>
     /// <param name="timeout">The maximum duration to wait for in-flight requests during shutdown.</param>
     /// <returns>This builder for chaining.</returns>
     public AgentHostBuilder ConfigureShutdown(TimeSpan timeout)
     {
-        _shutdownTimeout = timeout;
+        _builder.Services.Configure<AgentHostOptions>(o => o.ShutdownTimeout = timeout);
         return this;
     }
 
@@ -138,8 +139,12 @@ public sealed class AgentHostBuilder
     /// <returns>A configured <see cref="AgentHostApp"/> ready to run.</returns>
     public AgentHostApp Build()
     {
-        // Resolve shutdown timeout
-        var shutdownTimeout = _shutdownTimeout ?? TimeSpan.FromSeconds(30);
+        // Build a temporary service provider to resolve and validate options.
+        // This uses the registrations accumulated so far (from Configure / ConfigureShutdown).
+        var tempProvider = _builder.Services.BuildServiceProvider();
+        var options = tempProvider.GetRequiredService<IOptions<AgentHostOptions>>().Value;
+        options.Validate();
+        var shutdownTimeout = options.ShutdownTimeout;
 
         // Configure Kestrel — port comes from FoundryEnvironment (platform-controlled)
         var port = FoundryEnvironment.Port;

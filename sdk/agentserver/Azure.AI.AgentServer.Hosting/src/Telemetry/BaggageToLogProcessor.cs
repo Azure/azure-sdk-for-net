@@ -25,20 +25,25 @@ internal sealed class BaggageToLogProcessor : BaseProcessor<LogRecord>
             return;
         }
 
-        List<KeyValuePair<string, object?>>? attributes = null;
+        // Merge baggage into existing attributes (don't overwrite any attributes
+        // already set by the call-site or earlier processors).
+        var existing = data.Attributes as List<KeyValuePair<string, object?>>;
+        List<KeyValuePair<string, object?>>? merged = null;
 
         foreach (var item in activity.Baggage)
         {
             if (item.Value is not null)
             {
-                attributes ??= new List<KeyValuePair<string, object?>>();
-                attributes.Add(new KeyValuePair<string, object?>(item.Key, item.Value));
+                merged ??= existing is not null
+                    ? new List<KeyValuePair<string, object?>>(existing)
+                    : new List<KeyValuePair<string, object?>>();
+                merged.Add(new KeyValuePair<string, object?>(item.Key, item.Value));
             }
         }
 
-        if (attributes is not null)
+        if (merged is not null)
         {
-            data.Attributes = attributes;
+            data.Attributes = merged;
         }
     }
 }

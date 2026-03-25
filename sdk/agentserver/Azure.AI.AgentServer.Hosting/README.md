@@ -17,7 +17,7 @@ dotnet add package Azure.AI.AgentServer.Hosting --prerelease
 ### Prerequisites
 
 - An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
-- [.NET 10](https://dotnet.microsoft.com/download) or later
+- [.NET 8](https://dotnet.microsoft.com/download) or later
 
 ### Start a server (Tier 1 — recommended)
 
@@ -56,7 +56,7 @@ The built application. Call `Run()` to start listening. Wraps `WebApplication` w
 
 ### FoundryEnvironment
 
-Reads Azure AI Foundry platform variables (`AZF_*`) to resolve endpoint URLs, deployment names, and connection strings. Useful when your agent server runs as a hosted agent in AI Foundry.
+Reads Azure AI Foundry platform variables (`FOUNDRY_*`, `PORT`, `SSE_KEEPALIVE_INTERVAL`) to resolve agent identity, listening port, and connection strings. Also detects `OTEL_EXPORTER_OTLP_ENDPOINT` and `APPLICATIONINSIGHTS_CONNECTION_STRING` for telemetry configuration. Useful when your agent server runs as a hosted agent in AI Foundry.
 
 ### Telemetry
 
