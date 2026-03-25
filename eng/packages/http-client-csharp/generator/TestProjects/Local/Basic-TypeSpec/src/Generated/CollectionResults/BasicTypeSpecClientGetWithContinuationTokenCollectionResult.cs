@@ -37,7 +37,7 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientGetWithContinuationTokenCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            string nextPage = continuationToken ?? _token;
+            string nextPage = continuationToken ?? _token0;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

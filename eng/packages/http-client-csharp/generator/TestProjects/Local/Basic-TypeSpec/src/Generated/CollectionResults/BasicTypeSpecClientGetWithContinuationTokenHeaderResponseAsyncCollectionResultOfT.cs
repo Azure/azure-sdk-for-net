@@ -37,7 +37,7 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            string nextPage = continuationToken ?? _token;
+            string nextPage = continuationToken ?? _token0;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);

@@ -62,7 +62,7 @@ namespace BasicTypeSpec
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            int pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _numElements;
+            int pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _numElements0;
             HttpMessage message = nextLink != null ? _client.CreateNextGetWithHeaderNextLinkWithMaxPageRequest(nextLink, pageSize, _context) : _client.CreateGetWithHeaderNextLinkWithMaxPageRequest(pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithHeaderNextLinkWithMaxPage");
             scope.Start();

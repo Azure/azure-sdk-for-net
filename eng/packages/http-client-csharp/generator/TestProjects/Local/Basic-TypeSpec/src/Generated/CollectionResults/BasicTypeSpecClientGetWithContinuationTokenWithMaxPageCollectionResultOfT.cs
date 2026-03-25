@@ -39,7 +39,7 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientGetWithContinuationTokenWithMaxPageCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            string nextPage = continuationToken ?? _token;
+            string nextPage = continuationToken ?? _token0;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -62,7 +62,7 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            int pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _numElements;
+            int pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _numElements0;
             HttpMessage message = _client.CreateGetWithContinuationTokenWithMaxPageRequest(pageSize, continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationTokenWithMaxPage");
             scope.Start();
