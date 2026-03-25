@@ -44,7 +44,7 @@ public class Sample_Agents_Tracing : SamplesBase
 
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -81,7 +81,7 @@ public class Sample_Agents_Tracing : SamplesBase
         {
             AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };
@@ -125,7 +125,7 @@ public class Sample_Agents_Tracing : SamplesBase
 
         using (tracerProvider)
         {
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };
@@ -167,7 +167,7 @@ public class Sample_Agents_Tracing : SamplesBase
 
         using (tracerProvider)
         {
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };

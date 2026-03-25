@@ -134,6 +134,8 @@ public class OutputItemBuilderAutoStampTests
         public string ResponseId { get; }
         public bool IsShutdownRequested { get; set; }
         public System.Text.Json.JsonElement RawBody => default;
+        public IReadOnlyDictionary<string, string> ClientHeaders { get; } = new Dictionary<string, string>();
+        public IReadOnlyDictionary<string, Microsoft.Extensions.Primitives.StringValues> QueryParameters { get; } = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>();
         public Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default)
             => Task.FromResult<IReadOnlyList<OutputItem>>(Array.Empty<OutputItem>());
         public Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default)

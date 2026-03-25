@@ -30,7 +30,7 @@ public class Sample_CodeInterpreter : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_CreateAgent_CodeInterpreter_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a personal math tutor. When asked a math question, write and run code using the python tool to answer the question.",
             Tools = {
@@ -77,7 +77,7 @@ public class Sample_CodeInterpreter : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_CreateAgent_CodeInterpreter_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
             Tools = {

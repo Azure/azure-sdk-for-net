@@ -83,6 +83,10 @@ These principles govern **all** work under `sdk/agentserver/`, across every prot
 
 | Project | Path | Description |
 |---|---|---|
+| **Hosting** | `Azure.AI.AgentServer.Hosting/src/` | Shared hosting foundation: AgentServer, AgentServerBuilder, OpenTelemetry, server user-agent header, health endpoint |
+| **Hosting Tests** | `Azure.AI.AgentServer.Hosting/tests/` | NUnit tests for Hosting |
+| **Invocations** | `Azure.AI.AgentServer.Invocations/src/` | Invocations protocol library: InvocationHandler, session resolution, client header forwarding |
+| **Invocations Tests** | `Azure.AI.AgentServer.Invocations/tests/` | NUnit tests for Invocations |
 | **Responses.Contracts** | `Azure.AI.AgentServer.Responses.Contracts/src/` | TypeSpec-generated model contracts for Responses protocol |
 | **Responses** | `Azure.AI.AgentServer.Responses/src/` | Responses protocol library (hosting extensions, streaming, handlers) |
 | **Responses Tests** | `Azure.AI.AgentServer.Responses/tests/` | NUnit tests for Responses protocol |
@@ -97,6 +101,8 @@ Each protocol has its own `AGENTS.md` with protocol-specific contract compliance
 
 | Protocol | AGENTS.md | Status |
 |---|---|---|
+| **Hosting** | Covered by this top-level AGENTS.md | Active |
+| **Invocations** | Covered by this top-level AGENTS.md | Active |
 | **Responses** | [Azure.AI.AgentServer.Responses/AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/AGENTS.md) | Active |
 
 > When adding a new protocol, create an `AGENTS.md` in the protocol project directory following the same structure.

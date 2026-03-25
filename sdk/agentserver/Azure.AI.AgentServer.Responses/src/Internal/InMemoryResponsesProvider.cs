@@ -363,7 +363,7 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
     };
 
     /// <summary>
-    /// Extracts output items from <see cref="Response.Output"/>, stores new ones in the item store,
+    /// Extracts output items from <see cref="Models.Response.Output"/>, stores new ones in the item store,
     /// and updates the output item ID list for the response.
     /// </summary>
     private void StoreOutputItems(Models.Response response)

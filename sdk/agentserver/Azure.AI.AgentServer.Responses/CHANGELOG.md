@@ -10,3 +10,4 @@
 - Streaming event builder pattern for real-time SSE responses.
 - Built-in in-memory response provider and execution tracking.
 - Support for default, streaming, background, and streaming+background response modes.
+- Protocol identity registration with `ServerUserAgentRegistry` during route mapping.

@@ -37,7 +37,7 @@ public class Sample_BingGrounding : ProjectsOpenAITestBase
             searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
             )
         );
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent.",
             Tools = { bingGroundingAgentTool, }
@@ -84,7 +84,7 @@ public class Sample_BingGrounding : ProjectsOpenAITestBase
             searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
             )
         );
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent.",
             Tools = { bingGroundingAgentTool, }

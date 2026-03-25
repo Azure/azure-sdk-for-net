@@ -53,7 +53,7 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
         toolDefinition.Description = "Trip Advisor API to get travel information.";
         OpenAPITool openapiTool = new(toolDefinition);
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
             Tools = {openapiTool}
@@ -108,7 +108,7 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
         toolDefinition.Description = "Trip Advisor API to get travel information.";
         OpenAPITool openapiTool = new(toolDefinition);
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
             Tools = { openapiTool }

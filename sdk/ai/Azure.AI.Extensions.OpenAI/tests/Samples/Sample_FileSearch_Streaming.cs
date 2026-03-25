@@ -89,7 +89,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         VectorStore vectorStore = await projectClient.OpenAI.VectorStores.CreateVectorStoreAsync(options);
         #endregion
         #region Snippet:Sample_CreateAgent_FileSearch_Streaming_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
             Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
@@ -164,7 +164,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         VectorStore vectorStore = projectClient.OpenAI.VectorStores.CreateVectorStore(options);
         #endregion
         #region Snippet:Sample_CreateAgent_FileSearch_Streaming_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
             Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }

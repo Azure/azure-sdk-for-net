@@ -10,3 +10,12 @@ __pycache__/
 
 # npm
 package-lock.json
+
+# Copilot + Spec Kit — local-only files (never committed)
+# Bootstrap with: ./scripts/Bootstrap-Copilot.ps1
+.specify/
+.speckit/
+.github/
+specs/
+
+.specs/

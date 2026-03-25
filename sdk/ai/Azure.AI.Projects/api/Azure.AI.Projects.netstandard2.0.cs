@@ -83,7 +83,7 @@ namespace Azure.AI.Projects
         public AIProjectClient(Azure.AI.Projects.AIProjectClientSettings settings) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.AIProjectClientOptions options) : base (default(int)) { }
-        public virtual Azure.AI.Projects.Agents.AgentsClient Agents { get { throw null; } }
+        public virtual Azure.AI.Projects.Agents.AgentAdministrationClient Agents { get { throw null; } }
         public virtual Azure.AI.Projects.AIProjectConnectionsOperations Connections { get { throw null; } }
         public virtual Azure.AI.Projects.AIProjectDatasetsOperations Datasets { get { throw null; } }
         public virtual Azure.AI.Projects.AIProjectDeploymentsOperations Deployments { get { throw null; } }

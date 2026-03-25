@@ -1,6 +1,12 @@
-# Sample 3: Conversation History
+# Sample 3: Conversation History — Study Tutor
 
-This sample shows how to use `IResponseContext.GetHistoryAsync()` to resolve prior conversation turns and build multi-turn conversational flows using `previous_response_id`.
+This sample builds a study tutor agent that uses `IResponseContext.GetHistoryAsync()` to resolve prior conversation turns. The tutor references previous exchanges to give contextual follow-up answers, demonstrating multi-turn conversational flows using `previous_response_id`.
+
+## Prerequisites
+
+```dotnetcli
+dotnet add package Azure.AI.AgentServer.Responses --prerelease
+```
 
 ## Implement the handler
 
@@ -9,7 +15,7 @@ using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 
-public class ConversationHandler : IResponseHandler
+public class StudyTutorHandler : IResponseHandler
 {
     public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
@@ -24,15 +30,16 @@ public class ConversationHandler : IResponseHandler
         // Resolve conversation history from previous responses.
         // Returns empty list if no previous_response_id is set.
         var history = await context.GetHistoryAsync(cancellationToken);
-        var inputItems = await context.GetInputItemsAsync(cancellationToken);
 
         var currentInput = request.GetInputText();
         var turnNumber = history.OfType<OutputItemOutputMessage>().Count() + 1;
 
+        // In a real agent, pass the history + current question to a model.
         string reply;
         if (history.Count == 0)
         {
-            reply = $"[Turn 1] No history. You said: \"{currentInput}\"";
+            reply = $"Welcome! I'm your study tutor. You asked: \"{currentInput}\". " +
+                    "Let me help you understand that topic.";
         }
         else
         {
@@ -41,9 +48,9 @@ public class ConversationHandler : IResponseHandler
                 .OfType<OutputMessageContentOutputTextContent>()
                 .FirstOrDefault()?.Text ?? "(none)";
 
-            reply = $"[Turn {turnNumber}] History has {history.Count} item(s). " +
-                    $"Last assistant message: \"{lastText}\". " +
-                    $"You said: \"{currentInput}\"";
+            reply = $"[Turn {turnNumber}] Building on our previous discussion " +
+                    $"(last answer: \"{lastText[..Math.Min(50, lastText.Length)]}...\"), " +
+                    $"you asked: \"{currentInput}\".";
         }
 
         var message = stream.AddOutputItemMessage();
@@ -63,21 +70,20 @@ public class ConversationHandler : IResponseHandler
 }
 ```
 
-## Configure the server
+## Start the server
+
+This sample uses the Tier 2 builder pattern to configure `DefaultFetchHistoryCount`:
 
 ```csharp
-var builder = WebApplication.CreateBuilder(args);
+using Azure.AI.AgentServer.Hosting;
+using Azure.AI.AgentServer.Responses;
 
-// DefaultFetchHistoryCount controls how many prior items are resolved (default: 100).
-builder.Services.AddResponsesServer(options =>
+var builder = AgentServer.CreateBuilder(args);
+builder.AddResponses<StudyTutorHandler>(options =>
 {
     options.DefaultFetchHistoryCount = 20;
 });
-
-builder.Services.AddSingleton<IResponseHandler, ConversationHandler>();
-
 var app = builder.Build();
-app.MapResponsesServer();
 app.Run();
 ```
 
@@ -86,9 +92,9 @@ app.Run();
 ### Turn 1 — initial message (no history)
 
 ```bash
-curl -X POST http://localhost:5000/responses \
+curl -X POST http://localhost:8088/responses \
   -H "Content-Type: application/json" \
-  -d '{"model": "test", "input": "Hello, I am Alice."}' \
+  -d '{"model": "tutor", "input": "Explain photosynthesis."}' \
   --no-buffer
 ```
 
@@ -97,13 +103,13 @@ Extract the response `id` from the JSON response for the next turn.
 ### Turn 2 — chain via `previous_response_id`
 
 ```bash
-curl -X POST http://localhost:5000/responses \
+curl -X POST http://localhost:8088/responses \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "test",
-    "input": "What is 2 + 2?",
+    "model": "tutor",
+    "input": "What role does chlorophyll play in that process?",
     "previous_response_id": "<RESPONSE_1_ID>"
   }' --no-buffer
 ```
 
-The handler sees Turn 1 history and reports the turn number and previous assistant message.
+The tutor sees Turn 1 history and builds on the previous answer about photosynthesis.

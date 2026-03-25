@@ -25,4 +25,12 @@ namespace ProvisioningTypeSpec {
     v2024_04_01: "2024-04-01",
     v2024_05_01: "2024-05-01",
   }
+
+  // Test that SubResource inside a list is correctly resolved to Azure.Provisioning.Resources.SubResource
+  @@alternateType(ConfigurationStoreProperties.linkedResources, Azure.ResourceManager.Models.SubResource[], "csharp");
+}
+
+// Dummy models to test alternateType replacement with SubResource
+namespace Azure.ResourceManager.Models {
+  model SubResource { }
 }

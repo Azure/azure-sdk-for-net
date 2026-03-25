@@ -54,6 +54,8 @@ namespace Azure.AI.AnomalyDetector
     public partial class AnomalyDetectorClient
     {
         protected AnomalyDetectorClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public AnomalyDetectorClient(Azure.AI.AnomalyDetector.AnomalyDetectorClientSettings settings) { }
         public AnomalyDetectorClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public AnomalyDetectorClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -67,6 +69,14 @@ namespace Azure.AI.AnomalyDetector
         {
             V1_1 = 1,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class AnomalyDetectorClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public AnomalyDetectorClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class AnomalyDetectorModelFactory
     {

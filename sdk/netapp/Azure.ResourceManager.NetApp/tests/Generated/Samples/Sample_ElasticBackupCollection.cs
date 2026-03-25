@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ElasticBackupsCreateOrUpdate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/ElasticBackups_CreateOrUpdate.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/ElasticBackups_CreateOrUpdate.json
             // this example is just showing the usage of "ElasticBackups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ElasticBackupsGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/ElasticBackups_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/ElasticBackups_Get.json
             // this example is just showing the usage of "ElasticBackups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ElasticBackupsListByVault()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/ElasticBackups_ListByVault.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/ElasticBackups_ListByVault.json
             // this example is just showing the usage of "ElasticBackups_ListByVault" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ElasticBackupsGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/ElasticBackups_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/ElasticBackups_Get.json
             // this example is just showing the usage of "ElasticBackups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ElasticBackupsGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/ElasticBackups_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/ElasticBackups_Get.json
             // this example is just showing the usage of "ElasticBackups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -4,6 +4,7 @@
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
 
@@ -30,15 +31,21 @@ internal sealed class ResponseContextImpl : IResponseContext
     /// <param name="request">The create-response request containing input items.</param>
     /// <param name="options">Server options for configuration values like history limit.</param>
     /// <param name="rawBody">The full raw JSON request body, or <c>default</c> if not available.</param>
+    /// <param name="clientHeaders">Forwarded <c>x-client-*</c> headers, or <c>null</c> for empty.</param>
+    /// <param name="queryParameters">Query parameters from the request, or <c>null</c> for empty.</param>
     public ResponseContextImpl(
         string responseId,
         IResponsesProvider provider,
         CreateResponse request,
         IOptions<ResponsesServerOptions>? options = null,
-        JsonElement rawBody = default)
+        JsonElement rawBody = default,
+        IReadOnlyDictionary<string, string>? clientHeaders = null,
+        IReadOnlyDictionary<string, StringValues>? queryParameters = null)
     {
         ResponseId = responseId;
         RawBody = rawBody;
+        ClientHeaders = clientHeaders ?? new Dictionary<string, string>();
+        QueryParameters = queryParameters ?? new Dictionary<string, StringValues>();
         _provider = provider;
         _request = request;
         _historyLimit = options?.Value.DefaultFetchHistoryCount ?? ResponsesServerOptions.DefaultFetchHistoryCountValue;
@@ -55,6 +62,12 @@ internal sealed class ResponseContextImpl : IResponseContext
 
     /// <inheritdoc/>
     public bool IsShutdownRequested { get; set; }
+
+    /// <inheritdoc/>
+    public IReadOnlyDictionary<string, string> ClientHeaders { get; }
+
+    /// <inheritdoc/>
+    public IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
 
     /// <inheritdoc/>
     public Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default)

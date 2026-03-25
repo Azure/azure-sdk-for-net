@@ -6,22 +6,19 @@ namespace Azure.AI.AgentServer.Responses.Tests.PublicApi;
 public class ResponsesServerOptionsTests
 {
     [Test]
-    public void DefaultSseKeepAliveInterval_IsDisabled()
+    public void DefaultFetchHistoryCount_Is100()
     {
         var options = new ResponsesServerOptions();
 
-        Assert.That(options.SseKeepAliveInterval, Is.EqualTo(Timeout.InfiniteTimeSpan));
+        Assert.That(options.DefaultFetchHistoryCount, Is.EqualTo(100));
     }
 
     [Test]
-    public void SseKeepAliveInterval_CanBeSetToPositiveValue()
+    public void DefaultModel_IsNull()
     {
-        var options = new ResponsesServerOptions
-        {
-            SseKeepAliveInterval = TimeSpan.FromSeconds(15),
-        };
+        var options = new ResponsesServerOptions();
 
-        Assert.That(options.SseKeepAliveInterval, Is.EqualTo(TimeSpan.FromSeconds(15)));
+        Assert.That(options.DefaultModel, Is.Null);
     }
 }
 

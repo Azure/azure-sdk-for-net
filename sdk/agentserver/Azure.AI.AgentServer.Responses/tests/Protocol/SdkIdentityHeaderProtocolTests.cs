@@ -4,6 +4,7 @@
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using Azure.AI.AgentServer.Hosting;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
@@ -12,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 /// <summary>
 /// Protocol conformance tests for the SDK identity response header (US1).
 /// Validates that every HTTP response includes an <c>x-platform-server</c> header
-/// with value <c>azure-ai-agentserver-responses/{version} (dotnet/{runtime-version})</c>.
+/// composed of hosting identity + protocol identity segments.
 /// </summary>
 public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
 {
@@ -127,7 +128,7 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
     {
         using var factory = new TestWebApplicationFactory(
             handler: Handler,
-            configureOptions: opts => opts.AdditionalServerIdentity = "my-app/1.0");
+            configureHostOptions: opts => opts.AdditionalServerIdentity = "my-app/1.0");
         using var client = factory.CreateClient();
 
         var content = new StringContent(
@@ -139,22 +140,26 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
         Assert.That(response.Headers.Contains(HeaderName), Is.True);
 
         var value = response.Headers.GetValues(HeaderName).Single();
+        XAssert.Contains("azure-ai-agentserver/", value);
         XAssert.Contains("azure-ai-agentserver-responses/", value);
         XAssert.EndsWith("; my-app/1.0", value);
     }
 
-    // ── T009: AdditionalServerIdentity null — no append ────────
+    // ── T009: AdditionalServerIdentity null — no extra append ──
 
     [Test]
-    public async Task POST_Responses_WithNullAdditionalServerIdentity_NoAppend()
+    public async Task POST_Responses_WithNullAdditionalServerIdentity_NoExtraAppend()
     {
-        // Default (no AdditionalServerIdentity) — header is just the SDK identity
+        // Default (no AdditionalServerIdentity) — header has hosting + protocol segments only
         var response = await PostResponsesAsync(new { model = "test" });
 
         Assert.That(response.Headers.Contains(HeaderName), Is.True);
         var value = response.Headers.GetValues(HeaderName).Single();
+        XAssert.Contains("azure-ai-agentserver/", value);
         XAssert.Contains("azure-ai-agentserver-responses/", value);
-        XAssert.DoesNotContain("; ", value);
+        // Exactly 2 segments: hosting + protocol (no additional identity)
+        var segments = value.Split("; ");
+        Assert.That(segments, Has.Length.EqualTo(2));
     }
 
     // ── T010: Composability — existing header + SDK append ─────
@@ -181,24 +186,25 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
     // ── Assertion Helpers ──────────────────────────────────────
 
     /// <summary>
-    /// Asserts the identity header value matches the format:
-    /// <c>azure-ai-agentserver-responses/{version} (dotnet/{runtime-version})</c>
+    /// Asserts the identity header value contains both hosting and protocol identity segments
+    /// in the format: <c>azure-ai-agentserver/{version} (dotnet/{runtime}); azure-ai-agentserver-responses/{version} (dotnet/{runtime})</c>
     /// </summary>
     private static void AssertIdentityHeaderFormat(string headerValue)
     {
-        // May contain a prefix from another layer, separated by "; "
-        // The SDK's portion should always be present
+        // Header must contain both hosting and protocol identity segments
+        XAssert.Contains("azure-ai-agentserver/", headerValue);
         XAssert.Contains("azure-ai-agentserver-responses/", headerValue);
         XAssert.Contains("(dotnet/", headerValue);
         XAssert.EndsWith(")", headerValue);
 
-        // Extract the SDK identity portion (last component if composable)
-        var sdkPortion = headerValue.Contains("; ")
-            ? headerValue[(headerValue.LastIndexOf("; ", StringComparison.Ordinal) + 2)..]
-            : headerValue;
+        // Extract the protocol portion (second segment)
+        var segments = headerValue.Split("; ");
+        Assert.That(segments.Length, Is.GreaterThanOrEqualTo(2), "Header must have at least hosting + protocol segments");
+
+        var protocolSegment = segments.First(s => s.StartsWith("azure-ai-agentserver-responses/"));
 
         // Verify format: azure-ai-agentserver-responses/{version} (dotnet/{runtime-version})
-        XAssert.Matches(@"^azure-ai-agentserver-responses/\S+ \(dotnet/\d+\.\d+(\.\d+)?\)$", sdkPortion);
+        XAssert.Matches(@"^azure-ai-agentserver-responses/\S+ \(dotnet/\d+\.\d+\)$", protocolSegment);
     }
 
     // ── Helper event factories ─────────────────────────────────

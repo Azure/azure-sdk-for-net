@@ -209,10 +209,12 @@ public interface IResponseContext
     JsonElement RawBody { get; }
     Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default);
     Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default);
+    IReadOnlyDictionary<string, string> ClientHeaders { get; }
+    IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
 }
 ```
 
-Provides the library-generated response ID, shutdown signalling, and access to resolved input and history items.
+Provides the library-generated response ID, shutdown signalling, access to resolved input and history items, forwarded client headers, and query parameters from the original request.
 
 #### Input Items — `GetInputItemsAsync()`
 
@@ -247,6 +249,53 @@ var history = await context.GetHistoryAsync(ct);
 - **Ascending order** — items are returned oldest-first (ascending by position).
 - **Configurable limit** — controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: 100).
 - **Lazy singleton** — computed once and cached, like `GetInputItemsAsync`.
+
+#### Client Headers — `ClientHeaders`
+
+Returns `x-client-*` prefixed headers forwarded from the original HTTP request. These headers enable end-to-end tracing context and client metadata to flow through the server:
+
+```csharp
+public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    CreateResponse request, IResponseContext context, CancellationToken ct)
+{
+    // Access forwarded client headers (e.g., x-client-request-id, x-client-trace-id)
+    var clientHeaders = context.ClientHeaders;
+
+    if (clientHeaders.TryGetValue("x-client-request-id", out var requestId))
+    {
+        // Use the client's request ID for correlation
+    }
+
+    // ... emit events
+}
+```
+
+- **Prefix filtering**: Only headers with the `x-client-` prefix are included.
+- **Read-only**: The dictionary is immutable — values cannot be modified by the handler.
+- **Empty if no matching headers**: Returns an empty dictionary when the request contains no `x-client-*` headers.
+
+#### Query Parameters — `QueryParameters`
+
+Returns all query parameters from the original HTTP request:
+
+```csharp
+public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    CreateResponse request, IResponseContext context, CancellationToken ct)
+{
+    var queryParams = context.QueryParameters;
+
+    if (queryParams.TryGetValue("model_override", out var modelOverride))
+    {
+        // Use a custom query parameter for handler logic
+    }
+
+    // ... emit events
+}
+```
+
+- **All query parameters**: Unlike `ClientHeaders`, this includes all query string key-value pairs, not just prefixed ones.
+- **Multi-valued**: Values are `StringValues`, supporting multiple values for the same key.
+- **Read-only**: The dictionary is immutable.
 
 #### ID Generation Extensions
 
@@ -791,6 +840,37 @@ See [Token Usage (B33)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk
 
 ## Server Registration
 
+### Tier 1: One-Line Startup (Recommended)
+
+The simplest way to start a Responses server is with the `Azure.AI.AgentServer.Hosting` package:
+
+```csharp
+using Azure.AI.AgentServer.Hosting;
+using Azure.AI.AgentServer.Responses;
+
+AgentServer.Run<MyHandler>(args);
+```
+
+This creates a Kestrel host with OpenTelemetry, health checks, identity headers, and the Responses protocol endpoints — all in one line.
+
+### Tier 2: Builder Pattern
+
+For more control over the host configuration:
+
+```csharp
+using Azure.AI.AgentServer.Hosting;
+using Azure.AI.AgentServer.Responses;
+
+var builder = AgentServer.CreateBuilder(args);
+builder.AddResponses<MyHandler>();
+var app = builder.Build();
+app.Run();
+```
+
+### Manual Setup (Without Hosting)
+
+If you don't use the Hosting package, register services and map endpoints directly:
+
 ### Basic Setup
 
 ```csharp
@@ -803,7 +883,7 @@ builder.Services.AddSingleton<IResponseHandler, MyHandler>();
 ```csharp
 builder.Services.AddResponsesServer(options =>
 {
-    options.SseKeepAliveInterval = TimeSpan.FromSeconds(15); // SSE keep-alive (default: disabled)
+    options.DefaultFetchHistoryCount = 50; // Limit history resolution (default: 100)
 });
 
 // Configure in-memory provider TTLs separately
@@ -866,9 +946,15 @@ For multi-instance or durable scenarios, see [Library Behavioural Specification 
 
 | Option | Type | Default | Description |
 |---|---|---|---|
-| `SseKeepAliveInterval` | `TimeSpan` | Disabled (`Timeout.InfiniteTimeSpan`) | Interval between SSE keep-alive comments. Opt-in via code or `SSE_KEEPALIVE_INTERVAL` env var (seconds). See [SSE Keep-Alive](#sse-keep-alive) |
 | `DefaultModel` | `string?` | `null` | Default model when `model` is omitted from `CreateResponse`. Falls back to `""` if null |
 | `DefaultFetchHistoryCount` | `int` | `100` | Maximum number of history items to resolve when `GetHistoryAsync()` is called. Controls the `limit` parameter passed to `IResponsesProvider.GetHistoryItemIdsAsync` |
+
+**Platform environment variables** (read once at startup via `FoundryEnvironment`):
+
+| Variable | Default | Description |
+|---|---|---|
+| `SSE_KEEPALIVE_INTERVAL` | Disabled | Interval (in seconds) between SSE keep-alive comments. See [SSE Keep-Alive](#sse-keep-alive) |
+| `PORT` | `8088` | HTTP listen port for the Kestrel server |
 
 **In-memory provider options** (`InMemoryProviderOptions` — separate from `ResponsesServerOptions`):
 
@@ -902,13 +988,17 @@ This happens transparently — no handler code is needed.
 
 ### Library Identity Header
 
-The server automatically adds an `x-platform-server` identity header to all responses. To append custom identity information, use the server options:
+The server automatically adds an `x-platform-server` identity header to all responses via the `ServerUserAgentMiddleware` in the Hosting package. Each protocol registers its own identity segment (e.g., `azure-ai-agentserver-responses/{version}`) with the `ServerUserAgentRegistry` during route mapping. To append custom identity information, use the hosting options:
 
 ```csharp
-builder.Services.AddResponsesServer(options =>
+var builder = AgentServer.CreateBuilder(args);
+builder.Configure(options =>
 {
     options.AdditionalServerIdentity = "my-app/1.0";
 });
+builder.AddResponses<MyHandler>();
+var app = builder.Build();
+app.Run();
 ```
 
 See [Server Identity Header (B19)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
@@ -1060,20 +1150,13 @@ See [Event Stream Replay Availability (B35)](https://github.com/Azure/azure-sdk-
 
 The server can send periodic keep-alive comments during SSE streaming to prevent reverse proxies from closing idle connections. Disabled by default.
 
-**Enable via code**:
-
-```csharp
-builder.Services.AddResponsesServer(options =>
-{
-    options.SseKeepAliveInterval = TimeSpan.FromSeconds(15);
-});
-```
-
 **Enable via environment variable**:
 
 ```bash
 export SSE_KEEPALIVE_INTERVAL=15
 ```
+
+This is a platform-controlled setting read once at startup via `FoundryEnvironment.SseKeepAliveInterval`.
 
 The `X-Accel-Buffering: no` response header is automatically set on SSE streams to disable nginx buffering.
 

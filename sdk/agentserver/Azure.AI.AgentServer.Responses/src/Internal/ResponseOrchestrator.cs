@@ -77,7 +77,7 @@ internal sealed class ResponseOrchestrator
     /// </param>
     /// <returns>
     /// An <see cref="OrchestratorResult"/> — either
-    /// <see cref="OrchestratorResult.Completed(Response)"/> or
+    /// <see cref="OrchestratorResult.Completed(Models.Response)"/> or
     /// <see cref="OrchestratorResult.Streaming(IAsyncEnumerable{ResponseStreamEvent})"/>.
     /// </returns>
     public async Task<OrchestratorResult> CreateAsync(

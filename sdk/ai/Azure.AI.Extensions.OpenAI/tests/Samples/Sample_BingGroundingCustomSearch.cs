@@ -39,7 +39,7 @@ public class Sample_CustomBingSearch : ProjectsOpenAITestBase
             searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
             )
         );
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent.",
             Tools = { customBingSearchAgentTool, }
@@ -87,7 +87,7 @@ public class Sample_CustomBingSearch : ProjectsOpenAITestBase
             searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
             )
         );
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent.",
             Tools = { customBingSearchAgentTool, }

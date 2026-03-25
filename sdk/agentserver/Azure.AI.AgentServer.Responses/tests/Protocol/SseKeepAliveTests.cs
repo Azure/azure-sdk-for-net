@@ -3,6 +3,7 @@
 
 using System.Runtime.CompilerServices;
 using System.Text;
+using Azure.AI.AgentServer.Hosting;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
@@ -10,11 +11,25 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// Protocol tests for User Story 5 — SSE Keep-Alive Disabled by Default.
-/// Verifies FR-020 (no keep-alive by default) and FR-021 (opt-in via configuration).
+/// Verifies FR-020 (no keep-alive by default) and FR-021 (opt-in via env var).
 /// </summary>
 public class SseKeepAliveTests : IDisposable
 {
     private readonly TestHandler _handler = new();
+    private string? _previousSseEnv;
+
+    [SetUp]
+    public void SetUp()
+    {
+        _previousSseEnv = Environment.GetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL");
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", _previousSseEnv);
+        FoundryEnvironment.Reload();
+    }
 
     // ═══════════════════════════════════════════════════════════════════════
     // T051: Default configuration — SSE stream contains no keep-alive comments
@@ -24,6 +39,9 @@ public class SseKeepAliveTests : IDisposable
     public async Task Default_NoKeepAliveCommentsInSseStream()
     {
         // Arrange: default configuration (SseKeepAliveInterval = Timeout.InfiniteTimeSpan)
+        Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", null);
+        FoundryEnvironment.Reload();
+
         _handler.EventFactory = (req, ctx, ct) => SlowStream(ctx, delay: TimeSpan.FromMilliseconds(200), ct);
         using var factory = new TestWebApplicationFactory(_handler);
         using var client = factory.CreateClient();
@@ -49,14 +67,12 @@ public class SseKeepAliveTests : IDisposable
     [Test]
     public async Task ConfiguredKeepAlive_KeepAliveCommentsPresent()
     {
-        // Arrange: 100ms keep-alive interval with a handler that takes 500ms
-        _handler.EventFactory = (req, ctx, ct) => SlowStream(ctx, delay: TimeSpan.FromMilliseconds(500), ct);
-        using var factory = new TestWebApplicationFactory(
-            _handler,
-            configureOptions: opts =>
-            {
-                opts.SseKeepAliveInterval = TimeSpan.FromMilliseconds(100);
-            });
+        // Arrange: set env var for 1-second keep-alive, handler takes 3 seconds
+        Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", "1");
+        FoundryEnvironment.Reload();
+
+        _handler.EventFactory = (req, ctx, ct) => SlowStream(ctx, delay: TimeSpan.FromSeconds(3), ct);
+        using var factory = new TestWebApplicationFactory(_handler);
         using var client = factory.CreateClient();
 
         // Act: create a streaming response

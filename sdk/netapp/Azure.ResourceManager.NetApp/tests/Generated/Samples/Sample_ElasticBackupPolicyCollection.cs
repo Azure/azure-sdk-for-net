@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ElasticBackupPoliciesCreateOrUpdate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/ElasticBackupPolicies_CreateOrUpdate.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/ElasticBackupPolicies_CreateOrUpdate.json
             // this example is just showing the usage of "ElasticBackupPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ElasticBackupPoliciesGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/ElasticBackupPolicies_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/ElasticBackupPolicies_Get.json
             // this example is just showing the usage of "ElasticBackupPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ElasticBackupPoliciesListByElasticAccount()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/ElasticBackupPolicies_List.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/ElasticBackupPolicies_List.json
             // this example is just showing the usage of "ElasticBackupPolicies_ListByElasticAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ElasticBackupPoliciesGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/ElasticBackupPolicies_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/ElasticBackupPolicies_Get.json
             // this example is just showing the usage of "ElasticBackupPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ElasticBackupPoliciesGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/ElasticBackupPolicies_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/ElasticBackupPolicies_Get.json
             // this example is just showing the usage of "ElasticBackupPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

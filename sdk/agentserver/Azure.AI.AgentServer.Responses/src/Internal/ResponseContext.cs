@@ -3,6 +3,7 @@
 
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
+using Microsoft.Extensions.Primitives;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
 
@@ -38,4 +39,12 @@ internal sealed class ResponseContext : IResponseContext
     /// <inheritdoc/>
     public Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default)
         => Task.FromResult<IReadOnlyList<OutputItem>>(Array.Empty<OutputItem>());
+
+    /// <inheritdoc/>
+    public IReadOnlyDictionary<string, string> ClientHeaders { get; }
+        = new Dictionary<string, string>();
+
+    /// <inheritdoc/>
+    public IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
+        = new Dictionary<string, StringValues>();
 }

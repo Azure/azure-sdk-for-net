@@ -40,7 +40,7 @@
     <PackageVersion Include="Azure.ResourceManager.Compute" Version="1.13.0" />
     <PackageVersion Include="Azure.ResourceManager.ExtendedLocations" Version="1.1.0-beta.1" />
     <PackageVersion Include="Azure.ResourceManager.PrivateDns" Version="1.2.1" />
-    <PackageVersion Include="Azure.ResourceManager.RecoveryServices" Version="1.2.0-beta.1" />
+    <PackageVersion Include="Azure.ResourceManager.RecoveryServices" Version="1.2.0" />
     <PackageVersion Include="Castle.Core" Version="$(CastleCoreVersion)" />
     <PackageVersion Include="CloudNative.CloudEvents.SystemTextJson" Version="$(CloudNativeCloudEventsSystemTextJsonVersion)" />
     <PackageVersion Include="CommandLineParser" Version="2.9.1" />

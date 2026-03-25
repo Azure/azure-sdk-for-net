@@ -1,6 +1,12 @@
-# Sample 4: Multi-Output Handling
+# Sample 4: Multi-Output — Math Problem Solver with Reasoning
 
-This sample shows how to produce multiple output items in a single response — a reasoning item followed by a text message. Demonstrates sequential output indices and mixed output types.
+This sample builds a math problem solver that shows its work. The agent emits a **reasoning** item (the thought process) followed by a **message** item (the final answer). This demonstrates streaming multiple output types in a single response.
+
+## Prerequisites
+
+```dotnetcli
+dotnet add package Azure.AI.AgentServer.Responses --prerelease
+```
 
 ## Implement the handler
 
@@ -9,7 +15,7 @@ using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 
-public class MultiOutputHandler : IResponseHandler
+public class MathSolverHandler : IResponseHandler
 {
     public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
@@ -18,32 +24,40 @@ public class MultiOutputHandler : IResponseHandler
     {
         await Task.CompletedTask;
         var stream = new ResponseEventStream(context, request);
+        var question = request.GetInputText();
 
         yield return stream.EmitCreated();
         yield return stream.EmitInProgress();
 
-        // Output item 0: Reasoning
+        // Output item 0: Reasoning — show the thought process.
         var reasoning = stream.AddOutputItemReasoningItem();
         yield return reasoning.EmitAdded();
 
         var summary = reasoning.AddSummaryPart();
         yield return summary.EmitAdded();
-        yield return summary.EmitTextDelta("Let me think about this...");
-        yield return summary.EmitTextDone("Let me think about this...");
+
+        // In a real agent, this would be the model’s chain-of-thought.
+        var thought = $"The user asked: \"{question}\". " +
+                      "I need to identify the mathematical operation, " +
+                      "compute the result, and explain the steps.";
+        yield return summary.EmitTextDelta(thought);
+        yield return summary.EmitTextDone(thought);
         yield return summary.EmitDone();
         reasoning.EmitSummaryPartDone(summary);
 
         yield return reasoning.EmitDone();
 
-        // Output item 1: Message with text content
+        // Output item 1: Message — the final answer.
         var message = stream.AddOutputItemMessage();
         yield return message.EmitAdded();
 
         var text = message.AddTextContent();
         yield return text.EmitAdded();
 
-        yield return text.EmitDelta("Here is my answer.");
-        yield return text.EmitDone("Here is my answer.");
+        var answer = "The answer is 42. Here’s how: " +
+                     "6 × 7 = 42. The multiplication of 6 and 7 gives 42.";
+        yield return text.EmitDelta(answer);
+        yield return text.EmitDone(answer);
 
         yield return message.EmitContentDone(text);
         yield return message.EmitDone();
@@ -53,30 +67,21 @@ public class MultiOutputHandler : IResponseHandler
 }
 ```
 
-## Configure the server
+## Start the server
 
 ```csharp
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddResponsesServer();
-builder.Services.AddSingleton<IResponseHandler, MultiOutputHandler>();
-
-var app = builder.Build();
-app.MapResponsesServer();
-app.Run();
+AgentServer.Run<MathSolverHandler>(args);
 ```
 
 ## Test the endpoint
 
 ```bash
-curl -X POST http://localhost:5000/responses \
+curl -X POST http://localhost:8088/responses \
   -H "Content-Type: application/json" \
-  -d '{"model": "test", "stream": true}' \
+  -d '{"model": "math", "input": "What is 6 times 7?"}' \
   --no-buffer
 ```
 
 The SSE stream will contain events for two output items in sequence:
-1. A **reasoning** item (output index 0) with a summary part
-2. A **message** item (output index 1) with text content
-
-In non-streaming mode, the response JSON includes both items in the `output` array.
+1. A **reasoning** item (output index 0) — the agent’s thought process
+2. A **message** item (output index 1) — the final answer with explanation
