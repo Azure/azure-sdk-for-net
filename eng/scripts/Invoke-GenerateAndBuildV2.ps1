@@ -87,10 +87,17 @@ function Test-DpgSdkUsingNewGenerator {
     }
 
     $tspConfigContent = Get-Content $tspConfigFile -Raw
-    $isNewDpgEmitter = $tspConfigContent -match '@azure-typespec/http-client-csharp'
     $tspLocationContent = Get-Content $tspLocationFile -Raw
-    $hasNewEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*"?eng/azure-typespec-http-client-csharp-emitter-package.json"?'
-    return ($isNewDpgEmitter -and $hasNewEmitterPackageJson)
+
+    # Check for @azure-typespec/http-client-csharp (Azure-branded emitter)
+    $isAzureDpgEmitter = $tspConfigContent -match '@azure-typespec/http-client-csharp'
+    $hasAzureEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*"?eng/azure-typespec-http-client-csharp-emitter-package.json"?'
+
+    # Check for @typespec/http-client-csharp (unbranded/core emitter)
+    $isCoreDpgEmitter = $tspConfigContent -match '@typespec/http-client-csharp'
+    $hasCoreEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*"?eng/http-client-csharp-emitter-package.json"?'
+
+    return (($isAzureDpgEmitter -and $hasAzureEmitterPackageJson) -or ($isCoreDpgEmitter -and $hasCoreEmitterPackageJson))
 }
 
 function Update-PackageVersionSuffix {
