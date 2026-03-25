@@ -572,7 +572,13 @@
               "Diagnostics": {
                 "$ref": "#/definitions/diagnostics"
               }
-            }
+            },
+            "required": [
+              "TenantId",
+              "ClientId",
+              "AzurePipelinesServiceConnectionId",
+              "AzurePipelinesSystemAccessToken"
+            ]
           }
         },
         {
@@ -1181,7 +1187,13 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "required": [
+              "TenantId",
+              "ClientId",
+              "AzurePipelinesServiceConnectionId",
+              "AzurePipelinesSystemAccessToken"
+            ]
           }
         },
         {
