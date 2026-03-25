@@ -11,31 +11,25 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 ## Add the Invocations protocol to your existing app
 
 ```C# Snippet:Hosting_Sample3_SelfHost
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder();
 
-// Your existing services.
-builder.Services.AddSingleton<MyExistingService>();
+            // Your existing services.
+            builder.Services.AddSingleton<MyExistingService>();
 
-// Register the Invocations SDK services and your handler.
-builder.Services.AddInvocationsServer();
-builder.Services.AddScoped<InvocationHandler, SummaryHandler>();
-
-// Set up OpenTelemetry yourself — the Hosting framework is not involved.
-builder.Services.AddOpenTelemetry()
-    .WithTracing(tracing => tracing
-        .AddAspNetCoreInstrumentation()
-        .AddSource("Azure.AI.AgentServer.Invocations"));
+            // Register the Invocations SDK services and your handler.
+            builder.Services.AddInvocationsServer();
+            builder.Services.AddScoped<InvocationHandler, SummaryHandler>();
 
 var app = builder.Build();
 
-// Your existing endpoints.
-app.MapGet("/", () => "My existing app");
-app.MapGet("/healthy", () => Results.Ok());
+            // Your existing endpoints.
+            app.MapGet("/", () => "My existing app");
+            app.MapGet("/healthy", () => Results.Ok());
 
-// Map the Invocations protocol endpoints.
-app.MapInvocationsServer();
+            // Map the Invocations protocol endpoints.
+            app.MapInvocationsServer();
 
-app.Run();
+            app.Run();
 ```
 
 ## Implement the handler

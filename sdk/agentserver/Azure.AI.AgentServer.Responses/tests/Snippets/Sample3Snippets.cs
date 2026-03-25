@@ -21,11 +21,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             #region Snippet:Responses_Sample3_BuilderConfig
 
-#if SNIPPET
-            var builder = AgentHost.CreateBuilder(args);
-#else
-            var builder = AgentHost.CreateBuilder();
-#endif
+var builder = AgentHost.CreateBuilder();
             builder.AddResponses<StudyTutorHandler>(options =>
             {
                 options.DefaultFetchHistoryCount = 20;

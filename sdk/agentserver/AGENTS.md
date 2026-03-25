@@ -157,6 +157,12 @@ eng/scripts/Export-API.ps1 agentserver
 
 # Update doc snippets
 eng/scripts/Update-Snippets.ps1 agentserver
+
+# Build snippets (reproduces the CI "Build snippets" step locally)
+# This defines the SNIPPET constant and verifies all #region Snippet:Name
+# code compiles. MUST be run before committing snippet changes.
+cd sdk/agentserver
+dotnet build Azure.AI.AgentServer.sln /p:BuildSnippets=true
 ```
 
 ### Regenerate Contracts (TypeSpec)
@@ -176,9 +182,11 @@ in `tsp-location.yaml`. There is no standalone `package.json` in this directory.
 ### How compiled snippets work
 
 Samples in markdown are sourced from compiled C# test files via the repo's snippet system.
-See [CONTRIBUTING.md — Updating Sample Snippets](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) for the canonical reference, including `#region Snippet:Name`, `#if SNIPPET` directives, and the `Update-Snippets.ps1` tool.
+See [CONTRIBUTING.md — Updating Sample Snippets](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) for the canonical reference, including `#region Snippet:Name` and the `Update-Snippets.ps1` tool.
 
 **Key rule:** Never edit code inside `` ```C# Snippet:Name `` fences in markdown. Edit the `.cs` source file, then run `eng/scripts/Update-Snippets.ps1 agentserver`.
+
+**No `#if SNIPPET` blocks.** CI builds snippet files with `/p:BuildSnippets=true`, which defines the `SNIPPET` preprocessor constant. Code inside `#if SNIPPET` blocks must compile in that mode, but method-scoped `using` directives and references to `args` (which only exists in top-level statements) are illegal. Instead, write snippet code that compiles directly — `AgentHost.Run<T>()` and `AgentHost.CreateBuilder()` accept optional `args` so no workaround is needed.
 
 ### `AgentHost` namespace design and global using
 
@@ -205,9 +213,12 @@ Snippet tests may reference types from **other** AgentServer packages (e.g., Inv
 
 - Mark snippet test classes with `[Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]`
 - Handler classes used as snippets go **outside** test methods as nested types wrapped in `#region Snippet:Name`
-- Server startup code goes **inside** test methods with `#if SNIPPET` / `#else` guards
+- Server startup code goes **inside** test methods wrapped in `#region Snippet:Name`
+- **Never use `#if SNIPPET`** — write code that compiles in both normal and snippet build modes
+- Use parameterless overloads (`AgentHost.Run<T>()`, `AgentHost.CreateBuilder()`) instead of passing `args`
 - Each sample markdown file gets its own `<SampleN>Snippets.cs` backing file
 - Each README gets a `ReadMeSnippets.cs` backing file
+- **Always verify locally** with `dotnet build /p:BuildSnippets=true` before committing
 
 ## 5. Analyzer Suppression Rules
 

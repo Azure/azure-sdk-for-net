@@ -21,11 +21,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             #region Snippet:Responses_Sample2_StartServer
 
-#if SNIPPET
-            AgentHost.Run<WeatherHandler>(args);
-#else
-            AgentHost.Run<WeatherHandler>(args: null);
-#endif
+AgentHost.Run<WeatherHandler>();
 
             #endregion
         }

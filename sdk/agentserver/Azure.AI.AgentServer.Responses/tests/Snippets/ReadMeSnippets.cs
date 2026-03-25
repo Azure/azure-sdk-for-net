@@ -23,11 +23,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             #region Snippet:Responses_ReadMe_ConfigureServer_Tier1
 
-#if SNIPPET
-            AgentHost.Run<EchoHandler>(args);
-#else
-            AgentHost.Run<EchoHandler>(args: null);
-#endif
+AgentHost.Run<EchoHandler>();
 
             #endregion
         }
@@ -37,11 +33,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             #region Snippet:Responses_ReadMe_ConfigureServer_Manual
 
-#if SNIPPET
-            var builder = WebApplication.CreateBuilder(args);
-#else
-            var builder = WebApplication.CreateBuilder();
-#endif
+var builder = WebApplication.CreateBuilder();
 
             builder.Services.AddResponsesServer();
             builder.Services.AddScoped<IResponseHandler, EchoHandler>();

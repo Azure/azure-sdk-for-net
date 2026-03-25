@@ -25,16 +25,16 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 Register the Invocations protocol on an `AgentHostBuilder`:
 
 ```C# Snippet:Invocations_ReadMe_Builder
-var builder = AgentHost.CreateBuilder(args);
-builder.AddInvocations<MyHandler>();
-var app = builder.Build();
-app.Run();
+var builder = AgentHost.CreateBuilder();
+            builder.AddInvocations<MyHandler>();
+            var app = builder.Build();
+            app.Run();
 ```
 
 Or use the one-line Tier 1 startup if Invocations is the only protocol:
 
 ```C# Snippet:Invocations_ReadMe_Tier1
-AgentHost.Run<MyHandler>(args);
+AgentHost.Run<MyHandler>();
 ```
 
 ### Implement a handler

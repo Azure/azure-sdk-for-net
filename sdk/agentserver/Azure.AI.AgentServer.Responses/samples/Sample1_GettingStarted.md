@@ -49,7 +49,7 @@ public class QnAHandler : IResponseHandler
 ## Start the server
 
 ```C# Snippet:Responses_Sample1_StartServer
-AgentHost.Run<QnAHandler>(args);
+AgentHost.Run<QnAHandler>();
 ```
 
 ## Test the endpoint

@@ -11,7 +11,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 ## The entire Program.cs
 
 ```C# Snippet:Hosting_Sample1_StartServer
-AgentHost.Run<QnAHandler>(args);
+AgentHost.Run<QnAHandler>();
 ```
 
 That's it. The framework configures everything else.

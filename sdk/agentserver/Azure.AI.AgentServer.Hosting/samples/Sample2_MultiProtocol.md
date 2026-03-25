@@ -14,29 +14,22 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 This example builds a customer support agent that exposes both protocols — the Responses API for streaming chat and Invocations for ticket submission:
 
 ```C# Snippet:Hosting_Sample2_Compose
-var builder = AgentHost.CreateBuilder(args);
+var builder = AgentHost.CreateBuilder();
 
-// Register the Responses protocol for streaming chat.
-builder.AddResponses<ChatHandler>();
+            // Register the Responses protocol for streaming chat.
+            builder.AddResponses<ChatHandler>();
 
-// Register the Invocations protocol for ticket submission.
-builder.AddInvocations<TicketHandler>();
+            // Register the Invocations protocol for ticket submission.
+            builder.AddInvocations<TicketHandler>();
 
-// Customize health checks — add a readiness check for the knowledge base.
-builder.ConfigureHealth(health =>
-{
-    health.AddCheck("knowledge_base", () =>
-        HealthCheckResult.Healthy());
-});
+            // Add a custom tracing source for your business logic.
+            builder.ConfigureTracing(tracing =>
+            {
+                tracing.AddSource("CustomerSupport.BusinessLogic");
+            });
 
-// Add a custom tracing source for your business logic.
-builder.ConfigureTracing(tracing =>
-{
-    tracing.AddSource("CustomerSupport.BusinessLogic");
-});
-
-var app = builder.Build();
-app.Run();
+            var app = builder.Build();
+            app.Run();
 ```
 
 ## Handler implementations

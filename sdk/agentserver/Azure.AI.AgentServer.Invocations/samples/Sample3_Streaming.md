@@ -68,7 +68,7 @@ public record CodeGenInput(string Prompt);
 ## Start the server
 
 ```C# Snippet:Invocations_Sample3_StartServer
-AgentHost.Run<CodeGenHandler>(args);
+AgentHost.Run<CodeGenHandler>();
 ```
 
 ## Test the endpoint

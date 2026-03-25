@@ -25,7 +25,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 The recommended way to start a Responses server is with the Hosting package's one-line API:
 
 ```C# Snippet:Responses_ReadMe_ConfigureServer_Tier1
-AgentHost.Run<EchoHandler>(args);
+AgentHost.Run<EchoHandler>();
 ```
 
 This starts a Kestrel server with OpenTelemetry, health checks, server user-agent headers, and your handler mapped to the Responses API endpoints. Install the `Azure.AI.AgentServer.Hosting` package for this approach.
@@ -33,14 +33,14 @@ This starts a Kestrel server with OpenTelemetry, health checks, server user-agen
 Alternatively, register the library services manually in your `Program.cs`:
 
 ```C# Snippet:Responses_ReadMe_ConfigureServer_Manual
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder();
 
-builder.Services.AddResponsesServer();
-builder.Services.AddScoped<IResponseHandler, EchoHandler>();
+            builder.Services.AddResponsesServer();
+            builder.Services.AddScoped<IResponseHandler, EchoHandler>();
 
-var app = builder.Build();
-app.MapResponsesServer();
-app.Run();
+            var app = builder.Build();
+            app.MapResponsesServer();
+            app.Run();
 ```
 
 ## Key concepts

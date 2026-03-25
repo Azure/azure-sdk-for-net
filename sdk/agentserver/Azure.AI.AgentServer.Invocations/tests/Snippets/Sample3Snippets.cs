@@ -20,11 +20,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         {
             #region Snippet:Invocations_Sample3_StartServer
 
-#if SNIPPET
-            AgentHost.Run<CodeGenHandler>(args);
-#else
-            AgentHost.Run<CodeGenHandler>(args: null);
-#endif
+AgentHost.Run<CodeGenHandler>();
 
             #endregion
         }

@@ -21,11 +21,7 @@ namespace Azure.AI.AgentServer.Hosting.Tests.Snippets
         {
             #region Snippet:Hosting_Sample1_StartServer
 
-#if SNIPPET
-            AgentHost.Run<QnAHandler>(args);
-#else
-            AgentHost.Run<QnAHandler>(args: null);
-#endif
+AgentHost.Run<QnAHandler>();
 
             #endregion
         }

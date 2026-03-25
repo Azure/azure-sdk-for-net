@@ -66,7 +66,7 @@ public class MathSolverHandler : IResponseHandler
 ## Start the server
 
 ```C# Snippet:Responses_Sample4_StartServer
-AgentHost.Run<MathSolverHandler>(args);
+AgentHost.Run<MathSolverHandler>();
 ```
 
 ## Test the endpoint

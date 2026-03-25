@@ -20,11 +20,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             #region Snippet:Responses_Sample4_StartServer
 
-#if SNIPPET
-            AgentHost.Run<MathSolverHandler>(args);
-#else
-            AgentHost.Run<MathSolverHandler>(args: null);
-#endif
+AgentHost.Run<MathSolverHandler>();
 
             #endregion
         }

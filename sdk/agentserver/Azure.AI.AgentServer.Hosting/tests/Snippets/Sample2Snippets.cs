@@ -7,7 +7,6 @@ using Azure.AI.AgentServer.Invocations;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Hosting.Tests.Snippets
@@ -24,26 +23,13 @@ namespace Azure.AI.AgentServer.Hosting.Tests.Snippets
         {
             #region Snippet:Hosting_Sample2_Compose
 
-#if SNIPPET
-            var builder = AgentHost.CreateBuilder(args);
-#else
-            var builder = AgentHost.CreateBuilder();
-#endif
+var builder = AgentHost.CreateBuilder();
 
             // Register the Responses protocol for streaming chat.
             builder.AddResponses<ChatHandler>();
 
             // Register the Invocations protocol for ticket submission.
             builder.AddInvocations<TicketHandler>();
-
-            // Customize health checks — add a readiness check for the knowledge base.
-#if SNIPPET
-            builder.ConfigureHealth(health =>
-            {
-                health.AddCheck("knowledge_base", () =>
-                    HealthCheckResult.Healthy());
-            });
-#endif
 
             // Add a custom tracing source for your business logic.
             builder.ConfigureTracing(tracing =>

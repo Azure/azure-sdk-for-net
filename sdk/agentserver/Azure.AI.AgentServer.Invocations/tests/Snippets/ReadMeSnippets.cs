@@ -20,11 +20,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         {
             #region Snippet:Invocations_ReadMe_Builder
 
-#if SNIPPET
-            var builder = AgentHost.CreateBuilder(args);
-#else
-            var builder = AgentHost.CreateBuilder();
-#endif
+var builder = AgentHost.CreateBuilder();
             builder.AddInvocations<MyHandler>();
             var app = builder.Build();
             app.Run();
@@ -37,11 +33,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         {
             #region Snippet:Invocations_ReadMe_Tier1
 
-#if SNIPPET
-            AgentHost.Run<MyHandler>(args);
-#else
-            AgentHost.Run<MyHandler>(args: null);
-#endif
+AgentHost.Run<MyHandler>();
 
             #endregion
         }

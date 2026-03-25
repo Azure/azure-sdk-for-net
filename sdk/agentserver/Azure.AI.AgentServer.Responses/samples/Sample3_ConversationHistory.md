@@ -71,13 +71,13 @@ public class StudyTutorHandler : IResponseHandler
 This sample uses the Tier 2 builder pattern to configure `DefaultFetchHistoryCount`:
 
 ```C# Snippet:Responses_Sample3_BuilderConfig
-var builder = AgentHost.CreateBuilder(args);
-builder.AddResponses<StudyTutorHandler>(options =>
-{
-    options.DefaultFetchHistoryCount = 20;
-});
-var app = builder.Build();
-app.Run();
+var builder = AgentHost.CreateBuilder();
+            builder.AddResponses<StudyTutorHandler>(options =>
+            {
+                options.DefaultFetchHistoryCount = 20;
+            });
+            var app = builder.Build();
+            app.Run();
 ```
 
 ## Test the endpoint

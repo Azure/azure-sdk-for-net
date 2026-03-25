@@ -59,7 +59,7 @@ public record TravelInput(string Message);
 ## Start the server
 
 ```C# Snippet:Invocations_Sample4_StartServer
-AgentHost.Run<TravelPlannerHandler>(args);
+AgentHost.Run<TravelPlannerHandler>();
 ```
 
 ## Test the endpoint

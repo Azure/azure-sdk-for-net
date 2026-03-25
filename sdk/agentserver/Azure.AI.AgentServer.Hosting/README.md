@@ -24,7 +24,7 @@ dotnet add package Azure.AI.AgentServer.Hosting --prerelease
 The simplest way to create an agent server is with the one-line `AgentHost.Run<THandler>()` API. You'll also need a protocol package such as `Azure.AI.AgentServer.Responses`:
 
 ```C# Snippet:Hosting_ReadMe_Tier1
-AgentHost.Run<MyHandler>(args);
+AgentHost.Run<MyHandler>();
 ```
 
 This starts a Kestrel server with OpenTelemetry, a `/healthy` health endpoint, server user-agent headers, and your handler wired up to the Responses protocol.
@@ -34,10 +34,10 @@ This starts a Kestrel server with OpenTelemetry, a `/healthy` health endpoint, s
 For more control, use the builder pattern:
 
 ```C# Snippet:Hosting_ReadMe_Tier2
-var builder = AgentHost.CreateBuilder(args);
-builder.AddResponses<MyHandler>();
-var app = builder.Build();
-app.Run();
+var builder = AgentHost.CreateBuilder();
+            builder.AddResponses<MyHandler>();
+            var app = builder.Build();
+            app.Run();
 ```
 
 ## Key concepts
