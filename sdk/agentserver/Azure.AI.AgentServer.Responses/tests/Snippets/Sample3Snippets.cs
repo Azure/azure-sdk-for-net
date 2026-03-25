@@ -22,8 +22,6 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
             #region Snippet:Responses_Sample3_BuilderConfig
 
 #if SNIPPET
-            using Azure.AI.AgentServer.Responses;
-
             var builder = AgentHost.CreateBuilder(args);
 #else
             var builder = AgentHost.CreateBuilder();

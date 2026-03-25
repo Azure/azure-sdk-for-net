@@ -11,8 +11,6 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 ## Add the Invocations protocol to your existing app
 
 ```C# Snippet:Hosting_Sample3_SelfHost
-using Azure.AI.AgentServer.Invocations;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Your existing services.

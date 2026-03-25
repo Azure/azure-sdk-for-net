@@ -25,8 +25,6 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 Register the Invocations protocol on an `AgentHostBuilder`:
 
 ```C# Snippet:Invocations_ReadMe_Builder
-using Azure.AI.AgentServer.Invocations;
-
 var builder = AgentHost.CreateBuilder(args);
 builder.AddInvocations<MyHandler>();
 var app = builder.Build();

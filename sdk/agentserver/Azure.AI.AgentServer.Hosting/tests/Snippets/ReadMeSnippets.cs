@@ -22,8 +22,6 @@ namespace Azure.AI.AgentServer.Hosting.Tests.Snippets
             #region Snippet:Hosting_ReadMe_Tier1
 
 #if SNIPPET
-            using Azure.AI.AgentServer.Responses;
-
             AgentHost.Run<MyHandler>(args);
 #else
             AgentHost.Run<MyHandler>(args: null);
@@ -38,8 +36,6 @@ namespace Azure.AI.AgentServer.Hosting.Tests.Snippets
             #region Snippet:Hosting_ReadMe_Tier2
 
 #if SNIPPET
-            using Azure.AI.AgentServer.Responses;
-
             var builder = AgentHost.CreateBuilder(args);
 #else
             var builder = AgentHost.CreateBuilder();

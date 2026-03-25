@@ -22,8 +22,6 @@ namespace Azure.AI.AgentServer.Hosting.Tests.Snippets
             #region Snippet:Hosting_Sample3_SelfHost
 
 #if SNIPPET
-            using Azure.AI.AgentServer.Invocations;
-
             var builder = WebApplication.CreateBuilder(args);
 #else
             var builder = WebApplication.CreateBuilder();

@@ -71,8 +71,6 @@ public class StudyTutorHandler : IResponseHandler
 This sample uses the Tier 2 builder pattern to configure `DefaultFetchHistoryCount`:
 
 ```C# Snippet:Responses_Sample3_BuilderConfig
-using Azure.AI.AgentServer.Responses;
-
 var builder = AgentHost.CreateBuilder(args);
 builder.AddResponses<StudyTutorHandler>(options =>
 {

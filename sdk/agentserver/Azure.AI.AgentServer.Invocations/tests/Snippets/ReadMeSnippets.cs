@@ -21,8 +21,6 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             #region Snippet:Invocations_ReadMe_Builder
 
 #if SNIPPET
-            using Azure.AI.AgentServer.Invocations;
-
             var builder = AgentHost.CreateBuilder(args);
 #else
             var builder = AgentHost.CreateBuilder();

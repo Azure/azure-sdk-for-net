@@ -25,9 +25,6 @@ namespace Azure.AI.AgentServer.Hosting.Tests.Snippets
             #region Snippet:Hosting_Sample2_Compose
 
 #if SNIPPET
-            using Azure.AI.AgentServer.Invocations;
-            using Azure.AI.AgentServer.Responses;
-
             var builder = AgentHost.CreateBuilder(args);
 #else
             var builder = AgentHost.CreateBuilder();

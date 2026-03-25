@@ -14,9 +14,6 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 This example builds a customer support agent that exposes both protocols — the Responses API for streaming chat and Invocations for ticket submission:
 
 ```C# Snippet:Hosting_Sample2_Compose
-using Azure.AI.AgentServer.Invocations;
-using Azure.AI.AgentServer.Responses;
-
 var builder = AgentHost.CreateBuilder(args);
 
 // Register the Responses protocol for streaming chat.
