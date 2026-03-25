@@ -63,7 +63,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         void IJsonModel<ExtendedLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ((IJsonModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>)this).Write(writer, options);
+            writer.WriteStartObject();
+            if (Name != null)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (base.ExtendedLocationType != null)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(base.ExtendedLocationType.ToString());
+            }
+            writer.WriteEndObject();
         }
 
         // IPersistableModel<ExtendedLocation> implementation - delegates to base class
@@ -81,7 +92,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         BinaryData IPersistableModel<ExtendedLocation>.Write(ModelReaderWriterOptions options)
         {
-            return ((IPersistableModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>)this).Write(options);
+            using var stream = new System.IO.MemoryStream();
+            using var writer = new Utf8JsonWriter(stream);
+            ((IJsonModel<ExtendedLocation>)this).Write(writer, options);
+            writer.Flush();
+            return new BinaryData(stream.ToArray());
         }
 
         // Deserialization helper used by generated serialization code.

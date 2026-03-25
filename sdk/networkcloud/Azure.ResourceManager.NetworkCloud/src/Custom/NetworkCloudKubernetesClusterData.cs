@@ -42,15 +42,9 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new KubernetesClusterProperties();
                 }
-                var list = Properties.AadAdminGroupObjectIds;
-                list.Clear();
-                if (value != null)
-                {
-                    foreach (var item in value)
-                    {
-                        list.Add(item);
-                    }
-                }
+                // Re-create AadConfiguration with the provided value to avoid NullReferenceException
+                // when the parameterless NetworkCloudAadConfiguration() constructor leaves AdminGroupObjectIds null.
+                Properties.AadConfiguration = new NetworkCloudAadConfiguration(value ?? System.Array.Empty<string>());
             }
         }
         /// <summary> The extended location of the cluster associated with the resource. </summary>
