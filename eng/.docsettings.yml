@@ -151,6 +151,8 @@ known_content_issues:
   # Server-side hosting libraries: titles use 'library for .NET' (not 'client library'),
   # and have no 'Authenticate the Client' section since there is no client to authenticate.
   - ['sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md','Server-side library - title and auth section do not match client SDK pattern']
+  - ['sdk/agentserver/Azure.AI.AgentServer.Responses/README.md','Server-side library - title and auth section do not match client SDK pattern']
+  - ['sdk/agentserver/Azure.AI.AgentServer.Responses.Contracts/README.md','Server-side library - title and auth section do not match client SDK pattern']
 
   - ['sdk/tools/Azure.SdkAnalyzers/README.md','Not a package - internal tooling']
   - ['eng/centralpackagemanagement/README.md','Not a package - internal tooling']
