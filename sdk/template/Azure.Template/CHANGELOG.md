@@ -1,6 +1,22 @@
 # Release History
 
+## 1.0.3-beta.23 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.3-beta.21 (Unreleased)
+
+### Features Added
+
+- Added `WidgetAnalyticsClientSettings` to support creating a `WidgetAnalyticsClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
+## 1.0.3-beta.22 (2026-03-25)
 
 ### Features Added
 
