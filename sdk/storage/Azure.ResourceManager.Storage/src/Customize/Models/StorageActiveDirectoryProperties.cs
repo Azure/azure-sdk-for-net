@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             Argument.AssertNotNull(domainName, nameof(domainName));
 
             DomainName = domainName;
-            ActiveDirectoryDomainGuid = domainGuid;
+            DomainGuid = domainGuid;
         }
         /// <summary>
         /// Specifies the domain GUID.
