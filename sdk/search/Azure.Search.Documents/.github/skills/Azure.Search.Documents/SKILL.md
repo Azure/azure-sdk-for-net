@@ -1,6 +1,6 @@
 ---
 name: Azure.Search.Documents
-description: "**WORKFLOW SKILL** — Orchestrate the full release cycle for Azure.Search.Documents SDK including TypeSpec generation, customization fixes, API export, testing, and versioning. WHEN: \"search SDK release\", \"regenerate search SDK\", \"update search API version\", \"fix search customization errors\", \"search pre-release validation\". INVOKES: azsdk_package_generate_code, azsdk_package_build_code, azsdk_package_run_check, azsdk_package_update_changelog_content, azsdk_package_update_metadata MCP tools. FOR SINGLE OPERATIONS: Use azsdk MCP tools directly for one-off builds or generation."
+description: "Orchestrate the full release cycle for Azure.Search.Documents SDK including TypeSpec generation, customization fixes, API export, testing, and versioning. WHEN: \"search SDK release\", \"regenerate search SDK\", \"update search API version\", \"fix search customization errors\", \"search pre-release validation\". INVOKES: azsdk_package_generate_code, azsdk_package_build_code, azsdk_package_run_check, azsdk_package_update_changelog_content, azsdk_package_update_metadata MCP tools. FOR SINGLE OPERATIONS: Use azsdk MCP tools directly for one-off builds or generation."
 ---
 
 # Azure.Search.Documents — Package Skill
