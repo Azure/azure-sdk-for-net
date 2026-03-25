@@ -7,7 +7,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
 /// Represents the outcome of a <see cref="ResponseOrchestrator.CreateAsync"/> call.
-/// Either a synchronous result wrapping a completed <see cref="Models.Response"/>,
+/// Either a synchronous result wrapping a completed <see cref="Response"/>,
 /// or a streaming result wrapping a processed event stream.
 /// </summary>
 internal sealed class OrchestratorResult

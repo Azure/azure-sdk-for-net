@@ -121,7 +121,9 @@ internal sealed class ResponseOrchestrator
 
     /// <summary>
     /// Retrieves a stored response by ID.
-    /// Encapsulates all guard logic: store check, background check, completion check.
+    /// First checks the in-memory tracker for in-flight or recently completed executions.
+    /// Falls through to the provider for responses that have been evicted from the tracker
+    /// (e.g. after TTL expiry or server restart).
     /// </summary>
     /// <param name="responseId">The response ID to look up.</param>
     /// <returns>The Response snapshot.</returns>
@@ -264,14 +266,14 @@ internal sealed class ResponseOrchestrator
                     yield break; // unreachable — satisfies compiler definite-assignment
                 }
 
-                // FR-006: Response.Id must match IResponseContext.ResponseId
+                // FR-006: Models.Response.Id must match IResponseContext.ResponseId
                 if (createdEvt.Response.Id != context.ResponseId)
                 {
                     ThrowBadHandler(execution,
                         $"Handler emitted response.created with id '{createdEvt.Response.Id}' but expected '{context.ResponseId}'. Handler type: {_handler.GetType().Name}.");
                 }
 
-                // FR-007: Response.Status must be non-terminal on response.created
+                // FR-007: Models.Response.Status must be non-terminal on response.created
                 if (IsTerminalStatus(createdEvt.Response.Status))
                 {
                     ThrowBadHandler(execution,
@@ -299,7 +301,8 @@ internal sealed class ResponseOrchestrator
                     await publisher.OnNextAsync(evt);
 
                     var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(context);
-                    await _provider.CreateResponseAsync(execution.Response!, inputItems, historyItemIds);
+                    await _provider.CreateResponseAsync(
+                        new CreateResponseRequest(execution.Response!, inputItems, historyItemIds));
 
                     // Signal that response.created has been processed — unblocks
                     // the bg non-streaming endpoint path waiting for the handler's response.
@@ -349,11 +352,11 @@ internal sealed class ResponseOrchestrator
             // Full replacement for response.* events — handler is source of truth
             ResponseMutations.ReplaceResponse(execution, evt);
 
-            // Stamp AgentReference — the only SDK-managed property on Response
+            // Stamp AgentReference — the only SDK-managed property on Models.Response
             ResponseMutations.StampAgentReference(execution, request);
 
             // Validate terminal event status consistency — handler must set the
-            // correct Status on the Response before yielding a terminal event.
+            // correct Status on the Models.Response before yielding a terminal event.
             {
                 ResponseStatus? expectedStatus = evt switch
                 {
@@ -376,8 +379,8 @@ internal sealed class ResponseOrchestrator
             // Update output list for output_item.* events
             execution.Response!.UpdateFromEvent(evt);
 
-            // Snapshot the Response embedded in lifecycle events
-            evt.SnapshotEmbeddedResponse(execution.Response!);
+            // Snapshot the Models.Response embedded in lifecycle events
+            evt.SnapshotEmbeddedResponse(execution.Response);
 
             // Push to replay subject via provider publisher
             await publisher.OnNextAsync(evt);
@@ -693,7 +696,8 @@ internal sealed class ResponseOrchestrator
                 {
                     // Default mode: single persist at non-cancelled terminal state.
                     var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(execution.Context);
-                    await _provider.CreateResponseAsync(execution.Response, inputItems, historyItemIds);
+                    await _provider.CreateResponseAsync(
+                        new CreateResponseRequest(execution.Response, inputItems, historyItemIds));
                 }
             }
         }

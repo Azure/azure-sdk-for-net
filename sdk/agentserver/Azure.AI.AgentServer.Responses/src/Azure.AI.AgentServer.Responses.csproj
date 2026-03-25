@@ -24,4 +24,8 @@
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Responses.Contracts\src\Azure.AI.AgentServer.Responses.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
+
 </Project>

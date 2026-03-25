@@ -40,7 +40,7 @@ internal sealed class ResponsesExceptionFilter : IEndpointFilter
         }
         catch (ResponseValidationException ex)
         {
-            // Response validation errors are developer bugs — log full details but never expose to caller
+            // Models.Response validation errors are developer bugs — log full details but never expose to caller
             _logger.LogError(ex,
                 "Response validation failed with {ErrorCount} error(s): {Errors}",
                 ex.Errors.Count,

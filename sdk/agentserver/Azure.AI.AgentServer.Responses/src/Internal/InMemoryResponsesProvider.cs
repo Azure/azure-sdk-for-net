@@ -32,7 +32,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </remarks>
 internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponsesCancellationSignalProvider, IResponsesStreamProvider, IDisposable
 {
-    // --- Response envelopes ---
+    // --- Models.Response envelopes ---
     private readonly ConcurrentDictionary<string, Models.Response> _responses = new();
 
     // --- Item store (all items by ID) ---
@@ -82,11 +82,13 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
 
     /// <inheritdoc/>
     public Task CreateResponseAsync(
-        Models.Response response,
-        IEnumerable<OutputItem>? inputItems,
-        IEnumerable<string>? historyItemIds,
+        CreateResponseRequest request,
         CancellationToken cancellationToken = default)
     {
+        var response = request.Response;
+        var inputItems = request.InputItems;
+        var historyItemIds = request.HistoryItemIds;
+
         if (!_responses.TryAdd(response.Id, response))
         {
             throw new InvalidOperationException($"Response '{response.Id}' already exists.");
@@ -115,7 +117,7 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
             _historyItemIds[response.Id] = historyItemIds.ToList();
         }
 
-        // Store output items from Response.Output (non-bg mode has them populated at create time)
+        // Store output items from Models.Response.Output (non-bg mode has them populated at create time)
         StoreOutputItems(response);
 
         // Track conversation membership

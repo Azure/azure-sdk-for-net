@@ -52,8 +52,8 @@ public class ResponseEventStream
     // ── Public Properties ──────────────────────────────────────
 
     /// <summary>
-    /// Gets the <see cref="Models.Response"/> object being constructed.
-    /// Allows the handler to set any <see cref="Models.Response"/> property
+    /// Gets the <see cref="Response"/> object being constructed.
+    /// Allows the handler to set any <see cref="Response"/> property
     /// (e.g. <c>Metadata</c>, <c>Instructions</c>, <c>Temperature</c>)
     /// before calling <see cref="EmitCreated"/>.
     /// </summary>
@@ -67,7 +67,7 @@ public class ResponseEventStream
     /// <summary>Gets the agent reference for auto-stamping output items.</summary>
     internal AgentReference? AgentReference => _response.AgentReference;
 
-    // ── Response Lifecycle Events ──────────────────────────────
+    // ── Models.Response Lifecycle Events ──────────────────────────────
 
     /// <summary>
     /// Produces a <c>response.queued</c> event.
