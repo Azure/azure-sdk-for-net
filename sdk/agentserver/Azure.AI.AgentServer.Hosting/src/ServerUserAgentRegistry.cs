@@ -13,25 +13,36 @@ namespace Azure.AI.AgentServer.Hosting;
 /// </summary>
 public sealed class ServerUserAgentRegistry
 {
+    private readonly object _lock = new();
     private readonly List<string> _segments = new();
 
     /// <summary>
     /// Registers a protocol identity segment. Duplicate values are ignored.
+    /// This method is thread-safe.
     /// </summary>
     /// <param name="identity">The identity string to register (e.g., <c>azure-ai-agentserver-responses/1.0.0 (dotnet/10.0)</c>).</param>
     public void Register(string identity)
     {
         ArgumentException.ThrowIfNullOrEmpty(identity);
-        if (!_segments.Contains(identity))
+        lock (_lock)
         {
-            _segments.Add(identity);
+            if (!_segments.Contains(identity))
+            {
+                _segments.Add(identity);
+            }
         }
     }
 
     /// <summary>
     /// Returns all registered identity segments in registration order.
     /// </summary>
-    public IReadOnlyList<string> GetSegments() => _segments;
+    public IReadOnlyList<string> GetSegments()
+    {
+        lock (_lock)
+        {
+            return _segments.ToArray();
+        }
+    }
 
     /// <summary>
     /// Builds a standard identity string from an SDK name and assembly version.

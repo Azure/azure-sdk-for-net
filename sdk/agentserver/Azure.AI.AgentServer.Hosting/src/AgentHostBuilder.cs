@@ -120,6 +120,9 @@ public sealed class AgentHostBuilder
     /// <param name="endpointMapper">Action to map protocol endpoints during the build phase.</param>
     public void RegisterProtocol(string protocolName, Action<IEndpointRouteBuilder> endpointMapper)
     {
+        ArgumentException.ThrowIfNullOrEmpty(protocolName);
+        ArgumentNullException.ThrowIfNull(endpointMapper);
+
         if (!_registeredProtocols.Add(protocolName))
         {
             throw new InvalidOperationException(

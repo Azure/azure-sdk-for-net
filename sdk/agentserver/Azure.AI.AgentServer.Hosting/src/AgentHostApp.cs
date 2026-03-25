@@ -44,8 +44,9 @@ public sealed class AgentHostApp
         if (cancellationToken.CanBeCanceled)
         {
             // WebApplication.RunAsync(string? url) doesn't accept a CancellationToken directly.
-            // Use StopAsync to honor the external token.
-            await using var reg = cancellationToken.Register(() => App.StopAsync());
+            // Use Lifetime.StopApplication() to honor the external token synchronously
+            // without fire-and-forget async pitfalls.
+            await using var reg = cancellationToken.Register(() => App.Lifetime.StopApplication());
             await App.RunAsync();
         }
         else

@@ -25,18 +25,18 @@ internal sealed class BaggageToLogProcessor : BaseProcessor<LogRecord>
             return;
         }
 
-        var baggage = activity.Baggage;
-        var attributes = new List<KeyValuePair<string, object?>>();
+        List<KeyValuePair<string, object?>>? attributes = null;
 
-        foreach (var item in baggage)
+        foreach (var item in activity.Baggage)
         {
             if (item.Value is not null)
             {
+                attributes ??= new List<KeyValuePair<string, object?>>();
                 attributes.Add(new KeyValuePair<string, object?>(item.Key, item.Value));
             }
         }
 
-        if (attributes.Count > 0)
+        if (attributes is not null)
         {
             data.Attributes = attributes;
         }
