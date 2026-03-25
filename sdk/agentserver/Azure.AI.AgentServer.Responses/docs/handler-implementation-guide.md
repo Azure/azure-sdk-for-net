@@ -847,7 +847,7 @@ The simplest way to start a Responses server is with the `Azure.AI.AgentServer.H
 ```csharp
 using Azure.AI.AgentServer.Responses;
 
-AgentHost.Run<MyHandler>(args);
+ResponsesServer.Run<MyHandler>(args);
 ```
 
 This creates a Kestrel host with OpenTelemetry, health checks, identity headers, and the Responses protocol endpoints — all in one line.

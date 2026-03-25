@@ -20,7 +20,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             #region Snippet:Responses_Sample1_StartServer
 
-            AgentHost.Run<QnAHandler>();
+            ResponsesServer.Run<QnAHandler>();
 
             #endregion
         }

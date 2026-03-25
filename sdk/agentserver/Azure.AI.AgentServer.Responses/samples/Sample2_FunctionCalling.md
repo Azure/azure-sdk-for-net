@@ -76,7 +76,7 @@ public class WeatherHandler : IResponseHandler
 ## Start the server
 
 ```C# Snippet:Responses_Sample2_StartServer
-AgentHost.Run<WeatherHandler>();
+ResponsesServer.Run<WeatherHandler>();
 ```
 
 ## Test the endpoint

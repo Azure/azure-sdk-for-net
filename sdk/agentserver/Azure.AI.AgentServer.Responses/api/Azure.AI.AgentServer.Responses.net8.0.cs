@@ -251,6 +251,10 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Hosting.AgentHostBuilder AddResponses(this Azure.AI.AgentServer.Hosting.AgentHostBuilder builder, Azure.AI.AgentServer.Responses.IResponseHandler handler, System.Action<Azure.AI.AgentServer.Responses.ResponsesServerOptions>? configure = null) { throw null; }
         public static Azure.AI.AgentServer.Hosting.AgentHostBuilder AddResponses<THandler>(this Azure.AI.AgentServer.Hosting.AgentHostBuilder builder, System.Action<Azure.AI.AgentServer.Responses.ResponsesServerOptions>? configure = null) where THandler : class, Azure.AI.AgentServer.Responses.IResponseHandler { throw null; }
     }
+    public static partial class ResponsesServer
+    {
+        public static void Run<THandler>(string[]? args = null, System.Action<Azure.AI.AgentServer.Hosting.AgentHostBuilder>? configure = null) where THandler : class, Azure.AI.AgentServer.Responses.IResponseHandler { }
+    }
     public static partial class ResponsesServerEndpointRouteBuilderExtensions
     {
         public static Microsoft.AspNetCore.Routing.RouteGroupBuilder MapResponsesServer(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder endpoints, string? prefix = null) { throw null; }
