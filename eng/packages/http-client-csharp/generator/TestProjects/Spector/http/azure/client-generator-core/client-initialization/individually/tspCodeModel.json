@@ -1,5 +1,5 @@
 {
-  "name": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient",
+  "name": "Specs.Azure.Tcgc.ClientInit.Individually",
   "apiVersions": [],
   "enums": [],
   "constants": [

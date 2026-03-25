@@ -56,9 +56,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         if (!properties.ContainsKey(scopeItem.Key))
                         {
-                            var stringValue = SchemaConstants.TruncationExemptProperties.Contains(scopeItem.Key)
-                                ? Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)!
-                                : Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!;
+                            var maxValueLength = SchemaConstants.GenAiProperties.Contains(scopeItem.Key)
+                                ? SchemaConstants.GenAi_Properties_MaxValueLength
+                                : SchemaConstants.MessageData_Properties_MaxValueLength;
+                            var stringValue = Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(maxValueLength)!;
                             properties.Add(scopeItem.Key, stringValue);
                         }
                     }
@@ -218,9 +219,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 {
                                     if (!properties.ContainsKey(item.Key))
                                     {
-                                        var stringValue = SchemaConstants.TruncationExemptProperties.Contains(item.Key)
-                                            ? item.Value.ToString()!
-                                            : item.Value.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!;
+                                        var maxValueLength = SchemaConstants.GenAiProperties.Contains(item.Key)
+                                            ? SchemaConstants.GenAi_Properties_MaxValueLength
+                                            : SchemaConstants.MessageData_Properties_MaxValueLength;
+                                        var stringValue = item.Value.ToString().Truncate(maxValueLength)!;
                                         properties.Add(item.Key, stringValue);
                                     }
                                 }
