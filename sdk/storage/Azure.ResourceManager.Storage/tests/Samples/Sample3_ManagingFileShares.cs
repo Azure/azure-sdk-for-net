@@ -56,10 +56,11 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         public async Task List()
         {
             #region Snippet:Managing_FileShares_ListFileShares
-            AsyncPageable<FileShareItem> response = fileService.GetAllAsync();
-            await foreach (FileShareItem fileShare in response)
+            FileShareCollection fileShareCollection = fileService.GetFileShares();
+            AsyncPageable<FileShareResource> response = fileShareCollection.GetAllAsync();
+            await foreach (FileShareResource fileShare in response)
             {
-                Console.WriteLine(fileShare.Name);
+                Console.WriteLine(fileShare.Id.Name);
             }
             #endregion
         }

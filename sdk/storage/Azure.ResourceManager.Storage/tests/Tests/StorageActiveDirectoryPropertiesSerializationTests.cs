@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string json = $"{{ \"domainGuid\": \"{guid}\" }}";
             using JsonDocument document = JsonDocument.Parse(json);
 
+            // TypeSpec migration: Deserialize now requires explicit ModelReaderWriterOptions parameter
             StorageActiveDirectoryProperties result =
                 StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement, ModelReaderWriterOptions.Json);
 

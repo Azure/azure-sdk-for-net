@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(3, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
 
-            immutabilityPolicy = await container.GetImmutabilityPolicy().LockImmutabilityPolicyAsync(immutabilityPolicy.Data.ETag?.ToString());
+            immutabilityPolicy = await container.GetImmutabilityPolicy().LockImmutabilityPolicyAsync(immutabilityPolicy.Data.ETag.Value);
             Assert.NotNull(immutabilityPolicy.Id);
             Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(ImmutabilityPolicyState.Locked, immutabilityPolicy.Data.State);
 
             immutabilityPolicyModel = new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 100 };
-            immutabilityPolicy = await container.GetImmutabilityPolicy().ExtendImmutabilityPolicyAsync(immutabilityPolicy.Data.ETag?.ToString(), data: immutabilityPolicyModel);
+            immutabilityPolicy = await container.GetImmutabilityPolicy().ExtendImmutabilityPolicyAsync(immutabilityPolicy.Data.ETag.Value, data: immutabilityPolicyModel);
             Assert.NotNull(immutabilityPolicy.Id);
             Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
@@ -147,6 +147,8 @@ namespace Azure.ResourceManager.Storage.Tests
             BlobContainerResource container1 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName1, new BlobContainerData())).Value;
             BlobContainerResource container2 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName2, new BlobContainerData())).Value;
 
+            // Use BlobServiceResource.GetAllAsync() directly — backward-compat Collection.GetAllAsync()
+            // returns Resource objects without data loaded; accessing .Data would throw.
             var containerList = await _blobService.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(containerList.Count, 2);
             foreach (var item in containerList)
@@ -219,7 +221,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
 
             //delete immutability policy
-            immutabilityPolicyData = (await immutabilityPolicy.DeleteAsync(WaitUntil.Completed, immutabilityPolicy.Data.ETag?.ToString())).Value.Data;
+            immutabilityPolicyData = (await immutabilityPolicy.DeleteAsync(WaitUntil.Completed, immutabilityPolicy.Data.ETag.Value)).Value.Data;
 
             //validate
             Assert.NotNull(immutabilityPolicyData.Id);
@@ -300,7 +302,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
 
             //lock immutability policy
-            immutabilityPolicy = await container.GetImmutabilityPolicy().LockImmutabilityPolicyAsync(immutabilityPolicy.Data.ETag?.ToString());
+            immutabilityPolicy = await container.GetImmutabilityPolicy().LockImmutabilityPolicyAsync(immutabilityPolicy.Data.ETag.Value);
 
             Assert.NotNull(immutabilityPolicy.Data.Id);
             Assert.NotNull(immutabilityPolicy.Data.ResourceType);
@@ -339,7 +341,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
 
             //lock immutability policy
-            immutabilityPolicy = await container.GetImmutabilityPolicy().LockImmutabilityPolicyAsync(immutabilityPolicy.Data.ETag?.ToString());
+            immutabilityPolicy = await container.GetImmutabilityPolicy().LockImmutabilityPolicyAsync(immutabilityPolicy.Data.ETag.Value);
 
             Assert.NotNull(immutabilityPolicy.Data.Id);
             Assert.NotNull(immutabilityPolicy.Data.ResourceType);
@@ -349,7 +351,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //extend immutability policy
             immutabilityPolicyData = new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 100 };
-            immutabilityPolicy = await container.GetImmutabilityPolicy().ExtendImmutabilityPolicyAsync(ifMatch: immutabilityPolicy.Data.ETag?.ToString(), data: immutabilityPolicyData);
+            immutabilityPolicy = await container.GetImmutabilityPolicy().ExtendImmutabilityPolicyAsync(ifMatch: immutabilityPolicy.Data.ETag.Value, data: immutabilityPolicyData);
 
             Assert.NotNull(immutabilityPolicy.Data.Id);
             Assert.NotNull(immutabilityPolicy.Data.ResourceType);
@@ -396,6 +398,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsFalse(_blobService.Data.DeleteRetentionPolicy.IsEnabled);
             Assert.IsNull(_blobService.Data.DeleteRetentionPolicy.Days);
             Assert.IsNull(_blobService.Data.DefaultServiceVersion);
+            // TypeSpec migration: use public CorsRules property (internal Cors wrapper removed)
             Assert.AreEqual(0, _blobService.Data.CorsRules.Count);
             Assert.AreEqual(_blobService.Data.Sku.Name, StorageSkuName.StandardGrs);
 
@@ -511,6 +514,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 SourceAccount = sourceAccount.Id.Name,
                 DestinationAccount = destAccount.Id.Name,
                 IsMetricsEnabled = true,
+                // TypeSpec migration: use public flattened property (PriorityReplication wrapper removed)
                 IsPriorityReplicationEnabled = true,
                 Rules =
                 {
@@ -556,6 +560,7 @@ namespace Azure.ResourceManager.Storage.Tests
                     Days = 300,
                 },
                 DefaultServiceVersion = "2017-04-17",
+                // TypeSpec migration: use public CorsRules property (internal Cors wrapper removed)
                 CorsRules =
                 {
                     new StorageCorsRule(new[] { "http://www.contoso.com", "http://www.fabrikam.com" },
@@ -632,6 +637,8 @@ namespace Azure.ResourceManager.Storage.Tests
             BlobContainerResource container2 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName2, new BlobContainerData())).Value;
             await container2.DeleteAsync(WaitUntil.Completed);
 
+            // Use BlobServiceResource.GetAllAsync() directly — backward-compat Collection.GetAllAsync()
+            // returns Resource objects without data loaded; accessing .Data would throw.
             //list delete included
             List<ListContainerItem> blobContainers = await _blobService.GetAllAsync(include: BlobContainerState.Deleted).ToEnumerableAsync();
             Assert.AreEqual(2, blobContainers.Count);
@@ -740,11 +747,10 @@ namespace Azure.ResourceManager.Storage.Tests
             BlobContainerResource container2 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName2, parameters2)).Value;
             await container2.GetImmutabilityPolicy().CreateOrUpdateAsync(WaitUntil.Completed, data: new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 1 });
 
-            // TODO: Update for TypeSpec migration - EnableVersionLevelImmutabilityAsync removed
-            // await container2.EnableVersionLevelImmutabilityAsync(WaitUntil.Completed);
-            // container2 = await container2.GetAsync();
-            // Assert.IsTrue(container2.Data.ImmutableStorageWithVersioning.IsEnabled);
-            // Assert.AreEqual("Completed", container2.Data.ImmutableStorageWithVersioning.MigrationState);
+            await container2.EnableVersionLevelImmutabilityAsync(WaitUntil.Completed);
+            container2 = await container2.GetAsync();
+            Assert.IsTrue(container2.Data.ImmutableStorageWithVersioning.IsEnabled);
+            Assert.AreEqual("Completed", container2.Data.ImmutableStorageWithVersioning.MigrationState);
         }
 
         [Test]

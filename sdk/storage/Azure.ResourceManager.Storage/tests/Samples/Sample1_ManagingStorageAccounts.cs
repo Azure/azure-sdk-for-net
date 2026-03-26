@@ -57,8 +57,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         public async Task GetKeys()
         {
             #region Snippet:Managing_StorageAccounts_GetKeys
-            StorageAccountListKeysResult keysResult = (await storageAccount.GetKeysAsync()).Value;
-            foreach (StorageAccountKey key in keysResult.Keys)
+            await foreach (StorageAccountKey key in storageAccount.GetKeysAsync())
             {
                 Console.WriteLine(key.Value);
             }

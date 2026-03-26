@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Storage
             return message;
         }
 
-        internal HttpMessage CreateHierarchicalNamespaceMigrationRequest(Guid subscriptionId, string resourceGroupName, string accountName, string requestType, RequestContext context)
+        internal HttpMessage CreateEnableHierarchicalNamespaceRequest(Guid subscriptionId, string resourceGroupName, string accountName, string requestType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

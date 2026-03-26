@@ -56,10 +56,11 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         public async Task List()
         {
             #region Snippet:Managing_BlobContainers_ListBlobContainers
-            AsyncPageable<ListContainerItem> response = blobService.GetAllAsync();
-            await foreach (ListContainerItem blobContainer in response)
+            BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
+            AsyncPageable<BlobContainerResource> response = blobContainerCollection.GetAllAsync();
+            await foreach (BlobContainerResource blobContainer in response)
             {
-                Console.WriteLine(blobContainer.Name);
+                Console.WriteLine(blobContainer.Id.Name);
             }
             #endregion
         }

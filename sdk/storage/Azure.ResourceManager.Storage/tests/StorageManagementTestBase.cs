@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Storage.Tests
                         break;
                 }
             }
-            AccountSasContent parameters = new AccountSasContent(new StorageAccountSasSignedService(serviceParameters), new StorageAccountSasSignedResourceType(resourceTypesParameters), new StorageAccountSasPermission(permissionsParameters), sharedAccessExpiryTimeParameters)
+            AccountSasContent parameters = new AccountSasContent(serviceParameters, resourceTypesParameters, permissionsParameters, sharedAccessExpiryTimeParameters)
             {
                 IPAddressOrRange = ipAddressOrRangeParameters,
                 Protocols = protocolsParameters,

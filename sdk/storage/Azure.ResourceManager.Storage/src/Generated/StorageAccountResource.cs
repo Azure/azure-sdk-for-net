@@ -731,11 +731,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestType"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> HierarchicalNamespaceMigrationAsync(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> EnableHierarchicalNamespaceAsync(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestType, nameof(requestType));
 
-            using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.HierarchicalNamespaceMigration");
+            using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.EnableHierarchicalNamespace");
             scope.Start();
             try
             {
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateHierarchicalNamespaceMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestType, context);
+                HttpMessage message = _storageAccountsRestClient.CreateEnableHierarchicalNamespaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestType, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation operation = new StorageArmOperation(_storageAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -785,11 +785,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestType"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation HierarchicalNamespaceMigration(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
+        public virtual ArmOperation EnableHierarchicalNamespace(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestType, nameof(requestType));
 
-            using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.HierarchicalNamespaceMigration");
+            using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.EnableHierarchicalNamespace");
             scope.Start();
             try
             {
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateHierarchicalNamespaceMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestType, context);
+                HttpMessage message = _storageAccountsRestClient.CreateEnableHierarchicalNamespaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestType, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation operation = new StorageArmOperation(_storageAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

@@ -51,16 +51,6 @@ namespace Azure.ResourceManager.Storage
         public virtual ArmOperation Failover(WaitUntil waitUntil, StorageAccountFailoverType? failoverType, CancellationToken cancellationToken) =>
             Failover(waitUntil, failoverType.HasValue ? new FailoverRequestFailoverType(failoverType.Value.ToString()) : (FailoverRequestFailoverType?)null, cancellationToken);
 
-        // Backward-compatible overload: EnableHierarchicalNamespace is not available in this API version.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation EnableHierarchicalNamespace(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
-            => throw new NotSupportedException("EnableHierarchicalNamespace is not supported in this version of the SDK. This operation has been removed from the API.");
-
-        // Backward-compatible overload: EnableHierarchicalNamespaceAsync is not available in this API version.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<ArmOperation> EnableHierarchicalNamespaceAsync(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
-            => throw new NotSupportedException("EnableHierarchicalNamespace is not supported in this version of the SDK. This operation has been removed from the API.");
-
         // Backward-compatible overload: Parameterless GetBlobInventoryPolicy.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual BlobInventoryPolicyResource GetBlobInventoryPolicy()
@@ -75,17 +65,22 @@ namespace Azure.ResourceManager.Storage
 
         // Backward-compatible overload: GetKeys with old StorageListKeyExpand parameter type.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<StorageAccountKey> GetKeys(StorageListKeyExpand? expand, CancellationToken cancellationToken)
+        public virtual Pageable<StorageAccountKey> GetKeys(StorageListKeyExpand? expand, CancellationToken cancellationToken = default)
         {
             var response = GetKeys(expand.HasValue ? new ListKeysRequestExpand(expand.Value.ToString()) : (ListKeysRequestExpand?)null, cancellationToken);
             return new SinglePagePageable<StorageAccountKey>(response.Value.Keys.ToList(), response.GetRawResponse());
         }
 
+        // Backward-compatible parameterless overload for GetKeys.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<StorageAccountKey> GetKeys()
+            => GetKeys((StorageListKeyExpand?)null, default);
+
         // Backward-compatible overload: GetKeysAsync with old StorageListKeyExpand parameter type.
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0107 // async call wraps result, no sync alternative available
         [ForwardsClientCalls(true)]
-        public virtual AsyncPageable<StorageAccountKey> GetKeysAsync(StorageListKeyExpand? expand, CancellationToken cancellationToken)
+        public virtual AsyncPageable<StorageAccountKey> GetKeysAsync(StorageListKeyExpand? expand, CancellationToken cancellationToken = default)
         {
             return new DeferredAsyncPageable<StorageAccountKey>(async () =>
             {
@@ -93,6 +88,14 @@ namespace Azure.ResourceManager.Storage
                 return (response.Value.Keys.ToList(), response.GetRawResponse());
             });
         }
+#pragma warning restore AZC0107
+
+        // Backward-compatible parameterless overload for GetKeysAsync.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0107 // async call wraps result, no sync alternative available
+        [ForwardsClientCalls(true)]
+        public virtual AsyncPageable<StorageAccountKey> GetKeysAsync()
+            => GetKeysAsync((StorageListKeyExpand?)null, default);
 #pragma warning restore AZC0107
 
         // Justification: Prior GA returned Pageable<StorageAccountKey>; generated code returns
@@ -161,7 +164,8 @@ namespace Azure.ResourceManager.Storage
 
         // Backward-compatible overload: Gets the private link resources that need to be created for a storage account.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<StoragePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken)
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<StoragePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<StoragePrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -174,7 +178,8 @@ namespace Azure.ResourceManager.Storage
 
         // Backward-compatible overload: Gets the private link resources that need to be created for a storage account.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<StoragePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken)
+        [ForwardsClientCalls]
+        public virtual Pageable<StoragePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             Page<StoragePrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
             {

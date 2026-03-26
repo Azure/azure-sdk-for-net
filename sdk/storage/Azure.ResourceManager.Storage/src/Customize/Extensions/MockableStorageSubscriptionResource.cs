@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Storage.Mocking
     public partial class MockableStorageSubscriptionResource
     {
         // Backward-compatible overload: Lists deleted accounts under the subscription.
-        [Obsolete("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.", error: true)]
+        [Obsolete("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(CancellationToken cancellationToken)
+        public virtual AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.");
 
         // Backward-compatible overload: Lists deleted accounts under the subscription.
-        [Obsolete("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.", error: true)]
+        [Obsolete("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<DeletedAccountResource> GetDeletedAccounts(CancellationToken cancellationToken)
+        public virtual Pageable<DeletedAccountResource> GetDeletedAccounts(CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.");
     }
 }

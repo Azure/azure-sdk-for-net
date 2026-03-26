@@ -11,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using Azure.Core;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.Storage
 
         // Backward-compatible overload: Lists all containers.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Pageable<BlobContainerResource> GetAll(string maxpagesize, string filter, BlobContainerState? include, CancellationToken cancellationToken)
             => new PageableWrapper<ListContainerItem, BlobContainerResource>(
                 Client.GetBlobServiceResource(Id).GetAll(maxpagesize, filter, include, cancellationToken),
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.Storage
 
         // Backward-compatible overload: Lists all containers.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual AsyncPageable<BlobContainerResource> GetAllAsync(string maxpagesize, string filter, BlobContainerState? include, CancellationToken cancellationToken)
             => new AsyncPageableWrapper<ListContainerItem, BlobContainerResource>(
                 Client.GetBlobServiceResource(Id).GetAllAsync(maxpagesize, filter, include, cancellationToken),
@@ -51,12 +54,14 @@ namespace Azure.ResourceManager.Storage
 
         // Backward-compatible overload with int maxpagesize: Lists all containers.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<BlobContainerResource> GetAll(int? maxpagesize, string filter, BlobContainerState? include, CancellationToken cancellationToken)
+        [ForwardsClientCalls]
+        public virtual Pageable<BlobContainerResource> GetAll(int? maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
             => GetAll(maxpagesize?.ToString(), filter, include, cancellationToken);
 
         // Backward-compatible overload with int maxpagesize: Lists all containers.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(int? maxpagesize, string filter, BlobContainerState? include, CancellationToken cancellationToken)
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(int? maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
             => GetAllAsync(maxpagesize?.ToString(), filter, include, cancellationToken);
     }
 }

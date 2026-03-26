@@ -140,14 +140,14 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(shareSnapshot.Data.SnapshotOn, shareSnapshot1.Data.SnapshotOn);
 
             //list share with snapshot
-            List<FileShareItem> fileShares = await _fileService.GetAllAsync(expand: "snapshots").ToEnumerableAsync();
+            List<FileShareResource> fileShares = await _fileShareCollection.GetAllAsync(expand: "snapshots").ToEnumerableAsync();
             Assert.AreEqual(3, fileShares.Count);
 
             //delete share snapshot
             await shareSnapshot.DeleteAsync(WaitUntil.Completed);
 
             // List share with deleted
-            fileShares = await _fileService.GetAllAsync(expand: "deleted").ToEnumerableAsync();
+            fileShares = await _fileShareCollection.GetAllAsync(expand: "deleted").ToEnumerableAsync();
             Assert.AreEqual(2, fileShares.Count);
         }
 
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.Storage.Tests
             FileShareResource share2 = (await _fileShareCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileShareName2, new FileShareData())).Value;
 
             //validate if there are two file shares
-            FileShareItem share3 = null;
-            FileShareItem share4 = null;
+            FileShareResource share3 = null;
+            FileShareResource share4 = null;
             int count = 0;
-            await foreach (FileShareItem share in _fileService.GetAllAsync())
+            await foreach (FileShareResource share in _fileShareCollection.GetAllAsync())
             {
                 count++;
                 if (share.Id.Name == fileShareName1)
@@ -231,6 +231,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             // Get after account create
             var service = (await _fileService.GetAsync()).Value;
+            // TypeSpec migration: Cors wrapper removed; CorsRules is now a direct property on FileServiceData
             Assert.AreEqual(0, service.Data.CorsRules.Count);
 
             //Set and validated
@@ -290,6 +291,8 @@ namespace Azure.ResourceManager.Storage.Tests
             //delete this share
             await share1.DeleteAsync(WaitUntil.Completed);
 
+            // Use FileServiceResource.GetAllAsync() directly — backward-compat Collection.GetAllAsync()
+            // returns Resource objects without data loaded; accessing .Data would throw.
             //get the deleted share version
             string deletedShareVersion = null;
             List<FileShareItem> fileShares = await _fileService.GetAllAsync(expand: "deleted").ToEnumerableAsync();
@@ -332,16 +335,14 @@ namespace Azure.ResourceManager.Storage.Tests
             DateTimeOffset start2 = datenow.AddMinutes(1).ToUniversalTime();
             DateTimeOffset end2 = datenow.AddMinutes(40).ToUniversalTime();
             var updateParameters2 = new FileShareData();
-            var sig1 = new StorageSignedIdentifier()
-            {
-                Id = "testSig1",
-                AccessPolicy = new StorageServiceAccessPolicy() { StartOn = start1, ExpireOn = end1, Permission = "rw" }
-            };
-            var sig2 = new StorageSignedIdentifier()
-            {
-                Id = "testSig2",
-                AccessPolicy = new StorageServiceAccessPolicy() { StartOn = start2, ExpireOn = end2, Permission = "rwdl" }
-            };
+            var sig1 = new StorageSignedIdentifier("testSig1",
+                new StorageServiceAccessPolicy(startOn: start1,
+                    expireOn: end1,
+                    permission: "rw", null), null);
+            var sig2 = new StorageSignedIdentifier("testSig2",
+                new StorageServiceAccessPolicy(startOn: start2,
+                    expireOn: end2,
+                    permission: "rwdl", null), null);
             updateParameters2.SignedIdentifiers.Add(sig1);
             updateParameters2.SignedIdentifiers.Add(sig2);
 
@@ -442,17 +443,20 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             FileServiceData properties1 = _fileService.Data;
             FileServiceData properties2 = new FileServiceData();
+            // TypeSpec migration: Cors wrapper removed; use CorsRules directly on FileServiceData
             properties2.CorsRules.Add(
-                new StorageCorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                    new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
-                    100,
-                    new string[] { "x-ms-meta-*" },
-                    new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }));
+                    new StorageCorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                        new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
+                        100,
+                        new string[] { "x-ms-meta-*" },
+                        new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" })
+                );
 
             _fileService = (await _fileService.CreateOrUpdateAsync(WaitUntil.Completed, properties2)).Value;
             FileServiceData properties3 = _fileService.Data;
 
             //validate CORS rules
+            // TypeSpec migration: Cors wrapper removed; CorsRules is now a direct property
             Assert.AreEqual(properties2.CorsRules.Count, properties3.CorsRules.Count);
             for (int i = 0; i < properties2.CorsRules.Count; i++)
             {
@@ -471,6 +475,7 @@ namespace Azure.ResourceManager.Storage.Tests
             FileServiceData properties4 = _fileService.Data;
 
             //validate CORS rules
+            // TypeSpec migration: Cors wrapper removed; CorsRules is now a direct property
             Assert.AreEqual(properties2.CorsRules.Count, properties4.CorsRules.Count);
             for (int i = 0; i < properties2.CorsRules.Count; i++)
             {

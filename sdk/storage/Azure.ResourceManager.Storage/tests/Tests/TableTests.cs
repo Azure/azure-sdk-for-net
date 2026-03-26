@@ -129,23 +129,25 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task UpdateTableService()
         {
             //update cors
+            // TypeSpec migration: Cors wrapper removed; use CorsRules directly on TableServiceData
             TableServiceData parameter = new TableServiceData();
             parameter.CorsRules.Add(new StorageCorsRule(
-                allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
-                allowedMethods: new CorsRuleAllowedMethod[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
-                 allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                exposedHeaders: new string[] { "x-ms-meta-*" },
-                maxAgeInSeconds: 100));
+                            allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
+                            allowedMethods: new CorsRuleAllowedMethod[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
+                             allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                            exposedHeaders: new string[] { "x-ms-meta-*" },
+                            maxAgeInSeconds: 100));
             parameter.CorsRules.Add(new StorageCorsRule(
-                allowedOrigins: new string[] { "*" },
-                allowedMethods: new CorsRuleAllowedMethod[] {"GET" },
-                maxAgeInSeconds: 2,
-                exposedHeaders: new string[] { "*" },
-                allowedHeaders: new string[] { "*" }
-                ));
+                            allowedOrigins: new string[] { "*" },
+                            allowedMethods: new CorsRuleAllowedMethod[] {"GET" },
+                            maxAgeInSeconds: 2,
+                            exposedHeaders: new string[] { "*" },
+                            allowedHeaders: new string[] { "*" }
+                            ));
             _tableService = (await _tableService.CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
 
             //Validate CORS Rules
+            // TypeSpec migration: Cors wrapper removed; CorsRules is now a direct property
             Assert.AreEqual(parameter.CorsRules.Count, _tableService.Data.CorsRules.Count);
             for (int i = 0; i < parameter.CorsRules.Count; i++)
             {
@@ -167,6 +169,7 @@ namespace Azure.ResourceManager.Storage.Tests
             _tableService = (await _tableService.GetAsync()).Value;
 
             //Validate CORS Rules
+            // TypeSpec migration: Cors wrapper removed; CorsRules is now a direct property
             Assert.AreEqual(parameter.CorsRules.Count, _tableService.Data.CorsRules.Count);
             for (int i = 0; i < parameter.CorsRules.Count; i++)
             {
