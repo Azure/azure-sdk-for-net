@@ -36,6 +36,7 @@
     <PackageReference Include="Azure.ResourceManager.Compute" />
     <PackageReference Include="Azure.ResourceManager.ContainerRegistry" />
     <PackageReference Include="Azure.ResourceManager.ContainerService" />
+    <PackageReference Include="Azure.ResourceManager.ContainerInstance" />
     <PackageReference Include="Azure.ResourceManager.CosmosDB" />
     <PackageReference Include="Azure.ResourceManager.DataFactory" />
     <PackageReference Include="Azure.Core.Expressions.DataFactory" />
