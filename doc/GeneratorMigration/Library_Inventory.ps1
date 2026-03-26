@@ -189,9 +189,14 @@ function Get-SdkLibraries {
                 continue
             }
 
+            # Skip empty directories (e.g., leftover from deleted libraries) - must have at least one .csproj
+            $csprojFiles = Get-ChildItem -Path $libraryDir.FullName -Filter "*.csproj" -Recurse -ErrorAction SilentlyContinue
+            if (-not $csprojFiles) {
+                continue
+            }
+
             # If it has a /src directory or a csproj file, it's likely a library
             $srcPath = Join-Path $libraryDir.FullName "src"
-            $csprojFiles = Get-ChildItem -Path $libraryDir.FullName -Filter "*.csproj" -ErrorAction SilentlyContinue
 
             if ((Test-Path $srcPath) -or $csprojFiles) {
                 $libraryType = if (Test-MgmtLibrary $libraryDir.FullName) { "Management" } else { "Data Plane" }
