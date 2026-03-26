@@ -211,6 +211,22 @@
                 "type": "string",
                 "description": "The Microsoft Entra tenant (directory) ID."
               },
+              "ClientId": {
+                "type": "string",
+                "description": "The client (application) ID."
+              },
+              "ClientCertificatePath": {
+                "type": "string",
+                "description": "The file path to a client certificate for authentication."
+              },
+              "SendCertificateChain": {
+                "type": "boolean",
+                "description": "Include the x5c header in client claims when using certificate authentication."
+              },
+              "Username": {
+                "type": "string",
+                "description": "The username for username/password authentication."
+              },
               "DisableInstanceDiscovery": {
                 "type": "boolean",
                 "description": "Skip Microsoft Entra instance discovery and validation."
@@ -864,6 +880,22 @@
               "TenantId": {
                 "type": "string",
                 "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "ClientId": {
+                "type": "string",
+                "description": "The client (application) ID."
+              },
+              "ClientCertificatePath": {
+                "type": "string",
+                "description": "The file path to a client certificate for authentication."
+              },
+              "SendCertificateChain": {
+                "type": "boolean",
+                "description": "Include the x5c header in client claims when using certificate authentication."
+              },
+              "Username": {
+                "type": "string",
+                "description": "The username for username/password authentication."
               },
               "DisableInstanceDiscovery": {
                 "type": "boolean",
