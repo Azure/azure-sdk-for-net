@@ -66,6 +66,15 @@ namespace Azure.ResourceManager.Chaos.Models
             }
         }
 
+        /// <summary> Resource provisioning state. Not currently in use for executions. </summary>
+        public ChaosProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The reason why the execution failed. </summary>
         public string FailureReason
         {

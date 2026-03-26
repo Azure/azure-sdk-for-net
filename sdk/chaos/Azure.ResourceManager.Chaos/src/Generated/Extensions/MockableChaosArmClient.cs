@@ -71,6 +71,24 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return new ChaosExperimentExecutionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="PrivateAccessResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateAccessResource"/> object. </returns>
+        public virtual PrivateAccessResource GetPrivateAccessResource(ResourceIdentifier id)
+        {
+            PrivateAccessResource.ValidateResourceId(id);
+            return new PrivateAccessResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
+        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            PrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new PrivateEndpointConnectionResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ChaosTargetMetadataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ChaosTargetMetadataResource"/> object. </returns>
@@ -78,6 +96,69 @@ namespace Azure.ResourceManager.Chaos.Mocking
         {
             ChaosTargetMetadataResource.ValidateResourceId(id);
             return new ChaosTargetMetadataResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosWorkspaceResource"/> object. </returns>
+        public virtual ChaosWorkspaceResource GetChaosWorkspaceResource(ResourceIdentifier id)
+        {
+            ChaosWorkspaceResource.ValidateResourceId(id);
+            return new ChaosWorkspaceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DiscoveredResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiscoveredResource"/> object. </returns>
+        public virtual DiscoveredResource GetDiscoveredResource(ResourceIdentifier id)
+        {
+            DiscoveredResource.ValidateResourceId(id);
+            return new DiscoveredResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosScenarioResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosScenarioResource"/> object. </returns>
+        public virtual ChaosScenarioResource GetChaosScenarioResource(ResourceIdentifier id)
+        {
+            ChaosScenarioResource.ValidateResourceId(id);
+            return new ChaosScenarioResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosScenarioRunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosScenarioRunResource"/> object. </returns>
+        public virtual ChaosScenarioRunResource GetChaosScenarioRunResource(ResourceIdentifier id)
+        {
+            ChaosScenarioRunResource.ValidateResourceId(id);
+            return new ChaosScenarioRunResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosScenarioConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosScenarioConfigurationResource"/> object. </returns>
+        public virtual ChaosScenarioConfigurationResource GetChaosScenarioConfigurationResource(ResourceIdentifier id)
+        {
+            ChaosScenarioConfigurationResource.ValidateResourceId(id);
+            return new ChaosScenarioConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ValidationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ValidationResource"/> object. </returns>
+        public virtual ValidationResource GetValidationResource(ResourceIdentifier id)
+        {
+            ValidationResource.ValidateResourceId(id);
+            return new ValidationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PermissionsFixResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PermissionsFixResource"/> object. </returns>
+        public virtual PermissionsFixResource GetPermissionsFixResource(ResourceIdentifier id)
+        {
+            PermissionsFixResource.ValidateResourceId(id);
+            return new PermissionsFixResource(Client, id);
         }
     }
 }
