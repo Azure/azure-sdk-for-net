@@ -126,11 +126,12 @@ else
     $clientType = "copilot-cli"
 }
 
+
 # Process skill invocations (looking for "azsdk" prefix in skill name)
 if ($toolName -eq "skill")
 {
     $skillName = $toolInput.skill
-    if ($skillName -and $skillName.StartsWith("azsdk"))
+    if ($skillName)
     {
         $eventType = "skill_invocation"
         $shouldTrack = $true
