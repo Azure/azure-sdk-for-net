@@ -1,6 +1,20 @@
 # Microsoft Azure Relationships management client library for .NET
 
-**[Describe the service briefly first.]**
+Azure Relationships are a resource type used to create links or connections between resources. These relationships enable the grouping and management of resources across different scopes, such as subscriptions and resource groups.
+
+- Relationship = a semantic association between a source and target.
+
+- Resources = physical or logical Azure assets, above or below ARM.
+
+Microsoft.Relationships enables building a knowledge graph that powers:
+
+ - Service health triage
+- Change management
+- Security and compliance reporting
+- Outage root cause analysis
+- Dependency Mapping
+
+Using this management library, you can programmatically provision and update relationships of type `DependencyOf`, as well as add members to service groups.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
