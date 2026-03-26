@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="AccessBridgeList"/>. </summary>
         /// <param name="value"> The AccessBridge items on this page. </param>
-        internal AccessBridgeList(IEnumerable<AccessBridgeData> value)
+        internal AccessBridgeList(IEnumerable<NetworkCloudAccessBridgeData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="value"> The AccessBridge items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessBridgeList(IList<AccessBridgeData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessBridgeList(IList<NetworkCloudAccessBridgeData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The AccessBridge items on this page. </summary>
-        public IList<AccessBridgeData> Value { get; }
+        public IList<NetworkCloudAccessBridgeData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

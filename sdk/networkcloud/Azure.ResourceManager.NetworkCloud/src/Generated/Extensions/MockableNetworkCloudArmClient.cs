@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="AccessBridgeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetworkCloudAccessBridgeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccessBridgeResource"/> object. </returns>
-        public virtual AccessBridgeResource GetAccessBridgeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudAccessBridgeResource"/> object. </returns>
+        public virtual NetworkCloudAccessBridgeResource GetNetworkCloudAccessBridgeResource(ResourceIdentifier id)
         {
-            AccessBridgeResource.ValidateResourceId(id);
-            return new AccessBridgeResource(Client, id);
+            NetworkCloudAccessBridgeResource.ValidateResourceId(id);
+            return new NetworkCloudAccessBridgeResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="NetworkCloudBareMetalMachineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             return new NetworkCloudKubernetesClusterResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="KubernetesVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetworkCloudKubernetesVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KubernetesVersionResource"/> object. </returns>
-        public virtual KubernetesVersionResource GetKubernetesVersionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudKubernetesVersionResource"/> object. </returns>
+        public virtual NetworkCloudKubernetesVersionResource GetNetworkCloudKubernetesVersionResource(ResourceIdentifier id)
         {
-            KubernetesVersionResource.ValidateResourceId(id);
-            return new KubernetesVersionResource(Client, id);
+            NetworkCloudKubernetesVersionResource.ValidateResourceId(id);
+            return new NetworkCloudKubernetesVersionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="NetworkCloudL2NetworkResource"/> along with the instance operations that can be performed on it but with no data. </summary>

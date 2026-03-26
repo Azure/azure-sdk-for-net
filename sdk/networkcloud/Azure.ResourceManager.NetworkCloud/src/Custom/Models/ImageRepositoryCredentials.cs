@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
@@ -10,11 +11,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public partial class ImageRepositoryCredentials
     {
         /// <summary> Initializes a new instance of <see cref="ImageRepositoryCredentials"/>. </summary>
-        /// <param name="password"> The password or token used to access an image in the target repository. </param>
-        /// <param name="registryUrl"> The URL of the authentication server used to validate the repository credentials. </param>
+        /// <param name="registryUriString"> The URL of the authentication server used to validate the repository credentials. </param>
+        /// <param name="username"> The username used to access an image in the target repository. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="registryUriString"/> or <paramref name="username"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ImageRepositoryCredentials(string password, string registryUrl)
-            : this(password, registryUrl, null, null)
+        public ImageRepositoryCredentials(string registryUriString, string username)
+            : this(null, registryUriString, username, null)
         {
         }
     }

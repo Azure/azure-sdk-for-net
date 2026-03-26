@@ -1,11 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward-compat shim: old API exposed ExtendedLocation in Azure.ResourceManager.NetworkCloud.Models namespace.
-// New generator uses Azure.ResourceManager.Resources.Models.ExtendedLocation. This shim preserves ApiCompat.
-// [CodeGenType] maps the generated NetworkCloudExtendedLocation (from @@alternateType in client.tsp) to this class.
-// [CodeGenSuppress] removes generated members that hide inherited ones from the base class.
-
 #nullable disable
 
 using System;
@@ -18,6 +13,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
+    // Backward-compat shim: old API exposed ExtendedLocation in Azure.ResourceManager.NetworkCloud.Models namespace.
+    // New generator uses Azure.ResourceManager.Resources.Models.ExtendedLocation. This shim preserves ApiCompat.
+    // [CodeGenType] maps the generated NetworkCloudExtendedLocation (from @@alternateType in client.tsp) to this class.
+    // [CodeGenSuppress] removes generated members that hide inherited ones from the base class.
+
     /// <summary> The complex type of the extended location. </summary>
     [CodeGenType("NetworkCloudExtendedLocation")]
     [CodeGenSuppress("Name")]

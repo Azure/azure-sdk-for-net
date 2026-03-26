@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccessBridgeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccessBridgeResource> GetAccessBridgesAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudAccessBridgeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudAccessBridgeResource> GetNetworkCloudAccessBridgesAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AccessBridgeData, AccessBridgeResource>(new AccessBridgesGetBySubscriptionAsyncCollectionResultOfT(AccessBridgesRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new AccessBridgeResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudAccessBridgeData, NetworkCloudAccessBridgeResource>(new AccessBridgesGetBySubscriptionAsyncCollectionResultOfT(AccessBridgesRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudAccessBridgeResource(Client, data));
         }
 
         /// <summary>
@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccessBridgeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccessBridgeResource> GetAccessBridges(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudAccessBridgeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudAccessBridgeResource> GetNetworkCloudAccessBridges(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AccessBridgeData, AccessBridgeResource>(new AccessBridgesGetBySubscriptionCollectionResultOfT(AccessBridgesRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new AccessBridgeResource(Client, data));
+            return new PageableWrapper<NetworkCloudAccessBridgeData, NetworkCloudAccessBridgeResource>(new AccessBridgesGetBySubscriptionCollectionResultOfT(AccessBridgesRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudAccessBridgeResource(Client, data));
         }
 
         /// <summary>
@@ -562,14 +562,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KubernetesVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<KubernetesVersionResource> GetKubernetesVersionsAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudKubernetesVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudKubernetesVersionResource> GetNetworkCloudKubernetesVersionsAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubernetesVersionData, KubernetesVersionResource>(new KubernetesVersionsGetBySubscriptionAsyncCollectionResultOfT(KubernetesVersionsRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new KubernetesVersionResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new KubernetesVersionsGetBySubscriptionAsyncCollectionResultOfT(KubernetesVersionsRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudKubernetesVersionResource(Client, data));
         }
 
         /// <summary>
@@ -592,14 +592,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KubernetesVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<KubernetesVersionResource> GetKubernetesVersions(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudKubernetesVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudKubernetesVersionResource> GetNetworkCloudKubernetesVersions(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubernetesVersionData, KubernetesVersionResource>(new KubernetesVersionsGetBySubscriptionCollectionResultOfT(KubernetesVersionsRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new KubernetesVersionResource(Client, data));
+            return new PageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new KubernetesVersionsGetBySubscriptionCollectionResultOfT(KubernetesVersionsRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new NetworkCloudKubernetesVersionResource(Client, data));
         }
 
         /// <summary>

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AccessBridgeData item in Value)
+            foreach (NetworkCloudAccessBridgeData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            IList<AccessBridgeData> value = default;
+            IList<NetworkCloudAccessBridgeData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AccessBridgeData> array = new List<AccessBridgeData>();
+                    List<NetworkCloudAccessBridgeData> array = new List<NetworkCloudAccessBridgeData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AccessBridgeData.DeserializeAccessBridgeData(item, options));
+                        array.Add(NetworkCloudAccessBridgeData.DeserializeNetworkCloudAccessBridgeData(item, options));
                     }
                     value = array;
                     continue;

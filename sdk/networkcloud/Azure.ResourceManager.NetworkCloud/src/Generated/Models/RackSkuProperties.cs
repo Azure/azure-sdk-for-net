@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="storageAppliances"> The list of appliance SKUs and associated rack slot for the storage appliance(s) in this rack model. </param>
         /// <param name="supportedRackSkuIds"> The list of supported SKUs if the rack is an aggregator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RackSkuProperties(IReadOnlyList<MachineSkuSlot> computeMachines, IReadOnlyList<MachineSkuSlot> controllerMachines, DeploymentType? deploymentType, string description, long? maxClusterSlots, RackSkuProvisioningState? provisioningState, RackSkuType? rackType, IReadOnlyList<StorageApplianceSkuSlot> storageAppliances, IReadOnlyList<string> supportedRackSkuIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RackSkuProperties(IReadOnlyList<MachineSkuSlot> computeMachines, IReadOnlyList<MachineSkuSlot> controllerMachines, NetworkCloudDeploymentType? deploymentType, string description, long? maxClusterSlots, RackSkuProvisioningState? provisioningState, RackSkuType? rackType, IReadOnlyList<StorageApplianceSkuSlot> storageAppliances, IReadOnlyList<string> supportedRackSkuIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputeMachines = computeMachines;
             ControllerMachines = controllerMachines;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IReadOnlyList<MachineSkuSlot> ControllerMachines { get; } = new ChangeTrackingList<MachineSkuSlot>();
 
         /// <summary> The deployment type supported by the rack SKU. </summary>
-        public DeploymentType? DeploymentType { get; }
+        public NetworkCloudDeploymentType? DeploymentType { get; }
 
         /// <summary> The free-form text describing the rack. </summary>
         public string Description { get; }

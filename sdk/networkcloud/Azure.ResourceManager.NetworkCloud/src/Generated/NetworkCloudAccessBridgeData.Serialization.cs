@@ -19,10 +19,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary> AccessBridge represents a managed access bridge resource. </summary>
-    public partial class AccessBridgeData : TrackedResourceData, IJsonModel<AccessBridgeData>
+    public partial class NetworkCloudAccessBridgeData : TrackedResourceData, IJsonModel<NetworkCloudAccessBridgeData>
     {
-        /// <summary> Initializes a new instance of <see cref="AccessBridgeData"/> for deserialization. </summary>
-        internal AccessBridgeData()
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAccessBridgeData"/> for deserialization. </summary>
+        internal NetworkCloudAccessBridgeData()
         {
         }
 
@@ -30,62 +30,62 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessBridgeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudAccessBridgeData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAccessBridgeData(document.RootElement, options);
+                        return DeserializeNetworkCloudAccessBridgeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessBridgeData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudAccessBridgeData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessBridgeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudAccessBridgeData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AccessBridgeData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudAccessBridgeData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AccessBridgeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetworkCloudAccessBridgeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AccessBridgeData IPersistableModel<AccessBridgeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AccessBridgeData)PersistableModelCreateCore(data, options);
+        NetworkCloudAccessBridgeData IPersistableModel<NetworkCloudAccessBridgeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkCloudAccessBridgeData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AccessBridgeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkCloudAccessBridgeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="accessBridgeData"> The <see cref="AccessBridgeData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AccessBridgeData accessBridgeData)
+        /// <param name="networkCloudAccessBridgeData"> The <see cref="NetworkCloudAccessBridgeData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkCloudAccessBridgeData networkCloudAccessBridgeData)
         {
-            if (accessBridgeData == null)
+            if (networkCloudAccessBridgeData == null)
             {
                 return null;
             }
-            return RequestContent.Create(accessBridgeData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(networkCloudAccessBridgeData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AccessBridgeData"/> from. </param>
-        internal static AccessBridgeData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkCloudAccessBridgeData"/> from. </param>
+        internal static NetworkCloudAccessBridgeData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAccessBridgeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNetworkCloudAccessBridgeData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AccessBridgeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkCloudAccessBridgeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessBridgeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudAccessBridgeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessBridgeData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudAccessBridgeData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -110,29 +110,29 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("extendedLocation"u8);
-            ((IJsonModel<Resources.Models.ExtendedLocation>)ExtendedLocation).Write(writer, options);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AccessBridgeData IJsonModel<AccessBridgeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AccessBridgeData)JsonModelCreateCore(ref reader, options);
+        NetworkCloudAccessBridgeData IJsonModel<NetworkCloudAccessBridgeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkCloudAccessBridgeData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessBridgeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudAccessBridgeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessBridgeData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudAccessBridgeData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccessBridgeData(document.RootElement, options);
+            return DeserializeNetworkCloudAccessBridgeData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AccessBridgeData DeserializeAccessBridgeData(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetworkCloudAccessBridgeData DeserializeNetworkCloudAccessBridgeData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud
             AzureLocation location = default;
             AccessBridgeProperties properties = default;
             ETag? eTag = default;
-            Resources.Models.ExtendedLocation extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (prop.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ModelReaderWriter.Read<Resources.Models.ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AccessBridgeData(
+            return new NetworkCloudAccessBridgeData(
                 id,
                 name,
                 resourceType,

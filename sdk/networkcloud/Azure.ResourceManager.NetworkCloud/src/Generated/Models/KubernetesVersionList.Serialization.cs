@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (KubernetesVersionData item in Value)
+            foreach (NetworkCloudKubernetesVersionData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            IList<KubernetesVersionData> value = default;
+            IList<NetworkCloudKubernetesVersionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<KubernetesVersionData> array = new List<KubernetesVersionData>();
+                    List<NetworkCloudKubernetesVersionData> array = new List<NetworkCloudKubernetesVersionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVersionData.DeserializeKubernetesVersionData(item, options));
+                        array.Add(NetworkCloudKubernetesVersionData.DeserializeNetworkCloudKubernetesVersionData(item, options));
                     }
                     value = array;
                     continue;

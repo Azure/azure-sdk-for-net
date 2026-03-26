@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         {
         }
 
-        /// <summary> Gets a collection of AccessBridges in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of AccessBridges and their operations over a AccessBridgeResource. </returns>
-        public virtual AccessBridgeCollection GetAccessBridges()
+        /// <summary> Gets a collection of NetworkCloudAccessBridges in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudAccessBridges and their operations over a NetworkCloudAccessBridgeResource. </returns>
+        public virtual NetworkCloudAccessBridgeCollection GetNetworkCloudAccessBridges()
         {
-            return GetCachedClient(client => new AccessBridgeCollection(client, Id));
+            return GetCachedClient(client => new NetworkCloudAccessBridgeCollection(client, Id));
         }
 
         /// <summary>
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <param name="accessBridgeName"> The name of the access bridge. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AccessBridgeResource>> GetAccessBridgeAsync(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkCloudAccessBridgeResource>> GetNetworkCloudAccessBridgeAsync(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
         {
-            return await GetAccessBridges().GetAsync(accessBridgeName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudAccessBridges().GetAsync(accessBridgeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <param name="accessBridgeName"> The name of the access bridge. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<AccessBridgeResource> GetAccessBridge(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkCloudAccessBridgeResource> GetNetworkCloudAccessBridge(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
         {
-            return GetAccessBridges().Get(accessBridgeName, cancellationToken);
+            return GetNetworkCloudAccessBridges().Get(accessBridgeName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudBareMetalMachines in the <see cref="ResourceGroupResource"/>. </summary>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             return GetNetworkCloudKubernetesClusters().Get(kubernetesClusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of KubernetesVersions in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of KubernetesVersions and their operations over a KubernetesVersionResource. </returns>
-        public virtual KubernetesVersionCollection GetKubernetesVersions()
+        /// <summary> Gets a collection of NetworkCloudKubernetesVersions in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudKubernetesVersions and their operations over a NetworkCloudKubernetesVersionResource. </returns>
+        public virtual NetworkCloudKubernetesVersionCollection GetNetworkCloudKubernetesVersions()
         {
-            return GetCachedClient(client => new KubernetesVersionCollection(client, Id));
+            return GetCachedClient(client => new NetworkCloudKubernetesVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -443,11 +443,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="kubernetesVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<KubernetesVersionResource>> GetKubernetesVersionAsync(string kubernetesVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkCloudKubernetesVersionResource>> GetNetworkCloudKubernetesVersionAsync(string kubernetesVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kubernetesVersionName, nameof(kubernetesVersionName));
 
-            return await GetKubernetesVersions().GetAsync(kubernetesVersionName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudKubernetesVersions().GetAsync(kubernetesVersionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -472,11 +472,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="kubernetesVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<KubernetesVersionResource> GetKubernetesVersion(string kubernetesVersionName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkCloudKubernetesVersionResource> GetNetworkCloudKubernetesVersion(string kubernetesVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kubernetesVersionName, nameof(kubernetesVersionName));
 
-            return GetKubernetesVersions().Get(kubernetesVersionName, cancellationToken);
+            return GetNetworkCloudKubernetesVersions().Get(kubernetesVersionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudL2Networks in the <see cref="ResourceGroupResource"/>. </summary>

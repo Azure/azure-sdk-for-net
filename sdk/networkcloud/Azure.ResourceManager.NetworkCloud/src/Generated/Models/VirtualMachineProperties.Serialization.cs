@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(ConsoleExtendedLocation))
             {
                 writer.WritePropertyName("consoleExtendedLocation"u8);
-                ((IJsonModel<Resources.Models.ExtendedLocation>)ConsoleExtendedLocation).Write(writer, options);
+                ((IJsonModel<ExtendedLocation>)ConsoleExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string availabilityZone = default;
             ResourceIdentifier bareMetalMachineId = default;
             ResourceIdentifier clusterId = default;
-            Resources.Models.ExtendedLocation consoleExtendedLocation = default;
+            ExtendedLocation consoleExtendedLocation = default;
             VirtualMachineDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
             VirtualMachinePowerState? powerState = default;
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    consoleExtendedLocation = ModelReaderWriter.Read<Resources.Models.ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    consoleExtendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("detailedStatus"u8))

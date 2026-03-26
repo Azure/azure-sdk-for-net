@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KubernetesVersionResource"/> and their operations.
-    /// Each <see cref="KubernetesVersionResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="KubernetesVersionCollection"/> instance call the GetKubernetesVersions method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="NetworkCloudKubernetesVersionResource"/> and their operations.
+    /// Each <see cref="NetworkCloudKubernetesVersionResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="NetworkCloudKubernetesVersionCollection"/> instance call the GetNetworkCloudKubernetesVersions method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class KubernetesVersionCollection : ArmCollection, IEnumerable<KubernetesVersionResource>, IAsyncEnumerable<KubernetesVersionResource>
+    public partial class NetworkCloudKubernetesVersionCollection : ArmCollection, IEnumerable<NetworkCloudKubernetesVersionResource>, IAsyncEnumerable<NetworkCloudKubernetesVersionResource>
     {
         private readonly ClientDiagnostics _kubernetesVersionsClientDiagnostics;
         private readonly KubernetesVersions _kubernetesVersionsRestClient;
 
-        /// <summary> Initializes a new instance of KubernetesVersionCollection for mocking. </summary>
-        protected KubernetesVersionCollection()
+        /// <summary> Initializes a new instance of NetworkCloudKubernetesVersionCollection for mocking. </summary>
+        protected NetworkCloudKubernetesVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KubernetesVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal KubernetesVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetworkCloudKubernetesVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(KubernetesVersionResource.ResourceType, out string kubernetesVersionApiVersion);
-            _kubernetesVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", KubernetesVersionResource.ResourceType.Namespace, Diagnostics);
-            _kubernetesVersionsRestClient = new KubernetesVersions(_kubernetesVersionsClientDiagnostics, Pipeline, Endpoint, kubernetesVersionApiVersion ?? "2026-01-01-preview");
+            TryGetApiVersion(NetworkCloudKubernetesVersionResource.ResourceType, out string networkCloudKubernetesVersionApiVersion);
+            _kubernetesVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudKubernetesVersionResource.ResourceType.Namespace, Diagnostics);
+            _kubernetesVersionsRestClient = new KubernetesVersions(_kubernetesVersionsClientDiagnostics, Pipeline, Endpoint, networkCloudKubernetesVersionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="kubernetesVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<KubernetesVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string kubernetesVersionName, KubernetesVersionData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudKubernetesVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string kubernetesVersionName, NetworkCloudKubernetesVersionData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kubernetesVersionName, nameof(kubernetesVersionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("NetworkCloudKubernetesVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, kubernetesVersionName, KubernetesVersionData.ToRequestContent(data), matchConditions, context);
+                HttpMessage message = _kubernetesVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, kubernetesVersionName, NetworkCloudKubernetesVersionData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkCloudArmOperation<KubernetesVersionResource> operation = new NetworkCloudArmOperation<KubernetesVersionResource>(
-                    new KubernetesVersionOperationSource(Client),
+                NetworkCloudArmOperation<NetworkCloudKubernetesVersionResource> operation = new NetworkCloudArmOperation<NetworkCloudKubernetesVersionResource>(
+                    new NetworkCloudKubernetesVersionOperationSource(Client),
                     _kubernetesVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="kubernetesVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<KubernetesVersionResource> CreateOrUpdate(WaitUntil waitUntil, string kubernetesVersionName, KubernetesVersionData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudKubernetesVersionResource> CreateOrUpdate(WaitUntil waitUntil, string kubernetesVersionName, NetworkCloudKubernetesVersionData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kubernetesVersionName, nameof(kubernetesVersionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("NetworkCloudKubernetesVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, kubernetesVersionName, KubernetesVersionData.ToRequestContent(data), matchConditions, context);
+                HttpMessage message = _kubernetesVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, kubernetesVersionName, NetworkCloudKubernetesVersionData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NetworkCloudArmOperation<KubernetesVersionResource> operation = new NetworkCloudArmOperation<KubernetesVersionResource>(
-                    new KubernetesVersionOperationSource(Client),
+                NetworkCloudArmOperation<NetworkCloudKubernetesVersionResource> operation = new NetworkCloudArmOperation<NetworkCloudKubernetesVersionResource>(
+                    new NetworkCloudKubernetesVersionOperationSource(Client),
                     _kubernetesVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="kubernetesVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<KubernetesVersionResource>> GetAsync(string kubernetesVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkCloudKubernetesVersionResource>> GetAsync(string kubernetesVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kubernetesVersionName, nameof(kubernetesVersionName));
 
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionCollection.Get");
+            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("NetworkCloudKubernetesVersionCollection.Get");
             scope.Start();
             try
             {
@@ -208,12 +208,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 };
                 HttpMessage message = _kubernetesVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, kubernetesVersionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<KubernetesVersionData> response = Response.FromValue(KubernetesVersionData.FromResponse(result), result);
+                Response<NetworkCloudKubernetesVersionData> response = Response.FromValue(NetworkCloudKubernetesVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new KubernetesVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudKubernetesVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="kubernetesVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<KubernetesVersionResource> Get(string kubernetesVersionName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkCloudKubernetesVersionResource> Get(string kubernetesVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kubernetesVersionName, nameof(kubernetesVersionName));
 
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionCollection.Get");
+            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("NetworkCloudKubernetesVersionCollection.Get");
             scope.Start();
             try
             {
@@ -257,12 +257,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 };
                 HttpMessage message = _kubernetesVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, kubernetesVersionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<KubernetesVersionData> response = Response.FromValue(KubernetesVersionData.FromResponse(result), result);
+                Response<NetworkCloudKubernetesVersionData> response = Response.FromValue(NetworkCloudKubernetesVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new KubernetesVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudKubernetesVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -291,20 +291,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KubernetesVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<KubernetesVersionResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudKubernetesVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudKubernetesVersionResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubernetesVersionData, KubernetesVersionResource>(new KubernetesVersionsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new KubernetesVersionsGetByResourceGroupAsyncCollectionResultOfT(
                 _kubernetesVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new KubernetesVersionResource(Client, data));
+                context), data => new NetworkCloudKubernetesVersionResource(Client, data));
         }
 
         /// <summary>
@@ -327,20 +327,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KubernetesVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<KubernetesVersionResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudKubernetesVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudKubernetesVersionResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubernetesVersionData, KubernetesVersionResource>(new KubernetesVersionsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new KubernetesVersionsGetByResourceGroupCollectionResultOfT(
                 _kubernetesVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new KubernetesVersionResource(Client, data));
+                context), data => new NetworkCloudKubernetesVersionResource(Client, data));
         }
 
         /// <summary>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNullOrEmpty(kubernetesVersionName, nameof(kubernetesVersionName));
 
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionCollection.Exists");
+            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("NetworkCloudKubernetesVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -379,14 +379,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _kubernetesVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, kubernetesVersionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<KubernetesVersionData> response = default;
+                Response<NetworkCloudKubernetesVersionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(KubernetesVersionData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkCloudKubernetesVersionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((KubernetesVersionData)null, result);
+                        response = Response.FromValue((NetworkCloudKubernetesVersionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNullOrEmpty(kubernetesVersionName, nameof(kubernetesVersionName));
 
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionCollection.Exists");
+            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("NetworkCloudKubernetesVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -436,14 +436,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _kubernetesVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, kubernetesVersionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<KubernetesVersionData> response = default;
+                Response<NetworkCloudKubernetesVersionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(KubernetesVersionData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkCloudKubernetesVersionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((KubernetesVersionData)null, result);
+                        response = Response.FromValue((NetworkCloudKubernetesVersionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -478,11 +478,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="kubernetesVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<KubernetesVersionResource>> GetIfExistsAsync(string kubernetesVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NetworkCloudKubernetesVersionResource>> GetIfExistsAsync(string kubernetesVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kubernetesVersionName, nameof(kubernetesVersionName));
 
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("NetworkCloudKubernetesVersionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -493,23 +493,23 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _kubernetesVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, kubernetesVersionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<KubernetesVersionData> response = default;
+                Response<NetworkCloudKubernetesVersionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(KubernetesVersionData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkCloudKubernetesVersionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((KubernetesVersionData)null, result);
+                        response = Response.FromValue((NetworkCloudKubernetesVersionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<KubernetesVersionResource>(response.GetRawResponse());
+                    return new NoValueResponse<NetworkCloudKubernetesVersionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new KubernetesVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudKubernetesVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -539,11 +539,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="kubernetesVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<KubernetesVersionResource> GetIfExists(string kubernetesVersionName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NetworkCloudKubernetesVersionResource> GetIfExists(string kubernetesVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kubernetesVersionName, nameof(kubernetesVersionName));
 
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("NetworkCloudKubernetesVersionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -554,23 +554,23 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _kubernetesVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, kubernetesVersionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<KubernetesVersionData> response = default;
+                Response<NetworkCloudKubernetesVersionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(KubernetesVersionData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkCloudKubernetesVersionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((KubernetesVersionData)null, result);
+                        response = Response.FromValue((NetworkCloudKubernetesVersionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<KubernetesVersionResource>(response.GetRawResponse());
+                    return new NoValueResponse<NetworkCloudKubernetesVersionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new KubernetesVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudKubernetesVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        IEnumerator<KubernetesVersionResource> IEnumerable<KubernetesVersionResource>.GetEnumerator()
+        IEnumerator<NetworkCloudKubernetesVersionResource> IEnumerable<NetworkCloudKubernetesVersionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<KubernetesVersionResource> IAsyncEnumerable<KubernetesVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NetworkCloudKubernetesVersionResource> IAsyncEnumerable<NetworkCloudKubernetesVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

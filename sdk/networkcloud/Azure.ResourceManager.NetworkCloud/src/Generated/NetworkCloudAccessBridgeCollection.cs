@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AccessBridgeResource"/> and their operations.
-    /// Each <see cref="AccessBridgeResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="AccessBridgeCollection"/> instance call the GetAccessBridges method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="NetworkCloudAccessBridgeResource"/> and their operations.
+    /// Each <see cref="NetworkCloudAccessBridgeResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="NetworkCloudAccessBridgeCollection"/> instance call the GetNetworkCloudAccessBridges method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class AccessBridgeCollection : ArmCollection, IEnumerable<AccessBridgeResource>, IAsyncEnumerable<AccessBridgeResource>
+    public partial class NetworkCloudAccessBridgeCollection : ArmCollection, IEnumerable<NetworkCloudAccessBridgeResource>, IAsyncEnumerable<NetworkCloudAccessBridgeResource>
     {
         private readonly ClientDiagnostics _accessBridgesClientDiagnostics;
         private readonly AccessBridges _accessBridgesRestClient;
 
-        /// <summary> Initializes a new instance of AccessBridgeCollection for mocking. </summary>
-        protected AccessBridgeCollection()
+        /// <summary> Initializes a new instance of NetworkCloudAccessBridgeCollection for mocking. </summary>
+        protected NetworkCloudAccessBridgeCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessBridgeCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAccessBridgeCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AccessBridgeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetworkCloudAccessBridgeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AccessBridgeResource.ResourceType, out string accessBridgeApiVersion);
-            _accessBridgesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", AccessBridgeResource.ResourceType.Namespace, Diagnostics);
-            _accessBridgesRestClient = new AccessBridges(_accessBridgesClientDiagnostics, Pipeline, Endpoint, accessBridgeApiVersion ?? "2026-01-01-preview");
+            TryGetApiVersion(NetworkCloudAccessBridgeResource.ResourceType, out string networkCloudAccessBridgeApiVersion);
+            _accessBridgesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudAccessBridgeResource.ResourceType.Namespace, Diagnostics);
+            _accessBridgesRestClient = new AccessBridges(_accessBridgesClientDiagnostics, Pipeline, Endpoint, networkCloudAccessBridgeApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="data"> The access bridge configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AccessBridgeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AccessBridgeAllowedName accessBridgeName, AccessBridgeData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudAccessBridgeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AccessBridgeAllowedName accessBridgeName, NetworkCloudAccessBridgeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("AccessBridgeCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessBridgesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), AccessBridgeData.ToRequestContent(data), context);
+                HttpMessage message = _accessBridgesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), NetworkCloudAccessBridgeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkCloudArmOperation<AccessBridgeResource> operation = new NetworkCloudArmOperation<AccessBridgeResource>(
-                    new AccessBridgeOperationSource(Client),
+                NetworkCloudArmOperation<NetworkCloudAccessBridgeResource> operation = new NetworkCloudArmOperation<NetworkCloudAccessBridgeResource>(
+                    new NetworkCloudAccessBridgeOperationSource(Client),
                     _accessBridgesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="data"> The access bridge configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AccessBridgeResource> CreateOrUpdate(WaitUntil waitUntil, AccessBridgeAllowedName accessBridgeName, AccessBridgeData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudAccessBridgeResource> CreateOrUpdate(WaitUntil waitUntil, AccessBridgeAllowedName accessBridgeName, NetworkCloudAccessBridgeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("AccessBridgeCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessBridgesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), AccessBridgeData.ToRequestContent(data), context);
+                HttpMessage message = _accessBridgesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), NetworkCloudAccessBridgeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NetworkCloudArmOperation<AccessBridgeResource> operation = new NetworkCloudArmOperation<AccessBridgeResource>(
-                    new AccessBridgeOperationSource(Client),
+                NetworkCloudArmOperation<NetworkCloudAccessBridgeResource> operation = new NetworkCloudArmOperation<NetworkCloudAccessBridgeResource>(
+                    new NetworkCloudAccessBridgeOperationSource(Client),
                     _accessBridgesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="accessBridgeName"> The name of the access bridge. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AccessBridgeResource>> GetAsync(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkCloudAccessBridgeResource>> GetAsync(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("AccessBridgeCollection.Get");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeCollection.Get");
             scope.Start();
             try
             {
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 };
                 HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AccessBridgeData> response = Response.FromValue(AccessBridgeData.FromResponse(result), result);
+                Response<NetworkCloudAccessBridgeData> response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AccessBridgeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudAccessBridgeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,9 +232,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="accessBridgeName"> The name of the access bridge. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AccessBridgeResource> Get(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkCloudAccessBridgeResource> Get(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("AccessBridgeCollection.Get");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeCollection.Get");
             scope.Start();
             try
             {
@@ -244,12 +244,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 };
                 HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AccessBridgeData> response = Response.FromValue(AccessBridgeData.FromResponse(result), result);
+                Response<NetworkCloudAccessBridgeData> response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AccessBridgeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudAccessBridgeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,20 +278,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccessBridgeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccessBridgeResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudAccessBridgeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudAccessBridgeResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AccessBridgeData, AccessBridgeResource>(new AccessBridgesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudAccessBridgeData, NetworkCloudAccessBridgeResource>(new AccessBridgesGetByResourceGroupAsyncCollectionResultOfT(
                 _accessBridgesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new AccessBridgeResource(Client, data));
+                context), data => new NetworkCloudAccessBridgeResource(Client, data));
         }
 
         /// <summary>
@@ -314,20 +314,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccessBridgeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccessBridgeResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudAccessBridgeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudAccessBridgeResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AccessBridgeData, AccessBridgeResource>(new AccessBridgesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudAccessBridgeData, NetworkCloudAccessBridgeResource>(new AccessBridgesGetByResourceGroupCollectionResultOfT(
                 _accessBridgesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new AccessBridgeResource(Client, data));
+                context), data => new NetworkCloudAccessBridgeResource(Client, data));
         }
 
         /// <summary>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("AccessBridgeCollection.Exists");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeCollection.Exists");
             scope.Start();
             try
             {
@@ -362,14 +362,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AccessBridgeData> response = default;
+                Response<NetworkCloudAccessBridgeData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AccessBridgeData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AccessBridgeData)null, result);
+                        response = Response.FromValue((NetworkCloudAccessBridgeData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("AccessBridgeCollection.Exists");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeCollection.Exists");
             scope.Start();
             try
             {
@@ -415,14 +415,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AccessBridgeData> response = default;
+                Response<NetworkCloudAccessBridgeData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AccessBridgeData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AccessBridgeData)null, result);
+                        response = Response.FromValue((NetworkCloudAccessBridgeData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -455,9 +455,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="accessBridgeName"> The name of the access bridge. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<AccessBridgeResource>> GetIfExistsAsync(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NetworkCloudAccessBridgeResource>> GetIfExistsAsync(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("AccessBridgeCollection.GetIfExists");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -468,23 +468,23 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AccessBridgeData> response = default;
+                Response<NetworkCloudAccessBridgeData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AccessBridgeData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AccessBridgeData)null, result);
+                        response = Response.FromValue((NetworkCloudAccessBridgeData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AccessBridgeResource>(response.GetRawResponse());
+                    return new NoValueResponse<NetworkCloudAccessBridgeResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AccessBridgeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudAccessBridgeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -512,9 +512,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="accessBridgeName"> The name of the access bridge. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<AccessBridgeResource> GetIfExists(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NetworkCloudAccessBridgeResource> GetIfExists(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("AccessBridgeCollection.GetIfExists");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -525,23 +525,23 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AccessBridgeData> response = default;
+                Response<NetworkCloudAccessBridgeData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AccessBridgeData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AccessBridgeData)null, result);
+                        response = Response.FromValue((NetworkCloudAccessBridgeData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AccessBridgeResource>(response.GetRawResponse());
+                    return new NoValueResponse<NetworkCloudAccessBridgeResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AccessBridgeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudAccessBridgeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        IEnumerator<AccessBridgeResource> IEnumerable<AccessBridgeResource>.GetEnumerator()
+        IEnumerator<NetworkCloudAccessBridgeResource> IEnumerable<NetworkCloudAccessBridgeResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<AccessBridgeResource> IAsyncEnumerable<AccessBridgeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NetworkCloudAccessBridgeResource> IAsyncEnumerable<NetworkCloudAccessBridgeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

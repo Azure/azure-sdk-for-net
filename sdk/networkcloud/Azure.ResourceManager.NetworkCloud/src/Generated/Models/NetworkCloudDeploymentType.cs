@@ -12,7 +12,7 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> The type (kind) of the cluster. When specified, the value must exactly match the kind configured on the cluster manager that manages the cluster. If omitted, the service will default the value to the kind value of the cluster manager. </summary>
-    public readonly partial struct DeploymentType : IEquatable<DeploymentType>
+    public readonly partial struct NetworkCloudDeploymentType : IEquatable<NetworkCloudDeploymentType>
     {
         private readonly string _value;
         /// <summary> Azure Operator Nexus. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Azure Local. </summary>
         private const string AzureLocalValue = "AzureLocal";
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudDeploymentType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DeploymentType(string value)
+        public NetworkCloudDeploymentType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Azure Operator Nexus. </summary>
-        public static DeploymentType Nexus { get; } = new DeploymentType(NexusValue);
+        public static NetworkCloudDeploymentType Nexus { get; } = new NetworkCloudDeploymentType(NexusValue);
 
         /// <summary> Azure Local. </summary>
-        public static DeploymentType AzureLocal { get; } = new DeploymentType(AzureLocalValue);
+        public static NetworkCloudDeploymentType AzureLocal { get; } = new NetworkCloudDeploymentType(AzureLocalValue);
 
-        /// <summary> Determines if two <see cref="DeploymentType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="NetworkCloudDeploymentType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DeploymentType left, DeploymentType right) => left.Equals(right);
+        public static bool operator ==(NetworkCloudDeploymentType left, NetworkCloudDeploymentType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DeploymentType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="NetworkCloudDeploymentType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DeploymentType left, DeploymentType right) => !left.Equals(right);
+        public static bool operator !=(NetworkCloudDeploymentType left, NetworkCloudDeploymentType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DeploymentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="NetworkCloudDeploymentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentType(string value) => new DeploymentType(value);
+        public static implicit operator NetworkCloudDeploymentType(string value) => new NetworkCloudDeploymentType(value);
 
-        /// <summary> Converts a string to a <see cref="DeploymentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="NetworkCloudDeploymentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeploymentType?(string value) => value == null ? null : new DeploymentType(value);
+        public static implicit operator NetworkCloudDeploymentType?(string value) => value == null ? null : new NetworkCloudDeploymentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DeploymentType other && Equals(other);
+        public override bool Equals(object obj) => obj is NetworkCloudDeploymentType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DeploymentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(NetworkCloudDeploymentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

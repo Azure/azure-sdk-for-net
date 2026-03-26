@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    internal partial class AccessBridgesGetByResourceGroupCollectionResultOfT : Pageable<AccessBridgeData>
+    internal partial class AccessBridgesGetByResourceGroupCollectionResultOfT : Pageable<NetworkCloudAccessBridgeData>
     {
         private readonly AccessBridges _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AccessBridgesGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<AccessBridgeData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<NetworkCloudAccessBridgeData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     yield break;
                 }
                 AccessBridgeList result = AccessBridgeList.FromResponse(response);
-                yield return Page<AccessBridgeData>.FromValues((IReadOnlyList<AccessBridgeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NetworkCloudAccessBridgeData>.FromValues((IReadOnlyList<NetworkCloudAccessBridgeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _top, _skipToken, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _top, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AccessBridgeCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NetworkCloudAccessBridgeCollection.GetAll");
             scope.Start();
             try
             {

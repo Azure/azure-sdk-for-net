@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="keyData"> The SSH public key data. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyData"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudVirtualMachineConsoleData(AzureLocation location, ConsoleEnabled enabled, string keyData, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudVirtualMachineConsoleData(AzureLocation location, ConsoleEnabled enabled, string keyData, Models.ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(keyData, nameof(keyData));
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="properties"> The list of the resource properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
-        internal NetworkCloudVirtualMachineConsoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ConsoleProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudVirtualMachineConsoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ConsoleProperties properties, ETag? eTag, Models.ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

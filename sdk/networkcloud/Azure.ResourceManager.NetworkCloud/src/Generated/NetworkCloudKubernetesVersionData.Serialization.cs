@@ -19,10 +19,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary> KubernetesVersion represents the available Kubernetes versions for a cluster. </summary>
-    public partial class KubernetesVersionData : TrackedResourceData, IJsonModel<KubernetesVersionData>
+    public partial class NetworkCloudKubernetesVersionData : TrackedResourceData, IJsonModel<NetworkCloudKubernetesVersionData>
     {
-        /// <summary> Initializes a new instance of <see cref="KubernetesVersionData"/> for deserialization. </summary>
-        internal KubernetesVersionData()
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesVersionData"/> for deserialization. </summary>
+        internal NetworkCloudKubernetesVersionData()
         {
         }
 
@@ -30,62 +30,62 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudKubernetesVersionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKubernetesVersionData(document.RootElement, options);
+                        return DeserializeNetworkCloudKubernetesVersionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesVersionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudKubernetesVersionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudKubernetesVersionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesVersionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudKubernetesVersionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KubernetesVersionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetworkCloudKubernetesVersionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KubernetesVersionData IPersistableModel<KubernetesVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (KubernetesVersionData)PersistableModelCreateCore(data, options);
+        NetworkCloudKubernetesVersionData IPersistableModel<NetworkCloudKubernetesVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkCloudKubernetesVersionData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KubernetesVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkCloudKubernetesVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="kubernetesVersionData"> The <see cref="KubernetesVersionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(KubernetesVersionData kubernetesVersionData)
+        /// <param name="networkCloudKubernetesVersionData"> The <see cref="NetworkCloudKubernetesVersionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkCloudKubernetesVersionData networkCloudKubernetesVersionData)
         {
-            if (kubernetesVersionData == null)
+            if (networkCloudKubernetesVersionData == null)
             {
                 return null;
             }
-            return RequestContent.Create(kubernetesVersionData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(networkCloudKubernetesVersionData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KubernetesVersionData"/> from. </param>
-        internal static KubernetesVersionData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkCloudKubernetesVersionData"/> from. </param>
+        internal static NetworkCloudKubernetesVersionData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKubernetesVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNetworkCloudKubernetesVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KubernetesVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkCloudKubernetesVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudKubernetesVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesVersionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudKubernetesVersionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -110,29 +110,29 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("extendedLocation"u8);
-            ((IJsonModel<Resources.Models.ExtendedLocation>)ExtendedLocation).Write(writer, options);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KubernetesVersionData IJsonModel<KubernetesVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KubernetesVersionData)JsonModelCreateCore(ref reader, options);
+        NetworkCloudKubernetesVersionData IJsonModel<NetworkCloudKubernetesVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkCloudKubernetesVersionData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudKubernetesVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesVersionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudKubernetesVersionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKubernetesVersionData(document.RootElement, options);
+            return DeserializeNetworkCloudKubernetesVersionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KubernetesVersionData DeserializeKubernetesVersionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetworkCloudKubernetesVersionData DeserializeNetworkCloudKubernetesVersionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud
             AzureLocation location = default;
             KubernetesVersionProperties properties = default;
             ETag? eTag = default;
-            Resources.Models.ExtendedLocation extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (prop.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ModelReaderWriter.Read<Resources.Models.ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KubernetesVersionData(
+            return new NetworkCloudKubernetesVersionData(
                 id,
                 name,
                 resourceType,

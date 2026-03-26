@@ -12,22 +12,22 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> AccessBridgePatchParameters represents the payload for a PATCH request to an access bridge. </summary>
-    public partial class AccessBridgePatch
+    public partial class NetworkCloudAccessBridgePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AccessBridgePatch"/>. </summary>
-        public AccessBridgePatch()
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAccessBridgePatch"/>. </summary>
+        public NetworkCloudAccessBridgePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessBridgePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAccessBridgePatch"/>. </summary>
         /// <param name="properties"> The list of the resource properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessBridgePatch(AccessBridgePatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkCloudAccessBridgePatch(AccessBridgePatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Tags = tags;

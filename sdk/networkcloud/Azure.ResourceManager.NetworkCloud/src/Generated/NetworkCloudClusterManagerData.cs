@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="kind"> The kind of the cluster manager. </param>
-        internal NetworkCloudClusterManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterManagerProperties properties, ETag? eTag, ManagedServiceIdentity identity, DeploymentType? kind) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudClusterManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterManagerProperties properties, ETag? eTag, ManagedServiceIdentity identity, NetworkCloudDeploymentType? kind) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The kind of the cluster manager. </summary>
-        public DeploymentType? Kind { get; set; }
+        public NetworkCloudDeploymentType? Kind { get; set; }
 
         /// <summary> The resource ID of the Log Analytics workspace that is used for the logs collection. </summary>
         public ResourceIdentifier AnalyticsWorkspaceId

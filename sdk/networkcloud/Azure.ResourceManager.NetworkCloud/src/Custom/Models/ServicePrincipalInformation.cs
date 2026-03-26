@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
@@ -11,11 +12,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalInformation"/>. </summary>
         /// <param name="applicationId"> The application ID, also known as client ID, of the service principal. </param>
-        /// <param name="password"> The password of the service principal. </param>
         /// <param name="principalId"> The principal ID, also known as the object ID, of the service principal. </param>
+        /// <param name="tenantId"> The tenant ID, also known as the directory ID, of the tenant in which the service principal is created. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/>, <paramref name="principalId"/> or <paramref name="tenantId"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ServicePrincipalInformation(string applicationId, string password, string principalId)
-            : this(applicationId, password, principalId, null, null)
+        public ServicePrincipalInformation(string applicationId, string principalId, string tenantId)
+            : this(applicationId, null, principalId, tenantId, null)
         {
         }
     }

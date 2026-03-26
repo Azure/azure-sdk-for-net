@@ -12,21 +12,21 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> KubernetesVersionPatchParameters represents the body of the request to patch Kubernetes version tags. </summary>
-    public partial class KubernetesVersionPatch
+    public partial class NetworkCloudKubernetesVersionPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KubernetesVersionPatch"/>. </summary>
-        public KubernetesVersionPatch()
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesVersionPatch"/>. </summary>
+        public NetworkCloudKubernetesVersionPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KubernetesVersionPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesVersionPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesVersionPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkCloudKubernetesVersionPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

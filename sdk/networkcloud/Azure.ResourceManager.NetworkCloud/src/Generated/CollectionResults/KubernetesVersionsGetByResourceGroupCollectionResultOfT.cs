@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    internal partial class KubernetesVersionsGetByResourceGroupCollectionResultOfT : Pageable<KubernetesVersionData>
+    internal partial class KubernetesVersionsGetByResourceGroupCollectionResultOfT : Pageable<NetworkCloudKubernetesVersionData>
     {
         private readonly KubernetesVersions _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of KubernetesVersionsGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<KubernetesVersionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<NetworkCloudKubernetesVersionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     yield break;
                 }
                 KubernetesVersionList result = KubernetesVersionList.FromResponse(response);
-                yield return Page<KubernetesVersionData>.FromValues((IReadOnlyList<KubernetesVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NetworkCloudKubernetesVersionData>.FromValues((IReadOnlyList<NetworkCloudKubernetesVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _top, _skipToken, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _top, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("KubernetesVersionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NetworkCloudKubernetesVersionCollection.GetAll");
             scope.Start();
             try
             {

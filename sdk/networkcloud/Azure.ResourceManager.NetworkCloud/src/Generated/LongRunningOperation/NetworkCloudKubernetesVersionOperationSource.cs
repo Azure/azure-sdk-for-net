@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary></summary>
-    internal partial class KubernetesVersionOperationSource : IOperationSource<KubernetesVersionResource>
+    internal partial class NetworkCloudKubernetesVersionOperationSource : IOperationSource<NetworkCloudKubernetesVersionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal KubernetesVersionOperationSource(ArmClient client)
+        internal NetworkCloudKubernetesVersionOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        KubernetesVersionResource IOperationSource<KubernetesVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkCloudKubernetesVersionResource IOperationSource<NetworkCloudKubernetesVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            KubernetesVersionData data = KubernetesVersionData.DeserializeKubernetesVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new KubernetesVersionResource(_client, data);
+            NetworkCloudKubernetesVersionData data = NetworkCloudKubernetesVersionData.DeserializeNetworkCloudKubernetesVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkCloudKubernetesVersionResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<KubernetesVersionResource> IOperationSource<KubernetesVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkCloudKubernetesVersionResource> IOperationSource<NetworkCloudKubernetesVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            KubernetesVersionData data = KubernetesVersionData.DeserializeKubernetesVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new KubernetesVersionResource(_client, data);
+            NetworkCloudKubernetesVersionData data = NetworkCloudKubernetesVersionData.DeserializeNetworkCloudKubernetesVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkCloudKubernetesVersionResource(_client, data);
         }
     }
 }

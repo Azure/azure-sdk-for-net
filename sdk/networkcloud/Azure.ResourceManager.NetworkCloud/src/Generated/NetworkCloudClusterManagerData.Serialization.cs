@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ClusterManagerProperties properties = default;
             ETag? eTag = default;
             ManagedServiceIdentity identity = default;
-            DeploymentType? kind = default;
+            NetworkCloudDeploymentType? kind = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    kind = new DeploymentType(prop.Value.GetString());
+                    kind = new NetworkCloudDeploymentType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

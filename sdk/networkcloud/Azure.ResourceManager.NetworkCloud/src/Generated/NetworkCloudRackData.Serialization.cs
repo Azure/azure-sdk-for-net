@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation, options);
+            writer.WriteObjectValue<Models.ExtendedLocation>(ExtendedLocation, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetworkCloud
             AzureLocation location = default;
             RackProperties properties = default;
             ETag? eTag = default;
-            ExtendedLocation extendedLocation = default;
+            Models.ExtendedLocation extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (prop.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
+                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

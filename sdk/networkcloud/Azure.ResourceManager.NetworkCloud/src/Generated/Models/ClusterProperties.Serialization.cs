@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (options.Format != "W" && Optional.IsDefined(ClusterExtendedLocation))
             {
                 writer.WritePropertyName("clusterExtendedLocation"u8);
-                ((IJsonModel<Resources.Models.ExtendedLocation>)ClusterExtendedLocation).Write(writer, options);
+                ((IJsonModel<ExtendedLocation>)ClusterExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClusterManagerConnectionStatus))
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (options.Format != "W" && Optional.IsDefined(HybridAksExtendedLocation))
             {
                 writer.WritePropertyName("hybridAksExtendedLocation"u8);
-                ((IJsonModel<Resources.Models.ExtendedLocation>)HybridAksExtendedLocation).Write(writer, options);
+                ((IJsonModel<ExtendedLocation>)HybridAksExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManualActionCount))
             {
@@ -313,12 +313,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions = default;
             ClusterCapacity clusterCapacity = default;
             ClusterConnectionStatus? clusterConnectionStatus = default;
-            Resources.Models.ExtendedLocation clusterExtendedLocation = default;
+            ExtendedLocation clusterExtendedLocation = default;
             ClusterManagerConnectionStatus? clusterManagerConnectionStatus = default;
             ResourceIdentifier clusterManagerId = default;
             ClusterDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
-            Resources.Models.ExtendedLocation hybridAksExtendedLocation = default;
+            ExtendedLocation hybridAksExtendedLocation = default;
             long? manualActionCount = default;
             DateTimeOffset? supportExpireOn = default;
             IReadOnlyList<ResourceIdentifier> workloadResourceIds = default;
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    clusterExtendedLocation = ModelReaderWriter.Read<Resources.Models.ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    clusterExtendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("clusterManagerConnectionStatus"u8))
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    hybridAksExtendedLocation = ModelReaderWriter.Read<Resources.Models.ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    hybridAksExtendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("manualActionCount"u8))

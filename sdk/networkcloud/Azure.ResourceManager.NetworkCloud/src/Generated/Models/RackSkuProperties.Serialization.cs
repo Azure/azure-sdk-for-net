@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             IReadOnlyList<MachineSkuSlot> computeMachines = default;
             IReadOnlyList<MachineSkuSlot> controllerMachines = default;
-            DeploymentType? deploymentType = default;
+            NetworkCloudDeploymentType? deploymentType = default;
             string description = default;
             long? maxClusterSlots = default;
             RackSkuProvisioningState? provisioningState = default;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    deploymentType = new DeploymentType(prop.Value.GetString());
+                    deploymentType = new NetworkCloudDeploymentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

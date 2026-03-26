@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing a KubernetesVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KubernetesVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetKubernetesVersions method.
+    /// A class representing a NetworkCloudAccessBridge along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudAccessBridgeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudAccessBridges method.
     /// </summary>
-    public partial class KubernetesVersionResource : ArmResource
+    public partial class NetworkCloudAccessBridgeResource : ArmResource
     {
-        private readonly ClientDiagnostics _kubernetesVersionsClientDiagnostics;
-        private readonly KubernetesVersions _kubernetesVersionsRestClient;
-        private readonly KubernetesVersionData _data;
+        private readonly ClientDiagnostics _accessBridgesClientDiagnostics;
+        private readonly AccessBridges _accessBridgesRestClient;
+        private readonly NetworkCloudAccessBridgeData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/kubernetesVersions";
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/accessBridges";
 
-        /// <summary> Initializes a new instance of KubernetesVersionResource for mocking. </summary>
-        protected KubernetesVersionResource()
+        /// <summary> Initializes a new instance of NetworkCloudAccessBridgeResource for mocking. </summary>
+        protected NetworkCloudAccessBridgeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KubernetesVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAccessBridgeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal KubernetesVersionResource(ArmClient client, KubernetesVersionData data) : this(client, data.Id)
+        internal NetworkCloudAccessBridgeResource(ArmClient client, NetworkCloudAccessBridgeData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KubernetesVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAccessBridgeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal KubernetesVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetworkCloudAccessBridgeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string kubernetesVersionApiVersion);
-            _kubernetesVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _kubernetesVersionsRestClient = new KubernetesVersions(_kubernetesVersionsClientDiagnostics, Pipeline, Endpoint, kubernetesVersionApiVersion ?? "2026-01-01-preview");
+            TryGetApiVersion(ResourceType, out string networkCloudAccessBridgeApiVersion);
+            _accessBridgesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
+            _accessBridgesRestClient = new AccessBridges(_accessBridgesClientDiagnostics, Pipeline, Endpoint, networkCloudAccessBridgeApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual KubernetesVersionData Data
+        public virtual NetworkCloudAccessBridgeData Data
         {
             get
             {
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="kubernetesVersionName"> The kubernetesVersionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string kubernetesVersionName)
+        /// <param name="accessBridgeName"> The accessBridgeName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AccessBridgeAllowedName accessBridgeName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesVersions/{kubernetesVersionName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/accessBridges/{accessBridgeName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Retrieve the Kubernetes version resource that describes the available Kubernetes versions for deployment.
+        /// Get the properties of the provided access bridge.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesVersions/{kubernetesVersionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/accessBridges/{accessBridgeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> KubernetesVersions_Get. </description>
+        /// <description> AccessBridges_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="KubernetesVersionResource"/>. </description>
+        /// <description> <see cref="NetworkCloudAccessBridgeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<KubernetesVersionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkCloudAccessBridgeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionResource.Get");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeResource.Get");
             scope.Start();
             try
             {
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<KubernetesVersionData> response = Response.FromValue(KubernetesVersionData.FromResponse(result), result);
+                Response<NetworkCloudAccessBridgeData> response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new KubernetesVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudAccessBridgeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Retrieve the Kubernetes version resource that describes the available Kubernetes versions for deployment.
+        /// Get the properties of the provided access bridge.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesVersions/{kubernetesVersionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/accessBridges/{accessBridgeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> KubernetesVersions_Get. </description>
+        /// <description> AccessBridges_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="KubernetesVersionResource"/>. </description>
+        /// <description> <see cref="NetworkCloudAccessBridgeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<KubernetesVersionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<NetworkCloudAccessBridgeResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionResource.Get");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeResource.Get");
             scope.Start();
             try
             {
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<KubernetesVersionData> response = Response.FromValue(KubernetesVersionData.FromResponse(result), result);
+                Response<NetworkCloudAccessBridgeData> response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new KubernetesVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudAccessBridgeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,15 +190,15 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Update tags associated with the Kubernetes version resource. No other properties are supported for update.
+        /// Update properties of the provided access bridge, or update tags associated with the access bridge. Properties and tag updates can be done independently.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesVersions/{kubernetesVersionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/accessBridges/{accessBridgeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> KubernetesVersions_Update. </description>
+        /// <description> AccessBridges_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="KubernetesVersionResource"/>. </description>
+        /// <description> <see cref="NetworkCloudAccessBridgeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,9 +214,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<KubernetesVersionResource>> UpdateAsync(WaitUntil waitUntil, KubernetesVersionPatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudAccessBridgeResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudAccessBridgePatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionResource.Update");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeResource.Update");
             scope.Start();
             try
             {
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesVersionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, KubernetesVersionPatch.ToRequestContent(patch), matchConditions, context);
+                HttpMessage message = _accessBridgesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudAccessBridgePatch.ToRequestContent(patch), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkCloudArmOperation<KubernetesVersionResource> operation = new NetworkCloudArmOperation<KubernetesVersionResource>(
-                    new KubernetesVersionOperationSource(Client),
-                    _kubernetesVersionsClientDiagnostics,
+                NetworkCloudArmOperation<NetworkCloudAccessBridgeResource> operation = new NetworkCloudArmOperation<NetworkCloudAccessBridgeResource>(
+                    new NetworkCloudAccessBridgeOperationSource(Client),
+                    _accessBridgesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -247,15 +247,15 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Update tags associated with the Kubernetes version resource. No other properties are supported for update.
+        /// Update properties of the provided access bridge, or update tags associated with the access bridge. Properties and tag updates can be done independently.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesVersions/{kubernetesVersionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/accessBridges/{accessBridgeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> KubernetesVersions_Update. </description>
+        /// <description> AccessBridges_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="KubernetesVersionResource"/>. </description>
+        /// <description> <see cref="NetworkCloudAccessBridgeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -271,9 +271,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<KubernetesVersionResource> Update(WaitUntil waitUntil, KubernetesVersionPatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudAccessBridgeResource> Update(WaitUntil waitUntil, NetworkCloudAccessBridgePatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionResource.Update");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeResource.Update");
             scope.Start();
             try
             {
@@ -281,11 +281,11 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesVersionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, KubernetesVersionPatch.ToRequestContent(patch), matchConditions, context);
+                HttpMessage message = _accessBridgesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudAccessBridgePatch.ToRequestContent(patch), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NetworkCloudArmOperation<KubernetesVersionResource> operation = new NetworkCloudArmOperation<KubernetesVersionResource>(
-                    new KubernetesVersionOperationSource(Client),
-                    _kubernetesVersionsClientDiagnostics,
+                NetworkCloudArmOperation<NetworkCloudAccessBridgeResource> operation = new NetworkCloudArmOperation<NetworkCloudAccessBridgeResource>(
+                    new NetworkCloudAccessBridgeOperationSource(Client),
+                    _accessBridgesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -304,15 +304,15 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Delete the specified Kubernetes version resource.
+        /// Delete the specified access bridge.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesVersions/{kubernetesVersionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/accessBridges/{accessBridgeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> KubernetesVersions_Delete. </description>
+        /// <description> AccessBridges_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="KubernetesVersionResource"/>. </description>
+        /// <description> <see cref="NetworkCloudAccessBridgeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionResource.Delete");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeResource.Delete");
             scope.Start();
             try
             {
@@ -337,11 +337,11 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, matchConditions, context);
+                HttpMessage message = _accessBridgesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
-                    _kubernetesVersionsClientDiagnostics,
+                    _accessBridgesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -360,15 +360,15 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Delete the specified Kubernetes version resource.
+        /// Delete the specified access bridge.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesVersions/{kubernetesVersionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/accessBridges/{accessBridgeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> KubernetesVersions_Delete. </description>
+        /// <description> AccessBridges_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="KubernetesVersionResource"/>. </description>
+        /// <description> <see cref="NetworkCloudAccessBridgeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionResource.Delete");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeResource.Delete");
             scope.Start();
             try
             {
@@ -393,11 +393,11 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, matchConditions, context);
+                HttpMessage message = _accessBridgesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
-                    _kubernetesVersionsClientDiagnostics,
+                    _accessBridgesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -420,12 +420,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<KubernetesVersionResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkCloudAccessBridgeResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionResource.AddTag");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeResource.AddTag");
             scope.Start();
             try
             {
@@ -438,21 +438,21 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _kubernetesVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<KubernetesVersionData> response = Response.FromValue(KubernetesVersionData.FromResponse(result), result);
-                    return Response.FromValue(new KubernetesVersionResource(Client, response.Value), response.GetRawResponse());
+                    Response<NetworkCloudAccessBridgeData> response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudAccessBridgeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    KubernetesVersionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    KubernetesVersionPatch patch = new KubernetesVersionPatch();
+                    NetworkCloudAccessBridgeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkCloudAccessBridgePatch patch = new NetworkCloudAccessBridgePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<KubernetesVersionResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkCloudAccessBridgeResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -468,12 +468,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<KubernetesVersionResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkCloudAccessBridgeResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionResource.AddTag");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeResource.AddTag");
             scope.Start();
             try
             {
@@ -486,21 +486,21 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _kubernetesVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<KubernetesVersionData> response = Response.FromValue(KubernetesVersionData.FromResponse(result), result);
-                    return Response.FromValue(new KubernetesVersionResource(Client, response.Value), response.GetRawResponse());
+                    Response<NetworkCloudAccessBridgeData> response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudAccessBridgeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    KubernetesVersionData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    KubernetesVersionPatch patch = new KubernetesVersionPatch();
+                    NetworkCloudAccessBridgeData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkCloudAccessBridgePatch patch = new NetworkCloudAccessBridgePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<KubernetesVersionResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkCloudAccessBridgeResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -515,11 +515,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<KubernetesVersionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkCloudAccessBridgeResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionResource.SetTags");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeResource.SetTags");
             scope.Start();
             try
             {
@@ -533,17 +533,17 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _kubernetesVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<KubernetesVersionData> response = Response.FromValue(KubernetesVersionData.FromResponse(result), result);
-                    return Response.FromValue(new KubernetesVersionResource(Client, response.Value), response.GetRawResponse());
+                    Response<NetworkCloudAccessBridgeData> response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudAccessBridgeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    KubernetesVersionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    KubernetesVersionPatch patch = new KubernetesVersionPatch();
+                    NetworkCloudAccessBridgeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkCloudAccessBridgePatch patch = new NetworkCloudAccessBridgePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<KubernetesVersionResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkCloudAccessBridgeResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -558,11 +558,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<KubernetesVersionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkCloudAccessBridgeResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionResource.SetTags");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeResource.SetTags");
             scope.Start();
             try
             {
@@ -576,17 +576,17 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _kubernetesVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<KubernetesVersionData> response = Response.FromValue(KubernetesVersionData.FromResponse(result), result);
-                    return Response.FromValue(new KubernetesVersionResource(Client, response.Value), response.GetRawResponse());
+                    Response<NetworkCloudAccessBridgeData> response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudAccessBridgeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    KubernetesVersionData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    KubernetesVersionPatch patch = new KubernetesVersionPatch();
+                    NetworkCloudAccessBridgeData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkCloudAccessBridgePatch patch = new NetworkCloudAccessBridgePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<KubernetesVersionResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkCloudAccessBridgeResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -601,11 +601,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<KubernetesVersionResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkCloudAccessBridgeResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionResource.RemoveTag");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeResource.RemoveTag");
             scope.Start();
             try
             {
@@ -618,21 +618,21 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _kubernetesVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<KubernetesVersionData> response = Response.FromValue(KubernetesVersionData.FromResponse(result), result);
-                    return Response.FromValue(new KubernetesVersionResource(Client, response.Value), response.GetRawResponse());
+                    Response<NetworkCloudAccessBridgeData> response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudAccessBridgeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    KubernetesVersionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    KubernetesVersionPatch patch = new KubernetesVersionPatch();
+                    NetworkCloudAccessBridgeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkCloudAccessBridgePatch patch = new NetworkCloudAccessBridgePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<KubernetesVersionResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkCloudAccessBridgeResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -647,11 +647,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<KubernetesVersionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkCloudAccessBridgeResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("KubernetesVersionResource.RemoveTag");
+            using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("NetworkCloudAccessBridgeResource.RemoveTag");
             scope.Start();
             try
             {
@@ -664,21 +664,21 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _kubernetesVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<KubernetesVersionData> response = Response.FromValue(KubernetesVersionData.FromResponse(result), result);
-                    return Response.FromValue(new KubernetesVersionResource(Client, response.Value), response.GetRawResponse());
+                    Response<NetworkCloudAccessBridgeData> response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudAccessBridgeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    KubernetesVersionData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    KubernetesVersionPatch patch = new KubernetesVersionPatch();
+                    NetworkCloudAccessBridgeData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkCloudAccessBridgePatch patch = new NetworkCloudAccessBridgePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<KubernetesVersionResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkCloudAccessBridgeResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

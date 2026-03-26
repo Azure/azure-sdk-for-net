@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, string clusterLocation, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier networkFabricId, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettings vulnerabilityScanningSettings, IReadOnlyList<NetworkCloudActionState> actionStates, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, Resources.Models.ExtendedLocation clusterExtendedLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, Resources.Models.ExtendedLocation hybridAksExtendedLocation, long? manualActionCount, DateTimeOffset? supportExpireOn, IReadOnlyList<ResourceIdentifier> workloadResourceIds, ClusterProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, string clusterLocation, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier networkFabricId, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettings vulnerabilityScanningSettings, IReadOnlyList<NetworkCloudActionState> actionStates, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, long? manualActionCount, DateTimeOffset? supportExpireOn, IReadOnlyList<ResourceIdentifier> workloadResourceIds, ClusterProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
             AnalyticsOutputSettings = analyticsOutputSettings;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ClusterConnectionStatus? ClusterConnectionStatus { get; }
 
         /// <summary> The extended location (custom location) that represents the cluster's control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </summary>
-        public Resources.Models.ExtendedLocation ClusterExtendedLocation { get; }
+        public ExtendedLocation ClusterExtendedLocation { get; }
 
         /// <summary> The latest connectivity status between cluster manager and the cluster. </summary>
         public ClusterManagerConnectionStatus? ClusterManagerConnectionStatus { get; }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string DetailedStatusMessage { get; }
 
         /// <summary> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </summary>
-        public Resources.Models.ExtendedLocation HybridAksExtendedLocation { get; }
+        public ExtendedLocation HybridAksExtendedLocation { get; }
 
         /// <summary> The count of Manual Action Taken (MAT) events that have not been validated. </summary>
         public long? ManualActionCount { get; }

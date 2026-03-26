@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The deployment type supported by the rack SKU. </summary>
-        public DeploymentType? DeploymentType
+        public NetworkCloudDeploymentType? DeploymentType
         {
             get
             {
