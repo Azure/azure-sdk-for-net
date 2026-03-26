@@ -25,14 +25,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample7_ConversationsAuthoring_CancelTrainingJob
             string projectName = "{projectName}";
             string jobId = "{jobId}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = projectClient.CancelTrainingJob(
+            // CancelTrainingJob convenience method is suppressed; use protocol method
+            Operation<BinaryData> cancelOperation = client.CancelTrainingJob(
                 waitUntil: WaitUntil.Completed,
-                jobId: jobId
+                projectName: projectName,
+                jobId: jobId,
+                context: null
             );
 
-            // Extract the operation-location header
             string operationLocation = cancelOperation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
@@ -51,14 +52,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample7_ConversationsAuthoring_CancelTrainingJobAsync
             string projectName = "{projectName}";
             string jobId = "{jobId}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await projectClient.CancelTrainingJobAsync(
+            Operation<BinaryData> cancelOperation = await client.CancelTrainingJobAsync(
                 waitUntil: WaitUntil.Completed,
-                jobId: jobId
+                projectName: projectName,
+                jobId: jobId,
+                context: null
             );
 
-            // Extract the operation-location header
             string operationLocation = cancelOperation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 

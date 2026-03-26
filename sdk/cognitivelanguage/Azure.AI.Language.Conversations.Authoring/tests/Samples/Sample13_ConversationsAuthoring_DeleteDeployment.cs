@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
+using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -24,16 +25,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample13_ConversationsAuthoring_DeleteDeployment
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
-            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
-            Operation operation = deploymentClient.DeleteDeployment(
-                waitUntil: WaitUntil.Completed
+            Operation operation = client.DeleteDeployment(
+                waitUntil: WaitUntil.Completed,
+                projectName: projectName,
+                deploymentName: deploymentName
             );
 
-            // Extract operation-location from response headers
-            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";
-            Console.WriteLine($"Delete operation-location: {operationLocation}");
-            Console.WriteLine($"Delete operation completed with status: {operation.GetRawResponse().Status}");
+            Console.WriteLine($"Deployment deletion completed with status: {operation.GetRawResponse().Status}");
             #endregion
         }
 
@@ -48,16 +47,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample13_ConversationsAuthoring_DeleteDeploymentAsync
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
-            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
-            Operation operation = await deploymentClient.DeleteDeploymentAsync(
-                waitUntil: WaitUntil.Completed
+            Operation operation = await client.DeleteDeploymentAsync(
+                waitUntil: WaitUntil.Completed,
+                projectName: projectName,
+                deploymentName: deploymentName
             );
 
-            // Extract operation-location from response headers
-            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";
-            Console.WriteLine($"Delete operation-location: {operationLocation}");
-            Console.WriteLine($"Delete operation completed with status: {operation.GetRawResponse().Status}");
+            Console.WriteLine($"Deployment deletion completed with status: {operation.GetRawResponse().Status}");
             #endregion
         }
     }

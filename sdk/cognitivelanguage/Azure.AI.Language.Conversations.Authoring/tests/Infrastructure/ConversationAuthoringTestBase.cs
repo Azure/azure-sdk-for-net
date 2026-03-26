@@ -9,7 +9,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
     /// <summary>
     /// Base class for live client tests using different service versions for Conversation Authoring.
     /// </summary>
-    /// <typeparam name="TClient">The type of client being tested.</typeparam>
     [ClientTestFixture(
         ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2023_04_01,
         ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview,
@@ -28,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         }
 
         /// <summary>
-        /// Gets an instrumented client of type <typeparamref name="TClient"/>.
+        /// Gets an instrumented client of type <see cref="ConversationAnalysisAuthoringClient"/>.
         /// </summary>
         protected ConversationAnalysisAuthoringClient client { get; private set; }
 
@@ -38,7 +37,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         protected ConversationAnalysisAuthoringClientOptions.ServiceVersion ServiceVersion { get; }
 
         /// <summary>
-        /// Creates the <see cref="Client"/> once tests begin.
+        /// Creates the <see cref="ConversationAnalysisAuthoringClient"/> once tests begin.
         /// </summary>
         public override async Task StartTestRecordingAsync()
         {

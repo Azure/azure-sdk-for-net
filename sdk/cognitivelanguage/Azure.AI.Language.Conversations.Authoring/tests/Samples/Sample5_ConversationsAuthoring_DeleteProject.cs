@@ -24,12 +24,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample5_ConversationsAuthoring_DeleteProject
             string projectName = "{projectName}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-            Operation operation = projectClient.DeleteProject(
-                waitUntil: WaitUntil.Completed
+
+            Operation operation = client.DeleteProject(
+                waitUntil: WaitUntil.Completed,
+                projectName: projectName
             );
 
-            // Extract the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
@@ -47,12 +47,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample5_ConversationsAuthoring_DeleteProjectAsync
             string projectName = "{projectName}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-            Operation operation = await projectClient.DeleteProjectAsync(
-                waitUntil: WaitUntil.Completed
+
+            Operation operation = await client.DeleteProjectAsync(
+                waitUntil: WaitUntil.Completed,
+                projectName: projectName
             );
 
-            // Extract the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 

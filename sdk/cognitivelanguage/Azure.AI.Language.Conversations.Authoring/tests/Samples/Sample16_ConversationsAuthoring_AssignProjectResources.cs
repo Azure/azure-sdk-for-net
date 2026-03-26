@@ -1,12 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
+using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -20,49 +19,30 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         public void AssignProjectResources()
         {
             Uri endpoint = TestEnvironment.Endpoint;
-            DefaultAzureCredential credential = new DefaultAzureCredential();
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample16_ConversationsAuthoring_AssignProjectResources
-            // Arrange
-            string sampleProjectName = "{projectName}";
-            ConversationAuthoringProject sampleProjectClient = client.GetProject(sampleProjectName);
+            string projectName = "{projectName}";
 
-            var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
-                azureResourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
-                customDomain: "{customDomain}",
-                region: "{region}"
+            var assignResourcesDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
+                new[]
+                {
+                    new ConversationAuthoringResourceMetadata(
+                        azureResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.CognitiveServices/accounts/{accountName}",
+                        customDomain: "{customDomain}",
+                        region: "{region}"
+                    )
+                }
             );
 
-            var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
-                new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
+            Operation operation = client.AssignProjectResources(
+                waitUntil: WaitUntil.Completed,
+                projectName: projectName,
+                details: assignResourcesDetails
             );
 
-            // Act
-            Operation sampleOperation = sampleProjectClient.AssignProjectResources(
-                waitUntil: WaitUntil.Started,
-                details: sampleAssignDetails
-            );
-
-            // Output operation details
-            Console.WriteLine("Operation started successfully.");
-            Console.WriteLine($"Operation Status: {sampleOperation.GetRawResponse().Status}");
-
-            // Extract and print jobId from Operation-Location header
-            string sampleOperationLocation = sampleOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location)
-                ? location
-                : null;
-
-            if (!string.IsNullOrEmpty(sampleOperationLocation))
-            {
-                string sampleJobId = new Uri(sampleOperationLocation).Segments.Last().Split('?')[0];
-                Console.WriteLine($"Operation-Location: {sampleOperationLocation}");
-                Console.WriteLine($"Job ID: {sampleJobId}");
-            }
-            else
-            {
-                Console.WriteLine("Operation-Location header is null or empty.");
-            }
+            Console.WriteLine($"Assign project resources completed with status: {operation.GetRawResponse().Status}");
             #endregion
         }
 
@@ -71,49 +51,30 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         public async Task AssignProjectResourcesAsync()
         {
             Uri endpoint = TestEnvironment.Endpoint;
-            DefaultAzureCredential credential = new DefaultAzureCredential();
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample16_ConversationsAuthoring_AssignProjectResourcesAsync
-            // Arrange
-            string sampleProjectName = "{projectName}";
-            ConversationAuthoringProject sampleProjectClient = client.GetProject(sampleProjectName);
+            string projectName = "{projectName}";
 
-            var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
-                azureResourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
-                customDomain: "{customDomain}",
-                region: "{region}"
+            var assignResourcesDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
+                new[]
+                {
+                    new ConversationAuthoringResourceMetadata(
+                        azureResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.CognitiveServices/accounts/{accountName}",
+                        customDomain: "{customDomain}",
+                        region: "{region}"
+                    )
+                }
             );
 
-            var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
-                new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
+            Operation operation = await client.AssignProjectResourcesAsync(
+                waitUntil: WaitUntil.Completed,
+                projectName: projectName,
+                details: assignResourcesDetails
             );
 
-            // Act
-            Operation sampleOperation = await sampleProjectClient.AssignProjectResourcesAsync(
-                waitUntil: WaitUntil.Started,
-                details: sampleAssignDetails
-            );
-
-            // Output operation details
-            Console.WriteLine("Operation started successfully.");
-            Console.WriteLine($"Operation Status: {sampleOperation.GetRawResponse().Status}");
-
-            // Extract and print jobId from Operation-Location header
-            string sampleOperationLocation = sampleOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location)
-                ? location
-                : null;
-
-            if (!string.IsNullOrEmpty(sampleOperationLocation))
-            {
-                string sampleJobId = new Uri(sampleOperationLocation).Segments.Last().Split('?')[0];
-                Console.WriteLine($"Operation-Location: {sampleOperationLocation}");
-                Console.WriteLine($"Job ID: {sampleJobId}");
-            }
-            else
-            {
-                Console.WriteLine("Operation-Location header is null or empty.");
-            }
+            Console.WriteLine($"Assign project resources completed with status: {operation.GetRawResponse().Status}");
             #endregion
         }
     }

@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNull(details, nameof(details));
 
             using RequestContent content = CreateDeployProjectContent(details);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
 
             return await DeployProjectAsync(waitUntil, content, context).ConfigureAwait(false);
         }
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNull(details, nameof(details));
 
             using RequestContent content = CreateDeployProjectContent(details);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return DeployProject(waitUntil, content, context);
         }
 
@@ -76,7 +76,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
 
             // Preview 2025-11-15 (and future versions): use generated object shape
-            return details.ToRequestContent();
+            return details;
         }
 
         private static IList<string> GetResourceIdsFromObjects(

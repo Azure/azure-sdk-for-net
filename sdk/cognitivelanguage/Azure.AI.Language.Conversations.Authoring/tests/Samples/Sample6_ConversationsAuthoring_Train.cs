@@ -24,27 +24,30 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample6_ConversationsAuthoring_Train
             string projectName = "{projectName}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-            ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
-                modelLabel: "{modelLabel}",
-                trainingMode: ConversationAuthoringTrainingMode.Standard
-            )
+
+            // Train convenience method is suppressed; use protocol method with RequestContent
+            var trainingJobJson = new
             {
-                TrainingConfigVersion = "1.0",
-                EvaluationOptions = new ConversationAuthoringEvaluationDetails
+                modelLabel = "{modelLabel}",
+                trainingMode = "standard",
+                trainingConfigVersion = "1.0",
+                evaluationOptions = new
                 {
-                    Kind = ConversationAuthoringEvaluationKind.Percentage,
-                    TestingSplitPercentage = 20,
-                    TrainingSplitPercentage = 80
+                    kind = "percentage",
+                    testingSplitPercentage = 20,
+                    trainingSplitPercentage = 80
                 }
             };
 
-            Operation<ConversationAuthoringTrainingJobResult> operation = projectClient.Train(
+            using RequestContent content = RequestContent.Create(BinaryData.FromObjectAsJson(trainingJobJson));
+
+            Operation<BinaryData> operation = client.Train(
                 waitUntil: WaitUntil.Completed,
-                details: trainingJobDetails
+                projectName: projectName,
+                content: content,
+                context: null
             );
 
-            // Extract the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
@@ -63,38 +66,39 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample6_ConversationsAuthoring_Train_WithDataGeneration
             string projectName = "{projectName}";
 
-            // Create connection info for data generation
-            var connectionInfo = new AnalyzeConversationAuthoringDataGenerationConnectionInfo(
-                kind: AnalyzeConversationAuthoringDataGenerationConnectionKind.AzureOpenAI,
-                deploymentName: "gpt-4o")
+            // Use JSON for training job details including data generation settings
+            var trainingJobJson = new
             {
-                ResourceId = "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
-            };
-
-            // Prepare training job details with evaluation and data generation settings
-            var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
-                modelLabel: "{modelLabel}",
-                trainingMode: ConversationAuthoringTrainingMode.Standard)
-            {
-                TrainingConfigVersion = "2025-05-15-preview-ConvLevel",
-                EvaluationOptions = new ConversationAuthoringEvaluationDetails
+                modelLabel = "{modelLabel}",
+                trainingMode = "standard",
+                trainingConfigVersion = "2025-05-15-preview-ConvLevel",
+                evaluationOptions = new
                 {
-                    Kind = ConversationAuthoringEvaluationKind.Percentage,
-                    TestingSplitPercentage = 20,
-                    TrainingSplitPercentage = 80
+                    kind = "percentage",
+                    testingSplitPercentage = 20,
+                    trainingSplitPercentage = 80
                 },
-                DataGenerationSettings = new AnalyzeConversationAuthoringDataGenerationSettings(
-                    enableDataGeneration: true,
-                    dataGenerationConnectionInfo: connectionInfo)
+                dataGenerationSettings = new
+                {
+                    enableDataGeneration = true,
+                    dataGenerationConnectionInfo = new
+                    {
+                        kind = "AzureOpenAI",
+                        deploymentName = "gpt-4o",
+                        resourceId = "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+                    }
+                }
             };
 
-            // Start the training operation
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-            Operation<ConversationAuthoringTrainingJobResult> operation = projectClient.Train(
-                waitUntil: WaitUntil.Completed,
-                details: trainingJobDetails);
+            using RequestContent content = RequestContent.Create(BinaryData.FromObjectAsJson(trainingJobJson));
 
-            // Extract operation location header and print status
+            Operation<BinaryData> operation = client.Train(
+                waitUntil: WaitUntil.Completed,
+                projectName: projectName,
+                content: content,
+                context: null
+            );
+
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
             Console.WriteLine($"Training completed with status: {operation.GetRawResponse().Status}");
@@ -111,28 +115,29 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample6_ConversationsAuthoring_TrainAsync
             string projectName = "{projectName}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
-            ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
-                modelLabel: "{modelLabel}",
-                trainingMode: ConversationAuthoringTrainingMode.Standard
-            )
+            var trainingJobJson = new
             {
-                TrainingConfigVersion = "1.0",
-                EvaluationOptions = new ConversationAuthoringEvaluationDetails
+                modelLabel = "{modelLabel}",
+                trainingMode = "standard",
+                trainingConfigVersion = "1.0",
+                evaluationOptions = new
                 {
-                    Kind = ConversationAuthoringEvaluationKind.Percentage,
-                    TestingSplitPercentage = 20,
-                    TrainingSplitPercentage = 80
+                    kind = "percentage",
+                    testingSplitPercentage = 20,
+                    trainingSplitPercentage = 80
                 }
             };
 
-            Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
+            using RequestContent content = RequestContent.Create(BinaryData.FromObjectAsJson(trainingJobJson));
+
+            Operation<BinaryData> operation = await client.TrainAsync(
                 waitUntil: WaitUntil.Completed,
-                details: trainingJobDetails
+                projectName: projectName,
+                content: content,
+                context: null
             );
 
-            // Extract the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
@@ -151,38 +156,38 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample6_ConversationsAuthoring_TrainAsync_WithDataGeneration
             string projectName = "{projectName}";
 
-            // Create connection info for data generation
-            var connectionInfo = new AnalyzeConversationAuthoringDataGenerationConnectionInfo(
-                kind: AnalyzeConversationAuthoringDataGenerationConnectionKind.AzureOpenAI,
-                deploymentName: "gpt-4o")
+            var trainingJobJson = new
             {
-                ResourceId = "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
-            };
-
-            // Prepare training job details
-            var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
-                modelLabel: "{modelLabel}",
-                trainingMode: ConversationAuthoringTrainingMode.Standard)
-            {
-                TrainingConfigVersion = "2025-05-15-preview-ConvLevel",
-                EvaluationOptions = new ConversationAuthoringEvaluationDetails
+                modelLabel = "{modelLabel}",
+                trainingMode = "standard",
+                trainingConfigVersion = "2025-05-15-preview-ConvLevel",
+                evaluationOptions = new
                 {
-                    Kind = ConversationAuthoringEvaluationKind.Percentage,
-                    TestingSplitPercentage = 20,
-                    TrainingSplitPercentage = 80
+                    kind = "percentage",
+                    testingSplitPercentage = 20,
+                    trainingSplitPercentage = 80
                 },
-                DataGenerationSettings = new AnalyzeConversationAuthoringDataGenerationSettings(
-                    enableDataGeneration: true,
-                    dataGenerationConnectionInfo: connectionInfo)
+                dataGenerationSettings = new
+                {
+                    enableDataGeneration = true,
+                    dataGenerationConnectionInfo = new
+                    {
+                        kind = "AzureOpenAI",
+                        deploymentName = "gpt-4o",
+                        resourceId = "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+                    }
+                }
             };
 
-            // Start training
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-            Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
-                waitUntil: WaitUntil.Completed,
-                details: trainingJobDetails);
+            using RequestContent content = RequestContent.Create(BinaryData.FromObjectAsJson(trainingJobJson));
 
-            // Extract and print operation location and status
+            Operation<BinaryData> operation = await client.TrainAsync(
+                waitUntil: WaitUntil.Completed,
+                projectName: projectName,
+                content: content,
+                context: null
+            );
+
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
             Console.WriteLine($"Training completed with status: {operation.GetRawResponse().Status}");

@@ -1,10 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
+using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -18,30 +19,20 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         public void ListProjectResources()
         {
             Uri endpoint = TestEnvironment.Endpoint;
-            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client =
-                new ConversationAnalysisAuthoringClient(endpoint, credential);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample21_ConversationsAuthoring_ListProjectResources
             string projectName = "{projectName}";
 
-            // Retrieve resources assigned to this project
-            Pageable<ConversationAuthoringAssignedProjectResource> pageable =
-                client.GetProjectResources(projectName);
+            // GetDeploymentResources replaces the former GetProjectResources
+            Pageable<ConversationAuthoringAssignedDeploymentResource> pageable =
+                client.GetDeploymentResources(projectName);
 
-            foreach (ConversationAuthoringAssignedProjectResource resource in pageable)
+            foreach (ConversationAuthoringAssignedDeploymentResource resource in pageable)
             {
                 Console.WriteLine($"Resource ID: {resource.ResourceId}");
                 Console.WriteLine($"Region: {resource.Region}");
-
-                if (resource.AssignedAoaiResource != null)
-                {
-                    Console.WriteLine($"AOAI Kind: {resource.AssignedAoaiResource.Kind}");
-                    Console.WriteLine($"AOAI Resource ID: {resource.AssignedAoaiResource.ResourceId}");
-                    Console.WriteLine($"AOAI Deployment Name: {resource.AssignedAoaiResource.DeploymentName}");
-                }
-
-                Console.WriteLine();
             }
             #endregion
         }
@@ -51,30 +42,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         public async Task ListProjectResourcesAsync()
         {
             Uri endpoint = TestEnvironment.Endpoint;
-            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client =
-                new ConversationAnalysisAuthoringClient(endpoint, credential);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample21_ConversationsAuthoring_ListProjectResourcesAsync
             string projectName = "{projectName}";
 
-            // Retrieve resources assigned to this project (async)
-            AsyncPageable<ConversationAuthoringAssignedProjectResource> pageable =
-                client.GetProjectResourcesAsync(projectName);
+            AsyncPageable<ConversationAuthoringAssignedDeploymentResource> pageable =
+                client.GetDeploymentResourcesAsync(projectName);
 
-            await foreach (ConversationAuthoringAssignedProjectResource resource in pageable)
+            await foreach (ConversationAuthoringAssignedDeploymentResource resource in pageable)
             {
                 Console.WriteLine($"Resource ID: {resource.ResourceId}");
                 Console.WriteLine($"Region: {resource.Region}");
-
-                if (resource.AssignedAoaiResource != null)
-                {
-                    Console.WriteLine($"AOAI Kind: {resource.AssignedAoaiResource.Kind}");
-                    Console.WriteLine($"AOAI Resource ID: {resource.AssignedAoaiResource.ResourceId}");
-                    Console.WriteLine($"AOAI Deployment Name: {resource.AssignedAoaiResource.DeploymentName}");
-                }
-
-                Console.WriteLine();
             }
             #endregion
         }

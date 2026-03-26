@@ -5,56 +5,20 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    [CodeGenSuppress("GetConversationAuthoringProjectClient", typeof(string))]
-    [CodeGenSuppress("GetConversationAuthoringDeploymentClient", typeof(string), typeof(string))]
-    [CodeGenSuppress("GetConversationAuthoringExportedModelClient", typeof(string), typeof(string))]
-    [CodeGenSuppress("GetConversationAuthoringTrainedModelClient", typeof(string), typeof(string))]
+    // Suppress broken generated convenience methods that have incorrect return type
+    // (generator bug: Operation<BinaryData> cannot convert to Operation<T>)
+    [CodeGenType("AuthoringClient")]
+    [CodeGenSuppress("Train", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringTrainingJobDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("TrainAsync", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringTrainingJobDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("CancelTrainingJob", typeof(WaitUntil), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CancelTrainingJobAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("EvaluateModel", typeof(WaitUntil), typeof(string), typeof(string), typeof(ConversationAuthoringEvaluationDetails), typeof(CancellationToken))]
+    [CodeGenSuppress("EvaluateModelAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(ConversationAuthoringEvaluationDetails), typeof(CancellationToken))]
     public partial class ConversationAnalysisAuthoringClient
     {
-        /// <summary> Initializes a new instance of ConversationAuthoringProject. </summary>
-        /// <param name="projectName"> The project name to use for this subclient. </param>
-        public virtual ConversationAuthoringProject GetProject(string projectName)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            return new ConversationAuthoringProject(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, _apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of ConversationAuthoringDeployment. </summary>
-        /// <param name="projectName"> The project name to use for this subclient. </param>
-        /// <param name="deploymentName"> Represents deployment name. </param>
-        public virtual ConversationAuthoringDeployment GetDeployment(string projectName, string deploymentName)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-
-            return new ConversationAuthoringDeployment(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, deploymentName, _apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of ConversationAuthoringModels. </summary>
-        /// <param name="projectName"> The project name to use for this subclient. </param>
-        /// <param name="exportedModelName"> The exported model name to use for this subclient. </param>
-        public virtual ConversationAuthoringExportedModel GetExportedModel(string projectName, string exportedModelName)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
-
-            return new ConversationAuthoringExportedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, exportedModelName, _apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of ConversationAuthoringModels. </summary>
-        /// <param name="projectName"> The project name to use for this subclient. </param>
-        /// <param name="trainedModelLabel"> The trained model label to use for this subclient. </param>
-        public virtual ConversationAuthoringTrainedModel GetTrainedModel(string projectName, string trainedModelLabel)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-
-            return new ConversationAuthoringTrainedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, trainedModelLabel, _apiVersion);
-        }
     }
 }

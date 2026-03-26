@@ -1,12 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
+using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -19,52 +18,23 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         [SyncOnly]
         public void GetUnassignProjectResourcesStatus()
         {
-            Uri sampleEndpoint = TestEnvironment.Endpoint;
-            DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
-            var sampleClient = new ConversationAnalysisAuthoringClient(sampleEndpoint, sampleCredential);
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample19_ConversationsAuthoring_GetUnassignProjectResourcesStatus
-            string sampleProjectName = "{projectName}";
-            ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
+            string projectName = "{projectName}";
+            string jobId = "{jobId}";
 
-            // Define assigned resource ID to be unassigned
-            var sampleUnassignIds = new ConversationAuthoringProjectResourceIds
-            {
-                AzureResourceIds =
-                {
-                    "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
-                }
-            };
+            Response<ConversationAuthoringDeploymentResourcesState> response = client.GetUnassignProjectResourcesStatus(projectName, jobId);
 
-            // Start the unassign operation
-            Operation sampleUnassignOperation = sampleProjectClient.UnassignProjectResources(
-                waitUntil: WaitUntil.Started,
-                details: sampleUnassignIds
-            );
+            ConversationAuthoringDeploymentResourcesState state = response.Value;
 
-            Console.WriteLine($"UnassignProjectResources initiated. Status: {sampleUnassignOperation.GetRawResponse().Status}");
-
-            // Extract jobId from Operation-Location
-            string sampleJobId = sampleUnassignOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location)
-                ? new Uri(location).Segments.Last().Split('?')[0]
-                : throw new InvalidOperationException("Operation-Location header not found.");
-
-            Console.WriteLine($"Job ID: {sampleJobId}");
-
-            // Call the API to get unassign job status
-            Response<ConversationAuthoringProjectResourcesState> sampleStatusResponse =
-                sampleProjectClient.GetUnassignProjectResourcesStatus(sampleJobId);
-
-            Console.WriteLine($"Job Status: {sampleStatusResponse.Value.Status}");
-
-            if (sampleStatusResponse.Value.Errors != null && sampleStatusResponse.Value.Errors.Any())
-            {
-                Console.WriteLine("Errors:");
-                foreach (var sampleError in sampleStatusResponse.Value.Errors)
-                {
-                    Console.WriteLine($"- Code: {sampleError.Code}, Message: {sampleError.Message}");
-                }
-            }
+            Console.WriteLine($"Job ID: {state.JobId}");
+            Console.WriteLine($"Status: {state.Status}");
+            Console.WriteLine($"Created On: {state.CreatedOn}");
+            Console.WriteLine($"Last Updated On: {state.LastUpdatedOn}");
+            Console.WriteLine($"Expires On: {state.ExpiresOn}");
             #endregion
         }
 
@@ -72,52 +42,23 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         [AsyncOnly]
         public async Task GetUnassignProjectResourcesStatusAsync()
         {
-            Uri sampleEndpoint = TestEnvironment.Endpoint;
-            DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
-            var sampleClient = new ConversationAnalysisAuthoringClient(sampleEndpoint, sampleCredential);
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample19_ConversationsAuthoring_GetUnassignProjectResourcesStatusAsync
-            string sampleProjectName = "{projectName}";
-            ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
+            string projectName = "{projectName}";
+            string jobId = "{jobId}";
 
-            // Define assigned resource ID to be unassigned
-            var sampleUnassignIds = new ConversationAuthoringProjectResourceIds
-            {
-                AzureResourceIds =
-                {
-                    "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
-                }
-            };
+            Response<ConversationAuthoringDeploymentResourcesState> response = await client.GetUnassignProjectResourcesStatusAsync(projectName, jobId);
 
-            // Start the unassign operation
-            Operation sampleUnassignOperation = await sampleProjectClient.UnassignProjectResourcesAsync(
-                waitUntil: WaitUntil.Started,
-                details: sampleUnassignIds
-            );
+            ConversationAuthoringDeploymentResourcesState state = response.Value;
 
-            Console.WriteLine($"UnassignProjectResourcesAsync initiated. Status: {sampleUnassignOperation.GetRawResponse().Status}");
-
-            // Extract jobId from Operation-Location
-            string sampleJobId = sampleUnassignOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location)
-                ? new Uri(location).Segments.Last().Split('?')[0]
-                : throw new InvalidOperationException("Operation-Location header not found.");
-
-            Console.WriteLine($"Job ID: {sampleJobId}");
-
-            // Call the API to get unassign job status
-            Response<ConversationAuthoringProjectResourcesState> sampleStatusResponse =
-                await sampleProjectClient.GetUnassignProjectResourcesStatusAsync(sampleJobId);
-
-            Console.WriteLine($"Job Status: {sampleStatusResponse.Value.Status}");
-
-            if (sampleStatusResponse.Value.Errors != null && sampleStatusResponse.Value.Errors.Any())
-            {
-                Console.WriteLine("Errors:");
-                foreach (var sampleError in sampleStatusResponse.Value.Errors)
-                {
-                    Console.WriteLine($"- Code: {sampleError.Code}, Message: {sampleError.Message}");
-                }
-            }
+            Console.WriteLine($"Job ID: {state.JobId}");
+            Console.WriteLine($"Status: {state.Status}");
+            Console.WriteLine($"Created On: {state.CreatedOn}");
+            Console.WriteLine($"Last Updated On: {state.LastUpdatedOn}");
+            Console.WriteLine($"Expires On: {state.ExpiresOn}");
             #endregion
         }
     }

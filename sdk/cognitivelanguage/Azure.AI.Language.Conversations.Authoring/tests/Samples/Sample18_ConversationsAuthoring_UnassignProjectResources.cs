@@ -1,12 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
+using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -19,42 +18,28 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         [SyncOnly]
         public void UnassignProjectResources()
         {
-            Uri sampleEndpoint = TestEnvironment.Endpoint;
-            DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
-            var sampleClient = new ConversationAnalysisAuthoringClient(sampleEndpoint, sampleCredential);
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample18_ConversationsAuthoring_UnassignProjectResources
-            // Set project name and create client for the project
-            string sampleProjectName = "{projectName}";
-            ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
+            string projectName = "{projectName}";
 
-            // Define assigned resource ID to be unassigned
-            var sampleUnassignIds = new ConversationAuthoringProjectResourceIds
+            var unassignBody = new ConversationAuthoringDeleteDeploymentDetails
             {
-                AzureResourceIds =
+                AssignedResourceIds =
                 {
-                    "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+                    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.CognitiveServices/accounts/{accountName}"
                 }
             };
 
-            // Start the operation
-            Operation sampleOperation = sampleProjectClient.UnassignProjectResources(
-                waitUntil: WaitUntil.Started,
-                details: sampleUnassignIds
+            Operation operation = client.UnassignProjectResources(
+                waitUntil: WaitUntil.Completed,
+                projectName: projectName,
+                details: unassignBody
             );
 
-            Console.WriteLine($"UnassignProjectResources initiated. Status: {sampleOperation.GetRawResponse().Status}");
-
-            // Print jobId from Operation-Location
-            if (sampleOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location))
-            {
-                string sampleJobId = new Uri(location).Segments.Last().Split('?')[0];
-                Console.WriteLine($"Job ID: {sampleJobId}");
-            }
-            else
-            {
-                Console.WriteLine("Operation-Location header not found.");
-            }
+            Console.WriteLine($"Unassign project resources completed with status: {operation.GetRawResponse().Status}");
             #endregion
         }
 
@@ -62,42 +47,28 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         [AsyncOnly]
         public async Task UnassignProjectResourcesAsync()
         {
-            Uri sampleEndpoint = TestEnvironment.Endpoint;
-            DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
-            var sampleClient = new ConversationAnalysisAuthoringClient(sampleEndpoint, sampleCredential);
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample18_ConversationsAuthoring_UnassignProjectResourcesAsync
-            // Set project name and create client for the project
-            string sampleProjectName = "{projectName}";
-            ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
+            string projectName = "{projectName}";
 
-            // Define assigned resource ID to be unassigned
-            var sampleUnassignIds = new ConversationAuthoringProjectResourceIds
+            var unassignBody = new ConversationAuthoringDeleteDeploymentDetails
             {
-                AzureResourceIds =
+                AssignedResourceIds =
                 {
-                    "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+                    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.CognitiveServices/accounts/{accountName}"
                 }
             };
 
-            // Call the operation
-            Operation sampleOperation = await sampleProjectClient.UnassignProjectResourcesAsync(
-                waitUntil: WaitUntil.Started,
-                details: sampleUnassignIds
+            Operation operation = await client.UnassignProjectResourcesAsync(
+                waitUntil: WaitUntil.Completed,
+                projectName: projectName,
+                details: unassignBody
             );
 
-            Console.WriteLine($"UnassignProjectResourcesAsync initiated. Status: {sampleOperation.GetRawResponse().Status}");
-
-            // Print jobId from Operation-Location
-            if (sampleOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location))
-            {
-                string sampleJobId = new Uri(location).Segments.Last().Split('?')[0];
-                Console.WriteLine($"Job ID: {sampleJobId}");
-            }
-            else
-            {
-                Console.WriteLine("Operation-Location header not found.");
-            }
+            Console.WriteLine($"Unassign project resources completed with status: {operation.GetRawResponse().Status}");
             #endregion
         }
     }

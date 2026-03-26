@@ -1,10 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
+using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -18,11 +19,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         public void ListAssignedResourceDeployments()
         {
             Uri endpoint = TestEnvironment.Endpoint;
-            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample20_ConversationsAuthoring_ListAssignedResourceDeployments
-            // List all deployments assigned to resources across projects
             Pageable<ConversationAuthoringAssignedProjectDeploymentsMetadata> pageable =
                 client.GetAssignedResourceDeployments();
 
@@ -30,15 +30,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             {
                 Console.WriteLine($"Project Name: {meta.ProjectName}");
 
-                if (meta.DeploymentsMetadata != null)
+                foreach (ConversationAuthoringAssignedProjectDeploymentMetadata deployment in meta.DeploymentsMetadata)
                 {
-                    foreach (ConversationAuthoringAssignedProjectDeploymentMetadata deployment in meta.DeploymentsMetadata)
-                    {
-                        Console.WriteLine($"  Deployment Name: {deployment.DeploymentName}");
-                        Console.WriteLine($"  Last Deployed On: {deployment.LastDeployedOn}");
-                        Console.WriteLine($"  Deployment Expires On: {deployment.DeploymentExpiresOn}");
-                        Console.WriteLine();
-                    }
+                    Console.WriteLine($"  Deployment Name: {deployment.DeploymentName}");
+                    Console.WriteLine($"  Last Deployed On: {deployment.LastDeployedOn}");
+                    Console.WriteLine($"  Deployment Expires On: {deployment.DeploymentExpiresOn}");
                 }
             }
             #endregion
@@ -49,11 +45,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         public async Task ListAssignedResourceDeploymentsAsync()
         {
             Uri endpoint = TestEnvironment.Endpoint;
-            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample20_ConversationsAuthoring_ListAssignedResourceDeploymentsAsync
-            // List all deployments assigned to resources across projects (async)
             AsyncPageable<ConversationAuthoringAssignedProjectDeploymentsMetadata> pageable =
                 client.GetAssignedResourceDeploymentsAsync();
 
@@ -61,15 +56,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             {
                 Console.WriteLine($"Project Name: {meta.ProjectName}");
 
-                if (meta.DeploymentsMetadata != null)
+                foreach (ConversationAuthoringAssignedProjectDeploymentMetadata deployment in meta.DeploymentsMetadata)
                 {
-                    foreach (ConversationAuthoringAssignedProjectDeploymentMetadata deployment in meta.DeploymentsMetadata)
-                    {
-                        Console.WriteLine($"  Deployment Name: {deployment.DeploymentName}");
-                        Console.WriteLine($"  Last Deployed On: {deployment.LastDeployedOn}");
-                        Console.WriteLine($"  Deployment Expires On: {deployment.DeploymentExpiresOn}");
-                        Console.WriteLine();
-                    }
+                    Console.WriteLine($"  Deployment Name: {deployment.DeploymentName}");
+                    Console.WriteLine($"  Last Deployed On: {deployment.LastDeployedOn}");
+                    Console.WriteLine($"  Deployment Expires On: {deployment.DeploymentExpiresOn}");
                 }
             }
             #endregion

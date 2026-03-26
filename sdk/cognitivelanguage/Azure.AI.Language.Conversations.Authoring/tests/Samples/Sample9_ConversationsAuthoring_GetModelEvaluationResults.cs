@@ -24,31 +24,30 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResults
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-
-            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
             StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
-            Pageable<UtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResults(
+
+            Pageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> results = client.GetModelEvaluationResults(
+                projectName: projectName,
+                trainedModelLabel: trainedModelLabel,
                 stringIndexType: stringIndexType
             );
 
-            foreach (UtteranceEvaluationResult result in results)
+            foreach (AnalyzeConversationAuthoringUtteranceEvaluationResult result in results)
             {
                 Console.WriteLine($"Text: {result.Text}");
                 Console.WriteLine($"Language: {result.Language}");
 
-                // Print intents result
                 Console.WriteLine($"Expected Intent: {result.IntentsResult.ExpectedIntent}");
                 Console.WriteLine($"Predicted Intent: {result.IntentsResult.PredictedIntent}");
 
-                // Print entities result
                 Console.WriteLine("Expected Entities:");
-                foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
+                foreach (AnalyzeConversationAuthoringUtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
                 {
                     Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }
 
                 Console.WriteLine("Predicted Entities:");
-                foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
+                foreach (AnalyzeConversationAuthoringUtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
                 {
                     Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }
@@ -69,31 +68,30 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResultsAsync
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
             StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
 
-            AsyncPageable<UtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResultsAsync(
+            AsyncPageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> results = client.GetModelEvaluationResultsAsync(
+                projectName: projectName,
+                trainedModelLabel: trainedModelLabel,
                 stringIndexType: stringIndexType
             );
 
-            await foreach (UtteranceEvaluationResult result in results)
+            await foreach (AnalyzeConversationAuthoringUtteranceEvaluationResult result in results)
             {
                 Console.WriteLine($"Text: {result.Text}");
                 Console.WriteLine($"Language: {result.Language}");
 
-                // Print intents result
                 Console.WriteLine($"Expected Intent: {result.IntentsResult.ExpectedIntent}");
                 Console.WriteLine($"Predicted Intent: {result.IntentsResult.PredictedIntent}");
 
-                // Print entities result
                 Console.WriteLine("Expected Entities:");
-                foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
+                foreach (AnalyzeConversationAuthoringUtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
                 {
                     Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }
 
                 Console.WriteLine("Predicted Entities:");
-                foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
+                foreach (AnalyzeConversationAuthoringUtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
                 {
                     Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }

@@ -26,17 +26,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample8_ConversationsAuthoring_GetModelEvaluationSummary
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-            Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = trainedModelClient.GetModelEvaluationSummary();
+            Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = client.GetModelEvaluationSummary(projectName, trainedModelLabel);
 
             // Print entities evaluation summary
             EntitiesEvaluationSummary entitiesEval = evaluationSummaryResponse.Value.EntitiesEvaluation;
             Console.WriteLine($"Entities - Micro F1: {entitiesEval.MicroF1}, Micro Precision: {entitiesEval.MicroPrecision}, Micro Recall: {entitiesEval.MicroRecall}");
             Console.WriteLine($"Entities - Macro F1: {entitiesEval.MacroF1}, Macro Precision: {entitiesEval.MacroPrecision}, Macro Recall: {entitiesEval.MacroRecall}");
 
-            // Print detailed metrics per entity
-            foreach (KeyValuePair<string, ConversationAuthoringEntityEvalSummary> entity in entitiesEval.Entities)
+            foreach (KeyValuePair<string, AnalyzeConversationAuthoringEntityEvaluationSummary> entity in entitiesEval.Entities)
             {
                 Console.WriteLine($"Entity '{entity.Key}': F1 = {entity.Value.F1}, Precision = {entity.Value.Precision}, Recall = {entity.Value.Recall}");
                 Console.WriteLine($"  True Positives: {entity.Value.TruePositiveCount}, True Negatives: {entity.Value.TrueNegativeCount}");
@@ -48,14 +46,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Console.WriteLine($"Intents - Micro F1: {intentsEval.MicroF1}, Micro Precision: {intentsEval.MicroPrecision}, Micro Recall: {intentsEval.MicroRecall}");
             Console.WriteLine($"Intents - Macro F1: {intentsEval.MacroF1}, Macro Precision: {intentsEval.MacroPrecision}, Macro Recall: {intentsEval.MacroRecall}");
 
-            // Print detailed metrics per intent
             foreach (KeyValuePair<string, IntentEvaluationSummary> intent in intentsEval.Intents)
             {
                 Console.WriteLine($"Intent '{intent.Key}': F1 = {intent.Value.F1}, Precision = {intent.Value.Precision}, Recall = {intent.Value.Recall}");
                 Console.WriteLine($"  True Positives: {intent.Value.TruePositiveCount}, True Negatives: {intent.Value.TrueNegativeCount}");
                 Console.WriteLine($"  False Positives: {intent.Value.FalsePositiveCount}, False Negatives: {intent.Value.FalseNegativeCount}");
             }
-
             #endregion
         }
 
@@ -70,36 +66,30 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample8_ConversationsAuthoring_GetModelEvaluationSummaryAsync
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-            Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = await trainedModelClient.GetModelEvaluationSummaryAsync();
+            Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = await client.GetModelEvaluationSummaryAsync(projectName, trainedModelLabel);
 
-            // Print entities evaluation summary
             EntitiesEvaluationSummary entitiesEval = evaluationSummaryResponse.Value.EntitiesEvaluation;
             Console.WriteLine($"Entities - Micro F1: {entitiesEval.MicroF1}, Micro Precision: {entitiesEval.MicroPrecision}, Micro Recall: {entitiesEval.MicroRecall}");
             Console.WriteLine($"Entities - Macro F1: {entitiesEval.MacroF1}, Macro Precision: {entitiesEval.MacroPrecision}, Macro Recall: {entitiesEval.MacroRecall}");
 
-            // Print detailed metrics per entity
-            foreach (KeyValuePair<string, ConversationAuthoringEntityEvalSummary> entity in entitiesEval.Entities)
+            foreach (KeyValuePair<string, AnalyzeConversationAuthoringEntityEvaluationSummary> entity in entitiesEval.Entities)
             {
                 Console.WriteLine($"Entity '{entity.Key}': F1 = {entity.Value.F1}, Precision = {entity.Value.Precision}, Recall = {entity.Value.Recall}");
                 Console.WriteLine($"  True Positives: {entity.Value.TruePositiveCount}, True Negatives: {entity.Value.TrueNegativeCount}");
                 Console.WriteLine($"  False Positives: {entity.Value.FalsePositiveCount}, False Negatives: {entity.Value.FalseNegativeCount}");
             }
 
-            // Print intents evaluation summary
             IntentsEvaluationSummary intentsEval = evaluationSummaryResponse.Value.IntentsEvaluation;
             Console.WriteLine($"Intents - Micro F1: {intentsEval.MicroF1}, Micro Precision: {intentsEval.MicroPrecision}, Micro Recall: {intentsEval.MicroRecall}");
             Console.WriteLine($"Intents - Macro F1: {intentsEval.MacroF1}, Macro Precision: {intentsEval.MacroPrecision}, Macro Recall: {intentsEval.MacroRecall}");
 
-            // Print detailed metrics per intent
             foreach (KeyValuePair<string, IntentEvaluationSummary> intent in intentsEval.Intents)
             {
                 Console.WriteLine($"Intent '{intent.Key}': F1 = {intent.Value.F1}, Precision = {intent.Value.Precision}, Recall = {intent.Value.Recall}");
                 Console.WriteLine($"  True Positives: {intent.Value.TruePositiveCount}, True Negatives: {intent.Value.TrueNegativeCount}");
                 Console.WriteLine($"  False Positives: {intent.Value.FalsePositiveCount}, False Negatives: {intent.Value.FalseNegativeCount}");
             }
-
             #endregion
         }
     }

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -31,7 +30,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(projectJson, nameof(projectJson));
 
             using RequestContent content = RequestContent.Create(Encoding.UTF8.GetBytes(projectJson));
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return await ImportAsync(waitUntil, content, projectFormat?.ToString(), context).ConfigureAwait(false);
         }
 
@@ -52,7 +51,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(projectJson, nameof(projectJson));
 
             using RequestContent content = RequestContent.Create(Encoding.UTF8.GetBytes(projectJson));
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return Import(waitUntil, content, projectFormat?.ToString(), context);
         }
 
@@ -65,8 +64,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return await CreateProjectAsync(content, context).ConfigureAwait(false);
         }
 
@@ -79,8 +78,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return CreateProject(content, context);
         }
     }
