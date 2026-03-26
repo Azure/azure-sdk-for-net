@@ -13,3 +13,5 @@ https://www.nuget.org/packages/Azure.Monitor.Query.Metrics
 https://learn.microsoft.com/dotnet/api/overview/azure/monitor.query.metrics-readme?view=azure-dotnet
 #pre-release packages
 https://www.nuget.org/packages/Azure.AI.AgentServer.Hosting
+https://www.nuget.org/packages/Azure.AI.AgentServer.Responses
+https://www.nuget.org/packages/Azure.AI.AgentServer.Invocations
