@@ -53,6 +53,13 @@ public sealed class ServerUserAgentRegistry
     /// <returns>A formatted identity string.</returns>
     public static string BuildIdentityString(string sdkName, Assembly assembly)
     {
+#if NET
+        ArgumentException.ThrowIfNullOrEmpty(sdkName);
+        ArgumentNullException.ThrowIfNull(assembly);
+#else
+        if (string.IsNullOrEmpty(sdkName)) throw new ArgumentException("Value cannot be null or empty.", nameof(sdkName));
+        if (assembly is null) throw new ArgumentNullException(nameof(assembly));
+#endif
         var version = assembly
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
             .InformationalVersion ?? "0.0.0";

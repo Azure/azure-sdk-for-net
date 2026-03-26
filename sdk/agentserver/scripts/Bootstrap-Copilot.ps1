@@ -47,6 +47,12 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
+# Require PowerShell 7+ ($IsLinux/$IsMacOS are not defined in Windows PowerShell 5.1)
+if ($PSVersionTable.PSVersion.Major -lt 7) {
+    Write-Error "This script requires PowerShell 7+. Install from https://learn.microsoft.com/powershell/scripting/install/installing-powershell"
+    exit 1
+}
+
 # ---------------------------------------------------------------------------
 # Resolve paths
 # ---------------------------------------------------------------------------
