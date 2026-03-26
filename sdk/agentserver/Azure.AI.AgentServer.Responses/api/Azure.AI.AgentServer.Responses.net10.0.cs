@@ -316,4 +316,10 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseTextDeltaEvent EmitDelta(string text) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseTextDoneEvent EmitDone(string finalText) { throw null; }
     }
+    public sealed partial class ValidationError
+    {
+        public ValidationError(string path, string message) { }
+        public string Message { get { throw null; } }
+        public string Path { get { throw null; } }
+    }
 }

@@ -46,8 +46,8 @@ $AgentServerRoot = Split-Path -Parent $PSScriptRoot
 $TspDir = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses.Contracts" "src" "TypeSpec"
 $TspOut = Join-Path $TspDir "tsp-output"
 $ContractsGenerated = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses.Contracts" "src" "Generated"
-$ValidatorsDir = Join-Path $ContractsGenerated "Validators"
-$OverlayYaml = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses.Contracts" "src" "Validation" "validation-overlay.yaml"
+$ValidatorsDir = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses" "src" "Generated" "Validators"
+$OverlayYaml = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses" "src" "Validation" "validation-overlay.yaml"
 $ValidatorsNamespace = "Azure.AI.AgentServer.Responses.Validators"
 $GenerateValidatorsScript = Join-Path $AgentServerRoot "scripts" "generate-validators.py"
 
@@ -198,10 +198,15 @@ try {
 // Licensed under the MIT License.
 
 "@
-    Get-ChildItem -Path $ContractsGenerated -Filter "*.cs" -Recurse | ForEach-Object {
-        $content = Get-Content -Raw $_.FullName
-        if ($content -notmatch '^\s*// Copyright \(c\) Microsoft Corporation') {
-            Set-Content -Path $_.FullName -Value ($copyrightHeader + $content) -NoNewline
+    $generatedDirs = @($ContractsGenerated, $ValidatorsDir)
+    foreach ($genDir in $generatedDirs) {
+        if (Test-Path $genDir) {
+            Get-ChildItem -Path $genDir -Filter "*.cs" -Recurse | ForEach-Object {
+                $content = Get-Content -Raw $_.FullName
+                if ($content -notmatch '^\s*// Copyright \(c\) Microsoft Corporation') {
+                    Set-Content -Path $_.FullName -Value ($copyrightHeader + $content) -NoNewline
+                }
+            }
         }
     }
     Write-Host "Copyright headers added."
