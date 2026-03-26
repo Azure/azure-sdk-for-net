@@ -3,26 +3,26 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> Suppress generated factory methods for DevCenterOperationStatus.
+    /// <summary> Backward-compat factory method for DevCenterOperationStatus.
     /// The generator emits a factory method with only the IReadOnlyDictionary properties param,
     /// but we need the full backward-compat overload matching the baseline SDK. </summary>
-    [CodeGenSuppress("DevCenterOperationStatus", typeof(IReadOnlyDictionary<string, BinaryData>))]
-    [CodeGenSuppress("DevCenterOperationStatus", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(float?), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(IEnumerable<OperationStatusResult>), typeof(ResponseError), typeof(ResourceIdentifier), typeof(BinaryData))]
     public static partial class ArmDevCenterModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterOperationStatus"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevCenterOperationStatus DevCenterOperationStatus(ResourceIdentifier id = default, string name = default, string status = default, float? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, BinaryData properties = default)
         {
             operations ??= new List<OperationStatusResult>();
+            IDictionary<string, BinaryData> additionalProps = new Dictionary<string, BinaryData>();
+            if (resourceId != null)
+            {
+                additionalProps["resourceId"] = new BinaryData("\"" + resourceId.ToString() + "\"");
+            }
             return new DevCenterOperationStatus(
                 id,
                 name,
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 endOn,
                 operations?.ToList(),
                 error,
-                null,
+                additionalProps,
                 properties);
         }
     }
