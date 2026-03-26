@@ -3192,73 +3192,24 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The input contract for the retrieval request. </summary>
-        /// <param name="messages"> A list of chat message style input. </param>
         /// <param name="intents"> A list of intended queries to execute without model query planning. </param>
         /// <param name="maxRuntimeInSeconds"> The maximum runtime in seconds. </param>
         /// <param name="maxOutputSizeInTokens"> Limits the maximum size of the content in the output. </param>
         /// <param name="includeActivity"> Indicates retrieval results should include activity information. </param>
         /// <param name="knowledgeSourceParams"> A list of runtime parameters for the knowledge sources. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRetrievalRequest"/> instance for mocking. </returns>
-        public static KnowledgeBaseRetrievalRequest KnowledgeBaseRetrievalRequest(IEnumerable<KnowledgeBaseMessage> messages = default, IEnumerable<KnowledgeRetrievalIntent> intents = default, int? maxRuntimeInSeconds = default, int? maxOutputSizeInTokens = default, bool? includeActivity = default, IEnumerable<KnowledgeSourceParams> knowledgeSourceParams = default)
+        public static KnowledgeBaseRetrievalRequest KnowledgeBaseRetrievalRequest(IEnumerable<KnowledgeRetrievalIntent> intents = default, int? maxRuntimeInSeconds = default, int? maxOutputSizeInTokens = default, bool? includeActivity = default, IEnumerable<KnowledgeSourceParams> knowledgeSourceParams = default)
         {
-            messages ??= new ChangeTrackingList<KnowledgeBaseMessage>();
             intents ??= new ChangeTrackingList<KnowledgeRetrievalIntent>();
             knowledgeSourceParams ??= new ChangeTrackingList<KnowledgeSourceParams>();
 
             return new KnowledgeBaseRetrievalRequest(
-                messages.ToList(),
                 intents.ToList(),
                 maxRuntimeInSeconds,
                 maxOutputSizeInTokens,
                 includeActivity,
                 knowledgeSourceParams.ToList(),
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The natural language message style object. </summary>
-        /// <param name="role"> The role of the tool response. </param>
-        /// <param name="content"> The content of the message. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseMessage"/> instance for mocking. </returns>
-        public static KnowledgeBaseMessage KnowledgeBaseMessage(string role = default, IEnumerable<KnowledgeBaseMessageContent> content = default)
-        {
-            content ??= new ChangeTrackingList<KnowledgeBaseMessageContent>();
-
-            return new KnowledgeBaseMessage(role, content.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Specifies the type of the message content.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseMessageTextContent"/> and <see cref="KnowledgeBases.Models.KnowledgeBaseMessageImageContent"/>.
-        /// </summary>
-        /// <param name="type"> The type of the message. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseMessageContent"/> instance for mocking. </returns>
-        public static KnowledgeBaseMessageContent KnowledgeBaseMessageContent(string @type = default)
-        {
-            return new UnknownKnowledgeBaseMessageContent(new KnowledgeBaseMessageContentType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Text message type. </summary>
-        /// <param name="text"> The text content. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseMessageTextContent"/> instance for mocking. </returns>
-        public static KnowledgeBaseMessageTextContent KnowledgeBaseMessageTextContent(string text = default)
-        {
-            return new KnowledgeBaseMessageTextContent(KnowledgeBaseMessageContentType.Text, additionalBinaryDataProperties: null, text);
-        }
-
-        /// <summary> Image message type. </summary>
-        /// <param name="image"> The image content. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseMessageImageContent"/> instance for mocking. </returns>
-        public static KnowledgeBaseMessageImageContent KnowledgeBaseMessageImageContent(KnowledgeBaseImageContent image = default)
-        {
-            return new KnowledgeBaseMessageImageContent(KnowledgeBaseMessageContentType.Image, additionalBinaryDataProperties: null, image);
-        }
-
-        /// <summary> Image content. </summary>
-        /// <param name="url"> The url of the image. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseImageContent"/> instance for mocking. </returns>
-        public static KnowledgeBaseImageContent KnowledgeBaseImageContent(Uri url = default)
-        {
-            return new KnowledgeBaseImageContent(url, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -3391,6 +3342,52 @@ namespace Azure.Search.Documents.Models
             references ??= new ChangeTrackingList<KnowledgeBaseReference>();
 
             return new KnowledgeBaseRetrievalResponse(response.ToList(), activity.ToList(), references.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The natural language message style object. </summary>
+        /// <param name="role"> The role of the tool response. </param>
+        /// <param name="content"> The content of the message. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseMessage"/> instance for mocking. </returns>
+        public static KnowledgeBaseMessage KnowledgeBaseMessage(string role = default, IEnumerable<KnowledgeBaseMessageContent> content = default)
+        {
+            content ??= new ChangeTrackingList<KnowledgeBaseMessageContent>();
+
+            return new KnowledgeBaseMessage(role, content.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Specifies the type of the message content.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseMessageTextContent"/> and <see cref="KnowledgeBases.Models.KnowledgeBaseMessageImageContent"/>.
+        /// </summary>
+        /// <param name="type"> The type of the message. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseMessageContent"/> instance for mocking. </returns>
+        public static KnowledgeBaseMessageContent KnowledgeBaseMessageContent(string @type = default)
+        {
+            return new UnknownKnowledgeBaseMessageContent(new KnowledgeBaseMessageContentType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Text message type. </summary>
+        /// <param name="text"> The text content. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseMessageTextContent"/> instance for mocking. </returns>
+        public static KnowledgeBaseMessageTextContent KnowledgeBaseMessageTextContent(string text = default)
+        {
+            return new KnowledgeBaseMessageTextContent(KnowledgeBaseMessageContentType.Text, additionalBinaryDataProperties: null, text);
+        }
+
+        /// <summary> Image message type. </summary>
+        /// <param name="image"> The image content. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseMessageImageContent"/> instance for mocking. </returns>
+        public static KnowledgeBaseMessageImageContent KnowledgeBaseMessageImageContent(KnowledgeBaseImageContent image = default)
+        {
+            return new KnowledgeBaseMessageImageContent(KnowledgeBaseMessageContentType.Image, additionalBinaryDataProperties: null, image);
+        }
+
+        /// <summary> Image content. </summary>
+        /// <param name="url"> The url of the image. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseImageContent"/> instance for mocking. </returns>
+        public static KnowledgeBaseImageContent KnowledgeBaseImageContent(Uri url = default)
+        {
+            return new KnowledgeBaseImageContent(url, additionalBinaryDataProperties: null);
         }
 
         /// <summary>

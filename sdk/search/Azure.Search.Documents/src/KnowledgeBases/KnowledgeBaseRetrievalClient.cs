@@ -15,8 +15,6 @@ namespace Azure.Search.Documents.KnowledgeBases
     /// </summary>
     public partial class KnowledgeBaseRetrievalClient
     {
-        private readonly HttpPipeline _pipeline;
-
         /// <summary>
         /// Gets the URI endpoint of the Search service.  This is likely
         /// to be similar to "https://{search_service}.search.windows.net".
@@ -91,7 +89,11 @@ namespace Azure.Search.Documents.KnowledgeBases
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
             KnowledgeBaseName = knowledgeBaseName;
+            _endpoint = endpoint;
+            _keyCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
             _apiVersion = options.Version.ToVersionString();
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary>
@@ -116,8 +118,11 @@ namespace Azure.Search.Documents.KnowledgeBases
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
             KnowledgeBaseName = knowledgeBaseName;
-            _pipeline = options.Build(tokenCredential);
+            _endpoint = endpoint;
+            _tokenCredential = tokenCredential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
             _apiVersion = options.Version.ToVersionString();
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>

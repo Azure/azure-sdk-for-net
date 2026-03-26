@@ -85,16 +85,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 throw new FormatException($"The model {nameof(KnowledgeBaseRetrievalRequest)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Messages))
-            {
-                writer.WritePropertyName("messages"u8);
-                writer.WriteStartArray();
-                foreach (KnowledgeBaseMessage item in Messages)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsCollectionDefined(Intents))
             {
                 writer.WritePropertyName("intents"u8);
@@ -172,7 +162,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 return null;
             }
-            IList<KnowledgeBaseMessage> messages = default;
             IList<KnowledgeRetrievalIntent> intents = default;
             int? maxRuntimeInSeconds = default;
             int? maxOutputSizeInTokens = default;
@@ -181,20 +170,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("messages"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<KnowledgeBaseMessage> array = new List<KnowledgeBaseMessage>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(KnowledgeBaseMessage.DeserializeKnowledgeBaseMessage(item, options));
-                    }
-                    messages = array;
-                    continue;
-                }
                 if (prop.NameEquals("intents"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -256,7 +231,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
             }
             return new KnowledgeBaseRetrievalRequest(
-                messages ?? new ChangeTrackingList<KnowledgeBaseMessage>(),
                 intents ?? new ChangeTrackingList<KnowledgeRetrievalIntent>(),
                 maxRuntimeInSeconds,
                 maxOutputSizeInTokens,

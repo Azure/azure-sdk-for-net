@@ -451,11 +451,17 @@ namespace Azure.Search.Documents.Tests
         /// Automatically delete the Search Service when the resources are no
         /// longer needed.
         /// </summary>
-        public async ValueTask DisposeAsync() => await Task.WhenAll(
-            DeleteKnowledgeBaseAsync(),
-            DeleteKnowledgeSourceAsync(),
-            DeleteIndexAsync(),
-            DeleteBlobContainerAsync());
+        public async ValueTask DisposeAsync()
+        {
+            // Knowledge bases reference knowledge sources, so they must be
+            // deleted first.  Knowledge sources reference indexes, so they
+            // must be deleted before the index.
+            await DeleteKnowledgeBaseAsync();
+            await DeleteKnowledgeSourceAsync();
+            await Task.WhenAll(
+                DeleteIndexAsync(),
+                DeleteBlobContainerAsync());
+        }
 
         /// <summary>
         /// Deletes the index created as a test resource.
