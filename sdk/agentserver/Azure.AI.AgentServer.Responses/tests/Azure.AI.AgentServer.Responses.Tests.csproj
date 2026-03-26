@@ -27,10 +27,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
-  </ItemGroup>
-
   <!-- Source project targets RequiredRunnableTargetFrameworks (net8.0+) -->
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <ProjectReference Include="..\src\Azure.AI.AgentServer.Responses.csproj" />

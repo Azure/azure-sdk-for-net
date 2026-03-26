@@ -31,7 +31,6 @@
     <MicrosoftExtensionsLoggingConsoleVersion>10.0.3</MicrosoftExtensionsLoggingConsoleVersion>
     <MicrosoftExtensionsLoggingVersion>10.0.3</MicrosoftExtensionsLoggingVersion>
     <MicrosoftExtensionsPrimitivesVersion>10.0.3</MicrosoftExtensionsPrimitivesVersion>
-    <MicrosoftExtensionsTimeProviderTestingVersion>10.4.0</MicrosoftExtensionsTimeProviderTestingVersion>
     <SystemIOPipelinesVersion>10.0.3</SystemIOPipelinesVersion>
     <MicrosoftSpatialVersion>7.5.3</MicrosoftSpatialVersion>
     <NewtonsoftJsonVersion>13.0.4</NewtonsoftJsonVersion>
