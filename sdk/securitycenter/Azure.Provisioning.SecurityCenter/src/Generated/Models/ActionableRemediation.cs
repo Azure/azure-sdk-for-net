@@ -8,12 +8,14 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
 /// <summary>
 /// Configuration payload for PR Annotations.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class ActionableRemediation : ProvisionableConstruct
 {
     /// <summary>

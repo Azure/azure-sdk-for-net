@@ -8,12 +8,14 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
 /// <summary>
 /// A more specific scope used to identify the alerts to suppress.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class SuppressionAlertsScopeElement : ProvisionableConstruct
 {
     /// <summary>

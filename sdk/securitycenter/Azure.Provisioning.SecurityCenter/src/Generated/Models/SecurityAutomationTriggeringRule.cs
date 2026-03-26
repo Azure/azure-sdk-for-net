@@ -7,6 +7,7 @@
 
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
@@ -15,6 +16,7 @@ namespace Azure.Provisioning.SecurityCenter;
 /// by comparing a specific value from the event model to an expected value.
 /// This comparison is done by using one of the supported operators set.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class SecurityAutomationTriggeringRule : ProvisionableConstruct
 {
     /// <summary>

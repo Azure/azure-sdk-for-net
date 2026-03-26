@@ -10,12 +10,14 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
 /// <summary>
 /// GovernanceRule.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class GovernanceRule : ProvisionableResource
 {
     /// <summary>

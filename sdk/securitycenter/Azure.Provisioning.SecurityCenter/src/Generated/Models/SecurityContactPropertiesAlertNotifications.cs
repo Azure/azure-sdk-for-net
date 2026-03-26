@@ -6,12 +6,14 @@
 #nullable enable
 
 using Azure.Provisioning.Primitives;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
 /// <summary>
 /// Defines whether to send email notifications about new security alerts.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class SecurityContactPropertiesAlertNotifications : ProvisionableConstruct
 {
     /// <summary>

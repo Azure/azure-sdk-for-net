@@ -7,6 +7,7 @@
 
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
@@ -36,6 +37,7 @@ namespace Azure.Provisioning.SecurityCenter;
 /// and
 /// Azure.ResourceManager.SecurityCenter.Models.InformationProtectionAwsOffering.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class SecurityCenterCloudOffering : ProvisionableConstruct
 {
     /// <summary>

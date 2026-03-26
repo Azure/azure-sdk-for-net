@@ -7,12 +7,14 @@
 
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
 /// <summary>
 /// The governance email weekly notification configuration.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class GovernanceEmailNotification : ProvisionableConstruct
 {
     /// <summary>

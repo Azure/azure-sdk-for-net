@@ -7,12 +7,14 @@
 
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
 /// <summary>
 /// Details of the service principal.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class ServicePrincipalProperties : ProvisionableConstruct
 {
     /// <summary>

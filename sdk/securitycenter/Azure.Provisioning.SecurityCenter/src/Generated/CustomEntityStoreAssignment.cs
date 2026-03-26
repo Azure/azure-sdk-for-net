@@ -9,12 +9,14 @@ using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
 /// <summary>
 /// CustomEntityStoreAssignment.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class CustomEntityStoreAssignment : ProvisionableResource
 {
     /// <summary>

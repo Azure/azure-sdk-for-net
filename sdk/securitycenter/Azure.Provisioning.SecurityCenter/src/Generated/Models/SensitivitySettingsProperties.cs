@@ -8,12 +8,14 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
 /// <summary>
 /// The sensitivity settings properties.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class SensitivitySettingsProperties : ProvisionableConstruct
 {
     /// <summary>

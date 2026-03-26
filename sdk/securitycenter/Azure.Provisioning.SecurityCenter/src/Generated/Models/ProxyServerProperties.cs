@@ -7,6 +7,7 @@
 
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.SecurityCenter;
 /// For a non-Azure machine that is not connected directly to the internet,
 /// specify a proxy server that the non-Azure machine can use.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class ProxyServerProperties : ProvisionableConstruct
 {
     /// <summary>

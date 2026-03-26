@@ -7,12 +7,14 @@
 
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
 /// <summary>
 /// Severity level per category configuration for PR Annotations.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class CategoryConfiguration : ProvisionableConstruct
 {
     /// <summary>

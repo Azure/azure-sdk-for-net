@@ -8,6 +8,7 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
@@ -16,6 +17,7 @@ namespace Azure.Provisioning.SecurityCenter;
 /// when all the included rules in the rule set will be evaluated as
 /// &apos;true&apos;, will the event trigger the defined actions.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class SecurityAutomationRuleSet : ProvisionableConstruct
 {
     /// <summary>

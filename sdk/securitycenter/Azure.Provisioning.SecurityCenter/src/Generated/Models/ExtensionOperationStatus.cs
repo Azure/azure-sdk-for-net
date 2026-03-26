@@ -7,6 +7,7 @@
 
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.SecurityCenter;
 /// A status describing the success/failure of the enablement/disablement
 /// operation.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class ExtensionOperationStatus : ProvisionableConstruct
 {
     /// <summary>

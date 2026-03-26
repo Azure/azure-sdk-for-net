@@ -7,12 +7,14 @@
 
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
 /// <summary>
 /// Describe the additional data of governance assignment - optional.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class GovernanceAssignmentAdditionalInfo : ProvisionableConstruct
 {
     /// <summary>

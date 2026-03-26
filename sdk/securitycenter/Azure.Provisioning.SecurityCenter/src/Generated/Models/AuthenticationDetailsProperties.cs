@@ -7,6 +7,7 @@
 
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
@@ -22,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter;
 /// and
 /// Azure.ResourceManager.SecurityCenter.Models.GcpCredentialsDetailsProperties.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class AuthenticationDetailsProperties : ProvisionableConstruct
 {
     /// <summary>

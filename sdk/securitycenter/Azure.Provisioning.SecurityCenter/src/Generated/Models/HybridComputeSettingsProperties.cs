@@ -7,12 +7,14 @@
 
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
 /// <summary>
 /// Settings for hybrid compute management.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class HybridComputeSettingsProperties : ProvisionableConstruct
 {
     /// <summary>

@@ -7,12 +7,14 @@
 
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
 /// <summary>
 /// A single automation scope.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class SecurityAutomationScope : ProvisionableConstruct
 {
     /// <summary>

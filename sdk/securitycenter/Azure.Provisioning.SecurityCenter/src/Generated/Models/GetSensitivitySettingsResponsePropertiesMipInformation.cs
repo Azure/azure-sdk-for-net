@@ -8,6 +8,7 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
@@ -15,6 +16,7 @@ namespace Azure.Provisioning.SecurityCenter;
 /// Microsoft information protection built-in and custom information types,
 /// labels, and integration status.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class GetSensitivitySettingsResponsePropertiesMipInformation : ProvisionableConstruct
 {
     /// <summary>

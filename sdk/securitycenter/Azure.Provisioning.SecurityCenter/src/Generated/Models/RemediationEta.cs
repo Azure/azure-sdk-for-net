@@ -7,12 +7,14 @@
 
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
 /// <summary>
 /// The ETA (estimated time of arrival) for remediation.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class RemediationEta : ProvisionableConstruct
 {
     /// <summary>

@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Provisioning.Primitives;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
@@ -21,6 +22,7 @@ namespace Azure.Provisioning.SecurityCenter;
 /// Azure.ResourceManager.SecurityCenter.Models.GithubScopeEnvironment and
 /// Azure.ResourceManager.SecurityCenter.Models.GitlabScopeEnvironment.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class SecurityConnectorEnvironment : ProvisionableConstruct
 {
     /// <summary>

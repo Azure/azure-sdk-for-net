@@ -152,6 +152,7 @@
     <PackageVersion Include="Azure.ResourceManager.RedisEnterprise" Version="1.3.0" />
     <PackageVersion Include="Azure.ResourceManager.Resources" Version="1.11.2" />
     <PackageVersion Include="Azure.ResourceManager.Search" Version="1.3.0" />
+    <PackageVersion Include="Azure.ResourceManager.SecurityCenter" Version="1.1.0" />
     <PackageVersion Include="Azure.ResourceManager.ServiceBus" Version="1.1.0" />
     <PackageVersion Include="Azure.ResourceManager.SignalR" Version="1.1.4" />
     <PackageVersion Include="Azure.ResourceManager.Sql" Version="1.3.0" />

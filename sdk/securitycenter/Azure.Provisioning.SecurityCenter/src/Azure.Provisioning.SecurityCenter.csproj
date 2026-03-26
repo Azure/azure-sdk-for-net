@@ -7,7 +7,8 @@
     <LangVersion>12</LangVersion>
 
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
-    <NoWarn>CS1591</NoWarn>
+    <!-- Disable AZPROVISION001: Allow experimental types to reference each other within the library -->
+    <NoWarn>CS1591;AZPROVISION001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

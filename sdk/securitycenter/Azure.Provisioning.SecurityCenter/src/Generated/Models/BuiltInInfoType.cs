@@ -7,12 +7,14 @@
 
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
 /// <summary>
 /// Pre-configured sensitive information type.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class BuiltInInfoType : ProvisionableConstruct
 {
     /// <summary>

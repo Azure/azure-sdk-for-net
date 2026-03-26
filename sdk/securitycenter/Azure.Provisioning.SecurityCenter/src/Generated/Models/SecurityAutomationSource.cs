@@ -8,6 +8,7 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Provisioning.SecurityCenter;
 
@@ -17,6 +18,7 @@ namespace Azure.Provisioning.SecurityCenter;
 /// about the supported security events data models schemas - please visit
 /// https://aka.ms/ASCAutomationSchemas.
 /// </summary>
+[Experimental("AZPROVISION001")]
 public partial class SecurityAutomationSource : ProvisionableConstruct
 {
     /// <summary>
