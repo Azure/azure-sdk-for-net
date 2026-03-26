@@ -17,6 +17,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         private readonly DateTimeOffset? _endTime;
         private readonly string _continuation;
 
+        /// <summary>
+        /// Internal constructor.
+        /// </summary>
         internal BlobChangeFeedPageable(
             BlobServiceClient blobServiceClient,
             long? maxTransferSize,
@@ -30,6 +33,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _endTime = endTime;
         }
 
+        /// <summary>
+        /// Internal constructor for resuming from a continuation token.
+        /// </summary>
         internal BlobChangeFeedPageable(
             BlobServiceClient blobServiceClient,
             long? maxTransferSize,

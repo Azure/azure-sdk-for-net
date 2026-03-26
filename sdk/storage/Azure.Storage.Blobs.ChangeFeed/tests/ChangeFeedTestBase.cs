@@ -132,9 +132,15 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
+        /// <summary>
+        /// Async helper that returns mock year paths for test setup.
+        /// </summary>
         public static Task<Page<BlobHierarchyItem>> GetYearsPathFuncAsync(string continuation, int? pageSizeHint)
             => Task.FromResult(GetYearPathFunc(continuation, pageSizeHint));
 
+        /// <summary>
+        /// Returns a page of mock year paths for test setup.
+        /// </summary>
         public static Page<BlobHierarchyItem> GetYearPathFunc(
             string continuation,
             int? pageSizeHint)
@@ -147,11 +153,17 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 BlobsModelFactory.BlobHierarchyItem("idx/segments/2023/", null),
             });
 
+        /// <summary>
+        /// Async helper that returns mock segment paths for a year.
+        /// </summary>
         public static Task<Page<BlobHierarchyItem>> GetSegmentsInYearFuncAsync(
             string continuation,
             int? pageSizeHint)
             => Task.FromResult(GetSegmentsInYearFunc(continuation, pageSizeHint));
 
+        /// <summary>
+        /// Returns a page of mock segment paths for a year.
+        /// </summary>
         public static Page<BlobHierarchyItem> GetSegmentsInYearFunc(
             string continuation,
             int? pageSizeHint)

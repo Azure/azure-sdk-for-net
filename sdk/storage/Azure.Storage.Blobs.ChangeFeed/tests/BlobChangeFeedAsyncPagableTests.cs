@@ -22,6 +22,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Tests retrieving all change feed events.
+        /// </summary>
         [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task Test()
@@ -37,6 +40,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
+        /// <summary>
+        /// Tests retrieving historical change feed events within a specific time range.
+        /// </summary>
         [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task TestHistorical()
@@ -52,6 +58,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
+        /// <summary>
+        /// Tests retrieving change feed events from the last hour.
+        /// </summary>
         [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task TestLastHour()
@@ -83,6 +92,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             // Update and uncomment after recording.
             DateTimeOffset startTime = new DateTimeOffset(2020, 8, 10, 16, 00, 00, TimeSpan.Zero);
 
+            // This test simulates polling the tail of the feed: read initial batch, wait, read more.
             TimeSpan pollInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : TimeSpan.FromMinutes(3);
 
             BlobServiceClient service = GetServiceClient_SharedKey();
@@ -138,12 +148,15 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             CollectionAssert.IsNotEmpty(EventIdsPart3);
 
-            // Assert events are not duplicated
+            // The set intersection checks ensure no duplicate events across polling iterations.
             CollectionAssert.IsEmpty(EventIdsPart1.Intersect(EventIdsPart2));
             CollectionAssert.IsEmpty(EventIdsPart1.Intersect(EventIdsPart3));
             CollectionAssert.IsEmpty(EventIdsPart2.Intersect(EventIdsPart3));
         }
 
+        /// <summary>
+        /// Tests that all pages except the last one match the requested page size.
+        /// </summary>
         [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task PageSizeTest()
@@ -166,6 +179,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
+        /// <summary>
+        /// Tests cursor functionality by retrieving a page, extracting the continuation token, and resuming from that point.
+        /// </summary>
         [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task CursorTest()
@@ -195,6 +211,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
+        /// <summary>
+        /// Tests reading all change feed events until the end from a given start time.
+        /// </summary>
         [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task CanReadTillEnd()
@@ -214,6 +233,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             CollectionAssert.IsNotEmpty(list);
         }
 
+        /// <summary>
+        /// Tests that resuming from a continuation token in the middle of a chunk produces the same events as reading all at once.
+        /// </summary>
         [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task ResumeFromTheMiddleOfTheChunk()
@@ -225,6 +247,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             BlobServiceClient service = GetServiceClient_SharedKey();
             BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
 
+            // Phase 3 (verification): read all events from scratch without interruption.
             // Collect all events within range
             AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable
                 = blobChangeFeedClient.GetChangesAsync(
@@ -236,6 +259,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 AllEventIds.Add(e.Id.ToString());
             }
 
+            // Phase 1: read first pages to get a continuation token mid-stream.
             // Iterate over first two pages
             ISet<string> EventIdsPart1 = new HashSet<string>();
             blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(
@@ -263,6 +287,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             long blockOffset = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor).CurrentSegmentCursor.ShardCursors.First().BlockOffset;
             Assert.Greater(blockOffset, 0, "Making sure we actually finish in the middle of chunk, if this fails play with test data to make it pass");
 
+            // Phase 2: resume from the continuation token and read more pages.
             // Iterate over next two pages
             ISet<string> EventIdsPart2 = new HashSet<string>();
             blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(continuation);
@@ -298,6 +323,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 EventIdsTail.Add(e.Id.ToString());
             }
 
+            // The set intersection check ensures no events were duplicated or lost during resume.
             ISet<string> AllEventIdsFromResumingIteration = new HashSet<string>();
             AllEventIdsFromResumingIteration.UnionWith(EventIdsPart1);
             AllEventIdsFromResumingIteration.UnionWith(EventIdsPart2);
@@ -522,6 +548,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             CollectionAssert.AreEqual(AllEventIds, AllEventIdsFromResumingIteration);
         }
 
+        /// <summary>
+        /// Tests that resuming from the end of a past time range yields no additional events.
+        /// </summary>
         [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task ResumeFromEndInThePastYieldsEmptyResult()
@@ -561,6 +590,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.Greater(AllEventIds.Count, 0);
         }
 
+        /// <summary>
+        /// Tests that resuming from the end of the current hour immediately yields empty results.
+        /// </summary>
         [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task ImmediateResumeFromEndOfCurrentHourYieldsEmptyResult()
@@ -664,6 +696,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.IsNotNull(eventList.Find(e => e.EventTime > roundedEndTime.AddMinutes(-15)), "There is some event 15 minutes before end");
         }
 
+        /// <summary>
+        /// Tests the cursor JSON format, structure, and specific field values.
+        /// </summary>
         [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task CursorFormatTest()

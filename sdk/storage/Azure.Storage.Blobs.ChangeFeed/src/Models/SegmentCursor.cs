@@ -8,7 +8,7 @@ using System.Text;
 namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
-    /// Segment Cursor.
+    /// Tracks the current position within a Segment for resumable iteration.
     /// </summary>
     internal class SegmentCursor
     {

@@ -3,6 +3,9 @@
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
+    /// <summary>
+    /// Tracks the current position within a Shard for resumable iteration.
+    /// </summary>
     internal class ShardCursor
     {
         /// <summary>

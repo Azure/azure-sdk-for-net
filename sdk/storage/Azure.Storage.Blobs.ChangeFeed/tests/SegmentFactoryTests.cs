@@ -22,7 +22,10 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
-        [RecordedTest]
+        /// <summary>
+        /// Tests building a segment when the segment cursor has a null CurrentShardPath, verifying it defaults to the first shard.
+        /// </summary>
+        [Test]
         public async Task BuildSegment_SegmentCursorNullCurrentShardPath()
         {
             // Arrange
@@ -34,6 +37,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 new ShardCursor("log/01/2020/03/25/0200/chunk4", 5, 6),
                 new ShardCursor("log/02/2020/03/25/0200/chunk7", 8, 9)
             };
+            // When cursor has a null CurrentShardPath, the factory defaults to shard index 0.
             SegmentCursor expectedSegmentCursor = new SegmentCursor()
             {
                 SegmentPath = segmentPath,

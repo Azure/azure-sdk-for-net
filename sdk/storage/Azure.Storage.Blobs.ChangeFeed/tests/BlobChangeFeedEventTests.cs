@@ -22,6 +22,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Tests deserialization of a V1 schema change feed event.
+        /// </summary>
         [Test]
         public void SchemaV1Test()
         {
@@ -82,6 +85,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 changeFeedEvent.EventData.Sequencer);
         }
 
+        /// <summary>
+        /// Tests deserialization of a V3 schema change feed event with extended properties.
+        /// </summary>
         [Test]
         public void SchemaV3Test()
         {
@@ -141,6 +147,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 "00000000000000010000000000000002000000000000001d",
                 changeFeedEvent.EventData.Sequencer);
 
+            // V3 adds PreviousInfo and UpdatedBlobProperties on top of V1 fields.
             Assert.AreEqual("2022-02-17T13:08:42.4825913Z", changeFeedEvent.EventData.PreviousInfo.SoftDeleteSnapshot);
             Assert.IsTrue(changeFeedEvent.EventData.PreviousInfo.WasBlobSoftDeleted);
             Assert.AreEqual("2024-02-17T16:11:52.0781797Z", changeFeedEvent.EventData.PreviousInfo.NewBlobVersion);
@@ -178,6 +185,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual("application/octet-stream", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].OldValue);
         }
 
+        /// <summary>
+        /// Tests deserialization of a V4 schema change feed event with blob versioning and async operation info.
+        /// </summary>
         [Test]
         public void SchemaV4Test()
         {
@@ -230,6 +240,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual(
                 BlobType.Block,
                 changeFeedEvent.EventData.BlobType);
+            // V4 adds BlobVersion, ContainerVersion, BlobAccessTier, and LongRunningOperationInfo.
             Assert.AreEqual(
                 "2022-02-17T16:11:52.5901564Z",
                 changeFeedEvent.EventData.BlobVersion);
@@ -287,6 +298,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual("copyId", changeFeedEvent.EventData.LongRunningOperationInfo.CopyId);
         }
 
+        /// <summary>
+        /// Tests deserialization of a V5 schema change feed event with updated blob tags.
+        /// </summary>
         [Test]
         public void SchemaV5Test()
         {
@@ -395,6 +409,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.IsTrue(changeFeedEvent.EventData.LongRunningOperationInfo.IsAsync);
             Assert.AreEqual("copyId", changeFeedEvent.EventData.LongRunningOperationInfo.CopyId);
 
+            // V5 adds UpdatedBlobTags tracking.
             Assert.AreEqual(2, changeFeedEvent.EventData.UpdatedBlobTags.OldTags.Count);
             Assert.AreEqual("Value1_3", changeFeedEvent.EventData.UpdatedBlobTags.OldTags["Tag1"]);
             Assert.AreEqual("Value2_3", changeFeedEvent.EventData.UpdatedBlobTags.OldTags["Tag2"]);
@@ -404,6 +419,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual("Value2_4", changeFeedEvent.EventData.UpdatedBlobTags.NewTags["Tag2"]);
         }
 
+        /// <summary>
+        /// Tests reading change feed events directly from an Avro file.
+        /// </summary>
         [Test]
         [Ignore("For debugging specific avro files")]
         public async Task AvroTest()
@@ -435,6 +453,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             return rawDictionary;
         }
 
+        /// <summary>
+        /// Recursively converts child JObject instances in a dictionary to Dictionary{string, object}.
+        /// </summary>
         private void ConvertChildOJObjectsToDictionaries(Dictionary<string, object> dictionary)
         {
             foreach (string key in dictionary.Keys.ToList())

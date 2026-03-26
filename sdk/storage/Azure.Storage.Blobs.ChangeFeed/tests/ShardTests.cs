@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests creating a Shard with a ShardCursor, and then calling Shard.GetCursor().
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetCursor()
         {
             // Arrange
@@ -112,7 +112,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests Shard.HasNext().
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task HasNext_False()
         {
             // Arrange
@@ -199,7 +199,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests Shard.HasNext().
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task HasNext_ChunksLeft()
         {
             // Arrange
@@ -282,7 +282,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests Shard.HasNext().
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task HasNext_CurrentChunkHasNext()
         {
             // Arrange
@@ -371,10 +371,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// We call ShardFactory.BuildShard() with a ShardCursor, to create the Shard,
         /// Shard.Next() 4 times, Shard.GetCursor(), and then Shard.Next 4 times.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task Next()
         {
             // Arrange
+            // The shard has chunks 2-5 (skipping chunks 0,1 via cursor fast-forward to chunk2).
+            // Each chunk has 2 events, 8 total across 4 chunks.
             int chunkCount = 4;
             int eventCount = 8;
             Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
@@ -429,6 +431,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<CancellationToken>()))
                 .Returns((bool _, string path, long __, long ___, CancellationToken ____) => Task.FromResult(chunks[path].Object));
 
+            // Chunks 2-4: HasNext true (before 2nd event), then false (triggers advance to next chunk).
             chunks["chunk2"].SetupSequence(r => r.HasNext())
                 .Returns(true)
                 .Returns(false);
@@ -441,6 +444,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 .Returns(true)
                 .Returns(false);
 
+            // chunk5 needs 3 "true" then "false": checked after each Next() call AND by the shard's own HasNext().
+            // The last chunk has no successor, so shard.HasNext() also queries it, requiring the extra "true".
             chunks["chunk5"].SetupSequence(r => r.HasNext())
                 .Returns(true)
                 .Returns(true)
@@ -471,11 +476,14 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 .ConfigureAwait(false);
 
             List<BlobChangeFeedEvent> changeFeedEvents = new List<BlobChangeFeedEvent>();
+            // First 4 Next() calls consume chunks 2 and 3 (2 events each).
             for (int i = 0; i < 4; i++)
             {
                 changeFeedEvents.Add(await shard.Next(IsAsync));
             }
+            // GetCursor() captures position at chunk 4 (the next chunk to be read).
             ShardCursor cursor = shard.GetCursor();
+            // Last 4 Next() calls consume chunks 4 and 5.
             for (int i = 0; i < 4; i++)
             {
                 changeFeedEvents.Add(await shard.Next(IsAsync));
@@ -542,11 +550,62 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             chunks["chunk4"].Verify(r => r.EventIndex);
         }
 
+        /// <summary>
+        /// Tests that Shard.Next() throws InvalidOperationException when HasNext() is false.
+        /// </summary>
+        [Test]
+        public void Next_ThrowsWhenExhausted()
+        {
+            // Arrange - create a Shard with no chunks and null currentChunk
+            Shard shard = new Shard(
+                containerClient: new Mock<BlobContainerClient>(MockBehavior.Strict).Object,
+                chunkFactory: new Mock<ChunkFactory>(MockBehavior.Strict).Object,
+                chunks: new Queue<BlobItem>(),
+                currentChunk: null,
+                chunkIndex: 0,
+                shardPath: "shardPath");
+
+            // Verify precondition
+            Assert.IsFalse(shard.HasNext());
+
+            // Act / Assert
+            Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await shard.Next(IsAsync));
+        }
+
+        /// <summary>
+        /// Tests that Shard.GetCursor() returns null when _currentChunk is null.
+        /// </summary>
+        [Test]
+        public void GetCursor_ReturnsNullWhenNoCurrentChunk()
+        {
+            // Arrange - create a Shard with null currentChunk
+            Shard shard = new Shard(
+                containerClient: new Mock<BlobContainerClient>(MockBehavior.Strict).Object,
+                chunkFactory: new Mock<ChunkFactory>(MockBehavior.Strict).Object,
+                chunks: new Queue<BlobItem>(),
+                currentChunk: null,
+                chunkIndex: 0,
+                shardPath: "shardPath");
+
+            // Act
+            ShardCursor cursor = shard.GetCursor();
+
+            // Assert
+            Assert.IsNull(cursor);
+        }
+
+        /// <summary>
+        /// Async helper that returns mock chunk pages for test setup.
+        /// </summary>
         private static Task<Page<BlobHierarchyItem>> GetChunkPagesFuncAsync(
             string continuation,
             int? pageSizeHint)
             => Task.FromResult(GetChunkPagesFunc(continuation, pageSizeHint));
 
+        /// <summary>
+        /// Returns a page of mock chunk blob items for test setup.
+        /// </summary>
         private static Page<BlobHierarchyItem> GetChunkPagesFunc(
             string continuation,
             int? pageSizeHint)
@@ -572,6 +631,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     BlobsModelFactory.BlobItem("chunk5", false, BlobsModelFactory.BlobItemProperties(true, contentLength: long.MaxValue)))
             });
 
+        /// <summary>
+        /// Creates a dictionary of mock Chunk objects keyed by chunk path for test setup.
+        /// </summary>
         private static Dictionary<string, Mock<Chunk>> GetChunkMocks(long blockOffset, long eventIndex)
         {
             Dictionary<string, Mock<Chunk>> mocks = new Dictionary<string, Mock<Chunk>>();

@@ -10,6 +10,9 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
+    /// <summary>
+    /// Builds ChangeFeed instances, handling cursor validation, time range filtering, and segment discovery.
+    /// </summary>
     internal class ChangeFeedFactory
     {
         private readonly SegmentFactory _segmentFactory;
@@ -39,6 +42,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _segmentFactory = segmentFactory;
         }
 
+        /// <summary>
+        /// Builds a <see cref="ChangeFeed"/> from the specified time range or continuation token.
+        /// Validates the cursor (if resuming), checks that Change Feed is enabled, discovers year/segment
+        /// paths, and constructs the initial Segment.
+        /// </summary>
         public async Task<ChangeFeed> BuildChangeFeed(
             DateTimeOffset? startTime,
             DateTimeOffset? endTime,
@@ -51,7 +59,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
             Queue<string> segments = new Queue<string>();
             ChangeFeedCursor cursor = null;
 
-            // Create cursor
+            // When resuming from a continuation token, deserialize the cursor and override
+            // the start/end times with the cursor's position so we pick up where we left off.
             if (continuation != null)
             {
                 cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continuation);
@@ -66,7 +75,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 endTime = endTime.RoundUpToNearestHour();
             }
 
-            // Check if Change Feed has been abled for this account.
+            // Check if Change Feed has been enabled for this account.
             bool changeFeedContainerExists;
 
             if (async)
@@ -83,6 +92,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 throw new ArgumentException("Change Feed hasn't been enabled on this account, or is currently being enabled.");
             }
 
+            // Fetch the lastConsumable timestamp — the latest hour that is safe to read.
+            // If the meta segments blob doesn't exist yet, the feed has no data.
             DateTimeOffset? lastConsumableNullable = await GetLastConsumableInternal(
                 _containerClient,
                 async,
@@ -118,9 +129,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 return ChangeFeed.Empty();
             }
 
+            // Scan through years until we find one with segments in the requested time range.
             while (segments.Count == 0 && years.Count > 0)
             {
-                // Get Segments for year
                 segments = await BlobChangeFeedExtensions.GetSegmentsInYearInternal(
                     containerClient: _containerClient,
                     yearPath: years.Dequeue(),
@@ -154,6 +165,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 endTime);
         }
 
+        /// <summary>
+        /// Validates that the cursor's host matches the container and that the cursor version is supported.
+        /// </summary>
         private static void ValidateCursor(
             BlobContainerClient containerClient,
             ChangeFeedCursor cursor)
@@ -168,6 +182,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
         }
 
+        /// <summary>
+        /// Lists year-level directory prefixes under the segment index, filtering out the initialization segment.
+        /// </summary>
         internal async Task<Queue<string>> GetYearPathsInternal(
             bool async,
             CancellationToken cancellationToken)
@@ -207,6 +224,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return new Queue<string>(list);
         }
 
+        /// <summary>
+        /// Downloads the meta/segments.json blob and extracts the lastConsumable timestamp.
+        /// Returns null if the blob does not exist (change feed has no data yet).
+        /// </summary>
         internal static async Task<DateTimeOffset?> GetLastConsumableInternal(
             BlobContainerClient containerClient,
             bool async,

@@ -32,6 +32,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _endTime = endTime;
         }
 
+        /// <summary>
+        /// Internal constructor for resuming from a continuation token.
+        /// </summary>
         internal BlobChangeFeedAsyncPageable(
             BlobServiceClient blobServiceClient,
             long? maxTransferSize,

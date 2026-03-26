@@ -13,6 +13,9 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
+    /// <summary>
+    /// A stream that lazily downloads blob data in blocks as it is read.
+    /// </summary>
     internal class LazyLoadingBlobStream : Stream
     {
         /// <summary>
@@ -50,6 +53,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         private long _blobLength;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LazyLoadingBlobStream"/> class.
+        /// </summary>
         public LazyLoadingBlobStream(BlobClient blobClient, long offset, long blockSize)
         {
             _blobClient = blobClient;
@@ -144,6 +150,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 }
             }
 
+            // Read from the current block's stream, downloading additional blocks as needed
+            // until the caller's buffer is filled or the blob is exhausted.
             int totalCopiedBytes = 0;
             do
             {
@@ -174,6 +182,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return totalCopiedBytes;
         }
 
+        /// <summary>
+        /// Validates that the buffer, offset, and count parameters are within valid bounds.
+        /// </summary>
         private static void ValidateReadParameters(byte[] buffer, int offset, int count)
         {
             if (buffer == null)
@@ -202,6 +213,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
         }
 
+        /// <summary>
+        /// Extracts the total blob length from the Content-Range header (e.g. "bytes 0-1023/4096").
+        /// </summary>
         private static long GetBlobLength(Response<BlobDownloadStreamingResult> response)
         {
             string lengthString = response.Value.Details.ContentRange;
@@ -218,6 +232,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <inheritdoc/>
         public override bool CanWrite => throw new NotSupportedException();
 
+        /// <inheritdoc/>
         public override long Length => throw new NotSupportedException();
 
         /// <inheritdoc/>

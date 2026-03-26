@@ -16,6 +16,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Tests retrieving all change feed events using the synchronous API.
+        /// </summary>
         [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public void Test()

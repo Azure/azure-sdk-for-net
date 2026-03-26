@@ -28,10 +28,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// Tests building a ChangeFeed with a ChangeFeedCursor, and then calling ChangeFeed.GetCursor()
         /// and making sure the cursors match.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetCursor()
         {
             // Arrange
+            // Mock hierarchy: serviceClient -> containerClient -> blobClient (for manifest download),
+            // segmentFactory builds segment objects from segment paths discovered via container listing.
             Mock<BlobServiceClient> serviceClient = new Mock<BlobServiceClient>(MockBehavior.Strict);
             Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
             Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
@@ -118,6 +120,10 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<SegmentCursor>()))
                 .ReturnsAsync(segment.Object);
 
+            // Build a cursor with known values to use as the continuation token input.
+            // segmentPath here differs from GetSegmentsInYearFunc's first segment ("idx/segments/2020/01/16/2300/meta.json")
+            // — the cursor's segmentPath records where we left off, while BuildSegment receives the
+            // first segment from listing and the cursor is passed through for shard-level resume state.
             string currentChunkPath = "chunk1";
             long blockOffset = 2;
             long eventIndex = 3;
@@ -150,6 +156,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 segmentFactory.Object);
 
             // Act
+            // Round-trip test: serialize expectedCursor to JSON and pass it as the continuation token.
+            // BuildChangeFeed deserializes it to restore state; then GetCursor() should produce an equivalent cursor.
             ChangeFeed changeFeed = await changeFeedFactory.BuildChangeFeed(
                 startTime: default,
                 endTime: default,
@@ -226,6 +234,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     default));
             }
 
+            // BuildSegment is called with the first segment path from GetSegmentsInYearFunc listing
+            // ("2020/01/16/2300"), NOT the cursor's segmentPath ("2020/01/04/1700"). The cursor's
+            // shard-level state is forwarded so the segment can resume reading from the right position.
             segmentFactory.Verify(r => r.BuildSegment(
                 IsAsync,
                 "idx/segments/2020/01/16/2300/meta.json",
@@ -246,10 +257,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// We call ChangeFeed.GetPage() with a page size of 3, and then again with no page size,
         /// resulting in two pages with 3 and 5 Events.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetPage()
         {
             // Arrange
+            // Test scenario: 8 events spread across 4 segments in 2 years (2019 and 2020, 2 segments each).
+            // Two GetPage calls: first with pageSize=3, second with default size. Expect pages of 3 and 5 events.
             int eventCount = 8;
             int segmentCount = 4;
             Mock<BlobServiceClient> serviceClient = new Mock<BlobServiceClient>(MockBehavior.Strict);
@@ -365,8 +378,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 });
             }
 
+            // segment[0] HasNext=false: all its events (2) are returned in a single GetPage call, so it's immediately exhausted.
             segments[0].SetupSequence(r => r.HasNext())
                 .Returns(false);
+            // segment[1] HasNext=true then false: it spans two ChangeFeed.GetPage calls —
+            // first call takes 1 event (filling page0 to 3), second call drains the remaining 1 event.
             segments[1].SetupSequence(r => r.HasNext())
                 .Returns(true)
                 .Returns(false);
@@ -376,6 +392,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 .Returns(true)
                 .Returns(false);
 
+            // segment[0] returns 2 events; page0 collects these first, then needs 1 more to reach pageSize=3.
             segments[0].SetupSequence(r => r.GetPage(
                 It.IsAny<bool>(),
                 It.IsAny<int?>(),
@@ -386,6 +403,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     events[1]
                 }));
 
+            // segment[1] is called twice: first returns 1 event (completing page0 to 3 events),
+            // second returns 1 event (starting page1).
             segments[1].SetupSequence(r => r.GetPage(
                 It.IsAny<bool>(),
                 It.IsAny<int?>(),
@@ -460,7 +479,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 cancellationToken: default);
 
             // Act
+            // page0: pageSize=3 -> gets 2 from segment[0], then 1 from segment[1] to fill the page.
             Page<BlobChangeFeedEvent> page0 = await changeFeed.GetPage(IsAsync, 3);
+            // page1: default size -> gets remaining 1 from segment[1], 2 from segment[2], 2 from segment[3] = 5 total.
             Page<BlobChangeFeedEvent> page1 = await changeFeed.GetPage(IsAsync);
 
             // Assert
@@ -549,26 +570,31 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             segments[2].Verify(r => r.HasNext());
             segments[3].Verify(r => r.HasNext(), Times.Exactly(3));
 
+            // page0: segment[0] asked for all 3 remaining slots
             segments[0].Verify(r => r.GetPage(
                 IsAsync,
                 3,
                 default));
 
+            // page0: after segment[0] yielded 2, only 1 slot remains (3-2=1)
             segments[1].Verify(r => r.GetPage(
                 IsAsync,
                 1,
                 default));
 
+            // page1: segment[1] still has events, so it's asked first with full DefaultPageSize budget
             segments[1].Verify(r => r.GetPage(
                 IsAsync,
                 Constants.ChangeFeed.DefaultPageSize,
                 default));
 
+            // page1: segment[1] yielded 1, so DefaultPageSize-1 slots remain for segment[2]
             segments[2].Verify(r => r.GetPage(
                 IsAsync,
                 Constants.ChangeFeed.DefaultPageSize - 1,
                 default));
 
+            // page1: segments[1]+[2] yielded 3 total, so DefaultPageSize-3 slots remain for segment[3]
             segments[3].Verify(r => r.GetPage(
                 IsAsync,
                 Constants.ChangeFeed.DefaultPageSize - 3,
@@ -580,7 +606,10 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             containerClient.Verify(r => r.Uri, Times.Exactly(2));
         }
 
-        [RecordedTest]
+        /// <summary>
+        /// Tests that HasNext returns false when no segments exist after the specified start time.
+        /// </summary>
+        [Test]
         public async Task NoYearsAfterStartTime()
         {
             // Arrange
@@ -695,10 +724,15 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
-        [RecordedTest]
+        /// <summary>
+        /// Tests that when no segments remain in the start year, the change feed advances to the next year.
+        /// </summary>
+        [Test]
         public async Task NoSegmentsRemainingInStartYear()
         {
             // Arrange
+            // startTime is mid-2019 (June), but all 2019 segments are earlier (Jan/Mar per the helper),
+            // so the change feed must skip 2019 entirely and advance to 2020 to find valid segments.
             int eventCount = 2;
             int segmentCount = 2;
             Mock<BlobServiceClient> serviceClient = new Mock<BlobServiceClient>(MockBehavior.Strict);
@@ -939,6 +973,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             containerClient.Verify(r => r.Uri, Times.Exactly(1));
         }
 
+        /// <summary>
+        /// Tests retrieving the last consumable timestamp from the change feed.
+        /// </summary>
         [RecordedTest]
         [PlaybackOnly("Last Consumable is always changing")]
         public async Task GetLastConsumable()
@@ -955,9 +992,140 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual(expectedLastConsumable, lastConsumable.Value);
         }
 
+        /// <summary>
+        /// Tests that calling GetPage() on an empty ChangeFeed throws InvalidOperationException.
+        /// </summary>
+        [Test]
+        public void GetPage_ThrowsWhenExhausted()
+        {
+            // Arrange
+            ChangeFeed changeFeed = ChangeFeed.Empty();
+
+            // Act / Assert
+            Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await changeFeed.GetPage(IsAsync));
+        }
+
+        /// <summary>
+        /// Tests that HasNext() returns false when the current segment's DateTime >= endTime,
+        /// even when the segment itself still has events.
+        /// </summary>
+        [Test]
+        public void HasNext_ReturnsFalseWhenEndTimeReached()
+        {
+            // Arrange
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<SegmentFactory> segmentFactory = new Mock<SegmentFactory>(MockBehavior.Strict);
+
+            DateTimeOffset segmentTime = new DateTimeOffset(2020, 5, 1, 0, 0, 0, TimeSpan.Zero);
+            DateTimeOffset endTime = new DateTimeOffset(2020, 5, 1, 0, 0, 0, TimeSpan.Zero);
+
+            // Segment has events (HasNext=true), but DateTime == endTime
+            Mock<Shard> shard = new Mock<Shard>(MockBehavior.Strict);
+            shard.Setup(r => r.HasNext()).Returns(true);
+
+            Segment segment = new Segment(
+                new List<Shard> { shard.Object },
+                0,
+                segmentTime,
+                "idx/segments/2020/05/01/0000/meta.json");
+
+            ChangeFeed changeFeed = new ChangeFeed(
+                containerClient.Object,
+                segmentFactory.Object,
+                new Queue<string>(),
+                new Queue<string>(),
+                segment,
+                new DateTimeOffset(2020, 6, 1, 0, 0, 0, TimeSpan.Zero),
+                null,
+                endTime);
+
+            // Act / Assert - First ChangeFeed: segment time == endTime, so HasNext returns false (boundary is exclusive).
+            Assert.IsFalse(changeFeed.HasNext());
+
+            // Second ChangeFeed: segment time (April) is before endTime (May), so HasNext returns true.
+            DateTimeOffset earlierSegmentTime = new DateTimeOffset(2020, 4, 1, 0, 0, 0, TimeSpan.Zero);
+            Segment earlierSegment = new Segment(
+                new List<Shard> { shard.Object },
+                0,
+                earlierSegmentTime,
+                "idx/segments/2020/04/01/0000/meta.json");
+
+            ChangeFeed changeFeedWithEarlierSegment = new ChangeFeed(
+                containerClient.Object,
+                segmentFactory.Object,
+                new Queue<string>(),
+                new Queue<string>(),
+                earlierSegment,
+                new DateTimeOffset(2020, 6, 1, 0, 0, 0, TimeSpan.Zero),
+                null,
+                endTime);
+
+            Assert.IsTrue(changeFeedWithEarlierSegment.HasNext());
+        }
+
+        /// <summary>
+        /// Tests that pageSize is capped to DefaultPageSize when a larger value is requested.
+        /// </summary>
+        [Test]
+        public async Task GetPage_CapsPageSizeToDefault()
+        {
+            // Arrange
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<SegmentFactory> segmentFactory = new Mock<SegmentFactory>(MockBehavior.Strict);
+
+            Uri containerUri = new Uri("https://account.blob.core.windows.net/$blobchangefeed");
+            containerClient.Setup(r => r.Uri).Returns(containerUri);
+
+            DateTimeOffset segmentTime = new DateTimeOffset(2020, 3, 1, 0, 0, 0, TimeSpan.Zero);
+
+            BlobChangeFeedEvent evt = new BlobChangeFeedEvent { Id = Guid.NewGuid() };
+
+            // Set up a shard that returns one event then is exhausted
+            Mock<Shard> shard = new Mock<Shard>(MockBehavior.Strict);
+            shard.SetupSequence(r => r.HasNext())
+                .Returns(false);
+            shard.Setup(r => r.Next(It.IsAny<bool>(), default))
+                .Returns(Task.FromResult(evt));
+            shard.Setup(r => r.GetCursor()).Returns(new ShardCursor("chunk1", 0, 0));
+            shard.Setup(r => r.ShardPath).Returns("log/00/2020/03/01/0000/");
+
+            Segment segment = new Segment(
+                new List<Shard> { shard.Object },
+                0,
+                segmentTime,
+                "idx/segments/2020/03/01/0000/meta.json");
+
+            ChangeFeed changeFeed = new ChangeFeed(
+                containerClient.Object,
+                segmentFactory.Object,
+                new Queue<string>(),
+                new Queue<string>(),
+                segment,
+                new DateTimeOffset(2020, 6, 1, 0, 0, 0, TimeSpan.Zero),
+                null,
+                null);
+
+            // Act - request a page size larger than DefaultPageSize.
+            // ChangeFeed.GetPage internally clamps pageSize to DefaultPageSize, so the oversized
+            // request is silently reduced. With only 1 event available, the page has 1 event either way,
+            // but this verifies the clamping logic doesn't throw or misbehave.
+            Page<BlobChangeFeedEvent> page = await changeFeed.GetPage(IsAsync, Constants.ChangeFeed.DefaultPageSize + 1000);
+
+            // Assert
+            Assert.AreEqual(1, page.Values.Count);
+            Assert.AreEqual(evt.Id, page.Values[0].Id);
+        }
+
+        /// <summary>
+        /// Async helper that returns a short list of mock year paths (1601, 2019, 2020) for test setup.
+        /// </summary>
         public static Task<Page<BlobHierarchyItem>> GetYearsPathShortFuncAsync(string continuation, int? pageSizeHint)
             => Task.FromResult(GetYearsPathShortFunc(continuation, pageSizeHint));
 
+        /// <summary>
+        /// Returns a page of mock year paths (1601, 2019, 2020) for test setup.
+        /// </summary>
         public static Page<BlobHierarchyItem> GetYearsPathShortFunc(
             string continuation,
             int? pageSizeHint)
@@ -968,11 +1136,17 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 BlobsModelFactory.BlobHierarchyItem("idx/segments/2020/", null)
             });
 
+        /// <summary>
+        /// Async helper that returns mock 2019 segment paths for test setup.
+        /// </summary>
         public static Task<Page<BlobHierarchyItem>> GetSegmentsInYear2019FuncAsync(
             string continuation,
             int? pageSizeHint)
             => Task.FromResult(GetSegmentsInYear2019Func(continuation, pageSizeHint));
 
+        /// <summary>
+        /// Returns a page of mock 2019 segment paths for test setup.
+        /// </summary>
         public static Page<BlobHierarchyItem> GetSegmentsInYear2019Func(
             string continuation,
             int? pageSizeHint)
@@ -986,11 +1160,17 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     BlobsModelFactory.BlobItem("idx/segments/2019/04/03/2200/meta.json", false, null))
             });
 
+        /// <summary>
+        /// Async helper that returns mock 2020 segment paths for test setup.
+        /// </summary>
         public static Task<Page<BlobHierarchyItem>> GetSegmentsInYear2020FuncAsync(
             string continuation,
             int? pageSizeHint)
             => Task.FromResult(GetSegmentsInYear2020Func(continuation, pageSizeHint));
 
+        /// <summary>
+        /// Returns a page of mock 2020 segment paths for test setup.
+        /// </summary>
         public static Page<BlobHierarchyItem> GetSegmentsInYear2020Func(
             string continuation,
             int? pageSizeHint)

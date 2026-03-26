@@ -24,10 +24,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Test building a Segment with a SegmentCursor, and then calling Segment.GetCursor().
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetCursor()
         {
             // Arrange
+            // Build a segment from a manifest with 3 shards, each with its own cursor position.
             string manifestPath = "idx/segments/2020/03/25/0200/meta.json";
 
             Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
@@ -43,6 +44,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             DateTimeOffset dateTime = new DateTimeOffset(2020, 3, 25, 2, 0, 0, TimeSpan.Zero);
             string segmentPath = "idx/segments/2020/03/25/0200/meta.json";
+            // Shard 0 ("log/00/...") is the "current" shard in the cursor.
             string currentShardPath = "log/00/2020/03/25/0200/";
 
             List<ShardCursor> shardCursors = new List<ShardCursor>
@@ -130,7 +132,10 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
-        [RecordedTest]
+        /// <summary>
+        /// Tests that GetCursor returns an empty shard cursors list when the segment has no shards.
+        /// </summary>
+        [Test]
         public async Task GetCursor_NoShards()
         {
             // Arrange
@@ -193,7 +198,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// We are round-robining the Shards, so we will return the events for
         /// the shards indexes: 0 1 2 0 1.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetPage()
         {
             // Arrange
@@ -242,12 +247,14 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 .ReturnsAsync(shards[1].Object)
                 .ReturnsAsync(shards[2].Object);
 
-            // Set up Shards
+            // Set up Shards for round-robin reads: shard 0 -> 1 -> 2 -> 0 -> 1
+            // Shard 0 has 2 events: eventIds[0] (1st round) and eventIds[3] (2nd round)
             shards[0].SetupSequence(r => r.Next(It.IsAny<bool>(), default))
                 .Returns(Task.FromResult(new BlobChangeFeedEvent
                 {
                     Id = eventIds[0]
                 }))
+                // eventIds[3] comes from shard 0's second read (second pass of round-robin)
                 .Returns(Task.FromResult(new BlobChangeFeedEvent
                 {
                     Id = eventIds[3]
@@ -258,11 +265,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 .Returns(true)
                 .Returns(false);
 
+            // Shard 1 has 2 events: eventIds[1] (1st round) and eventIds[4] (2nd round)
             shards[1].SetupSequence(r => r.Next(It.IsAny<bool>(), default))
                 .Returns(Task.FromResult(new BlobChangeFeedEvent
                 {
                     Id = eventIds[1]
                 }))
+                // eventIds[4] comes from shard 1's second read (second pass of round-robin)
                 .Returns(Task.FromResult(new BlobChangeFeedEvent
                 {
                     Id = eventIds[4]
@@ -273,12 +282,14 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 .Returns(true)
                 .Returns(false);
 
+            // Shard 2 has only 1 event; returns it then is exhausted, so round-robin skips it on the second pass.
             shards[2].Setup(r => r.Next(It.IsAny<bool>(), default))
                 .Returns(Task.FromResult(new BlobChangeFeedEvent
                 {
                     Id = eventIds[2]
                 }));
 
+            // HasNext: true (before 1st read), then false (exhausted; skipped on 2nd pass)
             shards[2].SetupSequence(r => r.HasNext())
                 .Returns(true)
                 .Returns(false);
@@ -330,7 +341,103 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             shards[1].Verify(r => r.HasNext());
         }
 
-        [RecordedTest]
+        /// <summary>
+        /// Tests that GetPage with a pageSize smaller than the shard count
+        /// only returns that many events (partial round-robin).
+        /// 3 shards each with events, pageSize=2 — only 2 events from shards 0 and 1.
+        /// </summary>
+        [Test]
+        public async Task GetPage_PageSizeSmallerThanShardCount()
+        {
+            // Arrange
+            string manifestPath = "idx/segments/2020/03/25/0200/meta.json";
+            int shardCount = 3;
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
+            Mock<ShardFactory> shardFactory = new Mock<ShardFactory>(MockBehavior.Strict);
+
+            List<Mock<Shard>> shards = new List<Mock<Shard>>();
+
+            for (int i = 0; i < shardCount; i++)
+            {
+                shards.Add(new Mock<Shard>(MockBehavior.Strict));
+            }
+
+            List<Guid> eventIds = new List<Guid>
+            {
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid()
+            };
+
+            containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
+
+            using FileStream stream = File.OpenRead(
+                $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"SegmentManifest.json"}");
+            BlobDownloadStreamingResult blobDownloadStreamingResult = BlobsModelFactory.BlobDownloadStreamingResult(content: stream);
+            Response<BlobDownloadStreamingResult> downloadResponse = Response.FromValue(blobDownloadStreamingResult, new MockResponse(200));
+
+            if (IsAsync)
+            {
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default)).ReturnsAsync(downloadResponse);
+            }
+            else
+            {
+                blobClient.Setup(r => r.DownloadStreaming(default, default)).Returns(downloadResponse);
+            }
+
+            shardFactory.SetupSequence(r => r.BuildShard(
+                It.IsAny<bool>(),
+                It.IsAny<string>(),
+                It.IsAny<ShardCursor>()))
+                .ReturnsAsync(shards[0].Object)
+                .ReturnsAsync(shards[1].Object)
+                .ReturnsAsync(shards[2].Object);
+
+            // Set up Shards - all have events
+            shards[0].Setup(r => r.Next(It.IsAny<bool>(), default))
+                .Returns(Task.FromResult(new BlobChangeFeedEvent { Id = eventIds[0] }));
+            shards[0].SetupSequence(r => r.HasNext())
+                .Returns(true)
+                .Returns(true); // still has events after first read
+
+            shards[1].Setup(r => r.Next(It.IsAny<bool>(), default))
+                .Returns(Task.FromResult(new BlobChangeFeedEvent { Id = eventIds[1] }));
+            shards[1].SetupSequence(r => r.HasNext())
+                .Returns(true)
+                .Returns(true);
+
+            shards[2].Setup(r => r.Next(It.IsAny<bool>(), default))
+                .Returns(Task.FromResult(new BlobChangeFeedEvent { Id = eventIds[2] }));
+            shards[2].SetupSequence(r => r.HasNext())
+                .Returns(true);
+
+            SegmentFactory segmentFactory = new SegmentFactory(
+                containerClient.Object,
+                shardFactory.Object);
+            Segment segment = await segmentFactory.BuildSegment(
+                IsAsync,
+                manifestPath);
+
+            // Act - pageSize=2 means only shards 0 and 1 are read; shard 2 is never reached in the round-robin.
+            List<BlobChangeFeedEvent> events = await segment.GetPage(IsAsync, 2);
+
+            // Assert - only 2 events returned (from shards 0 and 1)
+            Assert.AreEqual(2, events.Count);
+            Assert.AreEqual(eventIds[0], events[0].Id);
+            Assert.AreEqual(eventIds[1], events[1].Id);
+
+            // Shard 2 should not have been read
+            shards[0].Verify(r => r.Next(IsAsync, default), Times.Once);
+            shards[1].Verify(r => r.Next(IsAsync, default), Times.Once);
+            shards[2].Verify(r => r.Next(IsAsync, default), Times.Never);
+        }
+
+        /// <summary>
+        /// Tests that GetPage returns an empty list when all shards have no more events.
+        /// </summary>
+        [Test]
         public async Task GetPage_NoMoreEvents()
         {
             // Arrange
