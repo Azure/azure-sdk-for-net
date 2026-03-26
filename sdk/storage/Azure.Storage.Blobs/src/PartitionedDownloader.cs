@@ -531,7 +531,7 @@ namespace Azure.Storage.Blobs
         /// Fetches the blob layout for the range using
         /// <see cref="BlobBaseClient.GetLayout"/> or <see cref="BlobBaseClient.GetLayoutAsync"/>.
         /// Eagerly materializes all layout items into a sorted array.
-        /// If there is no layout, return null.
+        /// If there is no blob layout, return null.
         /// </summary>
         private async Task<BlobLayoutSegment[]> FetchLayoutInternal(
             long initialLength,
