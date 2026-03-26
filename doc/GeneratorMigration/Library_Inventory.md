@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-03-26 03:04:47 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-03-26 03:09:25 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -16,8 +16,8 @@
 
 ## Summary
 
-- Total libraries: 413
-- Management Plane (MPG): 232
+- Total libraries: 412
+- Management Plane (MPG): 231
   - Autorest/Swagger: 114
   - New Emitter (TypeSpec): 117
   - Old TypeSpec: 0
@@ -29,7 +29,7 @@
   - Reflection-based generator: 33
   - TypeSpec-based generator: 1
   - No generator: 2
-- No generator: 50
+- No generator: 49
 
 
 ## Data Plane Libraries (DPG) - Migrated to New Emitter
@@ -443,14 +443,13 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 50
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 49
 
 | Service | Library |
 | ------- | ------- |
 | agentserver | Azure.AI.AgentServer.AgentFramework |
 | agentserver | Azure.AI.AgentServer.Core |
 | ai | Azure.AI.Inference |
-| appnetwork | Azure.ResourceManager.AppNetwork |
 | cloudmachine | Azure.Projects |
 | cloudmachine | Azure.Projects.AI |
 | cloudmachine | Azure.Projects.AI.Foundry |
