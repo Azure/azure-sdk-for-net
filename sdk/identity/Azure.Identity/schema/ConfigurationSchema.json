@@ -573,13 +573,7 @@
               "Diagnostics": {
                 "$ref": "#/definitions/diagnostics"
               }
-            },
-            "required": [
-              "TenantId",
-              "ClientId",
-              "AzurePipelinesServiceConnectionId",
-              "AzurePipelinesSystemAccessToken"
-            ]
+            }
           }
         },
         {
@@ -637,11 +631,7 @@
               "Diagnostics": {
                 "$ref": "#/definitions/diagnostics"
               }
-            },
-            "required": [
-              "ManagedIdentityIdKind",
-              "ManagedIdentityId"
-            ]
+            }
           }
         },
         {
@@ -671,10 +661,7 @@
               "Diagnostics": {
                 "$ref": "#/definitions/diagnostics"
               }
-            },
-            "required": [
-              "Sources"
-            ]
+            }
           }
         }
       ],
@@ -720,12 +707,12 @@
             ]
           },
           "then": {
-            "title": "\u26a0\ufe0f Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
-            "description": "\u26a0\ufe0f Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "title": "⚠️ Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "description": "⚠️ Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
             "properties": {
               "ClientSecret": {
                 "not": {},
-                "description": "\u26a0\ufe0f Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
+                "description": "⚠️ Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
               }
             }
           }
@@ -737,12 +724,12 @@
             ]
           },
           "then": {
-            "title": "\u26a0\ufe0f Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
-            "description": "\u26a0\ufe0f Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "title": "⚠️ Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "description": "⚠️ Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
             "properties": {
               "ClientCertificatePassword": {
                 "not": {},
-                "description": "\u26a0\ufe0f Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
+                "description": "⚠️ Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
               }
             }
           }
@@ -754,12 +741,12 @@
             ]
           },
           "then": {
-            "title": "\u26a0\ufe0f Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
-            "description": "\u26a0\ufe0f Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "title": "⚠️ Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "description": "⚠️ Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
             "properties": {
               "Password": {
                 "not": {},
-                "description": "\u26a0\ufe0f Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
+                "description": "⚠️ Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
               }
             }
           }
@@ -1192,13 +1179,7 @@
                   "type": "string"
                 }
               }
-            },
-            "required": [
-              "TenantId",
-              "ClientId",
-              "AzurePipelinesServiceConnectionId",
-              "AzurePipelinesSystemAccessToken"
-            ]
+            }
           }
         },
         {
@@ -1250,11 +1231,7 @@
                   }
                 ]
               }
-            },
-            "required": [
-              "ManagedIdentityIdKind",
-              "ManagedIdentityId"
-            ]
+            }
           }
         }
       ],
