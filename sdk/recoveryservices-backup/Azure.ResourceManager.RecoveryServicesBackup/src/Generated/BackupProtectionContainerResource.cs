@@ -20,11 +20,11 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
-    /// A class representing a ProtectionContainer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProtectionContainerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetProtectionContainers method.
+    /// A class representing a BackupProtectionContainer along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BackupProtectionContainerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBackupProtectionContainers method.
     /// </summary>
-    public partial class ProtectionContainerResource : ArmResource
+    public partial class BackupProtectionContainerResource : ArmResource
     {
         private readonly ClientDiagnostics _protectionContainersClientDiagnostics;
         private readonly ProtectionContainers _protectionContainersRestClient;
@@ -34,30 +34,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers";
 
-        /// <summary> Initializes a new instance of ProtectionContainerResource for mocking. </summary>
-        protected ProtectionContainerResource()
+        /// <summary> Initializes a new instance of BackupProtectionContainerResource for mocking. </summary>
+        protected BackupProtectionContainerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProtectionContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProtectionContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProtectionContainerResource(ArmClient client, BackupProtectionContainerData data) : this(client, data.Id)
+        internal BackupProtectionContainerResource(ArmClient client, BackupProtectionContainerData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProtectionContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProtectionContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ProtectionContainerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BackupProtectionContainerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string protectionContainerApiVersion);
+            TryGetApiVersion(ResourceType, out string backupProtectionContainerApiVersion);
             _protectionContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _protectionContainersRestClient = new ProtectionContainers(_protectionContainersClientDiagnostics, Pipeline, Endpoint, protectionContainerApiVersion ?? "2026-01-01-preview");
+            _protectionContainersRestClient = new ProtectionContainers(_protectionContainersClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-01-preview");
             _backupWorkloadItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _backupWorkloadItemsRestClient = new BackupWorkloadItems(_backupWorkloadItemsClientDiagnostics, Pipeline, Endpoint, protectionContainerApiVersion ?? "2026-01-01-preview");
+            _backupWorkloadItemsRestClient = new BackupWorkloadItems(_backupWorkloadItemsClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProtectionContainerResource"/>. </description>
+        /// <description> <see cref="BackupProtectionContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ProtectionContainerResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupProtectionContainerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerResource.Get");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerResource.Get");
             scope.Start();
             try
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -164,14 +164,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProtectionContainerResource"/>. </description>
+        /// <description> <see cref="BackupProtectionContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProtectionContainerResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<BackupProtectionContainerResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerResource.Get");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerResource.Get");
             scope.Start();
             try
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProtectionContainerResource"/>. </description>
+        /// <description> <see cref="BackupProtectionContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerResource.Delete");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerResource.Delete");
             scope.Start();
             try
             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProtectionContainerResource"/>. </description>
+        /// <description> <see cref="BackupProtectionContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerResource.Delete");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerResource.Delete");
             scope.Start();
             try
             {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProtectionContainerResource"/>. </description>
+        /// <description> <see cref="BackupProtectionContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProtectionContainerResource"/>. </description>
+        /// <description> <see cref="BackupProtectionContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProtectionContainerResource"/>. </description>
+        /// <description> <see cref="BackupProtectionContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> InquireAsync(string filter = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerResource.Inquire");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerResource.Inquire");
             scope.Start();
             try
             {
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProtectionContainerResource"/>. </description>
+        /// <description> <see cref="BackupProtectionContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Inquire(string filter = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerResource.Inquire");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerResource.Inquire");
             scope.Start();
             try
             {
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary>
-        /// Update a ProtectionContainer.
+        /// Update a BackupProtectionContainer.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProtectionContainerResource"/>. </description>
+        /// <description> <see cref="BackupProtectionContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -500,11 +500,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProtectionContainerResource>> UpdateAsync(WaitUntil waitUntil, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BackupProtectionContainerResource>> UpdateAsync(WaitUntil waitUntil, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerResource.Update");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerResource.Update");
             scope.Start();
             try
             {
@@ -514,8 +514,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BackupProtectionContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesBackupArmOperation<ProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<ProtectionContainerResource>(
-                    new ProtectionContainerOperationSource(Client),
+                RecoveryServicesBackupArmOperation<BackupProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(
+                    new BackupProtectionContainerOperationSource(Client),
                     _protectionContainersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary>
-        /// Update a ProtectionContainer.
+        /// Update a BackupProtectionContainer.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProtectionContainerResource"/>. </description>
+        /// <description> <see cref="BackupProtectionContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -559,11 +559,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ProtectionContainerResource> Update(WaitUntil waitUntil, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BackupProtectionContainerResource> Update(WaitUntil waitUntil, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerResource.Update");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerResource.Update");
             scope.Start();
             try
             {
@@ -573,8 +573,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BackupProtectionContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesBackupArmOperation<ProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<ProtectionContainerResource>(
-                    new ProtectionContainerOperationSource(Client),
+                RecoveryServicesBackupArmOperation<BackupProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(
+                    new BackupProtectionContainerOperationSource(Client),
                     _protectionContainersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -598,12 +598,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ProtectionContainerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupProtectionContainerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerResource.AddTag");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerResource.AddTag");
             scope.Start();
             try
             {
@@ -619,13 +619,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
-                    return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     BackupProtectionContainerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<ProtectionContainerResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BackupProtectionContainerResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -641,12 +641,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ProtectionContainerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<BackupProtectionContainerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerResource.AddTag");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerResource.AddTag");
             scope.Start();
             try
             {
@@ -662,13 +662,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
-                    return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     BackupProtectionContainerData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<ProtectionContainerResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<BackupProtectionContainerResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -683,11 +683,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ProtectionContainerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupProtectionContainerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerResource.SetTags");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerResource.SetTags");
             scope.Start();
             try
             {
@@ -704,13 +704,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
-                    return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     BackupProtectionContainerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<ProtectionContainerResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BackupProtectionContainerResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -725,11 +725,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ProtectionContainerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<BackupProtectionContainerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerResource.SetTags");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerResource.SetTags");
             scope.Start();
             try
             {
@@ -746,13 +746,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
-                    return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     BackupProtectionContainerData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<ProtectionContainerResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<BackupProtectionContainerResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -767,11 +767,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ProtectionContainerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupProtectionContainerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerResource.RemoveTag");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerResource.RemoveTag");
             scope.Start();
             try
             {
@@ -787,13 +787,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
-                    return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     BackupProtectionContainerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<ProtectionContainerResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BackupProtectionContainerResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -808,11 +808,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ProtectionContainerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<BackupProtectionContainerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerResource.RemoveTag");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerResource.RemoveTag");
             scope.Start();
             try
             {
@@ -828,13 +828,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
-                    return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     BackupProtectionContainerData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<ProtectionContainerResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<BackupProtectionContainerResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             }
         }
 
-        /// <summary> Gets a collection of BackupProtectedItems in the <see cref="ProtectionContainerResource"/>. </summary>
+        /// <summary> Gets a collection of BackupProtectedItems in the <see cref="BackupProtectionContainerResource"/>. </summary>
         /// <returns> An object representing collection of BackupProtectedItems and their operations over a BackupProtectedItemResource. </returns>
         public virtual BackupProtectedItemCollection GetBackupProtectedItems()
         {
@@ -884,39 +884,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             return GetBackupProtectedItems().Get(protectedItemName, filter, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ProtectionContainerOperationResults in the <see cref="ProtectionContainerResource"/>. </summary>
-        /// <returns> An object representing collection of ProtectionContainerOperationResults and their operations over a ProtectionContainerOperationResultResource. </returns>
-        public virtual ProtectionContainerOperationResultCollection GetProtectionContainerOperationResults()
-        {
-            return GetCachedClient(client => new ProtectionContainerOperationResultCollection(client, Id));
-        }
-
-        /// <summary> Fetches the result of any operation on the container. </summary>
-        /// <param name="operationId"> The name of the ProtectionContainerResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ProtectionContainerOperationResultResource>> GetProtectionContainerOperationResultAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetProtectionContainerOperationResults().GetAsync(operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Fetches the result of any operation on the container. </summary>
-        /// <param name="operationId"> The name of the ProtectionContainerResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ProtectionContainerOperationResultResource> GetProtectionContainerOperationResult(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetProtectionContainerOperationResults().Get(operationId, cancellationToken);
         }
     }
 }

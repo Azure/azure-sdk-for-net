@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// <summary>
     /// A class representing a BackupProtectedItem along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BackupProtectedItemResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProtectionContainerResource"/> using the GetBackupProtectedItems method.
+    /// Otherwise you can get one from its parent resource <see cref="BackupProtectionContainerResource"/> using the GetBackupProtectedItems method.
     /// </summary>
     public partial class BackupProtectedItemResource : ArmResource
     {
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="BackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupRecoveryPointResource> GetAllAsync(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BackupRecoveryPointResource> GetRecoveryPointsRecommendedForMoveAsync(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new RecoveryPointsRecommendedForMoveGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new RecoveryPointsRecommendedForMoveGetRecoveryPointsRecommendedForMoveAsyncCollectionResultOfT(
                 _recoveryPointsRecommendedForMoveRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="BackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupRecoveryPointResource> GetAll(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
+        public virtual Pageable<BackupRecoveryPointResource> GetRecoveryPointsRecommendedForMove(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new RecoveryPointsRecommendedForMoveGetAllCollectionResultOfT(
+            return new PageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new RecoveryPointsRecommendedForMoveGetRecoveryPointsRecommendedForMoveCollectionResultOfT(
                 _recoveryPointsRecommendedForMoveRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

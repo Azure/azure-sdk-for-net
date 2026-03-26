@@ -80,22 +80,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             return new BackupProtectedItemResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ProtectionContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BackupProtectionContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProtectionContainerResource"/> object. </returns>
-        public virtual ProtectionContainerResource GetProtectionContainerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BackupProtectionContainerResource"/> object. </returns>
+        public virtual BackupProtectionContainerResource GetBackupProtectionContainerResource(ResourceIdentifier id)
         {
-            ProtectionContainerResource.ValidateResourceId(id);
-            return new ProtectionContainerResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ProtectionContainerOperationResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProtectionContainerOperationResultResource"/> object. </returns>
-        public virtual ProtectionContainerOperationResultResource GetProtectionContainerOperationResultResource(ResourceIdentifier id)
-        {
-            ProtectionContainerOperationResultResource.ValidateResourceId(id);
-            return new ProtectionContainerOperationResultResource(Client, id);
+            BackupProtectionContainerResource.ValidateResourceId(id);
+            return new BackupProtectionContainerResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BackupRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary></summary>
-    public partial class ProtectionContainerResource : IJsonModel<BackupProtectionContainerData>
+    public partial class BackupProtectionContainerResource : IJsonModel<BackupProtectionContainerData>
     {
         private static IJsonModel<BackupProtectionContainerData> s_dataDeserializationInstance;
 

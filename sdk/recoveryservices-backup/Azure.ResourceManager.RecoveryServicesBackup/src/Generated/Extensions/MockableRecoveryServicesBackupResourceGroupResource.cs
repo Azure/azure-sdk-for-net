@@ -349,11 +349,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             return GetBackupPrivateEndpointConnections().Get(vaultName, privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProtectionContainers in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ProtectionContainers and their operations over a ProtectionContainerResource. </returns>
-        public virtual ProtectionContainerCollection GetProtectionContainers()
+        /// <summary> Gets a collection of BackupProtectionContainers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of BackupProtectionContainers and their operations over a BackupProtectionContainerResource. </returns>
+        public virtual BackupProtectionContainerCollection GetBackupProtectionContainers()
         {
-            return GetCachedClient(client => new ProtectionContainerCollection(client, Id));
+            return GetCachedClient(client => new BackupProtectionContainerCollection(client, Id));
         }
 
         /// <summary>
@@ -380,13 +380,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProtectionContainerResource>> GetProtectionContainerAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupProtectionContainerResource>> GetBackupProtectionContainerAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            return await GetProtectionContainers().GetAsync(vaultName, fabricName, containerName, cancellationToken).ConfigureAwait(false);
+            return await GetBackupProtectionContainers().GetAsync(vaultName, fabricName, containerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -413,13 +413,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProtectionContainerResource> GetProtectionContainer(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
+        public virtual Response<BackupProtectionContainerResource> GetBackupProtectionContainer(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            return GetProtectionContainers().Get(vaultName, fabricName, containerName, cancellationToken);
+            return GetBackupProtectionContainers().Get(vaultName, fabricName, containerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BackupProtectionPolicies in the <see cref="ResourceGroupResource"/>. </summary>
@@ -1634,8 +1634,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="BackupProtectionContainerData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupProtectionContainerData> GetAllAsync(string vaultName, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupProtectionContainerResource> GetAllAsync(string vaultName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
@@ -1643,13 +1643,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BackupProtectionContainersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainersGetAllAsyncCollectionResultOfT(
                 BackupProtectionContainersRestClient,
                 vaultName,
                 Id.ResourceGroupName,
                 Id.SubscriptionId,
                 filter,
-                context);
+                context), data => new BackupProtectionContainerResource(Client, data));
         }
 
         /// <summary>
@@ -1674,8 +1674,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="BackupProtectionContainerData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupProtectionContainerData> GetAll(string vaultName, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupProtectionContainerResource> GetAll(string vaultName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
@@ -1683,13 +1683,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BackupProtectionContainersGetAllCollectionResultOfT(
+            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainersGetAllCollectionResultOfT(
                 BackupProtectionContainersRestClient,
                 vaultName,
                 Id.ResourceGroupName,
                 Id.SubscriptionId,
                 filter,
-                context);
+                context), data => new BackupProtectionContainerResource(Client, data));
         }
 
         /// <summary>
@@ -1714,8 +1714,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="BackupProtectionContainerData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupProtectionContainerData> GetSoftDeletedProtectionContainersAsync(string vaultName, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainersAsync(string vaultName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
@@ -1723,13 +1723,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedProtectionContainersGetSoftDeletedProtectionContainersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new DeletedProtectionContainersGetSoftDeletedProtectionContainersAsyncCollectionResultOfT(
                 DeletedProtectionContainersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 vaultName,
                 filter,
-                context);
+                context), data => new BackupProtectionContainerResource(Client, data));
         }
 
         /// <summary>
@@ -1754,8 +1754,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="BackupProtectionContainerData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupProtectionContainerData> GetSoftDeletedProtectionContainers(string vaultName, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainers(string vaultName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
@@ -1763,13 +1763,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedProtectionContainersGetSoftDeletedProtectionContainersCollectionResultOfT(
+            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new DeletedProtectionContainersGetSoftDeletedProtectionContainersCollectionResultOfT(
                 DeletedProtectionContainersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 vaultName,
                 filter,
-                context);
+                context), data => new BackupProtectionContainerResource(Client, data));
         }
 
         /// <summary>

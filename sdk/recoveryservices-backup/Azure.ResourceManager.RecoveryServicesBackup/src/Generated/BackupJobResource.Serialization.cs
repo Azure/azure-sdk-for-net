@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary></summary>
-    public partial class BackupJobResource : IJsonModel<BackupJobData>
+    public partial class BackupJobResource : ArmResource, IJsonModel<BackupJobData>
     {
         private static IJsonModel<BackupJobData> s_dataDeserializationInstance;
 

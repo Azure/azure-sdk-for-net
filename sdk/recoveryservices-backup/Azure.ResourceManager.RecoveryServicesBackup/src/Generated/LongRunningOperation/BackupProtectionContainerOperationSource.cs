@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary></summary>
-    internal partial class ProtectionContainerOperationSource : IOperationSource<ProtectionContainerResource>
+    internal partial class BackupProtectionContainerOperationSource : IOperationSource<BackupProtectionContainerResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ProtectionContainerOperationSource(ArmClient client)
+        internal BackupProtectionContainerOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ProtectionContainerResource IOperationSource<ProtectionContainerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        BackupProtectionContainerResource IOperationSource<BackupProtectionContainerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             BackupProtectionContainerData data = BackupProtectionContainerData.DeserializeBackupProtectionContainerData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ProtectionContainerResource(_client, data);
+            return new BackupProtectionContainerResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ProtectionContainerResource> IOperationSource<ProtectionContainerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BackupProtectionContainerResource> IOperationSource<BackupProtectionContainerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             BackupProtectionContainerData data = BackupProtectionContainerData.DeserializeBackupProtectionContainerData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ProtectionContainerResource(_client, data);
+            return new BackupProtectionContainerResource(_client, data);
         }
     }
 }

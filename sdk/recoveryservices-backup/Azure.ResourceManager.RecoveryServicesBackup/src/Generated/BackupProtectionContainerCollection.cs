@@ -18,32 +18,32 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProtectionContainerResource"/> and their operations.
-    /// Each <see cref="ProtectionContainerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="ProtectionContainerCollection"/> instance call the GetProtectionContainers method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="BackupProtectionContainerResource"/> and their operations.
+    /// Each <see cref="BackupProtectionContainerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="BackupProtectionContainerCollection"/> instance call the GetBackupProtectionContainers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class ProtectionContainerCollection : ArmCollection
+    public partial class BackupProtectionContainerCollection : ArmCollection
     {
         private readonly ClientDiagnostics _protectionContainersClientDiagnostics;
         private readonly ProtectionContainers _protectionContainersRestClient;
         private readonly ClientDiagnostics _backupWorkloadItemsClientDiagnostics;
         private readonly BackupWorkloadItems _backupWorkloadItemsRestClient;
 
-        /// <summary> Initializes a new instance of ProtectionContainerCollection for mocking. </summary>
-        protected ProtectionContainerCollection()
+        /// <summary> Initializes a new instance of BackupProtectionContainerCollection for mocking. </summary>
+        protected BackupProtectionContainerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProtectionContainerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProtectionContainerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ProtectionContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BackupProtectionContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ProtectionContainerResource.ResourceType, out string protectionContainerApiVersion);
-            _protectionContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProtectionContainerResource.ResourceType.Namespace, Diagnostics);
-            _protectionContainersRestClient = new ProtectionContainers(_protectionContainersClientDiagnostics, Pipeline, Endpoint, protectionContainerApiVersion ?? "2026-01-01-preview");
-            _backupWorkloadItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProtectionContainerResource.ResourceType.Namespace, Diagnostics);
-            _backupWorkloadItemsRestClient = new BackupWorkloadItems(_backupWorkloadItemsClientDiagnostics, Pipeline, Endpoint, protectionContainerApiVersion ?? "2026-01-01-preview");
+            TryGetApiVersion(BackupProtectionContainerResource.ResourceType, out string backupProtectionContainerApiVersion);
+            _protectionContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionContainerResource.ResourceType.Namespace, Diagnostics);
+            _protectionContainersRestClient = new ProtectionContainers(_protectionContainersClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-01-preview");
+            _backupWorkloadItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionContainerResource.ResourceType.Namespace, Diagnostics);
+            _backupWorkloadItemsRestClient = new BackupWorkloadItems(_backupWorkloadItemsClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -84,14 +84,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ProtectionContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, string fabricName, string containerName, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BackupProtectionContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, string fabricName, string containerName, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, BackupProtectionContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesBackupArmOperation<ProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<ProtectionContainerResource>(
-                    new ProtectionContainerOperationSource(Client),
+                RecoveryServicesBackupArmOperation<BackupProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(
+                    new BackupProtectionContainerOperationSource(Client),
                     _protectionContainersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -148,14 +148,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ProtectionContainerResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, string fabricName, string containerName, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BackupProtectionContainerResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, string fabricName, string containerName, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -165,8 +165,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, BackupProtectionContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesBackupArmOperation<ProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<ProtectionContainerResource>(
-                    new ProtectionContainerOperationSource(Client),
+                RecoveryServicesBackupArmOperation<BackupProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(
+                    new BackupProtectionContainerOperationSource(Client),
                     _protectionContainersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -208,13 +208,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ProtectionContainerResource>> GetAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupProtectionContainerResource>> GetAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerCollection.Get");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Get");
             scope.Start();
             try
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -261,13 +261,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ProtectionContainerResource> Get(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
+        public virtual Response<BackupProtectionContainerResource> Get(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerCollection.Get");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Get");
             scope.Start();
             try
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerCollection.Exists");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Exists");
             scope.Start();
             try
             {
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerCollection.Exists");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Exists");
             scope.Start();
             try
             {
@@ -436,13 +436,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ProtectionContainerResource>> GetIfExistsAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<BackupProtectionContainerResource>> GetIfExistsAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -467,9 +467,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ProtectionContainerResource>(response.GetRawResponse());
+                    return new NoValueResponse<BackupProtectionContainerResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -501,13 +501,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ProtectionContainerResource> GetIfExists(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<BackupProtectionContainerResource> GetIfExists(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("ProtectionContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -532,9 +532,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ProtectionContainerResource>(response.GetRawResponse());
+                    return new NoValueResponse<BackupProtectionContainerResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

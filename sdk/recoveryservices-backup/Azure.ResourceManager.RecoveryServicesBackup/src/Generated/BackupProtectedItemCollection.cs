@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
     /// A class representing a collection of <see cref="BackupProtectedItemResource"/> and their operations.
-    /// Each <see cref="BackupProtectedItemResource"/> in the collection will belong to the same instance of <see cref="ProtectionContainerResource"/>.
-    /// To get a <see cref="BackupProtectedItemCollection"/> instance call the GetBackupProtectedItems method from an instance of <see cref="ProtectionContainerResource"/>.
+    /// Each <see cref="BackupProtectedItemResource"/> in the collection will belong to the same instance of <see cref="BackupProtectionContainerResource"/>.
+    /// To get a <see cref="BackupProtectedItemCollection"/> instance call the GetBackupProtectedItems method from an instance of <see cref="BackupProtectionContainerResource"/>.
     /// </summary>
     public partial class BackupProtectedItemCollection : ArmCollection
     {
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ProtectionContainerResource.ResourceType)
+            if (id.ResourceType != BackupProtectionContainerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProtectionContainerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BackupProtectionContainerResource.ResourceType), id);
             }
         }
 

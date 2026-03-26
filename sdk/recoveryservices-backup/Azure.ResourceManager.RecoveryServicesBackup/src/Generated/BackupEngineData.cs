@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary> Initializes a new instance of <see cref="BackupEngineData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal BackupEngineData(AzureLocation location) : base(location)
+        public BackupEngineData(AzureLocation location) : base(location)
         {
         }
 
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> BackupEngineBaseResource properties. </summary>
-        public BackupGenericEngine Properties { get; }
+        public BackupGenericEngine Properties { get; set; }
 
         /// <summary> Optional ETag. </summary>
-        public ETag? ETag { get; }
+        public ETag? ETag { get; set; }
     }
 }

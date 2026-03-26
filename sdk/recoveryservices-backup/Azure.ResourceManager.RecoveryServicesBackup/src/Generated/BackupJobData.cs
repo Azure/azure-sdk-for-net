@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary> Initializes a new instance of <see cref="BackupJobData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal BackupJobData(AzureLocation location) : base(location)
+        public BackupJobData(AzureLocation location) : base(location)
         {
         }
 
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> JobResource properties. </summary>
-        public BackupGenericJob Properties { get; }
+        public BackupGenericJob Properties { get; set; }
 
         /// <summary> Optional ETag. </summary>
-        public ETag? ETag { get; }
+        public ETag? ETag { get; set; }
     }
 }
