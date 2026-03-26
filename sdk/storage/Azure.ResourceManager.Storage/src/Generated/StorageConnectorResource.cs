@@ -20,40 +20,40 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
-    /// A class representing a Connector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetConnectors method.
+    /// A class representing a StorageConnector along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageConnectorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetStorageConnectors method.
     /// </summary>
-    public partial class ConnectorResource : ArmResource
+    public partial class StorageConnectorResource : ArmResource
     {
         private readonly ClientDiagnostics _connectorsClientDiagnostics;
         private readonly Connectors _connectorsRestClient;
-        private readonly ConnectorData _data;
+        private readonly StorageConnectorData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/connectors";
 
-        /// <summary> Initializes a new instance of ConnectorResource for mocking. </summary>
-        protected ConnectorResource()
+        /// <summary> Initializes a new instance of StorageConnectorResource for mocking. </summary>
+        protected StorageConnectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageConnectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ConnectorResource(ArmClient client, ConnectorData data) : this(client, data.Id)
+        internal StorageConnectorResource(ArmClient client, StorageConnectorData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageConnectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ConnectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageConnectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string connectorApiVersion);
+            TryGetApiVersion(ResourceType, out string storageConnectorApiVersion);
             _connectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _connectorsRestClient = new Connectors(_connectorsClientDiagnostics, Pipeline, Endpoint, connectorApiVersion ?? "2025-08-01");
+            _connectorsRestClient = new Connectors(_connectorsClientDiagnostics, Pipeline, Endpoint, storageConnectorApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ConnectorData Data
+        public virtual StorageConnectorData Data
         {
             get
             {
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectorResource"/>. </description>
+        /// <description> <see cref="StorageConnectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConnectorResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageConnectorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ConnectorResource.Get");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("StorageConnectorResource.Get");
             scope.Start();
             try
             {
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Storage
                 };
                 HttpMessage message = _connectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConnectorData> response = Response.FromValue(ConnectorData.FromResponse(result), result);
+                Response<StorageConnectorData> response = Response.FromValue(StorageConnectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,14 +159,14 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectorResource"/>. </description>
+        /// <description> <see cref="StorageConnectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConnectorResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<StorageConnectorResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ConnectorResource.Get");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("StorageConnectorResource.Get");
             scope.Start();
             try
             {
@@ -176,12 +176,12 @@ namespace Azure.ResourceManager.Storage
                 };
                 HttpMessage message = _connectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConnectorData> response = Response.FromValue(ConnectorData.FromResponse(result), result);
+                Response<StorageConnectorData> response = Response.FromValue(StorageConnectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectorResource"/>. </description>
+        /// <description> <see cref="StorageConnectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,11 +215,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="data"> The updated properties of the Storage Connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ConnectorResource>> UpdateAsync(WaitUntil waitUntil, ConnectorData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageConnectorResource>> UpdateAsync(WaitUntil waitUntil, StorageConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ConnectorResource.Update");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("StorageConnectorResource.Update");
             scope.Start();
             try
             {
@@ -227,10 +227,10 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ConnectorData.ToRequestContent(data), context);
+                HttpMessage message = _connectorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageConnectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                StorageArmOperation<ConnectorResource> operation = new StorageArmOperation<ConnectorResource>(
-                    new ConnectorOperationSource(Client),
+                StorageArmOperation<StorageConnectorResource> operation = new StorageArmOperation<StorageConnectorResource>(
+                    new StorageConnectorOperationSource(Client),
                     _connectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectorResource"/>. </description>
+        /// <description> <see cref="StorageConnectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="data"> The updated properties of the Storage Connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ConnectorResource> Update(WaitUntil waitUntil, ConnectorData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StorageConnectorResource> Update(WaitUntil waitUntil, StorageConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ConnectorResource.Update");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("StorageConnectorResource.Update");
             scope.Start();
             try
             {
@@ -286,10 +286,10 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ConnectorData.ToRequestContent(data), context);
+                HttpMessage message = _connectorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageConnectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                StorageArmOperation<ConnectorResource> operation = new StorageArmOperation<ConnectorResource>(
-                    new ConnectorOperationSource(Client),
+                StorageArmOperation<StorageConnectorResource> operation = new StorageArmOperation<StorageConnectorResource>(
+                    new StorageConnectorOperationSource(Client),
                     _connectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectorResource"/>. </description>
+        /// <description> <see cref="StorageConnectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ConnectorResource.Delete");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("StorageConnectorResource.Delete");
             scope.Start();
             try
             {
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectorResource"/>. </description>
+        /// <description> <see cref="StorageConnectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ConnectorResource.Delete");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("StorageConnectorResource.Delete");
             scope.Start();
             try
             {
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectorResource"/>. </description>
+        /// <description> <see cref="StorageConnectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ConnectorResource.TestExistingConnection");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("StorageConnectorResource.TestExistingConnection");
             scope.Start();
             try
             {
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectorResource"/>. </description>
+        /// <description> <see cref="StorageConnectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ConnectorResource.TestExistingConnection");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("StorageConnectorResource.TestExistingConnection");
             scope.Start();
             try
             {
@@ -535,12 +535,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ConnectorResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageConnectorResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ConnectorResource.AddTag");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("StorageConnectorResource.AddTag");
             scope.Start();
             try
             {
@@ -555,19 +555,19 @@ namespace Azure.ResourceManager.Storage
                     };
                     HttpMessage message = _connectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ConnectorData> response = Response.FromValue(ConnectorData.FromResponse(result), result);
-                    return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
+                    Response<StorageConnectorData> response = Response.FromValue(StorageConnectorData.FromResponse(result), result);
+                    return Response.FromValue(new StorageConnectorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ConnectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ConnectorData patch = new ConnectorData();
+                    StorageConnectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageConnectorData patch = new StorageConnectorData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<ConnectorResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageConnectorResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -583,12 +583,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ConnectorResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<StorageConnectorResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ConnectorResource.AddTag");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("StorageConnectorResource.AddTag");
             scope.Start();
             try
             {
@@ -603,19 +603,19 @@ namespace Azure.ResourceManager.Storage
                     };
                     HttpMessage message = _connectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ConnectorData> response = Response.FromValue(ConnectorData.FromResponse(result), result);
-                    return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
+                    Response<StorageConnectorData> response = Response.FromValue(StorageConnectorData.FromResponse(result), result);
+                    return Response.FromValue(new StorageConnectorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ConnectorData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ConnectorData patch = new ConnectorData();
+                    StorageConnectorData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    StorageConnectorData patch = new StorageConnectorData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<ConnectorResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<StorageConnectorResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -630,11 +630,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ConnectorResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageConnectorResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ConnectorResource.SetTags");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("StorageConnectorResource.SetTags");
             scope.Start();
             try
             {
@@ -650,15 +650,15 @@ namespace Azure.ResourceManager.Storage
                     };
                     HttpMessage message = _connectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ConnectorData> response = Response.FromValue(ConnectorData.FromResponse(result), result);
-                    return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
+                    Response<StorageConnectorData> response = Response.FromValue(StorageConnectorData.FromResponse(result), result);
+                    return Response.FromValue(new StorageConnectorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ConnectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ConnectorData patch = new ConnectorData();
+                    StorageConnectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageConnectorData patch = new StorageConnectorData();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<ConnectorResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageConnectorResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -673,11 +673,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ConnectorResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<StorageConnectorResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ConnectorResource.SetTags");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("StorageConnectorResource.SetTags");
             scope.Start();
             try
             {
@@ -693,15 +693,15 @@ namespace Azure.ResourceManager.Storage
                     };
                     HttpMessage message = _connectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ConnectorData> response = Response.FromValue(ConnectorData.FromResponse(result), result);
-                    return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
+                    Response<StorageConnectorData> response = Response.FromValue(StorageConnectorData.FromResponse(result), result);
+                    return Response.FromValue(new StorageConnectorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ConnectorData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ConnectorData patch = new ConnectorData();
+                    StorageConnectorData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    StorageConnectorData patch = new StorageConnectorData();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<ConnectorResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<StorageConnectorResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -716,11 +716,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ConnectorResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageConnectorResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ConnectorResource.RemoveTag");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("StorageConnectorResource.RemoveTag");
             scope.Start();
             try
             {
@@ -735,19 +735,19 @@ namespace Azure.ResourceManager.Storage
                     };
                     HttpMessage message = _connectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ConnectorData> response = Response.FromValue(ConnectorData.FromResponse(result), result);
-                    return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
+                    Response<StorageConnectorData> response = Response.FromValue(StorageConnectorData.FromResponse(result), result);
+                    return Response.FromValue(new StorageConnectorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ConnectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ConnectorData patch = new ConnectorData();
+                    StorageConnectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageConnectorData patch = new StorageConnectorData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<ConnectorResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageConnectorResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -762,11 +762,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ConnectorResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<StorageConnectorResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("ConnectorResource.RemoveTag");
+            using DiagnosticScope scope = _connectorsClientDiagnostics.CreateScope("StorageConnectorResource.RemoveTag");
             scope.Start();
             try
             {
@@ -781,19 +781,19 @@ namespace Azure.ResourceManager.Storage
                     };
                     HttpMessage message = _connectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ConnectorData> response = Response.FromValue(ConnectorData.FromResponse(result), result);
-                    return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
+                    Response<StorageConnectorData> response = Response.FromValue(StorageConnectorData.FromResponse(result), result);
+                    return Response.FromValue(new StorageConnectorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ConnectorData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ConnectorData patch = new ConnectorData();
+                    StorageConnectorData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    StorageConnectorData patch = new StorageConnectorData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<ConnectorResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<StorageConnectorResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

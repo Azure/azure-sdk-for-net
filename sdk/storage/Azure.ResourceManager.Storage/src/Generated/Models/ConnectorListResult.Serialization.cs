@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ConnectorData item in Value)
+            foreach (StorageConnectorData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            IList<ConnectorData> value = default;
+            IList<StorageConnectorData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ConnectorData> array = new List<ConnectorData>();
+                    List<StorageConnectorData> array = new List<StorageConnectorData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConnectorData.DeserializeConnectorData(item, options));
+                        array.Add(StorageConnectorData.DeserializeStorageConnectorData(item, options));
                     }
                     value = array;
                     continue;

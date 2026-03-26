@@ -18,10 +18,10 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A Connector is a tracked ARM resource modeled as a sub-resource of a Storage Account. </summary>
-    public partial class ConnectorData : TrackedResourceData, IJsonModel<ConnectorData>
+    public partial class StorageConnectorData : TrackedResourceData, IJsonModel<StorageConnectorData>
     {
-        /// <summary> Initializes a new instance of <see cref="ConnectorData"/> for deserialization. </summary>
-        internal ConnectorData()
+        /// <summary> Initializes a new instance of <see cref="StorageConnectorData"/> for deserialization. </summary>
+        internal StorageConnectorData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.Storage
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectorData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConnectorData(document.RootElement, options);
+                        return DeserializeStorageConnectorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectorData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageConnectorData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectorData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectorData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageConnectorData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConnectorData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StorageConnectorData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectorData IPersistableModel<ConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConnectorData)PersistableModelCreateCore(data, options);
+        StorageConnectorData IPersistableModel<StorageConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageConnectorData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="connectorData"> The <see cref="ConnectorData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ConnectorData connectorData)
+        /// <param name="storageConnectorData"> The <see cref="StorageConnectorData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(StorageConnectorData storageConnectorData)
         {
-            if (connectorData == null)
+            if (storageConnectorData == null)
             {
                 return null;
             }
-            return RequestContent.Create(connectorData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(storageConnectorData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConnectorData"/> from. </param>
-        internal static ConnectorData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageConnectorData"/> from. </param>
+        internal static StorageConnectorData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeStorageConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectorData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectorData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageConnectorData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -107,24 +107,24 @@ namespace Azure.ResourceManager.Storage
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectorData IJsonModel<ConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConnectorData)JsonModelCreateCore(ref reader, options);
+        StorageConnectorData IJsonModel<StorageConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StorageConnectorData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectorData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectorData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageConnectorData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectorData(document.RootElement, options);
+            return DeserializeStorageConnectorData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConnectorData DeserializeConnectorData(JsonElement element, ModelReaderWriterOptions options)
+        internal static StorageConnectorData DeserializeStorageConnectorData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Storage
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnectorData(
+            return new StorageConnectorData(
                 id,
                 name,
                 resourceType,

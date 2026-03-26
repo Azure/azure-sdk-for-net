@@ -14,23 +14,23 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A Connector is a tracked ARM resource modeled as a sub-resource of a Storage Account. </summary>
-    public partial class ConnectorData : TrackedResourceData
+    public partial class StorageConnectorData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectorData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageConnectorData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of the Storage Connector. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public ConnectorData(AzureLocation location, StorageConnectorProperties properties) : base(location)
+        public StorageConnectorData(AzureLocation location, StorageConnectorProperties properties) : base(location)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectorData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageConnectorData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of the Storage Connector. </param>
-        internal ConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, StorageConnectorProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, StorageConnectorProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

@@ -1892,11 +1892,11 @@ namespace Azure.ResourceManager.Storage
             return GetStorageTaskAssignments().Get(storageTaskAssignmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Connectors in the <see cref="StorageAccountResource"/>. </summary>
-        /// <returns> An object representing collection of Connectors and their operations over a ConnectorResource. </returns>
-        public virtual ConnectorCollection GetConnectors()
+        /// <summary> Gets a collection of StorageConnectors in the <see cref="StorageAccountResource"/>. </summary>
+        /// <returns> An object representing collection of StorageConnectors and their operations over a StorageConnectorResource. </returns>
+        public virtual StorageConnectorCollection GetStorageConnectors()
         {
-            return GetCachedClient(client => new ConnectorCollection(client, Id));
+            return GetCachedClient(client => new StorageConnectorCollection(client, Id));
         }
 
         /// <summary> Get the specified Storage Connector. </summary>
@@ -1905,11 +1905,11 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConnectorResource>> GetConnectorAsync(string connectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageConnectorResource>> GetStorageConnectorAsync(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            return await GetConnectors().GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
+            return await GetStorageConnectors().GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the specified Storage Connector. </summary>
@@ -1918,31 +1918,18 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConnectorResource> GetConnector(string connectorName, CancellationToken cancellationToken = default)
+        public virtual Response<StorageConnectorResource> GetStorageConnector(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            return GetConnectors().Get(connectorName, cancellationToken);
+            return GetStorageConnectors().Get(connectorName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataShares in the <see cref="StorageAccountResource"/>. </summary>
-        /// <returns> An object representing collection of DataShares and their operations over a DataShareResource. </returns>
-        public virtual DataShareCollection GetDataShares()
+        /// <summary> Gets a collection of StorageDataShares in the <see cref="StorageAccountResource"/>. </summary>
+        /// <returns> An object representing collection of StorageDataShares and their operations over a StorageDataShareResource. </returns>
+        public virtual StorageDataShareCollection GetStorageDataShares()
         {
-            return GetCachedClient(client => new DataShareCollection(client, Id));
-        }
-
-        /// <summary> Get the specified Storage DataShare. </summary>
-        /// <param name="dataShareName"> The name of the Storage DataShare. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataShareName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataShareName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataShareResource>> GetDataShareAsync(string dataShareName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(dataShareName, nameof(dataShareName));
-
-            return await GetDataShares().GetAsync(dataShareName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new StorageDataShareCollection(client, Id));
         }
 
         /// <summary> Get the specified Storage DataShare. </summary>
@@ -1951,11 +1938,24 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="dataShareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataShareName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataShareResource> GetDataShare(string dataShareName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageDataShareResource>> GetStorageDataShareAsync(string dataShareName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataShareName, nameof(dataShareName));
 
-            return GetDataShares().Get(dataShareName, cancellationToken);
+            return await GetStorageDataShares().GetAsync(dataShareName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the specified Storage DataShare. </summary>
+        /// <param name="dataShareName"> The name of the Storage DataShare. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataShareName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataShareName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StorageDataShareResource> GetStorageDataShare(string dataShareName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataShareName, nameof(dataShareName));
+
+            return GetStorageDataShares().Get(dataShareName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ObjectReplicationPolicies in the <see cref="StorageAccountResource"/>. </summary>

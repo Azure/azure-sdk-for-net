@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary></summary>
-    internal partial class ConnectorOperationSource : IOperationSource<ConnectorResource>
+    internal partial class StorageConnectorOperationSource : IOperationSource<StorageConnectorResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ConnectorOperationSource(ArmClient client)
+        internal StorageConnectorOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Storage
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ConnectorResource IOperationSource<ConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        StorageConnectorResource IOperationSource<StorageConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ConnectorData data = ConnectorData.DeserializeConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ConnectorResource(_client, data);
+            StorageConnectorData data = StorageConnectorData.DeserializeStorageConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new StorageConnectorResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ConnectorResource> IOperationSource<ConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StorageConnectorResource> IOperationSource<StorageConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ConnectorData data = ConnectorData.DeserializeConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ConnectorResource(_client, data);
+            StorageConnectorData data = StorageConnectorData.DeserializeStorageConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new StorageConnectorResource(_client, data);
         }
     }
 }

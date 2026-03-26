@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="DataShareListResult"/>. </summary>
         /// <param name="value"> The DataShare items on this page. </param>
-        internal DataShareListResult(IEnumerable<DataShareData> value)
+        internal DataShareListResult(IEnumerable<StorageDataShareData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="value"> The DataShare items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataShareListResult(IList<DataShareData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataShareListResult(IList<StorageDataShareData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The DataShare items on this page. </summary>
         [WirePath("value")]
-        public IList<DataShareData> Value { get; }
+        public IList<StorageDataShareData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

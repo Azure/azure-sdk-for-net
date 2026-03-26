@@ -15,7 +15,7 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    internal partial class ConnectorsGetByStorageAccountAsyncCollectionResultOfT : AsyncPageable<ConnectorData>
+    internal partial class ConnectorsGetByStorageAccountAsyncCollectionResultOfT : AsyncPageable<StorageConnectorData>
     {
         private readonly Connectors _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ConnectorsGetByStorageAccountAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ConnectorData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<StorageConnectorData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage
                     yield break;
                 }
                 ConnectorListResult result = ConnectorListResult.FromResponse(response);
-                yield return Page<ConnectorData>.FromValues((IReadOnlyList<ConnectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<StorageConnectorData>.FromValues((IReadOnlyList<StorageConnectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Storage
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByStorageAccountRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _context) : _client.CreateGetByStorageAccountRequest(_subscriptionId, _resourceGroupName, _accountName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConnectorCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageConnectorCollection.GetAll");
             scope.Start();
             try
             {

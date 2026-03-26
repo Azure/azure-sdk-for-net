@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DataShareData item in Value)
+            foreach (StorageDataShareData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            IList<DataShareData> value = default;
+            IList<StorageDataShareData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DataShareData> array = new List<DataShareData>();
+                    List<StorageDataShareData> array = new List<StorageDataShareData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DataShareData.DeserializeDataShareData(item, options));
+                        array.Add(StorageDataShareData.DeserializeStorageDataShareData(item, options));
                     }
                     value = array;
                     continue;

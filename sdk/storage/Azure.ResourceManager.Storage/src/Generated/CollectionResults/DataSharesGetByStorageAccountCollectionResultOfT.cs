@@ -14,7 +14,7 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    internal partial class DataSharesGetByStorageAccountCollectionResultOfT : Pageable<DataShareData>
+    internal partial class DataSharesGetByStorageAccountCollectionResultOfT : Pageable<StorageDataShareData>
     {
         private readonly DataShares _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DataSharesGetByStorageAccountCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DataShareData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<StorageDataShareData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage
                     yield break;
                 }
                 DataShareListResult result = DataShareListResult.FromResponse(response);
-                yield return Page<DataShareData>.FromValues((IReadOnlyList<DataShareData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<StorageDataShareData>.FromValues((IReadOnlyList<StorageDataShareData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Storage
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByStorageAccountRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _context) : _client.CreateGetByStorageAccountRequest(_subscriptionId, _resourceGroupName, _accountName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DataShareCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageDataShareCollection.GetAll");
             scope.Start();
             try
             {

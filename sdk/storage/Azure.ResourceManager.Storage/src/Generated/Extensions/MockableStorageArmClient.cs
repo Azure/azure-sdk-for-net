@@ -179,22 +179,22 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new StorageTaskAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="StorageConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectorResource"/> object. </returns>
-        public virtual ConnectorResource GetConnectorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StorageConnectorResource"/> object. </returns>
+        public virtual StorageConnectorResource GetStorageConnectorResource(ResourceIdentifier id)
         {
-            ConnectorResource.ValidateResourceId(id);
-            return new ConnectorResource(Client, id);
+            StorageConnectorResource.ValidateResourceId(id);
+            return new StorageConnectorResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DataShareResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="StorageDataShareResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataShareResource"/> object. </returns>
-        public virtual DataShareResource GetDataShareResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StorageDataShareResource"/> object. </returns>
+        public virtual StorageDataShareResource GetStorageDataShareResource(ResourceIdentifier id)
         {
-            DataShareResource.ValidateResourceId(id);
-            return new DataShareResource(Client, id);
+            StorageDataShareResource.ValidateResourceId(id);
+            return new StorageDataShareResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="StorageQueueResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectorListResult"/>. </summary>
         /// <param name="value"> The Connector items on this page. </param>
-        internal ConnectorListResult(IEnumerable<ConnectorData> value)
+        internal ConnectorListResult(IEnumerable<StorageConnectorData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="value"> The Connector items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectorListResult(IList<ConnectorData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectorListResult(IList<StorageConnectorData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The Connector items on this page. </summary>
         [WirePath("value")]
-        public IList<ConnectorData> Value { get; }
+        public IList<StorageConnectorData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

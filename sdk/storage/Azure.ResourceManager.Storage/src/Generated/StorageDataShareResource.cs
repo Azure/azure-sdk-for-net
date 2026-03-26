@@ -19,40 +19,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
-    /// A class representing a DataShare along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataShareResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetDataShares method.
+    /// A class representing a StorageDataShare along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageDataShareResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetStorageDataShares method.
     /// </summary>
-    public partial class DataShareResource : ArmResource
+    public partial class StorageDataShareResource : ArmResource
     {
         private readonly ClientDiagnostics _dataSharesClientDiagnostics;
         private readonly DataShares _dataSharesRestClient;
-        private readonly DataShareData _data;
+        private readonly StorageDataShareData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/dataShares";
 
-        /// <summary> Initializes a new instance of DataShareResource for mocking. </summary>
-        protected DataShareResource()
+        /// <summary> Initializes a new instance of StorageDataShareResource for mocking. </summary>
+        protected StorageDataShareResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataShareResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageDataShareResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataShareResource(ArmClient client, DataShareData data) : this(client, data.Id)
+        internal StorageDataShareResource(ArmClient client, StorageDataShareData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataShareResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageDataShareResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataShareResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageDataShareResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dataShareApiVersion);
+            TryGetApiVersion(ResourceType, out string storageDataShareApiVersion);
             _dataSharesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _dataSharesRestClient = new DataShares(_dataSharesClientDiagnostics, Pipeline, Endpoint, dataShareApiVersion ?? "2025-08-01");
+            _dataSharesRestClient = new DataShares(_dataSharesClientDiagnostics, Pipeline, Endpoint, storageDataShareApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Storage
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual DataShareData Data
+        public virtual StorageDataShareData Data
         {
             get
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataShareResource"/>. </description>
+        /// <description> <see cref="StorageDataShareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataShareResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageDataShareResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("DataShareResource.Get");
+            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("StorageDataShareResource.Get");
             scope.Start();
             try
             {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.Storage
                 };
                 HttpMessage message = _dataSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataShareData> response = Response.FromValue(DataShareData.FromResponse(result), result);
+                Response<StorageDataShareData> response = Response.FromValue(StorageDataShareData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DataShareResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageDataShareResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataShareResource"/>. </description>
+        /// <description> <see cref="StorageDataShareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataShareResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<StorageDataShareResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("DataShareResource.Get");
+            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("StorageDataShareResource.Get");
             scope.Start();
             try
             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.Storage
                 };
                 HttpMessage message = _dataSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataShareData> response = Response.FromValue(DataShareData.FromResponse(result), result);
+                Response<StorageDataShareData> response = Response.FromValue(StorageDataShareData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DataShareResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageDataShareResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataShareResource"/>. </description>
+        /// <description> <see cref="StorageDataShareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="data"> The updated properties of the Storage DataShare. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataShareResource>> UpdateAsync(WaitUntil waitUntil, DataShareData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageDataShareResource>> UpdateAsync(WaitUntil waitUntil, StorageDataShareData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("DataShareResource.Update");
+            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("StorageDataShareResource.Update");
             scope.Start();
             try
             {
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataSharesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataShareData.ToRequestContent(data), context);
+                HttpMessage message = _dataSharesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageDataShareData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                StorageArmOperation<DataShareResource> operation = new StorageArmOperation<DataShareResource>(
-                    new DataShareOperationSource(Client),
+                StorageArmOperation<StorageDataShareResource> operation = new StorageArmOperation<StorageDataShareResource>(
+                    new StorageDataShareOperationSource(Client),
                     _dataSharesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataShareResource"/>. </description>
+        /// <description> <see cref="StorageDataShareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="data"> The updated properties of the Storage DataShare. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DataShareResource> Update(WaitUntil waitUntil, DataShareData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StorageDataShareResource> Update(WaitUntil waitUntil, StorageDataShareData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("DataShareResource.Update");
+            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("StorageDataShareResource.Update");
             scope.Start();
             try
             {
@@ -285,10 +285,10 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataSharesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataShareData.ToRequestContent(data), context);
+                HttpMessage message = _dataSharesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageDataShareData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                StorageArmOperation<DataShareResource> operation = new StorageArmOperation<DataShareResource>(
-                    new DataShareOperationSource(Client),
+                StorageArmOperation<StorageDataShareResource> operation = new StorageArmOperation<StorageDataShareResource>(
+                    new StorageDataShareOperationSource(Client),
                     _dataSharesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataShareResource"/>. </description>
+        /// <description> <see cref="StorageDataShareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("DataShareResource.Delete");
+            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("StorageDataShareResource.Delete");
             scope.Start();
             try
             {
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataShareResource"/>. </description>
+        /// <description> <see cref="StorageDataShareResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("DataShareResource.Delete");
+            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("StorageDataShareResource.Delete");
             scope.Start();
             try
             {
@@ -410,12 +410,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<DataShareResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageDataShareResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("DataShareResource.AddTag");
+            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("StorageDataShareResource.AddTag");
             scope.Start();
             try
             {
@@ -430,19 +430,19 @@ namespace Azure.ResourceManager.Storage
                     };
                     HttpMessage message = _dataSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DataShareData> response = Response.FromValue(DataShareData.FromResponse(result), result);
-                    return Response.FromValue(new DataShareResource(Client, response.Value), response.GetRawResponse());
+                    Response<StorageDataShareData> response = Response.FromValue(StorageDataShareData.FromResponse(result), result);
+                    return Response.FromValue(new StorageDataShareResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataShareData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DataShareData patch = new DataShareData();
+                    StorageDataShareData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageDataShareData patch = new StorageDataShareData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DataShareResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageDataShareResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -458,12 +458,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<DataShareResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<StorageDataShareResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("DataShareResource.AddTag");
+            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("StorageDataShareResource.AddTag");
             scope.Start();
             try
             {
@@ -478,19 +478,19 @@ namespace Azure.ResourceManager.Storage
                     };
                     HttpMessage message = _dataSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DataShareData> response = Response.FromValue(DataShareData.FromResponse(result), result);
-                    return Response.FromValue(new DataShareResource(Client, response.Value), response.GetRawResponse());
+                    Response<StorageDataShareData> response = Response.FromValue(StorageDataShareData.FromResponse(result), result);
+                    return Response.FromValue(new StorageDataShareResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataShareData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DataShareData patch = new DataShareData();
+                    StorageDataShareData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    StorageDataShareData patch = new StorageDataShareData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DataShareResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<StorageDataShareResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -505,11 +505,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<DataShareResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageDataShareResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("DataShareResource.SetTags");
+            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("StorageDataShareResource.SetTags");
             scope.Start();
             try
             {
@@ -525,15 +525,15 @@ namespace Azure.ResourceManager.Storage
                     };
                     HttpMessage message = _dataSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DataShareData> response = Response.FromValue(DataShareData.FromResponse(result), result);
-                    return Response.FromValue(new DataShareResource(Client, response.Value), response.GetRawResponse());
+                    Response<StorageDataShareData> response = Response.FromValue(StorageDataShareData.FromResponse(result), result);
+                    return Response.FromValue(new StorageDataShareResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataShareData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DataShareData patch = new DataShareData();
+                    StorageDataShareData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageDataShareData patch = new StorageDataShareData();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DataShareResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageDataShareResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -548,11 +548,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<DataShareResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<StorageDataShareResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("DataShareResource.SetTags");
+            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("StorageDataShareResource.SetTags");
             scope.Start();
             try
             {
@@ -568,15 +568,15 @@ namespace Azure.ResourceManager.Storage
                     };
                     HttpMessage message = _dataSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DataShareData> response = Response.FromValue(DataShareData.FromResponse(result), result);
-                    return Response.FromValue(new DataShareResource(Client, response.Value), response.GetRawResponse());
+                    Response<StorageDataShareData> response = Response.FromValue(StorageDataShareData.FromResponse(result), result);
+                    return Response.FromValue(new StorageDataShareResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataShareData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DataShareData patch = new DataShareData();
+                    StorageDataShareData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    StorageDataShareData patch = new StorageDataShareData();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DataShareResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<StorageDataShareResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -591,11 +591,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<DataShareResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageDataShareResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("DataShareResource.RemoveTag");
+            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("StorageDataShareResource.RemoveTag");
             scope.Start();
             try
             {
@@ -610,19 +610,19 @@ namespace Azure.ResourceManager.Storage
                     };
                     HttpMessage message = _dataSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DataShareData> response = Response.FromValue(DataShareData.FromResponse(result), result);
-                    return Response.FromValue(new DataShareResource(Client, response.Value), response.GetRawResponse());
+                    Response<StorageDataShareData> response = Response.FromValue(StorageDataShareData.FromResponse(result), result);
+                    return Response.FromValue(new StorageDataShareResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataShareData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DataShareData patch = new DataShareData();
+                    StorageDataShareData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageDataShareData patch = new StorageDataShareData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DataShareResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageDataShareResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -637,11 +637,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<DataShareResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<StorageDataShareResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("DataShareResource.RemoveTag");
+            using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("StorageDataShareResource.RemoveTag");
             scope.Start();
             try
             {
@@ -656,19 +656,19 @@ namespace Azure.ResourceManager.Storage
                     };
                     HttpMessage message = _dataSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DataShareData> response = Response.FromValue(DataShareData.FromResponse(result), result);
-                    return Response.FromValue(new DataShareResource(Client, response.Value), response.GetRawResponse());
+                    Response<StorageDataShareData> response = Response.FromValue(StorageDataShareData.FromResponse(result), result);
+                    return Response.FromValue(new StorageDataShareResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataShareData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DataShareData patch = new DataShareData();
+                    StorageDataShareData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    StorageDataShareData patch = new StorageDataShareData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DataShareResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<StorageDataShareResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

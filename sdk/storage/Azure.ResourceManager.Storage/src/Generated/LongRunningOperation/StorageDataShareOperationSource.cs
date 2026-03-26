@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary></summary>
-    internal partial class DataShareOperationSource : IOperationSource<DataShareResource>
+    internal partial class StorageDataShareOperationSource : IOperationSource<StorageDataShareResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal DataShareOperationSource(ArmClient client)
+        internal StorageDataShareOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Storage
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        DataShareResource IOperationSource<DataShareResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        StorageDataShareResource IOperationSource<StorageDataShareResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DataShareData data = DataShareData.DeserializeDataShareData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DataShareResource(_client, data);
+            StorageDataShareData data = StorageDataShareData.DeserializeStorageDataShareData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new StorageDataShareResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<DataShareResource> IOperationSource<DataShareResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StorageDataShareResource> IOperationSource<StorageDataShareResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DataShareData data = DataShareData.DeserializeDataShareData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DataShareResource(_client, data);
+            StorageDataShareData data = StorageDataShareData.DeserializeStorageDataShareData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new StorageDataShareResource(_client, data);
         }
     }
 }

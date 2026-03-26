@@ -18,10 +18,10 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A DataShare is a tracked ARM resource modeled as a sub-resource of a Storage Account. </summary>
-    public partial class DataShareData : TrackedResourceData, IJsonModel<DataShareData>
+    public partial class StorageDataShareData : TrackedResourceData, IJsonModel<StorageDataShareData>
     {
-        /// <summary> Initializes a new instance of <see cref="DataShareData"/> for deserialization. </summary>
-        internal DataShareData()
+        /// <summary> Initializes a new instance of <see cref="StorageDataShareData"/> for deserialization. </summary>
+        internal StorageDataShareData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.Storage
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataShareData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDataShareData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDataShareData(document.RootElement, options);
+                        return DeserializeStorageDataShareData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataShareData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageDataShareData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataShareData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDataShareData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DataShareData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageDataShareData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataShareData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StorageDataShareData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataShareData IPersistableModel<DataShareData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataShareData)PersistableModelCreateCore(data, options);
+        StorageDataShareData IPersistableModel<StorageDataShareData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageDataShareData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataShareData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageDataShareData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="dataShareData"> The <see cref="DataShareData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DataShareData dataShareData)
+        /// <param name="storageDataShareData"> The <see cref="StorageDataShareData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(StorageDataShareData storageDataShareData)
         {
-            if (dataShareData == null)
+            if (storageDataShareData == null)
             {
                 return null;
             }
-            return RequestContent.Create(dataShareData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(storageDataShareData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataShareData"/> from. </param>
-        internal static DataShareData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageDataShareData"/> from. </param>
+        internal static StorageDataShareData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDataShareData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeStorageDataShareData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DataShareData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageDataShareData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataShareData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDataShareData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataShareData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageDataShareData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -107,24 +107,24 @@ namespace Azure.ResourceManager.Storage
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataShareData IJsonModel<DataShareData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataShareData)JsonModelCreateCore(ref reader, options);
+        StorageDataShareData IJsonModel<StorageDataShareData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StorageDataShareData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataShareData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDataShareData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataShareData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageDataShareData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataShareData(document.RootElement, options);
+            return DeserializeStorageDataShareData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataShareData DeserializeDataShareData(JsonElement element, ModelReaderWriterOptions options)
+        internal static StorageDataShareData DeserializeStorageDataShareData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Storage
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataShareData(
+            return new StorageDataShareData(
                 id,
                 name,
                 resourceType,

@@ -1421,12 +1421,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of the Storage Connector. </param>
-        /// <returns> A new <see cref="Storage.ConnectorData"/> instance for mocking. </returns>
-        public static ConnectorData ConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StorageConnectorProperties properties = default)
+        /// <returns> A new <see cref="Storage.StorageConnectorData"/> instance for mocking. </returns>
+        public static StorageConnectorData StorageConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StorageConnectorProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ConnectorData(
+            return new StorageConnectorData(
                 id,
                 name,
                 resourceType,
@@ -1500,12 +1500,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of the Storage DataShare. </param>
-        /// <returns> A new <see cref="Storage.DataShareData"/> instance for mocking. </returns>
-        public static DataShareData DataShareData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StorageDataShareProperties properties = default)
+        /// <returns> A new <see cref="Storage.StorageDataShareData"/> instance for mocking. </returns>
+        public static StorageDataShareData StorageDataShareData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StorageDataShareProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DataShareData(
+            return new StorageDataShareData(
                 id,
                 name,
                 resourceType,
