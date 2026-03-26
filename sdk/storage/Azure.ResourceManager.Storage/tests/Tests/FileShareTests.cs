@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
@@ -231,7 +231,6 @@ namespace Azure.ResourceManager.Storage.Tests
 
             // Get after account create
             var service = (await _fileService.GetAsync()).Value;
-            // TypeSpec migration: Cors wrapper removed; CorsRules is now a direct property on FileServiceData
             Assert.AreEqual(0, service.Data.CorsRules.Count);
 
             //Set and validated
@@ -291,12 +290,10 @@ namespace Azure.ResourceManager.Storage.Tests
             //delete this share
             await share1.DeleteAsync(WaitUntil.Completed);
 
-            // Use FileServiceResource.GetAllAsync() directly — backward-compat Collection.GetAllAsync()
-            // returns Resource objects without data loaded; accessing .Data would throw.
             //get the deleted share version
             string deletedShareVersion = null;
-            List<FileShareItem> fileShares = await _fileService.GetAllAsync(expand: "deleted").ToEnumerableAsync();
-            deletedShareVersion = fileShares[0].Version;
+            List<FileShareResource> fileShares = await _fileShareCollection.GetAllAsync(expand: "deleted").ToEnumerableAsync();
+            deletedShareVersion = fileShares[0].Data.Version;
 
             //restore file share
             //Don't need sleep when playback, or test will be very slow. Need sleep when live and record.
@@ -308,7 +305,7 @@ namespace Azure.ResourceManager.Storage.Tests
             await share1.RestoreAsync(deletedShare);
 
             //validate
-            fileShares = await _fileService.GetAllAsync().ToEnumerableAsync();
+            fileShares = await _fileShareCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(fileShares.Count, 1);
         }
 
@@ -443,20 +440,18 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             FileServiceData properties1 = _fileService.Data;
             FileServiceData properties2 = new FileServiceData();
-            // TypeSpec migration: Cors wrapper removed; use CorsRules directly on FileServiceData
+            // TypeSpec migration: use public CorsRules property (internal Cors wrapper removed)
             properties2.CorsRules.Add(
-                    new StorageCorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                        new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
-                        100,
-                        new string[] { "x-ms-meta-*" },
-                        new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" })
-                );
+                new StorageCorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                    new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
+                    100,
+                    new string[] { "x-ms-meta-*" },
+                    new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }));
 
             _fileService = (await _fileService.CreateOrUpdateAsync(WaitUntil.Completed, properties2)).Value;
             FileServiceData properties3 = _fileService.Data;
 
             //validate CORS rules
-            // TypeSpec migration: Cors wrapper removed; CorsRules is now a direct property
             Assert.AreEqual(properties2.CorsRules.Count, properties3.CorsRules.Count);
             for (int i = 0; i < properties2.CorsRules.Count; i++)
             {
@@ -475,7 +470,6 @@ namespace Azure.ResourceManager.Storage.Tests
             FileServiceData properties4 = _fileService.Data;
 
             //validate CORS rules
-            // TypeSpec migration: Cors wrapper removed; CorsRules is now a direct property
             Assert.AreEqual(properties2.CorsRules.Count, properties4.CorsRules.Count);
             for (int i = 0; i < properties2.CorsRules.Count; i++)
             {

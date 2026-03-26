@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.Storage
     {
         private readonly ClientDiagnostics _queueServicesClientDiagnostics;
         private readonly QueueServices _queueServicesRestClient;
-        private readonly ClientDiagnostics _queueClientDiagnostics;
-        private readonly Queue _queueRestClient;
         private readonly QueueServiceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/queueServices";
@@ -54,8 +52,6 @@ namespace Azure.ResourceManager.Storage
             TryGetApiVersion(ResourceType, out string queueServiceApiVersion);
             _queueServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
             _queueServicesRestClient = new QueueServices(_queueServicesClientDiagnostics, Pipeline, Endpoint, queueServiceApiVersion ?? "2025-08-01");
-            _queueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _queueRestClient = new Queue(_queueClientDiagnostics, Pipeline, Endpoint, queueServiceApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 
@@ -334,8 +330,8 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new QueueGetAllAsyncCollectionResultOfT(
-                _queueRestClient,
+            return new QueueServicesGetAllAsyncCollectionResultOfT(
+                _queueServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -375,8 +371,8 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new QueueGetAllCollectionResultOfT(
-                _queueRestClient,
+            return new QueueServicesGetAllCollectionResultOfT(
+                _queueServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,

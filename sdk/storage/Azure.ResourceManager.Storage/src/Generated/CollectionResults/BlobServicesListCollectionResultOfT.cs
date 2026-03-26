@@ -14,25 +14,27 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    internal partial class QueueGetAllCollectionResultOfT : Pageable<ListQueue>
+    internal partial class BlobServicesListCollectionResultOfT : Pageable<ListContainerItem>
     {
-        private readonly Queue _client;
+        private readonly BlobServices _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _accountName;
         private readonly string _maxpagesize;
         private readonly string _filter;
+        private readonly string _include;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of QueueGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Queue client used to send requests. </param>
+        /// <summary> Initializes a new instance of BlobServicesListCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The BlobServices client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
-        /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
+        /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
+        /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
+        /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public QueueGetAllCollectionResultOfT(Queue client, Guid subscriptionId, string resourceGroupName, string accountName, string maxpagesize, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BlobServicesListCollectionResultOfT(BlobServices client, Guid subscriptionId, string resourceGroupName, string accountName, string maxpagesize, string filter, string include, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,25 +42,26 @@ namespace Azure.ResourceManager.Storage
             _accountName = accountName;
             _maxpagesize = maxpagesize;
             _filter = filter;
+            _include = include;
             _context = context;
         }
 
-        /// <summary> Gets the pages of QueueGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BlobServicesListCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of QueueGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ListQueue>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of BlobServicesListCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ListContainerItem>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = this.GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                ListQueueResource result = ListQueueResource.FromResponse(response);
-                yield return Page<ListQueue>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ListContainerItems result = ListContainerItems.FromResponse(response);
+                yield return Page<ListContainerItem>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -72,8 +75,8 @@ namespace Azure.ResourceManager.Storage
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _maxpagesize, _filter, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _maxpagesize, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("QueueServiceResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _maxpagesize, _filter, _include, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _maxpagesize, _filter, _include, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BlobServiceResource.GetAll");
             scope.Start();
             try
             {

@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(BlobRestoreStatus))]
     [ModelReaderWriterBuildable(typeof(BlobServiceChangeFeed))]
     [ModelReaderWriterBuildable(typeof(BlobServiceData))]
+    [ModelReaderWriterBuildable(typeof(BlobServiceItems))]
     [ModelReaderWriterBuildable(typeof(BlobServicePropertiesProperties))]
     [ModelReaderWriterBuildable(typeof(BlobServiceResource))]
     [ModelReaderWriterBuildable(typeof(BurstingConstants))]

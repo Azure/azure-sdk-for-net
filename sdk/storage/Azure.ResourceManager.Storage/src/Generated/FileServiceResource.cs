@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.Storage
     {
         private readonly ClientDiagnostics _fileServicesClientDiagnostics;
         private readonly FileServices _fileServicesRestClient;
-        private readonly ClientDiagnostics _fileSharesClientDiagnostics;
-        private readonly FileShares _fileSharesRestClient;
         private readonly FileServiceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/fileServices";
@@ -54,8 +52,6 @@ namespace Azure.ResourceManager.Storage
             TryGetApiVersion(ResourceType, out string fileServiceApiVersion);
             _fileServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
             _fileServicesRestClient = new FileServices(_fileServicesClientDiagnostics, Pipeline, Endpoint, fileServiceApiVersion ?? "2025-08-01");
-            _fileSharesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _fileSharesRestClient = new FileShares(_fileSharesClientDiagnostics, Pipeline, Endpoint, fileServiceApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 
@@ -335,8 +331,8 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new FileSharesGetAllAsyncCollectionResultOfT(
-                _fileSharesRestClient,
+            return new FileServicesGetAllAsyncCollectionResultOfT(
+                _fileServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -378,8 +374,8 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new FileSharesGetAllCollectionResultOfT(
-                _fileSharesRestClient,
+            return new FileServicesGetAllCollectionResultOfT(
+                _fileServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,

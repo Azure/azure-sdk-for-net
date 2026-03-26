@@ -147,16 +147,14 @@ namespace Azure.ResourceManager.Storage.Tests
             BlobContainerResource container1 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName1, new BlobContainerData())).Value;
             BlobContainerResource container2 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName2, new BlobContainerData())).Value;
 
-            // Use BlobServiceResource.GetAllAsync() directly — backward-compat Collection.GetAllAsync()
-            // returns Resource objects without data loaded; accessing .Data would throw.
-            var containerList = await _blobService.GetAllAsync().ToEnumerableAsync();
+            var containerList = await _blobContainerCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(containerList.Count, 2);
             foreach (var item in containerList)
             {
-                Assert.NotNull(item.Name);
-                Assert.NotNull(item.PublicAccess);
-                Assert.IsFalse(item.HasImmutabilityPolicy);
-                Assert.IsFalse(item.HasLegalHold);
+                Assert.NotNull(item.Data.Name);
+                Assert.NotNull(item.Data.PublicAccess);
+                Assert.IsFalse(item.Data.HasImmutabilityPolicy);
+                Assert.IsFalse(item.Data.HasLegalHold);
             }
         }
 
@@ -514,7 +512,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 SourceAccount = sourceAccount.Id.Name,
                 DestinationAccount = destAccount.Id.Name,
                 IsMetricsEnabled = true,
-                // TypeSpec migration: use public flattened property (PriorityReplication wrapper removed)
+                // TypeSpec migration: use public flattened property (internal PriorityReplication wrapper removed)
                 IsPriorityReplicationEnabled = true,
                 Rules =
                 {
@@ -637,25 +635,23 @@ namespace Azure.ResourceManager.Storage.Tests
             BlobContainerResource container2 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName2, new BlobContainerData())).Value;
             await container2.DeleteAsync(WaitUntil.Completed);
 
-            // Use BlobServiceResource.GetAllAsync() directly — backward-compat Collection.GetAllAsync()
-            // returns Resource objects without data loaded; accessing .Data would throw.
             //list delete included
-            List<ListContainerItem> blobContainers = await _blobService.GetAllAsync(include: BlobContainerState.Deleted).ToEnumerableAsync();
+            List<BlobContainerResource> blobContainers = await _blobContainerCollection.GetAllAsync(include: BlobContainerState.Deleted).ToEnumerableAsync();
             Assert.AreEqual(2, blobContainers.Count);
-            foreach (ListContainerItem con in blobContainers)
+            foreach (BlobContainerResource con in blobContainers)
             {
-                if (con.Name == containerName1)
+                if (con.Data.Name == containerName1)
                 {
-                    Assert.IsFalse(con.IsDeleted);
+                    Assert.IsFalse(con.Data.IsDeleted);
                 }
                 else
                 {
-                    Assert.IsTrue(con.IsDeleted);
-                    Assert.NotNull(con.RemainingRetentionDays);
+                    Assert.IsTrue(con.Data.IsDeleted);
+                    Assert.NotNull(con.Data.RemainingRetentionDays);
                 }
             }
             //list without delete included
-            blobContainers = await _blobService.GetAllAsync().ToEnumerableAsync();
+            blobContainers = await _blobContainerCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, blobContainers.Count);
 
             //disable container softdelete

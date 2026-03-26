@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.Storage
     {
         private readonly ClientDiagnostics _blobServicesClientDiagnostics;
         private readonly BlobServices _blobServicesRestClient;
-        private readonly ClientDiagnostics _blobContainersClientDiagnostics;
-        private readonly BlobContainers _blobContainersRestClient;
         private readonly BlobServiceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/blobServices";
@@ -54,8 +52,6 @@ namespace Azure.ResourceManager.Storage
             TryGetApiVersion(ResourceType, out string blobServiceApiVersion);
             _blobServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
             _blobServicesRestClient = new BlobServices(_blobServicesClientDiagnostics, Pipeline, Endpoint, blobServiceApiVersion ?? "2025-08-01");
-            _blobContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _blobContainersRestClient = new BlobContainers(_blobContainersClientDiagnostics, Pipeline, Endpoint, blobServiceApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 
@@ -335,8 +331,8 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new BlobContainersGetAllAsyncCollectionResultOfT(
-                _blobContainersRestClient,
+            return new BlobServicesListAsyncCollectionResultOfT(
+                _blobServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -378,8 +374,8 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new BlobContainersGetAllCollectionResultOfT(
-                _blobContainersRestClient,
+            return new BlobServicesListCollectionResultOfT(
+                _blobServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
