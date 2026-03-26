@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
 
-            AlertResource alertWithStateNew = null;
-            AsyncPageable<AlertResource> alertsWithStateNew = Client.GetAlerts(subscription.Id).GetAllAsync(alertState: new ServiceAlertState("New"));
-            await foreach (AlertResource alert in alertsWithStateNew)
+            ServiceAlertResource alertWithStateNew = null;
+            AsyncPageable<ServiceAlertResource> alertsWithStateNew = Client.GetServiceAlerts(subscription.Id).GetAllAsync(alertState: new ServiceAlertState("New"));
+            await foreach (ServiceAlertResource alert in alertsWithStateNew)
             {
                 Console.WriteLine(alert.Data.Name);
                 // Perform state change operation
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
             // Get alerts filtered
             ServiceAlertSeverity severityFilter = ServiceAlertSeverity.Sev3;
             MonitorServiceSourceForAlert monitorServiceFilter = MonitorServiceSourceForAlert.LogAnalytics;
-            AsyncPageable<AlertResource> alerts = Client.GetAlerts(subscription.Id).GetAllAsync(alertState: new ServiceAlertState("New"), monitorService: monitorServiceFilter, severity: severityFilter);
-            await foreach (AlertResource alert in alerts)
+            AsyncPageable<ServiceAlertResource> alerts = Client.GetServiceAlerts(subscription.Id).GetAllAsync(alertState: new ServiceAlertState("New"), monitorService: monitorServiceFilter, severity: severityFilter);
+            await foreach (ServiceAlertResource alert in alerts)
             {
                 // Verify the state change operation was successful
                 Assert.AreEqual(alert.Data.Properties.Essentials.MonitorService, monitorServiceFilter);
