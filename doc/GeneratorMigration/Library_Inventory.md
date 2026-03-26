@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-03-26 03:12:37 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-03-26 05:27:23 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -16,7 +16,7 @@
 
 ## Summary
 
-- Total libraries: 410
+- Total libraries: 411
 - Management Plane (MPG): 231
   - Autorest/Swagger: 114
   - New Emitter (TypeSpec): 117
@@ -25,9 +25,9 @@
   - Autorest/Swagger: 53
   - New Emitter (TypeSpec): 39
   - Old TypeSpec: 4
-- Provisioning: 35
+- Provisioning: 36
   - Reflection-based generator: 33
-  - TypeSpec-based generator: 0
+  - TypeSpec-based generator: 1
   - No generator: 2
 - No generator: 48
 
@@ -399,13 +399,14 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 11
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 0 / 35 migrated to TypeSpec-based generator
+**Migration Status**: 1 / 36 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
 | apimanagement | Azure.Provisioning.ApiManagement | Azure.ResourceManager.ApiManagement | Reflection |
 | appconfiguration | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | Reflection |
 | applicationinsights | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights | Reflection |
+| batch | Azure.Provisioning.Batch | Azure.ResourceManager.Batch ✅ | TypeSpec ✅ |
 | cdn | Azure.Provisioning.Cdn | Azure.ResourceManager.Cdn | Reflection |
 | cognitiveservices | Azure.Provisioning.CognitiveServices | Azure.ResourceManager.CognitiveServices | Reflection |
 | communication | Azure.Provisioning.Communication | Azure.ResourceManager.Communication ✅ | Reflection |
