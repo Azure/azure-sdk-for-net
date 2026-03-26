@@ -57,8 +57,7 @@ namespace Azure.Communication.CallAutomation
             {
                 throw new ArgumentException(
                     $"Recording URL host '{host}' is not a valid Azure Communication Services recording endpoint. " +
-                    "Only URLs pointing to *.asm.skype.com, .asyncgw.teams.microsoft.com" +
-                    "or Azure Blob Storage (*.blob.core.windows.net) are allowed.",
+                    "Only URLs pointing to *.asm.skype.com, .asyncgw.teams.microsoft.com are allowed.",
                     parameterName);
             }
         }

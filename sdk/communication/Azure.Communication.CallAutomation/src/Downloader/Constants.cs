@@ -48,7 +48,6 @@ namespace Azure.Communication.CallAutomation
             {
                 ".asm.skype.com",
                 ".asyncgw.teams.microsoft.com",
-                ".blob.core.windows.net"
             };
         }
     }
