@@ -65,28 +65,11 @@ namespace Azure.Generator.Providers
         private string CreateRequestMethodName
             => Client.RestClient.GetCreateRequestMethod(_operation).Signature.Name;
 
+        // We use "_diagnosticScope" rather than "_scope" to reduce collision risk with API parameters.
+        // If a collision does occur, the framework's CodeWriter dedup renames declarations but not
+        // AsValueExpression references, causing incorrect codegen. See: https://github.com/microsoft/typespec/issues/10130
         protected override FieldProvider[] BuildFields()
-        {
-            var baseFields = base.BuildFields();
-            var existingNames = new HashSet<string>(baseFields.Select(f => f.Name));
-
-            // If a base field already uses our desired name (e.g. an API parameter named "diagnosticScope"),
-            // update the field name to avoid collision. Without this, the framework's field declaration
-            // deduplication would rename the declaration but leave references (via AsValueExpression)
-            // pointing to the original name, causing incorrect assignments and CreateScope calls.
-            if (existingNames.Contains(_scopeField.Name))
-            {
-                var uniqueName = _scopeField.Name;
-                do
-                {
-                    uniqueName += "0";
-                } while (existingNames.Contains(uniqueName));
-
-                _scopeField.Update(name: uniqueName);
-            }
-
-            return [.. baseFields, _scopeField];
-        }
+            => [.. base.BuildFields(), _scopeField];
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
