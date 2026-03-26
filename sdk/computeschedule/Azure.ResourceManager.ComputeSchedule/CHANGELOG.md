@@ -4,11 +4,8 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Updated the ComputeSchedule RP api-version from `2025-04-15-preview` to `2026-03-01-preview`.
+- Added `VirtualMachinesExecuteCreateFlex` operation for flexible VM creation with prioritized VM size profiles, allocation strategies, and inline network configuration.
 
 ## 1.2.0-beta.1 (2025-09-12)
 
