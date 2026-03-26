@@ -7,10 +7,7 @@ namespace Azure.ResourceManager.TestFramework
     {
         public InheritanceCheckTests()
         {
-            ExceptionList = new[]
-            {
-                "AlertsManagementProxyResource"
-            };
+            ExceptionList = System.Array.Empty<string>();
         }
     }
 }
