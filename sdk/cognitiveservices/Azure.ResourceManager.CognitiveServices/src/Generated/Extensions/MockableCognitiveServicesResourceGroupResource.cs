@@ -8,56 +8,58 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.CognitiveServices;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CognitiveServices.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableCognitiveServicesResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableCognitiveServicesResourceGroupResource"/> class for mocking. </summary>
+        private ClientDiagnostics _commitmentPlansClientDiagnostics;
+        private CommitmentPlans _commitmentPlansRestClient;
+
+        /// <summary> Initializes a new instance of MockableCognitiveServicesResourceGroupResource for mocking. </summary>
         protected MockableCognitiveServicesResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCognitiveServicesResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableCognitiveServicesResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCognitiveServicesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics CommitmentPlansClientDiagnostics => _commitmentPlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of CognitiveServicesAccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CognitiveServicesAccountResources and their operations over a CognitiveServicesAccountResource. </returns>
-        public virtual CognitiveServicesAccountCollection GetCognitiveServicesAccounts()
+        private CommitmentPlans CommitmentPlansRestClient => _commitmentPlansRestClient ??= new CommitmentPlans(CommitmentPlansClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
+
+        /// <summary> Gets a collection of Accounts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Accounts and their operations over a AccountResource. </returns>
+        public virtual AccountCollection GetAccounts()
         {
-            return GetCachedClient(client => new CognitiveServicesAccountCollection(client, Id));
+            return GetCachedClient(client => new AccountCollection(client, Id));
         }
 
         /// <summary>
         /// Returns a Cognitive Services account specified by the parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,29 +68,27 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CognitiveServicesAccountResource>> GetCognitiveServicesAccountAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AccountResource>> GetAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetCognitiveServicesAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            return await GetAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns a Cognitive Services account specified by the parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,78 +97,67 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CognitiveServicesAccountResource> GetCognitiveServicesAccount(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<AccountResource> GetAccount(string accountName, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesAccounts().Get(accountName, cancellationToken);
-        }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-        /// <summary> Gets a collection of CognitiveServicesCommitmentPlanResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CognitiveServicesCommitmentPlanResources and their operations over a CognitiveServicesCommitmentPlanResource. </returns>
-        public virtual CognitiveServicesCommitmentPlanCollection GetCognitiveServicesCommitmentPlans()
-        {
-            return GetCachedClient(client => new CognitiveServicesCommitmentPlanCollection(client, Id));
+            return GetAccounts().Get(accountName, cancellationToken);
         }
 
         /// <summary>
-        /// Returns a Cognitive Services commitment plan specified by the parameters.
+        /// Returns all the resources of a particular type belonging to a resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommitmentPlans_GetPlan</description>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanOperationGroup_ListPlansByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CognitiveServicesCommitmentPlanResource>> GetCognitiveServicesCommitmentPlanAsync(string commitmentPlanName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommitmentPlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommitmentPlanResource> GetCommitmentPlansAsync(CancellationToken cancellationToken = default)
         {
-            return await GetCognitiveServicesCommitmentPlans().GetAsync(commitmentPlanName, cancellationToken).ConfigureAwait(false);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CommitmentPlanData, CommitmentPlanResource>(new CommitmentPlansGetPlansByResourceGroupAsyncCollectionResultOfT(CommitmentPlansRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new CommitmentPlanResource(Client, data));
         }
 
         /// <summary>
-        /// Returns a Cognitive Services commitment plan specified by the parameters.
+        /// Returns all the resources of a particular type belonging to a resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommitmentPlans_GetPlan</description>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanOperationGroup_ListPlansByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlan(string commitmentPlanName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommitmentPlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommitmentPlanResource> GetCommitmentPlans(CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesCommitmentPlans().Get(commitmentPlanName, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CommitmentPlanData, CommitmentPlanResource>(new CommitmentPlansGetPlansByResourceGroupCollectionResultOfT(CommitmentPlansRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new CommitmentPlanResource(Client, data));
         }
     }
 }
