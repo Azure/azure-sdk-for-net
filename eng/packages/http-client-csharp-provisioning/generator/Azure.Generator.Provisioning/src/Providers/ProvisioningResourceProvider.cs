@@ -97,7 +97,8 @@ namespace Azure.Generator.Provisioning.Providers
                 propInfo.IsOutput,
                 propInfo.IsRequired,
                 propInfo.BicepPath,
-                propInfo.DefaultValue);
+                propInfo.DefaultValue,
+                propInfo.TypeOverride);
         }
 
         /// <summary>
@@ -428,7 +429,15 @@ namespace Azure.Generator.Provisioning.Providers
                     defaultValue = _resourceMetadata.SingletonResourceName;
                     isOutput = true;
                 }
-                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue));
+                // Ensure "location" at the resource level always uses AzureLocation,
+                // even when the TypeSpec defines it as plain string.
+                CSharpType? typeOverride = null;
+                if (string.Equals(serializedName, "location", StringComparison.OrdinalIgnoreCase))
+                {
+                    typeOverride = new CSharpType(typeof(BicepValue<>), typeof(Azure.Core.AzureLocation));
+                }
+
+                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue, typeOverride));
             }
         }
 
@@ -842,7 +851,8 @@ namespace Azure.Generator.Provisioning.Providers
             string[] BicepPath,
             bool IsOutput,
             bool IsRequired,
-            string? DefaultValue = null);
+            string? DefaultValue = null,
+            CSharpType? TypeOverride = null);
 
         // ── ResourceVersions nested class ────────────────────────────
 
