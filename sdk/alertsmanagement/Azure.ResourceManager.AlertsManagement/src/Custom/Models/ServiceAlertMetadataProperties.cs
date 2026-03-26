@@ -4,7 +4,6 @@
 #nullable disable
 
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {

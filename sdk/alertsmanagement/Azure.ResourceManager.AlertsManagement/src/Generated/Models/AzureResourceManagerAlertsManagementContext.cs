@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.AlertsManagement
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownAlertEnrichmentItem))]
     [ModelReaderWriterBuildable(typeof(UnknownAlertsManagementBaseDetails))]
+    [ModelReaderWriterBuildable(typeof(UnknownAlertsMetaDataProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownPrometheusEnrichmentItem))]
-    [ModelReaderWriterBuildable(typeof(UnknownServiceAlertMetadataProperties))]
     public partial class AzureResourceManagerAlertsManagementContext : ModelReaderWriterContext
     {
     }
