@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public Uri RegistryUri { get; set; }
 
         /// <summary> The address of the source registry (e.g. 'mcr.microsoft.com'). </summary>
+        [WirePath("registryUri")]
         public string RegistryAddress
         {
             get => RegistryUri?.AbsoluteUri;
