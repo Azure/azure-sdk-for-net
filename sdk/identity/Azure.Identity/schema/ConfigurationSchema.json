@@ -100,10 +100,6 @@
                 "type": "string",
                 "description": "The Azure subscription name or ID for Azure CLI."
               },
-              "CredentialProcessTimeout": {
-                "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
-              },
               "AdditionallyAllowedTenants": {
                 "type": "array",
                 "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
@@ -116,6 +112,10 @@
               },
               "Diagnostics": {
                 "$ref": "#/definitions/diagnostics"
+              },
+              "ProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
               }
             }
           }
@@ -137,10 +137,6 @@
                 "type": "string",
                 "description": "The Microsoft Entra tenant (directory) ID."
               },
-              "CredentialProcessTimeout": {
-                "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 10 seconds."
-              },
               "AdditionallyAllowedTenants": {
                 "type": "array",
                 "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
@@ -153,6 +149,10 @@
               },
               "Diagnostics": {
                 "$ref": "#/definitions/diagnostics"
+              },
+              "ProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 10 seconds."
               }
             }
           }
@@ -174,10 +174,6 @@
                 "type": "string",
                 "description": "The Microsoft Entra tenant (directory) ID."
               },
-              "CredentialProcessTimeout": {
-                "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
-              },
               "AdditionallyAllowedTenants": {
                 "type": "array",
                 "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
@@ -190,6 +186,10 @@
               },
               "Diagnostics": {
                 "$ref": "#/definitions/diagnostics"
+              },
+              "ProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
               }
             }
           }
@@ -415,10 +415,6 @@
                 "type": "string",
                 "description": "The Microsoft Entra tenant (directory) ID."
               },
-              "CredentialProcessTimeout": {
-                "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
-              },
               "AdditionallyAllowedTenants": {
                 "type": "array",
                 "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
@@ -431,6 +427,10 @@
               },
               "Diagnostics": {
                 "$ref": "#/definitions/diagnostics"
+              },
+              "ProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
               }
             }
           }
@@ -772,16 +772,16 @@
                 "type": "string",
                 "description": "The Azure subscription name or ID for Azure CLI."
               },
-              "CredentialProcessTimeout": {
-                "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
-              },
               "AdditionallyAllowedTenants": {
                 "type": "array",
                 "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
                 "items": {
                   "type": "string"
                 }
+              },
+              "ProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
               }
             }
           }
@@ -803,16 +803,16 @@
                 "type": "string",
                 "description": "The Microsoft Entra tenant (directory) ID."
               },
-              "CredentialProcessTimeout": {
-                "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 10 seconds."
-              },
               "AdditionallyAllowedTenants": {
                 "type": "array",
                 "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
                 "items": {
                   "type": "string"
                 }
+              },
+              "ProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 10 seconds."
               }
             }
           }
@@ -834,16 +834,16 @@
                 "type": "string",
                 "description": "The Microsoft Entra tenant (directory) ID."
               },
-              "CredentialProcessTimeout": {
-                "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
-              },
               "AdditionallyAllowedTenants": {
                 "type": "array",
                 "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
                 "items": {
                   "type": "string"
                 }
+              },
+              "ProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
               }
             }
           }
@@ -1045,16 +1045,16 @@
                 "type": "string",
                 "description": "The Microsoft Entra tenant (directory) ID."
               },
-              "CredentialProcessTimeout": {
-                "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
-              },
               "AdditionallyAllowedTenants": {
                 "type": "array",
                 "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
                 "items": {
                   "type": "string"
                 }
+              },
+              "ProcessTimeout": {
+                "type": "string",
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
               }
             }
           }

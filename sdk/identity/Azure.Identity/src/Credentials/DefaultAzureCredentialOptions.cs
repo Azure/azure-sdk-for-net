@@ -100,7 +100,7 @@ namespace Azure.Identity
                 ManagedIdentityId = managedIdentityId;
             }
 
-            if (TimeSpan.TryParse(section[nameof(CredentialProcessTimeout)], out TimeSpan credentialProcessTimeout))
+            if (TimeSpan.TryParse(section[nameof(VisualStudioCredentialOptions.ProcessTimeout)], out TimeSpan credentialProcessTimeout))
             {
                 CredentialProcessTimeout = credentialProcessTimeout;
             }

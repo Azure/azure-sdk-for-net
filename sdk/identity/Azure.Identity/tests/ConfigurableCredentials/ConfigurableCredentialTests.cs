@@ -433,14 +433,14 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                     // Source 0: AzureCliCredential with all settable properties
                     ["Credential:Sources:0:CredentialSource"] = "AzureCliCredential",
                     ["Credential:Sources:0:TenantId"] = "cli-tenant",
-                    ["Credential:Sources:0:CredentialProcessTimeout"] = "00:00:45",
+                    ["Credential:Sources:0:ProcessTimeout"] = "00:00:45",
                     ["Credential:Sources:0:Subscription"] = "cli-sub-id",
                     ["Credential:Sources:0:AdditionallyAllowedTenants:0"] = "cli-extra-tenant",
 
                     // Source 1: AzurePowerShellCredential with properties
                     ["Credential:Sources:1:CredentialSource"] = "AzurePowerShellCredential",
                     ["Credential:Sources:1:TenantId"] = "ps-tenant",
-                    ["Credential:Sources:1:CredentialProcessTimeout"] = "00:01:00",
+                    ["Credential:Sources:1:ProcessTimeout"] = "00:01:00",
                     ["Credential:Sources:1:AdditionallyAllowedTenants:0"] = "ps-extra-tenant",
 
                     // Source 2: ManagedIdentityCredential with user-assigned client ID
@@ -451,14 +451,14 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                     // Source 3: AzureDeveloperCliCredential with properties
                     ["Credential:Sources:3:CredentialSource"] = "AzureDeveloperCliCredential",
                     ["Credential:Sources:3:TenantId"] = "azd-tenant",
-                    ["Credential:Sources:3:CredentialProcessTimeout"] = "00:00:30",
+                    ["Credential:Sources:3:ProcessTimeout"] = "00:00:30",
                     ["Credential:Sources:3:AdditionallyAllowedTenants:0"] = "azd-extra-tenant-a",
                     ["Credential:Sources:3:AdditionallyAllowedTenants:1"] = "azd-extra-tenant-b",
 
                     // Source 4: VisualStudioCredential with properties
                     ["Credential:Sources:4:CredentialSource"] = "VisualStudioCredential",
                     ["Credential:Sources:4:TenantId"] = "vs-tenant",
-                    ["Credential:Sources:4:CredentialProcessTimeout"] = "00:02:00",
+                    ["Credential:Sources:4:ProcessTimeout"] = "00:02:00",
                     ["Credential:Sources:4:AdditionallyAllowedTenants:0"] = "*",
                 })
                 .Build();
