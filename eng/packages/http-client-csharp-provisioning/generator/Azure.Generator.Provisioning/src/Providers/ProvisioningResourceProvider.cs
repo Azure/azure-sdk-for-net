@@ -439,7 +439,8 @@ namespace Azure.Generator.Provisioning.Providers
                 // Ensure "location" at the resource level always uses AzureLocation,
                 // even when the TypeSpec defines it as plain string.
                 CSharpType? typeOverride = null;
-                if (string.Equals(serializedName, "location", StringComparison.OrdinalIgnoreCase))
+                if (basePath is null
+                    && string.Equals(serializedName, "location", StringComparison.OrdinalIgnoreCase))
                 {
                     typeOverride = new CSharpType(typeof(BicepValue<>), typeof(Azure.Core.AzureLocation));
                 }
