@@ -10,9 +10,16 @@ using System.Linq;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
+    // CodeGenSuppress for the generated backward-compat overload of NetworkCloudOperationStatusResult.
+    // The generator produces invalid C#: it mixes positional args after named args when calling the
+    // main overload, because the new parameters (exitCode, outputHead, resultRef, resultUri) from
+    // OperationStatusResultProperties (flattened via @@flattenProperty in back-compat.tsp) are inserted
+    // as named defaults between reordered positional args. The corrected overload is defined below.
+    [CodeGenSuppress("NetworkCloudOperationStatusResult", typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(float?), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(IEnumerable<NetworkCloudOperationStatusResult>), typeof(ResponseError))]
     public static partial class ArmNetworkCloudModelFactory
     {
         /// <summary> Initializes a new instance of KubernetesClusterNode. </summary>
@@ -408,12 +415,31 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 virtualMachinesAssociatedIds: virtualMachinesAssociatedIds);
         }
 
-        // GENERATOR BUG WORKAROUND: The generated backward-compat overload for
-        // NetworkCloudOperationStatusResult in ArmNetworkCloudModelFactory.cs (Generated) uses
-        // positional args after named args, which is invalid C#. The generated file's call was
-        // manually fixed to use all named args. [CodeGenSuppress] with nullable/generic typeof()
-        // crashes the emitter, so this cannot be moved to custom code yet.
-        // TODO: Remove this workaround when the generator bug is fixed.
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.Models.NetworkCloudOperationStatusResult"/>. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudOperationStatusResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IEnumerable<NetworkCloudOperationStatusResult> operations, ResponseError error)
+        {
+            return NetworkCloudOperationStatusResult(
+                endOn: endOn,
+                error: error,
+                id: id,
+                name: name,
+                operations: operations,
+                percentComplete: percentComplete,
+                resourceId: resourceId,
+                startOn: startOn,
+                status: status);
+        }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudRackData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

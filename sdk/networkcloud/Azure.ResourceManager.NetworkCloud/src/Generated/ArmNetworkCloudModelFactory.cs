@@ -3170,22 +3170,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             return NetworkCloudStorageApplianceData(id, name, resourceType, systemData, tags, location, rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials, caCertificate: default, capacity, capacityUsed, clusterId, detailedStatus, detailedStatusMessage, expansionShelves: default, managementIPv4Address, manufacturer: default, model: default, remoteVendorManagementFeature, remoteVendorManagementStatus, secretRotationStatus: default, version: default, provisioningState, etag: default, extendedLocation);
         }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkCloud.Models.NetworkCloudOperationStatusResult"/>. </summary>
-        /// <param name="id"> Fully qualified ID for the async operation. </param>
-        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
-        /// <param name="name"> Name of the async operation. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="operations"> The operations list. </param>
-        /// <param name="error"> If present, details of the operation error. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudOperationStatusResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IEnumerable<NetworkCloudOperationStatusResult> operations, ResponseError error)
-        {
-            return NetworkCloudOperationStatusResult(endOn: endOn, error: error, id: id, name: name, operations: operations, percentComplete: percentComplete, exitCode: default, outputHead: default, resultRef: default, resultUri: default, resourceId: resourceId, startOn: startOn, status: status);
-        }
     }
 }
