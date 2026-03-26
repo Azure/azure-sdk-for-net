@@ -1,13 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -1387,7 +1384,10 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Needs re-recording: old singleton CreateOrUpdateAsync sent PUT but backward-compat wrapper now forwards to Update which sends PATCH — different HTTP method than recorded")]
+        [Ignore("Needs re-recording: CreateOrUpdate moved from resource to collection in TypeSpec " +
+            "because BlobInventoryPolicy is missing @singleton decorator in spec (name should always be 'default'). " +
+            "Backward-compat wrapper delegates to collection but changes the recorded request sequence. " +
+            "See https://github.com/Azure/azure-rest-api-specs/blob/main/specification/storage/Storage.Management/BlobInventoryPolicy.tsp#L17-L27")]
         public async Task CreateUpdateGetDeleteBlobInventoryPolicy()
         {
             //create resource group and storage account
@@ -1482,7 +1482,10 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Needs re-recording: old singleton CreateOrUpdateAsync sent PUT but backward-compat wrapper now forwards to Update which sends PATCH — different HTTP method than recorded")]
+        [Ignore("Needs re-recording: CreateOrUpdate moved from resource to collection in TypeSpec " +
+            "because ManagementPolicy is missing @singleton decorator in spec (name should always be 'default'). " +
+            "Backward-compat wrapper delegates to collection but changes the recorded request sequence. " +
+            "See https://github.com/Azure/azure-rest-api-specs/blob/main/specification/storage/Storage.Management/ManagementPolicy.tsp#L17-L27")]
         public async Task SetGetDeleteManagementPolicy()
         {
             //create resource group and storage account

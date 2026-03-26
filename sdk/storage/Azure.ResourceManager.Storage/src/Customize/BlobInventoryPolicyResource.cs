@@ -3,28 +3,35 @@
 
 #nullable disable
 
-// Backward-compat: Adds CreateOrUpdate overloads forwarding to Update to preserve prior GA method names.
-// Operation was renamed in TypeSpec spec.
+// Backward-compat: Adds CreateOrUpdate overloads that forward to the collection's CreateOrUpdate (PUT)
+// to preserve prior GA behavior. The resource's Update sends PATCH which differs from recordings.
 
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     public partial class BlobInventoryPolicyResource
     {
-        // Backward-compatible overload: CreateOrUpdate renamed to Update.
+        // Backward-compatible overload: delegates to collection CreateOrUpdate (PUT) with default name.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual ArmOperation<BlobInventoryPolicyResource> CreateOrUpdate(WaitUntil waitUntil, BlobInventoryPolicyData data, CancellationToken cancellationToken = default)
-            => Update(waitUntil, data, cancellationToken);
+        {
+            var collection = new BlobInventoryPolicyCollection(Client, Id.Parent);
+            return collection.CreateOrUpdate(waitUntil, BlobInventoryPolicyName.Default, data, cancellationToken);
+        }
 
-        // Backward-compatible overload: CreateOrUpdateAsync renamed to UpdateAsync.
+        // Backward-compatible overload: delegates to collection CreateOrUpdateAsync (PUT) with default name.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual Task<ArmOperation<BlobInventoryPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BlobInventoryPolicyData data, CancellationToken cancellationToken = default)
-            => UpdateAsync(waitUntil, data, cancellationToken);
+        {
+            var collection = new BlobInventoryPolicyCollection(Client, Id.Parent);
+            return collection.CreateOrUpdateAsync(waitUntil, BlobInventoryPolicyName.Default, data, cancellationToken);
+        }
     }
 }
