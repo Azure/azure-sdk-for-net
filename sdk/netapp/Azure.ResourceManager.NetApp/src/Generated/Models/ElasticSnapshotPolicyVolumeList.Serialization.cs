@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IReadOnlyList<ElasticVolumeData> value = default;
+            IReadOnlyList<NetAppElasticVolumeData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ElasticVolumeData> array = new List<ElasticVolumeData>();
+                    List<NetAppElasticVolumeData> array = new List<NetAppElasticVolumeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticVolumeData.DeserializeElasticVolumeData(item, options));
+                        array.Add(NetAppElasticVolumeData.DeserializeNetAppElasticVolumeData(item, options));
                     }
                     value = array;
                     continue;

@@ -275,13 +275,13 @@ stages:
                       parameters:
                         EnableNuGetCache: false
                     # When the release pipeline runs from a release/* branch,
-                    # sync the csproj and merge changelog entries from the
-                    # release commit into main's versions.  Only overlay the
-                    # specific package directory from main.
+                    # merge the csproj version and changelog entries from main
+                    # into the release working tree.  The working tree stays on
+                    # the release commit so all release branch changes are
+                    # included in the version-bump PR.
                     - pwsh: |
                         git fetch origin main
-                        git checkout origin/main -- "sdk/${{parameters.ServiceDirectory}}/${{artifact.name}}/"
-                        eng/scripts/Sync-ReleaseArtifacts.ps1 -PackageName '${{artifact.name}}' -ServiceDirectory '${{parameters.ServiceDirectory}}' -SourceCommit '$(Build.SourceVersion)'
+                        eng/scripts/Sync-ReleaseArtifacts.ps1 -PackageName '${{artifact.name}}' -ServiceDirectory '${{parameters.ServiceDirectory}}' -MainRef 'origin/main'
                       displayName: Sync release artifacts into main
                     - pwsh: |
                         eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -SkipCpmUpdate $false

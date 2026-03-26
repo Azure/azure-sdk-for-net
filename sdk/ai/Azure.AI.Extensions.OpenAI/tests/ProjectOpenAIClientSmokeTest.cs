@@ -86,7 +86,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         {
             await agentsClient.CreateAgentVersionAsync(
                 agentName: "foobar",
-                options: new AgentVersionCreationOptions(
+                options: new ProjectsAgentVersionCreationOptions(
                     definition: new DeclarativeAgentDefinition("mock-model")));
         }
 
@@ -106,10 +106,10 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
 
         VerifyCall(DoCreateAgentAsync(projectClientWithoutApp.Agents), "Azure.AI.Projects.*");
         VerifyCall(DoCreateAgentAsync(projectClientWithApp.Agents), "MyApplication Azure.AI.Projects.*");
-        VerifyCall(DoResponseAsync(projectClientWithoutApp.OpenAI.Responses), "Azure.AI.Projects.*");
-        VerifyCall(DoResponseAsync(projectClientWithApp.OpenAI.Responses), "MyApplication Azure.AI.Projects.*");
-        VerifyCall(DoResponseAsync(openAIClientWithoutApp.Responses), "AIProjectClient OpenAI.*");
-        VerifyCall(DoResponseAsync(openAIClientWithApp.Responses), "MyOtherApplication-AIProjectClient OpenAI.*");
+        VerifyCall(DoResponseAsync(projectClientWithoutApp.OpenAI.GetProjectResponsesClient()), "Azure.AI.Projects.*");
+        VerifyCall(DoResponseAsync(projectClientWithApp.OpenAI.GetProjectResponsesClient()), "MyApplication Azure.AI.Projects.*");
+        VerifyCall(DoResponseAsync(openAIClientWithoutApp.GetProjectResponsesClient()), "AIProjectClient OpenAI.*");
+        VerifyCall(DoResponseAsync(openAIClientWithApp.GetProjectResponsesClient()), "MyOtherApplication-AIProjectClient OpenAI.*");
         VerifyCall(DoResponseAsync(responsesClientWithoutApp), "AIProjectClient.*");
     }
 
@@ -135,7 +135,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
         // Remove Agents.
-        foreach (AgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: FOUNDRY_AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: FOUNDRY_AGENT_NAME))
         {
             projectClient.Agents.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }

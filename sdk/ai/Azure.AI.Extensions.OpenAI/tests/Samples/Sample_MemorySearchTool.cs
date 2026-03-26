@@ -39,7 +39,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -105,7 +105,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             Instructions = "You are a prompt agent capable to access memorized conversation.",
         };
         agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
-        AgentVersion agentVersionWithMemory = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersionWithMemory = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "agentWithMemory",
             options: new(agentDefinition));
         #endregion
@@ -147,7 +147,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -216,7 +216,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             Instructions = "You are a prompt agent capable to access memorized conversation.",
         };
         agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
-        AgentVersion agentVersionWithMemory = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersionWithMemory = projectClient.Agents.CreateAgentVersion(
             agentName: "agentWithMemory",
             options: new(agentDefinition));
         #endregion

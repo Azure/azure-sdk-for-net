@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
-    public partial class AzureFunctionTool : AgentTool
+    public partial class AzureFunctionTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="AzureFunctionTool"/>. </summary>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>

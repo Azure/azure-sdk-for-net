@@ -5,13 +5,13 @@ namespace Azure.AI.Projects.Agents;
 
 public partial class ProjectsAgentsModelFactory
 {
-    public static AgentRecord AgentRecord(string id = default, string name = default)
+    public static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default)
     {
-        return new AgentRecord("agent", id, name, default, additionalBinaryDataProperties: null);
+        return new ProjectsAgentRecord("agent", id, name, default, additionalBinaryDataProperties: null);
     }
 
-    internal static AgentRecord AgentRecord(string id = default, string name = default, AgentObjectVersions versions = default)
+    internal static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentObjectVersions versions = default)
     {
-        return new AgentRecord("agent", id, name, versions, additionalBinaryDataProperties: null);
+        return new ProjectsAgentRecord("agent", id, name, versions, additionalBinaryDataProperties: null);
     }
 }

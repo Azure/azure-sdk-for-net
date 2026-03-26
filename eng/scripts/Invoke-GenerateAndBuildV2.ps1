@@ -62,6 +62,14 @@ function Test-MgmtSdkUsingNewGenerator {
         return $false
     }
 
+    # Skip if tsp-location.yaml is untracked (i.e. newly created by tsp-client init
+    # during this CI run, not yet committed). This avoids marking SDK validation as
+    # required for migration PRs where the SDK hasn't been fully migrated yet.
+    $untrackedFiles = git -C $sdkProjectFolder ls-files --others --exclude-standard "tsp-location.yaml"
+    if ($untrackedFiles) {
+        return $false
+    }
+
     $tspConfigContent = Get-Content $tspConfigFile -Raw
     $isNewMgmtEmitter = $tspConfigContent -match '@azure-typespec/http-client-csharp-mgmt'
     $tspLocationContent = Get-Content $tspLocationFile -Raw

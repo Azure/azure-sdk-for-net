@@ -162,7 +162,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
             content.WriteTo(memoryStream, CancellationToken.None);
             memoryStream.Position = 0;
             BinaryData binaryData = BinaryData.FromStream(memoryStream);
-            AgentVersionCreationOptions updateOptions = ModelReaderWriter.Read<AgentVersionCreationOptions>(
+            ProjectsAgentVersionCreationOptions updateOptions = ModelReaderWriter.Read<ProjectsAgentVersionCreationOptions>(
                 binaryData,
                 ModelSerializationExtensions.WireOptions,
                 AzureAIProjectsAgentsContext.Default
@@ -200,7 +200,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
             content.WriteTo(memoryStream, CancellationToken.None);
             memoryStream.Position = 0;
             BinaryData binaryData = BinaryData.FromStream(memoryStream);
-            AgentVersionCreationOptions creationOptions = ModelReaderWriter.Read<AgentVersionCreationOptions>(
+            ProjectsAgentVersionCreationOptions creationOptions = ModelReaderWriter.Read<ProjectsAgentVersionCreationOptions>(
                 binaryData,
                 ModelSerializationExtensions.WireOptions,
                 AzureAIProjectsAgentsContext.Default
@@ -224,7 +224,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
         /// <param name="scope">The OpenTelemetryScope instance to set tags on.</param>
         /// <param name="agentDefinition">The agent definition to process.</param>
         /// <param name="agentName">The name of the agent.</param>
-        private static void SetAgentDefinitionTelemetryTags(OpenTelemetryScope scope, AgentDefinition agentDefinition, string agentName)
+        private static void SetAgentDefinitionTelemetryTags(OpenTelemetryScope scope, ProjectsAgentDefinition agentDefinition, string agentName)
         {
             // Determine agent type based on the definition type
             string agentType = DetermineAgentType(agentDefinition);
@@ -358,7 +358,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
         /// </summary>
         /// <param name="agentDefinition">The agent definition to analyze.</param>
         /// <returns>The agent type string.</returns>
-        private static string DetermineAgentType(AgentDefinition agentDefinition)
+        private static string DetermineAgentType(ProjectsAgentDefinition agentDefinition)
         {
             // Check for hosted agent first (most specific)
             if (agentDefinition is HostedAgentDefinition)
@@ -432,7 +432,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
         {
             if (s_enableTelemetry)
             {
-                AgentRecord agentClientResult = response.ToProjectAgentsResult<AgentRecord>();
+                ProjectsAgentRecord agentClientResult = response.ToProjectAgentsResult<ProjectsAgentRecord>();
                 _response = new RecordedResponse(s_traceContent);
                 //var agentResponse = Response.FromValue(PersistentAgent.FromResponse(response), response);
                 _response.AgentId = agentClientResult.Id;
@@ -443,7 +443,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
         {
             if (s_enableTelemetry)
             {
-                AgentRecord agentClientResult = response.ToProjectAgentsResult<AgentRecord>();
+                ProjectsAgentRecord agentClientResult = response.ToProjectAgentsResult<ProjectsAgentRecord>();
                 _response = new RecordedResponse(s_traceContent);
                 //var agentResponse = Response.FromValue(PersistentAgent.FromResponse(response), response);
                 _response.AgentId = agentClientResult.Id;
@@ -455,7 +455,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
         {
             if (s_enableTelemetry)
             {
-                AgentVersion agentVersion = response.ToProjectAgentsResult<AgentVersion>();
+                ProjectsAgentVersion agentVersion = response.ToProjectAgentsResult<ProjectsAgentVersion>();
                 _response = new RecordedResponse(s_traceContent);
                 //var agentResponse = Response.FromValue(PersistentAgent.FromResponse(response), response);
                 _response.AgentId = agentVersion.Id;

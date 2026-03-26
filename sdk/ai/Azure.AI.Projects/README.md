@@ -179,11 +179,11 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent1",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-AgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent2",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
@@ -195,11 +195,11 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent1",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent2",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
@@ -209,13 +209,13 @@ Get Agent
 
 Synchronous call:
 ```C# Snippet:Sample_GetAgentCRUD_Sync
-AgentRecord result = projectClient.Agents.GetAgent(agentVersion1.Name);
+ProjectsAgentRecord result = projectClient.Agents.GetAgent(agentVersion1.Name);
 Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
 ```
 
 Asynchronous call:
 ```C# Snippet:Sample_GetAgentCRUD_Async
-AgentRecord result = await projectClient.Agents.GetAgentAsync(agentVersion1.Name);
+ProjectsAgentRecord result = await projectClient.Agents.GetAgentAsync(agentVersion1.Name);
 Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
 ```
 
@@ -223,7 +223,7 @@ List Agents
 
 Synchronous call:
 ```C# Snippet:Sample_ListAgentsCRUD_Sync
-foreach (AgentRecord agent in projectClient.Agents.GetAgents())
+foreach (ProjectsAgentRecord agent in projectClient.Agents.GetAgents())
 {
     Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
 }
@@ -231,7 +231,7 @@ foreach (AgentRecord agent in projectClient.Agents.GetAgents())
 
 Asynchronous call:
 ```C# Snippet:Sample_ListAgentsCRUD_Async
-await foreach (AgentRecord agent in projectClient.Agents.GetAgentsAsync())
+await foreach (ProjectsAgentRecord agent in projectClient.Agents.GetAgentsAsync())
 {
     Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
 }
