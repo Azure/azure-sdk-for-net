@@ -10,22 +10,22 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The ProjectsSchedules sub-client. </summary>
-    public partial class ProjectsSchedules
+    /// <summary> The ProjectSchedules sub-client. </summary>
+    public partial class ProjectSchedules
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ProjectsSchedules for mocking. </summary>
-        protected ProjectsSchedules()
+        /// <summary> Initializes a new instance of ProjectSchedules for mocking. </summary>
+        protected ProjectSchedules()
         {
         }
 
-        /// <summary> Initializes a new instance of ProjectsSchedules. </summary>
+        /// <summary> Initializes a new instance of ProjectSchedules. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ProjectsSchedules(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ProjectSchedules(ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -192,7 +192,7 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAll(string @type, bool? enabled, RequestOptions options)
         {
-            return new ProjectsSchedulesGetAllCollectionResult(this, @type, enabled, options);
+            return new ProjectSchedulesGetAllCollectionResult(this, @type, enabled, options);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAllAsync(string @type, bool? enabled, RequestOptions options)
         {
-            return new ProjectsSchedulesGetAllAsyncCollectionResult(this, @type, enabled, options);
+            return new ProjectSchedulesGetAllAsyncCollectionResult(this, @type, enabled, options);
         }
 
         /// <summary> List all schedules. </summary>
@@ -220,7 +220,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual CollectionResult<ProjectsSchedule> GetAll(ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
-            return new ProjectsSchedulesGetAllCollectionResultOfT(this, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
+            return new ProjectSchedulesGetAllCollectionResultOfT(this, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all schedules. </summary>
@@ -230,7 +230,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual AsyncCollectionResult<ProjectsSchedule> GetAllAsync(ScheduleTaskType? @type = default, bool? enabled = default, CancellationToken cancellationToken = default)
         {
-            return new ProjectsSchedulesGetAllAsyncCollectionResultOfT(this, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
+            return new ProjectSchedulesGetAllAsyncCollectionResultOfT(this, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return new ProjectsSchedulesGetRunsCollectionResult(this, id, @type, enabled, options);
+            return new ProjectSchedulesGetRunsCollectionResult(this, id, @type, enabled, options);
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return new ProjectsSchedulesGetRunsAsyncCollectionResult(this, id, @type, enabled, options);
+            return new ProjectSchedulesGetRunsAsyncCollectionResult(this, id, @type, enabled, options);
         }
 
         /// <summary> List all schedule runs. </summary>
@@ -451,7 +451,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return new ProjectsSchedulesGetRunsCollectionResultOfT(this, id, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
+            return new ProjectSchedulesGetRunsCollectionResultOfT(this, id, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all schedule runs. </summary>
@@ -466,7 +466,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return new ProjectsSchedulesGetRunsAsyncCollectionResultOfT(this, id, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
+            return new ProjectSchedulesGetRunsAsyncCollectionResultOfT(this, id, @type?.ToString(), enabled, cancellationToken.ToRequestOptions());
         }
     }
 }

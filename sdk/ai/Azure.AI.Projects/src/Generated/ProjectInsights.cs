@@ -10,22 +10,22 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The ProjectsInsights sub-client. </summary>
-    public partial class ProjectsInsights
+    /// <summary> The ProjectInsights sub-client. </summary>
+    public partial class ProjectInsights
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ProjectsInsights for mocking. </summary>
-        protected ProjectsInsights()
+        /// <summary> Initializes a new instance of ProjectInsights for mocking. </summary>
+        protected ProjectInsights()
         {
         }
 
-        /// <summary> Initializes a new instance of ProjectsInsights. </summary>
+        /// <summary> Initializes a new instance of ProjectInsights. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ProjectsInsights(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ProjectInsights(ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -206,7 +206,7 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAll(string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
-            return new ProjectsInsightsGetAllCollectionResult(
+            return new ProjectInsightsGetAllCollectionResult(
                 this,
                 foundryFeatures,
                 @type,
@@ -236,7 +236,7 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAllAsync(string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
-            return new ProjectsInsightsGetAllAsyncCollectionResult(
+            return new ProjectInsightsGetAllAsyncCollectionResult(
                 this,
                 foundryFeatures,
                 @type,
@@ -258,7 +258,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual CollectionResult<ProjectInsight> GetAll(FoundryFeaturesOptInKeys? foundryFeatures = default, InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
-            return new ProjectsInsightsGetAllCollectionResultOfT(
+            return new ProjectInsightsGetAllCollectionResultOfT(
                 this,
                 foundryFeatures?.ToSerialString(),
                 @type?.ToString(),
@@ -280,7 +280,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual AsyncCollectionResult<ProjectInsight> GetAllAsync(FoundryFeaturesOptInKeys? foundryFeatures = default, InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
-            return new ProjectsInsightsGetAllAsyncCollectionResultOfT(
+            return new ProjectInsightsGetAllAsyncCollectionResultOfT(
                 this,
                 foundryFeatures?.ToSerialString(),
                 @type?.ToString(),

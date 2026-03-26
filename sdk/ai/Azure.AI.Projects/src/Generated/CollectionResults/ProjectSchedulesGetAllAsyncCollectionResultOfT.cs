@@ -11,24 +11,21 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ProjectsSchedulesGetRunsAsyncCollectionResultOfT : AsyncCollectionResult<ScheduleRun>
+    internal partial class ProjectSchedulesGetAllAsyncCollectionResultOfT : AsyncCollectionResult<ProjectsSchedule>
     {
-        private readonly ProjectsSchedules _client;
-        private readonly string _id;
+        private readonly ProjectSchedules _client;
         private readonly string _type;
         private readonly bool? _enabled;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ProjectsSchedulesGetRunsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ProjectsSchedules client used to send requests. </param>
-        /// <param name="id"> Identifier of the schedule. </param>
+        /// <summary> Initializes a new instance of ProjectSchedulesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectSchedules client used to send requests. </param>
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProjectsSchedulesGetRunsAsyncCollectionResultOfT(ProjectsSchedules client, string id, string @type, bool? enabled, RequestOptions options)
+        public ProjectSchedulesGetAllAsyncCollectionResultOfT(ProjectSchedules client, string @type, bool? enabled, RequestOptions options)
         {
             _client = client;
-            _id = id;
             _type = @type;
             _enabled = enabled;
             _options = options;
@@ -38,19 +35,19 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetRunsRequest(_id, _type, _enabled, _options);
+            PipelineMessage message = _client.CreateGetAllRequest(_type, _enabled, _options);
             Uri nextPageUri = null;
             while (true)
             {
                 ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
                 yield return result;
 
-                nextPageUri = ((PagedScheduleRun)result).NextLink;
+                nextPageUri = ((PagedSchedule)result).NextLink;
                 if (nextPageUri == null)
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetRunsRequest(nextPageUri, _id, _type, _enabled, _options);
+                message = _client.CreateNextGetAllRequest(nextPageUri, _type, _enabled, _options);
             }
         }
 
@@ -59,7 +56,7 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((PagedScheduleRun)page).NextLink;
+            Uri nextPage = ((PagedSchedule)page).NextLink;
             if (nextPage != null)
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));
@@ -73,9 +70,9 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<ScheduleRun> GetValuesFromPageAsync(ClientResult page)
+        protected override async IAsyncEnumerable<ProjectsSchedule> GetValuesFromPageAsync(ClientResult page)
         {
-            foreach (ScheduleRun item in ((PagedScheduleRun)page).Value)
+            foreach (ProjectsSchedule item in ((PagedSchedule)page).Value)
             {
                 yield return item;
                 await Task.Yield();

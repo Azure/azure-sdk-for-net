@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ProjectsSchedulesGetAllAsyncCollectionResult : AsyncCollectionResult
+    internal partial class ProjectSchedulesGetAllCollectionResult : CollectionResult
     {
-        private readonly ProjectsSchedules _client;
+        private readonly ProjectSchedules _client;
         private readonly string _type;
         private readonly bool? _enabled;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ProjectsSchedulesGetAllAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ProjectsSchedules client used to send requests. </param>
+        /// <summary> Initializes a new instance of ProjectSchedulesGetAllCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectSchedules client used to send requests. </param>
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProjectsSchedulesGetAllAsyncCollectionResult(ProjectsSchedules client, string @type, bool? enabled, RequestOptions options)
+        public ProjectSchedulesGetAllCollectionResult(ProjectSchedules client, string @type, bool? enabled, RequestOptions options)
         {
             _client = client;
             _type = @type;
@@ -32,13 +32,13 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        public override IEnumerable<ClientResult> GetRawPages()
         {
             PipelineMessage message = _client.CreateGetAllRequest(_type, _enabled, _options);
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
                 nextPageUri = ((PagedSchedule)result).NextLink;

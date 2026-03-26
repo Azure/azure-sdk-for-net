@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.AI.Projects;
 
-public partial class ProjectsInsights
+public partial class ProjectInsights
 {
     internal PipelineMessage CreateNextGetAllRequest(Uri nextPage, string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
     {

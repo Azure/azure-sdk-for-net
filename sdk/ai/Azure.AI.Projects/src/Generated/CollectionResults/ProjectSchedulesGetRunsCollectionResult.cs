@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ProjectsSchedulesGetRunsCollectionResult : CollectionResult
+    internal partial class ProjectSchedulesGetRunsCollectionResult : CollectionResult
     {
-        private readonly ProjectsSchedules _client;
+        private readonly ProjectSchedules _client;
         private readonly string _id;
         private readonly string _type;
         private readonly bool? _enabled;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ProjectsSchedulesGetRunsCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ProjectsSchedules client used to send requests. </param>
+        /// <summary> Initializes a new instance of ProjectSchedulesGetRunsCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectSchedules client used to send requests. </param>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="type"> Filter by the type of schedule. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProjectsSchedulesGetRunsCollectionResult(ProjectsSchedules client, string id, string @type, bool? enabled, RequestOptions options)
+        public ProjectSchedulesGetRunsCollectionResult(ProjectSchedules client, string id, string @type, bool? enabled, RequestOptions options)
         {
             _client = client;
             _id = id;

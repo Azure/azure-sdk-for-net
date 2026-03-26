@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ProjectsInsightsGetAllAsyncCollectionResult : AsyncCollectionResult
+    internal partial class ProjectInsightsGetAllCollectionResult : CollectionResult
     {
-        private readonly ProjectsInsights _client;
+        private readonly ProjectInsights _client;
         private readonly string _foundryFeatures;
         private readonly string _type;
         private readonly string _evalId;
@@ -21,8 +21,8 @@ namespace Azure.AI.Projects
         private readonly bool? _includeCoordinates;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ProjectsInsightsGetAllAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ProjectsInsights client used to send requests. </param>
+        /// <summary> Initializes a new instance of ProjectInsightsGetAllCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectInsights client used to send requests. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="type"> Filter by the type of analysis. </param>
         /// <param name="evalId"> Filter by the evaluation ID. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProjectsInsightsGetAllAsyncCollectionResult(ProjectsInsights client, string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
+        public ProjectInsightsGetAllCollectionResult(ProjectInsights client, string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
             _client = client;
             _foundryFeatures = foundryFeatures;
@@ -44,13 +44,13 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        public override IEnumerable<ClientResult> GetRawPages()
         {
             PipelineMessage message = _client.CreateGetAllRequest(_foundryFeatures, _type, _evalId, _runId, _agentName, _includeCoordinates, _options);
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
                 nextPageUri = ((PagedInsight)result).NextLink;

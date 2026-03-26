@@ -7,6 +7,6 @@ namespace Azure.AI.Projects;
 
 [Experimental("AAIP001")]
 [CodeGenType("Insights")]
-public partial class ProjectsInsights
+public partial class ProjectInsights
 {
 }

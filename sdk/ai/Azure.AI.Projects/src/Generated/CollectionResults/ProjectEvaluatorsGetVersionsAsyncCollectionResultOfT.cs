@@ -11,21 +11,24 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ProjectsEvaluatorsGetLatestVersionsAsyncCollectionResultOfT : AsyncCollectionResult<EvaluatorVersion>
+    internal partial class ProjectEvaluatorsGetVersionsAsyncCollectionResultOfT : AsyncCollectionResult<EvaluatorVersion>
     {
-        private readonly ProjectsEvaluators _client;
+        private readonly ProjectEvaluators _client;
+        private readonly string _name;
         private readonly string _type;
         private readonly int? _limit;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ProjectsEvaluatorsGetLatestVersionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ProjectsEvaluators client used to send requests. </param>
+        /// <summary> Initializes a new instance of ProjectEvaluatorsGetVersionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectEvaluators client used to send requests. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProjectsEvaluatorsGetLatestVersionsAsyncCollectionResultOfT(ProjectsEvaluators client, string @type, int? limit, RequestOptions options)
+        public ProjectEvaluatorsGetVersionsAsyncCollectionResultOfT(ProjectEvaluators client, string name, string @type, int? limit, RequestOptions options)
         {
             _client = client;
+            _name = name;
             _type = @type;
             _limit = limit;
             _options = options;
@@ -35,7 +38,7 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetLatestVersionsRequest(_type, _limit, _options);
+            PipelineMessage message = _client.CreateGetVersionsRequest(_name, _type, _limit, _options);
             Uri nextPageUri = null;
             while (true)
             {
@@ -47,7 +50,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetLatestVersionsRequest(nextPageUri, _type, _limit, _options);
+                message = _client.CreateNextGetVersionsRequest(nextPageUri, _name, _type, _limit, _options);
             }
         }
 

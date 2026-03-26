@@ -10,26 +10,26 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ProjectsEvaluatorsGetVersionsCollectionResult : CollectionResult
+    internal partial class ProjectSchedulesGetRunsCollectionResultOfT : CollectionResult<ScheduleRun>
     {
-        private readonly ProjectsEvaluators _client;
-        private readonly string _name;
+        private readonly ProjectSchedules _client;
+        private readonly string _id;
         private readonly string _type;
-        private readonly int? _limit;
+        private readonly bool? _enabled;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ProjectsEvaluatorsGetVersionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ProjectsEvaluators client used to send requests. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <summary> Initializes a new instance of ProjectSchedulesGetRunsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectSchedules client used to send requests. </param>
+        /// <param name="id"> Identifier of the schedule. </param>
+        /// <param name="type"> Filter by the type of schedule. </param>
+        /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProjectsEvaluatorsGetVersionsCollectionResult(ProjectsEvaluators client, string name, string @type, int? limit, RequestOptions options)
+        public ProjectSchedulesGetRunsCollectionResultOfT(ProjectSchedules client, string id, string @type, bool? enabled, RequestOptions options)
         {
             _client = client;
-            _name = name;
+            _id = id;
             _type = @type;
-            _limit = limit;
+            _enabled = enabled;
             _options = options;
         }
 
@@ -37,19 +37,19 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetVersionsRequest(_name, _type, _limit, _options);
+            PipelineMessage message = _client.CreateGetRunsRequest(_id, _type, _enabled, _options);
             Uri nextPageUri = null;
             while (true)
             {
                 ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
-                nextPageUri = ((PagedEvaluatorVersion)result).NextLink;
+                nextPageUri = ((PagedScheduleRun)result).NextLink;
                 if (nextPageUri == null)
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetVersionsRequest(nextPageUri, _name, _type, _limit, _options);
+                message = _client.CreateNextGetRunsRequest(nextPageUri, _id, _type, _enabled, _options);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((PagedEvaluatorVersion)page).NextLink;
+            Uri nextPage = ((PagedScheduleRun)page).NextLink;
             if (nextPage != null)
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));
@@ -67,6 +67,14 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
+        }
+
+        /// <summary> Gets the values from the specified page. </summary>
+        /// <param name="page"></param>
+        /// <returns> The values from the specified page. </returns>
+        protected override IEnumerable<ScheduleRun> GetValuesFromPage(ClientResult page)
+        {
+            return ((PagedScheduleRun)page).Value;
         }
     }
 }

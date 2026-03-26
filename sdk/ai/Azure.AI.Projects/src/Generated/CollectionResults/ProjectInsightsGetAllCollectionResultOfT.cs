@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ProjectsInsightsGetAllCollectionResultOfT : CollectionResult<ProjectInsight>
+    internal partial class ProjectInsightsGetAllCollectionResultOfT : CollectionResult<ProjectInsight>
     {
-        private readonly ProjectsInsights _client;
+        private readonly ProjectInsights _client;
         private readonly string _foundryFeatures;
         private readonly string _type;
         private readonly string _evalId;
@@ -21,8 +21,8 @@ namespace Azure.AI.Projects
         private readonly bool? _includeCoordinates;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ProjectsInsightsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ProjectsInsights client used to send requests. </param>
+        /// <summary> Initializes a new instance of ProjectInsightsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectInsights client used to send requests. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="type"> Filter by the type of analysis. </param>
         /// <param name="evalId"> Filter by the evaluation ID. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProjectsInsightsGetAllCollectionResultOfT(ProjectsInsights client, string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
+        public ProjectInsightsGetAllCollectionResultOfT(ProjectInsights client, string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
             _client = client;
             _foundryFeatures = foundryFeatures;

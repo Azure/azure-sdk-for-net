@@ -10,26 +10,26 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ProjectsSchedulesGetRunsAsyncCollectionResult : AsyncCollectionResult
+    internal partial class ProjectEvaluatorsGetVersionsAsyncCollectionResult : AsyncCollectionResult
     {
-        private readonly ProjectsSchedules _client;
-        private readonly string _id;
+        private readonly ProjectEvaluators _client;
+        private readonly string _name;
         private readonly string _type;
-        private readonly bool? _enabled;
+        private readonly int? _limit;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ProjectsSchedulesGetRunsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ProjectsSchedules client used to send requests. </param>
-        /// <param name="id"> Identifier of the schedule. </param>
-        /// <param name="type"> Filter by the type of schedule. </param>
-        /// <param name="enabled"> Filter by the enabled status. </param>
+        /// <summary> Initializes a new instance of ProjectEvaluatorsGetVersionsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectEvaluators client used to send requests. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProjectsSchedulesGetRunsAsyncCollectionResult(ProjectsSchedules client, string id, string @type, bool? enabled, RequestOptions options)
+        public ProjectEvaluatorsGetVersionsAsyncCollectionResult(ProjectEvaluators client, string name, string @type, int? limit, RequestOptions options)
         {
             _client = client;
-            _id = id;
+            _name = name;
             _type = @type;
-            _enabled = enabled;
+            _limit = limit;
             _options = options;
         }
 
@@ -37,19 +37,19 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetRunsRequest(_id, _type, _enabled, _options);
+            PipelineMessage message = _client.CreateGetVersionsRequest(_name, _type, _limit, _options);
             Uri nextPageUri = null;
             while (true)
             {
                 ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
                 yield return result;
 
-                nextPageUri = ((PagedScheduleRun)result).NextLink;
+                nextPageUri = ((PagedEvaluatorVersion)result).NextLink;
                 if (nextPageUri == null)
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetRunsRequest(nextPageUri, _id, _type, _enabled, _options);
+                message = _client.CreateNextGetVersionsRequest(nextPageUri, _name, _type, _limit, _options);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((PagedScheduleRun)page).NextLink;
+            Uri nextPage = ((PagedEvaluatorVersion)page).NextLink;
             if (nextPage != null)
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));

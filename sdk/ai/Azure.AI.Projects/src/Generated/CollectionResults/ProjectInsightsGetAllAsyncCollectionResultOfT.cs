@@ -6,13 +6,14 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ProjectsInsightsGetAllCollectionResult : CollectionResult
+    internal partial class ProjectInsightsGetAllAsyncCollectionResultOfT : AsyncCollectionResult<ProjectInsight>
     {
-        private readonly ProjectsInsights _client;
+        private readonly ProjectInsights _client;
         private readonly string _foundryFeatures;
         private readonly string _type;
         private readonly string _evalId;
@@ -21,8 +22,8 @@ namespace Azure.AI.Projects
         private readonly bool? _includeCoordinates;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ProjectsInsightsGetAllCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ProjectsInsights client used to send requests. </param>
+        /// <summary> Initializes a new instance of ProjectInsightsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectInsights client used to send requests. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="type"> Filter by the type of analysis. </param>
         /// <param name="evalId"> Filter by the evaluation ID. </param>
@@ -30,7 +31,7 @@ namespace Azure.AI.Projects
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProjectsInsightsGetAllCollectionResult(ProjectsInsights client, string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
+        public ProjectInsightsGetAllAsyncCollectionResultOfT(ProjectInsights client, string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
             _client = client;
             _foundryFeatures = foundryFeatures;
@@ -44,13 +45,13 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override IEnumerable<ClientResult> GetRawPages()
+        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
             PipelineMessage message = _client.CreateGetAllRequest(_foundryFeatures, _type, _evalId, _runId, _agentName, _includeCoordinates, _options);
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
                 yield return result;
 
                 nextPageUri = ((PagedInsight)result).NextLink;
@@ -75,6 +76,18 @@ namespace Azure.AI.Projects
             else
             {
                 return null;
+            }
+        }
+
+        /// <summary> Gets the values from the specified page. </summary>
+        /// <param name="page"></param>
+        /// <returns> The values from the specified page. </returns>
+        protected override async IAsyncEnumerable<ProjectInsight> GetValuesFromPageAsync(ClientResult page)
+        {
+            foreach (ProjectInsight item in ((PagedInsight)page).Value)
+            {
+                yield return item;
+                await Task.Yield();
             }
         }
     }

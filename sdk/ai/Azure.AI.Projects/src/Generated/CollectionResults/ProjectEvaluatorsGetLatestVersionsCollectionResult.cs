@@ -10,23 +10,23 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ProjectsSchedulesGetAllCollectionResult : CollectionResult
+    internal partial class ProjectEvaluatorsGetLatestVersionsCollectionResult : CollectionResult
     {
-        private readonly ProjectsSchedules _client;
+        private readonly ProjectEvaluators _client;
         private readonly string _type;
-        private readonly bool? _enabled;
+        private readonly int? _limit;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ProjectsSchedulesGetAllCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ProjectsSchedules client used to send requests. </param>
-        /// <param name="type"> Filter by the type of schedule. </param>
-        /// <param name="enabled"> Filter by the enabled status. </param>
+        /// <summary> Initializes a new instance of ProjectEvaluatorsGetLatestVersionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectEvaluators client used to send requests. </param>
+        /// <param name="type"> Filter evaluators by type. Possible values: 'all', 'custom', 'builtin'. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProjectsSchedulesGetAllCollectionResult(ProjectsSchedules client, string @type, bool? enabled, RequestOptions options)
+        public ProjectEvaluatorsGetLatestVersionsCollectionResult(ProjectEvaluators client, string @type, int? limit, RequestOptions options)
         {
             _client = client;
             _type = @type;
-            _enabled = enabled;
+            _limit = limit;
             _options = options;
         }
 
@@ -34,19 +34,19 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetAllRequest(_type, _enabled, _options);
+            PipelineMessage message = _client.CreateGetLatestVersionsRequest(_type, _limit, _options);
             Uri nextPageUri = null;
             while (true)
             {
                 ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
-                nextPageUri = ((PagedSchedule)result).NextLink;
+                nextPageUri = ((PagedEvaluatorVersion)result).NextLink;
                 if (nextPageUri == null)
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetAllRequest(nextPageUri, _type, _enabled, _options);
+                message = _client.CreateNextGetLatestVersionsRequest(nextPageUri, _type, _limit, _options);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((PagedSchedule)page).NextLink;
+            Uri nextPage = ((PagedEvaluatorVersion)page).NextLink;
             if (nextPage != null)
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));

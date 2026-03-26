@@ -7,6 +7,6 @@ namespace Azure.AI.Projects;
 
 [Experimental("AAIP001")]
 [CodeGenType("Evaluators")]
-public partial class ProjectsEvaluators
+public partial class ProjectEvaluators
 {
 }
