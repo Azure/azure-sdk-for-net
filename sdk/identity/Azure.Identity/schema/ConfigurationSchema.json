@@ -9,18 +9,18 @@
           "description": "The credential type to use for authentication.",
           "enum": [
             "AzureCliCredential",
-            "AzurePowerShellCredential",
             "AzureDeveloperCliCredential",
-            "EnvironmentCredential",
-            "WorkloadIdentityCredential",
-            "ManagedIdentityCredential",
-            "InteractiveBrowserCredential",
-            "VisualStudioCredential",
-            "VisualStudioCodeCredential",
-            "BrokerCredential",
             "AzurePipelinesCredential",
+            "AzurePowerShellCredential",
+            "BrokerCredential",
+            "ChainedTokenCredential",
+            "EnvironmentCredential",
+            "InteractiveBrowserCredential",
             "ManagedIdentityAsFederatedIdentityCredential",
-            "ChainedTokenCredential"
+            "ManagedIdentityCredential",
+            "VisualStudioCodeCredential",
+            "VisualStudioCredential",
+            "WorkloadIdentityCredential"
           ]
         }
       },
@@ -676,17 +676,17 @@
           "description": "The token credential type. ApiKeyCredential and ChainedTokenCredential are not allowed in a chain.",
           "enum": [
             "AzureCliCredential",
-            "AzurePowerShellCredential",
             "AzureDeveloperCliCredential",
-            "EnvironmentCredential",
-            "WorkloadIdentityCredential",
-            "ManagedIdentityCredential",
-            "InteractiveBrowserCredential",
-            "VisualStudioCredential",
-            "VisualStudioCodeCredential",
-            "BrokerCredential",
             "AzurePipelinesCredential",
-            "ManagedIdentityAsFederatedIdentityCredential"
+            "AzurePowerShellCredential",
+            "BrokerCredential",
+            "EnvironmentCredential",
+            "InteractiveBrowserCredential",
+            "ManagedIdentityAsFederatedIdentityCredential",
+            "ManagedIdentityCredential",
+            "VisualStudioCodeCredential",
+            "VisualStudioCredential",
+            "WorkloadIdentityCredential"
           ]
         },
         "Retry": {
