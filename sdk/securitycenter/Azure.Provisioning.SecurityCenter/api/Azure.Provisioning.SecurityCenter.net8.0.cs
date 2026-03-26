@@ -259,6 +259,12 @@ namespace Azure.Provisioning.SecurityCenter
         public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class AzureServersSetting : Azure.Provisioning.SecurityCenter.ServerVulnerabilityAssessmentsSetting
+    {
+        public AzureServersSetting(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.SecurityCenter.ServerVulnerabilityAssessmentsAzureSettingSelectedProvider> SelectedProvider { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
     public partial class BuiltInInfoType : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -363,6 +369,12 @@ namespace Azure.Provisioning.SecurityCenter
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.SecurityCenter.CustomEntityStoreAssignment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+    }
+    public partial class DataExportSettings : Azure.Provisioning.SecurityCenter.SecuritySetting
+    {
+        public DataExportSettings(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(string)) { }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class DefenderCspmAwsOffering : Azure.Provisioning.SecurityCenter.SecurityCenterCloudOffering
     {
@@ -1547,6 +1559,12 @@ namespace Azure.Provisioning.SecurityCenter
         Disabled = 1,
         Expired = 2,
     }
+    public partial class SecurityAlertSyncSettings : Azure.Provisioning.SecurityCenter.SecuritySetting
+    {
+        public SecurityAlertSyncSettings(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(string)) { }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class SecurityAssessment : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public SecurityAssessment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -2318,6 +2336,10 @@ namespace Azure.Provisioning.SecurityCenter
         Canceled = 2,
         Provisioning = 3,
         Deprovisioning = 4,
+    }
+    public enum ServerVulnerabilityAssessmentsAzureSettingSelectedProvider
+    {
+        MdeTvm = 0,
     }
     public partial class ServerVulnerabilityAssessmentsSetting : Azure.Provisioning.Primitives.ProvisionableResource
     {
