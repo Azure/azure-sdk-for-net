@@ -6,6 +6,10 @@
 
 - Updated API version to 2026-01-01-preview.
 
+### Breaking Changes
+
+### Bugs Fixed
+
 ### Other Changes
 
 - Migrated from AutoRest/Swagger to TypeSpec-based generation.

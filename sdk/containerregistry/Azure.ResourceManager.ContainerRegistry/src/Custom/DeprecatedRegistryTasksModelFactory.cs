@@ -3,7 +3,7 @@
 
 #nullable disable
 
-#pragma warning disable CS1591, SA1402, SA1508
+#pragma warning disable CS1591, SA1402, SA1508, CS0618
 
 using System;
 using System.Collections.Generic;
