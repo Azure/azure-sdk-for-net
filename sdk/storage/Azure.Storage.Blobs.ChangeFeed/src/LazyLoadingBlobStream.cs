@@ -50,6 +50,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         private long _blobLength;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LazyLoadingBlobStream"/> class.
+        /// </summary>
         public LazyLoadingBlobStream(BlobClient blobClient, long offset, long blockSize)
         {
             _blobClient = blobClient;

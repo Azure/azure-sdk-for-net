@@ -542,11 +542,62 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             chunks["chunk4"].Verify(r => r.EventIndex);
         }
 
+        /// <summary>
+        /// Tests that Shard.Next() throws InvalidOperationException when HasNext() is false.
+        /// </summary>
+        [RecordedTest]
+        public void Next_ThrowsWhenExhausted()
+        {
+            // Arrange - create a Shard with no chunks and null currentChunk
+            Shard shard = new Shard(
+                containerClient: new Mock<BlobContainerClient>(MockBehavior.Strict).Object,
+                chunkFactory: new Mock<ChunkFactory>(MockBehavior.Strict).Object,
+                chunks: new Queue<BlobItem>(),
+                currentChunk: null,
+                chunkIndex: 0,
+                shardPath: "shardPath");
+
+            // Verify precondition
+            Assert.IsFalse(shard.HasNext());
+
+            // Act / Assert
+            Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await shard.Next(IsAsync));
+        }
+
+        /// <summary>
+        /// Tests that Shard.GetCursor() returns null when _currentChunk is null.
+        /// </summary>
+        [RecordedTest]
+        public void GetCursor_ReturnsNullWhenNoCurrentChunk()
+        {
+            // Arrange - create a Shard with null currentChunk
+            Shard shard = new Shard(
+                containerClient: new Mock<BlobContainerClient>(MockBehavior.Strict).Object,
+                chunkFactory: new Mock<ChunkFactory>(MockBehavior.Strict).Object,
+                chunks: new Queue<BlobItem>(),
+                currentChunk: null,
+                chunkIndex: 0,
+                shardPath: "shardPath");
+
+            // Act
+            ShardCursor cursor = shard.GetCursor();
+
+            // Assert
+            Assert.IsNull(cursor);
+        }
+
+        /// <summary>
+        /// Async helper that returns mock chunk pages for test setup.
+        /// </summary>
         private static Task<Page<BlobHierarchyItem>> GetChunkPagesFuncAsync(
             string continuation,
             int? pageSizeHint)
             => Task.FromResult(GetChunkPagesFunc(continuation, pageSizeHint));
 
+        /// <summary>
+        /// Returns a page of mock chunk blob items for test setup.
+        /// </summary>
         private static Page<BlobHierarchyItem> GetChunkPagesFunc(
             string continuation,
             int? pageSizeHint)
@@ -572,6 +623,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     BlobsModelFactory.BlobItem("chunk5", false, BlobsModelFactory.BlobItemProperties(true, contentLength: long.MaxValue)))
             });
 
+        /// <summary>
+        /// Creates a dictionary of mock Chunk objects keyed by chunk path for test setup.
+        /// </summary>
         private static Dictionary<string, Mock<Chunk>> GetChunkMocks(long blockOffset, long eventIndex)
         {
             Dictionary<string, Mock<Chunk>> mocks = new Dictionary<string, Mock<Chunk>>();

@@ -8,6 +8,9 @@ using Azure.Storage.Internal.Avro;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
+    /// <summary>
+    /// Builds <see cref="Chunk"/> instances from blob storage.
+    /// </summary>
     internal class ChunkFactory
     {
         private readonly LazyLoadingBlobStreamFactory _lazyLoadingBlobStreamFactory;
@@ -15,6 +18,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         private readonly BlobContainerClient _containerClient;
         private readonly long? _maxTransferSize;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ChunkFactory"/> class.
+        /// </summary>
         public ChunkFactory(
             BlobContainerClient containerClient,
             LazyLoadingBlobStreamFactory lazyLoadingBlobStreamFactory,
@@ -27,6 +33,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _maxTransferSize = maxTransferSize;
         }
 
+        /// <summary>
+        /// Builds a <see cref="Chunk"/> from the specified chunk path, optionally resuming
+        /// from the given block offset and event index.
+        /// </summary>
         internal async virtual Task<Chunk> BuildChunk(
             bool async,
             string chunkPath,

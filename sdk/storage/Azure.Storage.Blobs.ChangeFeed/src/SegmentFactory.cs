@@ -9,6 +9,9 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
+    /// <summary>
+    /// Builds <see cref="Segment"/> instances from blob storage.
+    /// </summary>
     internal class SegmentFactory
     {
         private readonly BlobContainerClient _containerClient;
@@ -19,6 +22,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         public SegmentFactory() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SegmentFactory"/> class.
+        /// </summary>
         public SegmentFactory(
             BlobContainerClient containerClient,
             ShardFactory shardFactory)
@@ -27,6 +33,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _shardFactory = shardFactory;
         }
 
+        /// <summary>
+        /// Builds a <see cref="Segment"/> from the specified manifest path, optionally
+        /// resuming from the given cursor position.
+        /// </summary>
 #pragma warning disable CA1822 // Does not acces instance data can be marked static.
         public virtual async Task<Segment> BuildSegment(
 #pragma warning restore CA1822 // Can't mock static methods in MOQ.

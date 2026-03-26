@@ -100,6 +100,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return newDateTimeOffest.Value.AddHours(1);
         }
 
+        /// <summary>
+        /// Rounds a DateTimeOffset down to January 1st of the same year.
+        /// </summary>
         internal static DateTimeOffset? RoundDownToNearestYear(this DateTimeOffset? dateTimeOffset)
         {
             if (dateTimeOffset == null)
@@ -171,6 +174,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return new Queue<string>(list);
         }
 
+        /// <summary>
+        /// Returns the earlier of <paramref name="lastConsumable"/> and <paramref name="endDate"/>.
+        /// If <paramref name="endDate"/> is null, returns <paramref name="lastConsumable"/>.
+        /// </summary>
         internal static DateTimeOffset MinDateTime(DateTimeOffset lastConsumable, DateTimeOffset? endDate)
         {
             if (endDate.HasValue && endDate.Value < lastConsumable)

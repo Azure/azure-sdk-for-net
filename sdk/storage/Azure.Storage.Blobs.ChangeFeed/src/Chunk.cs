@@ -34,6 +34,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         public virtual string ChunkPath { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Chunk"/> class.
+        /// </summary>
         public Chunk(
             AvroReader avroReader,
             long blockOffset,
@@ -46,9 +49,15 @@ namespace Azure.Storage.Blobs.ChangeFeed
             ChunkPath = chunkPath;
         }
 
+        /// <summary>
+        /// Returns true if the underlying Avro reader has more events.
+        /// </summary>
         public virtual bool HasNext()
             => _avroReader.HasNext();
 
+        /// <summary>
+        /// Gets the next <see cref="BlobChangeFeedEvent"/> from this Chunk.
+        /// </summary>
         public virtual async Task<BlobChangeFeedEvent> Next(
             bool async,
             CancellationToken cancellationToken = default)

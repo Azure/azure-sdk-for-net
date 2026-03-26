@@ -22,6 +22,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Tests deserialization of a V1 schema change feed event.
+        /// </summary>
         [Test]
         public void SchemaV1Test()
         {
@@ -82,6 +85,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 changeFeedEvent.EventData.Sequencer);
         }
 
+        /// <summary>
+        /// Tests deserialization of a V3 schema change feed event with extended properties.
+        /// </summary>
         [Test]
         public void SchemaV3Test()
         {
@@ -178,6 +184,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual("application/octet-stream", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].OldValue);
         }
 
+        /// <summary>
+        /// Tests deserialization of a V4 schema change feed event with blob versioning and async operation info.
+        /// </summary>
         [Test]
         public void SchemaV4Test()
         {
@@ -287,6 +296,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual("copyId", changeFeedEvent.EventData.LongRunningOperationInfo.CopyId);
         }
 
+        /// <summary>
+        /// Tests deserialization of a V5 schema change feed event with updated blob tags.
+        /// </summary>
         [Test]
         public void SchemaV5Test()
         {
@@ -404,6 +416,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual("Value2_4", changeFeedEvent.EventData.UpdatedBlobTags.NewTags["Tag2"]);
         }
 
+        /// <summary>
+        /// Tests reading change feed events directly from an Avro file.
+        /// </summary>
         [Test]
         [Ignore("For debugging specific avro files")]
         public async Task AvroTest()
@@ -435,6 +450,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             return rawDictionary;
         }
 
+        /// <summary>
+        /// Recursively converts child JObject instances in a dictionary to Dictionary{string, object}.
+        /// </summary>
         private void ConvertChildOJObjectsToDictionaries(Dictionary<string, object> dictionary)
         {
             foreach (string key in dictionary.Keys.ToList())

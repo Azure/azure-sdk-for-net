@@ -14,12 +14,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// The time (to the nearest hour) associated with this Segment.
         /// </summary>
-        public DateTimeOffset DateTime { get; private set; }
+        public virtual DateTimeOffset DateTime { get; private set; }
 
         /// <summary>
         /// The path of manifest associated with this Segment.
         /// </summary>
-        public string ManifestPath { get; private set; }
+        public virtual string ManifestPath { get; private set; }
 
         /// <summary>
         /// The Shards associated with this Segment.
@@ -49,6 +49,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _finishedShards = new HashSet<int>();
         }
 
+        /// <summary>
+        /// Gets the <see cref="SegmentCursor"/> representing the current position within this Segment.
+        /// </summary>
         public virtual SegmentCursor GetCursor()
         {
             List<ShardCursor> shardCursors = new List<ShardCursor>();
@@ -123,6 +126,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return changeFeedEventList;
         }
 
+        /// <summary>
+        /// Returns true if this Segment has more events to return.
+        /// </summary>
         public virtual bool HasNext()
             => _finishedShards.Count < _shards.Count;
 

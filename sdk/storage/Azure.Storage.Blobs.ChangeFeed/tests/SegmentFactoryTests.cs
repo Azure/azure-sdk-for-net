@@ -22,6 +22,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Tests building a segment when the segment cursor has a null CurrentShardPath, verifying it defaults to the first shard.
+        /// </summary>
         [RecordedTest]
         public async Task BuildSegment_SegmentCursorNullCurrentShardPath()
         {

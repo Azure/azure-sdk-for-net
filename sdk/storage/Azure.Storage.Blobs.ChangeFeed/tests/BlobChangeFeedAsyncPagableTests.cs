@@ -22,6 +22,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Tests retrieving all change feed events.
+        /// </summary>
         [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task Test()
@@ -37,6 +40,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
+        /// <summary>
+        /// Tests retrieving historical change feed events within a specific time range.
+        /// </summary>
         [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task TestHistorical()
@@ -52,6 +58,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
+        /// <summary>
+        /// Tests retrieving change feed events from the last hour.
+        /// </summary>
         [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task TestLastHour()
@@ -144,6 +153,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             CollectionAssert.IsEmpty(EventIdsPart2.Intersect(EventIdsPart3));
         }
 
+        /// <summary>
+        /// Tests that all pages except the last one match the requested page size.
+        /// </summary>
         [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task PageSizeTest()
@@ -166,6 +178,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
+        /// <summary>
+        /// Tests cursor functionality by retrieving a page, extracting the continuation token, and resuming from that point.
+        /// </summary>
         [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task CursorTest()
@@ -195,6 +210,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
+        /// <summary>
+        /// Tests reading all change feed events until the end from a given start time.
+        /// </summary>
         [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task CanReadTillEnd()
@@ -214,6 +232,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             CollectionAssert.IsNotEmpty(list);
         }
 
+        /// <summary>
+        /// Tests that resuming from a continuation token in the middle of a chunk produces the same events as reading all at once.
+        /// </summary>
         [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task ResumeFromTheMiddleOfTheChunk()
@@ -522,6 +543,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             CollectionAssert.AreEqual(AllEventIds, AllEventIdsFromResumingIteration);
         }
 
+        /// <summary>
+        /// Tests that resuming from the end of a past time range yields no additional events.
+        /// </summary>
         [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task ResumeFromEndInThePastYieldsEmptyResult()
@@ -561,6 +585,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.Greater(AllEventIds.Count, 0);
         }
 
+        /// <summary>
+        /// Tests that resuming from the end of the current hour immediately yields empty results.
+        /// </summary>
         [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task ImmediateResumeFromEndOfCurrentHourYieldsEmptyResult()
@@ -664,6 +691,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.IsNotNull(eventList.Find(e => e.EventTime > roundedEndTime.AddMinutes(-15)), "There is some event 15 minutes before end");
         }
 
+        /// <summary>
+        /// Tests the cursor JSON format, structure, and specific field values.
+        /// </summary>
         [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task CursorFormatTest()

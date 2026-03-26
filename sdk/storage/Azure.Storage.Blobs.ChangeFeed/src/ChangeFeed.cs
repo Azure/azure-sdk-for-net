@@ -127,6 +127,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return new BlobChangeFeedEventPage(blobChangeFeedEvents, JsonSerializer.Serialize<ChangeFeedCursor>(GetCursor()));
         }
 
+        /// <summary>
+        /// Returns true if this Change Feed has more events to return.
+        /// </summary>
         public bool HasNext()
         {
             // [If Change Feed is empty], or [current segment is not finalized]
@@ -147,6 +150,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return true;
         }
 
+        /// <summary>
+        /// Gets the <see cref="ChangeFeedCursor"/> representing the current position in the Change Feed.
+        /// </summary>
         internal ChangeFeedCursor GetCursor()
             => new ChangeFeedCursor(
                 urlHost: _containerClient.Uri.Host,
@@ -196,6 +202,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
         }
 
+        /// <summary>
+        /// Creates an empty <see cref="ChangeFeed"/> that has no events.
+        /// </summary>
         public static ChangeFeed Empty()
              => new ChangeFeed
              {

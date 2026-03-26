@@ -19,6 +19,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Tests conversion of segment paths to DateTimeOffset values at various levels of path granularity.
+        /// </summary>
         [RecordedTest]
         public void ToDateTimeOffsetTests()
         {
@@ -63,6 +66,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 BlobChangeFeedExtensions.ToDateTimeOffset(((string)null)));
         }
 
+        /// <summary>
+        /// Tests rounding down a DateTimeOffset to the nearest hour.
+        /// </summary>
         [RecordedTest]
         public void RoundDownToNearestHourTests()
         {
@@ -77,6 +83,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 ((DateTimeOffset?)null).RoundDownToNearestHour());
         }
 
+        /// <summary>
+        /// Tests rounding up a DateTimeOffset to the nearest hour, including when already on the hour.
+        /// </summary>
         [RecordedTest]
         public void RoundUpToNearestHourTests()
         {
@@ -97,6 +106,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 ((DateTimeOffset?)null).RoundUpToNearestHour());
         }
 
+        /// <summary>
+        /// Tests rounding down a DateTimeOffset to January 1st of the same year.
+        /// </summary>
         [RecordedTest]
         public void RoundDownToNearestYearTests()
         {
@@ -111,6 +123,52 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 ((DateTimeOffset?)null).RoundDownToNearestYear());
         }
 
+        /// <summary>
+        /// Tests that ToDateTimeOffset throws ArgumentException for paths with fewer than three segments.
+        /// </summary>
+        [RecordedTest]
+        public void ToDateTimeOffset_ThrowsOnInvalidShortPaths()
+        {
+            // Paths with fewer than 3 non-empty segments should throw ArgumentException
+            Assert.Throws<ArgumentException>(
+                () => BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/"));
+
+            Assert.Throws<ArgumentException>(
+                () => BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments"));
+
+            Assert.Throws<ArgumentException>(
+                () => BlobChangeFeedExtensions.ToDateTimeOffset("a/b"));
+
+            Assert.Throws<ArgumentException>(
+                () => BlobChangeFeedExtensions.ToDateTimeOffset("single"));
+        }
+
+        /// <summary>
+        /// Tests MinDateTime returns the earlier of lastConsumable and endDate.
+        /// </summary>
+        [RecordedTest]
+        public void MinDateTimeTests()
+        {
+            DateTimeOffset lastConsumable = new DateTimeOffset(2020, 6, 1, 0, 0, 0, TimeSpan.Zero);
+
+            // When endDate is null, returns lastConsumable
+            Assert.AreEqual(lastConsumable, BlobChangeFeedExtensions.MinDateTime(lastConsumable, null));
+
+            // When endDate > lastConsumable, returns lastConsumable
+            DateTimeOffset laterDate = new DateTimeOffset(2020, 7, 1, 0, 0, 0, TimeSpan.Zero);
+            Assert.AreEqual(lastConsumable, BlobChangeFeedExtensions.MinDateTime(lastConsumable, laterDate));
+
+            // When endDate < lastConsumable, returns endDate
+            DateTimeOffset earlierDate = new DateTimeOffset(2020, 5, 1, 0, 0, 0, TimeSpan.Zero);
+            Assert.AreEqual(earlierDate, BlobChangeFeedExtensions.MinDateTime(lastConsumable, earlierDate));
+
+            // When endDate == lastConsumable, returns lastConsumable
+            Assert.AreEqual(lastConsumable, BlobChangeFeedExtensions.MinDateTime(lastConsumable, lastConsumable));
+        }
+
+        /// <summary>
+        /// Tests retrieving segment paths within a specific year filtered by start and end times.
+        /// </summary>
         [RecordedTest]
         public async Task GetSegmentsInYearTest()
         {

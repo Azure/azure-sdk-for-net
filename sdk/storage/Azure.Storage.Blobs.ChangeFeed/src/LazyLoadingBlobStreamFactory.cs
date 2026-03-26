@@ -9,6 +9,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
     /// </summary>
     internal class LazyLoadingBlobStreamFactory
     {
+        /// <summary>
+        /// Builds a <see cref="LazyLoadingBlobStream"/> that reads from the specified blob client.
+        /// </summary>
         public virtual LazyLoadingBlobStream BuildLazyLoadingBlobStream(
             BlobClient blobClient,
             long offset,

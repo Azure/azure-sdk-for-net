@@ -12,9 +12,16 @@ namespace Azure.Storage.Blobs.ChangeFeed
     /// </summary>
     internal class AvroReaderFactory
     {
+        /// <summary>
+        /// Builds an <see cref="AvroReader"/> from a data stream.
+        /// </summary>
         public virtual AvroReader BuildAvroReader(Stream dataStream)
             => new AvroReader(dataStream);
 
+        /// <summary>
+        /// Builds an <see cref="AvroReader"/> from a data stream and head stream, resuming
+        /// from the specified block offset and event index.
+        /// </summary>
         public virtual AvroReader BuildAvroReader(
             Stream dataStream,
             Stream headStream,
