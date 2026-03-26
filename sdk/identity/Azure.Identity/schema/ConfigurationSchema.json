@@ -671,7 +671,10 @@
               "Diagnostics": {
                 "$ref": "#/definitions/diagnostics"
               }
-            }
+            },
+            "required": [
+              "Sources"
+            ]
           }
         }
       ],
