@@ -17,12 +17,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// The time (to the nearest hour) associated with this Segment.
         /// </summary>
-        public virtual DateTimeOffset DateTime { get; private set; }
+        public DateTimeOffset DateTime { get; private set; }
 
         /// <summary>
         /// The path of manifest associated with this Segment.
         /// </summary>
-        public virtual string ManifestPath { get; private set; }
+        public string ManifestPath { get; private set; }
 
         /// <summary>
         /// The Shards associated with this Segment.
