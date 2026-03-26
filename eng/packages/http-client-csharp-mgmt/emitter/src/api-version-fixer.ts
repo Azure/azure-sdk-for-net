@@ -79,9 +79,9 @@ export function deduplicateApiVersionEnums(codeModel: CodeModel): void {
  * - If methods have different apiVersions, report an error diagnostic asking the user
  *   to use @@clientLocation to separate methods with different API versions.
  *
- * This works around a TCGC bug where combined multi-service clients
- * (created via @client({ service: [...] })) get empty apiVersions despite
- * their methods having known API versions.
+ * In TCGC's hierarchical client model, parent clients don't carry apiVersions — child clients
+ * inherit from parents. In mgmt SDK we flatten the hierarchy, so each client needs its own
+ * apiVersions. We infer them from the client's methods.
  */
 export function fixClientApiVersions(
   codeModel: CodeModel,

@@ -36,11 +36,13 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
     transformSubscriptionIdParameters(codeModel);
 
     // Deduplicate ApiVersionEnum enums to work around base generator crash
-    // when multiple services share the same namespace (microsoft/typespec#10055)
+    // when multiple services share the same namespace.
+    // https://github.com/microsoft/typespec/issues/10055
     deduplicateApiVersionEnums(codeModel);
 
     // Fix clients with empty apiVersions by inferring from their methods.
-    // This works around a TCGC bug where combined multi-service clients get empty apiVersions.
+    // In TCGC's hierarchical client model, parent clients don't carry apiVersions — child clients
+    // inherit from parents. In mgmt SDK we flatten the hierarchy, so we infer from methods instead.
     fixClientApiVersions(codeModel, sdkContext);
 
     updateClients(codeModel, sdkContext, context.options);
