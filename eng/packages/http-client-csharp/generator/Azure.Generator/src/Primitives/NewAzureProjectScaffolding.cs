@@ -6,6 +6,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Azure.Generator.Primitives
@@ -21,8 +22,37 @@ namespace Azure.Generator.Primitives
         private const string SharedSourceLinkBase = "Shared/Core";
 
         /// <inheritdoc/>
+        protected override string GetSolutionFileContent()
+        {
+            var outputDir = AzureClientGenerator.Instance.Configuration.OutputDirectory;
+            // Clean up old .slnx files (the base class only cleans up .sln files)
+            foreach (var file in Directory.GetFiles(outputDir, "*.slnx", SearchOption.TopDirectoryOnly))
+            {
+                File.Delete(file);
+            }
+
+            var packageName = AzureClientGenerator.Instance.Configuration.PackageName;
+            return $"<Solution>\n  <Project Path=\"src/{packageName}.csproj\" />\n</Solution>\n";
+        }
+
+        /// <inheritdoc/>
         protected override string GetSourceProjectFileContent()
         {
+            // The base class writes the solution content to a .sln file.
+            // Rename it to .slnx since we return slnx-formatted content from GetSolutionFileContent().
+            var outputDir = AzureClientGenerator.Instance.Configuration.OutputDirectory;
+            var packageName = AzureClientGenerator.Instance.Configuration.PackageName;
+            var slnPath = Path.Combine(outputDir, $"{packageName}.sln");
+            var slnxPath = Path.Combine(outputDir, $"{packageName}.slnx");
+            if (File.Exists(slnPath))
+            {
+                if (File.Exists(slnxPath))
+                {
+                    File.Delete(slnxPath);
+                }
+                File.Move(slnPath, slnxPath);
+            }
+
             var builder = new CSharpProjectWriter()
             {
                 Description = $"This is the {AzureClientGenerator.Instance.Configuration.PackageName} client library for developing .NET applications with rich experience.",
