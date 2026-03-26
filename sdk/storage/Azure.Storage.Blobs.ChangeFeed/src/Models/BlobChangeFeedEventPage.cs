@@ -7,9 +7,14 @@ using System.Text;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
+    /// <summary>
+    /// Represents a page of BlobChangeFeedEvent results with a continuation token.
+    /// </summary>
     internal class BlobChangeFeedEventPage : Page<BlobChangeFeedEvent>
     {
+        /// <inheritdoc/>
         public override IReadOnlyList<BlobChangeFeedEvent> Values { get; }
+        /// <inheritdoc/>
         public override string ContinuationToken { get; }
         public override Response GetRawResponse() => null;
         //private Response _raw;

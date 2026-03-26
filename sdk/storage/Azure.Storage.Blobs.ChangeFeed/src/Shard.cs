@@ -9,6 +9,9 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
+    /// <summary>
+    /// Represents a single shard within a Segment, containing one or more Chunks of Avro data.
+    /// </summary>
     internal class Shard
     {
         /// <summary>

@@ -9,6 +9,9 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
+    /// <summary>
+    /// Represents a single hourly segment of the Change Feed, containing one or more Shards.
+    /// </summary>
     internal class Segment
     {
         /// <summary>
@@ -69,6 +72,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 currentShardPath: _shards.Count > 0 ? _shards[_shardIndex].ShardPath : null);
         }
 
+        /// <summary>
+        /// Gets the next batch of events by round-robining across shards, up to <paramref name="pageSize"/> events.
+        /// </summary>
         public virtual async Task<List<BlobChangeFeedEvent>> GetPage(
             bool async,
             int? pageSize,
@@ -81,6 +87,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 return new List<BlobChangeFeedEvent>(capacity: 0);
             }
 
+            // Round-robin across shards: read one event per shard, wrap around, skip finished shards.
             int i = 0;
             while (i < pageSize && _shards.Count > 0)
             {

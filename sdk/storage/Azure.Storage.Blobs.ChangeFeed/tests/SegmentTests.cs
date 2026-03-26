@@ -28,6 +28,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         public async Task GetCursor()
         {
             // Arrange
+            // Build a segment from a manifest with 3 shards, each with its own cursor position.
             string manifestPath = "idx/segments/2020/03/25/0200/meta.json";
 
             Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
@@ -43,6 +44,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             DateTimeOffset dateTime = new DateTimeOffset(2020, 3, 25, 2, 0, 0, TimeSpan.Zero);
             string segmentPath = "idx/segments/2020/03/25/0200/meta.json";
+            // Shard 0 ("log/00/...") is the "current" shard in the cursor.
             string currentShardPath = "log/00/2020/03/25/0200/";
 
             List<ShardCursor> shardCursors = new List<ShardCursor>
@@ -245,12 +247,14 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 .ReturnsAsync(shards[1].Object)
                 .ReturnsAsync(shards[2].Object);
 
-            // Set up Shards
+            // Set up Shards for round-robin reads: shard 0 -> 1 -> 2 -> 0 -> 1
+            // Shard 0 has 2 events: eventIds[0] (1st round) and eventIds[3] (2nd round)
             shards[0].SetupSequence(r => r.Next(It.IsAny<bool>(), default))
                 .Returns(Task.FromResult(new BlobChangeFeedEvent
                 {
                     Id = eventIds[0]
                 }))
+                // eventIds[3] comes from shard 0's second read (second pass of round-robin)
                 .Returns(Task.FromResult(new BlobChangeFeedEvent
                 {
                     Id = eventIds[3]
@@ -261,11 +265,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 .Returns(true)
                 .Returns(false);
 
+            // Shard 1 has 2 events: eventIds[1] (1st round) and eventIds[4] (2nd round)
             shards[1].SetupSequence(r => r.Next(It.IsAny<bool>(), default))
                 .Returns(Task.FromResult(new BlobChangeFeedEvent
                 {
                     Id = eventIds[1]
                 }))
+                // eventIds[4] comes from shard 1's second read (second pass of round-robin)
                 .Returns(Task.FromResult(new BlobChangeFeedEvent
                 {
                     Id = eventIds[4]
@@ -276,12 +282,14 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 .Returns(true)
                 .Returns(false);
 
+            // Shard 2 has only 1 event; returns it then is exhausted, so round-robin skips it on the second pass.
             shards[2].Setup(r => r.Next(It.IsAny<bool>(), default))
                 .Returns(Task.FromResult(new BlobChangeFeedEvent
                 {
                     Id = eventIds[2]
                 }));
 
+            // HasNext: true (before 1st read), then false (exhausted; skipped on 2nd pass)
             shards[2].SetupSequence(r => r.HasNext())
                 .Returns(true)
                 .Returns(false);
@@ -412,7 +420,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 IsAsync,
                 manifestPath);
 
-            // Act - request only 2 events from 3 shards
+            // Act - pageSize=2 means only shards 0 and 1 are read; shard 2 is never reached in the round-robin.
             List<BlobChangeFeedEvent> events = await segment.GetPage(IsAsync, 2);
 
             // Assert - only 2 events returned (from shards 0 and 1)

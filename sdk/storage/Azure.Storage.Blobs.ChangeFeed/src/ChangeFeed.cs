@@ -10,6 +10,10 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
+    /// <summary>
+    /// Represents a Change Feed and provides methods to iterate through its events
+    /// across segments and years.
+    /// </summary>
     internal class ChangeFeed
     {
         /// <summary>
@@ -85,7 +89,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         public ChangeFeed() { }
 
-        // The last segment may still be adding chunks.
+        /// <summary>
+        /// Gets the next page of <see cref="BlobChangeFeedEvent"/>s, collecting events across
+        /// segments as needed to fill the requested page size. The last segment may still be
+        /// adding chunks while being read.
+        /// </summary>
         public async Task<Page<BlobChangeFeedEvent>> GetPage(
             bool async,
             int pageSize = Constants.ChangeFeed.DefaultPageSize,
@@ -96,11 +104,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 throw new InvalidOperationException("Change feed doesn't have any more events");
             }
 
+            // Guard: if we've advanced past the user's end time, return an empty page.
             if (_currentSegment.DateTime >= _endTime)
             {
                 return BlobChangeFeedEventPage.Empty();
             }
 
+            // Cap page size to the maximum allowed.
             if (pageSize > Constants.ChangeFeed.DefaultPageSize)
             {
                 pageSize = Constants.ChangeFeed.DefaultPageSize;
@@ -159,6 +169,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 endDateTime: _endTime,
                 currentSegmentCursor: _currentSegment.GetCursor());
 
+        /// <summary>
+        /// If the current segment is exhausted, advances to the next segment in the queue.
+        /// If the segment queue is also empty, loads segments from the next year.
+        /// </summary>
         private async Task AdvanceSegmentIfNecessary(
             bool async,
             CancellationToken cancellationToken)

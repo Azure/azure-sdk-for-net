@@ -92,6 +92,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             // Update and uncomment after recording.
             DateTimeOffset startTime = new DateTimeOffset(2020, 8, 10, 16, 00, 00, TimeSpan.Zero);
 
+            // This test simulates polling the tail of the feed: read initial batch, wait, read more.
             TimeSpan pollInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : TimeSpan.FromMinutes(3);
 
             BlobServiceClient service = GetServiceClient_SharedKey();
@@ -147,7 +148,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             CollectionAssert.IsNotEmpty(EventIdsPart3);
 
-            // Assert events are not duplicated
+            // The set intersection checks ensure no duplicate events across polling iterations.
             CollectionAssert.IsEmpty(EventIdsPart1.Intersect(EventIdsPart2));
             CollectionAssert.IsEmpty(EventIdsPart1.Intersect(EventIdsPart3));
             CollectionAssert.IsEmpty(EventIdsPart2.Intersect(EventIdsPart3));
@@ -246,6 +247,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             BlobServiceClient service = GetServiceClient_SharedKey();
             BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
 
+            // Phase 3 (verification): read all events from scratch without interruption.
             // Collect all events within range
             AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable
                 = blobChangeFeedClient.GetChangesAsync(
@@ -257,6 +259,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 AllEventIds.Add(e.Id.ToString());
             }
 
+            // Phase 1: read first pages to get a continuation token mid-stream.
             // Iterate over first two pages
             ISet<string> EventIdsPart1 = new HashSet<string>();
             blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(
@@ -284,6 +287,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             long blockOffset = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor).CurrentSegmentCursor.ShardCursors.First().BlockOffset;
             Assert.Greater(blockOffset, 0, "Making sure we actually finish in the middle of chunk, if this fails play with test data to make it pass");
 
+            // Phase 2: resume from the continuation token and read more pages.
             // Iterate over next two pages
             ISet<string> EventIdsPart2 = new HashSet<string>();
             blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(continuation);
@@ -319,6 +323,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 EventIdsTail.Add(e.Id.ToString());
             }
 
+            // The set intersection check ensures no events were duplicated or lost during resume.
             ISet<string> AllEventIdsFromResumingIteration = new HashSet<string>();
             AllEventIdsFromResumingIteration.UnionWith(EventIdsPart1);
             AllEventIdsFromResumingIteration.UnionWith(EventIdsPart2);

@@ -154,6 +154,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             bool recursive = true;
             string sequencer = "sequencer";
 
+            // Mock Avro record dictionary mimics the structure of a real change feed Avro event.
             Dictionary<string, object> record = new Dictionary<string, object>
             {
                 { Constants.ChangeFeed.Event.Topic, topic },
@@ -163,6 +164,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 { Constants.ChangeFeed.Event.EventId, eventId.ToString() },
                 { Constants.ChangeFeed.Event.SchemaVersion, dataVersion },
                 { Constants.ChangeFeed.Event.MetadataVersion, metadataVersion },
+                // The nested "data" dictionary represents BlobChangeFeedEventData fields.
                 { Constants.ChangeFeed.Event.Data, new Dictionary<string, object>
                     {
                         { Constants.ChangeFeed.EventData.Api, api },
@@ -191,6 +193,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Mock<LazyLoadingBlobStream> headStream = new Mock<LazyLoadingBlobStream>(MockBehavior.Strict);
 
             containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
+            // First call returns the data stream (for reading events); second returns the head stream
+            // (for reading the Avro schema when resuming mid-block).
             lazyLoadingBlobStreamFactory.SetupSequence(r => r.BuildLazyLoadingBlobStream(
                 It.IsAny<BlobClient>(),
                 It.IsAny<long>(),

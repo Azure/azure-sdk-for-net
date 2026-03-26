@@ -29,6 +29,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         public ShardFactory() { }
 
+        /// <summary>
+        /// Builds a <see cref="Shard"/> by listing chunk blobs and optionally fast-forwarding
+        /// to the cursor position for resumable reads.
+        /// </summary>
 #pragma warning disable CA1822 // Does not acces instance data can be marked static.
         public virtual async Task<Shard> BuildShard(
 #pragma warning restore CA1822 // Can't mock static methods in MOQ.

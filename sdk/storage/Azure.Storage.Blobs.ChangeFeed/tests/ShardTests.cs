@@ -375,6 +375,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         public async Task Next()
         {
             // Arrange
+            // The shard has chunks 2-5 (skipping chunks 0,1 via cursor fast-forward to chunk2).
+            // Each chunk has 2 events, 8 total across 4 chunks.
             int chunkCount = 4;
             int eventCount = 8;
             Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
@@ -429,6 +431,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<CancellationToken>()))
                 .Returns((bool _, string path, long __, long ___, CancellationToken ____) => Task.FromResult(chunks[path].Object));
 
+            // Chunks 2-4: HasNext true (before 2nd event), then false (triggers advance to next chunk).
             chunks["chunk2"].SetupSequence(r => r.HasNext())
                 .Returns(true)
                 .Returns(false);
@@ -441,6 +444,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 .Returns(true)
                 .Returns(false);
 
+            // chunk5 needs 3 "true" then "false": checked after each Next() call AND by the shard's own HasNext().
+            // The last chunk has no successor, so shard.HasNext() also queries it, requiring the extra "true".
             chunks["chunk5"].SetupSequence(r => r.HasNext())
                 .Returns(true)
                 .Returns(true)
@@ -471,11 +476,14 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 .ConfigureAwait(false);
 
             List<BlobChangeFeedEvent> changeFeedEvents = new List<BlobChangeFeedEvent>();
+            // First 4 Next() calls consume chunks 2 and 3 (2 events each).
             for (int i = 0; i < 4; i++)
             {
                 changeFeedEvents.Add(await shard.Next(IsAsync));
             }
+            // GetCursor() captures position at chunk 4 (the next chunk to be read).
             ShardCursor cursor = shard.GetCursor();
+            // Last 4 Next() calls consume chunks 4 and 5.
             for (int i = 0; i < 4; i++)
             {
                 changeFeedEvents.Add(await shard.Next(IsAsync));
