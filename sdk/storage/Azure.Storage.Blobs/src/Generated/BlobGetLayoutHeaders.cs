@@ -94,6 +94,8 @@ namespace Azure.Storage.Blobs
         public string AccessTier => _response.Headers.TryGetValue("x-ms-access-tier", out string value) ? value : null;
         /// <summary> For page blobs on a premium storage account only. If the access tier is not explicitly set on the blob, the tier is inferred based on its content length and this header will be returned with true value. </summary>
         public bool? AccessTierInferred => _response.Headers.TryGetValue("x-ms-access-tier-inferred", out bool? value) ? value : null;
+        /// <summary> The underlying tier of a smart tier blob. Only returned if the blob is in Smart tier. </summary>
+        public string SmartAccessTier => _response.Headers.TryGetValue("x-ms-smart-access-tier", out string value) ? value : null;
         /// <summary> For blob storage LRS accounts, valid values are rehydrate-pending-to-hot/rehydrate-pending-to-cool. If the blob is being rehydrated and is not complete then this header is returned indicating that rehydrate is pending and also tells the destination tier. </summary>
         public string ArchiveStatus => _response.Headers.TryGetValue("x-ms-archive-status", out string value) ? value : null;
         /// <summary> The time the tier was changed on the object. This is only returned if the tier on the block blob was ever set. </summary>

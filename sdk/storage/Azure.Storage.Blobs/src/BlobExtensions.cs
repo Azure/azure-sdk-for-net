@@ -861,6 +861,7 @@ namespace Azure.Storage.Blobs
                 EncryptionScope = response.Headers.EncryptionScope,
                 AccessTier = response.Headers.AccessTier,
                 AccessTierInferred = response.Headers.AccessTierInferred.GetValueOrDefault(),
+                SmartAccessTier = response.Headers.SmartAccessTier,
                 ArchiveStatus = response.Headers.ArchiveStatus,
                 AccessTierChangedOn = response.Headers.AccessTierChangeTime.GetValueOrDefault(),
                 VersionId = response.Headers.VersionId,

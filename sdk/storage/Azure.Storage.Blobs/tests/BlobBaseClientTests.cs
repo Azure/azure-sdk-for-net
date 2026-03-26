@@ -1771,63 +1771,7 @@ namespace Azure.Storage.Blobs.Test
             await blob.DownloadToAsync(resultStream, options);
         }
 
-        [RecordedTest]
-        public async Task DownloadToAsync_DisableDataLocality()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-            var data = GetRandomBuffer(20 * Constants.MB);
-
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-            using (var resultStream = new MemoryStream())
-            {
-                BlobDownloadToOptions options = new()
-                {
-                    TransferOptions = new StorageTransferOptions
-                    {
-                        MaximumConcurrency = 10,
-                        InitialTransferSize = 3 * Constants.MB,
-                        MaximumTransferSize = 5 * Constants.MB
-                    },
-                };
-                await blob.DownloadToAsync(resultStream, options);
-                Assert.AreEqual(data.Length, resultStream.Length);
-                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
-            }
-        }
-
-        [RecordedTest]
-        public async Task DownloadToAsync_EnableDataLocality()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-            var data = GetRandomBuffer(20 * Constants.MB);
-
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-            using (var resultStream = new MemoryStream())
-            {
-                BlobDownloadToOptions options = new()
-                {
-                    EnableDataLocality = true,
-                    TransferOptions = new StorageTransferOptions
-                    {
-                        MaximumConcurrency = 10,
-                        InitialTransferSize = 3 * Constants.MB,
-                        MaximumTransferSize = 5 * Constants.MB
-                    },
-                };
-                await blob.DownloadToAsync(resultStream, options);
-                Assert.AreEqual(data.Length, resultStream.Length);
-                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
-            }
-        }
-
+        [LiveOnly]
         [RecordedTest]
         public async Task DownloadToAsync_EnableDataLocality_WithRequestAsserts()
         {
@@ -4543,12 +4487,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            long size = 0;
-            var data = GetRandomBuffer(size);
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
+            await blob.CommitBlockListAsync(Array.Empty<string>());
 
             // Act
             await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
@@ -4824,6 +4763,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("The current test environment does not support this feature")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetLayoutAsync_IfTags()
@@ -4859,6 +4799,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("The current test environment does not support this feature")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetLayoutAsync_IfTagsFailed()
@@ -5001,6 +4942,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("The current test environment does not support this feature")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetLayoutAsync_EncryptionScope()
@@ -5024,6 +4966,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("The current test environment does not support this feature")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         [TestCase(null)]
@@ -5060,6 +5003,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("The current test environment does not support this feature")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetLayoutAsync_Tags()

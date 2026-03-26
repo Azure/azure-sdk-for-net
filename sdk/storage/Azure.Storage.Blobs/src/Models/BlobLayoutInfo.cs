@@ -215,6 +215,11 @@ namespace Azure.Storage.Blobs.Models
         public bool AccessTierInferred { get; internal set; }
 
         /// <summary>
+        /// The underlying tier of a smart tier blob. Only returned if the blob is in Smart tier.
+        /// </summary>
+        public string SmartAccessTier { get; internal set; }
+
+        /// <summary>
         /// For blob storage LRS accounts, valid values are rehydrate-pending-to-hot/rehydrate-pending-to-cool.
         /// If the blob is being rehydrated and is not complete then this header is returned indicating that
         /// rehydrate is pending and also tells the destination tier.
