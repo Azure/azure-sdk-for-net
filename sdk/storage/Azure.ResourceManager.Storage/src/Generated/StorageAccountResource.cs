@@ -30,8 +30,6 @@ namespace Azure.ResourceManager.Storage
         private readonly StorageAccounts _storageAccountsRestClient;
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
-        private readonly ClientDiagnostics _storageTaskAssignmentsInstancesReportClientDiagnostics;
-        private readonly StorageTaskAssignmentsInstancesReport _storageTaskAssignmentsInstancesReportRestClient;
         private readonly StorageAccountData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts";
@@ -60,8 +58,6 @@ namespace Azure.ResourceManager.Storage
             _storageAccountsRestClient = new StorageAccounts(_storageAccountsClientDiagnostics, Pipeline, Endpoint, storageAccountApiVersion ?? "2025-08-01");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
             _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, storageAccountApiVersion ?? "2025-08-01");
-            _storageTaskAssignmentsInstancesReportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _storageTaskAssignmentsInstancesReportRestClient = new StorageTaskAssignmentsInstancesReport(_storageTaskAssignmentsInstancesReportClientDiagnostics, Pipeline, Endpoint, storageAccountApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 
@@ -1330,14 +1326,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. See [Constructing Filter Strings](https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings) for details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageTaskReportInstance"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageTaskReportInstance> GetAllAsync(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<StorageTaskReportInstance> GetStorageTaskAssignmentsInstancesReportsAsync(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTaskAssignmentsInstancesReportGetAllAsyncCollectionResultOfT(
-                _storageTaskAssignmentsInstancesReportRestClient,
+            return new StorageAccountsGetStorageTaskAssignmentsInstancesReportsAsyncCollectionResultOfT(
+                _storageAccountsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -1371,14 +1367,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. See [Constructing Filter Strings](https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings) for details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageTaskReportInstance"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageTaskReportInstance> GetAll(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<StorageTaskReportInstance> GetStorageTaskAssignmentsInstancesReports(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTaskAssignmentsInstancesReportGetAllCollectionResultOfT(
-                _storageTaskAssignmentsInstancesReportRestClient,
+            return new StorageAccountsGetStorageTaskAssignmentsInstancesReportsCollectionResultOfT(
+                _storageAccountsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,

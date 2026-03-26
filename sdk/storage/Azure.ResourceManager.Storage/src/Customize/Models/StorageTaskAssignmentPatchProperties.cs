@@ -38,5 +38,9 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
+
+        /// <summary> Id of the corresponding storage task. </summary>
+        [WirePath("taskId")]
+        public string TaskId { get; set; }
     }
 }

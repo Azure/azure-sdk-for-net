@@ -43,10 +43,6 @@ namespace Azure.ResourceManager.Storage.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Id of the corresponding storage task. </summary>
-        [WirePath("taskId")]
-        public string TaskId { get; }
-
         /// <summary> Text that describes the purpose of the storage task assignment. </summary>
         [WirePath("description")]
         public string Description { get; set; }

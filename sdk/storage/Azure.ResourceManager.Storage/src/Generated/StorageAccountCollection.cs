@@ -31,8 +31,6 @@ namespace Azure.ResourceManager.Storage
         private readonly StorageAccounts _storageAccountsRestClient;
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
-        private readonly ClientDiagnostics _storageTaskAssignmentsInstancesReportClientDiagnostics;
-        private readonly StorageTaskAssignmentsInstancesReport _storageTaskAssignmentsInstancesReportRestClient;
 
         /// <summary> Initializes a new instance of StorageAccountCollection for mocking. </summary>
         protected StorageAccountCollection()
@@ -49,8 +47,6 @@ namespace Azure.ResourceManager.Storage
             _storageAccountsRestClient = new StorageAccounts(_storageAccountsClientDiagnostics, Pipeline, Endpoint, storageAccountApiVersion ?? "2025-08-01");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageAccountResource.ResourceType.Namespace, Diagnostics);
             _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, storageAccountApiVersion ?? "2025-08-01");
-            _storageTaskAssignmentsInstancesReportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageAccountResource.ResourceType.Namespace, Diagnostics);
-            _storageTaskAssignmentsInstancesReportRestClient = new StorageTaskAssignmentsInstancesReport(_storageTaskAssignmentsInstancesReportClientDiagnostics, Pipeline, Endpoint, storageAccountApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

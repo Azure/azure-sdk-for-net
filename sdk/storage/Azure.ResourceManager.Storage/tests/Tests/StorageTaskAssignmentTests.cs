@@ -115,6 +115,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //udpate TaskAssignement
             var assignmentPatchProperties = new StorageTaskAssignmentPatchProperties()
             {
+                TaskId = _storageTaskId,
                 IsEnabled = true,
                 Description = "test storage task assignment 2",
                 ExecutionContext = new StorageTaskAssignmentUpdateExecutionContext()
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.Storage.Tests
         [RecordedTest]
         public async Task ListStorageTaskAssignmentsInstancesReport()
         {
-            var reports = await _storageAccount.GetAllAsync().ToEnumerableAsync();
+            var reports = await _storageAccount.GetStorageTaskAssignmentsInstancesReportsAsync().ToEnumerableAsync();
             Assert.AreEqual(0, reports.Count);
         }
 

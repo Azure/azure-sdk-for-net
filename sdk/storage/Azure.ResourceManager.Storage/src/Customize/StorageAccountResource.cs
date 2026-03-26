@@ -71,16 +71,6 @@ namespace Azure.ResourceManager.Storage
         public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicy()
             => GetStorageAccountManagementPolicy(ManagementPolicyName.Default).Value;
 
-        // Backward-compatible overload: GetStorageTaskAssignmentsInstancesReports renamed to GetAll.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<StorageTaskReportInstance> GetStorageTaskAssignmentsInstancesReports(int? maxpagesize, string filter, CancellationToken cancellationToken)
-            => GetAll(maxpagesize, filter, cancellationToken);
-
-        // Backward-compatible overload: GetStorageTaskAssignmentsInstancesReportsAsync renamed to GetAllAsync.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<StorageTaskReportInstance> GetStorageTaskAssignmentsInstancesReportsAsync(int? maxpagesize, string filter, CancellationToken cancellationToken)
-            => GetAllAsync(maxpagesize, filter, cancellationToken);
-
         // Backward-compat: prior GA returned Pageable<StorageAccountKey> instead of Response<StorageAccountListKeysResult>.
 
         // Backward-compatible overload: GetKeys with old StorageListKeyExpand parameter type.
