@@ -62,6 +62,14 @@ function Test-MgmtSdkUsingNewGenerator {
         return $false
     }
 
+    # Skip if tsp-location.yaml is untracked (i.e. newly created by tsp-client init
+    # during this CI run, not yet committed). This avoids marking SDK validation as
+    # required for migration PRs where the SDK hasn't been fully migrated yet.
+    $untrackedFiles = git -C $sdkProjectFolder ls-files --others --exclude-standard "tsp-location.yaml"
+    if ($untrackedFiles) {
+        return $false
+    }
+
     $tspConfigContent = Get-Content $tspConfigFile -Raw
     $isNewMgmtEmitter = $tspConfigContent -match '@azure-typespec/http-client-csharp-mgmt'
     $tspLocationContent = Get-Content $tspLocationFile -Raw
@@ -255,12 +263,7 @@ if ($relatedTypeSpecProjectFolder) {
             $tspclientCommand += " --local-spec-repo $typespecFolder"
         }
         if ($apiVersion) {
-            # Validate apiVersion format to prevent command injection - allow alphanumeric, dots, and dashes
-            if ($apiVersion -match '^[a-zA-Z0-9.-]+$') {
-                $tspclientCommand += " --emitter-options `"api-version=$apiVersion`""
-            } else {
-                Write-Warning "apiVersion '$apiVersion' contains invalid characters and will be skipped. Only alphanumeric characters, dots, and dashes are allowed."
-            }
+            Write-Warning "apiVersion '$apiVersion' is not supported for .NET SDK generation. The api-version from tspconfig.yaml will be used instead."
         }
         Write-Host $tspclientCommand
         Invoke-Expression $tspclientCommand

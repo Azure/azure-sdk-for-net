@@ -13,43 +13,11 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary>
-    /// A class representing the ServiceBusRule data model.
-    /// Description of Rule Resource.
-    /// </summary>
+    /// <summary> Description of Rule Resource. </summary>
     public partial class ServiceBusRuleData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusRuleData"/>. </summary>
         public ServiceBusRuleData()
@@ -57,40 +25,98 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of Rule resource. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="action"> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </param>
-        /// <param name="filterType"> Filter type that is evaluated against a BrokeredMessage. </param>
-        /// <param name="sqlFilter"> Properties of sqlFilter. </param>
-        /// <param name="correlationFilter"> Properties of correlationFilter. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ServiceBusFilterAction action, ServiceBusFilterType? filterType, ServiceBusSqlFilter sqlFilter, ServiceBusCorrelationFilter correlationFilter, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, Ruleproperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Location = location;
-            Action = action;
-            FilterType = filterType;
-            SqlFilter = sqlFilter;
-            CorrelationFilter = correlationFilter;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Properties of Rule resource. </summary>
+        [WirePath("properties")]
+        internal Ruleproperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
+
         /// <summary> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </summary>
         [WirePath("properties.action")]
-        public ServiceBusFilterAction Action { get; set; }
+        public ServiceBusFilterAction Action
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Action;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Ruleproperties();
+                }
+                Properties.Action = value;
+            }
+        }
+
         /// <summary> Filter type that is evaluated against a BrokeredMessage. </summary>
         [WirePath("properties.filterType")]
-        public ServiceBusFilterType? FilterType { get; set; }
+        public ServiceBusFilterType? FilterType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FilterType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Ruleproperties();
+                }
+                Properties.FilterType = value.Value;
+            }
+        }
+
         /// <summary> Properties of sqlFilter. </summary>
         [WirePath("properties.sqlFilter")]
-        public ServiceBusSqlFilter SqlFilter { get; set; }
+        public ServiceBusSqlFilter SqlFilter
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SqlFilter;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Ruleproperties();
+                }
+                Properties.SqlFilter = value;
+            }
+        }
+
         /// <summary> Properties of correlationFilter. </summary>
         [WirePath("properties.correlationFilter")]
-        public ServiceBusCorrelationFilter CorrelationFilter { get; set; }
+        public ServiceBusCorrelationFilter CorrelationFilter
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CorrelationFilter;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Ruleproperties();
+                }
+                Properties.CorrelationFilter = value;
+            }
+        }
     }
 }

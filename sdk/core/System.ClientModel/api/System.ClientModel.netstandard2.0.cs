@@ -273,9 +273,9 @@ namespace System.ClientModel.Primitives
         protected sealed override void ProcessCore(System.ClientModel.Primitives.PipelineMessage message) { }
         protected sealed override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
-    public partial interface IClientBuilder : Microsoft.Extensions.Hosting.IHostApplicationBuilder
+    public partial interface IClientBuilder
     {
-        Microsoft.Extensions.Hosting.IHostApplicationBuilder PostConfigure(System.Action<System.ClientModel.Primitives.ClientSettings> configure);
+        System.ClientModel.Primitives.IClientBuilder PostConfigure(System.Action<System.ClientModel.Primitives.ClientSettings> configure);
     }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {

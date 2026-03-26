@@ -65,6 +65,11 @@ To determine the review scope:
 - Remove "Resource" suffix if remaining noun is still descriptive (e.g., VirtualMachine not VirtualMachineResource)
 - Keep "Resource" if removing makes it non-descriptive (e.g., GenericResource stays)
 - For models: append "Data" suffix if inherits ResourceData/TrackedResourceData, otherwise "Info"
+- **No "Resource" in Data or Collection type names.**
+  - **Data types:** Types used as the `Data` property of an `ArmResource` must not include "Resource" before the "Data" suffix — e.g., `VirtualMachineResourceData` is **not allowed**; use `VirtualMachineData` instead.
+  - **Collection types:** `ArmCollection` types must not include "Resource" before "Collection" — e.g., `VirtualMachineResourceCollection` is **not allowed**; use `VirtualMachineCollection` instead.
+  - **Exception – PrivateLinkResource:** `*PrivateLinkResourceData` and `*PrivateLinkResourceCollection` are allowed because "PrivateLinkResource" is the established ARM resource name.
+  - **When to flag:** Flag all other violations unless the PR provides explicit justification for keeping the "Resource" infix.
 
 #### Operation Body Parameters
 - **PATCH operation body:** Must be named `[Model]Patch`

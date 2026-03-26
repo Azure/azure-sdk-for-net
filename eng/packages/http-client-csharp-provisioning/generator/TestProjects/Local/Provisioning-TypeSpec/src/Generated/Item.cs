@@ -32,7 +32,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        public ItemProperties Properties
+        internal ItemProperties Properties
         {
             get
             {
@@ -108,6 +108,57 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 _parent.Value = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Value. </summary>
+        public BicepValue<string> Value
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Value;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ItemProperties();
+                }
+                Properties.Value = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ContentType. </summary>
+        public BicepValue<string> ContentType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContentType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ItemProperties();
+                }
+                Properties.ContentType = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Attributes. </summary>
+        public ItemAttributes Attributes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Attributes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ItemProperties();
+                }
+                Properties.Attributes = value;
             }
         }
 
