@@ -330,7 +330,7 @@
                   "properties": {
                     "ManagedIdentityId": {
                       "type": "string",
-                      "description": "The managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdKind)."
+                      "description": "The user-assigned managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdKind)."
                     }
                   }
                 }
@@ -966,7 +966,7 @@
                   "properties": {
                     "ManagedIdentityId": {
                       "type": "string",
-                      "description": "The managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdKind)."
+                      "description": "The user-assigned managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdKind)."
                     }
                   }
                 }
