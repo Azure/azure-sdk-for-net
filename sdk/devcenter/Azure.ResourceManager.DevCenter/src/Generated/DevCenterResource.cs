@@ -683,11 +683,11 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        /// <summary> Gets a collection of ProjectPolicies in the <see cref="DevCenterResource"/>. </summary>
-        /// <returns> An object representing collection of ProjectPolicies and their operations over a ProjectPolicyResource. </returns>
-        public virtual ProjectPolicyCollection GetProjectPolicies()
+        /// <summary> Gets a collection of DevCenterProjectPolicies in the <see cref="DevCenterResource"/>. </summary>
+        /// <returns> An object representing collection of DevCenterProjectPolicies and their operations over a DevCenterProjectPolicyResource. </returns>
+        public virtual DevCenterProjectPolicyCollection GetDevCenterProjectPolicies()
         {
-            return GetCachedClient(client => new ProjectPolicyCollection(client, Id));
+            return GetCachedClient(client => new DevCenterProjectPolicyCollection(client, Id));
         }
 
         /// <summary> Gets a specific project policy. </summary>
@@ -696,11 +696,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectPolicyResource>> GetProjectPolicyAsync(string projectPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectPolicyResource>> GetDevCenterProjectPolicyAsync(string projectPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectPolicyName, nameof(projectPolicyName));
 
-            return await GetProjectPolicies().GetAsync(projectPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterProjectPolicies().GetAsync(projectPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a specific project policy. </summary>
@@ -709,11 +709,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProjectPolicyResource> GetProjectPolicy(string projectPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProjectPolicyResource> GetDevCenterProjectPolicy(string projectPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectPolicyName, nameof(projectPolicyName));
 
-            return GetProjectPolicies().Get(projectPolicyName, cancellationToken);
+            return GetDevCenterProjectPolicies().Get(projectPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AttachedNetworkConnections in the <see cref="DevCenterResource"/>. </summary>

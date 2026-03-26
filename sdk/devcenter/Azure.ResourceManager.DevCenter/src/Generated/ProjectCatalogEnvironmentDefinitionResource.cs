@@ -18,11 +18,11 @@ using Azure.ResourceManager.DevCenter.Models;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a EnvironmentDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EnvironmentDefinitionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProjectCatalogResource"/> using the GetEnvironmentDefinitions method.
+    /// A class representing a ProjectCatalogEnvironmentDefinition along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProjectCatalogEnvironmentDefinitionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProjectCatalogResource"/> using the GetProjectCatalogEnvironmentDefinitions method.
     /// </summary>
-    public partial class EnvironmentDefinitionResource : ArmResource
+    public partial class ProjectCatalogEnvironmentDefinitionResource : ArmResource
     {
         private readonly ClientDiagnostics _environmentDefinitionsClientDiagnostics;
         private readonly EnvironmentDefinitions _environmentDefinitionsRestClient;
@@ -32,30 +32,30 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/catalogs/environmentDefinitions";
 
-        /// <summary> Initializes a new instance of EnvironmentDefinitionResource for mocking. </summary>
-        protected EnvironmentDefinitionResource()
+        /// <summary> Initializes a new instance of ProjectCatalogEnvironmentDefinitionResource for mocking. </summary>
+        protected ProjectCatalogEnvironmentDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectCatalogEnvironmentDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EnvironmentDefinitionResource(ArmClient client, EnvironmentDefinitionData data) : this(client, data.Id)
+        internal ProjectCatalogEnvironmentDefinitionResource(ArmClient client, EnvironmentDefinitionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectCatalogEnvironmentDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EnvironmentDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProjectCatalogEnvironmentDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string environmentDefinitionApiVersion);
+            TryGetApiVersion(ResourceType, out string projectCatalogEnvironmentDefinitionApiVersion);
             _environmentDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _environmentDefinitionsRestClient = new EnvironmentDefinitions(_environmentDefinitionsClientDiagnostics, Pipeline, Endpoint, environmentDefinitionApiVersion ?? "2026-01-01-preview");
+            _environmentDefinitionsRestClient = new EnvironmentDefinitions(_environmentDefinitionsClientDiagnostics, Pipeline, Endpoint, projectCatalogEnvironmentDefinitionApiVersion ?? "2026-01-01-preview");
             _projectCatalogEnvironmentDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _projectCatalogEnvironmentDefinitionsRestClient = new ProjectCatalogEnvironmentDefinitions(_projectCatalogEnvironmentDefinitionsClientDiagnostics, Pipeline, Endpoint, environmentDefinitionApiVersion ?? "2026-01-01-preview");
+            _projectCatalogEnvironmentDefinitionsRestClient = new ProjectCatalogEnvironmentDefinitions(_projectCatalogEnvironmentDefinitionsClientDiagnostics, Pipeline, Endpoint, projectCatalogEnvironmentDefinitionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EnvironmentDefinitionResource"/>. </description>
+        /// <description> <see cref="ProjectCatalogEnvironmentDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EnvironmentDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectCatalogEnvironmentDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _environmentDefinitionsClientDiagnostics.CreateScope("EnvironmentDefinitionResource.Get");
+            using DiagnosticScope scope = _environmentDefinitionsClientDiagnostics.CreateScope("ProjectCatalogEnvironmentDefinitionResource.Get");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new EnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectCatalogEnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EnvironmentDefinitionResource"/>. </description>
+        /// <description> <see cref="ProjectCatalogEnvironmentDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EnvironmentDefinitionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ProjectCatalogEnvironmentDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _environmentDefinitionsClientDiagnostics.CreateScope("EnvironmentDefinitionResource.Get");
+            using DiagnosticScope scope = _environmentDefinitionsClientDiagnostics.CreateScope("ProjectCatalogEnvironmentDefinitionResource.Get");
             scope.Start();
             try
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new EnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectCatalogEnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,14 +210,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EnvironmentDefinitionResource"/>. </description>
+        /// <description> <see cref="ProjectCatalogEnvironmentDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DevCenterCatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _projectCatalogEnvironmentDefinitionsClientDiagnostics.CreateScope("EnvironmentDefinitionResource.GetErrorDetails");
+            using DiagnosticScope scope = _projectCatalogEnvironmentDefinitionsClientDiagnostics.CreateScope("ProjectCatalogEnvironmentDefinitionResource.GetErrorDetails");
             scope.Start();
             try
             {
@@ -258,14 +258,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EnvironmentDefinitionResource"/>. </description>
+        /// <description> <see cref="ProjectCatalogEnvironmentDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DevCenterCatalogResourceValidationErrorDetails> GetErrorDetails(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _projectCatalogEnvironmentDefinitionsClientDiagnostics.CreateScope("EnvironmentDefinitionResource.GetErrorDetails");
+            using DiagnosticScope scope = _projectCatalogEnvironmentDefinitionsClientDiagnostics.CreateScope("ProjectCatalogEnvironmentDefinitionResource.GetErrorDetails");
             scope.Start();
             try
             {

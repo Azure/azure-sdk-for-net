@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="scopes"> Resources that have access to the shared resources that are a part of this project policy. </param>
         /// <param name="configurationPolicies"> Configuration Policies part of this project policy. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="DevCenter.ProjectPolicyData"/> instance for mocking. </returns>
-        public static ProjectPolicyData ProjectPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<DevCenterResourcePolicy> resourcePolicies = default, IEnumerable<string> scopes = default, DevCenterConfigurationPolicies configurationPolicies = default, DevCenterProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="DevCenter.DevCenterProjectPolicyData"/> instance for mocking. </returns>
+        public static DevCenterProjectPolicyData DevCenterProjectPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<DevCenterResourcePolicy> resourcePolicies = default, IEnumerable<string> scopes = default, DevCenterConfigurationPolicies configurationPolicies = default, DevCenterProvisioningState? provisioningState = default)
         {
-            return new ProjectPolicyData(
+            return new DevCenterProjectPolicyData(
                 id,
                 name,
                 resourceType,
@@ -737,10 +737,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="inputs"> Inputs to the task. </param>
         /// <param name="timeout"> The default timeout for the task. </param>
         /// <param name="validationStatus"> Validation status for the Task. </param>
-        /// <returns> A new <see cref="DevCenter.CustomizationTaskData"/> instance for mocking. </returns>
-        public static CustomizationTaskData CustomizationTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IReadOnlyDictionary<string, DevCenterCustomizationTaskInput> inputs = default, int? timeout = default, DevCenterCatalogResourceValidationStatus? validationStatus = default)
+        /// <returns> A new <see cref="DevCenter.DevCenterCatalogTaskData"/> instance for mocking. </returns>
+        public static DevCenterCatalogTaskData DevCenterCatalogTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IReadOnlyDictionary<string, DevCenterCustomizationTaskInput> inputs = default, int? timeout = default, DevCenterCatalogResourceValidationStatus? validationStatus = default)
         {
-            return new CustomizationTaskData(
+            return new DevCenterCatalogTaskData(
                 id,
                 name,
                 resourceType,

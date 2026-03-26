@@ -696,11 +696,11 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        /// <summary> Gets a collection of EnvironmentDefinitionOperationGroups in the <see cref="DevCenterCatalogResource"/>. </summary>
-        /// <returns> An object representing collection of EnvironmentDefinitionOperationGroups and their operations over a EnvironmentDefinitionOperationGroupResource. </returns>
-        public virtual EnvironmentDefinitionOperationGroupCollection GetEnvironmentDefinitionOperationGroups()
+        /// <summary> Gets a collection of DevCenterCatalogEnvironmentDefinitions in the <see cref="DevCenterCatalogResource"/>. </summary>
+        /// <returns> An object representing collection of DevCenterCatalogEnvironmentDefinitions and their operations over a DevCenterCatalogEnvironmentDefinitionResource. </returns>
+        public virtual DevCenterCatalogEnvironmentDefinitionCollection GetDevCenterCatalogEnvironmentDefinitions()
         {
-            return GetCachedClient(client => new EnvironmentDefinitionOperationGroupCollection(client, Id));
+            return GetCachedClient(client => new DevCenterCatalogEnvironmentDefinitionCollection(client, Id));
         }
 
         /// <summary> Gets an environment definition from the catalog. </summary>
@@ -709,11 +709,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EnvironmentDefinitionOperationGroupResource>> GetEnvironmentDefinitionOperationGroupAsync(string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterCatalogEnvironmentDefinitionResource>> GetDevCenterCatalogEnvironmentDefinitionAsync(string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentDefinitionName, nameof(environmentDefinitionName));
 
-            return await GetEnvironmentDefinitionOperationGroups().GetAsync(environmentDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterCatalogEnvironmentDefinitions().GetAsync(environmentDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an environment definition from the catalog. </summary>
@@ -722,31 +722,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EnvironmentDefinitionOperationGroupResource> GetEnvironmentDefinitionOperationGroup(string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterCatalogEnvironmentDefinitionResource> GetDevCenterCatalogEnvironmentDefinition(string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentDefinitionName, nameof(environmentDefinitionName));
 
-            return GetEnvironmentDefinitionOperationGroups().Get(environmentDefinitionName, cancellationToken);
+            return GetDevCenterCatalogEnvironmentDefinitions().Get(environmentDefinitionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CustomizationTasks in the <see cref="DevCenterCatalogResource"/>. </summary>
-        /// <returns> An object representing collection of CustomizationTasks and their operations over a CustomizationTaskResource. </returns>
-        public virtual CustomizationTaskCollection GetCustomizationTasks()
+        /// <summary> Gets a collection of DevCenterCatalogTasks in the <see cref="DevCenterCatalogResource"/>. </summary>
+        /// <returns> An object representing collection of DevCenterCatalogTasks and their operations over a DevCenterCatalogTaskResource. </returns>
+        public virtual DevCenterCatalogTaskCollection GetDevCenterCatalogTasks()
         {
-            return GetCachedClient(client => new CustomizationTaskCollection(client, Id));
-        }
-
-        /// <summary> Gets a Task from the catalog. </summary>
-        /// <param name="taskName"> The name of the Customization Task. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CustomizationTaskResource>> GetCustomizationTaskAsync(string taskName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
-
-            return await GetCustomizationTasks().GetAsync(taskName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new DevCenterCatalogTaskCollection(client, Id));
         }
 
         /// <summary> Gets a Task from the catalog. </summary>
@@ -755,11 +742,24 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CustomizationTaskResource> GetCustomizationTask(string taskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterCatalogTaskResource>> GetDevCenterCatalogTaskAsync(string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            return GetCustomizationTasks().Get(taskName, cancellationToken);
+            return await GetDevCenterCatalogTasks().GetAsync(taskName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a Task from the catalog. </summary>
+        /// <param name="taskName"> The name of the Customization Task. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevCenterCatalogTaskResource> GetDevCenterCatalogTask(string taskName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
+
+            return GetDevCenterCatalogTasks().Get(taskName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevCenterCatalogImageDefinitions in the <see cref="DevCenterCatalogResource"/>. </summary>

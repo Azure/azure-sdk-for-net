@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The project policy properties for partial update. Properties not provided in the update request will not be changed. </summary>
-    public partial class ProjectPolicyPatch
+    public partial class DevCenterProjectPolicyPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectPolicyPatch"/>. </summary>
-        public ProjectPolicyPatch()
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectPolicyPatch"/>. </summary>
+        public DevCenterProjectPolicyPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectPolicyPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectPolicyPatch"/>. </summary>
         /// <param name="properties"> Properties of an project policy to be updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectPolicyPatch(ProjectPolicyUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterProjectPolicyPatch(ProjectPolicyUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

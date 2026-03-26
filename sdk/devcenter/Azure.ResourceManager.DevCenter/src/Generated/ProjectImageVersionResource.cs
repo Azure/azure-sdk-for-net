@@ -17,11 +17,11 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a ImageVersionOperationGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ImageVersionOperationGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterImageOperationGroupResource"/> using the GetImageVersionOperationGroups method.
+    /// A class representing a ProjectImageVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProjectImageVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProjectImageResource"/> using the GetProjectImageVersions method.
     /// </summary>
-    public partial class ImageVersionOperationGroupResource : ArmResource
+    public partial class ProjectImageVersionResource : ArmResource
     {
         private readonly ClientDiagnostics _imageVersionOperationGroupClientDiagnostics;
         private readonly ImageVersionOperationGroup _imageVersionOperationGroupRestClient;
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/images/versions";
 
-        /// <summary> Initializes a new instance of ImageVersionOperationGroupResource for mocking. </summary>
-        protected ImageVersionOperationGroupResource()
+        /// <summary> Initializes a new instance of ProjectImageVersionResource for mocking. </summary>
+        protected ProjectImageVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageVersionOperationGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectImageVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ImageVersionOperationGroupResource(ArmClient client, ImageVersionData data) : this(client, data.Id)
+        internal ProjectImageVersionResource(ArmClient client, ImageVersionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageVersionOperationGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectImageVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ImageVersionOperationGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProjectImageVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string imageVersionOperationGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string projectImageVersionApiVersion);
             _imageVersionOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _imageVersionOperationGroupRestClient = new ImageVersionOperationGroup(_imageVersionOperationGroupClientDiagnostics, Pipeline, Endpoint, imageVersionOperationGroupApiVersion ?? "2026-01-01-preview");
+            _imageVersionOperationGroupRestClient = new ImageVersionOperationGroup(_imageVersionOperationGroupClientDiagnostics, Pipeline, Endpoint, projectImageVersionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ImageVersionOperationGroupResource"/>. </description>
+        /// <description> <see cref="ProjectImageVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ImageVersionOperationGroupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectImageVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _imageVersionOperationGroupClientDiagnostics.CreateScope("ImageVersionOperationGroupResource.Get");
+            using DiagnosticScope scope = _imageVersionOperationGroupClientDiagnostics.CreateScope("ProjectImageVersionResource.Get");
             scope.Start();
             try
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ImageVersionOperationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectImageVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ImageVersionOperationGroupResource"/>. </description>
+        /// <description> <see cref="ProjectImageVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ImageVersionOperationGroupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ProjectImageVersionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _imageVersionOperationGroupClientDiagnostics.CreateScope("ImageVersionOperationGroupResource.Get");
+            using DiagnosticScope scope = _imageVersionOperationGroupClientDiagnostics.CreateScope("ProjectImageVersionResource.Get");
             scope.Start();
             try
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ImageVersionOperationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectImageVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

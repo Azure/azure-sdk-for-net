@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProjectPolicyResource"/> and their operations.
-    /// Each <see cref="ProjectPolicyResource"/> in the collection will belong to the same instance of <see cref="DevCenterResource"/>.
-    /// To get a <see cref="ProjectPolicyCollection"/> instance call the GetProjectPolicies method from an instance of <see cref="DevCenterResource"/>.
+    /// A class representing a collection of <see cref="DevCenterProjectPolicyResource"/> and their operations.
+    /// Each <see cref="DevCenterProjectPolicyResource"/> in the collection will belong to the same instance of <see cref="DevCenterResource"/>.
+    /// To get a <see cref="DevCenterProjectPolicyCollection"/> instance call the GetDevCenterProjectPolicies method from an instance of <see cref="DevCenterResource"/>.
     /// </summary>
-    public partial class ProjectPolicyCollection : ArmCollection, IEnumerable<ProjectPolicyResource>, IAsyncEnumerable<ProjectPolicyResource>
+    public partial class DevCenterProjectPolicyCollection : ArmCollection, IEnumerable<DevCenterProjectPolicyResource>, IAsyncEnumerable<DevCenterProjectPolicyResource>
     {
         private readonly ClientDiagnostics _projectPoliciesClientDiagnostics;
         private readonly ProjectPolicies _projectPoliciesRestClient;
 
-        /// <summary> Initializes a new instance of ProjectPolicyCollection for mocking. </summary>
-        protected ProjectPolicyCollection()
+        /// <summary> Initializes a new instance of DevCenterProjectPolicyCollection for mocking. </summary>
+        protected DevCenterProjectPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ProjectPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevCenterProjectPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ProjectPolicyResource.ResourceType, out string projectPolicyApiVersion);
-            _projectPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectPolicyResource.ResourceType.Namespace, Diagnostics);
-            _projectPoliciesRestClient = new ProjectPolicies(_projectPoliciesClientDiagnostics, Pipeline, Endpoint, projectPolicyApiVersion ?? "2026-01-01-preview");
+            TryGetApiVersion(DevCenterProjectPolicyResource.ResourceType, out string devCenterProjectPolicyApiVersion);
+            _projectPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterProjectPolicyResource.ResourceType.Namespace, Diagnostics);
+            _projectPoliciesRestClient = new ProjectPolicies(_projectPoliciesClientDiagnostics, Pipeline, Endpoint, devCenterProjectPolicyApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ProjectPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string projectPolicyName, ProjectPolicyData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DevCenterProjectPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string projectPolicyName, DevCenterProjectPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectPolicyName, nameof(projectPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("ProjectPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("DevCenterProjectPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectPolicyName, ProjectPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _projectPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectPolicyName, DevCenterProjectPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DevCenterArmOperation<ProjectPolicyResource> operation = new DevCenterArmOperation<ProjectPolicyResource>(
-                    new ProjectPolicyOperationSource(Client),
+                DevCenterArmOperation<DevCenterProjectPolicyResource> operation = new DevCenterArmOperation<DevCenterProjectPolicyResource>(
+                    new DevCenterProjectPolicyOperationSource(Client),
                     _projectPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ProjectPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string projectPolicyName, ProjectPolicyData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DevCenterProjectPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string projectPolicyName, DevCenterProjectPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectPolicyName, nameof(projectPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("ProjectPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("DevCenterProjectPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectPolicyName, ProjectPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _projectPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectPolicyName, DevCenterProjectPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                DevCenterArmOperation<ProjectPolicyResource> operation = new DevCenterArmOperation<ProjectPolicyResource>(
-                    new ProjectPolicyOperationSource(Client),
+                DevCenterArmOperation<DevCenterProjectPolicyResource> operation = new DevCenterArmOperation<DevCenterProjectPolicyResource>(
+                    new DevCenterProjectPolicyOperationSource(Client),
                     _projectPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ProjectPolicyResource>> GetAsync(string projectPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectPolicyResource>> GetAsync(string projectPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectPolicyName, nameof(projectPolicyName));
 
-            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("ProjectPolicyCollection.Get");
+            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("DevCenterProjectPolicyCollection.Get");
             scope.Start();
             try
             {
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.DevCenter
                 };
                 HttpMessage message = _projectPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectPolicyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ProjectPolicyData> response = Response.FromValue(ProjectPolicyData.FromResponse(result), result);
+                Response<DevCenterProjectPolicyData> response = Response.FromValue(DevCenterProjectPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProjectPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ProjectPolicyResource> Get(string projectPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProjectPolicyResource> Get(string projectPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectPolicyName, nameof(projectPolicyName));
 
-            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("ProjectPolicyCollection.Get");
+            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("DevCenterProjectPolicyCollection.Get");
             scope.Start();
             try
             {
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.DevCenter
                 };
                 HttpMessage message = _projectPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectPolicyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ProjectPolicyData> response = Response.FromValue(ProjectPolicyData.FromResponse(result), result);
+                Response<DevCenterProjectPolicyData> response = Response.FromValue(DevCenterProjectPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProjectPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -287,20 +287,20 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProjectPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProjectPolicyResource> GetAllAsync(int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevCenterProjectPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevCenterProjectPolicyResource> GetAllAsync(int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProjectPolicyData, ProjectPolicyResource>(new ProjectPoliciesGetByDevCenterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevCenterProjectPolicyData, DevCenterProjectPolicyResource>(new ProjectPoliciesGetByDevCenterAsyncCollectionResultOfT(
                 _projectPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new ProjectPolicyResource(Client, data));
+                context), data => new DevCenterProjectPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -322,20 +322,20 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProjectPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProjectPolicyResource> GetAll(int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevCenterProjectPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterProjectPolicyResource> GetAll(int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProjectPolicyData, ProjectPolicyResource>(new ProjectPoliciesGetByDevCenterCollectionResultOfT(
+            return new PageableWrapper<DevCenterProjectPolicyData, DevCenterProjectPolicyResource>(new ProjectPoliciesGetByDevCenterCollectionResultOfT(
                 _projectPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new ProjectPolicyResource(Client, data));
+                context), data => new DevCenterProjectPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectPolicyName, nameof(projectPolicyName));
 
-            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("ProjectPolicyCollection.Exists");
+            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("DevCenterProjectPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -374,14 +374,14 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _projectPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ProjectPolicyData> response = default;
+                Response<DevCenterProjectPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProjectPolicyData.FromResponse(result), result);
+                        response = Response.FromValue(DevCenterProjectPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProjectPolicyData)null, result);
+                        response = Response.FromValue((DevCenterProjectPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectPolicyName, nameof(projectPolicyName));
 
-            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("ProjectPolicyCollection.Exists");
+            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("DevCenterProjectPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -431,14 +431,14 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _projectPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ProjectPolicyData> response = default;
+                Response<DevCenterProjectPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProjectPolicyData.FromResponse(result), result);
+                        response = Response.FromValue(DevCenterProjectPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProjectPolicyData)null, result);
+                        response = Response.FromValue((DevCenterProjectPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -473,11 +473,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ProjectPolicyResource>> GetIfExistsAsync(string projectPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DevCenterProjectPolicyResource>> GetIfExistsAsync(string projectPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectPolicyName, nameof(projectPolicyName));
 
-            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("ProjectPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("DevCenterProjectPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -488,23 +488,23 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _projectPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ProjectPolicyData> response = default;
+                Response<DevCenterProjectPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProjectPolicyData.FromResponse(result), result);
+                        response = Response.FromValue(DevCenterProjectPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProjectPolicyData)null, result);
+                        response = Response.FromValue((DevCenterProjectPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ProjectPolicyResource>(response.GetRawResponse());
+                    return new NoValueResponse<DevCenterProjectPolicyResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProjectPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -534,11 +534,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ProjectPolicyResource> GetIfExists(string projectPolicyName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DevCenterProjectPolicyResource> GetIfExists(string projectPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectPolicyName, nameof(projectPolicyName));
 
-            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("ProjectPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("DevCenterProjectPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -549,23 +549,23 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _projectPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ProjectPolicyData> response = default;
+                Response<DevCenterProjectPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProjectPolicyData.FromResponse(result), result);
+                        response = Response.FromValue(DevCenterProjectPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProjectPolicyData)null, result);
+                        response = Response.FromValue((DevCenterProjectPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ProjectPolicyResource>(response.GetRawResponse());
+                    return new NoValueResponse<DevCenterProjectPolicyResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProjectPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        IEnumerator<ProjectPolicyResource> IEnumerable<ProjectPolicyResource>.GetEnumerator()
+        IEnumerator<DevCenterProjectPolicyResource> IEnumerable<DevCenterProjectPolicyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ProjectPolicyResource> IAsyncEnumerable<ProjectPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DevCenterProjectPolicyResource> IAsyncEnumerable<DevCenterProjectPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

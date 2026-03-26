@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary></summary>
-    internal partial class ProjectPolicyOperationSource : IOperationSource<ProjectPolicyResource>
+    internal partial class DevCenterProjectPolicyOperationSource : IOperationSource<DevCenterProjectPolicyResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ProjectPolicyOperationSource(ArmClient client)
+        internal DevCenterProjectPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ProjectPolicyResource IOperationSource<ProjectPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DevCenterProjectPolicyResource IOperationSource<DevCenterProjectPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ProjectPolicyData data = ProjectPolicyData.DeserializeProjectPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ProjectPolicyResource(_client, data);
+            DevCenterProjectPolicyData data = DevCenterProjectPolicyData.DeserializeDevCenterProjectPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DevCenterProjectPolicyResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ProjectPolicyResource> IOperationSource<ProjectPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DevCenterProjectPolicyResource> IOperationSource<DevCenterProjectPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ProjectPolicyData data = ProjectPolicyData.DeserializeProjectPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ProjectPolicyResource(_client, data);
+            DevCenterProjectPolicyData data = DevCenterProjectPolicyData.DeserializeDevCenterProjectPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DevCenterProjectPolicyResource(_client, data);
         }
     }
 }

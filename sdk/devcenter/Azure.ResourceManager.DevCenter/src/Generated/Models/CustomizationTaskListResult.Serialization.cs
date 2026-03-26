@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (CustomizationTaskData item in Value)
+                foreach (DevCenterCatalogTaskData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<CustomizationTaskData> value = default;
+            IReadOnlyList<DevCenterCatalogTaskData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<CustomizationTaskData> array = new List<CustomizationTaskData>();
+                    List<DevCenterCatalogTaskData> array = new List<DevCenterCatalogTaskData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CustomizationTaskData.DeserializeCustomizationTaskData(item, options));
+                        array.Add(DevCenterCatalogTaskData.DeserializeDevCenterCatalogTaskData(item, options));
                     }
                     value = array;
                     continue;

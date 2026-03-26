@@ -18,11 +18,11 @@ using Azure.ResourceManager.DevCenter.Models;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a EnvironmentDefinitionOperationGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EnvironmentDefinitionOperationGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterCatalogResource"/> using the GetEnvironmentDefinitionOperationGroups method.
+    /// A class representing a DevCenterCatalogEnvironmentDefinition along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterCatalogResource"/> using the GetDevCenterCatalogEnvironmentDefinitions method.
     /// </summary>
-    public partial class EnvironmentDefinitionOperationGroupResource : ArmResource
+    public partial class DevCenterCatalogEnvironmentDefinitionResource : ArmResource
     {
         private readonly ClientDiagnostics _environmentDefinitionOperationGroupClientDiagnostics;
         private readonly EnvironmentDefinitionOperationGroup _environmentDefinitionOperationGroupRestClient;
@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/catalogs/environmentDefinitions";
 
-        /// <summary> Initializes a new instance of EnvironmentDefinitionOperationGroupResource for mocking. </summary>
-        protected EnvironmentDefinitionOperationGroupResource()
+        /// <summary> Initializes a new instance of DevCenterCatalogEnvironmentDefinitionResource for mocking. </summary>
+        protected DevCenterCatalogEnvironmentDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionOperationGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EnvironmentDefinitionOperationGroupResource(ArmClient client, EnvironmentDefinitionData data) : this(client, data.Id)
+        internal DevCenterCatalogEnvironmentDefinitionResource(ArmClient client, EnvironmentDefinitionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionOperationGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EnvironmentDefinitionOperationGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevCenterCatalogEnvironmentDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string environmentDefinitionOperationGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string devCenterCatalogEnvironmentDefinitionApiVersion);
             _environmentDefinitionOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _environmentDefinitionOperationGroupRestClient = new EnvironmentDefinitionOperationGroup(_environmentDefinitionOperationGroupClientDiagnostics, Pipeline, Endpoint, environmentDefinitionOperationGroupApiVersion ?? "2026-01-01-preview");
+            _environmentDefinitionOperationGroupRestClient = new EnvironmentDefinitionOperationGroup(_environmentDefinitionOperationGroupClientDiagnostics, Pipeline, Endpoint, devCenterCatalogEnvironmentDefinitionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EnvironmentDefinitionOperationGroupResource"/>. </description>
+        /// <description> <see cref="DevCenterCatalogEnvironmentDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EnvironmentDefinitionOperationGroupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterCatalogEnvironmentDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("EnvironmentDefinitionOperationGroupResource.Get");
+            using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionResource.Get");
             scope.Start();
             try
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new EnvironmentDefinitionOperationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterCatalogEnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EnvironmentDefinitionOperationGroupResource"/>. </description>
+        /// <description> <see cref="DevCenterCatalogEnvironmentDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EnvironmentDefinitionOperationGroupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterCatalogEnvironmentDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("EnvironmentDefinitionOperationGroupResource.Get");
+            using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionResource.Get");
             scope.Start();
             try
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new EnvironmentDefinitionOperationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterCatalogEnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EnvironmentDefinitionOperationGroupResource"/>. </description>
+        /// <description> <see cref="DevCenterCatalogEnvironmentDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DevCenterCatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("EnvironmentDefinitionOperationGroupResource.GetErrorDetails");
+            using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionResource.GetErrorDetails");
             scope.Start();
             try
             {
@@ -254,14 +254,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EnvironmentDefinitionOperationGroupResource"/>. </description>
+        /// <description> <see cref="DevCenterCatalogEnvironmentDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DevCenterCatalogResourceValidationErrorDetails> GetErrorDetails(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("EnvironmentDefinitionOperationGroupResource.GetErrorDetails");
+            using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionResource.GetErrorDetails");
             scope.Start();
             try
             {

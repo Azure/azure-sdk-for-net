@@ -19,32 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EnvironmentDefinitionResource"/> and their operations.
-    /// Each <see cref="EnvironmentDefinitionResource"/> in the collection will belong to the same instance of <see cref="ProjectCatalogResource"/>.
-    /// To get a <see cref="EnvironmentDefinitionCollection"/> instance call the GetEnvironmentDefinitions method from an instance of <see cref="ProjectCatalogResource"/>.
+    /// A class representing a collection of <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> and their operations.
+    /// Each <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> in the collection will belong to the same instance of <see cref="DevCenterCatalogResource"/>.
+    /// To get a <see cref="DevCenterCatalogEnvironmentDefinitionCollection"/> instance call the GetDevCenterCatalogEnvironmentDefinitions method from an instance of <see cref="DevCenterCatalogResource"/>.
     /// </summary>
-    public partial class EnvironmentDefinitionCollection : ArmCollection, IEnumerable<EnvironmentDefinitionResource>, IAsyncEnumerable<EnvironmentDefinitionResource>
+    public partial class DevCenterCatalogEnvironmentDefinitionCollection : ArmCollection, IEnumerable<DevCenterCatalogEnvironmentDefinitionResource>, IAsyncEnumerable<DevCenterCatalogEnvironmentDefinitionResource>
     {
-        private readonly ClientDiagnostics _environmentDefinitionsClientDiagnostics;
-        private readonly EnvironmentDefinitions _environmentDefinitionsRestClient;
-        private readonly ClientDiagnostics _projectCatalogEnvironmentDefinitionsClientDiagnostics;
-        private readonly ProjectCatalogEnvironmentDefinitions _projectCatalogEnvironmentDefinitionsRestClient;
+        private readonly ClientDiagnostics _environmentDefinitionOperationGroupClientDiagnostics;
+        private readonly EnvironmentDefinitionOperationGroup _environmentDefinitionOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of EnvironmentDefinitionCollection for mocking. </summary>
-        protected EnvironmentDefinitionCollection()
+        /// <summary> Initializes a new instance of DevCenterCatalogEnvironmentDefinitionCollection for mocking. </summary>
+        protected DevCenterCatalogEnvironmentDefinitionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterCatalogEnvironmentDefinitionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EnvironmentDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevCenterCatalogEnvironmentDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EnvironmentDefinitionResource.ResourceType, out string environmentDefinitionApiVersion);
-            _environmentDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", EnvironmentDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _environmentDefinitionsRestClient = new EnvironmentDefinitions(_environmentDefinitionsClientDiagnostics, Pipeline, Endpoint, environmentDefinitionApiVersion ?? "2026-01-01-preview");
-            _projectCatalogEnvironmentDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", EnvironmentDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _projectCatalogEnvironmentDefinitionsRestClient = new ProjectCatalogEnvironmentDefinitions(_projectCatalogEnvironmentDefinitionsClientDiagnostics, Pipeline, Endpoint, environmentDefinitionApiVersion ?? "2026-01-01-preview");
+            TryGetApiVersion(DevCenterCatalogEnvironmentDefinitionResource.ResourceType, out string devCenterCatalogEnvironmentDefinitionApiVersion);
+            _environmentDefinitionOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterCatalogEnvironmentDefinitionResource.ResourceType.Namespace, Diagnostics);
+            _environmentDefinitionOperationGroupRestClient = new EnvironmentDefinitionOperationGroup(_environmentDefinitionOperationGroupClientDiagnostics, Pipeline, Endpoint, devCenterCatalogEnvironmentDefinitionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -52,9 +48,9 @@ namespace Azure.ResourceManager.DevCenter
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ProjectCatalogResource.ResourceType)
+            if (id.ResourceType != DevCenterCatalogResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProjectCatalogResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevCenterCatalogResource.ResourceType), id);
             }
         }
 
@@ -63,11 +59,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}/environmentDefinitions/{environmentDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}/environmentDefinitions/{environmentDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EnvironmentDefinitions_GetByProjectCatalog. </description>
+        /// <description> EnvironmentDefinitionOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -79,11 +75,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<EnvironmentDefinitionResource>> GetAsync(string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterCatalogEnvironmentDefinitionResource>> GetAsync(string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentDefinitionName, nameof(environmentDefinitionName));
 
-            using DiagnosticScope scope = _environmentDefinitionsClientDiagnostics.CreateScope("EnvironmentDefinitionCollection.Get");
+            using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionCollection.Get");
             scope.Start();
             try
             {
@@ -91,14 +87,14 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
+                HttpMessage message = _environmentDefinitionOperationGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EnvironmentDefinitionData> response = Response.FromValue(EnvironmentDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new EnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterCatalogEnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,11 +108,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}/environmentDefinitions/{environmentDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}/environmentDefinitions/{environmentDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EnvironmentDefinitions_GetByProjectCatalog. </description>
+        /// <description> EnvironmentDefinitionOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -128,11 +124,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<EnvironmentDefinitionResource> Get(string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterCatalogEnvironmentDefinitionResource> Get(string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentDefinitionName, nameof(environmentDefinitionName));
 
-            using DiagnosticScope scope = _environmentDefinitionsClientDiagnostics.CreateScope("EnvironmentDefinitionCollection.Get");
+            using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionCollection.Get");
             scope.Start();
             try
             {
@@ -140,14 +136,14 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
+                HttpMessage message = _environmentDefinitionOperationGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EnvironmentDefinitionData> response = Response.FromValue(EnvironmentDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new EnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterCatalogEnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,15 +153,15 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Lists the environment definitions in this project catalog.
+        /// List environment definitions in the catalog.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}/environmentDefinitions. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}/environmentDefinitions. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EnvironmentDefinitions_ListByProjectCatalog. </description>
+        /// <description> EnvironmentDefinitionOperationGroup_ListByCatalog. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -173,33 +169,35 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EnvironmentDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnvironmentDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevCenterCatalogEnvironmentDefinitionResource> GetAllAsync(int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnvironmentDefinitionData, EnvironmentDefinitionResource>(new EnvironmentDefinitionsGetByProjectCatalogAsyncCollectionResultOfT(
-                _environmentDefinitionsRestClient,
+            return new AsyncPageableWrapper<EnvironmentDefinitionData, DevCenterCatalogEnvironmentDefinitionResource>(new EnvironmentDefinitionOperationGroupGetByCatalogAsyncCollectionResultOfT(
+                _environmentDefinitionOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EnvironmentDefinitionResource(Client, data));
+                top,
+                context), data => new DevCenterCatalogEnvironmentDefinitionResource(Client, data));
         }
 
         /// <summary>
-        /// Lists the environment definitions in this project catalog.
+        /// List environment definitions in the catalog.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}/environmentDefinitions. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}/environmentDefinitions. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EnvironmentDefinitions_ListByProjectCatalog. </description>
+        /// <description> EnvironmentDefinitionOperationGroup_ListByCatalog. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -207,21 +205,23 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EnvironmentDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnvironmentDefinitionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevCenterCatalogEnvironmentDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterCatalogEnvironmentDefinitionResource> GetAll(int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnvironmentDefinitionData, EnvironmentDefinitionResource>(new EnvironmentDefinitionsGetByProjectCatalogCollectionResultOfT(
-                _environmentDefinitionsRestClient,
+            return new PageableWrapper<EnvironmentDefinitionData, DevCenterCatalogEnvironmentDefinitionResource>(new EnvironmentDefinitionOperationGroupGetByCatalogCollectionResultOfT(
+                _environmentDefinitionOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EnvironmentDefinitionResource(Client, data));
+                top,
+                context), data => new DevCenterCatalogEnvironmentDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}/environmentDefinitions/{environmentDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}/environmentDefinitions/{environmentDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EnvironmentDefinitions_GetByProjectCatalog. </description>
+        /// <description> EnvironmentDefinitionOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(environmentDefinitionName, nameof(environmentDefinitionName));
 
-            using DiagnosticScope scope = _environmentDefinitionsClientDiagnostics.CreateScope("EnvironmentDefinitionCollection.Exists");
+            using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionCollection.Exists");
             scope.Start();
             try
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
+                HttpMessage message = _environmentDefinitionOperationGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EnvironmentDefinitionData> response = default;
@@ -286,11 +286,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}/environmentDefinitions/{environmentDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}/environmentDefinitions/{environmentDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EnvironmentDefinitions_GetByProjectCatalog. </description>
+        /// <description> EnvironmentDefinitionOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(environmentDefinitionName, nameof(environmentDefinitionName));
 
-            using DiagnosticScope scope = _environmentDefinitionsClientDiagnostics.CreateScope("EnvironmentDefinitionCollection.Exists");
+            using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionCollection.Exists");
             scope.Start();
             try
             {
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
+                HttpMessage message = _environmentDefinitionOperationGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EnvironmentDefinitionData> response = default;
@@ -343,11 +343,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}/environmentDefinitions/{environmentDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}/environmentDefinitions/{environmentDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EnvironmentDefinitions_GetByProjectCatalog. </description>
+        /// <description> EnvironmentDefinitionOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -359,11 +359,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<EnvironmentDefinitionResource>> GetIfExistsAsync(string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DevCenterCatalogEnvironmentDefinitionResource>> GetIfExistsAsync(string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentDefinitionName, nameof(environmentDefinitionName));
 
-            using DiagnosticScope scope = _environmentDefinitionsClientDiagnostics.CreateScope("EnvironmentDefinitionCollection.GetIfExists");
+            using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
+                HttpMessage message = _environmentDefinitionOperationGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EnvironmentDefinitionData> response = default;
@@ -388,9 +388,9 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<EnvironmentDefinitionResource>(response.GetRawResponse());
+                    return new NoValueResponse<DevCenterCatalogEnvironmentDefinitionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new EnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterCatalogEnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -404,11 +404,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}/environmentDefinitions/{environmentDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}/environmentDefinitions/{environmentDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EnvironmentDefinitions_GetByProjectCatalog. </description>
+        /// <description> EnvironmentDefinitionOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -420,11 +420,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<EnvironmentDefinitionResource> GetIfExists(string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DevCenterCatalogEnvironmentDefinitionResource> GetIfExists(string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentDefinitionName, nameof(environmentDefinitionName));
 
-            using DiagnosticScope scope = _environmentDefinitionsClientDiagnostics.CreateScope("EnvironmentDefinitionCollection.GetIfExists");
+            using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
+                HttpMessage message = _environmentDefinitionOperationGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EnvironmentDefinitionData> response = default;
@@ -449,9 +449,9 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<EnvironmentDefinitionResource>(response.GetRawResponse());
+                    return new NoValueResponse<DevCenterCatalogEnvironmentDefinitionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new EnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterCatalogEnvironmentDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        IEnumerator<EnvironmentDefinitionResource> IEnumerable<EnvironmentDefinitionResource>.GetEnumerator()
+        IEnumerator<DevCenterCatalogEnvironmentDefinitionResource> IEnumerable<DevCenterCatalogEnvironmentDefinitionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<EnvironmentDefinitionResource> IAsyncEnumerable<EnvironmentDefinitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DevCenterCatalogEnvironmentDefinitionResource> IAsyncEnumerable<DevCenterCatalogEnvironmentDefinitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -17,69 +17,59 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> Represents an project policy resource. </summary>
-    public partial class ProjectPolicyData : ResourceData, IJsonModel<ProjectPolicyData>
+    /// <summary> Represents a Task to be used in customizing a Dev Box. </summary>
+    public partial class DevCenterCatalogTaskData : ResourceData, IJsonModel<DevCenterCatalogTaskData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevCenterCatalogTaskData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProjectPolicyData(document.RootElement, options);
+                        return DeserializeDevCenterCatalogTaskData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProjectPolicyData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterCatalogTaskData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevCenterCatalogTaskData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProjectPolicyData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterCatalogTaskData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProjectPolicyData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DevCenterCatalogTaskData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectPolicyData IPersistableModel<ProjectPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ProjectPolicyData)PersistableModelCreateCore(data, options);
+        DevCenterCatalogTaskData IPersistableModel<DevCenterCatalogTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DevCenterCatalogTaskData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProjectPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DevCenterCatalogTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="projectPolicyData"> The <see cref="ProjectPolicyData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ProjectPolicyData projectPolicyData)
-        {
-            if (projectPolicyData == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(projectPolicyData, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProjectPolicyData"/> from. </param>
-        internal static ProjectPolicyData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevCenterCatalogTaskData"/> from. </param>
+        internal static DevCenterCatalogTaskData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeProjectPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDevCenterCatalogTaskData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProjectPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DevCenterCatalogTaskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +80,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevCenterCatalogTaskData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectPolicyData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterCatalogTaskData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -105,24 +95,24 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectPolicyData IJsonModel<ProjectPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ProjectPolicyData)JsonModelCreateCore(ref reader, options);
+        DevCenterCatalogTaskData IJsonModel<DevCenterCatalogTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DevCenterCatalogTaskData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevCenterCatalogTaskData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectPolicyData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterCatalogTaskData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProjectPolicyData(document.RootElement, options);
+            return DeserializeDevCenterCatalogTaskData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProjectPolicyData DeserializeProjectPolicyData(JsonElement element, ModelReaderWriterOptions options)
+        internal static DevCenterCatalogTaskData DeserializeDevCenterCatalogTaskData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -133,7 +123,7 @@ namespace Azure.ResourceManager.DevCenter
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ProjectPolicyProperties properties = default;
+            CustomizationTaskProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -174,7 +164,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         continue;
                     }
-                    properties = ProjectPolicyProperties.DeserializeProjectPolicyProperties(prop.Value, options);
+                    properties = CustomizationTaskProperties.DeserializeCustomizationTaskProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -182,7 +172,7 @@ namespace Azure.ResourceManager.DevCenter
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectPolicyData(
+            return new DevCenterCatalogTaskData(
                 id,
                 name,
                 resourceType,

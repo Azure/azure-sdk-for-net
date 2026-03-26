@@ -15,7 +15,7 @@ using Azure.ResourceManager.DevCenter.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    internal partial class ProjectPoliciesGetByDevCenterAsyncCollectionResultOfT : AsyncPageable<ProjectPolicyData>
+    internal partial class ProjectPoliciesGetByDevCenterAsyncCollectionResultOfT : AsyncPageable<DevCenterProjectPolicyData>
     {
         private readonly ProjectPolicies _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ProjectPoliciesGetByDevCenterAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ProjectPolicyData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<DevCenterProjectPolicyData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DevCenter
                     yield break;
                 }
                 ProjectPolicyListResult result = ProjectPolicyListResult.FromResponse(response);
-                yield return Page<ProjectPolicyData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DevCenterProjectPolicyData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DevCenter
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByDevCenterRequest(nextLink, _subscriptionId, _resourceGroupName, _devCenterName, _top, _context) : _client.CreateGetByDevCenterRequest(_subscriptionId, _resourceGroupName, _devCenterName, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProjectPolicyCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DevCenterProjectPolicyCollection.GetAll");
             scope.Start();
             try
             {

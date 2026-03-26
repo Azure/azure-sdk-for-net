@@ -17,11 +17,11 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a DevCenterImageOperationGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterImageOperationGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource"/> using the GetDevCenterImageOperationGroups method.
+    /// A class representing a ProjectImage along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProjectImageResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource"/> using the GetProjectImages method.
     /// </summary>
-    public partial class DevCenterImageOperationGroupResource : ArmResource
+    public partial class ProjectImageResource : ArmResource
     {
         private readonly ClientDiagnostics _imageOperationGroupClientDiagnostics;
         private readonly ImageOperationGroup _imageOperationGroupRestClient;
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/images";
 
-        /// <summary> Initializes a new instance of DevCenterImageOperationGroupResource for mocking. </summary>
-        protected DevCenterImageOperationGroupResource()
+        /// <summary> Initializes a new instance of ProjectImageResource for mocking. </summary>
+        protected ProjectImageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterImageOperationGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DevCenterImageOperationGroupResource(ArmClient client, DevCenterImageData data) : this(client, data.Id)
+        internal ProjectImageResource(ArmClient client, DevCenterImageData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterImageOperationGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DevCenterImageOperationGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProjectImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string devCenterImageOperationGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string projectImageApiVersion);
             _imageOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _imageOperationGroupRestClient = new ImageOperationGroup(_imageOperationGroupClientDiagnostics, Pipeline, Endpoint, devCenterImageOperationGroupApiVersion ?? "2026-01-01-preview");
+            _imageOperationGroupRestClient = new ImageOperationGroup(_imageOperationGroupClientDiagnostics, Pipeline, Endpoint, projectImageApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DevCenterImageOperationGroupResource"/>. </description>
+        /// <description> <see cref="ProjectImageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DevCenterImageOperationGroupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectImageResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("DevCenterImageOperationGroupResource.Get");
+            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("ProjectImageResource.Get");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DevCenterImageOperationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DevCenterImageOperationGroupResource"/>. </description>
+        /// <description> <see cref="ProjectImageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DevCenterImageOperationGroupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ProjectImageResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("DevCenterImageOperationGroupResource.Get");
+            using DiagnosticScope scope = _imageOperationGroupClientDiagnostics.CreateScope("ProjectImageResource.Get");
             scope.Start();
             try
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DevCenterImageOperationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,11 +187,11 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        /// <summary> Gets a collection of ImageVersionOperationGroups in the <see cref="DevCenterImageOperationGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ImageVersionOperationGroups and their operations over a ImageVersionOperationGroupResource. </returns>
-        public virtual ImageVersionOperationGroupCollection GetImageVersionOperationGroups()
+        /// <summary> Gets a collection of ProjectImageVersions in the <see cref="ProjectImageResource"/>. </summary>
+        /// <returns> An object representing collection of ProjectImageVersions and their operations over a ProjectImageVersionResource. </returns>
+        public virtual ProjectImageVersionCollection GetProjectImageVersions()
         {
-            return GetCachedClient(client => new ImageVersionOperationGroupCollection(client, Id));
+            return GetCachedClient(client => new ProjectImageVersionCollection(client, Id));
         }
 
         /// <summary> Gets an image version. </summary>
@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ImageVersionOperationGroupResource>> GetImageVersionOperationGroupAsync(string versionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectImageVersionResource>> GetProjectImageVersionAsync(string versionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            return await GetImageVersionOperationGroups().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
+            return await GetProjectImageVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an image version. </summary>
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ImageVersionOperationGroupResource> GetImageVersionOperationGroup(string versionName, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectImageVersionResource> GetProjectImageVersion(string versionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            return GetImageVersionOperationGroups().Get(versionName, cancellationToken);
+            return GetProjectImageVersions().Get(versionName, cancellationToken);
         }
     }
 }

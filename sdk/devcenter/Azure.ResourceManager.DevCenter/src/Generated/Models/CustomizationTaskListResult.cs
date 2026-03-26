@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="CustomizationTaskListResult"/>. </summary>
         internal CustomizationTaskListResult()
         {
-            Value = new ChangeTrackingList<CustomizationTaskData>();
+            Value = new ChangeTrackingList<DevCenterCatalogTaskData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomizationTaskListResult"/>. </summary>
         /// <param name="value"> The CustomizationTask items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomizationTaskListResult(IReadOnlyList<CustomizationTaskData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomizationTaskListResult(IReadOnlyList<DevCenterCatalogTaskData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> The CustomizationTask items on this page. </summary>
-        public IReadOnlyList<CustomizationTaskData> Value { get; }
+        public IReadOnlyList<DevCenterCatalogTaskData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

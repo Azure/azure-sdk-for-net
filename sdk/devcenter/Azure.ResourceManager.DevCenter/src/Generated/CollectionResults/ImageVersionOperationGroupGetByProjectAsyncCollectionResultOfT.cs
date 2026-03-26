@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DevCenter
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByProjectRequest(nextLink, _subscriptionId, _resourceGroupName, _projectName, _imageName, _context) : _client.CreateGetByProjectRequest(_subscriptionId, _resourceGroupName, _projectName, _imageName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ImageVersionOperationGroupCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProjectImageVersionCollection.GetAll");
             scope.Start();
             try
             {

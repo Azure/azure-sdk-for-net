@@ -18,40 +18,40 @@ using Azure.ResourceManager.DevCenter.Models;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a ProjectPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProjectPolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterResource"/> using the GetProjectPolicies method.
+    /// A class representing a DevCenterProjectPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterProjectPolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterResource"/> using the GetDevCenterProjectPolicies method.
     /// </summary>
-    public partial class ProjectPolicyResource : ArmResource
+    public partial class DevCenterProjectPolicyResource : ArmResource
     {
         private readonly ClientDiagnostics _projectPoliciesClientDiagnostics;
         private readonly ProjectPolicies _projectPoliciesRestClient;
-        private readonly ProjectPolicyData _data;
+        private readonly DevCenterProjectPolicyData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/projectPolicies";
 
-        /// <summary> Initializes a new instance of ProjectPolicyResource for mocking. </summary>
-        protected ProjectPolicyResource()
+        /// <summary> Initializes a new instance of DevCenterProjectPolicyResource for mocking. </summary>
+        protected DevCenterProjectPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProjectPolicyResource(ArmClient client, ProjectPolicyData data) : this(client, data.Id)
+        internal DevCenterProjectPolicyResource(ArmClient client, DevCenterProjectPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ProjectPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevCenterProjectPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string projectPolicyApiVersion);
+            TryGetApiVersion(ResourceType, out string devCenterProjectPolicyApiVersion);
             _projectPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _projectPoliciesRestClient = new ProjectPolicies(_projectPoliciesClientDiagnostics, Pipeline, Endpoint, projectPolicyApiVersion ?? "2026-01-01-preview");
+            _projectPoliciesRestClient = new ProjectPolicies(_projectPoliciesClientDiagnostics, Pipeline, Endpoint, devCenterProjectPolicyApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevCenter
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ProjectPolicyData Data
+        public virtual DevCenterProjectPolicyData Data
         {
             get
             {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectPolicyResource"/>. </description>
+        /// <description> <see cref="DevCenterProjectPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ProjectPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("ProjectPolicyResource.Get");
+            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("DevCenterProjectPolicyResource.Get");
             scope.Start();
             try
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.DevCenter
                 };
                 HttpMessage message = _projectPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ProjectPolicyData> response = Response.FromValue(ProjectPolicyData.FromResponse(result), result);
+                Response<DevCenterProjectPolicyData> response = Response.FromValue(DevCenterProjectPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProjectPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectPolicyResource"/>. </description>
+        /// <description> <see cref="DevCenterProjectPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProjectPolicyResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProjectPolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("ProjectPolicyResource.Get");
+            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("DevCenterProjectPolicyResource.Get");
             scope.Start();
             try
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.DevCenter
                 };
                 HttpMessage message = _projectPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ProjectPolicyData> response = Response.FromValue(ProjectPolicyData.FromResponse(result), result);
+                Response<DevCenterProjectPolicyData> response = Response.FromValue(DevCenterProjectPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProjectPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectPolicyResource"/>. </description>
+        /// <description> <see cref="DevCenterProjectPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="patch"> Updatable project policy properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProjectPolicyResource>> UpdateAsync(WaitUntil waitUntil, ProjectPolicyPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DevCenterProjectPolicyResource>> UpdateAsync(WaitUntil waitUntil, DevCenterProjectPolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("ProjectPolicyResource.Update");
+            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("DevCenterProjectPolicyResource.Update");
             scope.Start();
             try
             {
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ProjectPolicyPatch.ToRequestContent(patch), context);
+                HttpMessage message = _projectPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevCenterProjectPolicyPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DevCenterArmOperation<ProjectPolicyResource> operation = new DevCenterArmOperation<ProjectPolicyResource>(
-                    new ProjectPolicyOperationSource(Client),
+                DevCenterArmOperation<DevCenterProjectPolicyResource> operation = new DevCenterArmOperation<DevCenterProjectPolicyResource>(
+                    new DevCenterProjectPolicyOperationSource(Client),
                     _projectPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectPolicyResource"/>. </description>
+        /// <description> <see cref="DevCenterProjectPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -272,11 +272,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="patch"> Updatable project policy properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<ProjectPolicyResource> Update(WaitUntil waitUntil, ProjectPolicyPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DevCenterProjectPolicyResource> Update(WaitUntil waitUntil, DevCenterProjectPolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("ProjectPolicyResource.Update");
+            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("DevCenterProjectPolicyResource.Update");
             scope.Start();
             try
             {
@@ -284,10 +284,10 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ProjectPolicyPatch.ToRequestContent(patch), context);
+                HttpMessage message = _projectPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevCenterProjectPolicyPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                DevCenterArmOperation<ProjectPolicyResource> operation = new DevCenterArmOperation<ProjectPolicyResource>(
-                    new ProjectPolicyOperationSource(Client),
+                DevCenterArmOperation<DevCenterProjectPolicyResource> operation = new DevCenterArmOperation<DevCenterProjectPolicyResource>(
+                    new DevCenterProjectPolicyOperationSource(Client),
                     _projectPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectPolicyResource"/>. </description>
+        /// <description> <see cref="DevCenterProjectPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("ProjectPolicyResource.Delete");
+            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("DevCenterProjectPolicyResource.Delete");
             scope.Start();
             try
             {
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectPolicyResource"/>. </description>
+        /// <description> <see cref="DevCenterProjectPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("ProjectPolicyResource.Delete");
+            using DiagnosticScope scope = _projectPoliciesClientDiagnostics.CreateScope("DevCenterProjectPolicyResource.Delete");
             scope.Start();
             try
             {

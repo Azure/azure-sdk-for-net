@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary></summary>
-    public partial class ImageVersionOperationGroupResource : IJsonModel<ImageVersionData>
+    public partial class ProjectImageVersionResource : IJsonModel<ImageVersionData>
     {
         private static IJsonModel<ImageVersionData> s_dataDeserializationInstance;
 

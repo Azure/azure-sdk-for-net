@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary> Represents an project policy resource. </summary>
-    public partial class ProjectPolicyData : ResourceData
+    public partial class DevCenterProjectPolicyData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectPolicyData"/>. </summary>
-        public ProjectPolicyData()
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectPolicyData"/>. </summary>
+        public DevCenterProjectPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectPolicyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectPolicyData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of an project policy. </param>
-        internal ProjectPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProjectPolicyProperties properties) : base(id, name, resourceType, systemData)
+        internal DevCenterProjectPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProjectPolicyProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

@@ -9,9 +9,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> Backward-compat factory method for DevCenterOperationStatus.
-    /// The generator emits a factory method with only the IReadOnlyDictionary properties param,
-    /// but we need the full backward-compat overload matching the baseline SDK. </summary>
+    // Backward-compat factory method for DevCenterOperationStatus.
+    // The generator emits a factory method with only the IReadOnlyDictionary properties param,
+    // but we need the full backward-compat overload matching the baseline SDK.
     public static partial class ArmDevCenterModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterOperationStatus"/>. </summary>

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="ProjectPolicyListResult"/>. </summary>
         internal ProjectPolicyListResult()
         {
-            Value = new ChangeTrackingList<ProjectPolicyData>();
+            Value = new ChangeTrackingList<DevCenterProjectPolicyData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProjectPolicyListResult"/>. </summary>
         /// <param name="value"> The ProjectPolicy items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectPolicyListResult(IReadOnlyList<ProjectPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectPolicyListResult(IReadOnlyList<DevCenterProjectPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> The ProjectPolicy items on this page. </summary>
-        public IReadOnlyList<ProjectPolicyData> Value { get; }
+        public IReadOnlyList<DevCenterProjectPolicyData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

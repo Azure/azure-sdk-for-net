@@ -696,11 +696,11 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        /// <summary> Gets a collection of EnvironmentDefinitions in the <see cref="ProjectCatalogResource"/>. </summary>
-        /// <returns> An object representing collection of EnvironmentDefinitions and their operations over a EnvironmentDefinitionResource. </returns>
-        public virtual EnvironmentDefinitionCollection GetEnvironmentDefinitions()
+        /// <summary> Gets a collection of ProjectCatalogEnvironmentDefinitions in the <see cref="ProjectCatalogResource"/>. </summary>
+        /// <returns> An object representing collection of ProjectCatalogEnvironmentDefinitions and their operations over a ProjectCatalogEnvironmentDefinitionResource. </returns>
+        public virtual ProjectCatalogEnvironmentDefinitionCollection GetProjectCatalogEnvironmentDefinitions()
         {
-            return GetCachedClient(client => new EnvironmentDefinitionCollection(client, Id));
+            return GetCachedClient(client => new ProjectCatalogEnvironmentDefinitionCollection(client, Id));
         }
 
         /// <summary> Gets an environment definition from the catalog. </summary>
@@ -709,11 +709,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EnvironmentDefinitionResource>> GetEnvironmentDefinitionAsync(string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectCatalogEnvironmentDefinitionResource>> GetProjectCatalogEnvironmentDefinitionAsync(string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentDefinitionName, nameof(environmentDefinitionName));
 
-            return await GetEnvironmentDefinitions().GetAsync(environmentDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetProjectCatalogEnvironmentDefinitions().GetAsync(environmentDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an environment definition from the catalog. </summary>
@@ -722,11 +722,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EnvironmentDefinitionResource> GetEnvironmentDefinition(string environmentDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectCatalogEnvironmentDefinitionResource> GetProjectCatalogEnvironmentDefinition(string environmentDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentDefinitionName, nameof(environmentDefinitionName));
 
-            return GetEnvironmentDefinitions().Get(environmentDefinitionName, cancellationToken);
+            return GetProjectCatalogEnvironmentDefinitions().Get(environmentDefinitionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ProjectCatalogImageDefinitions in the <see cref="ProjectCatalogResource"/>. </summary>

@@ -18,40 +18,40 @@ using Azure.ResourceManager.DevCenter.Models;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a CustomizationTask along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CustomizationTaskResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterCatalogResource"/> using the GetCustomizationTasks method.
+    /// A class representing a DevCenterCatalogTask along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterCatalogTaskResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterCatalogResource"/> using the GetDevCenterCatalogTasks method.
     /// </summary>
-    public partial class CustomizationTaskResource : ArmResource
+    public partial class DevCenterCatalogTaskResource : ArmResource
     {
         private readonly ClientDiagnostics _customizationTasksClientDiagnostics;
         private readonly CustomizationTasks _customizationTasksRestClient;
-        private readonly CustomizationTaskData _data;
+        private readonly DevCenterCatalogTaskData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/catalogs/tasks";
 
-        /// <summary> Initializes a new instance of CustomizationTaskResource for mocking. </summary>
-        protected CustomizationTaskResource()
+        /// <summary> Initializes a new instance of DevCenterCatalogTaskResource for mocking. </summary>
+        protected DevCenterCatalogTaskResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomizationTaskResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterCatalogTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CustomizationTaskResource(ArmClient client, CustomizationTaskData data) : this(client, data.Id)
+        internal DevCenterCatalogTaskResource(ArmClient client, DevCenterCatalogTaskData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomizationTaskResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterCatalogTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CustomizationTaskResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevCenterCatalogTaskResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string customizationTaskApiVersion);
+            TryGetApiVersion(ResourceType, out string devCenterCatalogTaskApiVersion);
             _customizationTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _customizationTasksRestClient = new CustomizationTasks(_customizationTasksClientDiagnostics, Pipeline, Endpoint, customizationTaskApiVersion ?? "2026-01-01-preview");
+            _customizationTasksRestClient = new CustomizationTasks(_customizationTasksClientDiagnostics, Pipeline, Endpoint, devCenterCatalogTaskApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevCenter
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual CustomizationTaskData Data
+        public virtual DevCenterCatalogTaskData Data
         {
             get
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CustomizationTaskResource"/>. </description>
+        /// <description> <see cref="DevCenterCatalogTaskResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CustomizationTaskResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterCatalogTaskResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _customizationTasksClientDiagnostics.CreateScope("CustomizationTaskResource.Get");
+            using DiagnosticScope scope = _customizationTasksClientDiagnostics.CreateScope("DevCenterCatalogTaskResource.Get");
             scope.Start();
             try
             {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.DevCenter
                 };
                 HttpMessage message = _customizationTasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CustomizationTaskData> response = Response.FromValue(CustomizationTaskData.FromResponse(result), result);
+                Response<DevCenterCatalogTaskData> response = Response.FromValue(DevCenterCatalogTaskData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CustomizationTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterCatalogTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CustomizationTaskResource"/>. </description>
+        /// <description> <see cref="DevCenterCatalogTaskResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CustomizationTaskResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterCatalogTaskResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _customizationTasksClientDiagnostics.CreateScope("CustomizationTaskResource.Get");
+            using DiagnosticScope scope = _customizationTasksClientDiagnostics.CreateScope("DevCenterCatalogTaskResource.Get");
             scope.Start();
             try
             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.DevCenter
                 };
                 HttpMessage message = _customizationTasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CustomizationTaskData> response = Response.FromValue(CustomizationTaskData.FromResponse(result), result);
+                Response<DevCenterCatalogTaskData> response = Response.FromValue(DevCenterCatalogTaskData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CustomizationTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterCatalogTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CustomizationTaskResource"/>. </description>
+        /// <description> <see cref="DevCenterCatalogTaskResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DevCenterCatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _customizationTasksClientDiagnostics.CreateScope("CustomizationTaskResource.GetErrorDetails");
+            using DiagnosticScope scope = _customizationTasksClientDiagnostics.CreateScope("DevCenterCatalogTaskResource.GetErrorDetails");
             scope.Start();
             try
             {
@@ -254,14 +254,14 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CustomizationTaskResource"/>. </description>
+        /// <description> <see cref="DevCenterCatalogTaskResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DevCenterCatalogResourceValidationErrorDetails> GetErrorDetails(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _customizationTasksClientDiagnostics.CreateScope("CustomizationTaskResource.GetErrorDetails");
+            using DiagnosticScope scope = _customizationTasksClientDiagnostics.CreateScope("DevCenterCatalogTaskResource.GetErrorDetails");
             scope.Start();
             try
             {

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevCenter
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByCatalogRequest(nextLink, _subscriptionId, _resourceGroupName, _devCenterName, _catalogName, _top, _context) : _client.CreateGetByCatalogRequest(_subscriptionId, _resourceGroupName, _devCenterName, _catalogName, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EnvironmentDefinitionOperationGroupCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DevCenterCatalogEnvironmentDefinitionCollection.GetAll");
             scope.Start();
             try
             {

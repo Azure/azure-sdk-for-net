@@ -15,61 +15,61 @@ using Azure.ResourceManager.DevCenter;
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The project policy properties for partial update. Properties not provided in the update request will not be changed. </summary>
-    public partial class ProjectPolicyPatch : IJsonModel<ProjectPolicyPatch>
+    public partial class DevCenterProjectPolicyPatch : IJsonModel<DevCenterProjectPolicyPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProjectPolicyPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DevCenterProjectPolicyPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProjectPolicyPatch(document.RootElement, options);
+                        return DeserializeDevCenterProjectPolicyPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProjectPolicyPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterProjectPolicyPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProjectPolicyPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterProjectPolicyPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProjectPolicyPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DevCenterProjectPolicyPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectPolicyPatch IPersistableModel<ProjectPolicyPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DevCenterProjectPolicyPatch IPersistableModel<DevCenterProjectPolicyPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProjectPolicyPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DevCenterProjectPolicyPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="projectPolicyPatch"> The <see cref="ProjectPolicyPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ProjectPolicyPatch projectPolicyPatch)
+        /// <param name="devCenterProjectPolicyPatch"> The <see cref="DevCenterProjectPolicyPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DevCenterProjectPolicyPatch devCenterProjectPolicyPatch)
         {
-            if (projectPolicyPatch == null)
+            if (devCenterProjectPolicyPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(projectPolicyPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(devCenterProjectPolicyPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProjectPolicyPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DevCenterProjectPolicyPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectPolicyPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterProjectPolicyPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectPolicyPatch IJsonModel<ProjectPolicyPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DevCenterProjectPolicyPatch IJsonModel<DevCenterProjectPolicyPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProjectPolicyPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DevCenterProjectPolicyPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectPolicyPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterProjectPolicyPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProjectPolicyPatch(document.RootElement, options);
+            return DeserializeDevCenterProjectPolicyPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProjectPolicyPatch DeserializeProjectPolicyPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static DevCenterProjectPolicyPatch DeserializeDevCenterProjectPolicyPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectPolicyPatch(properties, additionalBinaryDataProperties);
+            return new DevCenterProjectPolicyPatch(properties, additionalBinaryDataProperties);
         }
     }
 }

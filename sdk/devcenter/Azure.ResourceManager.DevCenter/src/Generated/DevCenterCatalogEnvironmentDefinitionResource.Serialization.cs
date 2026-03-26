@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary></summary>
-    public partial class EnvironmentDefinitionResource : IJsonModel<EnvironmentDefinitionData>
+    public partial class DevCenterCatalogEnvironmentDefinitionResource : IJsonModel<EnvironmentDefinitionData>
     {
         private static IJsonModel<EnvironmentDefinitionData> s_dataDeserializationInstance;
 
