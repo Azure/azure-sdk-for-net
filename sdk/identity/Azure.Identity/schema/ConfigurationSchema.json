@@ -599,7 +599,7 @@
               },
               "ManagedIdentityIdKind": {
                 "type": "string",
-                "description": "The type of managed identity to use as the federated identity. SystemAssigned is not supported.",
+                "description": "The type of user-assigned managed identity to use as the federated identity. SystemAssigned is not supported.",
                 "enum": [
                   "ClientId",
                   "ResourceId",
@@ -1205,7 +1205,7 @@
               },
               "ManagedIdentityIdKind": {
                 "type": "string",
-                "description": "The type of managed identity to use as the federated identity. SystemAssigned is not supported.",
+                "description": "The type of user-assigned managed identity to use as the federated identity. SystemAssigned is not supported.",
                 "enum": [
                   "ClientId",
                   "ResourceId",
