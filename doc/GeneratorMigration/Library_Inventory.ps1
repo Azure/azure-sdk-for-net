@@ -190,33 +190,28 @@ function Get-SdkLibraries {
             }
 
             # Skip empty directories (e.g., leftover from deleted libraries) - must have at least one .csproj
-            $csprojFiles = Get-ChildItem -Path $libraryDir.FullName -Filter "*.csproj" -Recurse -ErrorAction SilentlyContinue
-            if (-not $csprojFiles) {
+            $hasCsproj = Get-ChildItem -Path $libraryDir.FullName -Filter "*.csproj" -File -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+            if (-not $hasCsproj) {
                 continue
             }
 
-            # If it has a /src directory or a csproj file, it's likely a library
-            $srcPath = Join-Path $libraryDir.FullName "src"
+            $libraryType = if (Test-MgmtLibrary $libraryDir.FullName) { "Management" } else { "Data Plane" }
+            $generator = Get-GeneratorType $libraryDir.FullName
+            $hasTspLocation = Test-HasTspLocation $libraryDir.FullName
 
-            if ((Test-Path $srcPath) -or $csprojFiles) {
-                $libraryType = if (Test-MgmtLibrary $libraryDir.FullName) { "Management" } else { "Data Plane" }
-                $generator = Get-GeneratorType $libraryDir.FullName
-                $hasTspLocation = Test-HasTspLocation $libraryDir.FullName
+            # Calculate relative path from parent of SDK root (to include 'sdk' prefix)
+            $repoRoot = Split-Path $SdkRoot -Parent
+            $relativePath = $libraryDir.FullName.Substring($repoRoot.Length + 1)  # +1 to remove leading separator
+            $relativePath = $relativePath -replace "\\", "/"  # Normalize to forward slashes
 
-                # Calculate relative path from parent of SDK root (to include 'sdk' prefix)
-                $repoRoot = Split-Path $SdkRoot -Parent
-                $relativePath = $libraryDir.FullName.Substring($repoRoot.Length + 1)  # +1 to remove leading separator
-                $relativePath = $relativePath -replace "\\", "/"  # Normalize to forward slashes
-
-                $libraries += [PSCustomObject]@{
-                    service = $serviceDir.Name
-                    library = $libraryDir.Name
-                    path = $relativePath
-                    type = $libraryType
-                    generator = $generator
-                    hasTspLocation = $hasTspLocation
-                    mgmtPeerLibrary = if (Test-ProvisioningLibrary $libraryDir.FullName) { @(Get-ProvisioningMgmtPeerLibrary $libraryDir.Name) } else { @() }
-                }
+            $libraries += [PSCustomObject]@{
+                service = $serviceDir.Name
+                library = $libraryDir.Name
+                path = $relativePath
+                type = $libraryType
+                generator = $generator
+                hasTspLocation = $hasTspLocation
+                mgmtPeerLibrary = if (Test-ProvisioningLibrary $libraryDir.FullName) { @(Get-ProvisioningMgmtPeerLibrary $libraryDir.Name) } else { @() }
             }
         }
     }
