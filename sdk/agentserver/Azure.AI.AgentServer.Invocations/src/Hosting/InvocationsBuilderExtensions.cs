@@ -54,7 +54,7 @@ public static class InvocationsBuilderExtensions
         ArgumentNullException.ThrowIfNull(handler);
 
         builder.Services.AddInvocationsServer(configure);
-        builder.Services.TryAddScoped<InvocationHandler>(_ => handler);
+        builder.Services.TryAddSingleton<InvocationHandler>(handler);
 
         builder.RegisterProtocol("Invocations", endpoints =>
         {

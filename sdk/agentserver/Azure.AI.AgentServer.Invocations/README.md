@@ -17,7 +17,7 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 ### Prerequisites
 
 - An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
-- [.NET 10](https://dotnet.microsoft.com/download) or later
+- [.NET 8](https://dotnet.microsoft.com/download) or later
 - The `Azure.AI.AgentServer.Hosting` package (installed automatically as a dependency)
 
 ### Configure the server

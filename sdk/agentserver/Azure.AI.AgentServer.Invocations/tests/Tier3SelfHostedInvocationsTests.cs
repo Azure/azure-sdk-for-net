@@ -20,7 +20,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests;
 public class Tier3SelfHostedInvocationsTests
 {
     [Test]
-    public async Task SelfHosted_AddAndMap_WorksWithoutHostingPackage()
+    public async Task SelfHosted_AddAndMap_WorksWithPlainWebApplication()
     {
         // Developer creates their own WebApplication
         var builder = WebApplication.CreateBuilder();

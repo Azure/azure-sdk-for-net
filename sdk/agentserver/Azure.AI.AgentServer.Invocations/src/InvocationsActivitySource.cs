@@ -17,7 +17,7 @@ public class InvocationsActivitySource
     /// <summary>
     /// The default activity source name.
     /// </summary>
-    public const string DefaultName = "Azure.AI.AgentServer.Invocations";
+    public const string DefaultName = AgentHostTelemetry.InvocationsSourceName;
 
     private readonly ActivitySource _activitySource;
 
