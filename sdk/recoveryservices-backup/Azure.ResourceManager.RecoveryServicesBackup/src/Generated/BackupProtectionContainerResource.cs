@@ -325,13 +325,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WorkloadItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkloadItemResource> GetAllAsync(string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WorkloadItemResource> GetBackupWorkloadItemsAsync(string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new BackupWorkloadItemsGetAllAsyncCollectionResultOfT(
+            return new BackupWorkloadItemsGetBackupWorkloadItemsAsyncCollectionResultOfT(
                 _backupWorkloadItemsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -369,13 +369,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WorkloadItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkloadItemResource> GetAll(string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<WorkloadItemResource> GetBackupWorkloadItems(string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new BackupWorkloadItemsGetAllCollectionResultOfT(
+            return new BackupWorkloadItemsGetBackupWorkloadItemsCollectionResultOfT(
                 _backupWorkloadItemsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

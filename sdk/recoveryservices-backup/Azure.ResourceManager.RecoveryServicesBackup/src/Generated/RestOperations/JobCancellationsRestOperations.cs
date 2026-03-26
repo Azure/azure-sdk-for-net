@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateTriggerRequest(string subscriptionId, string resourceGroupName, string vaultName, string jobName, RequestContext context)
+        internal HttpMessage CreateTriggerJobCancellationRequest(string subscriptionId, string resourceGroupName, string vaultName, string jobName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

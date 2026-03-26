@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class GenericRecoveryPoint : BackupGenericRecoveryPoint
     {
         /// <summary> Initializes a new instance of <see cref="GenericRecoveryPoint"/>. </summary>
-        internal GenericRecoveryPoint() : base("GenericRecoveryPoint")
+        public GenericRecoveryPoint() : base("GenericRecoveryPoint")
         {
         }
 
@@ -38,18 +38,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Friendly name of the backup copy. </summary>
-        public string FriendlyName { get; }
+        public string FriendlyName { get; set; }
 
         /// <summary> Type of the backup copy. </summary>
-        public string RecoveryPointType { get; }
+        public string RecoveryPointType { get; set; }
 
         /// <summary> Time at which this backup copy was created. </summary>
-        public DateTimeOffset? RecoveryPointOn { get; }
+        public DateTimeOffset? RecoveryPointOn { get; set; }
 
         /// <summary> Additional information associated with this backup copy. </summary>
-        public string RecoveryPointAdditionalInfo { get; }
+        public string RecoveryPointAdditionalInfo { get; set; }
 
         /// <summary> Properties of Recovery Point. </summary>
-        public RecoveryPointProperties RecoveryPointProperties { get; }
+        public RecoveryPointProperties RecoveryPointProperties { get; set; }
     }
 }

@@ -333,11 +333,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> resource backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> TriggerAsync(TriggerBackupContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> TriggerBackupAsync(TriggerBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("BackupProtectedItemResource.Trigger");
+            using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("BackupProtectedItemResource.TriggerBackup");
             scope.Start();
             try
             {
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupsRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TriggerBackupContent.ToRequestContent(content), context);
+                HttpMessage message = _backupsRestClient.CreateTriggerBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TriggerBackupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -381,11 +381,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> resource backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response Trigger(TriggerBackupContent content, CancellationToken cancellationToken = default)
+        public virtual Response TriggerBackup(TriggerBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("BackupProtectedItemResource.Trigger");
+            using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("BackupProtectedItemResource.TriggerBackup");
             scope.Start();
             try
             {
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupsRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TriggerBackupContent.ToRequestContent(content), context);
+                HttpMessage message = _backupsRestClient.CreateTriggerBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TriggerBackupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

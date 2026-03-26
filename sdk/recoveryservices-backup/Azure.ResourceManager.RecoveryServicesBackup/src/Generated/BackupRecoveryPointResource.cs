@@ -331,11 +331,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> resource ILR request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> ProvisionAsync(ProvisionIlrConnectionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ProvisionItemLevelRecoveryConnectionAsync(ProvisionIlrConnectionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _itemLevelRecoveryConnectionsClientDiagnostics.CreateScope("BackupRecoveryPointResource.Provision");
+            using DiagnosticScope scope = _itemLevelRecoveryConnectionsClientDiagnostics.CreateScope("BackupRecoveryPointResource.ProvisionItemLevelRecoveryConnection");
             scope.Start();
             try
             {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _itemLevelRecoveryConnectionsRestClient.CreateProvisionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ProvisionIlrConnectionContent.ToRequestContent(content), context);
+                HttpMessage message = _itemLevelRecoveryConnectionsRestClient.CreateProvisionItemLevelRecoveryConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ProvisionIlrConnectionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -380,11 +380,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> resource ILR request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response Provision(ProvisionIlrConnectionContent content, CancellationToken cancellationToken = default)
+        public virtual Response ProvisionItemLevelRecoveryConnection(ProvisionIlrConnectionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _itemLevelRecoveryConnectionsClientDiagnostics.CreateScope("BackupRecoveryPointResource.Provision");
+            using DiagnosticScope scope = _itemLevelRecoveryConnectionsClientDiagnostics.CreateScope("BackupRecoveryPointResource.ProvisionItemLevelRecoveryConnection");
             scope.Start();
             try
             {
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _itemLevelRecoveryConnectionsRestClient.CreateProvisionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ProvisionIlrConnectionContent.ToRequestContent(content), context);
+                HttpMessage message = _itemLevelRecoveryConnectionsRestClient.CreateProvisionItemLevelRecoveryConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ProvisionIlrConnectionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -426,9 +426,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RevokeAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RevokeItemLevelRecoveryConnectionAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _itemLevelRecoveryConnectionsClientDiagnostics.CreateScope("BackupRecoveryPointResource.Revoke");
+            using DiagnosticScope scope = _itemLevelRecoveryConnectionsClientDiagnostics.CreateScope("BackupRecoveryPointResource.RevokeItemLevelRecoveryConnection");
             scope.Start();
             try
             {
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _itemLevelRecoveryConnectionsRestClient.CreateRevokeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _itemLevelRecoveryConnectionsRestClient.CreateRevokeItemLevelRecoveryConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -470,9 +470,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Revoke(CancellationToken cancellationToken = default)
+        public virtual Response RevokeItemLevelRecoveryConnection(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _itemLevelRecoveryConnectionsClientDiagnostics.CreateScope("BackupRecoveryPointResource.Revoke");
+            using DiagnosticScope scope = _itemLevelRecoveryConnectionsClientDiagnostics.CreateScope("BackupRecoveryPointResource.RevokeItemLevelRecoveryConnection");
             scope.Start();
             try
             {
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _itemLevelRecoveryConnectionsRestClient.CreateRevokeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _itemLevelRecoveryConnectionsRestClient.CreateRevokeItemLevelRecoveryConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -624,11 +624,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> TriggerAsync(WaitUntil waitUntil, TriggerRestoreContent content, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> TriggerRestoreAsync(WaitUntil waitUntil, TriggerRestoreContent content, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _restoresClientDiagnostics.CreateScope("BackupRecoveryPointResource.Trigger");
+            using DiagnosticScope scope = _restoresClientDiagnostics.CreateScope("BackupRecoveryPointResource.TriggerRestore");
             scope.Start();
             try
             {
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restoresRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TriggerRestoreContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = _restoresRestClient.CreateTriggerRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TriggerRestoreContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(_restoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -679,11 +679,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation Trigger(WaitUntil waitUntil, TriggerRestoreContent content, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation TriggerRestore(WaitUntil waitUntil, TriggerRestoreContent content, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _restoresClientDiagnostics.CreateScope("BackupRecoveryPointResource.Trigger");
+            using DiagnosticScope scope = _restoresClientDiagnostics.CreateScope("BackupRecoveryPointResource.TriggerRestore");
             scope.Start();
             try
             {
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restoresRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TriggerRestoreContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = _restoresRestClient.CreateTriggerRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TriggerRestoreContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(_restoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadSapHanaRecoveryPoint : WorkloadRecoveryPoint
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadSapHanaRecoveryPoint"/>. </summary>
-        internal WorkloadSapHanaRecoveryPoint()
+        public WorkloadSapHanaRecoveryPoint()
         {
         }
 

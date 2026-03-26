@@ -14,7 +14,7 @@ using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    internal partial class BackupWorkloadItemsGetAllCollectionResultOfT : Pageable<WorkloadItemResource>
+    internal partial class BackupWorkloadItemsGetBackupWorkloadItemsCollectionResultOfT : Pageable<WorkloadItemResource>
     {
         private readonly BackupWorkloadItems _client;
         private readonly string _subscriptionId;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly string _skipToken;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of BackupWorkloadItemsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BackupWorkloadItemsGetBackupWorkloadItemsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BackupWorkloadItems client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BackupWorkloadItemsGetAllCollectionResultOfT(BackupWorkloadItems client, string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string filter, string skipToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BackupWorkloadItemsGetBackupWorkloadItemsCollectionResultOfT(BackupWorkloadItems client, string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string filter, string skipToken, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _context = context;
         }
 
-        /// <summary> Gets the pages of BackupWorkloadItemsGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BackupWorkloadItemsGetBackupWorkloadItemsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of BackupWorkloadItemsGetAllCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of BackupWorkloadItemsGetBackupWorkloadItemsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<WorkloadItemResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _fabricName, _containerName, _filter, _skipToken, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _vaultName, _fabricName, _containerName, _filter, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BackupProtectionContainerResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetBackupWorkloadItemsRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _fabricName, _containerName, _filter, _skipToken, _context) : _client.CreateGetBackupWorkloadItemsRequest(_subscriptionId, _resourceGroupName, _vaultName, _fabricName, _containerName, _filter, _skipToken, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BackupProtectionContainerResource.GetBackupWorkloadItems");
             scope.Start();
             try
             {

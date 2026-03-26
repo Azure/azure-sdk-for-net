@@ -219,9 +219,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> TriggerAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> TriggerJobCancellationAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _jobCancellationsClientDiagnostics.CreateScope("BackupJobResource.Trigger");
+            using DiagnosticScope scope = _jobCancellationsClientDiagnostics.CreateScope("BackupJobResource.TriggerJobCancellation");
             scope.Start();
             try
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobCancellationsRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _jobCancellationsRestClient.CreateTriggerJobCancellationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -263,9 +263,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Trigger(CancellationToken cancellationToken = default)
+        public virtual Response TriggerJobCancellation(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _jobCancellationsClientDiagnostics.CreateScope("BackupJobResource.Trigger");
+            using DiagnosticScope scope = _jobCancellationsClientDiagnostics.CreateScope("BackupJobResource.TriggerJobCancellation");
             scope.Start();
             try
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobCancellationsRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _jobCancellationsRestClient.CreateTriggerJobCancellationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

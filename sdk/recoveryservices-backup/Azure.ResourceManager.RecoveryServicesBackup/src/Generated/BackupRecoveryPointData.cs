@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary> Initializes a new instance of <see cref="BackupRecoveryPointData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal BackupRecoveryPointData(AzureLocation location) : base(location)
+        public BackupRecoveryPointData(AzureLocation location) : base(location)
         {
         }
 
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> RecoveryPointResource properties. </summary>
-        public BackupGenericRecoveryPoint Properties { get; }
+        public BackupGenericRecoveryPoint Properties { get; set; }
 
         /// <summary> Optional ETag. </summary>
-        public ETag? ETag { get; }
+        public ETag? ETag { get; set; }
     }
 }
