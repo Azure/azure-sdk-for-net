@@ -14,8 +14,8 @@ namespace Azure.Communication.Messages
     /// </summary>
     [CodeGenSuppress("MessageTemplateClient", typeof(Uri), typeof(AzureKeyCredential))]
     [CodeGenSuppress("MessageTemplateClient", typeof(Uri), typeof(TokenCredential))]
-    [CodeGenSuppress("MessageTemplateClient", typeof(Uri), typeof(AzureKeyCredential), typeof(MessagesClientOptions))]
-    [CodeGenSuppress("MessageTemplateClient", typeof(Uri), typeof(TokenCredential), typeof(MessagesClientOptions))]
+    [CodeGenSuppress("MessageTemplateClient", typeof(Uri), typeof(AzureKeyCredential), typeof(CommunicationMessagesClientOptions))]
+    [CodeGenSuppress("MessageTemplateClient", typeof(Uri), typeof(TokenCredential), typeof(CommunicationMessagesClientOptions))]
     public partial class MessageTemplateClient
     {
         #region public constructors

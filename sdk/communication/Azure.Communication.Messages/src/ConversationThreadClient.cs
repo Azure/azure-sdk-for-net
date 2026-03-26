@@ -13,7 +13,7 @@ namespace Azure.Communication.Messages
     /// <summary>
     /// The Azure Communication Services Conversation Thread client.
     /// </summary>
-    [CodeGenSuppress("ConversationThreadClient", typeof(Uri), typeof(AzureKeyCredential), typeof(MessagesClientOptions))]
+    [CodeGenSuppress("ConversationThreadClient", typeof(Uri), typeof(AzureKeyCredential), typeof(CommunicationMessagesClientOptions))]
     public partial class ConversationThreadClient
     {
         #region public constructors

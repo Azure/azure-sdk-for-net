@@ -15,8 +15,8 @@ namespace Azure.Communication.Messages
     /// The Azure Communication Services Conversation Adminstration client.
     /// </summary>
     [CodeGenSuppress("ConversationAdministrationClient", typeof(Uri), typeof(AzureKeyCredential))]
-    [CodeGenSuppress("ConversationAdministrationClient", typeof(Uri), typeof(AzureKeyCredential), typeof(MessagesClientOptions))]
-    [CodeGenSuppress("ConversationAdministrationClient", typeof(Uri), typeof(TokenCredential), typeof(MessagesClientOptions))]
+    [CodeGenSuppress("ConversationAdministrationClient", typeof(Uri), typeof(AzureKeyCredential), typeof(CommunicationMessagesClientOptions))]
+    [CodeGenSuppress("ConversationAdministrationClient", typeof(Uri), typeof(TokenCredential), typeof(CommunicationMessagesClientOptions))]
     public partial class ConversationAdministrationClient
     {
         #region public constructors

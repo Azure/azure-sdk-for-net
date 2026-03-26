@@ -18,8 +18,8 @@ namespace Azure.Communication.Messages
     /// </summary>
     [CodeGenSuppress("NotificationMessagesClient", typeof(Uri), typeof(AzureKeyCredential))]
     [CodeGenSuppress("NotificationMessagesClient", typeof(Uri), typeof(TokenCredential))]
-    [CodeGenSuppress("NotificationMessagesClient", typeof(Uri), typeof(AzureKeyCredential), typeof(MessagesClientOptions))]
-    [CodeGenSuppress("NotificationMessagesClient", typeof(Uri), typeof(TokenCredential), typeof(MessagesClientOptions))]
+    [CodeGenSuppress("NotificationMessagesClient", typeof(Uri), typeof(AzureKeyCredential), typeof(CommunicationMessagesClientOptions))]
+    [CodeGenSuppress("NotificationMessagesClient", typeof(Uri), typeof(TokenCredential), typeof(CommunicationMessagesClientOptions))]
     public partial class NotificationMessagesClient
     {
         #region public constructors

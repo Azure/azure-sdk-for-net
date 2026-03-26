@@ -31,7 +31,7 @@ namespace Azure.Communication.Messages
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ConversationThreadClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new MessagesClientOptions())
+        public ConversationThreadClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
         {
         }
 
@@ -40,12 +40,12 @@ namespace Azure.Communication.Messages
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ConversationThreadClient(Uri endpoint, TokenCredential credential, MessagesClientOptions options)
+        public ConversationThreadClient(Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MessagesClientOptions();
+            options ??= new CommunicationMessagesClientOptions();
 
             _endpoint = endpoint;
             _tokenCredential = credential;
