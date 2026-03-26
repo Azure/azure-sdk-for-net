@@ -1,0 +1,303 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Storage.Blobs;
+using NUnit.Framework;
+
+namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
+{
+    /// <summary>
+    /// End-to-end live tests for <see cref="ShareChangeFeedClient"/>.
+    /// These tests require a storage account with an Azure File Share that has
+    /// change feed enabled and events already generated.
+    /// </summary>
+    public class ShareChangeFeedClientLiveTests : ShareChangeFeedTestBase
+    {
+        // TODO: Replace with a test environment property once one is available for share names.
+        private const string TestShareName = "changefeed-test-share";
+
+        public ShareChangeFeedClientLiveTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+        {
+        }
+
+        /// <summary>
+        /// Enumerates all change feed events and verifies at least one event is returned.
+        /// </summary>
+        [RecordedTest]
+        [Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
+        public async Task GetChanges_ReturnsEvents()
+        {
+            // Arrange
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                TestConfigDefault.ConnectionString,
+                TestShareName);
+
+            // Act
+            List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();
+
+            if (IsAsync)
+            {
+                await foreach (ShareChangeFeedEvent e in client.GetChangesAsync())
+                {
+                    events.Add(e);
+                }
+            }
+            else
+            {
+                foreach (ShareChangeFeedEvent e in client.GetChanges())
+                {
+                    events.Add(e);
+                }
+            }
+
+            // Assert
+            CollectionAssert.IsNotEmpty(events);
+            foreach (ShareChangeFeedEvent e in events)
+            {
+                Assert.AreNotEqual(default(DateTimeOffset), e.EventTime);
+                Assert.AreNotEqual(default(Guid), e.Id);
+                Assert.IsNotNull(e.EventData);
+            }
+        }
+
+        /// <summary>
+        /// Enumerates change feed events within a specific time range and verifies
+        /// all returned events fall within that range.
+        /// </summary>
+        [RecordedTest]
+        [Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
+        public async Task GetChanges_WithTimeRange_FiltersEvents()
+        {
+            // Arrange
+            DateTimeOffset start = DateTimeOffset.UtcNow.AddHours(-24);
+            DateTimeOffset end = DateTimeOffset.UtcNow;
+
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                TestConfigDefault.ConnectionString,
+                TestShareName);
+
+            // Act
+            List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();
+
+            if (IsAsync)
+            {
+                await foreach (ShareChangeFeedEvent e in client.GetChangesAsync(start, end))
+                {
+                    events.Add(e);
+                }
+            }
+            else
+            {
+                foreach (ShareChangeFeedEvent e in client.GetChanges(start, end))
+                {
+                    events.Add(e);
+                }
+            }
+
+            // Assert - all events should be within the requested range
+            foreach (ShareChangeFeedEvent e in events)
+            {
+                Assert.GreaterOrEqual(e.EventTime, start.AddMinutes(-15), "Event time should be >= start (minus one window tolerance)");
+                Assert.LessOrEqual(e.EventTime, end.AddMinutes(15), "Event time should be <= end (plus one window tolerance)");
+            }
+        }
+
+        /// <summary>
+        /// Verifies that pagination works correctly by reading one page at a time
+        /// and resuming with a continuation token.
+        /// </summary>
+        [RecordedTest]
+        [Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
+        public async Task GetChanges_WithContinuationToken_ResumesCorrectly()
+        {
+            // Arrange
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                TestConfigDefault.ConnectionString,
+                TestShareName);
+
+            // Act - read the first page
+            HashSet<Guid> firstPageIds = new HashSet<Guid>();
+            string continuationToken = null;
+
+            if (IsAsync)
+            {
+                await foreach (Page<ShareChangeFeedEvent> page in client.GetChangesAsync().AsPages(pageSizeHint: 10))
+                {
+                    foreach (ShareChangeFeedEvent e in page.Values)
+                    {
+                        firstPageIds.Add(e.Id);
+                    }
+                    continuationToken = page.ContinuationToken;
+                    break; // Only read the first page
+                }
+            }
+            else
+            {
+                foreach (Page<ShareChangeFeedEvent> page in client.GetChanges().AsPages(pageSizeHint: 10))
+                {
+                    foreach (ShareChangeFeedEvent e in page.Values)
+                    {
+                        firstPageIds.Add(e.Id);
+                    }
+                    continuationToken = page.ContinuationToken;
+                    break;
+                }
+            }
+
+            // Act - resume from continuation token and read the next page
+            HashSet<Guid> secondPageIds = new HashSet<Guid>();
+            if (continuationToken != null)
+            {
+                if (IsAsync)
+                {
+                    await foreach (Page<ShareChangeFeedEvent> page in client.GetChangesAsync(continuationToken).AsPages(pageSizeHint: 10))
+                    {
+                        foreach (ShareChangeFeedEvent e in page.Values)
+                        {
+                            secondPageIds.Add(e.Id);
+                        }
+                        break;
+                    }
+                }
+                else
+                {
+                    foreach (Page<ShareChangeFeedEvent> page in client.GetChanges(continuationToken).AsPages(pageSizeHint: 10))
+                    {
+                        foreach (ShareChangeFeedEvent e in page.Values)
+                        {
+                            secondPageIds.Add(e.Id);
+                        }
+                        break;
+                    }
+                }
+
+                // Assert - no overlap between first and second page
+                CollectionAssert.IsEmpty(
+                    firstPageIds.Intersect(secondPageIds),
+                    "Resumed page should not contain events from the first page");
+            }
+        }
+
+        /// <summary>
+        /// Verifies that <see cref="ShareChangeFeedClient.GetLastConsumable"/> returns a valid timestamp.
+        /// </summary>
+        [RecordedTest]
+        [Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
+        public async Task GetLastConsumable_ReturnsTimestamp()
+        {
+            // Arrange
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                TestConfigDefault.ConnectionString,
+                TestShareName);
+
+            // Act
+            DateTimeOffset? lastConsumable = IsAsync
+                ? await client.GetLastConsumableAsync()
+                : client.GetLastConsumable();
+
+            // Assert
+            Assert.IsNotNull(lastConsumable, "Last consumable timestamp should not be null when change feed has data");
+            Assert.Greater(lastConsumable.Value, DateTimeOffset.MinValue);
+        }
+
+        /// <summary>
+        /// Verifies that event data fields are populated correctly for returned events.
+        /// </summary>
+        [RecordedTest]
+        [Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
+        public async Task GetChanges_EventDataIsPopulated()
+        {
+            // Arrange
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                TestConfigDefault.ConnectionString,
+                TestShareName);
+
+            // Act - get just a few events
+            ShareChangeFeedEvent firstEvent = null;
+
+            if (IsAsync)
+            {
+                await foreach (ShareChangeFeedEvent e in client.GetChangesAsync())
+                {
+                    firstEvent = e;
+                    break;
+                }
+            }
+            else
+            {
+                foreach (ShareChangeFeedEvent e in client.GetChanges())
+                {
+                    firstEvent = e;
+                    break;
+                }
+            }
+
+            // Assert
+            Assert.IsNotNull(firstEvent, "Expected at least one event");
+            Assert.AreNotEqual(default(ShareChangeFeedReasonType), firstEvent.Reason);
+            Assert.AreNotEqual(default(ShareChangeFeedProtocol), firstEvent.Protocol);
+
+            Assert.IsNotNull(firstEvent.EventData);
+            Assert.IsNotNull(firstEvent.EventData.FileId, "FileId should be populated");
+            // FileName or FullFilePath should be present for non-control events
+            if (firstEvent.Reason != ShareChangeFeedReasonType.ControlEvent)
+            {
+                Assert.IsTrue(
+                    !string.IsNullOrEmpty(firstEvent.EventData.FileName) ||
+                    !string.IsNullOrEmpty(firstEvent.EventData.FullFilePath),
+                    "FileName or FullFilePath should be populated for non-control events");
+            }
+        }
+
+        /// <summary>
+        /// Verifies that GetChangesBetweenSnapshots returns events filtered by container version.
+        /// </summary>
+        [RecordedTest]
+        [Ignore("Requires a storage account with Files Change Feed enabled, pre-existing events, and two snapshots taken")]
+        public async Task GetChangesBetweenSnapshots_FiltersEvents()
+        {
+            // Arrange - these snapshot timestamps need to be set to real snapshot timestamps
+            // from the test storage account.
+            string beginSnapshot = "2024-01-15T08:00:00.000Z";
+            string endSnapshot = "2024-01-15T09:00:00.000Z";
+
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                TestConfigDefault.ConnectionString,
+                TestShareName);
+
+            // Act
+            List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();
+
+            if (IsAsync)
+            {
+                await foreach (ShareChangeFeedEvent e in client.GetChangesBetweenSnapshotsAsync(
+                    beginSnapshot, endSnapshot))
+                {
+                    events.Add(e);
+                }
+            }
+            else
+            {
+                foreach (ShareChangeFeedEvent e in client.GetChangesBetweenSnapshots(
+                    beginSnapshot, endSnapshot))
+                {
+                    events.Add(e);
+                }
+            }
+
+            // Assert
+            CollectionAssert.IsNotEmpty(events);
+            // All events should have ContainerVersionNumber > 0 (filtered by cvId range)
+            foreach (ShareChangeFeedEvent e in events)
+            {
+                Assert.Greater(e.ContainerVersionNumber, 0, "Events should have a positive container version number");
+            }
+        }
+    }
+}
