@@ -375,29 +375,19 @@ namespace Azure.Generator.Provisioning.Providers
             // then from the resource model itself. This ensures inherited ARM common
             // properties (name, location, tags) appear before leaf-defined properties
             // (e.g., the "properties" bag), which controls the Bicep emission order.
-<<<<<<< HEAD
             var chain = new Stack<InputModelType>();
             chain.Push(_inputModel);
             var baseModel = _inputModel.BaseModel;
             while (baseModel != null)
             {
                 chain.Push(baseModel);
-=======
-            var chain = new List<InputModelType>();
-            var baseModel = _inputModel.BaseModel;
-            while (baseModel != null)
-            {
-                chain.Add(baseModel);
->>>>>>> 2b590f8031332ec769dc77adfd3219fa9b6ee476
                 baseModel = baseModel.BaseModel;
             }
-            chain.Reverse();
 
             foreach (var model in chain)
             {
                 CollectPropertiesFromModel(model, result, seen, basePath: null);
             }
-            CollectPropertiesFromModel(_inputModel, result, seen, basePath: null);
 
             foreach (var model in chain)
             {
