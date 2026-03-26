@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AlertsManagement
     // CodeGenSuppress removes the generated method and this file re-adds it with the old name.
     // Also provides GetServiceAlertSummary/GetServiceAlertSummaryAsync extension methods on
     // SubscriptionResource with both individual-parameter and options-object overloads.
-    [CodeGenSuppress("GetAlertResource", typeof(ArmClient), typeof(ResourceIdentifier))]
+    [CodeGenSuppress("GetServiceAlertResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     public static partial class AlertsManagementExtensions
     {
         public static ServiceAlertResource GetAlertResource(this ArmClient client, ResourceIdentifier id)

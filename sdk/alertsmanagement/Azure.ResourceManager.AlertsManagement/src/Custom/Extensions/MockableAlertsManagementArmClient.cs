@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
     // Backward compatibility: the generated mocking method is named GetServiceAlertResource
     // (from the TypeSpec Alert renamed to ServiceAlert), but the old SDK exposed GetAlertResource.
     // CodeGenSuppress removes the generated method and this file re-adds it with the old name.
-    [CodeGenSuppress("GetAlertResource", typeof(ResourceIdentifier))]
+    [CodeGenSuppress("GetServiceAlertResource", typeof(ResourceIdentifier))]
     public partial class MockableAlertsManagementArmClient : ArmResource
     {
         public virtual ServiceAlertResource GetAlertResource(ResourceIdentifier id)
