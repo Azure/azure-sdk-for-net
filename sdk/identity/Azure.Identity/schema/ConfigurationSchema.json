@@ -102,7 +102,7 @@
               },
               "CredentialProcessTimeout": {
                 "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
               },
               "AdditionallyAllowedTenants": {
                 "type": "array",
@@ -139,7 +139,7 @@
               },
               "CredentialProcessTimeout": {
                 "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
               },
               "AdditionallyAllowedTenants": {
                 "type": "array",
@@ -176,7 +176,7 @@
               },
               "CredentialProcessTimeout": {
                 "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
               },
               "AdditionallyAllowedTenants": {
                 "type": "array",
@@ -417,7 +417,7 @@
               },
               "CredentialProcessTimeout": {
                 "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
               },
               "AdditionallyAllowedTenants": {
                 "type": "array",
@@ -774,7 +774,7 @@
               },
               "CredentialProcessTimeout": {
                 "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
               },
               "AdditionallyAllowedTenants": {
                 "type": "array",
@@ -805,7 +805,7 @@
               },
               "CredentialProcessTimeout": {
                 "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
               },
               "AdditionallyAllowedTenants": {
                 "type": "array",
@@ -836,7 +836,7 @@
               },
               "CredentialProcessTimeout": {
                 "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
               },
               "AdditionallyAllowedTenants": {
                 "type": "array",
@@ -1047,7 +1047,7 @@
               },
               "CredentialProcessTimeout": {
                 "type": "string",
-                "description": "Timeout for the credential process (TimeSpan format). Default: 30 seconds."
+                "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
               },
               "AdditionallyAllowedTenants": {
                 "type": "array",
