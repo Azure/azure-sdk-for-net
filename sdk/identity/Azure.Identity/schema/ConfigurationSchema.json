@@ -5,6 +5,7 @@
       "description": "Credential configuration. Available properties depend on the selected CredentialSource.",
       "properties": {
         "CredentialSource": {
+          "type": "string",
           "description": "The credential type to use for authentication.",
           "enum": [
             "AzureCliCredential",
@@ -681,6 +682,7 @@
       "description": "A credential source in a chain. ApiKeyCredential and ChainedTokenCredential cannot be used.",
       "properties": {
         "CredentialSource": {
+          "type": "string",
           "description": "The token credential type. ApiKeyCredential and ChainedTokenCredential are not allowed in a chain.",
           "enum": [
             "AzureCliCredential",
