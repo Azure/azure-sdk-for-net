@@ -55,9 +55,8 @@ try
 
 $toolName = $null
 $sessionId = $null
-$toolInput = $null
 
-# Get tool name. Both vscode and copilot-cli uses different proeprty names, so check for both.
+# Get tool name. Both vscode and copilot-cli uses different property names, so check for both.
 if ($inputData.PSObject.Properties['toolName'])
 {
     $toolName = $inputData.toolName
