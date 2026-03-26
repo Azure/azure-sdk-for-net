@@ -12,7 +12,6 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary>
         /// Validates that a recording URL points to Azure Communication Services
-        /// or Azure Blob Storage endpoint before credentials are attached.
         /// </summary>
         /// <param name="recordingUrl">The recording URL to validate.</param>
         /// <param name="parameterName">The parameter name for exception messages.</param>
