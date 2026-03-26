@@ -14,15 +14,17 @@ Trigger phrases: "migrate service X", "help with mgmt migration", "mpg migration
 
 ## Prerequisites
 
-This skill requires two repositories side by side:
+This skill requires the SDK repository and optionally the spec repo:
 
-| Path | Purpose |
-|------|---------|
-| Current repository (`azure-sdk-for-net`) | Azure SDK for .NET mono-repo. SDK packages live under `sdk/<service>/Azure.ResourceManager.<Service>/`. |
-| Sibling spec folder (`../azure-rest-api-specs`) | Full or sparse-checkout of the [Azure REST API Specs](https://github.com/Azure/azure-rest-api-specs) repo. TypeSpec specs live under `specification/<service>/resource-manager/Microsoft.<Provider>/<ServiceName>/`. |
-| Sibling TypeSpec folder (`../typespec`) | (Optional) Clone of the [microsoft/typespec](https://github.com/microsoft/typespec) repo. Contains the base HTTP client generator under `packages/http-client-csharp/`. Only needed for diagnosing or fixing generator bugs. |
+| Path | Purpose | Required? |
+|------|---------|----------|
+| Current repository (`azure-sdk-for-net`) | Azure SDK for .NET mono-repo. SDK packages live under `sdk/<service>/Azure.ResourceManager.<Service>/`. | Always |
+| Sibling spec folder (`../azure-rest-api-specs`) | Full or sparse-checkout of the [Azure REST API Specs](https://github.com/Azure/azure-rest-api-specs) repo. | Only when: (a) making spec-side changes (e.g., `client.tsp` edits), or (b) `commit_iteration` finds no valid remote commit and needs to create a fallback branch. |
+| Sibling TypeSpec folder (`../typespec`) | Clone of the [microsoft/typespec](https://github.com/microsoft/typespec) repo. | Only for diagnosing generator bugs |
 
-If the spec repo is not found at `../azure-rest-api-specs`, ask the user for the path.
+Both `commit_iteration` and `run_code_generation` work remotely by default — no local clone of `azure-rest-api-specs` is needed for the normal path. The local spec repo is only needed for: (a) fallback branch creation when `commit_iteration` returns `needsLocalSpecsPath=true`, (b) spec-side changes like `client.tsp` edits, or (c) when the user explicitly provides it.
+
+**When the local spec repo is needed but not found at `../azure-rest-api-specs`, ask the user for the path.**
 
 ### MCP Server (Generator Agent)
 
@@ -52,8 +54,8 @@ The MCP server provides deterministic fix tools for the build-fix cycle. Configu
 | `fetch_to_fromlro` | CS0103/CS1061 for `Fetch` method calls in custom LRO code | Replaces `Fetch(response)` with `Model.FromLroResponse(response)` |
 | `classify_errors` | Re-classify errors after partial fixes | Classifies errors against the deterministic fix registry |
 | `run_code_generation` | After spec/TypeSpec changes or CodeGen* attribute changes. Pass `localSpecsPath` for local spec iteration (full path to spec directory containing `main.tsp`, or repo root — the tool resolves via `tsp-location.yaml`). | Runs `dotnet build /t:generateCode` |
-| `validate_tsp_config` | Before code generation | Validates `tspconfig.yaml` emitter configuration |
-| `commit_iteration` | At migration start, to find a valid spec commit. Pass `commitOverride` if user provides a commit SHA. | Finds spec commit with valid tspconfig |
+| `validate_tsp_config` | Before code generation (if not already validated by `commit_iteration`) | Validates `tspconfig.yaml` emitter section: checks `@azure-typespec/http-client-csharp` key exists, required fields present (`emitter-output-dir`, `namespace`, `model-namespace`), and no invalid properties. Works on file path or string content. |
+| `commit_iteration` | At migration start and whenever code generation fails with a spec-level error. | Finds a valid spec commit remotely. Supports strict (`commitOverride`), auto-resolve (iterates forward), and fallback (`localSpecsPath`) modes. See Phase 2 for details. |
 | `pregen_cleanup` | Before first code generation | Removes `IncludeAutorestDependency` from `.csproj` |
 | `migrate_test_samples` | After src builds, before test build | Moves `Generated/Samples/` to `Samples/` |
 | `finalize_migration` | After ALL builds succeed | Runs `Export-API.ps1` and `Update-Snippets.ps1` |
@@ -92,15 +94,17 @@ Before any migration work, merge the latest `main` branch into all 3 repos:
 
 ## Phase 1 — Discovery & Planning
 
-Use **explore** agents in parallel:
+Start with the **SDK package only** — do NOT explore the local spec repo at this stage.
 
-1. **Find the spec**: Search `../azure-rest-api-specs/specification/<service>/` for `main.tsp` / `tspconfig.yaml`. Determine TypeSpec vs Swagger.
-2. **Find the existing SDK**: Check for `tsp-location.yaml` (already migrated) or `src/autorest.md` (legacy Swagger).
-3. **Inventory existing csharp customizations in spec**: Search `.tsp` files for `@clientName("...", "csharp")` and `@@clientName` decorators. Check for `back-compatible.tsp`.
-4. **Snapshot old API surface**: Read `api/<PACKAGE_NAME>.net*.cs` — extract all public type names for later rename resolution.
-5. **Extract autorest rename mappings**: From `src/autorest.md`, extract `rename-mapping` and `prepend-rp-prefix` entries.
-6. **Identify custom code folder convention**: `Custom/`, `Customization/`, or `Customized/`.
-7. **Review naming conventions**: Consult the `azure-sdk-mgmt-pr-review` skill.
+1. **Find the existing SDK**: Check for `tsp-location.yaml` (already TypeSpec-based) or `src/autorest.md` (legacy Swagger).
+2. **Snapshot old API surface**: Read `api/<PACKAGE_NAME>.net*.cs` — extract all public type names for later rename resolution.
+3. **Extract autorest rename mappings**: From `src/autorest.md`, extract `rename-mapping` and `prepend-rp-prefix` entries.
+4. **Identify custom code folder convention**: `Custom/`, `Customization/`, or `Customized/`.
+5. **Review naming conventions**: Consult the `azure-sdk-mgmt-pr-review` skill [MPG only].
+
+**If `tsp-location.yaml` exists with a `commit` and `directory`**: Proceed directly to Phase 2 — the `commit_iteration` tool will validate the spec remotely. Do NOT check the local spec repo or read local `tspconfig.yaml`.
+
+**If no `tsp-location.yaml` exists** (fresh migration): Search `../azure-rest-api-specs/specification/<service>/` for `main.tsp` / `tspconfig.yaml` to determine the spec directory. Also inventory existing csharp customizations in spec (search `.tsp` files for `@clientName("...", "csharp")` and `@@clientName` decorators, check for `back-compatible.tsp`).
 
 Present a summary plan and **ask the user** to confirm.
 
@@ -128,21 +132,45 @@ Present a summary plan and **ask the user** to confirm.
 
 ### Commit SHA Resolution
 
-Use the `commit_iteration` MCP tool — it automates steps 1–6 below. If the user provided a specific commit SHA, pass it as `commitOverride` to skip iteration entirely.
+There are three scenarios. Follow the **first one that applies**:
 
-```
-1. Read current `commit` and `directory` from tsp-location.yaml.
-2. Fetch tspconfig.yaml from spec repo at that commit.
-3. IF tspconfig.yaml contains an `emit` or `options` entry for the target emitter
-   → current commit is valid. Use it.
-4. IF NOT → find the earliest commit on `main` that adds it.
-5. IF directory no longer exists → search for relocated TypeSpec project, update `directory`, re-resolve.
-6. IF nothing found → fall back to latest `main`. Warn user.
-```
+#### Scenario 1 — User provides a commit SHA
 
-Before resolving the commit, call `validate_tsp_config` with the tspconfig.yaml path and SDK namespace to ensure correct emitter configuration.
+Call `commit_iteration` with `commitOverride` set to the user's SHA. The tool **strictly validates** this commit:
+- Fetches `main.tsp` and `tspconfig.yaml` from GitHub at that commit.
+- Validates the `@azure-typespec/http-client-csharp` emitter section.
+- If valid → writes the commit to `tsp-location.yaml` and returns success.
+- If invalid → returns a detailed error explaining what's wrong. **Do NOT iterate or fall back.** Tell the user their commit is invalid and why.
 
-additional `tsp-location.yaml` fields:
+#### Scenario 2 — No commit provided, auto-resolve
+
+**This works entirely remotely — no local spec clone needed.**
+
+Call `commit_iteration` with `sdkProjectPath`, `tspLocationPath`, and `specsRelativeDirectory`. The tool:
+1. Reads the current commit from `tsp-location.yaml`. If no commit exists (fresh migration), fetches HEAD of the repo's `main` branch from GitHub.
+2. Validates the starting commit by fetching `main.tsp` and `tspconfig.yaml` from GitHub.
+3. If valid → uses that commit.
+4. If invalid → fetches up to 20 newer commits from GitHub (oldest first) that touched the spec directory, and validates each one.
+5. If a valid commit is found → writes it to `tsp-location.yaml` and returns success.
+6. If **all candidates are invalid** and `localSpecsPath` was provided → creates a fallback branch (see Scenario 3).
+7. If **all candidates are invalid** and no `localSpecsPath` → returns `{ success: false, needsLocalSpecsPath: true }`.
+
+When the tool returns `needsLocalSpecsPath=true`, **ask the user** for the path to their local `azure-rest-api-specs` clone, then re-call `commit_iteration` with `localSpecsPath`.
+
+#### Scenario 3 — Fallback: create a local branch with fixed tspconfig
+
+When `commit_iteration` has `localSpecsPath` and all remote candidates are invalid, it:
+1. Checks out the latest candidate's spec files in the local clone.
+2. Fixes `tspconfig.yaml` to have the correct `@azure-typespec/http-client-csharp` emitter section.
+3. Creates a new branch (`sdk-migration-fallback-<timestamp>`) and commits the fix.
+4. Returns the new commit SHA.
+
+This commit should later be pushed to the spec repo and the PR's final commit used in `tsp-location.yaml` (see Phase 11).
+### Spec Commit Consistency
+
+Once a commit SHA is resolved, **use it for the entire migration**. If using `localSpecsPath` during the build-fix cycle (e.g., editing `client.tsp`), check out the local spec repo to the resolved commit first. If you cannot, omit `localSpecsPath` — remote generation always fetches from the commit in `tsp-location.yaml`.
+
+Additional `tsp-location.yaml` fields:
 - `directory` must point to the folder containing `main.tsp` and `tspconfig.yaml`.
 - Optional: `additionalDirectories` array for shared TypeSpec libraries.
 
@@ -226,21 +254,29 @@ These are also handled by MCP tools during build-fix, but can be applied before 
 
 **Goal**: Regenerate code with the new TypeSpec emitter.
 
-Call `run_code_generation` with the project path. For local spec iteration, pass `localSpecsPath` — this can be either the **full path to the spec directory** (containing `main.tsp`/`tspconfig.yaml`) or the **repo root** (the tool auto-resolves using `tsp-location.yaml`'s `directory` field):
-- **During iteration**: `run_code_generation(projectPath, localSpecsPath: "<path-to-spec-dir-or-repo-root>")`
-- **Final generation**: `run_code_generation(projectPath)` — uses the commit from `tsp-location.yaml`
+Call `run_code_generation` with the project path.
 
-Or run directly (here you **must** pass the full spec directory path, not the repo root):
+**Do NOT pass `localSpecsPath` unless** the user explicitly asks, or you are iterating on `client.tsp` changes. Passing `localSpecsPath` bypasses the pinned commit and uses whatever is on disk.
+
 ```shell
-# During iteration — use local spec directory (no push needed)
-# NOTE: LocalSpecRepo must be the full path to the spec directory containing main.tsp
-dotnet build /t:GenerateCode /p:LocalSpecRepo=<path-to-spec-directory>
-
-# Final generation — uses commit from tsp-location.yaml
+# Normal (remote): uses commit from tsp-location.yaml
 dotnet build /t:GenerateCode
+
+# Local spec iteration: must be full path to directory containing main.tsp
+dotnet build /t:GenerateCode /p:LocalSpecRepo=<path-to-spec-directory>
 ```
 
-**IMPORTANT**: Always use `dotnet build /t:GenerateCode`. Do NOT use `tsp-client update`.
+**Always use `dotnet build /t:GenerateCode`. Do NOT use `tsp-client update`.**
+
+### Code Generation Failure — Retry with Next Commit
+
+If code generation fails with a spec-level error (e.g., `invalid-schema`, `duplicate-example-file`, or any TypeSpec compiler error that is **not** a C# build error):
+
+1. Re-call `commit_iteration` (no `commitOverride`) — it iterates forward to find a valid commit.
+2. If found → retry `run_code_generation`.
+3. If `needsLocalSpecsPath=true` → ask the user for the path, re-call with `localSpecsPath`.
+
+See Phase 2 (Commit SHA Resolution) for the full commit resolution flow. **Do NOT manually fix the tspconfig.** Let `commit_iteration` handle it.
 
 After generation, additionally:
 - Export the API surface: `pwsh eng/scripts/Export-API.ps1 <SERVICE_NAME>`.
@@ -305,7 +341,7 @@ STEP 6: IF requires-reasoning errors remain:
           - Spec issue (rename, accessibility) → edit client.tsp, then call `run_code_generation`
           - Customization issue → edit custom .cs files directly
           - Generator attribute change → edit custom code, then call `run_code_generation`
-          - Generator bug → fix generator code, run Generate.ps1
+          - Generator bug → **STOP and report to the user** (see Generator Bug Reporting below)
         → After applying fixes, GOTO STEP 1
 
 STEP 7: IF error count is not decreasing after 3 iterations:
@@ -315,10 +351,12 @@ STEP 7: IF error count is not decreasing after 3 iterations:
 Max 10 iterations. If still failing, escalate to user.
 
 **Key decision points for regeneration:**
-- After editing `[CodeGenType]`, `[CodeGenSuppress]`, or `[CodeGenMember]` attributes → call `run_code_generation` before rebuilding
+- After editing `[CodeGenType]`, `[CodeGenSuppress]`, `[CodeGenMember]`, or `[CodeGenSerialization]` attributes → call `run_code_generation` before rebuilding
 - After editing `client.tsp` → call `run_code_generation` (with LocalSpecRepo if applicable) before rebuilding
+- After **removing or renaming a custom file** that contained generator attributes → call `run_code_generation` before rebuilding (the generator will produce different output without those attributes)
 - After editing only custom `.cs` code (no generator attributes) → just rebuild, no regeneration needed
 - If build returns 0 errors but previous build had errors → verify no regressions by rebuilding once more
+- **When in doubt, regenerate.** Skipping regeneration after customization changes is a common source of confusing errors.
 
 ### ApiCompat Error Handling
 
@@ -432,6 +470,8 @@ The generator reads existing customization files (`[CodeGenSuppress]`, `[CodeGen
 
 - Errors in `Generated/` are often **caused** by stale customization files, not generator bugs.
 - Fix by editing the customization file, then re-running `[GENERATE]`.
+- **If a generated file has errors that trace back to a problematic custom file, remove (or rename/comment-out) the custom file and regenerate.** The generator will produce clean output without the stale customization influence. You can then re-introduce only the parts of the custom file that are still needed, one piece at a time, regenerating after each change.
+- **After ANY change to a custom file that contains generator attributes** (`[CodeGenType]`, `[CodeGenSuppress]`, `[CodeGenMember]`, `[CodeGenSerialization]`), you **MUST** regenerate with `[GENERATE]` before rebuilding. The generator reads these attributes at generation time — building without regenerating will use stale generated code that doesn't reflect your customization changes.
 - Only after eliminating customization interference can you identify true generator bugs.
 
 ### Error Classification
@@ -444,12 +484,14 @@ Given: error in file F with message M
    b. Fix the customization to match new generated code
    c. Run [GENERATE] then [BUILD]
    d. If error persists after removing all customizations → generator bug
+      → STOP: Do NOT suppress. Report to user with full details (see Generator Bug Reporting).
 
 2. IF F is under custom code:
    a. Renamed/missing type → update custom code or add rename
    b. Internal type → use accessibility fix (@@access [MPG] or CodeGenType)
 
 3. IF error is structural in Generated/ with correct spec → generator bug
+      → STOP: Do NOT suppress. Report to user with full details (see Generator Bug Reporting).
 ```
 
 ### MPG Error Classification Detail [MPG only]
@@ -468,11 +510,14 @@ Given: error in file F with message M
       → ROOT CAUSE: spec (wrong template usage, or missing @@alternateType) or generator bug
       Check if old API used a different type (e.g., ResourceIdentifier vs string).
       If so, try @@alternateType in client.tsp first.
+      If the error is in Generated/ code and no spec/customization fix resolves it → generator bug.
+      STOP and report to user with full details (see Generator Bug Reporting).
    d. IF M is AZC0030/AZC0032 (forbidden suffix):
       → ROOT CAUSE: spec (needs @@clientName rename)
    e. IF the generated code looks structurally wrong (missing serialization,
       wrong inheritance, wrong type mapping) and the spec is correct:
       → ROOT CAUSE: generator bug
+      STOP and report to user with full details (see Generator Bug Reporting). Do NOT suppress.
 
 2. IF F is under `src/Custom/` or `src/Customization/` or `src/Customized/`:
    a. IF M references a type that was renamed or no longer exists:
@@ -787,20 +832,43 @@ After migration, update skill files with:
 Before reporting a generator bug, ALWAYS:
 1. Remove/fix any customization files that could influence the generator.
 2. Re-run `[GENERATE]`.
-3. If the error persists with no customization influence → generator bug.
+3. If the error persists with no customization influence → confirmed generator bug.
 
-Report: error messages, generated code snippet, repro steps. Do NOT manually fix Generated/ code.
+Do NOT manually fix Generated/ code. Do NOT silently suppress generator bugs with `[CodeGenSuppress]` or other workarounds.
+
+### Generator Bug Reporting
+
+When a generator bug is confirmed, you **MUST stop and report the bug to the user in detail**. Do NOT silently work around it with `[CodeGenSuppress]` + custom implementation. The user needs to understand what is broken so they can decide how to proceed (fix the generator, file an issue, or explicitly choose a workaround).
+
+**Required information to present to the user:**
+1. **Summary** — One-sentence description of the bug.
+2. **Affected operations** — Which TypeSpec operations / generated methods are broken, with their signatures.
+3. **What the generated code looks like** — Show the broken generated code snippet and explain what's wrong.
+4. **What correct code would look like** — Describe or show the expected behavior.
+5. **Error messages** — Full CS error codes and messages.
+6. **Repro steps** — Exact commands to reproduce (spec repo, commit, emitter version, tsp-location.yaml content).
+7. **Confirmation it's not caused by customizations** — State that you verified with zero custom files.
+8. **Root cause hypothesis** — Your best assessment of why the generator produces incorrect code.
+
+After presenting the bug details, **ask the user how they want to proceed**:
+- **Option A**: Fix the generator (provide the emitter path: `eng/packages/http-client-csharp/` for DPG, `eng/packages/http-client-csharp-mgmt/` for MPG)
+- **Option B**: File an issue and apply a `[CodeGenSuppress]` workaround **only with the user's explicit approval**
+- **Option C**: Pause the migration and wait for a generator fix
 
 ### Generator Fix Workflow [MPG only]
 
 ```
-1. CONFIRM it's a generator bug
-2. IF fixing generator:
+1. CONFIRM it's a generator bug (zero custom files, clean regeneration, same errors)
+2. REPORT the bug to the user with full details (see Generator Bug Reporting above)
+3. WAIT for user decision before proceeding
+4. IF user chooses to fix generator:
    - Edit under eng/packages/http-client-csharp-mgmt/
    - Regenerate with RegenSdkLocal.ps1
    - Clean up stale custom workarounds
    - Run Generate.ps1 to verify no regressions
-3. IF workaround: [CodeGenSuppress] + custom implementation, document the issue
+5. IF user explicitly approves workaround:
+   - [CodeGenSuppress] + custom implementation
+   - Add a code comment documenting the generator bug and linking to any filed issue
 ```
 
 ---
@@ -830,8 +898,9 @@ During the build-fix loop, Copilot operates autonomously. These actions are **pe
 2. **Custom code**: Adding partial classes in the SDK custom code folder. Use `[CodeGenType]`/`[CodeGenSuppress]`/`[CodeGenMember]` only when needed.
 3. **Deleting `autorest.md`** after extracting directives — git history preserves it.
 4. **Updating custom code** to reference new generated type names.
-5. **Regenerating code** using `dotnet build /t:GenerateCode` or **[MPG only]** `RegenSdkLocal.ps1`.
-6. **Updating CHANGELOG.md** and other metadata files.
+5. **Removing or commenting out a problematic custom file** that is causing errors in generated code — regenerate immediately after. Git history preserves the old version, and needed customizations can be re-introduced incrementally.
+6. **Regenerating code** using `dotnet build /t:GenerateCode` or **[MPG only]** `RegenSdkLocal.ps1`. **Always regenerate after modifying custom files that contain generator attributes.**
+7. **Updating CHANGELOG.md** and other metadata files.
 
 ### Actions Requiring User Confirmation
 
@@ -876,14 +945,13 @@ Proceed **without asking the user** except when:
 3. **Batch custom code fixes**: explore → general-purpose → task (rebuild).
 4. **Generator fixes** (one at a time): explore → general-purpose → task (RegenSdkLocal + rebuild) → general-purpose (clean up stale workarounds) → task (rebuild).
 
-## Common Pitfalls
+## Quick Reference — Do's and Don'ts
 
-- **Do NOT use `tsp-client update`** — use `dotnet build /t:GenerateCode`.
-- **Do NOT hand-edit `metadata.json`**.
-- **Match existing custom code folder convention**.
-- Don't blindly copy all renames from `autorest.md` — only add `@@clientName` for names that actually cause build errors after generation. Check existing spec decorators to avoid duplicates.
-- Batch spec fixes, then rebuild — one spec fix can resolve 5–20 errors.
-- Try spec-side fix (`@@access`) before custom code (`[CodeGenType]`).
-- Finalize `tsp-location.yaml` with pushed spec commit before creating PR.
-- Run `CodeChecks.ps1` before pushing: `pwsh eng\scripts\CodeChecks.ps1 -ServiceDirectory <service>`
+- Use `dotnet build /t:GenerateCode`, never `tsp-client update`.
+- Never hand-edit `metadata.json` or files under `Generated/`.
+- Match the existing custom code folder convention (`Custom/`, `Customization/`, or `Customized/`).
+- Only add `@@clientName` for names that cause build errors — don't blindly copy all renames from `autorest.md`.
+- Batch spec-side fixes before rebuilding — one fix can resolve 5–20 errors.
+- Prefer spec-side fixes (`@@access`) before SDK custom code (`[CodeGenType]`).
+- Finalize `tsp-location.yaml` with the pushed spec commit SHA before creating a PR.
 - Clean up stale custom workarounds after generator fixes.

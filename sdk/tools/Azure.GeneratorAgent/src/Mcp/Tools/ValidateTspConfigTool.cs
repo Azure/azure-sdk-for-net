@@ -30,6 +30,28 @@ public static class ValidateTspConfigTool
         @"model-namespace\s*:",
         RegexOptions.Compiled);
 
+    /// <summary>
+    /// The only valid properties for the @azure-typespec/http-client-csharp emitter options.
+    /// Anything else means the tspconfig is invalid and will cause the TypeSpec compiler
+    /// to fail with "invalid-schema: must NOT have additional properties".
+    /// </summary>
+    private static readonly HashSet<string> s_validCSharpEmitterProperties = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "emitter-output-dir",
+        "namespace",
+        "model-namespace",
+        "clear-output-folder",
+        "flavor",
+    };
+
+    /// <summary>
+    /// Regex to extract YAML key-value pairs at an indentation level (property names within a section).
+    /// Matches lines like "    some-property: value".
+    /// </summary>
+    private static readonly Regex s_yamlPropertyRegex = new(
+        @"^(?<indent>\s+)(?<key>[a-zA-Z][a-zA-Z0-9-]*)\s*:",
+        RegexOptions.Compiled | RegexOptions.Multiline);
+
     [McpServerTool(Name = "validate_tsp_config"), Description("Validate that a tspconfig.yaml has correct @azure-typespec/http-client-csharp emitter configuration.")]
     public static string Execute(
         [Description("Absolute path to the tspconfig.yaml file")] string tspConfigPath,
@@ -40,7 +62,7 @@ public static class ValidateTspConfigTool
     }
 
     /// <summary>
-    /// In-process validation for the orchestrator.
+    /// In-process validation for the orchestrator (reads from file).
     /// </summary>
     public static TspConfigValidationResult ValidateInProcess(string tspConfigPath, string expectedNamespace)
     {
@@ -53,6 +75,22 @@ public static class ValidateTspConfigTool
             }
 
             var content = File.ReadAllText(normalizedPath);
+            return ValidateContent(content, expectedNamespace);
+        }
+        catch (Exception ex)
+        {
+            return new TspConfigValidationResult { Success = false, Reason = ex.Message };
+        }
+    }
+
+    /// <summary>
+    /// Validates tspconfig.yaml content from a string. Used by both file-based validation
+    /// and remote validation (where content is fetched from GitHub).
+    /// </summary>
+    public static TspConfigValidationResult ValidateContent(string content, string expectedNamespace)
+    {
+        try
+        {
             var issues = new List<string>();
 
             // Check emitter key exists and extract its section for scoped validation
@@ -97,6 +135,20 @@ public static class ValidateTspConfigTool
             if (!s_modelNamespaceRegex.IsMatch(emitterSection))
             {
                 issues.Add("Missing 'model-namespace' field");
+            }
+
+            // Check for invalid properties within the @azure-typespec/http-client-csharp section.
+            // Only emitter-output-dir, namespace, model-namespace, clear-output-folder, flavor are valid.
+            // Anything else (e.g., package-dir from Python emitter) causes the TypeSpec compiler
+            // to fail with "invalid-schema: must NOT have additional properties".
+            var emitterProperties = s_yamlPropertyRegex.Matches(emitterSection);
+            foreach (Match prop in emitterProperties)
+            {
+                var key = prop.Groups["key"].Value;
+                if (!s_validCSharpEmitterProperties.Contains(key))
+                {
+                    issues.Add($"Invalid property '{key}' in @azure-typespec/http-client-csharp section — not a recognized emitter option");
+                }
             }
 
             return new TspConfigValidationResult

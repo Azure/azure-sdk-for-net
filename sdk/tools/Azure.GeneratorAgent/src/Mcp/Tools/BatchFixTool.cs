@@ -16,7 +16,7 @@ public static class BatchFixTool
 {
     [McpServerTool(Name = "batch_fix"), Description("Apply multiple deterministic fixes in one call. Takes a JSON array of fix operations.")]
     public static string Execute(
-        [Description("JSON array of fix operations. Each element: {\"tool\": \"tool_name\", \"args\": {\"key\": \"value\"}}")] string fixes)
+        [Description("JSON array of fix operations. Each element: {\"toolName\": \"tool_name\", \"toolArgs\": {\"key\": \"value\"}}")] string fixes)
     {
         try
         {

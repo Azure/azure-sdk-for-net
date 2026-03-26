@@ -2,144 +2,463 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
+using System.Net.Http.Headers;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using ModelContextProtocol.Server;
 
 namespace Azure.GeneratorAgent.Mcp.Tools;
 
 /// <summary>
-/// MCP tool that iterates through commits to find one with a valid tspconfig.yaml emitter config,
-/// or creates a fallback commit with the correct config.
+/// MCP tool that finds a valid spec commit for SDK code generation by validating
+/// tspconfig.yaml and main.tsp remotely via GitHub.
 /// </summary>
 [McpServerToolType]
 public static class CommitIterationTool
 {
-    [McpServerTool(Name = "commit_iteration"), Description("Iterate through spec repo commits to find one with a valid tspconfig.yaml emitter config for the given SDK namespace. Creates a fallback commit if none found. If commitOverride is provided, skips all iteration and uses that commit directly.")]
-    public static async Task<string> Execute(
-        [Description("Path to the SDK project directory (e.g., sdk/translation/Azure.AI.Translation.Document)")] string sdkProjectPath,
-        [Description("Path to the tsp-location.yaml file")] string tspLocationPath,
-        [Description("Relative directory path within the specs repo (from tsp-location.yaml 'directory' field)")] string specsRelativeDirectory,
-        [Description("Full path to the local specs directory (e.g., .../azure-rest-api-specs/specification/translation/...)")] string localSpecsPath,
-        [Description("Optional. If provided, skip all iteration/validation and use this commit SHA directly.")] string? commitOverride = null)
+    private const int MaxCandidateCommits = 20;
+    private const int CommitShaDisplayLength = 12;
+    private const string GitHubRawBaseUrl = "https://raw.githubusercontent.com";
+    private const string GitHubApiBaseUrl = "https://api.github.com";
+    private const string GitHubApiMediaType = "application/vnd.github+json";
+
+    private static readonly HttpClient s_httpClient = CreateHttpClient();
+
+    private static readonly Regex s_repoSlugRegex = new(
+        @"^[a-zA-Z0-9._-]+/[a-zA-Z0-9._-]+$",
+        RegexOptions.Compiled);
+
+    private static readonly Dictionary<string, string> s_gitEnv = new()
+    {
+        ["GIT_TERMINAL_PROMPT"] = "0"
+    };
+
+    [McpServerTool(Name = "commit_iteration"), Description(
+        "Find a valid spec commit for SDK code generation. " +
+        "Validates tspconfig.yaml and main.tsp remotely from GitHub. " +
+        "Three modes: commitOverride (strict), auto-resolve (iterates forward), " +
+        "fallback (creates local branch with fixed tspconfig when localSpecsPath is provided).")]
+    public static async Task<string> ExecuteAsync(
+        [Description("Absolute path to the SDK project directory")] string sdkProjectPath,
+        [Description("Absolute path to the tsp-location.yaml file")] string tspLocationPath,
+        [Description("Relative spec directory path (from tsp-location.yaml 'directory' field)")] string specsRelativeDirectory,
+        [Description("Optional. GitHub repo slug (e.g., Azure/azure-rest-api-specs). Defaults to tsp-location.yaml 'repo' field.")] string? repo = null,
+        [Description("Optional. Local specs clone path. Only needed for fallback branch creation.")] string? localSpecsPath = null,
+        [Description("Optional. User-provided commit SHA. Validated strictly, never iterates.")] string? commitOverride = null,
+        CancellationToken cancellationToken = default)
     {
         try
         {
-            sdkProjectPath = Path.GetFullPath(sdkProjectPath);
-            tspLocationPath = Path.GetFullPath(tspLocationPath);
-            localSpecsPath = Path.GetFullPath(localSpecsPath);
+            var result = await ExecuteInProcessAsync(
+                Path.GetFullPath(sdkProjectPath),
+                Path.GetFullPath(tspLocationPath),
+                specsRelativeDirectory,
+                repo,
+                localSpecsPath is not null ? Path.GetFullPath(localSpecsPath) : null,
+                commitOverride?.Trim(),
+                cancellationToken).ConfigureAwait(false);
 
-            var (success, message) = await ExecuteInProcessAsync(sdkProjectPath, tspLocationPath, specsRelativeDirectory, localSpecsPath, commitOverride, CancellationToken.None).ConfigureAwait(false);
-            return JsonSerializer.Serialize(new { success, message });
+            return JsonSerializer.Serialize(result);
         }
         catch (Exception ex)
         {
-            return JsonSerializer.Serialize(new { success = false, message = ex.Message });
+            return JsonSerializer.Serialize(new CommitIterationResult { Success = false, Message = ex.Message });
         }
     }
 
     /// <summary>
-    /// In-process execution for direct invocation from the CLI command.
+    /// In-process execution for direct invocation from CLI or orchestrator.
     /// </summary>
-    public static async Task<(bool Success, string Message)> ExecuteInProcessAsync(
+    public static async Task<CommitIterationResult> ExecuteInProcessAsync(
         string sdkProjectPath,
         string tspLocationPath,
         string specsRelativeDirectory,
-        string localSpecsPath,
+        string? repo,
+        string? localSpecsPath,
         string? commitOverride,
         CancellationToken cancellationToken)
     {
-        // If a commit override is provided, skip all iteration/validation and use it directly
+        if (!File.Exists(tspLocationPath))
+        {
+            return Fail($"tsp-location.yaml not found: {tspLocationPath}");
+        }
+
+        var sdkNamespace = Path.GetFileName(
+            sdkProjectPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+
+        repo = await ResolveRepoAsync(repo, tspLocationPath, cancellationToken).ConfigureAwait(false);
+        if (repo is null)
+        {
+            return Fail("No 'repo' field in tsp-location.yaml and no repo parameter provided.");
+        }
+
+        if (!s_repoSlugRegex.IsMatch(repo))
+        {
+            return Fail($"Invalid repo format '{repo}'. Expected 'owner/name' (e.g., Azure/azure-rest-api-specs).");
+        }
+
+        // Strict mode: validate exactly one commit, no iteration
         if (!string.IsNullOrWhiteSpace(commitOverride))
         {
-            await WriteYamlFieldAsync(tspLocationPath, "commit", commitOverride.Trim(), cancellationToken).ConfigureAwait(false);
-            return (true, $"Using provided commit override: {commitOverride.Trim()}");
+            return await ValidateAndUseCommitAsync(
+                tspLocationPath, specsRelativeDirectory, repo, sdkNamespace,
+                commitOverride, strict: true, cancellationToken).ConfigureAwait(false);
         }
 
-        var sdkNamespace = Path.GetFileName(sdkProjectPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+        // Auto-resolve mode: validate current commit, iterate forward if invalid
+        return await AutoResolveCommitAsync(
+            tspLocationPath, specsRelativeDirectory, repo, sdkNamespace,
+            localSpecsPath, cancellationToken).ConfigureAwait(false);
+    }
 
-        var specsRepoRoot = FindGitRepoRoot(localSpecsPath);
-        if (specsRepoRoot is null)
+    // ── Core validation ──────────────────────────────────────────────────
+
+    /// <summary>
+    /// Validates a commit by fetching main.tsp and tspconfig.yaml from GitHub.
+    /// If valid, writes the commit SHA to tsp-location.yaml.
+    /// </summary>
+    private static async Task<CommitIterationResult> ValidateAndUseCommitAsync(
+        string tspLocationPath,
+        string specsRelativeDirectory,
+        string repo,
+        string sdkNamespace,
+        string commit,
+        bool strict,
+        CancellationToken cancellationToken)
+    {
+        var mainTspPath = $"{specsRelativeDirectory}/main.tsp";
+        if (await FetchFileFromGitHubAsync(repo, commit, mainTspPath, cancellationToken).ConfigureAwait(false) is null)
         {
-            return (false, $"Could not find git repo root from specs path: {localSpecsPath}");
+            return MakeInvalidResult(commit, $"main.tsp not found at {mainTspPath}", strict);
         }
 
-        // Resolve the actual spec directory: localSpecsPath may be the repo root or the full spec dir.
-        // If tspconfig.yaml doesn't exist directly under localSpecsPath, combine with specsRelativeDirectory.
-        var actualSpecDir = localSpecsPath;
-        if (!File.Exists(Path.Combine(localSpecsPath, "tspconfig.yaml"))
-            && File.Exists(Path.Combine(localSpecsPath, specsRelativeDirectory, "tspconfig.yaml")))
+        var tspConfigPath = $"{specsRelativeDirectory}/tspconfig.yaml";
+        var tspConfigContent = await FetchFileFromGitHubAsync(repo, commit, tspConfigPath, cancellationToken).ConfigureAwait(false);
+        if (tspConfigContent is null)
         {
-            actualSpecDir = Path.Combine(localSpecsPath, specsRelativeDirectory);
+            return MakeInvalidResult(commit, $"tspconfig.yaml not found at {tspConfigPath}", strict);
         }
 
-        // Read current commit from tsp-location.yaml
-        var tspContent = await File.ReadAllTextAsync(tspLocationPath, cancellationToken).ConfigureAwait(false);
-        var currentCommit = ReadYamlField(tspContent, "commit");
-        if (string.IsNullOrEmpty(currentCommit))
+        var validation = ValidateTspConfigTool.ValidateContent(tspConfigContent, sdkNamespace);
+        if (!validation.IsValid)
         {
-            return (false, "No commit field found in tsp-location.yaml");
+            return MakeInvalidResult(commit, validation.Reason, strict);
         }
 
-        // Get newer commits (limited to last 20, in chronological order oldest→newest)
-        var newerCommits = await GetNewerCommitsAsync(specsRepoRoot, currentCommit, specsRelativeDirectory, cancellationToken).ConfigureAwait(false);
+        await WriteYamlFieldAsync(tspLocationPath, "commit", commit, cancellationToken).ConfigureAwait(false);
+        return new CommitIterationResult { Success = true, Commit = commit, Message = $"Found valid commit: {commit}" };
+    }
 
-        // Search order: current commit first, then newer commits oldest→newest.
-        // We want the OLDEST commit that has a valid tspconfig (new emitter config),
-        // because that minimizes spec drift from the starting point.
-        var candidates = new List<string> { currentCommit };
-        candidates.AddRange(newerCommits);
+    // ── Auto-resolve ─────────────────────────────────────────────────────
 
-        // Iterate commits to find one with valid tspconfig
-        foreach (var commit in candidates)
+    /// <summary>
+    /// Validates the current commit and iterates forward through newer commits if invalid.
+    /// Falls back to local branch creation when all remote candidates are exhausted.
+    /// </summary>
+    private static async Task<CommitIterationResult> AutoResolveCommitAsync(
+        string tspLocationPath,
+        string specsRelativeDirectory,
+        string repo,
+        string sdkNamespace,
+        string? localSpecsPath,
+        CancellationToken cancellationToken)
+    {
+        var startingCommit = await ResolveStartingCommitAsync(tspLocationPath, repo, cancellationToken).ConfigureAwait(false);
+        if (startingCommit is null)
+        {
+            return Fail("Could not determine a starting commit from tsp-location.yaml or GitHub HEAD.");
+        }
+
+        var startResult = await ValidateAndUseCommitAsync(
+            tspLocationPath, specsRelativeDirectory, repo, sdkNamespace,
+            startingCommit, strict: false, cancellationToken).ConfigureAwait(false);
+        if (startResult.Success)
+        {
+            return startResult;
+        }
+
+        // Iterate newer commits
+        var newerCommits = await GetNewerCommitsAsync(
+            repo, startingCommit, specsRelativeDirectory, cancellationToken).ConfigureAwait(false);
+
+        var invalidReasons = new List<string>(newerCommits.Count + 1)
+        {
+            $"{AbbrevSha(startingCommit)}: {startResult.Message}"
+        };
+
+        foreach (var commit in newerCommits)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            await RunGitAsync(specsRepoRoot, $"checkout {commit} -- {specsRelativeDirectory}", cancellationToken).ConfigureAwait(false);
-
-            var tspConfigPath = Path.Combine(actualSpecDir, "tspconfig.yaml");
-            var validation = ValidateTspConfigTool.ValidateInProcess(tspConfigPath, sdkNamespace);
-
-            if (validation.IsValid)
+            var result = await ValidateAndUseCommitAsync(
+                tspLocationPath, specsRelativeDirectory, repo, sdkNamespace,
+                commit, strict: false, cancellationToken).ConfigureAwait(false);
+            if (result.Success)
             {
-                await WriteYamlFieldAsync(tspLocationPath, "commit", commit, cancellationToken).ConfigureAwait(false);
-                await RestoreWorkingTree(specsRepoRoot, specsRelativeDirectory, cancellationToken).ConfigureAwait(false);
-                return (true, $"Found valid commit: {commit}");
+                return result;
             }
+
+            invalidReasons.Add($"{AbbrevSha(commit)}: {result.Message}");
         }
 
-        // Fallback — fix the latest commit's tspconfig
-        var latestCommit = candidates[^1];
+        // All candidates invalid
+        var candidateCount = 1 + newerCommits.Count;
+        var summary = string.Join("\n", invalidReasons);
 
-        var originalBranch = (await RunGitAsync(specsRepoRoot, "rev-parse --abbrev-ref HEAD", cancellationToken).ConfigureAwait(false)).Trim();
-        if (originalBranch == "HEAD")
+        if (localSpecsPath is not null)
         {
-            originalBranch = (await RunGitAsync(specsRepoRoot, "rev-parse HEAD", cancellationToken).ConfigureAwait(false)).Trim();
+            var latestCommit = newerCommits.Count > 0 ? newerCommits[^1] : startingCommit;
+            return await CreateFallbackCommitAsync(
+                tspLocationPath, specsRelativeDirectory, localSpecsPath, sdkNamespace,
+                latestCommit, cancellationToken).ConfigureAwait(false);
         }
 
-        await RunGitAsync(specsRepoRoot, $"checkout {latestCommit} -- {specsRelativeDirectory}", cancellationToken).ConfigureAwait(false);
-
-        var fallbackConfigPath = Path.Combine(actualSpecDir, "tspconfig.yaml");
-        var (fixSuccess, fixError) = ValidateTspConfigTool.FixTspConfig(fallbackConfigPath, sdkNamespace);
-        if (!fixSuccess)
+        return new CommitIterationResult
         {
-            await RestoreWorkingTree(specsRepoRoot, specsRelativeDirectory, cancellationToken).ConfigureAwait(false);
-            return (false, $"Failed to fix tspconfig.yaml: {fixError}");
-        }
-
-        await RunGitAsync(specsRepoRoot, "checkout -b sdk-migration-fallback", cancellationToken).ConfigureAwait(false);
-        await RunGitAsync(specsRepoRoot, $"add {specsRelativeDirectory}/tspconfig.yaml", cancellationToken).ConfigureAwait(false);
-        await RunGitAsync(specsRepoRoot, "commit -m \"Update tspconfig.yaml for SDK migration: set @azure-typespec/http-client-csharp emitter config\"", cancellationToken).ConfigureAwait(false);
-
-        var newCommitSha = (await RunGitAsync(specsRepoRoot, "rev-parse HEAD", cancellationToken).ConfigureAwait(false)).Trim();
-        await WriteYamlFieldAsync(tspLocationPath, "commit", newCommitSha, cancellationToken).ConfigureAwait(false);
-
-        // Restore original branch
-        await RunGitAsync(specsRepoRoot, $"checkout {originalBranch}", cancellationToken).ConfigureAwait(false);
-        await RestoreWorkingTree(specsRepoRoot, specsRelativeDirectory, cancellationToken).ConfigureAwait(false);
-
-        return (true, $"Created fallback commit: {newCommitSha}");
+            Success = false,
+            NeedsLocalSpecsPath = true,
+            Message = $"No valid commit found among {candidateCount} candidates. " +
+                      $"Provide localSpecsPath to create a fallback.\n{summary}"
+        };
     }
 
+    /// <summary>
+    /// Reads the starting commit from tsp-location.yaml, or fetches the HEAD SHA
+    /// of the repo's main branch from GitHub when no commit is present.
+    /// </summary>
+    private static async Task<string?> ResolveStartingCommitAsync(
+        string tspLocationPath,
+        string repo,
+        CancellationToken cancellationToken)
+    {
+        var tspContent = await File.ReadAllTextAsync(tspLocationPath, cancellationToken).ConfigureAwait(false);
+        var commit = ReadYamlField(tspContent, "commit");
+
+        return !string.IsNullOrEmpty(commit)
+            ? commit
+            : await GetHeadCommitShaAsync(repo, cancellationToken).ConfigureAwait(false);
+    }
+
+    // ── Fallback: local branch with fixed tspconfig ──────────────────────
+
+    /// <summary>
+    /// Creates a fallback commit in the local specs repo with a corrected tspconfig.yaml.
+    /// </summary>
+    private static async Task<CommitIterationResult> CreateFallbackCommitAsync(
+        string tspLocationPath,
+        string specsRelativeDirectory,
+        string localSpecsPath,
+        string sdkNamespace,
+        string baseCommit,
+        CancellationToken cancellationToken)
+    {
+        var repoRoot = FindGitRepoRoot(localSpecsPath);
+        if (repoRoot is null)
+        {
+            return Fail($"Git repository not found from: {localSpecsPath}");
+        }
+
+        var specDir = ResolveSpecDirectory(localSpecsPath, specsRelativeDirectory);
+        var originalRef = await GetCurrentGitRefAsync(repoRoot, cancellationToken).ConfigureAwait(false);
+
+        try
+        {
+            await RunGitAsync(repoRoot, $"checkout {baseCommit} -- {specsRelativeDirectory}", cancellationToken).ConfigureAwait(false);
+
+            var configPath = Path.Combine(specDir, "tspconfig.yaml");
+            var (fixSuccess, fixError) = ValidateTspConfigTool.FixTspConfig(configPath, sdkNamespace);
+            if (!fixSuccess)
+            {
+                await RestoreWorkingTreeAsync(repoRoot, specsRelativeDirectory, cancellationToken).ConfigureAwait(false);
+                return Fail($"Failed to fix tspconfig.yaml: {fixError}");
+            }
+
+            var branchName = $"sdk-migration-fallback-{DateTime.UtcNow:yyyyMMddHHmmss}";
+            await RunGitAsync(repoRoot, $"checkout -b {branchName}", cancellationToken).ConfigureAwait(false);
+            await RunGitAsync(repoRoot, $"add {specsRelativeDirectory}/tspconfig.yaml", cancellationToken).ConfigureAwait(false);
+            await RunGitAsync(repoRoot, "commit -m \"Update tspconfig.yaml for SDK migration\"", cancellationToken).ConfigureAwait(false);
+
+            var newCommit = (await RunGitAsync(repoRoot, "rev-parse HEAD", cancellationToken).ConfigureAwait(false)).Trim();
+            await WriteYamlFieldAsync(tspLocationPath, "commit", newCommit, cancellationToken).ConfigureAwait(false);
+
+            await RunGitAsync(repoRoot, $"checkout {originalRef}", cancellationToken).ConfigureAwait(false);
+            await RestoreWorkingTreeAsync(repoRoot, specsRelativeDirectory, cancellationToken).ConfigureAwait(false);
+
+            return new CommitIterationResult
+            {
+                Success = true,
+                Commit = newCommit,
+                Message = $"Created fallback commit {newCommit} on branch {branchName}."
+            };
+        }
+        catch
+        {
+            // Best-effort restore on failure
+            try
+            {
+                await RunGitAsync(repoRoot, $"checkout {originalRef}", cancellationToken).ConfigureAwait(false);
+                await RestoreWorkingTreeAsync(repoRoot, specsRelativeDirectory, cancellationToken).ConfigureAwait(false);
+            }
+            catch
+            {
+                // Swallow — original exception is more important.
+            }
+            throw;
+        }
+    }
+
+    // ── GitHub API helpers ───────────────────────────────────────────────
+
+    /// <summary>
+    /// Fetches a file from GitHub at a specific commit via raw.githubusercontent.com.
+    /// Returns null when the file does not exist (404) or the request fails.
+    /// </summary>
+    internal static async Task<string?> FetchFileFromGitHubAsync(
+        string repo, string commitSha, string filePath, CancellationToken cancellationToken)
+    {
+        var normalizedPath = filePath.Replace('\\', '/');
+        var url = $"{GitHubRawBaseUrl}/{repo}/{commitSha}/{normalizedPath}";
+
+        try
+        {
+            using var response = await s_httpClient.GetAsync(url, cancellationToken).ConfigureAwait(false);
+            return response.IsSuccessStatusCode
+                ? await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false)
+                : null;
+        }
+        catch (HttpRequestException)
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Gets the HEAD commit SHA of the repo's main branch.
+    /// </summary>
+    internal static async Task<string?> GetHeadCommitShaAsync(string repo, CancellationToken cancellationToken)
+    {
+        var url = $"{GitHubApiBaseUrl}/repos/{repo}/commits/main";
+
+        try
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(GitHubApiMediaType));
+
+            using var response = await s_httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+            using var doc = JsonDocument.Parse(json);
+            return doc.RootElement.TryGetProperty("sha", out var sha) ? sha.GetString() : null;
+        }
+        catch (HttpRequestException)
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Gets up to <see cref="MaxCandidateCommits"/> newer commits that touched the given
+    /// spec directory, in chronological order (oldest first).
+    /// </summary>
+    internal static async Task<List<string>> GetNewerCommitsAsync(
+        string repo, string sinceCommit, string specsDir, CancellationToken cancellationToken)
+    {
+        var commitDate = await GetCommitDateAsync(repo, sinceCommit, cancellationToken).ConfigureAwait(false);
+        if (commitDate is null)
+        {
+            return [];
+        }
+
+        var sinceParam = Uri.EscapeDataString(commitDate);
+        var pathParam = Uri.EscapeDataString(specsDir);
+        var url = $"{GitHubApiBaseUrl}/repos/{repo}/commits?sha=main&path={pathParam}&since={sinceParam}&per_page={MaxCandidateCommits}";
+
+        try
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(GitHubApiMediaType));
+
+            using var response = await s_httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            if (!response.IsSuccessStatusCode)
+            {
+                return [];
+            }
+
+            var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+            using var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.ValueKind != JsonValueKind.Array)
+            {
+                return [];
+            }
+
+            var result = new List<string>();
+            foreach (var item in doc.RootElement.EnumerateArray())
+            {
+                if (item.TryGetProperty("sha", out var shaElement))
+                {
+                    var sha = shaElement.GetString();
+                    if (sha is not null && sha != sinceCommit)
+                    {
+                        result.Add(sha);
+                    }
+                }
+            }
+
+            // GitHub API returns newest first; reverse to oldest first
+            result.Reverse();
+            return result;
+        }
+        catch (HttpRequestException)
+        {
+            return [];
+        }
+    }
+
+    /// <summary>
+    /// Gets the committer date for a specific commit SHA.
+    /// </summary>
+    private static async Task<string?> GetCommitDateAsync(
+        string repo, string commitSha, CancellationToken cancellationToken)
+    {
+        var url = $"{GitHubApiBaseUrl}/repos/{repo}/commits/{commitSha}";
+
+        try
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(GitHubApiMediaType));
+
+            using var response = await s_httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+            using var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.TryGetProperty("commit", out var commitObj)
+                && commitObj.TryGetProperty("committer", out var committer)
+                && committer.TryGetProperty("date", out var date))
+            {
+                return date.GetString();
+            }
+
+            return null;
+        }
+        catch (HttpRequestException)
+        {
+            return null;
+        }
+    }
+
+    // ── Local git helpers ────────────────────────────────────────────────
+
+    /// <summary>
+    /// Walks up the directory tree to find the .git root.
+    /// </summary>
     internal static string? FindGitRepoRoot(string startPath)
     {
         var dir = Directory.Exists(startPath) ? startPath : Path.GetDirectoryName(startPath);
@@ -154,57 +473,123 @@ public static class CommitIterationTool
         return null;
     }
 
-    private static async Task<List<string>> GetNewerCommitsAsync(string repoRoot, string startingCommit, string specsDir, CancellationToken cancellationToken)
+    private static async Task<string> GetCurrentGitRefAsync(
+        string repoRoot, CancellationToken cancellationToken)
     {
-        // Limit to last 20 commits to avoid slow iteration on large repos like azure-rest-api-specs
-        var output = await RunGitAsync(repoRoot, $"log --format=\"%H\" --reverse -20 {startingCommit}..HEAD -- {specsDir}", cancellationToken).ConfigureAwait(false);
-        return output
-            .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-            .Where(l => l.Length == 40 && l.All(char.IsAsciiHexDigit))
-            .ToList();
+        var branch = (await RunGitAsync(repoRoot, "rev-parse --abbrev-ref HEAD", cancellationToken).ConfigureAwait(false)).Trim();
+        if (branch == "HEAD")
+        {
+            branch = (await RunGitAsync(repoRoot, "rev-parse HEAD", cancellationToken).ConfigureAwait(false)).Trim();
+        }
+        return branch;
     }
 
-    private static async Task RestoreWorkingTree(string repoRoot, string specsDir, CancellationToken cancellationToken)
+    private static async Task RestoreWorkingTreeAsync(
+        string repoRoot, string specsDir, CancellationToken cancellationToken)
     {
         await RunGitAsync(repoRoot, $"checkout HEAD -- {specsDir}", cancellationToken).ConfigureAwait(false);
     }
 
-    private static string? ReadYamlField(string yamlContent, string fieldName)
+    private static async Task<string> RunGitAsync(
+        string workingDirectory, string arguments, CancellationToken cancellationToken)
     {
+        var (output, _) = await ProcessRunner.RunAsync(
+            "git", arguments, workingDirectory, s_gitEnv, cancellationToken).ConfigureAwait(false);
+        return output;
+    }
+
+    // ── YAML helpers ─────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Reads a top-level YAML field value using simple line parsing.
+    /// </summary>
+    internal static string? ReadYamlField(string yamlContent, string fieldName)
+    {
+        var prefix = $"{fieldName}:";
         foreach (var line in yamlContent.Split('\n'))
         {
             var trimmed = line.Trim();
-            if (trimmed.StartsWith($"{fieldName}:", StringComparison.OrdinalIgnoreCase))
+            if (trimmed.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
             {
-                var value = trimmed[($"{fieldName}:".Length)..].Trim().Trim('"', '\'');
+                var value = trimmed[prefix.Length..].Trim().Trim('"', '\'');
                 return string.IsNullOrEmpty(value) ? null : value;
             }
         }
         return null;
     }
 
-    private static async Task WriteYamlFieldAsync(string filePath, string fieldName, string value, CancellationToken cancellationToken)
+    /// <summary>
+    /// Writes a YAML field value in-place, or appends it if it does not exist.
+    /// </summary>
+    private static async Task WriteYamlFieldAsync(
+        string filePath, string fieldName, string value, CancellationToken cancellationToken)
     {
         var lines = await File.ReadAllLinesAsync(filePath, cancellationToken).ConfigureAwait(false);
+        var prefix = $"{fieldName}:";
+        var found = false;
+
         for (var i = 0; i < lines.Length; i++)
         {
-            if (lines[i].TrimStart().StartsWith($"{fieldName}:", StringComparison.OrdinalIgnoreCase))
+            if (lines[i].TrimStart().StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
             {
                 lines[i] = $"{fieldName}: {value}";
+                found = true;
                 break;
             }
         }
-        await File.WriteAllLinesAsync(filePath, lines, cancellationToken).ConfigureAwait(false);
+
+        if (found)
+        {
+            await File.WriteAllLinesAsync(filePath, lines, cancellationToken).ConfigureAwait(false);
+        }
+        else
+        {
+            await File.AppendAllTextAsync(filePath, $"\n{fieldName}: {value}\n", cancellationToken).ConfigureAwait(false);
+        }
     }
 
-    private static readonly Dictionary<string, string> s_gitEnv = new()
-    {
-        ["GIT_TERMINAL_PROMPT"] = "0"
-    };
+    // ── Shared utilities ─────────────────────────────────────────────────
 
-    private static async Task<string> RunGitAsync(string workingDirectory, string arguments, CancellationToken cancellationToken)
+    private static async Task<string?> ResolveRepoAsync(
+        string? repo, string tspLocationPath, CancellationToken cancellationToken)
     {
-        var (output, _) = await ProcessRunner.RunAsync("git", arguments, workingDirectory, s_gitEnv, cancellationToken).ConfigureAwait(false);
-        return output;
+        if (!string.IsNullOrEmpty(repo))
+        {
+            return repo;
+        }
+
+        var tspContent = await File.ReadAllTextAsync(tspLocationPath, cancellationToken).ConfigureAwait(false);
+        return ReadYamlField(tspContent, "repo");
+    }
+
+    private static string ResolveSpecDirectory(string localSpecsPath, string specsRelativeDirectory)
+    {
+        if (!File.Exists(Path.Combine(localSpecsPath, "tspconfig.yaml"))
+            && Directory.Exists(Path.Combine(localSpecsPath, specsRelativeDirectory)))
+        {
+            return Path.Combine(localSpecsPath, specsRelativeDirectory);
+        }
+        return localSpecsPath;
+    }
+
+    private static CommitIterationResult MakeInvalidResult(string commit, string reason, bool strict)
+    {
+        return strict
+            ? Fail($"Invalid commit {AbbrevSha(commit)}: {reason}")
+            : Fail(reason);
+    }
+
+    private static CommitIterationResult Fail(string message)
+        => new() { Success = false, Message = message };
+
+    private static string AbbrevSha(string sha)
+        => sha.Length > CommitShaDisplayLength ? sha[..CommitShaDisplayLength] : sha;
+
+    private static HttpClient CreateHttpClient()
+    {
+        var client = new HttpClient();
+        client.DefaultRequestHeaders.UserAgent.Add(
+            new ProductInfoHeaderValue("AzureGeneratorAgent", "1.0"));
+        return client;
     }
 }
