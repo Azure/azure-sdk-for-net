@@ -11,7 +11,7 @@ High level steps involved:
 3. Commit generated changes checkpoint
 4. Run package checks
 5. Run package tests
-6. Update change log, metadata and version
+6. Update changelog, metadata and version
 7. Commit final changes checkpoint
 
 ---
@@ -35,7 +35,7 @@ High level steps involved:
   9. Commit generated changes checkpoint
   10. Run package checks
   11. Run package tests
-  12. Update change log, metadata and version
+  12. Update changelog, metadata and version
   13. Commit final changes checkpoint
 
 ---
@@ -154,7 +154,7 @@ High level steps involved:
 
 ---
 
-### Step 4: Run package validation
+### Step 4: Run package checks
 
 **Actions**:
 
@@ -170,11 +170,11 @@ High level steps involved:
 
 ---
 
-### Step 6: Update change log, metadata and version
+### Step 6: Update changelog, metadata and version
 
 **Actions**:
 
-- Run `azsdk_package_update_changelog_content` MCP tool to update change log in the identified project directory.
+- Run `azsdk_package_update_changelog_content` MCP tool to update changelog in the identified project directory.
 - Run `azsdk_package_update_metadata` MCP tool to update metadata in the identified project directory.
 - Run `azsdk_package_update_version` MCP tool to update version in the identified project directory.
 
