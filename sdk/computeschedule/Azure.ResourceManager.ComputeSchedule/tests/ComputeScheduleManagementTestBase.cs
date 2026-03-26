@@ -43,11 +43,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                var options = new ArmClientOptions
-                {
-                    Environment = new ArmEnvironment(new Uri("https://brazilus.management.azure.com"), "https://management.core.windows.net/")
-                };
-                Client = GetArmClient(options);
+                Client = GetArmClient();
                 SubscriptionResource subIdRes = await Client.GetDefaultSubscriptionAsync();
                 DefaultSubscription = Client.GetSubscriptionResource(subIdRes.Id);
                 DefaultResourceGroupResource = await DefaultSubscription.GetResourceGroupAsync(TestEnvironment.ResourceGroup);
