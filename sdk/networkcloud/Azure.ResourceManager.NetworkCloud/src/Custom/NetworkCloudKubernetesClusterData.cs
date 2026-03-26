@@ -15,13 +15,21 @@ namespace Azure.ResourceManager.NetworkCloud
     // CodeGenSuppress for AadAdminGroupObjectIds: old API had a setter; new generated code is get-only.
     // After regeneration, only the custom property below will remain.
     [CodeGenSuppress("AadAdminGroupObjectIds")]
+    [CodeGenSuppress("NetworkCloudKubernetesClusterData", typeof(AzureLocation), typeof(ControlPlaneNodeConfiguration), typeof(IEnumerable<InitialAgentPoolConfiguration>), typeof(string), typeof(KubernetesClusterNetworkConfiguration), typeof(ExtendedLocation))]
     public partial class NetworkCloudKubernetesClusterData
     {
-        // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
         /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkCloudKubernetesClusterData(AzureLocation location, ExtendedLocation extendedLocation, ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, IEnumerable<InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, KubernetesClusterNetworkConfiguration networkConfiguration)
-            : this(location, controlPlaneNodeConfiguration, initialAgentPoolConfigurations, kubernetesVersion, networkConfiguration, extendedLocation) { }
+            : base(location)
+        {
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+            Argument.AssertNotNull(controlPlaneNodeConfiguration, nameof(controlPlaneNodeConfiguration));
+            Argument.AssertNotNull(initialAgentPoolConfigurations, nameof(initialAgentPoolConfigurations));
+            Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
+            Argument.AssertNotNull(networkConfiguration, nameof(networkConfiguration));
+            Properties = new KubernetesClusterProperties(controlPlaneNodeConfiguration, initialAgentPoolConfigurations, kubernetesVersion, networkConfiguration);
+            ExtendedLocation = extendedLocation;
+        }
 
         // Backward compat: old API had a setter for AadAdminGroupObjectIds.
         /// <summary> The list of Azure Active Directory group object IDs. </summary>

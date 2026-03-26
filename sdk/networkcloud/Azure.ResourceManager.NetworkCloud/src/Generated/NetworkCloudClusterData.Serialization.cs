@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue<Models.ExtendedLocation>(ExtendedLocation, options);
+            writer.WriteObjectValue(ExtendedLocation, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.NetworkCloud
             AzureLocation location = default;
             ClusterProperties properties = default;
             ETag? eTag = default;
-            Models.ExtendedLocation extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             ManagedServiceIdentity identity = default;
             NetworkCloudDeploymentType? kind = default;
             foreach (var prop in element.EnumerateObject())
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (prop.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))

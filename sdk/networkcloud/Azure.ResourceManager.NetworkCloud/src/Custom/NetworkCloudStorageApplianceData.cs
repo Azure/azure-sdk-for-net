@@ -7,9 +7,11 @@ using System.ComponentModel;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    [CodeGenSuppress("NetworkCloudStorageApplianceData", typeof(AzureLocation), typeof(ResourceIdentifier), typeof(string), typeof(long), typeof(string), typeof(AdministrativeCredentials), typeof(ExtendedLocation))]
     public partial class NetworkCloudStorageApplianceData
     {
         // Backward compat: CACertificate was flattened in old autorest code but not in new generator.
@@ -22,11 +24,19 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IPAddress ManagementIPv4Address => Properties?.ManagementIPv4Address;
 
-        // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
         /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkCloudStorageApplianceData(AzureLocation location, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId)
-            : this(location, rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials, extendedLocation) { }
+            : base(location)
+        {
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+            Argument.AssertNotNull(administratorCredentials, nameof(administratorCredentials));
+            Argument.AssertNotNull(rackId, nameof(rackId));
+            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
+            Argument.AssertNotNull(storageApplianceSkuId, nameof(storageApplianceSkuId));
+            Properties = new StorageApplianceProperties(rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials);
+            ExtendedLocation = extendedLocation;
+        }
+
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation { get; set; }
     }

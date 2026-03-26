@@ -9,9 +9,11 @@ using System.ComponentModel;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    [CodeGenSuppress("NetworkCloudBareMetalMachineKeySetData", typeof(AzureLocation), typeof(string), typeof(DateTimeOffset), typeof(IEnumerable<IPAddress>), typeof(BareMetalMachineKeySetPrivilegeLevel), typeof(IEnumerable<KeySetUser>), typeof(ExtendedLocation))]
     public partial class NetworkCloudBareMetalMachineKeySetData
     {
         /// <summary> The name of the group that users will be assigned to on the operating system of the machines. </summary>
@@ -27,11 +29,18 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineKeySetData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkCloudBareMetalMachineKeySetData(AzureLocation location, ExtendedLocation extendedLocation, string azureGroupId, DateTimeOffset expireOn, IEnumerable<IPAddress> jumpHostsAllowed, BareMetalMachineKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList)
-            : this(location, azureGroupId, expireOn, jumpHostsAllowed, privilegeLevel, userList, extendedLocation) { }
+            : base(location)
+        {
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+            Argument.AssertNotNull(azureGroupId, nameof(azureGroupId));
+            Argument.AssertNotNull(jumpHostsAllowed, nameof(jumpHostsAllowed));
+            Argument.AssertNotNull(userList, nameof(userList));
+            Properties = new BareMetalMachineKeySetProperties(azureGroupId, expireOn, jumpHostsAllowed, privilegeLevel, userList);
+            ExtendedLocation = extendedLocation;
+        }
+
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation { get; set; }
     }

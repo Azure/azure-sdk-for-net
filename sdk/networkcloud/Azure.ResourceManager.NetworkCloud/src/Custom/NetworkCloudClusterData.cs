@@ -6,9 +6,11 @@
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    [CodeGenSuppress("NetworkCloudClusterData", typeof(AzureLocation), typeof(NetworkCloudRackDefinition), typeof(ClusterType), typeof(string), typeof(ResourceIdentifier), typeof(ExtendedLocation))]
     public partial class NetworkCloudClusterData
     {
         /// <summary> The mode of operation for runtime protection. </summary>
@@ -24,11 +26,18 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkCloudClusterData(AzureLocation location, ExtendedLocation extendedLocation, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId)
-            : this(location, aggregatorOrSingleRackDefinition, clusterType, clusterVersion, networkFabricId, extendedLocation) { }
+            : base(location)
+        {
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+            Argument.AssertNotNull(aggregatorOrSingleRackDefinition, nameof(aggregatorOrSingleRackDefinition));
+            Argument.AssertNotNull(clusterVersion, nameof(clusterVersion));
+            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
+            Properties = new ClusterProperties(aggregatorOrSingleRackDefinition, clusterType, clusterVersion, networkFabricId);
+            ExtendedLocation = extendedLocation;
+        }
+
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation { get; set; }
 
@@ -39,7 +48,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 var baseLoc = Properties?.ClusterExtendedLocation;
                 if (baseLoc == null) return null;
-                if (baseLoc is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom) return custom;
                 return new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(baseLoc.Name, baseLoc.ExtendedLocationType?.ToString());
             }
         }
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 var baseLoc = Properties?.HybridAksExtendedLocation;
                 if (baseLoc == null) return null;
-                if (baseLoc is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom) return custom;
                 return new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(baseLoc.Name, baseLoc.ExtendedLocationType?.ToString());
             }
         }

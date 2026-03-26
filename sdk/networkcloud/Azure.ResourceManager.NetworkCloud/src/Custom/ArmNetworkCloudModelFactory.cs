@@ -91,28 +91,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudAgentPoolData NetworkCloudAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, AdministratorConfiguration administratorConfiguration, NetworkCloudAgentConfiguration agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IEnumerable<string> availabilityZones, long count, AgentPoolDetailedStatus? detailedStatus, string detailedStatusMessage, string kubernetesVersion, IEnumerable<KubernetesLabel> labels, NetworkCloudAgentPoolMode mode, AgentPoolProvisioningState? provisioningState, IEnumerable<KubernetesLabel> taints, string upgradeMaxSurge, string vmSkuName)
         {
             return NetworkCloudAgentPoolData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                administratorConfiguration: administratorConfiguration,
-                agentOptions: agentOptions,
-                attachedNetworkConfiguration: attachedNetworkConfiguration,
-                availabilityZones: availabilityZones,
-                count: count,
-                labels: labels,
-                mode: mode,
-                taints: taints,
-                upgradeSettings: new AgentPoolUpgradeSettings() { MaxSurge = upgradeMaxSurge },
-                vmSkuName: vmSkuName,
-                detailedStatus: detailedStatus,
-                detailedStatusMessage: detailedStatusMessage,
-                kubernetesVersion: kubernetesVersion,
-                provisioningState: provisioningState,
-                etag: default,
-                extendedLocation: extendedLocation);
+                id, name, resourceType, systemData, tags, location, extendedLocation,
+                administratorConfiguration, agentOptions, attachedNetworkConfiguration,
+                availabilityZones, count, detailedStatus, detailedStatusMessage, kubernetesVersion,
+                labels, mode, provisioningState, taints,
+                new AgentPoolUpgradeSettings() { MaxSurge = upgradeMaxSurge },
+                vmSkuName);
         }
 
         /// <summary> Initializes a new instance of NetworkAttachment. </summary>
@@ -174,29 +158,34 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkCloudAgentPoolData NetworkCloudAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, AdministratorConfiguration administratorConfiguration, NetworkCloudAgentConfiguration agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IEnumerable<string> availabilityZones, long count, AgentPoolDetailedStatus? detailedStatus, string detailedStatusMessage, string kubernetesVersion, IEnumerable<KubernetesLabel> labels, NetworkCloudAgentPoolMode mode, AgentPoolProvisioningState? provisioningState, IEnumerable<KubernetesLabel> taints, AgentPoolUpgradeSettings upgradeSettings, string vmSkuName)
         {
-            return NetworkCloudAgentPoolData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                administratorConfiguration: administratorConfiguration,
-                agentOptions: agentOptions,
-                attachedNetworkConfiguration: attachedNetworkConfiguration,
-                availabilityZones: availabilityZones,
-                count: count,
-                detailedStatus: detailedStatus,
-                detailedStatusMessage: detailedStatusMessage,
-                kubernetesVersion: kubernetesVersion,
-                labels: labels,
-                mode: mode,
-                provisioningState: provisioningState,
-                taints: taints,
-                upgradeSettings: upgradeSettings,
-                vmSkuName: vmSkuName,
-                etag: default,
-                extendedLocation: extendedLocation);
+            var properties = new AgentPoolProperties(
+                administratorConfiguration,
+                agentOptions,
+                attachedNetworkConfiguration,
+                availabilityZones?.ToList() ?? (IList<string>)new ChangeTrackingList<string>(),
+                count,
+                labels?.ToList() ?? (IList<KubernetesLabel>)new ChangeTrackingList<KubernetesLabel>(),
+                mode,
+                taints?.ToList() ?? (IList<KubernetesLabel>)new ChangeTrackingList<KubernetesLabel>(),
+                upgradeSettings,
+                vmSkuName,
+                detailedStatus,
+                detailedStatusMessage,
+                kubernetesVersion,
+                provisioningState,
+                additionalBinaryDataProperties: null);
+
+            return new NetworkCloudAgentPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                default,
+                extendedLocation);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudBareMetalMachineKeySetData"/>. </summary>

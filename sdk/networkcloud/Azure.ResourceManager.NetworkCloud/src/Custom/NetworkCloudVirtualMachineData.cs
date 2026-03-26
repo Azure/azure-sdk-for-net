@@ -11,16 +11,22 @@ using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.Cod
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    // CodeGenSuppress for ConsoleExtendedLocation: old API returned NetworkCloud.Models.ExtendedLocation;
-    // regenerated code returns Resources.Models.ExtendedLocation. This preserves the old return type.
     [CodeGenSuppress("ConsoleExtendedLocation")]
+    [CodeGenSuppress("NetworkCloudVirtualMachineData", typeof(AzureLocation), typeof(string), typeof(NetworkAttachment), typeof(long), typeof(long), typeof(NetworkCloudStorageProfile), typeof(string), typeof(ExtendedLocation))]
     public partial class NetworkCloudVirtualMachineData
     {
-        // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkCloudVirtualMachineData(AzureLocation location, ExtendedLocation extendedLocation, string adminUsername, NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, long memorySizeInGB, NetworkCloudStorageProfile storageProfile, string vmImage)
-            : this(location, adminUsername, cloudServicesNetworkAttachment, cpuCores, memorySizeInGB, storageProfile, vmImage, extendedLocation) { }
+            : base(location)
+        {
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+            Argument.AssertNotNull(adminUsername, nameof(adminUsername));
+            Argument.AssertNotNull(cloudServicesNetworkAttachment, nameof(cloudServicesNetworkAttachment));
+            Argument.AssertNotNull(storageProfile, nameof(storageProfile));
+            Argument.AssertNotNull(vmImage, nameof(vmImage));
+            Properties = new VirtualMachineProperties(adminUsername, cloudServicesNetworkAttachment, cpuCores, memorySizeInGB, storageProfile, vmImage);
+            ExtendedLocation = extendedLocation;
+        }
 
         // Backward compat: old API returned NetworkCloud.Models.ExtendedLocation; regenerated code
         // returns Resources.Models.ExtendedLocation. This preserves the old return type.
@@ -32,7 +38,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 var baseLoc = Properties?.ConsoleExtendedLocation;
                 if (baseLoc == null) return null;
-                if (baseLoc is Models.ExtendedLocation ncLoc) return ncLoc;
                 return new Models.ExtendedLocation(baseLoc.Name, baseLoc.ExtendedLocationType?.ToString());
             }
             set
@@ -41,7 +46,20 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new VirtualMachineProperties();
                 }
-                Properties.ConsoleExtendedLocation = value;
+                if (value == null)
+                {
+                    Properties.ConsoleExtendedLocation = null;
+                }
+                else
+                {
+                    Properties.ConsoleExtendedLocation = new Azure.ResourceManager.Resources.Models.ExtendedLocation
+                    {
+                        Name = value.Name,
+                        ExtendedLocationType = value.ExtendedLocationType != null
+                            ? new Azure.ResourceManager.Resources.Models.ExtendedLocationType(value.ExtendedLocationType)
+                            : (Azure.ResourceManager.Resources.Models.ExtendedLocationType?)null
+                    };
+                }
             }
         }
         /// <summary> The extended location of the cluster associated with the resource. </summary>

@@ -7,110 +7,163 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources.Models;
-using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    // Backward-compat shim: old API exposed ExtendedLocation in Azure.ResourceManager.NetworkCloud.Models namespace.
-    // New generator uses Azure.ResourceManager.Resources.Models.ExtendedLocation. This shim preserves ApiCompat.
-    // [CodeGenType] maps the generated NetworkCloudExtendedLocation (from @@alternateType in client.tsp) to this class.
-    // [CodeGenSuppress] removes generated members that hide inherited ones from the base class.
+    // Backward-compat shim for ExtendedLocation.
+    //
+    // Root cause: The old Swagger defined ExtendedLocation as a local model in definitions
+    // (with two string properties: "name" and "type"), NOT as a $ref to the ARM common type.
+    // AutoRest therefore generated a local Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation
+    // class with string Name and string ExtendedLocationType properties.
+    //
+    // In the new TypeSpec spec, the same concept uses Foundations.ExtendedLocation (the ARM
+    // common type). The C# MPG generator recognizes this as a known ARM common type and maps
+    // it directly to Azure.ResourceManager.Resources.Models.ExtendedLocation — no local type
+    // is generated.
+    //
+    // The ARM common type differs from the old local type:
+    //   - Namespace: Azure.ResourceManager.Resources.Models vs Azure.ResourceManager.NetworkCloud.Models
+    //   - ExtendedLocationType property: ExtendedLocationType? (struct enum) vs string
+    //   - Constructor: parameterless only vs (string name, string extendedLocationType)
+    //
+    // This shim preserves the old public API surface (namespace, constructor, string property
+    // types, and IJsonModel serialization) to avoid breaking changes for existing consumers.
 
     /// <summary> The complex type of the extended location. </summary>
-    [CodeGenType("NetworkCloudExtendedLocation")]
-    [CodeGenSuppress("Name")]
-    [CodeGenSuppress("ExtendedLocationType")]
-    [CodeGenSuppress("ExtendedLocation", typeof(string), typeof(ExtendedLocationType))]
-    [CodeGenSuppress("ExtendedLocation", typeof(string), typeof(ExtendedLocationType), typeof(IDictionary<string, BinaryData>))]
-    [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
-    [CodeGenSuppress("DeserializeExtendedLocation", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
-    public partial class ExtendedLocation : Azure.ResourceManager.Resources.Models.ExtendedLocation, IJsonModel<ExtendedLocation>, IPersistableModel<ExtendedLocation>
+    public partial class ExtendedLocation : IUtf8JsonSerializable, IJsonModel<ExtendedLocation>
     {
-        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
-        public ExtendedLocation()
-        {
-        }
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        // Backward compat: old API had constructor taking two strings (name, extendedLocationType).
-        // New API uses ExtendedLocationType enum via base class. This shim preserves the old API surface.
         /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <param name="name"> The resource ID of the extended location on which the resource will be created. </param>
+        /// <param name="extendedLocationType"> The extended location type, for example, CustomLocation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="extendedLocationType"/> is null. </exception>
         public ExtendedLocation(string name, string extendedLocationType)
         {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(extendedLocationType, nameof(extendedLocationType));
+
             Name = name;
-            base.ExtendedLocationType = new Resources.Models.ExtendedLocationType(extendedLocationType);
+            ExtendedLocationType = extendedLocationType;
         }
 
-        // Backward compat: old API exposed ExtendedLocationType as string.
-        // New base class uses ExtendedLocationType? enum. Shadow with string version for ApiCompat.
-        /// <summary> The type of the extended location. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new string ExtendedLocationType
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
+        /// <param name="name"> The resource ID of the extended location on which the resource will be created. </param>
+        /// <param name="extendedLocationType"> The extended location type, for example, CustomLocation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedLocation(string name, string extendedLocationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            get => base.ExtendedLocationType?.ToString();
-            set => base.ExtendedLocationType = value == null ? null : new Resources.Models.ExtendedLocationType(value);
+            Name = name;
+            ExtendedLocationType = extendedLocationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        // IJsonModel<ExtendedLocation> implementation - delegates to base class
-        ExtendedLocation IJsonModel<ExtendedLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/> for deserialization. </summary>
+        internal ExtendedLocation()
         {
-            var baseResult = ((IJsonModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>)this).Create(ref reader, options);
-            if (baseResult is ExtendedLocation custom) return custom;
-            return new ExtendedLocation(baseResult.Name, baseResult.ExtendedLocationType?.ToString());
         }
+
+        /// <summary> The resource ID of the extended location on which the resource will be created. </summary>
+        public string Name { get; set; }
+        /// <summary> The extended location type, for example, CustomLocation. </summary>
+        public string ExtendedLocationType { get; set; }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExtendedLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Name != null)
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (base.ExtendedLocationType != null)
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(base.ExtendedLocationType.ToString());
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        // IPersistableModel<ExtendedLocation> implementation - delegates to base class
-        ExtendedLocation IPersistableModel<ExtendedLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var baseResult = ((IPersistableModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>)this).Create(data, options);
-            if (baseResult is ExtendedLocation custom) return custom;
-            return new ExtendedLocation(baseResult.Name, baseResult.ExtendedLocationType?.ToString());
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExtendedLocation)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(ExtendedLocationType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        string IPersistableModel<ExtendedLocation>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        ExtendedLocation IJsonModel<ExtendedLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            return ((IPersistableModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>)this).GetFormatFromOptions(options);
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExtendedLocation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedLocation(document.RootElement, options);
         }
 
-        BinaryData IPersistableModel<ExtendedLocation>.Write(ModelReaderWriterOptions options)
-        {
-            using var stream = new System.IO.MemoryStream();
-            using var writer = new Utf8JsonWriter(stream);
-            ((IJsonModel<ExtendedLocation>)this).Write(writer, options);
-            writer.Flush();
-            return new BinaryData(stream.ToArray());
-        }
-
-        // Deserialization helper used by generated serialization code.
-        // The generated code calls ExtendedLocation.DeserializeExtendedLocation(element, options).
         internal static ExtendedLocation DeserializeExtendedLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-
-            string name = null;
-            string extendedLocationType = null;
-
+            string name = default;
+            string type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -120,11 +173,47 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    extendedLocationType = property.Value.GetString();
+                    type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExtendedLocation(name, extendedLocationType);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExtendedLocation(name, type, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExtendedLocation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedLocation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExtendedLocation IPersistableModel<ExtendedLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeExtendedLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedLocation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExtendedLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

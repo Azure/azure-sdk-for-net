@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="relayConfiguration"> The relay configuration for the cluster manager. </param>
         /// <param name="vmSize"> The size of the Azure virtual machines to use for hosting the cluster manager resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterManagerProperties(ResourceIdentifier analyticsWorkspaceId, IList<string> availabilityZones, IReadOnlyList<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, ClusterManagerRelayConfiguration relayConfiguration, string vmSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterManagerProperties(ResourceIdentifier analyticsWorkspaceId, IList<string> availabilityZones, IReadOnlyList<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, Resources.Models.ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, ClusterManagerRelayConfiguration relayConfiguration, string vmSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AnalyticsWorkspaceId = analyticsWorkspaceId;
             AvailabilityZones = availabilityZones;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
 
         /// <summary> The extended location (custom location) that represents the cluster manager's control plane location. This extended location is used when creating cluster and rack manifest resources. </summary>
-        public ExtendedLocation ManagerExtendedLocation { get; }
+        public Resources.Models.ExtendedLocation ManagerExtendedLocation { get; }
 
         /// <summary> The provisioning state of the cluster manager. </summary>
         public ClusterManagerProvisioningState? ProvisioningState { get; }

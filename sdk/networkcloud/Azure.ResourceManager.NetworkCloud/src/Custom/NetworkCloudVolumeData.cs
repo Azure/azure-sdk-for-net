@@ -6,9 +6,11 @@
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    [CodeGenSuppress("NetworkCloudVolumeData", typeof(AzureLocation), typeof(long), typeof(ExtendedLocation))]
     public partial class NetworkCloudVolumeData
     {
         // Backward compat: AllocatedInSizeMiB was flattened in old autorest code but not in new generator.
@@ -17,11 +19,18 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public long? AllocatedInSizeMiB => Properties?.AllocatedInSizeMiB;
 
-        // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVolumeData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="sizeInMiB"> The size of the volume in Mebibytes. </param>
         public NetworkCloudVolumeData(AzureLocation location, ExtendedLocation extendedLocation, long sizeInMiB)
-            : this(location, sizeInMiB, extendedLocation) { }
+            : base(location)
+        {
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+            Properties = new VolumeProperties(sizeInMiB);
+            ExtendedLocation = extendedLocation;
+        }
+
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation { get; set; }
     }

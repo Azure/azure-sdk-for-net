@@ -8,16 +8,24 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    [CodeGenSuppress("NetworkCloudBmcKeySetData", typeof(AzureLocation), typeof(string), typeof(DateTimeOffset), typeof(BmcKeySetPrivilegeLevel), typeof(IEnumerable<KeySetUser>), typeof(ExtendedLocation))]
     public partial class NetworkCloudBmcKeySetData
     {
-        // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBmcKeySetData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkCloudBmcKeySetData(AzureLocation location, ExtendedLocation extendedLocation, string azureGroupId, DateTimeOffset expireOn, BmcKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList)
-            : this(location, azureGroupId, expireOn, privilegeLevel, userList, extendedLocation) { }
+            : base(location)
+        {
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+            Argument.AssertNotNull(azureGroupId, nameof(azureGroupId));
+            Argument.AssertNotNull(userList, nameof(userList));
+            Properties = new BmcKeySetProperties(azureGroupId, expireOn, privilegeLevel, userList);
+            ExtendedLocation = extendedLocation;
+        }
+
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation { get; set; }
     }

@@ -21,27 +21,6 @@ namespace Azure.ResourceManager.NetworkCloud
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="rackId"> The resource ID of the rack where this storage appliance resides. </param>
-        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
-        /// <param name="rackSlot"> The slot the storage appliance is in the rack based on the BOM configuration. </param>
-        /// <param name="serialNumber"> The serial number for the storage appliance. </param>
-        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
-        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rackId"/>, <paramref name="storageApplianceSkuId"/>, <paramref name="serialNumber"/>, <paramref name="administratorCredentials"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudStorageApplianceData(AzureLocation location, ResourceIdentifier rackId, string storageApplianceSkuId, long rackSlot, string serialNumber, AdministrativeCredentials administratorCredentials, Models.ExtendedLocation extendedLocation) : base(location)
-        {
-            Argument.AssertNotNull(rackId, nameof(rackId));
-            Argument.AssertNotNull(storageApplianceSkuId, nameof(storageApplianceSkuId));
-            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
-            Argument.AssertNotNull(administratorCredentials, nameof(administratorCredentials));
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-
-            Properties = new StorageApplianceProperties(rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials);
-            ExtendedLocation = extendedLocation;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -52,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="properties"> The list of the resource properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
-        internal NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, StorageApplianceProperties properties, ETag? eTag, Models.ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, StorageApplianceProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

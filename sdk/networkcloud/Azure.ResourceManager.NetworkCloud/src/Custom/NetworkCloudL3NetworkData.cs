@@ -6,9 +6,11 @@
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    [CodeGenSuppress("NetworkCloudL3NetworkData", typeof(AzureLocation), typeof(ResourceIdentifier), typeof(long), typeof(ExtendedLocation))]
     public partial class NetworkCloudL3NetworkData
     {
         /// <summary> The type of the IP address allocation. </summary>
@@ -50,11 +52,16 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
         /// <summary> Initializes a new instance of <see cref="NetworkCloudL3NetworkData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkCloudL3NetworkData(AzureLocation location, ExtendedLocation extendedLocation, ResourceIdentifier l3IsolationDomainId, long vlan)
-            : this(location, l3IsolationDomainId, vlan, extendedLocation) { }
+            : base(location)
+        {
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+            Argument.AssertNotNull(l3IsolationDomainId, nameof(l3IsolationDomainId));
+            Properties = new L3NetworkProperties(l3IsolationDomainId, vlan);
+            ExtendedLocation = extendedLocation;
+        }
+
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation { get; set; }
     }

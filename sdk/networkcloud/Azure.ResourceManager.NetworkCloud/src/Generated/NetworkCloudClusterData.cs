@@ -21,25 +21,6 @@ namespace Azure.ResourceManager.NetworkCloud
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
-        /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
-        /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
-        /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
-        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aggregatorOrSingleRackDefinition"/>, <paramref name="clusterVersion"/>, <paramref name="networkFabricId"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudClusterData(AzureLocation location, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId, Models.ExtendedLocation extendedLocation) : base(location)
-        {
-            Argument.AssertNotNull(aggregatorOrSingleRackDefinition, nameof(aggregatorOrSingleRackDefinition));
-            Argument.AssertNotNull(clusterVersion, nameof(clusterVersion));
-            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-
-            Properties = new ClusterProperties(aggregatorOrSingleRackDefinition, clusterType, clusterVersion, networkFabricId);
-            ExtendedLocation = extendedLocation;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -52,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="kind"> The type (kind) of the cluster. When specified, the value must exactly match the kind configured on the cluster manager that manages the cluster. If omitted, the service will default the value to the kind value of the cluster manager. </param>
-        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ETag? eTag, Models.ExtendedLocation extendedLocation, ManagedServiceIdentity identity, NetworkCloudDeploymentType? kind) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ETag? eTag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, NetworkCloudDeploymentType? kind) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

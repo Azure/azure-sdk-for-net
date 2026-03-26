@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue<Models.ExtendedLocation>(ExtendedLocation, options);
+                writer.WriteObjectValue(ExtendedLocation, options);
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetworkCloud
             AzureLocation location = default;
             AgentPoolProperties properties = default;
             ETag? eTag = default;
-            Models.ExtendedLocation extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

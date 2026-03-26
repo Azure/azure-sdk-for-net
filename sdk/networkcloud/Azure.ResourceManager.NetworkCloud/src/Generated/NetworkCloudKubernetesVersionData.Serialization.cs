@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("extendedLocation"u8);
-            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
+            ((IJsonModel<Resources.Models.ExtendedLocation>)ExtendedLocation).Write(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud
             AzureLocation location = default;
             KubernetesVersionProperties properties = default;
             ETag? eTag = default;
-            ExtendedLocation extendedLocation = default;
+            Resources.Models.ExtendedLocation extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (prop.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    extendedLocation = ModelReaderWriter.Read<Resources.Models.ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
