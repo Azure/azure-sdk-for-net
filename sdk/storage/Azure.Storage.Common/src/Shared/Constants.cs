@@ -521,6 +521,22 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// Files ChangeFeed constant values.
+        /// </summary>
+        internal static class FilesChangeFeed
+        {
+            public const string SegmentPrefix = "idx/segments/";
+            public const string SnapshotsPrefix = "idx/snapshots/";
+            public const string MetaSegmentsPath = "meta/segments.json";
+            public const string InitializationSegment = "1601";
+            public const int DefaultPageSize = 5000;
+            public const long ChunkBlockDownloadSize = MB;
+            public const int TimeWindowMinutes = 15;
+            public const string ChangeFeedContainerHeader = "x-ms-file-blob-container-for-xfiles-change-feed";
+            public const string RequiredApiVersion = "2026-02-06";
+        }
+
+        /// <summary>
         /// Quick Query constant values.
         /// </summary>
         internal static class QuickQuery
