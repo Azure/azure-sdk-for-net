@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 throw new FormatException($"The model {nameof(PipelineSourceTriggerDescriptor)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(TriggeredOn))
+            if (Optional.IsDefined(SourceTriggerTimestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
-                writer.WriteStringValue(TriggeredOn.Value, "O");
+                writer.WriteStringValue(SourceTriggerTimestamp.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            DateTimeOffset? triggeredOn = default;
+            DateTimeOffset? sourceTriggerTimestamp = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    triggeredOn = prop.Value.GetDateTimeOffset("O");
+                    sourceTriggerTimestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PipelineSourceTriggerDescriptor(triggeredOn, additionalBinaryDataProperties);
+            return new PipelineSourceTriggerDescriptor(sourceTriggerTimestamp, additionalBinaryDataProperties);
         }
     }
 }

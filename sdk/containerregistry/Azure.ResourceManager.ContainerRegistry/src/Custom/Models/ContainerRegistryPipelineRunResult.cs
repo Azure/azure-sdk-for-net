@@ -1,24 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using Microsoft.TypeSpec.Generator.Customizations;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    // Suppress the auto-generated TriggerSourceTriggeredOn; the flattened name should be
-    // SourceTriggeredOn (matching Azure SDK DateTimeOffset naming convention).
-    [CodeGenSuppress("TriggerSourceTriggeredOn")]
+    // The old autorest SDK constructor returns an IReadOnlyList<string>, while the new TypeSpec SDK returns a List<string>
     public partial class ContainerRegistryPipelineRunResult
     {
-        /// <summary> The timestamp when the source update happened. </summary>
-        [WirePath("trigger.sourceTrigger.timestamp")]
-        public DateTimeOffset? SourceTriggeredOn
-        {
-            get
-            {
-                return Trigger?.SourceTriggeredOn;
-            }
-        }
+        /// <summary> The artifacts imported in the pipeline run. </summary>
+        [WirePath("importedArtifacts")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IReadOnlyList<string> ImportedArtifacts => (IReadOnlyList<string>)ImportedArtifactsList;
     }
 }

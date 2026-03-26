@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryExportPipelineTargetProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ExportPipelineTargetPropertiesType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ExportPipelineTargetPropertiesType);
             }
             if (Optional.IsDefined(Uri))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            string @type = default;
+            string exportPipelineTargetPropertiesType = default;
             Uri uri = default;
             Uri keyVaultUri = default;
             ContainerRegistryStorageAccessMode? storageAccessMode = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    exportPipelineTargetPropertiesType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("uri"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryExportPipelineTargetProperties(@type, uri, keyVaultUri, storageAccessMode, additionalBinaryDataProperties);
+            return new ContainerRegistryExportPipelineTargetProperties(exportPipelineTargetPropertiesType, uri, keyVaultUri, storageAccessMode, additionalBinaryDataProperties);
         }
     }
 }

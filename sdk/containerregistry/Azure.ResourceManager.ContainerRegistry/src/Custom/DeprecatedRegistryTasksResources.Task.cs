@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         ContainerRegistryTaskData IPersistableModel<ContainerRegistryTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException();
         string IPersistableModel<ContainerRegistryTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException();
         public ContainerRegistryTaskData(AzureLocation location) : base(location) { }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
 
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get { throw new NotSupportedException(); } set { } }

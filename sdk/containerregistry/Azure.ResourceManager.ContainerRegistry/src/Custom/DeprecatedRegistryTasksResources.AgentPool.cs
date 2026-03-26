@@ -95,6 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         ContainerRegistryAgentPoolData IPersistableModel<ContainerRegistryAgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException();
         string IPersistableModel<ContainerRegistryAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException();
         public ContainerRegistryAgentPoolData(AzureLocation location) : base(location) { }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
 
         [WirePath("properties.count")]
         public int? Count { get { throw new NotSupportedException(); } set { } }

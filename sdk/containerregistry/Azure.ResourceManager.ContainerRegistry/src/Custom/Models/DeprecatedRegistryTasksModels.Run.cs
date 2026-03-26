@@ -199,6 +199,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         ContainerRegistryRunGetLogResult IPersistableModel<ContainerRegistryRunGetLogResult>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException();
         string IPersistableModel<ContainerRegistryRunGetLogResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException();
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        internal ContainerRegistryRunGetLogResult() { }
         [WirePath("logLink")]
         public string LogLink { get { throw new NotSupportedException(); } }
         [WirePath("logArtifactLink")]

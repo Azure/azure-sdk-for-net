@@ -100,6 +100,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         ContainerRegistryRunData IPersistableModel<ContainerRegistryRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException();
         string IPersistableModel<ContainerRegistryRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException();
         public ContainerRegistryRunData() { }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
 
         [WirePath("properties.runId")]
         public string RunId { get { throw new NotSupportedException(); } set { } }

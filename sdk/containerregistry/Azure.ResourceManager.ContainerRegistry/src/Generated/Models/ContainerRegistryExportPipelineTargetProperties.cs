@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryExportPipelineTargetProperties"/>. </summary>
-        /// <param name="type"> The type of target for the export pipeline. </param>
+        /// <param name="exportPipelineTargetPropertiesType"> The type of target for the export pipeline. </param>
         /// <param name="uri">
         /// The target uri of the export pipeline.
         /// When 'AzureStorageBlob': "https://accountName.blob.core.windows.net/containerName/blobName"
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="keyVaultUri"> They key vault secret uri to obtain the target storage SAS token. </param>
         /// <param name="storageAccessMode"> The storage access mode used for the customer storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryExportPipelineTargetProperties(string @type, Uri uri, Uri keyVaultUri, ContainerRegistryStorageAccessMode? storageAccessMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryExportPipelineTargetProperties(string exportPipelineTargetPropertiesType, Uri uri, Uri keyVaultUri, ContainerRegistryStorageAccessMode? storageAccessMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ExportPipelineTargetPropertiesType = exportPipelineTargetPropertiesType;
             Uri = uri;
             KeyVaultUri = keyVaultUri;
             StorageAccessMode = storageAccessMode;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The type of target for the export pipeline. </summary>
         [WirePath("type")]
-        public string Type { get; set; }
+        public string ExportPipelineTargetPropertiesType { get; set; }
 
         /// <summary>
         /// The target uri of the export pipeline.

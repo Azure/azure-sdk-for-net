@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportPipelineSourceProperties"/>. </summary>
-        /// <param name="type"> The type of source for the import pipeline. </param>
+        /// <param name="sourceType"> The type of source for the import pipeline. </param>
         /// <param name="uri">
         /// The source uri of the import pipeline.
         /// When 'AzureStorageBlob': "https://accountName.blob.core.windows.net/containerName/blobName"
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="keyVaultUri"> They key vault secret uri to obtain the source storage SAS token. </param>
         /// <param name="storageAccessMode"> The storage access mode used for the customer storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryImportPipelineSourceProperties(ContainerRegistryPipelineSourceType? @type, Uri uri, Uri keyVaultUri, ContainerRegistryStorageAccessMode? storageAccessMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryImportPipelineSourceProperties(ContainerRegistryPipelineSourceType? sourceType, Uri uri, Uri keyVaultUri, ContainerRegistryStorageAccessMode? storageAccessMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            SourceType = sourceType;
             Uri = uri;
             KeyVaultUri = keyVaultUri;
             StorageAccessMode = storageAccessMode;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The type of source for the import pipeline. </summary>
         [WirePath("type")]
-        public ContainerRegistryPipelineSourceType? Type { get; set; }
+        public ContainerRegistryPipelineSourceType? SourceType { get; set; }
 
         /// <summary>
         /// The source uri of the import pipeline.

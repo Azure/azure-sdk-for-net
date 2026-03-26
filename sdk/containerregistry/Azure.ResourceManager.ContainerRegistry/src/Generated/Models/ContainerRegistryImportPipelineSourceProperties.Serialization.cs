@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryImportPipelineSourceProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(SourceType.Value.ToString());
             }
             if (Optional.IsDefined(Uri))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            ContainerRegistryPipelineSourceType? @type = default;
+            ContainerRegistryPipelineSourceType? sourceType = default;
             Uri uri = default;
             Uri keyVaultUri = default;
             ContainerRegistryStorageAccessMode? storageAccessMode = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    @type = new ContainerRegistryPipelineSourceType(prop.Value.GetString());
+                    sourceType = new ContainerRegistryPipelineSourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("uri"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryImportPipelineSourceProperties(@type, uri, keyVaultUri, storageAccessMode, additionalBinaryDataProperties);
+            return new ContainerRegistryImportPipelineSourceProperties(sourceType, uri, keyVaultUri, storageAccessMode, additionalBinaryDataProperties);
         }
     }
 }

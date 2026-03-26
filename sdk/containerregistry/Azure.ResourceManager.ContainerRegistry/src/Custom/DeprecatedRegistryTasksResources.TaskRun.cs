@@ -90,6 +90,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         ContainerRegistryTaskRunData IPersistableModel<ContainerRegistryTaskRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException();
         string IPersistableModel<ContainerRegistryTaskRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException();
         public ContainerRegistryTaskRunData() { }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
 
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get { throw new NotSupportedException(); } set { } }

@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Enable per-region endpoints for accessing registry. </summary>
         [WirePath("properties.regionalEndpoints")]
-        public ContainerRegistryRegionalEndpoint? RegionalEndpoints
+        public RegionalEndpoint? RegionalEndpoints
         {
             get
             {

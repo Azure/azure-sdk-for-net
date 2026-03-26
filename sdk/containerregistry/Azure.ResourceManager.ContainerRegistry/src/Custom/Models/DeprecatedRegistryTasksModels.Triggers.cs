@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         ContainerRegistryBaseImageDependency IPersistableModel<ContainerRegistryBaseImageDependency>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException();
         string IPersistableModel<ContainerRegistryBaseImageDependency>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException();
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        internal ContainerRegistryBaseImageDependency() { }
         [WirePath("type")]
         public ContainerRegistryBaseImageDependencyType? DependencyType { get { throw new NotSupportedException(); } }
         [WirePath("digest")]
@@ -292,27 +293,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public override string ToString() => _value;
     }
 
-    // ContainerRegistryTriggerStatus is now generated from the spec (via @@clientName on TriggerStatus).
-    // The generated partial struct only has operators and constants. This partial provides the remaining
-    // members (field, constructor, static properties, Equals, GetHashCode, ToString).
-    public readonly partial struct ContainerRegistryTriggerStatus
-    {
-        private readonly string _value;
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTriggerStatus"/>. </summary>
-        public ContainerRegistryTriggerStatus(string value) => _value = value ?? throw new ArgumentNullException(nameof(value));
-        /// <summary> Disabled. </summary>
-        public static ContainerRegistryTriggerStatus Disabled { get; } = new ContainerRegistryTriggerStatus("Disabled");
-        /// <summary> Enabled. </summary>
-        public static ContainerRegistryTriggerStatus Enabled { get; } = new ContainerRegistryTriggerStatus("Enabled");
-        /// <inheritdoc />
-        public override bool Equals(object obj) => obj is ContainerRegistryTriggerStatus other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ContainerRegistryTriggerStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-        /// <inheritdoc />
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
-    }
+    // ContainerRegistryTriggerStatus is now fully generated from the spec (via @@clientName on TriggerStatus).
+    // No additional partial declaration is needed.
 
     [Obsolete("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
     [EditorBrowsable(EditorBrowsableState.Never)]

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStartArray();
-                foreach (ContainerRegistryPipelineOption item in Options)
+                foreach (PipelineOption item in Options)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryExportPipelineTargetProperties target = default;
-            IList<ContainerRegistryPipelineOption> options0 = default;
+            IList<PipelineOption> options0 = default;
             ContainerRegistryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    List<ContainerRegistryPipelineOption> array = new List<ContainerRegistryPipelineOption>();
+                    List<PipelineOption> array = new List<PipelineOption>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new ContainerRegistryPipelineOption(item.GetString()));
+                        array.Add(new PipelineOption(item.GetString()));
                     }
                     options0 = array;
                     continue;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExportPipelineProperties(target, options0 ?? new ChangeTrackingList<ContainerRegistryPipelineOption>(), provisioningState, additionalBinaryDataProperties);
+            return new ExportPipelineProperties(target, options0 ?? new ChangeTrackingList<PipelineOption>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }
