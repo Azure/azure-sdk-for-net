@@ -244,9 +244,9 @@ When a migration PR introduces **new** resource types (not present in the previo
 | `.../projects/{name}/pools/{poolName}` | `ProjectPoolResource` |
 | `.../projects/{name}/catalogs/{c}/imageDefinitions/{i}` | `ProjectCatalogImageDefinitionResource` |
 
-**When to flag**: If a new resource name drifts significantly from its resource ID segments — e.g., uses an unrelated name, drops important parent context, or includes "OperationGroup" (which indicates a `ResourceName` / `@@clientName` collision in TypeSpec). Suggest renaming to better reflect the path segments.
+**When to flag**: If a new resource name drifts significantly from its resource ID segments — e.g., uses an unrelated name, drops important parent context, or includes "OperationGroup" in cases where that suffix was unintentionally introduced (which may indicate a `ResourceName` / `@@clientName` collision in TypeSpec). Suggest renaming to better reflect the path segments.
 
-**How to fix**: Set `ResourceName` on the `LegacyOperations` template or use `@@clientName` on the TypeSpec interface. Note that `@@clientName` on the **model** renames the Data type but not the Resource/Collection classes — to rename Resource classes, target the interface or use `ResourceName`.
+**How to fix**: Provide `ResourceName` as the 4th type argument to the `LegacyOperations<...>` alias or use `@@clientName` on the TypeSpec interface. Note that `@@clientName` on the **model** renames the Data type but not the Resource/Collection classes — to rename Resource classes, target the interface or use `ResourceName`.
 
 ## Phase 5: TypeSpec Decorator Preference Review
 
