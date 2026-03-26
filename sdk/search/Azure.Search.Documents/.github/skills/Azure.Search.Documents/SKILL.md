@@ -122,8 +122,6 @@ Re-run any step whose outputs changed:
 - [ ] `dotnet format` on changed csproj files
 - [ ] `dotnet build` → `dotnet test` (non-live) → `dotnet pack` (GA only)
 
-
-
 **Gate:** Clean build, all non-live tests pass, `git status` clean. 
 
 ## Execution Order Summary
