@@ -19,20 +19,20 @@ steps:
             exit 1
           }
         }
-        if ((!"$(System.PullRequest.SourceBranch)".StartsWith("sync-.github/workflows")) -and "$(System.PullRequest.TargetBranch)" -match "^(refs/heads/)?$(DefaultBranch)$")
+        if ((!"$(System.PullRequest.SourceBranch)".StartsWith("sync-.github")) -and "$(System.PullRequest.TargetBranch)" -match "^(refs/heads/)?$(DefaultBranch)$")
         {
-          # This list needs to be kept in sync with the FilePatterns listed in eng/pipelines/eng-workflows-sync.yml
-          $filePatterns = @(".github/workflows/*event*", ".github/workflows/post-apiview.yml")
+          # This list needs to be kept in sync with the FilePatterns listed in eng/pipelines/sync-.github.yml
+          $filePatterns = @(".github/workflows/*event*", ".github/workflows/post-apiview.yml", ".github/skills/azsdk-common-*/**")
           $filesInCommonDir = @()
           foreach ($filePattern in $filePatterns) {
             $filesInCommonDir += & "eng/common/scripts/get-changedfiles.ps1" -DiffPath $filePattern -DiffFilterType ""
           }
           if ($filesInCommonDir.Count -gt 0)
           {
-            Write-Host "##vso[task.LogIssue type=error;]Changes to files under '.github/workflows' directory should not be made in this Repo`n${filesInCommonDir}"
+            Write-Host "##vso[task.LogIssue type=error;]Changes to selected files under '.github/' directory should not be made in this Repo`n${filesInCommonDir}"
             Write-Host "##vso[task.LogIssue type=error;]Please follow workflow at https://github.com/Azure/azure-sdk-tools/blob/main/doc/workflows/engsys_workflows.md"
             exit 1
           }
         }
-      displayName: Prevent changes to eng/common and .github/workflows outside of azure-sdk-tools repo
+      displayName: Prevent changes to eng/common and selected .github/* files outside of azure-sdk-tools repo
       condition: and(succeeded(), ne(variables['Skip.EngCommonWorkflowEnforcer'], 'true'), not(endsWith(variables['Build.Repository.Name'], '-pr')))

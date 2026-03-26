@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>An OpenTelemetry .NET exporter that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry Exporter</AssemblyTitle>
@@ -17,7 +17,6 @@
          IConfiguration. -->
     <NoWarn>$(NoWarn);SYSLIB1100;SYSLIB1101</NoWarn>
     <DefineConstants>$(DefineConstants);AZURE_MONITOR_EXPORTER;</DefineConstants>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,6 +32,7 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <!-- Shared sources from Azure.Monitor.OpenTelemetry.LiveMetrics -->

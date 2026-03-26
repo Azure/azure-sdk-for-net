@@ -33,8 +33,8 @@ namespace Azure.AI.Extensions.OpenAI
         private const string OauthConsentRequestValue = "oauth_consent_request";
         private const string MemorySearchCallValue = "memory_search_call";
         private const string WorkflowActionValue = "workflow_action";
-        private const string A2aPreviewCallValue = "a2a_preview_call";
-        private const string A2aPreviewCallOutputValue = "a2a_preview_call_output";
+        private const string A2APreviewCallValue = "a2a_preview_call";
+        private const string A2APreviewCallOutputValue = "a2a_preview_call_output";
         private const string BingGroundingCallValue = "bing_grounding_call";
         private const string BingGroundingCallOutputValue = "bing_grounding_call_output";
         private const string SharepointGroundingPreviewCallValue = "sharepoint_grounding_preview_call";
@@ -128,11 +128,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Gets the WorkflowAction. </summary>
         public static AgentResponseItemKind WorkflowAction { get; } = new AgentResponseItemKind(WorkflowActionValue);
 
-        /// <summary> Gets the A2aPreviewCall. </summary>
-        public static AgentResponseItemKind A2aPreviewCall { get; } = new AgentResponseItemKind(A2aPreviewCallValue);
+        /// <summary> Gets the A2APreviewCall. </summary>
+        public static AgentResponseItemKind A2APreviewCall { get; } = new AgentResponseItemKind(A2APreviewCallValue);
 
-        /// <summary> Gets the A2aPreviewCallOutput. </summary>
-        public static AgentResponseItemKind A2aPreviewCallOutput { get; } = new AgentResponseItemKind(A2aPreviewCallOutputValue);
+        /// <summary> Gets the A2APreviewCallOutput. </summary>
+        public static AgentResponseItemKind A2APreviewCallOutput { get; } = new AgentResponseItemKind(A2APreviewCallOutputValue);
 
         /// <summary> Gets the BingGroundingCall. </summary>
         public static AgentResponseItemKind BingGroundingCall { get; } = new AgentResponseItemKind(BingGroundingCallValue);

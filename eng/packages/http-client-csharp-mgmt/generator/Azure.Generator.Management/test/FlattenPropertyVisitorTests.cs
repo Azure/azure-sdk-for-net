@@ -87,5 +87,69 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.IsNotNull(decoratorsProperty, "Could not find InputModelProperty.Decorators property");
             decoratorsProperty!.SetValue(property, new[] { decorator });
         }
+
+        /// <summary>
+        /// Verifies that a discriminator base model with a single non-discriminator public property
+        /// is NOT safe-flattened. Previously, since the discriminator property is internal and not
+        /// counted in publicPropertyCount, the model appeared to have only one public property,
+        /// triggering safe-flatten and making the discriminator base type internal — breaking the
+        /// polymorphic hierarchy.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenSkipsDiscriminatorBaseModel()
+        {
+            // Create a discriminator base model with one discriminator property and one regular property.
+            // The discriminator property will be internal, so publicPropertyCount == 1.
+            var discriminatorProperty = InputFactory.Property("kind", InputPrimitiveType.String, isRequired: true, isDiscriminator: true, serializedName: "kind");
+            var regularProperty = InputFactory.Property("retentionDays", InputPrimitiveType.Int32, isRequired: false, serializedName: "retentionDays");
+
+            var derivedModel = InputFactory.Model(
+                "PeriodicBackupPolicy",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("intervalInHours", InputPrimitiveType.Int32, isRequired: true, serializedName: "intervalInHours")],
+                discriminatedKind: "Periodic");
+
+            var discriminatorBaseModel = InputFactory.Model(
+                "BackupPolicy",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [discriminatorProperty, regularProperty],
+                derivedModels: [derivedModel],
+                discriminatedModels: new Dictionary<string, InputModelType> { { "Periodic", derivedModel } });
+
+            // Create a parent model that has a property of the discriminator base type.
+            var backupPolicyProperty = InputFactory.Property("backupPolicy", discriminatorBaseModel, isRequired: false, serializedName: "backupPolicy");
+            var parentModel = InputFactory.Model(
+                "DatabaseAccount",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [backupPolicyProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, discriminatorBaseModel, derivedModel]);
+
+            // Create model providers.
+            var parentModelProvider = plugin.Object.TypeFactory.CreateModel(parentModel);
+            Assert.IsNotNull(parentModelProvider);
+
+            var discriminatorModelProvider = plugin.Object.TypeFactory.CreateModel(discriminatorBaseModel);
+            Assert.IsNotNull(discriminatorModelProvider);
+
+            // Run all visitors on the parent model.
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentModelProvider]);
+            }
+
+            // The backupPolicy property should NOT have been flattened — it should remain public.
+            var backupPolicyProp = parentModelProvider!.Properties.FirstOrDefault(p => p.Name == "BackupPolicy");
+            Assert.IsNotNull(backupPolicyProp, "BackupPolicy property should still exist on the parent model");
+            Assert.IsTrue(
+                backupPolicyProp!.Modifiers.HasFlag(MethodSignatureModifiers.Public),
+                "BackupPolicy property should remain public (not flattened to internal)");
+        }
     }
 }

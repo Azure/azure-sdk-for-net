@@ -13,43 +13,11 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary>
-    /// A class representing the ServiceBusTopic data model.
-    /// Description of topic resource.
-    /// </summary>
+    /// <summary> Description of topic resource. </summary>
     public partial class ServiceBusTopicData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusTopicData"/>. </summary>
         public ServiceBusTopicData()
@@ -57,110 +25,302 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusTopicData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of topic resource. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="sizeInBytes"> Size of the topic, in bytes. </param>
-        /// <param name="createdOn"> Exact time the message was created. </param>
-        /// <param name="updatedOn"> The exact time the message was updated. </param>
-        /// <param name="accessedOn"> Last time the message was sent, or a request was received, for this topic. </param>
-        /// <param name="subscriptionCount"> Number of subscriptions. </param>
-        /// <param name="countDetails"> Message count details. </param>
-        /// <param name="defaultMessageTimeToLive"> ISO 8601 Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself. </param>
-        /// <param name="maxSizeInMegabytes"> Maximum size of the topic in megabytes, which is the size of the memory allocated for the topic. Default is 1024. </param>
-        /// <param name="maxMessageSizeInKilobytes"> Maximum size (in KB) of the message payload that can be accepted by the topic. This property is only used in Premium today and default is 1024. </param>
-        /// <param name="requiresDuplicateDetection"> Value indicating if this topic requires duplicate detection. </param>
-        /// <param name="duplicateDetectionHistoryTimeWindow"> ISO8601 timespan structure that defines the duration of the duplicate detection history. The default value is 10 minutes. </param>
-        /// <param name="enableBatchedOperations"> Value that indicates whether server-side batched operations are enabled. </param>
-        /// <param name="status"> Enumerates the possible values for the status of a messaging entity. </param>
-        /// <param name="supportOrdering"> Value that indicates whether the topic supports ordering. </param>
-        /// <param name="autoDeleteOnIdle"> ISO 8601 timespan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes. </param>
-        /// <param name="enablePartitioning"> Value that indicates whether the topic to be partitioned across multiple message brokers is enabled. </param>
-        /// <param name="enableExpress"> Value that indicates whether Express Entities are enabled. An express topic holds a message in memory temporarily before writing it to persistent storage. </param>
-        /// <param name="userMetadata"> Gets and Sets Metadata of User. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, long? sizeInBytes, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? accessedOn, int? subscriptionCount, MessageCountDetails countDetails, TimeSpan? defaultMessageTimeToLive, int? maxSizeInMegabytes, long? maxMessageSizeInKilobytes, bool? requiresDuplicateDetection, TimeSpan? duplicateDetectionHistoryTimeWindow, bool? enableBatchedOperations, ServiceBusMessagingEntityStatus? status, bool? supportOrdering, TimeSpan? autoDeleteOnIdle, bool? enablePartitioning, bool? enableExpress, string userMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceBusTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SBTopicProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Location = location;
-            SizeInBytes = sizeInBytes;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            AccessedOn = accessedOn;
-            SubscriptionCount = subscriptionCount;
-            CountDetails = countDetails;
-            DefaultMessageTimeToLive = defaultMessageTimeToLive;
-            MaxSizeInMegabytes = maxSizeInMegabytes;
-            MaxMessageSizeInKilobytes = maxMessageSizeInKilobytes;
-            RequiresDuplicateDetection = requiresDuplicateDetection;
-            DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindow;
-            EnableBatchedOperations = enableBatchedOperations;
-            Status = status;
-            SupportOrdering = supportOrdering;
-            AutoDeleteOnIdle = autoDeleteOnIdle;
-            EnablePartitioning = enablePartitioning;
-            EnableExpress = enableExpress;
-            UserMetadata = userMetadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Properties of topic resource. </summary>
+        [WirePath("properties")]
+        internal SBTopicProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
+
         /// <summary> Size of the topic, in bytes. </summary>
         [WirePath("properties.sizeInBytes")]
-        public long? SizeInBytes { get; }
+        public long? SizeInBytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SizeInBytes;
+            }
+        }
+
         /// <summary> Exact time the message was created. </summary>
         [WirePath("properties.createdAt")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The exact time the message was updated. </summary>
         [WirePath("properties.updatedAt")]
-        public DateTimeOffset? UpdatedOn { get; }
+        public DateTimeOffset? UpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdatedOn;
+            }
+        }
+
         /// <summary> Last time the message was sent, or a request was received, for this topic. </summary>
         [WirePath("properties.accessedAt")]
-        public DateTimeOffset? AccessedOn { get; }
+        public DateTimeOffset? AccessedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessedOn;
+            }
+        }
+
         /// <summary> Number of subscriptions. </summary>
         [WirePath("properties.subscriptionCount")]
-        public int? SubscriptionCount { get; }
+        public int? SubscriptionCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubscriptionCount;
+            }
+        }
+
         /// <summary> Message count details. </summary>
         [WirePath("properties.countDetails")]
-        public MessageCountDetails CountDetails { get; }
+        public MessageCountDetails CountDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CountDetails;
+            }
+        }
+
         /// <summary> ISO 8601 Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself. </summary>
         [WirePath("properties.defaultMessageTimeToLive")]
-        public TimeSpan? DefaultMessageTimeToLive { get; set; }
+        public TimeSpan? DefaultMessageTimeToLive
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultMessageTimeToLive;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBTopicProperties();
+                }
+                Properties.DefaultMessageTimeToLive = value.Value;
+            }
+        }
+
         /// <summary> Maximum size of the topic in megabytes, which is the size of the memory allocated for the topic. Default is 1024. </summary>
         [WirePath("properties.maxSizeInMegabytes")]
-        public int? MaxSizeInMegabytes { get; set; }
+        public int? MaxSizeInMegabytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxSizeInMegabytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBTopicProperties();
+                }
+                Properties.MaxSizeInMegabytes = value.Value;
+            }
+        }
+
         /// <summary> Maximum size (in KB) of the message payload that can be accepted by the topic. This property is only used in Premium today and default is 1024. </summary>
         [WirePath("properties.maxMessageSizeInKilobytes")]
-        public long? MaxMessageSizeInKilobytes { get; set; }
+        public long? MaxMessageSizeInKilobytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxMessageSizeInKilobytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBTopicProperties();
+                }
+                Properties.MaxMessageSizeInKilobytes = value.Value;
+            }
+        }
+
         /// <summary> Value indicating if this topic requires duplicate detection. </summary>
         [WirePath("properties.requiresDuplicateDetection")]
-        public bool? RequiresDuplicateDetection { get; set; }
+        public bool? RequiresDuplicateDetection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiresDuplicateDetection;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBTopicProperties();
+                }
+                Properties.RequiresDuplicateDetection = value.Value;
+            }
+        }
+
         /// <summary> ISO8601 timespan structure that defines the duration of the duplicate detection history. The default value is 10 minutes. </summary>
         [WirePath("properties.duplicateDetectionHistoryTimeWindow")]
-        public TimeSpan? DuplicateDetectionHistoryTimeWindow { get; set; }
+        public TimeSpan? DuplicateDetectionHistoryTimeWindow
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DuplicateDetectionHistoryTimeWindow;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBTopicProperties();
+                }
+                Properties.DuplicateDetectionHistoryTimeWindow = value.Value;
+            }
+        }
+
         /// <summary> Value that indicates whether server-side batched operations are enabled. </summary>
         [WirePath("properties.enableBatchedOperations")]
-        public bool? EnableBatchedOperations { get; set; }
+        public bool? EnableBatchedOperations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableBatchedOperations;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBTopicProperties();
+                }
+                Properties.EnableBatchedOperations = value.Value;
+            }
+        }
+
         /// <summary> Enumerates the possible values for the status of a messaging entity. </summary>
         [WirePath("properties.status")]
-        public ServiceBusMessagingEntityStatus? Status { get; set; }
+        public ServiceBusMessagingEntityStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBTopicProperties();
+                }
+                Properties.Status = value.Value;
+            }
+        }
+
         /// <summary> Value that indicates whether the topic supports ordering. </summary>
         [WirePath("properties.supportOrdering")]
-        public bool? SupportOrdering { get; set; }
+        public bool? SupportOrdering
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SupportOrdering;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBTopicProperties();
+                }
+                Properties.SupportOrdering = value.Value;
+            }
+        }
+
         /// <summary> ISO 8601 timespan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes. </summary>
         [WirePath("properties.autoDeleteOnIdle")]
-        public TimeSpan? AutoDeleteOnIdle { get; set; }
+        public TimeSpan? AutoDeleteOnIdle
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoDeleteOnIdle;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBTopicProperties();
+                }
+                Properties.AutoDeleteOnIdle = value.Value;
+            }
+        }
+
         /// <summary> Value that indicates whether the topic to be partitioned across multiple message brokers is enabled. </summary>
         [WirePath("properties.enablePartitioning")]
-        public bool? EnablePartitioning { get; set; }
+        public bool? EnablePartitioning
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnablePartitioning;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBTopicProperties();
+                }
+                Properties.EnablePartitioning = value.Value;
+            }
+        }
+
         /// <summary> Value that indicates whether Express Entities are enabled. An express topic holds a message in memory temporarily before writing it to persistent storage. </summary>
         [WirePath("properties.enableExpress")]
-        public bool? EnableExpress { get; set; }
+        public bool? EnableExpress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableExpress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBTopicProperties();
+                }
+                Properties.EnableExpress = value.Value;
+            }
+        }
+
         /// <summary> Gets and Sets Metadata of User. </summary>
         [WirePath("properties.userMetadata")]
-        public string UserMetadata { get; set; }
+        public string UserMetadata
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserMetadata;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBTopicProperties();
+                }
+                Properties.UserMetadata = value;
+            }
+        }
     }
 }

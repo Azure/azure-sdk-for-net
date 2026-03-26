@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -31,6 +32,36 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Initializes a new instance of TextTranslationClient for mocking. </summary>
         protected TextTranslationClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of TextTranslationClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal TextTranslationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, TextTranslationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new TextTranslationClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of TextTranslationClient from a <see cref="TextTranslationClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for TextTranslationClient. </param>
+        [Experimental("SCME0002")]
+        public TextTranslationClient(TextTranslationClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
         {
         }
 

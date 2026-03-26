@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Evaluation task for the schedule. </summary>
-    public partial class EvaluationScheduleTask : ScheduleTask, IJsonModel<EvaluationScheduleTask>
+    public partial class EvaluationScheduleTask : ProjectsScheduleTask, IJsonModel<EvaluationScheduleTask>
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationScheduleTask"/> for deserialization. </summary>
         internal EvaluationScheduleTask()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ScheduleTask PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsScheduleTask PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluationScheduleTask>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -88,7 +88,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ScheduleTask JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsScheduleTask JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluationScheduleTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

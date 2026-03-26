@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
 namespace Payload.Xml
@@ -14,7 +15,12 @@ namespace Payload.Xml
     {
         public XmlClient() : this(new Uri("http://localhost:3000"), new XmlClientOptions()) => throw null;
 
-        public XmlClient(Uri endpoint, XmlClientOptions options) => throw null;
+        internal XmlClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, XmlClientOptions options) => throw null;
+
+        public XmlClient(Uri endpoint, XmlClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public XmlClient(XmlClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
@@ -41,6 +47,10 @@ namespace Payload.Xml
         public virtual ModelWithDictionaryValue GetModelWithDictionaryValueClient() => throw null;
 
         public virtual ModelWithEncodedNamesValue GetModelWithEncodedNamesValueClient() => throw null;
+
+        public virtual ModelWithEnumValue GetModelWithEnumValueClient() => throw null;
+
+        public virtual ModelWithDatetimeValue GetModelWithDatetimeValueClient() => throw null;
 
         public virtual XmlErrorValue GetXmlErrorValueClient() => throw null;
     }

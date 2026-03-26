@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -15,59 +16,31 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The list of available versions for an agent pool. </summary>
     public partial class AgentPoolAvailableVersions : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersions"/>. </summary>
-        internal AgentPoolAvailableVersions()
+        /// <param name="properties"> Properties of agent pool available versions. </param>
+        internal AgentPoolAvailableVersions(AgentPoolAvailableVersionsProperties properties)
         {
-            AgentPoolVersions = new ChangeTrackingList<AgentPoolAvailableVersion>();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersions"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="agentPoolVersions"> List of versions available for agent pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolAvailableVersions(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<AgentPoolAvailableVersion> agentPoolVersions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> The name of the agent pool version list. </param>
+        /// <param name="properties"> Properties of agent pool available versions. </param>
+        internal AgentPoolAvailableVersions(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, AgentPoolAvailableVersionsProperties properties) : base(id, name, resourceType, systemData)
         {
-            AgentPoolVersions = agentPoolVersions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> List of versions available for agent pool. </summary>
-        [WirePath("properties.agentPoolVersions")]
-        public IReadOnlyList<AgentPoolAvailableVersion> AgentPoolVersions { get; }
+        /// <summary> Properties of agent pool available versions. </summary>
+        [WirePath("properties")]
+        internal AgentPoolAvailableVersionsProperties Properties { get; }
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Generator.Model;
@@ -12,7 +12,7 @@ using System.Reflection;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class KustoSpecification() :
-    Specification("Kusto", typeof(KustoExtensions), ignorePropertiesWithoutPath: true)
+    Specification("Kusto", typeof(KustoExtensions), ignorePropertiesWithoutPath: true, serviceDirectory: "kusto")
 {
     protected override void Customize()
     {

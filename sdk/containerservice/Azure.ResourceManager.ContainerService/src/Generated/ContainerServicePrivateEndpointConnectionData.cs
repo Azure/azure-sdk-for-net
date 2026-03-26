@@ -10,47 +10,14 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary>
-    /// A class representing the ContainerServicePrivateEndpointConnection data model.
-    /// A private endpoint connection
-    /// </summary>
+    /// <summary> A private endpoint connection. </summary>
     public partial class ContainerServicePrivateEndpointConnectionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateEndpointConnectionData"/>. </summary>
         public ContainerServicePrivateEndpointConnectionData()
@@ -58,42 +25,66 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The current provisioning state. </param>
-        /// <param name="privateEndpoint"> The resource of private endpoint. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServicePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerServicePrivateEndpointConnectionProvisioningState? provisioningState, WritableSubResource privateEndpoint, ContainerServicePrivateLinkServiceConnectionState connectionState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of a private endpoint connection. </param>
+        internal ContainerServicePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerServicePrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            PrivateEndpoint = privateEndpoint;
-            ConnectionState = connectionState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> The properties of a private endpoint connection. </summary>
+        [WirePath("properties")]
+        internal ContainerServicePrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> The current provisioning state. </summary>
         [WirePath("properties.provisioningState")]
-        public ContainerServicePrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
-        /// <summary> The resource of private endpoint. </summary>
-        internal WritableSubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.privateEndpoint.id")]
-        public ResourceIdentifier PrivateEndpointId
+        public ContainerServicePrivateEndpointConnectionProvisioningState? ProvisioningState
         {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
-            set
+            get
             {
-                if (PrivateEndpoint is null)
-                    PrivateEndpoint = new WritableSubResource();
-                PrivateEndpoint.Id = value;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
-        public ContainerServicePrivateLinkServiceConnectionState ConnectionState { get; set; }
+        public ContainerServicePrivateLinkServiceConnectionState ConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerServicePrivateEndpointConnectionProperties();
+                }
+                Properties.ConnectionState = value;
+            }
+        }
+
+        /// <summary> The resource ID of the private endpoint. </summary>
+        [WirePath("properties.privateEndpoint.id")]
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerServicePrivateEndpointConnectionProperties();
+                }
+                Properties.PrivateEndpointId = value;
+            }
+        }
     }
 }

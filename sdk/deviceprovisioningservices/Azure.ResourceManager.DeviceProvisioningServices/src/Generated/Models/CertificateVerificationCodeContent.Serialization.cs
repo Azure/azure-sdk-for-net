@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(certificateVerificationCodeContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(certificateVerificationCodeContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

@@ -24,7 +24,13 @@
  * allowing gradual migration to the standardized API.
  */
 
-import { Program, Operation } from "@typespec/compiler";
+import {
+  Program,
+  Operation,
+  getPattern,
+  getMinLength,
+  getMaxLength
+} from "@typespec/compiler";
 import {
   ResolvedResource,
   ResourceType,
@@ -33,6 +39,7 @@ import {
 import {
   ArmProviderSchema,
   ArmResourceSchema,
+  NameConstraints,
   NonResourceMethod,
   ResourceMetadata,
   ResourceMethod,
@@ -41,10 +48,16 @@ import {
   postProcessArmResources,
   ParentResourceLookupContext,
   assignNonResourceMethodsToResources,
-  calculateResourceTypeFromPath
+  calculateResourceTypeFromPath,
+  resolveResourceApiVersions,
+  extractRbacRoles
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
-import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
+import {
+  getCrossLanguageDefinitionId,
+  getClientType,
+  SdkModelType
+} from "@azure-tools/typespec-client-generator-core";
 import {
   isVariableSegment,
   isPrefix,
@@ -84,6 +97,20 @@ export function resolveArmResources(
     ResolvedResource
   >();
 
+  // Build a lookup map from methodId (crossLanguageDefinitionId) to apiVersions
+  // so that we can efficiently resolve per-resource API versions
+  const methodApiVersionsMap = new Map<string, string[]>();
+  for (const client of getAllSdkClients(sdkContext)) {
+    for (const method of client.methods) {
+      if (!methodApiVersionsMap.has(method.crossLanguageDefinitionId)) {
+        methodApiVersionsMap.set(
+          method.crossLanguageDefinitionId,
+          method.apiVersions
+        );
+      }
+    }
+  }
+
   if (provider.resources) {
     for (const resolvedResource of provider.resources) {
       // Get the model from SDK context
@@ -104,6 +131,7 @@ export function resolveArmResources(
 
       // Convert to our resource schema format
       const metadata = convertResolvedResourceToMetadata(
+        program,
         sdkContext,
         resolvedResource
       );
@@ -238,6 +266,15 @@ export function resolveArmResources(
   // move it into that resource as an Action (longest prefix wins).
   assignNonResourceMethodsToResources(filteredResources, nonResourceMethods);
 
+  // Compute per-resource API versions after all post-processing is complete,
+  // so that merged/moved methods are reflected in the final version set.
+  for (const resource of filteredResources) {
+    resource.metadata.apiVersions = resolveResourceApiVersions(
+      resource.metadata.methods,
+      methodApiVersionsMap
+    );
+  }
+
   return {
     resources: filteredResources,
     nonResourceMethods
@@ -248,6 +285,7 @@ export function resolveArmResources(
  * Converts a ResolvedResource to ResourceMetadata format
  */
 function convertResolvedResourceToMetadata(
+  program: Program,
   sdkContext: CSharpEmitterContext,
   resolvedResource: ResolvedResource
 ): ResourceMetadata {
@@ -375,6 +413,27 @@ function convertResolvedResourceToMetadata(
     resourceName = explicitName;
   }
 
+  // Extract name constraints from the resource model's "name" property
+  const nameProperty = resolvedResource.type.properties.get("name");
+  const rawPattern = nameProperty
+    ? getPattern(program, nameProperty)
+    : undefined;
+  const nameConstraints: NameConstraints = {
+    pattern: rawPattern || undefined,
+    minLength: nameProperty ? getMinLength(program, nameProperty) : undefined,
+    maxLength: nameProperty ? getMaxLength(program, nameProperty) : undefined
+  };
+
+  // API versions will be computed after post-processing when methods are finalized
+  const apiVersions: string[] = [];
+
+  // Extract RBAC roles from @@clientOption decorator
+  const sdkModel = getClientType(
+    sdkContext,
+    resolvedResource.type
+  ) as SdkModelType;
+  const rbacRoles = extractRbacRoles(sdkModel);
+
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
     resourceIdPattern: resourceIdPattern,
@@ -388,7 +447,10 @@ function convertResolvedResourceToMetadata(
     singletonResourceName: extractSingletonName(
       resolvedResource.resourceInstancePath
     ),
-    resourceName: resourceName
+    resourceName: resourceName,
+    nameConstraints,
+    apiVersions,
+    rbacRoles
   };
 }
 

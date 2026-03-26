@@ -769,6 +769,10 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.IncompleteRunDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.IncompleteRunDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class KeepAliveUpdate : Azure.AI.Agents.Persistent.StreamingUpdate
+    {
+        internal KeepAliveUpdate() { }
+    }
     public partial class KeyPressAction : Azure.AI.Agents.Persistent.ComputerUseAction, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.KeyPressAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.KeyPressAction>
     {
         internal KeyPressAction() { }
@@ -3097,6 +3101,7 @@ namespace Azure.AI.Agents.Persistent
         MessageFailed = 23,
         Error = 24,
         Done = 25,
+        KeepAlive = 26,
     }
     public partial class StreamingUpdate<T> : Azure.AI.Agents.Persistent.StreamingUpdate where T : class
     {

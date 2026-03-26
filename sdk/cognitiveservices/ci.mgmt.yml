@@ -10,3 +10,5 @@ extends:
     - name: Azure.ResourceManager.CognitiveServices
       safeName: AzureResourceManagerCognitiveServices
       directoryName: Azure.ResourceManager.CognitiveServices
+    - name: Azure.Provisioning.CognitiveServices
+      safeName: AzureProvisioningCognitiveServices

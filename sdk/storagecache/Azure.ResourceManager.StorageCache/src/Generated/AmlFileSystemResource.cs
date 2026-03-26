@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -297,6 +297,75 @@ namespace Azure.ResourceManager.StorageCache
             return GetAutoImportJobs().Get(autoImportJobName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ExpansionJobResources in the AmlFileSystem. </summary>
+        /// <returns> An object representing collection of ExpansionJobResources and their operations over a ExpansionJobResource. </returns>
+        public virtual ExpansionJobCollection GetExpansionJobs()
+        {
+            return GetCachedClient(client => new ExpansionJobCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Returns an expansion job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>expansionJobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpansionJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ExpansionJobResource>> GetExpansionJobAsync(string expansionJobName, CancellationToken cancellationToken = default)
+        {
+            return await GetExpansionJobs().GetAsync(expansionJobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns an expansion job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>expansionJobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpansionJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ExpansionJobResource> GetExpansionJob(string expansionJobName, CancellationToken cancellationToken = default)
+        {
+            return GetExpansionJobs().Get(expansionJobName, cancellationToken);
+        }
+
         /// <summary>
         /// Returns an AML file system.
         /// <list type="bullet">
@@ -310,7 +379,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,7 +419,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -390,7 +459,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -432,7 +501,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -474,7 +543,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -520,7 +589,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -566,7 +635,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -605,7 +674,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -644,7 +713,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -682,7 +751,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -720,7 +789,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -782,7 +851,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -844,7 +913,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -901,7 +970,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -958,7 +1027,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1018,7 +1087,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2026-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.StorageActions
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(storageTaskData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(storageTaskData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageTaskData"/> from. </param>
@@ -104,7 +102,7 @@ namespace Azure.ResourceManager.StorageActions
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("identity"u8);
-            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
         }
@@ -205,7 +203,7 @@ namespace Azure.ResourceManager.StorageActions
                 }
                 if (prop.NameEquals("identity"u8))
                 {
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageActionsContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerStorageActionsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
