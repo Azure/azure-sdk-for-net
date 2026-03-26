@@ -41,7 +41,7 @@ public class TtlConfigurationTests : IDisposable
 
         // Create and complete a response with an event stream
         var response = new Models.Response("resp_default_ttl", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await provider.CreateResponseAsync(response, null, null);
+        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
         var publisher = await provider.CreateEventPublisherAsync("resp_default_ttl");
         await publisher.OnNextAsync(ResponsesModelFactory.ResponseCreatedEvent(response));
         await publisher.OnCompletedAsync();
@@ -82,7 +82,7 @@ public class TtlConfigurationTests : IDisposable
 
         // Create and complete a response with event stream
         var response = new Models.Response("resp_1s_ttl", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await provider.CreateResponseAsync(response, null, null);
+        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
         var publisher = await provider.CreateEventPublisherAsync("resp_1s_ttl");
         await publisher.OnNextAsync(ResponsesModelFactory.ResponseCreatedEvent(response));
         await publisher.OnCompletedAsync();
@@ -121,7 +121,7 @@ public class TtlConfigurationTests : IDisposable
 
         // Create response with event stream
         var response = new Models.Response("resp_split_ttl", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await provider.CreateResponseAsync(response, null, null);
+        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
         var publisher = await provider.CreateEventPublisherAsync("resp_split_ttl");
 
         // Publish an event and complete
@@ -298,10 +298,10 @@ public class TtlConfigurationTests : IDisposable
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _cts = new();
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public Task CreateResponseAsync(Models.Response response, IEnumerable<OutputItem>? inputItems, IEnumerable<string>? historyItemIds, CancellationToken ct = default)
+        public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
         {
             Calls.Add("CreateResponseAsync");
-            _responses[response.Id] = response;
+            _responses[request.Response.Id] = request.Response;
             return Task.CompletedTask;
         }
 

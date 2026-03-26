@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Hosting\src\Azure.AI.AgentServer.Hosting.csproj" />
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Responses.Contracts\src\Azure.AI.AgentServer.Responses.Contracts.csproj" />
   </ItemGroup>

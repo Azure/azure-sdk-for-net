@@ -210,7 +210,7 @@ public class ServiceRegistrationTests
 
     private sealed class StubResponsesProvider : IResponsesProvider
     {
-        public Task CreateResponseAsync(Models.Response response, IEnumerable<OutputItem>? inputItems, IEnumerable<string>? historyItemIds, CancellationToken ct = default) => Task.CompletedTask;
+        public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default) => Task.CompletedTask;
         public Task<Models.Response> GetResponseAsync(string responseId, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
         public Task UpdateResponseAsync(Models.Response response, CancellationToken ct = default) => Task.CompletedTask;
@@ -247,10 +247,10 @@ public class ServiceRegistrationTests
         private readonly ConcurrentDictionary<string, Models.Response> _responses = new();
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public Task CreateResponseAsync(Models.Response response, IEnumerable<OutputItem>? inputItems, IEnumerable<string>? historyItemIds, CancellationToken ct = default)
+        public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
         {
             Calls.Add("CreateResponseAsync");
-            _responses.TryAdd(response.Id, response);
+            _responses.TryAdd(request.Response.Id, request.Response);
             return Task.CompletedTask;
         }
 
