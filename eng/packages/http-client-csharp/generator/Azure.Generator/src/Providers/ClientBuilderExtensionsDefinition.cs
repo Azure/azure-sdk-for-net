@@ -112,6 +112,14 @@ namespace Azure.Generator.Providers
                         continue;
                     }
 
+                    // Skip constructors with parameters whose types can't be fully resolved
+                    // (e.g., external types from packages not in metadata references).
+                    if (constructor.Signature.Parameters.SkipLast(1).Any(p =>
+                        !p.Type.IsFrameworkType && string.IsNullOrEmpty(p.Type.Namespace)))
+                    {
+                        continue;
+                    }
+
                     // get the second to last parameter, which is the location of the auth credential parameter if there is one
                     var authParameter = constructor.Signature.Parameters[^2];
                     var isTokenCredential = authParameter?.Type.Equals(typeof(TokenCredential)) == true;
