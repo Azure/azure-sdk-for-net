@@ -7,29 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Prometheus enrichment object. </summary>
     public partial class PrometheusEnrichmentItem : AlertEnrichmentItem
     {
-        /// <summary> Initializes a new instance of <see cref="PrometheusEnrichmentItem"/>. </summary>
-        /// <param name="title"> The enrichment title. </param>
-        /// <param name="description"> The enrichment description. </param>
-        /// <param name="status"> The status of the evaluation of the enrichment. </param>
-        /// <param name="linkToApi"> Link to Prometheus query API (Url format). </param>
-        /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
-        /// <param name="grafanaExplorePath"> Partial link to the Grafana explore API. </param>
-        /// <param name="query"> The Prometheus expression query. </param>
-        internal PrometheusEnrichmentItem(string title, string description, AlertsManagementStatus status, string linkToApi, IEnumerable<string> datasources, string grafanaExplorePath, string query) : base(title, description, status, Type.PrometheusEnrichmentItem)
-        {
-            LinkToApi = linkToApi;
-            Datasources = datasources.ToList();
-            GrafanaExplorePath = grafanaExplorePath;
-            Query = query;
-        }
-
         /// <summary> Initializes a new instance of <see cref="PrometheusEnrichmentItem"/>. </summary>
         /// <param name="title"> The enrichment title. </param>
         /// <param name="description"> The enrichment description. </param>

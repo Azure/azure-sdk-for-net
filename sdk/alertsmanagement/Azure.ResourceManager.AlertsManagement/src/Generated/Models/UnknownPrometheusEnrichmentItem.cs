@@ -10,10 +10,9 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Prometheus instant query enrichment object. </summary>
-    public partial class PrometheusInstantQuery : PrometheusEnrichmentItem
+    internal partial class UnknownPrometheusEnrichmentItem : PrometheusEnrichmentItem
     {
-        /// <summary> Initializes a new instance of <see cref="PrometheusInstantQuery"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownPrometheusEnrichmentItem"/>. </summary>
         /// <param name="title"> The enrichment title. </param>
         /// <param name="description"> The enrichment description. </param>
         /// <param name="status"> The status of the evaluation of the enrichment. </param>
@@ -24,13 +23,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
         /// <param name="grafanaExplorePath"> Partial link to the Grafana explore API. </param>
         /// <param name="query"> The Prometheus expression query. </param>
-        /// <param name="time"> The date and the time of the evaluation. </param>
-        internal PrometheusInstantQuery(string title, string description, AlertsManagementStatus status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query, string time) : base(title, description, status, errorMessage, @type, additionalBinaryDataProperties, linkToApi, datasources, grafanaExplorePath, query)
+        internal UnknownPrometheusEnrichmentItem(string title, string description, AlertsManagementStatus status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query) : base(title, description, status, errorMessage, @type != default ? @type : "unknown", additionalBinaryDataProperties, linkToApi, datasources, grafanaExplorePath, query)
         {
-            Time = time;
         }
-
-        /// <summary> The date and the time of the evaluation. </summary>
-        public string Time { get; }
     }
 }

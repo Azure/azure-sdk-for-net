@@ -855,13 +855,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PrometheusInstantQuery : Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery>
+    public partial class PrometheusInstantQuery : Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery>
     {
         internal PrometheusInstantQuery() { }
-        public System.Collections.Generic.IList<string> Datasources { get { throw null; } }
-        public string GrafanaExplorePath { get { throw null; } }
-        public string LinkToApi { get { throw null; } }
-        public string Query { get { throw null; } }
         public string Time { get { throw null; } }
         protected override Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -873,14 +869,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusInstantQuery>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PrometheusRangeQuery : Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusRangeQuery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusRangeQuery>
+    public partial class PrometheusRangeQuery : Azure.ResourceManager.AlertsManagement.Models.PrometheusEnrichmentItem, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusRangeQuery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.PrometheusRangeQuery>
     {
         internal PrometheusRangeQuery() { }
-        public System.Collections.Generic.IList<string> Datasources { get { throw null; } }
         public System.DateTimeOffset End { get { throw null; } }
-        public string GrafanaExplorePath { get { throw null; } }
-        public string LinkToApi { get { throw null; } }
-        public string Query { get { throw null; } }
         public System.DateTimeOffset Start { get { throw null; } }
         public string Step { get { throw null; } }
         protected override Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

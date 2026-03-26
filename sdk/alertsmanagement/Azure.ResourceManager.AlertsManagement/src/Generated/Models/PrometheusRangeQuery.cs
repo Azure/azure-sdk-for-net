@@ -7,35 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Prometheus instant query enrichment object. </summary>
-    public partial class PrometheusRangeQuery : AlertEnrichmentItem
+    public partial class PrometheusRangeQuery : PrometheusEnrichmentItem
     {
-        /// <summary> Initializes a new instance of <see cref="PrometheusRangeQuery"/>. </summary>
-        /// <param name="title"> The enrichment title. </param>
-        /// <param name="description"> The enrichment description. </param>
-        /// <param name="status"> The status of the evaluation of the enrichment. </param>
-        /// <param name="linkToApi"> Link to Prometheus query API (Url format). </param>
-        /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
-        /// <param name="grafanaExplorePath"> Partial link to the Grafana explore API. </param>
-        /// <param name="query"> The Prometheus expression query. </param>
-        /// <param name="start"> The start evaluation date and time in ISO8601 format. </param>
-        /// <param name="end"> The end evaluation date and time in ISO8601 format. </param>
-        /// <param name="step"> Query resolution step width in ISO8601 format. </param>
-        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string linkToApi, IEnumerable<string> datasources, string grafanaExplorePath, string query, DateTimeOffset start, DateTimeOffset end, string step) : base(title, description, status, Type.PrometheusRangeQuery)
-        {
-            LinkToApi = linkToApi;
-            Datasources = datasources.ToList();
-            GrafanaExplorePath = grafanaExplorePath;
-            Query = query;
-            Start = start;
-            End = end;
-            Step = step;
-        }
-
         /// <summary> Initializes a new instance of <see cref="PrometheusRangeQuery"/>. </summary>
         /// <param name="title"> The enrichment title. </param>
         /// <param name="description"> The enrichment description. </param>
@@ -50,28 +27,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="start"> The start evaluation date and time in ISO8601 format. </param>
         /// <param name="end"> The end evaluation date and time in ISO8601 format. </param>
         /// <param name="step"> Query resolution step width in ISO8601 format. </param>
-        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query, DateTimeOffset start, DateTimeOffset end, string step) : base(title, description, status, errorMessage, @type, additionalBinaryDataProperties)
+        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query, DateTimeOffset start, DateTimeOffset end, string step) : base(title, description, status, errorMessage, @type, additionalBinaryDataProperties, linkToApi, datasources, grafanaExplorePath, query)
         {
-            LinkToApi = linkToApi;
-            Datasources = datasources;
-            GrafanaExplorePath = grafanaExplorePath;
-            Query = query;
             Start = start;
             End = end;
             Step = step;
         }
-
-        /// <summary> Link to Prometheus query API (Url format). </summary>
-        public string LinkToApi { get; }
-
-        /// <summary> An array of the azure monitor workspace resource ids. </summary>
-        public IList<string> Datasources { get; }
-
-        /// <summary> Partial link to the Grafana explore API. </summary>
-        public string GrafanaExplorePath { get; }
-
-        /// <summary> The Prometheus expression query. </summary>
-        public string Query { get; }
 
         /// <summary> The start evaluation date and time in ISO8601 format. </summary>
         public DateTimeOffset Start { get; }

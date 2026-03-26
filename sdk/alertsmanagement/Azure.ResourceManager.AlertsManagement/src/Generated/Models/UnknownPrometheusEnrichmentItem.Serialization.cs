@@ -7,16 +7,16 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Prometheus enrichment object. </summary>
-    public partial class PrometheusEnrichmentItem : AlertEnrichmentItem, IJsonModel<PrometheusEnrichmentItem>
+    internal partial class UnknownPrometheusEnrichmentItem : PrometheusEnrichmentItem, IJsonModel<PrometheusEnrichmentItem>
     {
-        /// <summary> Initializes a new instance of <see cref="PrometheusEnrichmentItem"/> for deserialization. </summary>
-        internal PrometheusEnrichmentItem()
+        /// <summary> Initializes a new instance of <see cref="UnknownPrometheusEnrichmentItem"/> for deserialization. </summary>
+        internal UnknownPrometheusEnrichmentItem()
         {
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrometheusEnrichmentItem IPersistableModel<PrometheusEnrichmentItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrometheusEnrichmentItem)PersistableModelCreateCore(data, options);
+        PrometheusEnrichmentItem IPersistableModel<PrometheusEnrichmentItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownPrometheusEnrichmentItem)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PrometheusEnrichmentItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -79,29 +79,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 throw new FormatException($"The model {nameof(PrometheusEnrichmentItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("linkToApi"u8);
-            writer.WriteStringValue(LinkToApi);
-            writer.WritePropertyName("datasources"u8);
-            writer.WriteStartArray();
-            foreach (string item in Datasources)
-            {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("grafanaExplorePath"u8);
-            writer.WriteStringValue(GrafanaExplorePath);
-            writer.WritePropertyName("query"u8);
-            writer.WriteStringValue(Query);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrometheusEnrichmentItem IJsonModel<PrometheusEnrichmentItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PrometheusEnrichmentItem)JsonModelCreateCore(ref reader, options);
+        PrometheusEnrichmentItem IJsonModel<PrometheusEnrichmentItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownPrometheusEnrichmentItem)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -118,23 +100,97 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PrometheusEnrichmentItem DeserializePrometheusEnrichmentItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownPrometheusEnrichmentItem DeserializeUnknownPrometheusEnrichmentItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            string title = default;
+            string description = default;
+            AlertsManagementStatus status = default;
+            string errorMessage = default;
+            Type @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string linkToApi = default;
+            IList<string> datasources = default;
+            string grafanaExplorePath = default;
+            string query = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("title"u8))
                 {
-                    case "PrometheusInstantQuery":
-                        return PrometheusInstantQuery.DeserializePrometheusInstantQuery(element, options);
-                    case "PrometheusRangeQuery":
-                        return PrometheusRangeQuery.DeserializePrometheusRangeQuery(element, options);
+                    title = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("status"u8))
+                {
+                    status = new AlertsManagementStatus(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("errorMessage"u8))
+                {
+                    errorMessage = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = new Type(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("linkToApi"u8))
+                {
+                    linkToApi = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("datasources"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    datasources = array;
+                    continue;
+                }
+                if (prop.NameEquals("grafanaExplorePath"u8))
+                {
+                    grafanaExplorePath = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("query"u8))
+                {
+                    query = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownPrometheusEnrichmentItem.DeserializeUnknownPrometheusEnrichmentItem(element, options);
+            return new UnknownPrometheusEnrichmentItem(
+                title,
+                description,
+                status,
+                errorMessage,
+                @type,
+                additionalBinaryDataProperties,
+                linkToApi,
+                datasources,
+                grafanaExplorePath,
+                query);
         }
     }
 }

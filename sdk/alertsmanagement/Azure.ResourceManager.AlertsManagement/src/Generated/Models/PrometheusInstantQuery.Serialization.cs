@@ -14,7 +14,7 @@ using Azure.ResourceManager.AlertsManagement;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Prometheus instant query enrichment object. </summary>
-    public partial class PrometheusInstantQuery : AlertEnrichmentItem, IJsonModel<PrometheusInstantQuery>
+    public partial class PrometheusInstantQuery : PrometheusEnrichmentItem, IJsonModel<PrometheusInstantQuery>
     {
         /// <summary> Initializes a new instance of <see cref="PrometheusInstantQuery"/> for deserialization. </summary>
         internal PrometheusInstantQuery()
@@ -80,24 +80,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 throw new FormatException($"The model {nameof(PrometheusInstantQuery)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("linkToApi"u8);
-            writer.WriteStringValue(LinkToApi);
-            writer.WritePropertyName("datasources"u8);
-            writer.WriteStartArray();
-            foreach (string item in Datasources)
-            {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("grafanaExplorePath"u8);
-            writer.WriteStringValue(GrafanaExplorePath);
-            writer.WritePropertyName("query"u8);
-            writer.WriteStringValue(Query);
             writer.WritePropertyName("time"u8);
             writer.WriteStringValue(Time);
         }
