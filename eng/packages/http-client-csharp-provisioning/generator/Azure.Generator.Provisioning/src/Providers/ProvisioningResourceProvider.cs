@@ -62,6 +62,11 @@ namespace Azure.Generator.Provisioning.Providers
         /// </summary>
         private readonly List<ResourcePropertyInfo> _allProperties;
         /// <summary>
+        /// Lookup from InputModelProperty to ResourcePropertyInfo for O(1) access in
+        /// <see cref="IProvisioningPropertyInfo.GetProvisioningPropertyInfo"/>.
+        /// </summary>
+        private readonly Dictionary<InputModelProperty, ResourcePropertyInfo> _propertyLookup;
+        /// <summary>
         /// Serialized property names that are writable in the create/update request body model.
         /// When the resource model is output-only (e.g., a ProxyResource with a separate create body),
         /// its properties may be marked readOnly even though the create body accepts them as input.
@@ -90,8 +95,8 @@ namespace Azure.Generator.Provisioning.Providers
         /// <inheritdoc/>
         ProvisioningPropertyInfo? IProvisioningPropertyInfo.GetProvisioningPropertyInfo(InputModelProperty inputProp)
         {
-            var propInfo = _allProperties.FirstOrDefault(p => p.Property == inputProp);
-            if (propInfo == null) return null;
+            if (!_propertyLookup.TryGetValue(inputProp, out var propInfo))
+                return null;
             return new ProvisioningPropertyInfo(
                 propInfo.PropertyName,
                 propInfo.IsOutput,
@@ -114,6 +119,7 @@ namespace Azure.Generator.Provisioning.Providers
                 : null;
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
+            _propertyLookup = _allProperties.ToDictionary(p => p.Property);
         }
 
         /// <summary>
@@ -127,6 +133,7 @@ namespace Azure.Generator.Provisioning.Providers
             _defaultApiVersion = null;
             _createBodyWritableProperties = [];
             _allProperties = CollectAllProperties();
+            _propertyLookup = _allProperties.ToDictionary(p => p.Property);
         }
 
         public override void Reset()
