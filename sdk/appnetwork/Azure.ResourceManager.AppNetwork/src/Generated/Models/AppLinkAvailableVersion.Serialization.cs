@@ -16,52 +16,52 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppNetwork.Models
 {
-    /// <summary> AppLinkMember upgrade history. </summary>
-    public partial class UpgradeHistory : ResourceData, IJsonModel<UpgradeHistory>
+    /// <summary> AppLink available version resource. </summary>
+    public partial class AppLinkAvailableVersion : ResourceData, IJsonModel<AppLinkAvailableVersion>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeHistory>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkAvailableVersion>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUpgradeHistory(document.RootElement, options);
+                        return DeserializeAppLinkAvailableVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeHistory)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppLinkAvailableVersion)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeHistory>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkAvailableVersion>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeHistory)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppLinkAvailableVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UpgradeHistory>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AppLinkAvailableVersion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpgradeHistory IPersistableModel<UpgradeHistory>.Create(BinaryData data, ModelReaderWriterOptions options) => (UpgradeHistory)PersistableModelCreateCore(data, options);
+        AppLinkAvailableVersion IPersistableModel<AppLinkAvailableVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppLinkAvailableVersion)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UpgradeHistory>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppLinkAvailableVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UpgradeHistory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppLinkAvailableVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeHistory>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkAvailableVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeHistory)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppLinkAvailableVersion)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -87,24 +87,24 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpgradeHistory IJsonModel<UpgradeHistory>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UpgradeHistory)JsonModelCreateCore(ref reader, options);
+        AppLinkAvailableVersion IJsonModel<AppLinkAvailableVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AppLinkAvailableVersion)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeHistory>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkAvailableVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeHistory)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppLinkAvailableVersion)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpgradeHistory(document.RootElement, options);
+            return DeserializeAppLinkAvailableVersion(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UpgradeHistory DeserializeUpgradeHistory(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppLinkAvailableVersion DeserializeAppLinkAvailableVersion(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            UpgradeHistoryProperties properties = default;
+            AppLinkAvailableVersionProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     {
                         continue;
                     }
-                    properties = UpgradeHistoryProperties.DeserializeUpgradeHistoryProperties(prop.Value, options);
+                    properties = AppLinkAvailableVersionProperties.DeserializeAppLinkAvailableVersionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpgradeHistory(
+            return new AppLinkAvailableVersion(
                 id,
                 name,
                 resourceType,

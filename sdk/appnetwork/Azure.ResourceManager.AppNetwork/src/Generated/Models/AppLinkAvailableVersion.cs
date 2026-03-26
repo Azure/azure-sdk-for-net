@@ -13,30 +13,30 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> AppLink available version resource. </summary>
-    public partial class AvailableVersion : ResourceData
+    public partial class AppLinkAvailableVersion : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AvailableVersion"/>. </summary>
-        internal AvailableVersion()
+        /// <summary> Initializes a new instance of <see cref="AppLinkAvailableVersion"/>. </summary>
+        internal AppLinkAvailableVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvailableVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkAvailableVersion"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal AvailableVersion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AvailableVersionProperties properties) : base(id, name, resourceType, systemData)
+        internal AppLinkAvailableVersion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AppLinkAvailableVersionProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public AvailableVersionProperties Properties { get; }
+        public AppLinkAvailableVersionProperties Properties { get; }
     }
 }

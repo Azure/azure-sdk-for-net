@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.AppNetwork
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AppLinkAvailableVersion))]
+    [ModelReaderWriterBuildable(typeof(AppLinkAvailableVersionProperties))]
     [ModelReaderWriterBuildable(typeof(AppLinkConnectivityProfile))]
     [ModelReaderWriterBuildable(typeof(AppLinkData))]
     [ModelReaderWriterBuildable(typeof(AppLinkListResult))]
@@ -29,11 +31,11 @@ namespace Azure.ResourceManager.AppNetwork
     [ModelReaderWriterBuildable(typeof(AppLinkProperties))]
     [ModelReaderWriterBuildable(typeof(AppLinkReleaseChannelInfo))]
     [ModelReaderWriterBuildable(typeof(AppLinkResource))]
+    [ModelReaderWriterBuildable(typeof(AppLinkUpgradeHistory))]
+    [ModelReaderWriterBuildable(typeof(AppLinkUpgradeHistoryProperties))]
     [ModelReaderWriterBuildable(typeof(AppLinkUpgradeProfile))]
     [ModelReaderWriterBuildable(typeof(AppLinkVersionInfo))]
-    [ModelReaderWriterBuildable(typeof(AvailableVersion))]
     [ModelReaderWriterBuildable(typeof(AvailableVersionListResult))]
-    [ModelReaderWriterBuildable(typeof(AvailableVersionProperties))]
     [ModelReaderWriterBuildable(typeof(EastWestGatewayProfile))]
     [ModelReaderWriterBuildable(typeof(FullyManagedUpgradeProfile))]
     [ModelReaderWriterBuildable(typeof(FullyManagedVersions))]
@@ -46,9 +48,7 @@ namespace Azure.ResourceManager.AppNetwork
     [ModelReaderWriterBuildable(typeof(SelfManagedUpgradeProfile))]
     [ModelReaderWriterBuildable(typeof(SelfManagedVersions))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UpgradeHistory))]
     [ModelReaderWriterBuildable(typeof(UpgradeHistoryListResult))]
-    [ModelReaderWriterBuildable(typeof(UpgradeHistoryProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerAppNetworkContext : ModelReaderWriterContext
     {

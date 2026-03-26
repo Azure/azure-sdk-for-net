@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="kubernetesVersion"> Kubernetes version to filter profiles. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableVersion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableVersion> GetByLocationAsync(AzureLocation location, string kubernetesVersion = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppLinkAvailableVersion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppLinkAvailableVersion> GetAppLinkAvailableVersionsByLocationAsync(AzureLocation location, string kubernetesVersion = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableVersionsGetByLocationAsyncCollectionResultOfT(AvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), location, kubernetesVersion, context);
+            return new AvailableVersionsGetAppLinkAvailableVersionsByLocationAsyncCollectionResultOfT(AvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), location, kubernetesVersion, context);
         }
 
         /// <summary>
@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="kubernetesVersion"> Kubernetes version to filter profiles. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableVersion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableVersion> GetByLocation(AzureLocation location, string kubernetesVersion = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppLinkAvailableVersion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppLinkAvailableVersion> GetAppLinkAvailableVersionsByLocation(AzureLocation location, string kubernetesVersion = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableVersionsGetByLocationCollectionResultOfT(AvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), location, kubernetesVersion, context);
+            return new AvailableVersionsGetAppLinkAvailableVersionsByLocationCollectionResultOfT(AvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), location, kubernetesVersion, context);
         }
     }
 }

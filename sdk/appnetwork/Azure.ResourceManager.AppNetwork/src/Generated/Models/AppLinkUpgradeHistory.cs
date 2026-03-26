@@ -13,30 +13,30 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> AppLinkMember upgrade history. </summary>
-    public partial class UpgradeHistory : ResourceData
+    public partial class AppLinkUpgradeHistory : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeHistory"/>. </summary>
-        internal UpgradeHistory()
+        /// <summary> Initializes a new instance of <see cref="AppLinkUpgradeHistory"/>. </summary>
+        internal AppLinkUpgradeHistory()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeHistory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkUpgradeHistory"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal UpgradeHistory(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UpgradeHistoryProperties properties) : base(id, name, resourceType, systemData)
+        internal AppLinkUpgradeHistory(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AppLinkUpgradeHistoryProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public UpgradeHistoryProperties Properties { get; }
+        public AppLinkUpgradeHistoryProperties Properties { get; }
     }
 }

@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// List AvailableVersion resources by location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppNetworkSubscriptionResource.GetByLocationAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppNetworkSubscriptionResource.GetAppLinkAvailableVersionsByLocationAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -177,19 +177,19 @@ namespace Azure.ResourceManager.AppNetwork
         /// <param name="kubernetesVersion"> Kubernetes version to filter profiles. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableVersion"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailableVersion> GetByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string kubernetesVersion = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppLinkAvailableVersion"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppLinkAvailableVersion> GetAppLinkAvailableVersionsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string kubernetesVersion = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppNetworkSubscriptionResource(subscriptionResource).GetByLocationAsync(location, kubernetesVersion, cancellationToken);
+            return GetMockableAppNetworkSubscriptionResource(subscriptionResource).GetAppLinkAvailableVersionsByLocationAsync(location, kubernetesVersion, cancellationToken);
         }
 
         /// <summary>
         /// List AvailableVersion resources by location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppNetworkSubscriptionResource.GetByLocation(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppNetworkSubscriptionResource.GetAppLinkAvailableVersionsByLocation(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -197,12 +197,12 @@ namespace Azure.ResourceManager.AppNetwork
         /// <param name="kubernetesVersion"> Kubernetes version to filter profiles. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableVersion"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailableVersion> GetByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, string kubernetesVersion = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppLinkAvailableVersion"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppLinkAvailableVersion> GetAppLinkAvailableVersionsByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, string kubernetesVersion = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppNetworkSubscriptionResource(subscriptionResource).GetByLocation(location, kubernetesVersion, cancellationToken);
+            return GetMockableAppNetworkSubscriptionResource(subscriptionResource).GetAppLinkAvailableVersionsByLocation(location, kubernetesVersion, cancellationToken);
         }
     }
 }

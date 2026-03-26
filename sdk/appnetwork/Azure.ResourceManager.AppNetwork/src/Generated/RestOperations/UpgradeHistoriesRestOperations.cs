@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByAppLinkMemberRequest(Guid subscriptionId, string resourceGroupName, string appLinkName, string appLinkMemberName, RequestContext context)
+        internal HttpMessage CreateGetAppLinkUpgradeHistoriesRequest(Guid subscriptionId, string resourceGroupName, string appLinkName, string appLinkMemberName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppNetwork
             return message;
         }
 
-        internal HttpMessage CreateNextGetByAppLinkMemberRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string appLinkName, string appLinkMemberName, RequestContext context)
+        internal HttpMessage CreateNextGetAppLinkUpgradeHistoriesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string appLinkName, string appLinkMemberName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

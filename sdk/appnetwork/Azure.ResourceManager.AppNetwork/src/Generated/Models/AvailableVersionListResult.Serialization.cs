@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AvailableVersion item in Value)
+            foreach (AppLinkAvailableVersion item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.AppNetwork.Models
             {
                 return null;
             }
-            IList<AvailableVersion> value = default;
+            IList<AppLinkAvailableVersion> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AvailableVersion> array = new List<AvailableVersion>();
+                    List<AppLinkAvailableVersion> array = new List<AppLinkAvailableVersion>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AvailableVersion.DeserializeAvailableVersion(item, options));
+                        array.Add(AppLinkAvailableVersion.DeserializeAppLinkAvailableVersion(item, options));
                     }
                     value = array;
                     continue;

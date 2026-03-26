@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (UpgradeHistory item in Value)
+            foreach (AppLinkUpgradeHistory item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.AppNetwork.Models
             {
                 return null;
             }
-            IList<UpgradeHistory> value = default;
+            IList<AppLinkUpgradeHistory> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<UpgradeHistory> array = new List<UpgradeHistory>();
+                    List<AppLinkUpgradeHistory> array = new List<AppLinkUpgradeHistory>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UpgradeHistory.DeserializeUpgradeHistory(item, options));
+                        array.Add(AppLinkUpgradeHistory.DeserializeAppLinkUpgradeHistory(item, options));
                     }
                     value = array;
                     continue;

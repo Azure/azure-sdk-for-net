@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.UpgradeHistory"/> instance for mocking. </returns>
-        public static UpgradeHistory UpgradeHistory(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, UpgradeHistoryProperties properties = default)
+        /// <returns> A new <see cref="Models.AppLinkUpgradeHistory"/> instance for mocking. </returns>
+        public static AppLinkUpgradeHistory AppLinkUpgradeHistory(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppLinkUpgradeHistoryProperties properties = default)
         {
-            return new UpgradeHistory(
+            return new AppLinkUpgradeHistory(
                 id,
                 name,
                 resourceType,
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="fromVersion"> Version upgraded from. </param>
         /// <param name="toVersion"> Version upgraded to. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
-        /// <returns> A new <see cref="Models.UpgradeHistoryProperties"/> instance for mocking. </returns>
-        public static UpgradeHistoryProperties UpgradeHistoryProperties(DateTimeOffset startOn = default, DateTimeOffset? endOn = default, string initiatedBy = default, string fromVersion = default, string toVersion = default, AppLinkProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.AppLinkUpgradeHistoryProperties"/> instance for mocking. </returns>
+        public static AppLinkUpgradeHistoryProperties AppLinkUpgradeHistoryProperties(DateTimeOffset startOn = default, DateTimeOffset? endOn = default, string initiatedBy = default, string fromVersion = default, string toVersion = default, AppLinkProvisioningState? provisioningState = default)
         {
-            return new UpgradeHistoryProperties(
+            return new AppLinkUpgradeHistoryProperties(
                 startOn,
                 endOn,
                 initiatedBy,
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.AvailableVersion"/> instance for mocking. </returns>
-        public static AvailableVersion AvailableVersion(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AvailableVersionProperties properties = default)
+        /// <returns> A new <see cref="Models.AppLinkAvailableVersion"/> instance for mocking. </returns>
+        public static AppLinkAvailableVersion AppLinkAvailableVersion(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppLinkAvailableVersionProperties properties = default)
         {
-            return new AvailableVersion(
+            return new AppLinkAvailableVersion(
                 id,
                 name,
                 resourceType,
@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="fullyManagedVersionsReleaseChannels"> Release channels. </param>
         /// <param name="selfManagedVersionDetailVersions"> Istio versions. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
-        /// <returns> A new <see cref="Models.AvailableVersionProperties"/> instance for mocking. </returns>
-        public static AvailableVersionProperties AvailableVersionProperties(string kubernetesVersion = default, IEnumerable<AppLinkReleaseChannelInfo> fullyManagedVersionsReleaseChannels = default, IEnumerable<AppLinkVersionInfo> selfManagedVersionDetailVersions = default, AppLinkProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.AppLinkAvailableVersionProperties"/> instance for mocking. </returns>
+        public static AppLinkAvailableVersionProperties AppLinkAvailableVersionProperties(string kubernetesVersion = default, IEnumerable<AppLinkReleaseChannelInfo> fullyManagedVersionsReleaseChannels = default, IEnumerable<AppLinkVersionInfo> selfManagedVersionDetailVersions = default, AppLinkProvisioningState? provisioningState = default)
         {
-            return new AvailableVersionProperties(kubernetesVersion, fullyManagedVersionsReleaseChannels is null ? default : new FullyManagedVersions((fullyManagedVersionsReleaseChannels ?? new ChangeTrackingList<AppLinkReleaseChannelInfo>()).ToList(), null), selfManagedVersionDetailVersions is null ? default : new SelfManagedVersions((selfManagedVersionDetailVersions ?? new ChangeTrackingList<AppLinkVersionInfo>()).ToList(), null), provisioningState, additionalBinaryDataProperties: null);
+            return new AppLinkAvailableVersionProperties(kubernetesVersion, fullyManagedVersionsReleaseChannels is null ? default : new FullyManagedVersions((fullyManagedVersionsReleaseChannels ?? new ChangeTrackingList<AppLinkReleaseChannelInfo>()).ToList(), null), selfManagedVersionDetailVersions is null ? default : new SelfManagedVersions((selfManagedVersionDetailVersions ?? new ChangeTrackingList<AppLinkVersionInfo>()).ToList(), null), provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Release channel information. </summary>

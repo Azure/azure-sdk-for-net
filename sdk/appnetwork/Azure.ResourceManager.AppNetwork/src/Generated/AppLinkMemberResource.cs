@@ -432,14 +432,14 @@ namespace Azure.ResourceManager.AppNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UpgradeHistory"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UpgradeHistory> GetByAppLinkMemberAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppLinkUpgradeHistory"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppLinkUpgradeHistory> GetAppLinkUpgradeHistoriesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new UpgradeHistoriesGetByAppLinkMemberAsyncCollectionResultOfT(
+            return new UpgradeHistoriesGetAppLinkUpgradeHistoriesAsyncCollectionResultOfT(
                 _upgradeHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -470,14 +470,14 @@ namespace Azure.ResourceManager.AppNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UpgradeHistory"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UpgradeHistory> GetByAppLinkMember(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppLinkUpgradeHistory"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppLinkUpgradeHistory> GetAppLinkUpgradeHistories(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new UpgradeHistoriesGetByAppLinkMemberCollectionResultOfT(
+            return new UpgradeHistoriesGetAppLinkUpgradeHistoriesCollectionResultOfT(
                 _upgradeHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -13,57 +13,57 @@ using Azure.ResourceManager.AppNetwork;
 
 namespace Azure.ResourceManager.AppNetwork.Models
 {
-    /// <summary> AppLinkMember upgrade history properties. </summary>
-    public partial class UpgradeHistoryProperties : IJsonModel<UpgradeHistoryProperties>
+    /// <summary> AppLink available version properties. </summary>
+    public partial class AppLinkAvailableVersionProperties : IJsonModel<AppLinkAvailableVersionProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="UpgradeHistoryProperties"/> for deserialization. </summary>
-        internal UpgradeHistoryProperties()
+        /// <summary> Initializes a new instance of <see cref="AppLinkAvailableVersionProperties"/> for deserialization. </summary>
+        internal AppLinkAvailableVersionProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpgradeHistoryProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AppLinkAvailableVersionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeHistoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkAvailableVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUpgradeHistoryProperties(document.RootElement, options);
+                        return DeserializeAppLinkAvailableVersionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeHistoryProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppLinkAvailableVersionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeHistoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkAvailableVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeHistoryProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppLinkAvailableVersionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UpgradeHistoryProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AppLinkAvailableVersionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpgradeHistoryProperties IPersistableModel<UpgradeHistoryProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AppLinkAvailableVersionProperties IPersistableModel<AppLinkAvailableVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UpgradeHistoryProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppLinkAvailableVersionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UpgradeHistoryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppLinkAvailableVersionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,24 +74,17 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeHistoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkAvailableVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeHistoryProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppLinkAvailableVersionProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("startTimestamp"u8);
-            writer.WriteStringValue(StartOn, "O");
-            if (Optional.IsDefined(EndOn))
-            {
-                writer.WritePropertyName("endTimestamp"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
-            }
-            writer.WritePropertyName("initiatedBy"u8);
-            writer.WriteStringValue(InitiatedBy);
-            writer.WritePropertyName("fromVersion"u8);
-            writer.WriteStringValue(FromVersion);
-            writer.WritePropertyName("toVersion"u8);
-            writer.WriteStringValue(ToVersion);
+            writer.WritePropertyName("kubernetesVersion"u8);
+            writer.WriteStringValue(KubernetesVersion);
+            writer.WritePropertyName("fullyManagedVersions"u8);
+            writer.WriteObjectValue(FullyManagedVersions, options);
+            writer.WritePropertyName("selfManagedVersions"u8);
+            writer.WriteObjectValue(SelfManagedVersionDetail, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -116,65 +109,49 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpgradeHistoryProperties IJsonModel<UpgradeHistoryProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AppLinkAvailableVersionProperties IJsonModel<AppLinkAvailableVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpgradeHistoryProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AppLinkAvailableVersionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeHistoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkAvailableVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeHistoryProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppLinkAvailableVersionProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpgradeHistoryProperties(document.RootElement, options);
+            return DeserializeAppLinkAvailableVersionProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UpgradeHistoryProperties DeserializeUpgradeHistoryProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppLinkAvailableVersionProperties DeserializeAppLinkAvailableVersionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset startOn = default;
-            DateTimeOffset? endOn = default;
-            string initiatedBy = default;
-            string fromVersion = default;
-            string toVersion = default;
+            string kubernetesVersion = default;
+            FullyManagedVersions fullyManagedVersions = default;
+            SelfManagedVersions selfManagedVersionDetail = default;
             AppLinkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("startTimestamp"u8))
+                if (prop.NameEquals("kubernetesVersion"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    kubernetesVersion = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("endTimestamp"u8))
+                if (prop.NameEquals("fullyManagedVersions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    fullyManagedVersions = FullyManagedVersions.DeserializeFullyManagedVersions(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("initiatedBy"u8))
+                if (prop.NameEquals("selfManagedVersions"u8))
                 {
-                    initiatedBy = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("fromVersion"u8))
-                {
-                    fromVersion = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("toVersion"u8))
-                {
-                    toVersion = prop.Value.GetString();
+                    selfManagedVersionDetail = SelfManagedVersions.DeserializeSelfManagedVersions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -191,14 +168,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpgradeHistoryProperties(
-                startOn,
-                endOn,
-                initiatedBy,
-                fromVersion,
-                toVersion,
-                provisioningState,
-                additionalBinaryDataProperties);
+            return new AppLinkAvailableVersionProperties(kubernetesVersion, fullyManagedVersions, selfManagedVersionDetail, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

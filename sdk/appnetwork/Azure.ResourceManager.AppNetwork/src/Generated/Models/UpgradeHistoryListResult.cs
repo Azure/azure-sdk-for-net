@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="UpgradeHistoryListResult"/>. </summary>
         /// <param name="value"> The UpgradeHistory items on this page. </param>
-        internal UpgradeHistoryListResult(IEnumerable<UpgradeHistory> value)
+        internal UpgradeHistoryListResult(IEnumerable<AppLinkUpgradeHistory> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="value"> The UpgradeHistory items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradeHistoryListResult(IList<UpgradeHistory> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpgradeHistoryListResult(IList<AppLinkUpgradeHistory> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> The UpgradeHistory items on this page. </summary>
-        public IList<UpgradeHistory> Value { get; }
+        public IList<AppLinkUpgradeHistory> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

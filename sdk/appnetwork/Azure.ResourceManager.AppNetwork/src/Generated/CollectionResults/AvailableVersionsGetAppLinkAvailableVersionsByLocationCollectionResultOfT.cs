@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,7 +14,7 @@ using Azure.ResourceManager.AppNetwork.Models;
 
 namespace Azure.ResourceManager.AppNetwork
 {
-    internal partial class AvailableVersionsGetByLocationAsyncCollectionResultOfT : AsyncPageable<AvailableVersion>
+    internal partial class AvailableVersionsGetAppLinkAvailableVersionsByLocationCollectionResultOfT : Pageable<AppLinkAvailableVersion>
     {
         private readonly AvailableVersions _client;
         private readonly Guid _subscriptionId;
@@ -23,13 +22,13 @@ namespace Azure.ResourceManager.AppNetwork
         private readonly string _kubernetesVersion;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of AvailableVersionsGetByLocationAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of AvailableVersionsGetAppLinkAvailableVersionsByLocationCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AvailableVersions client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="kubernetesVersion"> Kubernetes version to filter profiles. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AvailableVersionsGetByLocationAsyncCollectionResultOfT(AvailableVersions client, Guid subscriptionId, AzureLocation location, string kubernetesVersion, RequestContext context) : base(context?.CancellationToken ?? default)
+        public AvailableVersionsGetAppLinkAvailableVersionsByLocationCollectionResultOfT(AvailableVersions client, Guid subscriptionId, AzureLocation location, string kubernetesVersion, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,22 +37,22 @@ namespace Azure.ResourceManager.AppNetwork
             _context = context;
         }
 
-        /// <summary> Gets the pages of AvailableVersionsGetByLocationAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of AvailableVersionsGetAppLinkAvailableVersionsByLocationCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AvailableVersionsGetByLocationAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<AvailableVersion>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of AvailableVersionsGetAppLinkAvailableVersionsByLocationCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<AppLinkAvailableVersion>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
                 AvailableVersionListResult result = AvailableVersionListResult.FromResponse(response);
-                yield return Page<AvailableVersion>.FromValues((IReadOnlyList<AvailableVersion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<AppLinkAvailableVersion>.FromValues((IReadOnlyList<AppLinkAvailableVersion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -65,14 +64,14 @@ namespace Azure.ResourceManager.AppNetwork
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByLocationRequest(nextLink, _subscriptionId, _location, _kubernetesVersion, _context) : _client.CreateGetByLocationRequest(_subscriptionId, _location, _kubernetesVersion, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAppNetworkSubscriptionResource.GetByLocation");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAppLinkAvailableVersionsByLocationRequest(nextLink, _subscriptionId, _location, _kubernetesVersion, _context) : _client.CreateGetAppLinkAvailableVersionsByLocationRequest(_subscriptionId, _location, _kubernetesVersion, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAppNetworkSubscriptionResource.GetAppLinkAvailableVersionsByLocation");
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByLocationRequest(Guid subscriptionId, AzureLocation location, string kubernetesVersion, RequestContext context)
+        internal HttpMessage CreateGetAppLinkAvailableVersionsByLocationRequest(Guid subscriptionId, AzureLocation location, string kubernetesVersion, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppNetwork
             return message;
         }
 
-        internal HttpMessage CreateNextGetByLocationRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string kubernetesVersion, RequestContext context)
+        internal HttpMessage CreateNextGetAppLinkAvailableVersionsByLocationRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string kubernetesVersion, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

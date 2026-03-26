@@ -11,29 +11,29 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> AppLink available version properties. </summary>
-    public partial class AvailableVersionProperties
+    public partial class AppLinkAvailableVersionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AvailableVersionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkAvailableVersionProperties"/>. </summary>
         /// <param name="kubernetesVersion"> Kubernetes version. </param>
         /// <param name="fullyManagedVersions"> Fully managed versions. </param>
         /// <param name="selfManagedVersionDetail"> Self managed versions. </param>
-        internal AvailableVersionProperties(string kubernetesVersion, FullyManagedVersions fullyManagedVersions, SelfManagedVersions selfManagedVersionDetail)
+        internal AppLinkAvailableVersionProperties(string kubernetesVersion, FullyManagedVersions fullyManagedVersions, SelfManagedVersions selfManagedVersionDetail)
         {
             KubernetesVersion = kubernetesVersion;
             FullyManagedVersions = fullyManagedVersions;
             SelfManagedVersionDetail = selfManagedVersionDetail;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvailableVersionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkAvailableVersionProperties"/>. </summary>
         /// <param name="kubernetesVersion"> Kubernetes version. </param>
         /// <param name="fullyManagedVersions"> Fully managed versions. </param>
         /// <param name="selfManagedVersionDetail"> Self managed versions. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailableVersionProperties(string kubernetesVersion, FullyManagedVersions fullyManagedVersions, SelfManagedVersions selfManagedVersionDetail, AppLinkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppLinkAvailableVersionProperties(string kubernetesVersion, FullyManagedVersions fullyManagedVersions, SelfManagedVersions selfManagedVersionDetail, AppLinkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KubernetesVersion = kubernetesVersion;
             FullyManagedVersions = fullyManagedVersions;

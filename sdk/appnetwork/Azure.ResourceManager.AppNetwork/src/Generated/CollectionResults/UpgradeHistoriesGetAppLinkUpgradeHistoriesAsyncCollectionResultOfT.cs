@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppNetwork.Models;
 
 namespace Azure.ResourceManager.AppNetwork
 {
-    internal partial class UpgradeHistoriesGetByAppLinkMemberAsyncCollectionResultOfT : AsyncPageable<UpgradeHistory>
+    internal partial class UpgradeHistoriesGetAppLinkUpgradeHistoriesAsyncCollectionResultOfT : AsyncPageable<AppLinkUpgradeHistory>
     {
         private readonly UpgradeHistories _client;
         private readonly Guid _subscriptionId;
@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.AppNetwork
         private readonly string _appLinkMemberName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of UpgradeHistoriesGetByAppLinkMemberAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of UpgradeHistoriesGetAppLinkUpgradeHistoriesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The UpgradeHistories client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="appLinkName"> The name of the AppLink. </param>
         /// <param name="appLinkMemberName"> The name of the AppLinkMember. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public UpgradeHistoriesGetByAppLinkMemberAsyncCollectionResultOfT(UpgradeHistories client, Guid subscriptionId, string resourceGroupName, string appLinkName, string appLinkMemberName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public UpgradeHistoriesGetAppLinkUpgradeHistoriesAsyncCollectionResultOfT(UpgradeHistories client, Guid subscriptionId, string resourceGroupName, string appLinkName, string appLinkMemberName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppNetwork
             _context = context;
         }
 
-        /// <summary> Gets the pages of UpgradeHistoriesGetByAppLinkMemberAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of UpgradeHistoriesGetAppLinkUpgradeHistoriesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of UpgradeHistoriesGetByAppLinkMemberAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<UpgradeHistory>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of UpgradeHistoriesGetAppLinkUpgradeHistoriesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<AppLinkUpgradeHistory>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppNetwork
                     yield break;
                 }
                 UpgradeHistoryListResult result = UpgradeHistoryListResult.FromResponse(response);
-                yield return Page<UpgradeHistory>.FromValues((IReadOnlyList<UpgradeHistory>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<AppLinkUpgradeHistory>.FromValues((IReadOnlyList<AppLinkUpgradeHistory>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.AppNetwork
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByAppLinkMemberRequest(nextLink, _subscriptionId, _resourceGroupName, _appLinkName, _appLinkMemberName, _context) : _client.CreateGetByAppLinkMemberRequest(_subscriptionId, _resourceGroupName, _appLinkName, _appLinkMemberName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AppLinkMemberResource.GetByAppLinkMember");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAppLinkUpgradeHistoriesRequest(nextLink, _subscriptionId, _resourceGroupName, _appLinkName, _appLinkMemberName, _context) : _client.CreateGetAppLinkUpgradeHistoriesRequest(_subscriptionId, _resourceGroupName, _appLinkName, _appLinkMemberName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AppLinkMemberResource.GetAppLinkUpgradeHistories");
             scope.Start();
             try
             {
