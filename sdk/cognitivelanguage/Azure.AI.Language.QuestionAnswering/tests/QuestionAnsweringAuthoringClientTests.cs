@@ -23,7 +23,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         public void QuestionAnsweringAuthoringClientEndpointNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(
-                () => new QuestionAnsweringAuthoringClient(null, (AzureKeyCredential)null));
+                () => new QuestionAnsweringAuthoringClient(null, new AzureKeyCredential("test-key")));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         public void QuestionAnsweringAuthoringClientEndpointNullUsingTokenCredential()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new QuestionAnsweringClient(null, (TokenCredential)null));
+                () => new QuestionAnsweringClient(null, new MockCredential()));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 

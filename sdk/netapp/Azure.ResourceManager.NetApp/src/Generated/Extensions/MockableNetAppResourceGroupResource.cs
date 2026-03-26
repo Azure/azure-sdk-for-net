@@ -33,6 +33,144 @@ namespace Azure.ResourceManager.NetApp.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of NetAppActiveDirectoryConfigResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetAppActiveDirectoryConfigResources and their operations over a NetAppActiveDirectoryConfigResource. </returns>
+        public virtual NetAppActiveDirectoryConfigCollection GetNetAppActiveDirectoryConfigs()
+        {
+            return GetCachedClient(client => new NetAppActiveDirectoryConfigCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the details of the specified active directory configuration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/activeDirectoryConfigs/{activeDirectoryConfigName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActiveDirectoryConfigs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppActiveDirectoryConfigResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="activeDirectoryConfigName"> The name of the ActiveDirectoryConfig. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="activeDirectoryConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activeDirectoryConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetAppActiveDirectoryConfigResource>> GetNetAppActiveDirectoryConfigAsync(string activeDirectoryConfigName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetAppActiveDirectoryConfigs().GetAsync(activeDirectoryConfigName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the details of the specified active directory configuration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/activeDirectoryConfigs/{activeDirectoryConfigName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActiveDirectoryConfigs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppActiveDirectoryConfigResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="activeDirectoryConfigName"> The name of the ActiveDirectoryConfig. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="activeDirectoryConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activeDirectoryConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetAppActiveDirectoryConfigResource> GetNetAppActiveDirectoryConfig(string activeDirectoryConfigName, CancellationToken cancellationToken = default)
+        {
+            return GetNetAppActiveDirectoryConfigs().Get(activeDirectoryConfigName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetAppElasticAccountResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetAppElasticAccountResources and their operations over a NetAppElasticAccountResource. </returns>
+        public virtual NetAppElasticAccountCollection GetNetAppElasticAccounts()
+        {
+            return GetCachedClient(client => new NetAppElasticAccountCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the NetApp Elastic Account
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppElasticAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accountName"> The name of the ElasticAccount. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetAppElasticAccountResource>> GetNetAppElasticAccountAsync(string accountName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetAppElasticAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the NetApp Elastic Account
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppElasticAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accountName"> The name of the ElasticAccount. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetAppElasticAccountResource> GetNetAppElasticAccount(string accountName, CancellationToken cancellationToken = default)
+        {
+            return GetNetAppElasticAccounts().Get(accountName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of NetAppAccountResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of NetAppAccountResources and their operations over a NetAppAccountResource. </returns>
         public virtual NetAppAccountCollection GetNetAppAccounts()
@@ -53,7 +191,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-01</description>
+        /// <description>2025-12-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +222,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-12-01</description>
+        /// <description>2025-12-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

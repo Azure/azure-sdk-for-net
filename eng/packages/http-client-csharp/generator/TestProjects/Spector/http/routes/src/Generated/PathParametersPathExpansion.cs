@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core.Pipeline;
 using Routes._PathParameters.PathExpansion.Explode;
 using Routes._PathParameters.PathExpansion.Standard;
@@ -14,6 +15,8 @@ namespace Routes._PathParameters.PathExpansion
     public partial class PathParametersPathExpansion
     {
         protected PathParametersPathExpansion() => throw null;
+
+        internal PathParametersPathExpansion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

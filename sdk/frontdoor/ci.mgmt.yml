@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.FrontDoor
       safeName: AzureResourceManagerFrontDoor
+    - name: Azure.Provisioning.FrontDoor
+      safeName: AzureProvisioningFrontDoor

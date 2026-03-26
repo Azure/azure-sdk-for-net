@@ -155,7 +155,7 @@ namespace Azure.AI.Projects.Agents
             string name = default;
             IDictionary<string, string> metadata = default;
             string description = default;
-            AgentDefinition definition = default;
+            ProjectsAgentDefinition definition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

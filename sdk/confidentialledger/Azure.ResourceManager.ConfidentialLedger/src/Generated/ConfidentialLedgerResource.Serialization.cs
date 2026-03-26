@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ConfidentialLedger
 {
+    /// <summary></summary>
     public partial class ConfidentialLedgerResource : IJsonModel<ConfidentialLedgerData>
     {
-        private static ConfidentialLedgerData s_dataDeserializationInstance;
-        private static ConfidentialLedgerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ConfidentialLedgerData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ConfidentialLedgerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ConfidentialLedgerData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConfidentialLedgerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConfidentialLedgerData>)Data).Write(writer, options);
 
-        ConfidentialLedgerData IJsonModel<ConfidentialLedgerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConfidentialLedgerData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConfidentialLedgerData IJsonModel<ConfidentialLedgerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ConfidentialLedgerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConfidentialLedgerData>(Data, options, AzureResourceManagerConfidentialLedgerContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ConfidentialLedgerData IPersistableModel<ConfidentialLedgerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConfidentialLedgerData>(data, options, AzureResourceManagerConfidentialLedgerContext.Default);
 
-        string IPersistableModel<ConfidentialLedgerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConfidentialLedgerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConfidentialLedgerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

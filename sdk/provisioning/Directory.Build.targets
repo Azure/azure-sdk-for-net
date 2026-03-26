@@ -4,9 +4,9 @@
         Condition="'$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.targets))' != ''" />
 
   <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests')) And $(MSBuildProjectName) != 'Azure.Provisioning.Tests'">
-    <Compile Include="$(MSBuildThisFileDirectory)Azure.Provisioning/tests/ProvisioningTestBase.cs" LinkBase="ProvisioningShared" />
-    <Compile Include="$(MSBuildThisFileDirectory)Azure.Provisioning/tests/ProvisioningTestEnvironment.cs" LinkBase="ProvisioningShared" />
-    <Compile Include="$(MSBuildThisFileDirectory)Azure.Provisioning/tests/Trycep.cs" LinkBase="ProvisioningShared" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../common/ProvisioningTestShared/ProvisioningTestBase.cs" LinkBase="ProvisioningShared" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../common/ProvisioningTestShared/ProvisioningTestEnvironment.cs" LinkBase="ProvisioningShared" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../common/ProvisioningTestShared/Trycep.cs" LinkBase="ProvisioningShared" />
   </ItemGroup>
 
 </Project>

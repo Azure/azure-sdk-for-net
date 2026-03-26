@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added `EventGridSenderClientSettings` to support creating a `EventGridSenderClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `EventGridReceiverClientSettings` to support creating a `EventGridReceiverClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ### Breaking Changes
 
 ### Bugs Fixed

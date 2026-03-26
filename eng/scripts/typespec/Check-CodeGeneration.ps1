@@ -13,7 +13,7 @@ try {
     & "$EmitterPackagePath/eng/scripts/Generate.ps1"
 
     Write-Host 'Checking generated files difference...'
-    git -c core.safecrlf=false diff --ignore-space-at-eol --exit-code
+    git -c core.safecrlf=false diff --ignore-space-at-eol --exit-code -- ':!package-lock.json'
     if ($LastExitCode -ne 0) {
         Write-Error 'Generated code of Azure generator is not up to date. Please run: /eng/scripts/Generate.ps1'
         exit 1

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -17,43 +18,39 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="itemPath"> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </param>
         /// <param name="isPathRelativeToBackupItem"> Flag to specify if the path is relative to backup item or full path. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemPath"/> is null. </exception>
-        public ItemPathBasedRestoreCriteria(string itemPath, bool isPathRelativeToBackupItem)
+        public ItemPathBasedRestoreCriteria(string itemPath, bool isPathRelativeToBackupItem) : base("ItemPathBasedRestoreCriteria")
         {
             Argument.AssertNotNull(itemPath, nameof(itemPath));
 
             ItemPath = itemPath;
             IsPathRelativeToBackupItem = isPathRelativeToBackupItem;
             SubItemPathPrefix = new ChangeTrackingList<string>();
-            ObjectType = "ItemPathBasedRestoreCriteria";
         }
 
         /// <summary> Initializes a new instance of <see cref="ItemPathBasedRestoreCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemPath"> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </param>
         /// <param name="isPathRelativeToBackupItem"> Flag to specify if the path is relative to backup item or full path. </param>
         /// <param name="subItemPathPrefix"> The list of prefix strings to be used as filter criteria during restore. These are relative to the item path specified. </param>
         /// <param name="renameTo"> Rename the item to be restored. Restore will rename the itemPath to this new name if the value is specified otherwise the itemPath will be restored as same name. </param>
-        internal ItemPathBasedRestoreCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemPath, bool isPathRelativeToBackupItem, IList<string> subItemPathPrefix, string renameTo) : base(objectType, serializedAdditionalRawData)
+        internal ItemPathBasedRestoreCriteria(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemPath, bool isPathRelativeToBackupItem, IList<string> subItemPathPrefix, string renameTo) : base(objectType, additionalBinaryDataProperties)
         {
             ItemPath = itemPath;
             IsPathRelativeToBackupItem = isPathRelativeToBackupItem;
             SubItemPathPrefix = subItemPathPrefix;
             RenameTo = renameTo;
-            ObjectType = objectType ?? "ItemPathBasedRestoreCriteria";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ItemPathBasedRestoreCriteria"/> for deserialization. </summary>
-        internal ItemPathBasedRestoreCriteria()
-        {
         }
 
         /// <summary> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </summary>
         public string ItemPath { get; }
+
         /// <summary> Flag to specify if the path is relative to backup item or full path. </summary>
         public bool IsPathRelativeToBackupItem { get; }
+
         /// <summary> The list of prefix strings to be used as filter criteria during restore. These are relative to the item path specified. </summary>
         public IList<string> SubItemPathPrefix { get; }
+
         /// <summary> Rename the item to be restored. Restore will rename the itemPath to this new name if the value is specified otherwise the itemPath will be restored as same name. </summary>
         public string RenameTo { get; set; }
     }
