@@ -108,9 +108,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
             // Simulate: GetProperties returns 5 messages, but PeekMessages throws
             // (e.g. message encoding mismatch, non-XML-compatible body).
             // The queue length should be preserved as 5, not reset to 0.
-            var queueProperties = new QueueProperties();
-            typeof(QueueProperties).GetProperty(nameof(QueueProperties.ApproximateMessagesCount))
-                .SetValue(queueProperties, 5);
+            var queueProperties = QueuesModelFactory.QueueProperties(metadata: null, approximateMessagesCount: 5);
 
             _mockQueue.Setup(p => p.GetPropertiesAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(queueProperties, Mock.Of<Response>())));
@@ -124,9 +122,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 
             Assert.AreEqual(5, metrics.QueueLength);
             Assert.AreEqual(TimeSpan.Zero, metrics.QueueTime);
-
-            var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == Microsoft.Extensions.Logging.LogLevel.Warning);
-            Assert.That(warning.FormattedMessage, Does.Contain("Error peeking queue messages"));
         }
 
         public class TestFixture : IDisposable

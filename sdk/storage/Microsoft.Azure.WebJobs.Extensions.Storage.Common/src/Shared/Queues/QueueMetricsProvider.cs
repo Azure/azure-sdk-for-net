@@ -97,14 +97,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                             queueLength = 0;
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         // If PeekMessages fails (e.g. message encoding mismatch, non-XML-compatible
                         // message body), preserve the ApproximateMessagesCount from GetProperties.
                         // The queue has messages — we just can't peek them. Resetting queueLength
                         // to 0 here would cause the scaler to report no work and prevent scale-out.
-                        _logger.LogFunctionScaleWarning("Error peeking queue messages for scale status. " +
-                            "ApproximateMessagesCount will be used as queue length.", _functionId, ex);
                     }
                 }
             }
