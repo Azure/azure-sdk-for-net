@@ -40,7 +40,7 @@ namespace Azure.Generator.Provisioning.Providers
             "id", "systemData", "type"
         };
 
-        // System properties that should always be required
+        // System properties that should always be required, even when marked readOnly (path parameters)
         private static readonly HashSet<string> RequiredInputProperties = new(StringComparer.OrdinalIgnoreCase)
         {
             "name", "location"
@@ -371,15 +371,24 @@ namespace Azure.Generator.Provisioning.Providers
             var result = new List<ResourcePropertyInfo>();
             var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-            // Collect from the resource model and its base chain
-            CollectPropertiesFromModel(_inputModel, result, seen, basePath: null);
-
+            // Collect from the base chain first (top-most ancestor → immediate base),
+            // then from the resource model itself. This ensures inherited ARM common
+            // properties (name, location, tags) appear before leaf-defined properties
+            // (e.g., the "properties" bag), which controls the Bicep emission order.
+            var chain = new List<InputModelType>();
             var baseModel = _inputModel.BaseModel;
             while (baseModel != null)
             {
-                CollectPropertiesFromModel(baseModel, result, seen, basePath: null);
+                chain.Add(baseModel);
                 baseModel = baseModel.BaseModel;
             }
+            chain.Reverse();
+
+            foreach (var model in chain)
+            {
+                CollectPropertiesFromModel(model, result, seen, basePath: null);
+            }
+            CollectPropertiesFromModel(_inputModel, result, seen, basePath: null);
 
             return result;
         }
