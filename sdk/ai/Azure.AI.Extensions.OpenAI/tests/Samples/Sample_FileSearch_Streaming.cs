@@ -77,7 +77,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         File.WriteAllText(
             path: filePath,
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        OpenAIFile uploadedFile = await projectClient.OpenAI.Files.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
+        OpenAIFile uploadedFile = await projectClient.OpenAI.GetProjectFilesClient().UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
         File.Delete(filePath);
         #endregion
         #region Snippet:Sample_CreateVectorStore_FileSearch_Streaming_Async
@@ -86,7 +86,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
             Name = "MySampleStore",
             FileIds = { uploadedFile.Id }
         };
-        VectorStore vectorStore = await projectClient.OpenAI.VectorStores.CreateVectorStoreAsync(options);
+        VectorStore vectorStore = await projectClient.OpenAI.GetProjectVectorStoresClient().CreateVectorStoreAsync(options);
         #endregion
         #region Snippet:Sample_CreateAgent_FileSearch_Streaming_Async
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -94,13 +94,13 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
             Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Async
-        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
+        ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync();
         CreateResponseOptions responseOptions = new()
         {
             Agent = new(name: agentVersion.Name, version: agentVersion.Version),
@@ -112,7 +112,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         #region Snippet:Sample_StreamingResponse_FileSearch_Streaming_Async
         responseOptions.InputItems.Clear();
         responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?"));
-        await foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreamingAsync(responseOptions))
+        await foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.GetProjectResponsesClient().CreateResponseStreamingAsync(responseOptions))
         {
             ParseResponse(streamResponse);
         }
@@ -121,7 +121,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         Console.WriteLine("Demonstrating follow-up query with streaming...");
         responseOptions.InputItems.Clear();
         responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("What was my previous question about?"));
-        await foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreamingAsync(responseOptions))
+        await foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.GetProjectResponsesClient().CreateResponseStreamingAsync(responseOptions))
         {
             ParseResponse(streamResponse);
         }
@@ -129,8 +129,8 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
 
         #region Snippet:Sample_Cleanup_FileSearch_Streaming_Async
         await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        await projectClient.OpenAI.VectorStores.DeleteVectorStoreAsync(vectorStoreId: vectorStore.Id);
-        await projectClient.OpenAI.Files.DeleteFileAsync(uploadedFile.Id);
+        await projectClient.OpenAI.GetProjectVectorStoresClient().DeleteVectorStoreAsync(vectorStoreId: vectorStore.Id);
+        await projectClient.OpenAI.GetProjectFilesClient().DeleteFileAsync(uploadedFile.Id);
         #endregion
     }
 
@@ -152,7 +152,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         File.WriteAllText(
             path: filePath,
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        OpenAIFile uploadedFile = projectClient.OpenAI.Files.UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
+        OpenAIFile uploadedFile = projectClient.OpenAI.GetProjectFilesClient().UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
         File.Delete(filePath);
         #endregion
         #region Snippet:Sample_CreateVectorStore_FileSearch_Streaming_Sync
@@ -161,7 +161,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
             Name = "MySampleStore",
             FileIds = { uploadedFile.Id }
         };
-        VectorStore vectorStore = projectClient.OpenAI.VectorStores.CreateVectorStore(options);
+        VectorStore vectorStore = projectClient.OpenAI.GetProjectVectorStoresClient().CreateVectorStore(options);
         #endregion
         #region Snippet:Sample_CreateAgent_FileSearch_Streaming_Sync
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -169,13 +169,13 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
             Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Sync
-        ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation();
+        ProjectConversation conversation = projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversation();
         CreateResponseOptions responseOptions = new()
         {
             Agent = new(name: agentVersion.Name, version: agentVersion.Version),
@@ -187,7 +187,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         #region Snippet:Sample_StreamingResponse_FileSearch_Streaming_Sync
         responseOptions.InputItems.Clear();
         responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?"));
-        foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreaming(responseOptions))
+        foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.GetProjectResponsesClient().CreateResponseStreaming(responseOptions))
         {
             ParseResponse(streamResponse);
         }
@@ -196,7 +196,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         Console.WriteLine("Demonstrating follow-up query with streaming...");
         responseOptions.InputItems.Clear();
         responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("What was my previous question about?"));
-        foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreaming(responseOptions))
+        foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.GetProjectResponsesClient().CreateResponseStreaming(responseOptions))
         {
             ParseResponse(streamResponse);
         }
@@ -204,8 +204,8 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
 
         #region Snippet:Sample_Cleanup_FileSearch_Streaming_Sync
         projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        projectClient.OpenAI.VectorStores.DeleteVectorStore(vectorStoreId: vectorStore.Id);
-        projectClient.OpenAI.Files.DeleteFile(uploadedFile.Id);
+        projectClient.OpenAI.GetProjectVectorStoresClient().DeleteVectorStore(vectorStoreId: vectorStore.Id);
+        projectClient.OpenAI.GetProjectFilesClient().DeleteFile(uploadedFile.Id);
         #endregion
     }
 

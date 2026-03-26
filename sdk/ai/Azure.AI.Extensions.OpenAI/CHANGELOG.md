@@ -5,6 +5,11 @@
 ### Features Added
 
 ### Breaking Changes
+- The `StructuredInputs` property was removed from `CreateResponseOptions`.
+- `Conversations` property was replaced by `GetProjectConversationsClient()` method.
+- `Responses` property was replaced by `GetProjectResponsesClient()` method.
+- `Files` property was replaced by `GetProjectFilesClient()` method.
+- `VectorStores` property was replaced by `GetProjectVectorStoresClient()` method.
 
 ### Bugs Fixed
 

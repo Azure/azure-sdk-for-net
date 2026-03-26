@@ -578,7 +578,7 @@ namespace Azure.AI.Projects
         /// <param name="target"> Target configuration for the agent. </param>
         /// <param name="riskCategories"> List of risk categories to evaluate against. </param>
         /// <returns> A new <see cref="Projects.AgentTaxonomyInput"/> instance for mocking. </returns>
-        public static AgentTaxonomyInput AgentTaxonomyInput(Target target = default, IEnumerable<RiskCategory> riskCategories = default)
+        public static AgentTaxonomyInput AgentTaxonomyInput(EvaluationTarget target = default, IEnumerable<RiskCategory> riskCategories = default)
         {
             riskCategories ??= new ChangeTrackingList<RiskCategory>();
 
@@ -587,54 +587,13 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base class for targets with discriminator support.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AzureAIModelTarget"/> and <see cref="Projects.AzureAIAgentTarget"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: 
         /// </summary>
         /// <param name="type"> The type of target. </param>
-        /// <returns> A new <see cref="Projects.Target"/> instance for mocking. </returns>
-        public static Target Target(string @type = default)
+        /// <returns> A new <see cref="Projects.EvaluationTarget"/> instance for mocking. </returns>
+        public static EvaluationTarget EvaluationTarget(string @type = default)
         {
-            return new UnknownTarget(@type, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents a target specifying an Azure AI model for operations requiring model selection. </summary>
-        /// <param name="model"> The unique identifier of the Azure AI model. </param>
-        /// <param name="samplingParams"> The parameters used to control the sampling behavior of the model during text generation. </param>
-        /// <returns> A new <see cref="Projects.AzureAIModelTarget"/> instance for mocking. </returns>
-        public static AzureAIModelTarget AzureAIModelTarget(string model = default, ModelSamplingParams samplingParams = default)
-        {
-            return new AzureAIModelTarget("azure_ai_model", additionalBinaryDataProperties: null, model, samplingParams);
-        }
-
-        /// <summary> Represents a set of parameters used to control the sampling behavior of a language model during text generation. </summary>
-        /// <param name="temperature"> The temperature parameter for sampling. </param>
-        /// <param name="topP"> The top-p parameter for nucleus sampling. </param>
-        /// <param name="seed"> The random seed for reproducibility. </param>
-        /// <param name="maxCompletionTokens"> The maximum number of tokens allowed in the completion. </param>
-        /// <returns> A new <see cref="Projects.ModelSamplingParams"/> instance for mocking. </returns>
-        public static ModelSamplingParams ModelSamplingParams(float temperature = default, float topP = default, int seed = default, int maxCompletionTokens = default)
-        {
-            return new ModelSamplingParams(temperature, topP, seed, maxCompletionTokens, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents a target specifying an Azure AI agent. </summary>
-        /// <param name="name"> The unique identifier of the Azure AI agent. </param>
-        /// <param name="version"> The version of the Azure AI agent. </param>
-        /// <param name="toolDescriptions"> The parameters used to control the sampling behavior of the agent during text generation. </param>
-        /// <returns> A new <see cref="Projects.AzureAIAgentTarget"/> instance for mocking. </returns>
-        public static AzureAIAgentTarget AzureAIAgentTarget(string name = default, string version = default, IEnumerable<ToolDescription> toolDescriptions = default)
-        {
-            toolDescriptions ??= new ChangeTrackingList<ToolDescription>();
-
-            return new AzureAIAgentTarget("azure_ai_agent", additionalBinaryDataProperties: null, name, version, toolDescriptions.ToList());
-        }
-
-        /// <summary> Description of a tool that can be used by an agent. </summary>
-        /// <param name="name"> The name of the tool. </param>
-        /// <param name="description"> A brief description of the tool's purpose. </param>
-        /// <returns> A new <see cref="Projects.ToolDescription"/> instance for mocking. </returns>
-        public static ToolDescription ToolDescription(string name = default, string description = default)
-        {
-            return new ToolDescription(name, description, additionalBinaryDataProperties: null);
+            return new UnknownEvaluationTarget(@type, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Taxonomy category definition. </summary>
@@ -797,10 +756,10 @@ namespace Azure.AI.Projects
         /// <param name="displayName"> User friendly display name for the insight. </param>
         /// <param name="request"> Request for the insights analysis. </param>
         /// <param name="result"> The result of the insights report. </param>
-        /// <returns> A new <see cref="Projects.Insight"/> instance for mocking. </returns>
-        public static Insight Insight(string id = default, InsightsMetadata metadata = default, OperationStatus state = default, string displayName = default, InsightRequest request = default, InsightResult result = default)
+        /// <returns> A new <see cref="Projects.ProjectInsight"/> instance for mocking. </returns>
+        public static ProjectInsight ProjectInsight(string id = default, InsightsMetadata metadata = default, OperationStatus state = default, string displayName = default, InsightRequest request = default, InsightResult result = default)
         {
-            return new Insight(
+            return new ProjectInsight(
                 id,
                 metadata,
                 state,
@@ -1110,14 +1069,14 @@ namespace Azure.AI.Projects
         /// <param name="tags"> Schedule's tags. Unlike properties, tags are fully mutable. </param>
         /// <param name="properties"> Schedule's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
         /// <param name="systemData"> System metadata for the resource. </param>
-        /// <returns> A new <see cref="Projects.Schedule"/> instance for mocking. </returns>
-        public static Schedule Schedule(string id = default, string displayName = default, string description = default, bool enabled = default, ScheduleProvisioningStatus? provisioningStatus = default, Trigger trigger = default, ScheduleTask task = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, IReadOnlyDictionary<string, string> systemData = default)
+        /// <returns> A new <see cref="Projects.ProjectsSchedule"/> instance for mocking. </returns>
+        public static ProjectsSchedule ProjectsSchedule(string id = default, string displayName = default, string description = default, bool enabled = default, ScheduleProvisioningStatus? provisioningStatus = default, ScheduleTrigger trigger = default, ProjectsScheduleTask task = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, IReadOnlyDictionary<string, string> systemData = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             properties ??= new ChangeTrackingDictionary<string, string>();
             systemData ??= new ChangeTrackingDictionary<string, string>();
 
-            return new Schedule(
+            return new ProjectsSchedule(
                 id,
                 displayName,
                 description,
@@ -1136,8 +1095,8 @@ namespace Azure.AI.Projects
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.CronTrigger"/>, <see cref="Projects.RecurrenceTrigger"/>, and <see cref="Projects.OneTimeTrigger"/>.
         /// </summary>
         /// <param name="type"> Type of the trigger. </param>
-        /// <returns> A new <see cref="Projects.Trigger"/> instance for mocking. </returns>
-        public static Trigger Trigger(string @type = default)
+        /// <returns> A new <see cref="Projects.ScheduleTrigger"/> instance for mocking. </returns>
+        public static ScheduleTrigger ScheduleTrigger(string @type = default)
         {
             return new UnknownTrigger(new TriggerType(@type), additionalBinaryDataProperties: null);
         }
@@ -1241,8 +1200,8 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="type"> Type of the task. </param>
         /// <param name="configuration"> Configuration for the task. </param>
-        /// <returns> A new <see cref="Projects.ScheduleTask"/> instance for mocking. </returns>
-        public static ScheduleTask ScheduleTask(string @type = default, IDictionary<string, string> configuration = default)
+        /// <returns> A new <see cref="Projects.ProjectsScheduleTask"/> instance for mocking. </returns>
+        public static ProjectsScheduleTask ProjectsScheduleTask(string @type = default, IDictionary<string, string> configuration = default)
         {
             configuration ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1272,7 +1231,7 @@ namespace Azure.AI.Projects
         /// <param name="configuration"> Configuration for the task. </param>
         /// <param name="insight"> The insight payload. </param>
         /// <returns> A new <see cref="Projects.InsightScheduleTask"/> instance for mocking. </returns>
-        public static InsightScheduleTask InsightScheduleTask(IDictionary<string, string> configuration = default, Insight insight = default)
+        public static InsightScheduleTask InsightScheduleTask(IDictionary<string, string> configuration = default, ProjectInsight insight = default)
         {
             configuration ??= new ChangeTrackingDictionary<string, string>();
 

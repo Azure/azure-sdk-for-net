@@ -48,7 +48,7 @@ public class Sample_Agents_Tracing : SamplesBase
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent1",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
@@ -85,7 +85,7 @@ public class Sample_Agents_Tracing : SamplesBase
             {
                 Instructions = "You are a prompt agent."
             };
-            AgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
+            ProjectsAgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
@@ -129,7 +129,7 @@ public class Sample_Agents_Tracing : SamplesBase
             {
                 Instructions = "You are a prompt agent."
             };
-            AgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
+            ProjectsAgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
@@ -171,7 +171,7 @@ public class Sample_Agents_Tracing : SamplesBase
             {
                 Instructions = "You are a prompt agent."
             };
-            AgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
+            ProjectsAgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");

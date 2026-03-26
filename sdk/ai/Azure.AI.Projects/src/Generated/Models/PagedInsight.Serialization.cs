@@ -87,7 +87,7 @@ namespace Azure.Core
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (Insight item in Value)
+            foreach (ProjectInsight item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -139,17 +139,17 @@ namespace Azure.Core
             {
                 return null;
             }
-            IList<Insight> value = default;
+            IList<ProjectInsight> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<Insight> array = new List<Insight>();
+                    List<ProjectInsight> array = new List<ProjectInsight>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Insight.DeserializeInsight(item, options));
+                        array.Add(ProjectInsight.DeserializeProjectInsight(item, options));
                     }
                     value = array;
                     continue;
