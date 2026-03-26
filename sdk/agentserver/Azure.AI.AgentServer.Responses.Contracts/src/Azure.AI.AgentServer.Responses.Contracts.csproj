@@ -5,7 +5,7 @@
     <RootNamespace>Azure.AI.AgentServer.Responses</RootNamespace>
     <Nullable>enable</Nullable>
     <Description>TypeSpec-generated model contracts for the Azure AI Agent Server Responses SDK.</Description>
-    <PackageTags>Azure.AI.AgentServer.Responses.Contracts</PackageTags>
+    <PackageTags>Azure;AI;AgentServer;Responses;Contracts</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>

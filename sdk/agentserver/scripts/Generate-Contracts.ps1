@@ -14,8 +14,8 @@
     4. Generates C# validators from the OpenAPI spec (python3 generate-validators.py)
     5. Cleans up tsp-output intermediates
 
-    Use -ValidatorsOnly to skip TypeSpec compilation and only regenerate validators
-    from the existing OpenAPI spec.
+    Use -ValidatorsOnly to skip TypeSpec compilation and only regenerate validators.
+    Requires a prior full run to have produced the compiled OpenAPI spec.
 
     Prerequisites:
     - Python 3 + pyyaml (for generate-validators.py)
@@ -23,7 +23,8 @@
 
 .PARAMETER ValidatorsOnly
     When specified, skips TypeSpec sync/compile and model copying.
-    Only regenerates validators from the existing OpenAPI spec.
+    Only regenerates validators from the previously compiled OpenAPI spec.
+    Requires a prior full run to have produced the spec at tsp-output/.
 
 .EXAMPLE
     # Full regeneration
@@ -51,9 +52,8 @@ $OverlayYaml = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses" "src"
 $ValidatorsNamespace = "Azure.AI.AgentServer.Responses.Validators"
 $GenerateValidatorsScript = Join-Path $AgentServerRoot "scripts" "generate-validators.py"
 
-# OpenAPI spec: prefer tsp-output (from tsp compile), fall back to synced TempTypeSpecFiles
+# OpenAPI spec produced by tsp compile (includes client.tsp customizations)
 $OpenApiYaml = Join-Path $TspOut "openapi.virtual-public-preview.yaml"
-$FallbackOpenApiYaml = Join-Path $TspDir "TempTypeSpecFiles" "Foundry" "openapi3" "virtual-public-preview" "microsoft-foundry-openapi3.yaml"
 
 # Ensure pyyaml is available
 Write-Host "Checking Python dependencies..."
@@ -164,26 +164,17 @@ try {
         Write-Host "Skipping TypeSpec sync/compile (validators-only mode)."
     }
 
-    # Step 4: Generate validators from OpenAPI spec
-    # IMPORTANT: Use the tsp-compiled OpenAPI spec (includes client.tsp customizations)
-    # The raw TempTypeSpecFiles spec does NOT include client.tsp changes (@@copyProperties,
-    # @@withoutOmittedProperties, schema filtering). Only fall back for bootstrapping.
-    $specPath = $OpenApiYaml
-    if (-not (Test-Path $specPath)) {
-        if ($ValidatorsOnly) {
-            Write-Warning "Compiled OpenAPI spec not found at '$OpenApiYaml'. Falling back to raw synced spec."
-            Write-Warning "Run without -ValidatorsOnly to compile TypeSpec with client.tsp customizations."
-        }
-        $specPath = $FallbackOpenApiYaml
+    # Step 4: Generate validators from the tsp-compiled OpenAPI spec
+    # This spec includes client.tsp customizations (@@copyProperties, @@withoutOmittedProperties,
+    # schema filtering). The raw TempTypeSpecFiles spec does NOT include these changes.
+    if (-not (Test-Path $OpenApiYaml)) {
+        throw "Compiled OpenAPI spec not found at '$OpenApiYaml'. Run without -ValidatorsOnly first to compile TypeSpec."
     }
-    if (-not (Test-Path $specPath)) {
-        throw "OpenAPI spec not found at '$OpenApiYaml' or '$FallbackOpenApiYaml'. Run without -ValidatorsOnly first, or ensure TempTypeSpecFiles are synced."
-    }
-    Write-Host "Using OpenAPI spec: $specPath"
+    Write-Host "Using OpenAPI spec: $OpenApiYaml"
 
     Write-Host "Generating C# validators from OpenAPI spec..."
     python3 $GenerateValidatorsScript `
-        --input $specPath `
+        --input $OpenApiYaml `
         --output $ValidatorsDir `
         --overlay $OverlayYaml `
         --namespace $ValidatorsNamespace `

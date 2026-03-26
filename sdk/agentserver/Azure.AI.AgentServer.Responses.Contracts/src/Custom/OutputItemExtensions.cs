@@ -148,8 +148,19 @@ public static class OutputItemExtensions
 
             return false;
         }
-        catch
+        catch (InvalidCastException)
         {
+            // Item does not implement IJsonModel<OutputItem> or cast failed.
+            return false;
+        }
+        catch (JsonException)
+        {
+            // JSON serialization or parsing failed.
+            return false;
+        }
+        catch (InvalidOperationException)
+        {
+            // Invalid operation during JSON writing/parsing.
             return false;
         }
     }

@@ -182,6 +182,12 @@ internal static class BinaryDataExpansionHelpers
         var items = new List<Item>();
         foreach (var element in root.EnumerateArray())
         {
+            if (element.ValueKind != JsonValueKind.Object)
+            {
+                throw new FormatException(
+                    $"Expected a JSON object in the item array, but got {element.ValueKind}.");
+            }
+
             if (element.TryGetProperty("type", out _))
             {
                 items.Add(Item.DeserializeItem(element, ModelReaderWriterOptions.Json));

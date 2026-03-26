@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <!-- Mirror the global using that NuGet consumers get via Hosting's build props.
-       Hosting targets net8.0+, so the namespace doesn't exist on net462. -->
+       Hosting targets net8.0+, so the namespace doesn't exist on legacy framework targets. -->
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <Using Include="Azure.AI.AgentServer.Hosting" />
   </ItemGroup>
@@ -20,7 +20,6 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
-
   </ItemGroup>
 
   <!-- ASP.NET Core packages require net8.0 or later -->

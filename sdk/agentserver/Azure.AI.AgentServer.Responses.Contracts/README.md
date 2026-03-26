@@ -29,7 +29,9 @@ This package contains the data models for the Azure AI Responses API, including:
 
 ### Thread safety
 
-All model types are designed for safe concurrent read access. Serialization and deserialization operations are thread-safe.
+Instances of the model types in this package may be safely shared across threads for concurrent **read-only** access. Concurrent mutation of a model instance is **not** supported; if any thread may modify an instance, you are responsible for synchronizing access.
+
+Serialization and deserialization operations provided by this library are designed to be used concurrently across threads.
 
 ## Examples
 
