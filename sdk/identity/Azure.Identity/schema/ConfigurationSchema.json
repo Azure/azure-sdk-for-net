@@ -398,6 +398,9 @@
               "AuthenticationRecord": {
                 "$ref": "#/definitions/authenticationRecord"
               },
+              "BrowserCustomization": {
+                "$ref": "#/definitions/browserCustomizationOptions"
+              },
               "AdditionallyAllowedTenants": {
                 "type": "array",
                 "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
@@ -1050,6 +1053,9 @@
               "AuthenticationRecord": {
                 "$ref": "#/definitions/authenticationRecord"
               },
+              "BrowserCustomization": {
+                "$ref": "#/definitions/browserCustomizationOptions"
+              },
               "AdditionallyAllowedTenants": {
                 "type": "array",
                 "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
@@ -1307,6 +1313,21 @@
         "ClientId": {
           "type": "string",
           "description": "The client application ID used for authentication."
+        }
+      },
+      "additionalProperties": false
+    },
+    "browserCustomizationOptions": {
+      "type": "object",
+      "description": "Options for customizing the interactive browser authentication experience.",
+      "properties": {
+        "SuccessMessage": {
+          "type": "string",
+          "description": "The HTML content shown in the browser after successful authentication."
+        },
+        "ErrorMessage": {
+          "type": "string",
+          "description": "The HTML content shown in the browser after failed authentication."
         }
       },
       "additionalProperties": false
