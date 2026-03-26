@@ -49,17 +49,33 @@ internal static class ProcessRunner
 
         using var process = Process.Start(psi)!;
         process.StandardInput.Close();
-        var stdoutTask = process.StandardOutput.ReadToEndAsync(cancellationToken);
-        var stderrTask = process.StandardError.ReadToEndAsync(cancellationToken);
-        await Task.WhenAll(stdoutTask, stderrTask).ConfigureAwait(false);
-        await process.WaitForExitAsync(cancellationToken).ConfigureAwait(false);
 
-        var output = stdoutTask.Result;
-        if (!string.IsNullOrWhiteSpace(stderrTask.Result))
+        try
         {
-            output = string.Concat(output, Environment.NewLine, stderrTask.Result);
-        }
+            var stdoutTask = process.StandardOutput.ReadToEndAsync(cancellationToken);
+            var stderrTask = process.StandardError.ReadToEndAsync(cancellationToken);
+            await Task.WhenAll(stdoutTask, stderrTask).ConfigureAwait(false);
+            await process.WaitForExitAsync(cancellationToken).ConfigureAwait(false);
 
-        return (output, process.ExitCode);
+            var output = stdoutTask.Result;
+            if (!string.IsNullOrWhiteSpace(stderrTask.Result))
+            {
+                output = string.Concat(output, Environment.NewLine, stderrTask.Result);
+            }
+
+            return (output, process.ExitCode);
+        }
+        catch (OperationCanceledException)
+        {
+            try
+            {
+                process.Kill(entireProcessTree: true);
+            }
+            catch
+            {
+                // Best effort — process may have already exited.
+            }
+            throw;
+        }
     }
 }

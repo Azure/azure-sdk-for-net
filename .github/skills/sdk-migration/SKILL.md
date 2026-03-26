@@ -51,7 +51,7 @@ The MCP server provides deterministic fix tools for the build-fix cycle. Configu
 | `rename_codegen_type` | CS0246 for mismatched `*ModelFactory` or `*ClientBuilderExtensions` | Updates `[CodeGenType]` attribute to match generated type |
 | `fetch_to_fromlro` | CS0103/CS1061 for `Fetch` method calls in custom LRO code | Replaces `Fetch(response)` with `Model.FromLroResponse(response)` |
 | `classify_errors` | Re-classify errors after partial fixes | Classifies errors against the deterministic fix registry |
-| `run_code_generation` | After spec/TypeSpec changes or CodeGen* attribute changes. Pass `localSpecsPath` for local spec iteration. | Runs `dotnet build /t:generateCode` |
+| `run_code_generation` | After spec/TypeSpec changes or CodeGen* attribute changes. Pass `localSpecsPath` for local spec iteration (full path to spec directory containing `main.tsp`, or repo root — the tool resolves via `tsp-location.yaml`). | Runs `dotnet build /t:generateCode` |
 | `validate_tsp_config` | Before code generation | Validates `tspconfig.yaml` emitter configuration |
 | `commit_iteration` | At migration start, to find a valid spec commit. Pass `commitOverride` if user provides a commit SHA. | Finds spec commit with valid tspconfig |
 | `pregen_cleanup` | Before first code generation | Removes `IncludeAutorestDependency` from `.csproj` |
@@ -226,14 +226,15 @@ These are also handled by MCP tools during build-fix, but can be applied before 
 
 **Goal**: Regenerate code with the new TypeSpec emitter.
 
-Call `run_code_generation` with the project path. For local spec iteration, pass `localSpecsPath` to use a local azure-rest-api-specs clone:
-- **During iteration**: `run_code_generation(projectPath, localSpecsPath: "<path-to-azure-rest-api-specs>")`
+Call `run_code_generation` with the project path. For local spec iteration, pass `localSpecsPath` — this can be either the **full path to the spec directory** (containing `main.tsp`/`tspconfig.yaml`) or the **repo root** (the tool auto-resolves using `tsp-location.yaml`'s `directory` field):
+- **During iteration**: `run_code_generation(projectPath, localSpecsPath: "<path-to-spec-dir-or-repo-root>")`
 - **Final generation**: `run_code_generation(projectPath)` — uses the commit from `tsp-location.yaml`
 
-Or run directly:
+Or run directly (here you **must** pass the full spec directory path, not the repo root):
 ```shell
-# During iteration — use local spec repo (no push needed)
-dotnet build /t:GenerateCode /p:LocalSpecRepo=<path-to-azure-rest-api-specs>
+# During iteration — use local spec directory (no push needed)
+# NOTE: LocalSpecRepo must be the full path to the spec directory containing main.tsp
+dotnet build /t:GenerateCode /p:LocalSpecRepo=<path-to-spec-directory>
 
 # Final generation — uses commit from tsp-location.yaml
 dotnet build /t:GenerateCode
