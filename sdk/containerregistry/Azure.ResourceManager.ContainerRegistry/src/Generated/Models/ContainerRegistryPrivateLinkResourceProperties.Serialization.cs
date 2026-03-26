@@ -13,7 +13,7 @@ using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> The properties of a private link resource. </summary>
+    /// <summary> Properties of a private link resource. </summary>
     internal partial class ContainerRegistryPrivateLinkResourceProperties : IJsonModel<ContainerRegistryPrivateLinkResourceProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredZoneNames))
+            if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
-            IReadOnlyList<string> requiredZoneNames = default;
+            IList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

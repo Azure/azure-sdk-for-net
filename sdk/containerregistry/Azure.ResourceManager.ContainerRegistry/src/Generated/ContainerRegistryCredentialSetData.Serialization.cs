@@ -134,11 +134,12 @@ namespace Azure.ResourceManager.ContainerRegistry
                 return null;
             }
             ResourceIdentifier id = default;
-            string name = default;
+            string groupName = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CredentialSetProperties properties = default;
+            string name = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 if (prop.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    groupName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -199,11 +200,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
             return new ContainerRegistryCredentialSetData(
                 id,
-                name,
+                groupName,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 properties,
+                name,
                 identity);
         }
     }

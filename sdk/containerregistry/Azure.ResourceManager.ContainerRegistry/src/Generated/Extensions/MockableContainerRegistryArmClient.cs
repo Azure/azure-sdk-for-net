@@ -35,15 +35,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
             return new ContainerRegistryResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ContainerRegistryPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryPrivateLinkResource"/> object. </returns>
-        public virtual ContainerRegistryPrivateLinkResource GetContainerRegistryPrivateLinkResource(ResourceIdentifier id)
-        {
-            ContainerRegistryPrivateLinkResource.ValidateResourceId(id);
-            return new ContainerRegistryPrivateLinkResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="ContainerRegistryArchiveResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerRegistryArchiveResource"/> object. </returns>

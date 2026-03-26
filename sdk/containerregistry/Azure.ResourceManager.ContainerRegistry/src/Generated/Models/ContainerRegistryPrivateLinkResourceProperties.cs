@@ -11,7 +11,7 @@ using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> The properties of a private link resource. </summary>
+    /// <summary> Properties of a private link resource. </summary>
     internal partial class ContainerRegistryPrivateLinkResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         [WirePath("requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();
 
-        /// <summary> The private link resource Private link DNS zone name. </summary>
+        /// <summary> The private link resource private link DNS zone name. </summary>
         [WirePath("requiredZoneNames")]
-        public IReadOnlyList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
+        public IList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
     }
 }

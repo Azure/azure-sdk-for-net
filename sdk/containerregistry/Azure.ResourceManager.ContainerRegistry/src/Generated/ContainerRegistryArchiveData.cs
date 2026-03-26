@@ -26,20 +26,26 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryArchiveData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
+        /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the archive. </param>
-        internal ContainerRegistryArchiveData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArchiveProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="name"> The name of the archive resource. </param>
+        internal ContainerRegistryArchiveData(ResourceIdentifier id, string groupName, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArchiveProperties properties, string name) : base(id, groupName, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            Name = name;
         }
 
         /// <summary> The properties of the archive. </summary>
         [WirePath("properties")]
         internal ArchiveProperties Properties { get; set; }
+
+        /// <summary> The name of the archive resource. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The package source of the archive. </summary>
         [WirePath("properties.packageSource")]

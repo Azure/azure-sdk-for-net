@@ -57,24 +57,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryPrivateLinkResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerRegistryPrivateLinkResource"/> object. </returns>
-        public static ContainerRegistryPrivateLinkResource GetContainerRegistryPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryPrivateLinkResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ContainerRegistryArchiveResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>

@@ -26,17 +26,19 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryExportPipelineData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
+        /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the export pipeline. </param>
+        /// <param name="name"> The name of the export pipeline. </param>
         /// <param name="location"> The location of the export pipeline. </param>
         /// <param name="identity"> The identity of the export pipeline. </param>
-        internal ContainerRegistryExportPipelineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExportPipelineProperties properties, AzureLocation? location, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
+        internal ContainerRegistryExportPipelineData(ResourceIdentifier id, string groupName, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExportPipelineProperties properties, string name, AzureLocation? location, ManagedServiceIdentity identity) : base(id, groupName, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            Name = name;
             Location = location;
             Identity = identity;
         }
@@ -44,6 +46,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> The properties of the export pipeline. </summary>
         [WirePath("properties")]
         internal ExportPipelineProperties Properties { get; set; }
+
+        /// <summary> The name of the export pipeline. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The location of the export pipeline. </summary>
         [WirePath("location")]

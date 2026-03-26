@@ -15,7 +15,7 @@ using Azure.ResourceManager.ContainerRegistry.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    internal partial class RegistriesGetPrivateLinkResourcesAsyncCollectionResultOfT : AsyncPageable<ContainerRegistryPrivateLinkResourceData>
+    internal partial class RegistriesGetPrivateLinkResourcesAsyncCollectionResultOfT : AsyncPageable<ContainerRegistryPrivateLinkResource>
     {
         private readonly Registries _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of RegistriesGetPrivateLinkResourcesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ContainerRegistryPrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ContainerRegistryPrivateLinkResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     yield break;
                 }
                 ContainerRegistryPrivateLinkResourceListResult result = ContainerRegistryPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<ContainerRegistryPrivateLinkResourceData>.FromValues((IReadOnlyList<ContainerRegistryPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerRegistryPrivateLinkResource>.FromValues((IReadOnlyList<ContainerRegistryPrivateLinkResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetPrivateLinkResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _registryName, _context) : _client.CreateGetPrivateLinkResourcesRequest(_subscriptionId, _resourceGroupName, _registryName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ContainerRegistryPrivateLinkResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ContainerRegistryResource.GetPrivateLinkResources");
             scope.Start();
             try
             {

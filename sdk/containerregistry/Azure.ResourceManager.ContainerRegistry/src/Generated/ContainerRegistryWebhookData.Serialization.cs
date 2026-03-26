@@ -124,13 +124,14 @@ namespace Azure.ResourceManager.ContainerRegistry
                 return null;
             }
             ResourceIdentifier id = default;
-            string name = default;
+            string groupName = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             WebhookProperties properties = default;
+            string name = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 if (prop.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    groupName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -207,13 +208,14 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
             return new ContainerRegistryWebhookData(
                 id,
-                name,
+                groupName,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                name);
         }
     }
 }

@@ -12,74 +12,64 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.ContainerRegistry.Models;
+using Azure.ResourceManager.ContainerRegistry;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ContainerRegistry
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> An object that represents a private endpoint connection for a container registry. </summary>
-    public partial class ContainerRegistryPrivateEndpointConnectionData : ResourceData, IJsonModel<ContainerRegistryPrivateEndpointConnectionData>
+    /// <summary> A private link resource. </summary>
+    public partial class MyPrivateLinkResource : ResourceData, IJsonModel<MyPrivateLinkResource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MyPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeContainerRegistryPrivateEndpointConnectionData(document.RootElement, options);
+                        return DeserializeMyPrivateLinkResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MyPrivateLinkResource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MyPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MyPrivateLinkResource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MyPrivateLinkResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerRegistryPrivateEndpointConnectionData IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerRegistryPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
+        MyPrivateLinkResource IPersistableModel<MyPrivateLinkResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (MyPrivateLinkResource)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MyPrivateLinkResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="containerRegistryPrivateEndpointConnectionData"> The <see cref="ContainerRegistryPrivateEndpointConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ContainerRegistryPrivateEndpointConnectionData containerRegistryPrivateEndpointConnectionData)
-        {
-            if (containerRegistryPrivateEndpointConnectionData == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(containerRegistryPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerRegistryPrivateEndpointConnectionData"/> from. </param>
-        internal static ContainerRegistryPrivateEndpointConnectionData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MyPrivateLinkResource"/> from. </param>
+        internal static MyPrivateLinkResource FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeContainerRegistryPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMyPrivateLinkResource(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContainerRegistryPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MyPrivateLinkResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +80,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MyPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryPrivateEndpointConnectionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MyPrivateLinkResource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -105,24 +95,24 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerRegistryPrivateEndpointConnectionData IJsonModel<ContainerRegistryPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContainerRegistryPrivateEndpointConnectionData)JsonModelCreateCore(ref reader, options);
+        MyPrivateLinkResource IJsonModel<MyPrivateLinkResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MyPrivateLinkResource)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MyPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryPrivateEndpointConnectionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MyPrivateLinkResource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContainerRegistryPrivateEndpointConnectionData(document.RootElement, options);
+            return DeserializeMyPrivateLinkResource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ContainerRegistryPrivateEndpointConnectionData DeserializeContainerRegistryPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static MyPrivateLinkResource DeserializeMyPrivateLinkResource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -133,8 +123,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            PrivateEndpointConnectionProperties properties = default;
-            string name = default;
+            ContainerRegistryPrivateLinkResourceProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -175,7 +164,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         continue;
                     }
-                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(prop.Value, options);
+                    properties = ContainerRegistryPrivateLinkResourceProperties.DeserializeContainerRegistryPrivateLinkResourceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -183,14 +172,13 @@ namespace Azure.ResourceManager.ContainerRegistry
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryPrivateEndpointConnectionData(
+            return new MyPrivateLinkResource(
                 id,
                 groupName,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties,
-                name);
+                properties);
         }
     }
 }
