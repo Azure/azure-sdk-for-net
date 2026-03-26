@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Validation status for the Dev Box Definition. </summary>
-        public CatalogResourceValidationStatus? ValidationStatus
+        public DevCenterCatalogResourceValidationStatus? ValidationStatus
         {
             get
             {

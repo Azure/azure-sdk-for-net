@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 writer.WritePropertyName("assignedGroups"u8);
                 writer.WriteStartArray();
-                foreach (AssignedGroup item in AssignedGroups)
+                foreach (DevCenterAssignedGroup item in AssignedGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -182,12 +182,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             int? maxDevBoxesPerUser = default;
             string displayName = default;
             ProjectCatalogSettings catalogSettings = default;
-            ProjectCustomizationSettings customizationSettings = default;
-            DevBoxScheduleDeleteSettings devBoxScheduleDeleteSettings = default;
+            DevCenterProjectCustomizationSettings customizationSettings = default;
+            DevCenterDevBoxScheduleDeleteSettings devBoxScheduleDeleteSettings = default;
             AzureAiServicesSettings azureAiServicesSettings = default;
-            ServerlessGpuSessionsSettings serverlessGpuSessionsSettings = default;
+            DevCenterServerlessGpuSessionsSettings serverlessGpuSessionsSettings = default;
             WorkspaceStorageSettings workspaceStorageSettings = default;
-            IList<AssignedGroup> assignedGroups = default;
+            IList<DevCenterAssignedGroup> assignedGroups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    customizationSettings = ProjectCustomizationSettings.DeserializeProjectCustomizationSettings(prop.Value, options);
+                    customizationSettings = DevCenterProjectCustomizationSettings.DeserializeDevCenterProjectCustomizationSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("devBoxScheduleDeleteSettings"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    devBoxScheduleDeleteSettings = DevBoxScheduleDeleteSettings.DeserializeDevBoxScheduleDeleteSettings(prop.Value, options);
+                    devBoxScheduleDeleteSettings = DevCenterDevBoxScheduleDeleteSettings.DeserializeDevCenterDevBoxScheduleDeleteSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("azureAiServicesSettings"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    serverlessGpuSessionsSettings = ServerlessGpuSessionsSettings.DeserializeServerlessGpuSessionsSettings(prop.Value, options);
+                    serverlessGpuSessionsSettings = DevCenterServerlessGpuSessionsSettings.DeserializeDevCenterServerlessGpuSessionsSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("workspaceStorageSettings"u8))
@@ -279,10 +279,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    List<AssignedGroup> array = new List<AssignedGroup>();
+                    List<DevCenterAssignedGroup> array = new List<DevCenterAssignedGroup>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AssignedGroup.DeserializeAssignedGroup(item, options));
+                        array.Add(DevCenterAssignedGroup.DeserializeDevCenterAssignedGroup(item, options));
                     }
                     assignedGroups = array;
                     continue;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 azureAiServicesSettings,
                 serverlessGpuSessionsSettings,
                 workspaceStorageSettings,
-                assignedGroups ?? new ChangeTrackingList<AssignedGroup>(),
+                assignedGroups ?? new ChangeTrackingList<DevCenterAssignedGroup>(),
                 additionalBinaryDataProperties);
         }
     }

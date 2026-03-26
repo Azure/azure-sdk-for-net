@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="ProjectCatalogSettings"/>. </summary>
         public ProjectCatalogSettings()
         {
-            CatalogItemSyncTypes = new ChangeTrackingList<CatalogItemType>();
+            CatalogItemSyncTypes = new ChangeTrackingList<DevCenterCatalogItemType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProjectCatalogSettings"/>. </summary>
         /// <param name="catalogItemSyncTypes"> Indicates catalog item types that can be synced. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectCatalogSettings(IList<CatalogItemType> catalogItemSyncTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectCatalogSettings(IList<DevCenterCatalogItemType> catalogItemSyncTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CatalogItemSyncTypes = catalogItemSyncTypes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates catalog item types that can be synced. </summary>
-        public IList<CatalogItemType> CatalogItemSyncTypes { get; }
+        public IList<DevCenterCatalogItemType> CatalogItemSyncTypes { get; }
     }
 }

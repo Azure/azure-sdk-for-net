@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            KeyEncryptionKeyIdentityType? identityType = default;
+            DevCenterKeyEncryptionKeyIdentityType? identityType = default;
             ResourceIdentifier userAssignedIdentityResourceId = default;
             Guid? delegatedIdentityClientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    identityType = new KeyEncryptionKeyIdentityType(prop.Value.GetString());
+                    identityType = new DevCenterKeyEncryptionKeyIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentityResourceId"u8))

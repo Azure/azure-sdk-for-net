@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="ProjectPolicyUpdateProperties"/>. </summary>
         public ProjectPolicyUpdateProperties()
         {
-            ResourcePolicies = new ChangeTrackingList<ResourcePolicy>();
+            ResourcePolicies = new ChangeTrackingList<DevCenterResourcePolicy>();
             Scopes = new ChangeTrackingList<string>();
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="scopes"> Resources that have access to the shared resources that are a part of this project policy. </param>
         /// <param name="configurationPolicies"> Configuration Policies part of this project policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectPolicyUpdateProperties(IList<ResourcePolicy> resourcePolicies, IList<string> scopes, ConfigurationPolicies configurationPolicies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectPolicyUpdateProperties(IList<DevCenterResourcePolicy> resourcePolicies, IList<string> scopes, DevCenterConfigurationPolicies configurationPolicies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourcePolicies = resourcePolicies;
             Scopes = scopes;
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Resource policies that are a part of this project policy. </summary>
-        public IList<ResourcePolicy> ResourcePolicies { get; } = new ChangeTrackingList<ResourcePolicy>();
+        public IList<DevCenterResourcePolicy> ResourcePolicies { get; } = new ChangeTrackingList<DevCenterResourcePolicy>();
 
         /// <summary> Resources that have access to the shared resources that are a part of this project policy. </summary>
         public IList<string> Scopes { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Configuration Policies part of this project policy. </summary>
-        public ConfigurationPolicies ConfigurationPolicies { get; set; }
+        public DevCenterConfigurationPolicies ConfigurationPolicies { get; set; }
     }
 }

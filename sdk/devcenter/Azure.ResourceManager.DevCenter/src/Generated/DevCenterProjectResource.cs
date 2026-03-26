@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<InheritedSettingsForProject>> GetInheritedSettingsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterInheritedSettingsForProject>> GetInheritedSettingsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.GetInheritedSettings");
             scope.Start();
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.DevCenter
                 };
                 HttpMessage message = _projectsRestClient.CreateGetInheritedSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<InheritedSettingsForProject> response = Response.FromValue(InheritedSettingsForProject.FromResponse(result), result);
+                Response<DevCenterInheritedSettingsForProject> response = Response.FromValue(DevCenterInheritedSettingsForProject.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<InheritedSettingsForProject> GetInheritedSettings(CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterInheritedSettingsForProject> GetInheritedSettings(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.GetInheritedSettings");
             scope.Start();
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.DevCenter
                 };
                 HttpMessage message = _projectsRestClient.CreateGetInheritedSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<InheritedSettingsForProject> response = Response.FromValue(InheritedSettingsForProject.FromResponse(result), result);
+                Response<DevCenterInheritedSettingsForProject> response = Response.FromValue(DevCenterInheritedSettingsForProject.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

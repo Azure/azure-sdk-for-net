@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="ImageDefinitionProperties"/>. </summary>
         internal ImageDefinitionProperties()
         {
-            Tasks = new ChangeTrackingList<CustomizationTaskInstance>();
-            UserTasks = new ChangeTrackingList<CustomizationTaskInstance>();
+            Tasks = new ChangeTrackingList<DevCenterCustomizationTaskInstance>();
+            UserTasks = new ChangeTrackingList<DevCenterCustomizationTaskInstance>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageDefinitionProperties"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="userTasks"> Tasks to run when a user first logs into a Dev Box. </param>
         /// <param name="extends"> Another Image Definition that this one extends. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageDefinitionProperties(DevCenterImageReference imageReference, string fileUri, LatestImageBuild latestBuild, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, CatalogResourceValidationStatus? validationStatus, DevCenterImageReference activeImageReference, AutoImageBuildStatus? autoImageBuild, IList<CustomizationTaskInstance> tasks, IList<CustomizationTaskInstance> userTasks, ImageDefinitionReference extends, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageDefinitionProperties(DevCenterImageReference imageReference, string fileUri, DevCenterLatestImageBuild latestBuild, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, DevCenterCatalogResourceValidationStatus? validationStatus, DevCenterImageReference activeImageReference, DevCenterAutoImageBuildStatus? autoImageBuild, IList<DevCenterCustomizationTaskInstance> tasks, IList<DevCenterCustomizationTaskInstance> userTasks, DevCenterImageDefinitionReference extends, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
             FileUri = fileUri;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public string FileUri { get; }
 
         /// <summary> Details about the latest build. </summary>
-        public LatestImageBuild LatestBuild { get; }
+        public DevCenterLatestImageBuild LatestBuild { get; }
 
         /// <summary> Validation status of the configured image. </summary>
         public ImageValidationStatus? ImageValidationStatus { get; }
@@ -69,21 +69,21 @@ namespace Azure.ResourceManager.DevCenter.Models
         public ImageValidationErrorDetails ImageValidationErrorDetails { get; }
 
         /// <summary> Validation status for the Image Definition. </summary>
-        public CatalogResourceValidationStatus? ValidationStatus { get; }
+        public DevCenterCatalogResourceValidationStatus? ValidationStatus { get; }
 
         /// <summary> Image reference information for the currently active image (only populated during updates). </summary>
         public DevCenterImageReference ActiveImageReference { get; }
 
         /// <summary> Indicates if automatic image builds will be triggered for image definition updates. </summary>
-        public AutoImageBuildStatus? AutoImageBuild { get; }
+        public DevCenterAutoImageBuildStatus? AutoImageBuild { get; }
 
         /// <summary> Tasks to run at Dev Box provisioning time. </summary>
-        public IList<CustomizationTaskInstance> Tasks { get; } = new ChangeTrackingList<CustomizationTaskInstance>();
+        public IList<DevCenterCustomizationTaskInstance> Tasks { get; } = new ChangeTrackingList<DevCenterCustomizationTaskInstance>();
 
         /// <summary> Tasks to run when a user first logs into a Dev Box. </summary>
-        public IList<CustomizationTaskInstance> UserTasks { get; } = new ChangeTrackingList<CustomizationTaskInstance>();
+        public IList<DevCenterCustomizationTaskInstance> UserTasks { get; } = new ChangeTrackingList<DevCenterCustomizationTaskInstance>();
 
         /// <summary> Another Image Definition that this one extends. </summary>
-        public ImageDefinitionReference Extends { get; }
+        public DevCenterImageDefinitionReference Extends { get; }
     }
 }

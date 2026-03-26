@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         internal ProjectPolicyUpdateProperties Properties { get; set; }
 
         /// <summary> Resource policies that are a part of this project policy. </summary>
-        public IList<ResourcePolicy> ResourcePolicies
+        public IList<DevCenterResourcePolicy> ResourcePolicies
         {
             get
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Configuration Policies part of this project policy. </summary>
-        public ConfigurationPolicies ConfigurationPolicies
+        public DevCenterConfigurationPolicies ConfigurationPolicies
         {
             get
             {

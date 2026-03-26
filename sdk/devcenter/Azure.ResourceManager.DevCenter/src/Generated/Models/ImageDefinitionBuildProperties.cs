@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="endOn"> End time of the task group. </param>
         /// <param name="errorDetails"> Details for image creation error. Populated when the image creation is not successful. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageDefinitionBuildProperties(DevCenterImageReference imageReference, ImageDefinitionBuildStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ImageCreationErrorDetails errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageDefinitionBuildProperties(DevCenterImageReference imageReference, DevCenterImageDefinitionBuildStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DevCenterImageCreationErrorDetails errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
             Status = status;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public DevCenterImageReference ImageReference { get; }
 
         /// <summary> The status of the build. </summary>
-        public ImageDefinitionBuildStatus? Status { get; }
+        public DevCenterImageDefinitionBuildStatus? Status { get; }
 
         /// <summary> Start time of the task group. </summary>
         public DateTimeOffset? StartOn { get; }
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Details for image creation error. Populated when the image creation is not successful. </summary>
-        public ImageCreationErrorDetails ErrorDetails { get; }
+        public DevCenterImageCreationErrorDetails ErrorDetails { get; }
     }
 }

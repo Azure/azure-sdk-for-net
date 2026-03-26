@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 writer.WritePropertyName("catalogItemSyncTypes"u8);
                 writer.WriteStartArray();
-                foreach (CatalogItemType item in CatalogItemSyncTypes)
+                foreach (DevCenterCatalogItemType item in CatalogItemSyncTypes)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            IList<CatalogItemType> catalogItemSyncTypes = default;
+            IList<DevCenterCatalogItemType> catalogItemSyncTypes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    List<CatalogItemType> array = new List<CatalogItemType>();
+                    List<DevCenterCatalogItemType> array = new List<DevCenterCatalogItemType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new CatalogItemType(item.GetString()));
+                        array.Add(new DevCenterCatalogItemType(item.GetString()));
                     }
                     catalogItemSyncTypes = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectCatalogSettings(catalogItemSyncTypes ?? new ChangeTrackingList<CatalogItemType>(), additionalBinaryDataProperties);
+            return new ProjectCatalogSettings(catalogItemSyncTypes ?? new ChangeTrackingList<DevCenterCatalogItemType>(), additionalBinaryDataProperties);
         }
     }
 }

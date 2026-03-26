@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevBoxProvisioningSettings"/>. </summary>
         /// <param name="installAzureMonitorAgentEnableStatus"> Indicates whether to install the Azure Monitor Agent service on Dev Boxes that belong to this dev center. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxProvisioningSettings(InstallAzureMonitorAgentEnableStatus? installAzureMonitorAgentEnableStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBoxProvisioningSettings(DevCenterInstallAzureMonitorAgentEnableStatus? installAzureMonitorAgentEnableStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstallAzureMonitorAgentEnableStatus = installAzureMonitorAgentEnableStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether to install the Azure Monitor Agent service on Dev Boxes that belong to this dev center. </summary>
-        public InstallAzureMonitorAgentEnableStatus? InstallAzureMonitorAgentEnableStatus { get; set; }
+        public DevCenterInstallAzureMonitorAgentEnableStatus? InstallAzureMonitorAgentEnableStatus { get; set; }
     }
 }

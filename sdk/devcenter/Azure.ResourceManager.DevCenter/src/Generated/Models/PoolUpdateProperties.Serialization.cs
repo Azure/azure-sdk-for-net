@@ -196,20 +196,20 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            PoolDevBoxDefinitionType? devBoxDefinitionType = default;
+            DevCenterPoolDevBoxDefinitionType? devBoxDefinitionType = default;
             string devBoxDefinitionName = default;
             DevCenterPoolDevBoxDefinitionDetail devBoxDefinition = default;
             string networkConnectionName = default;
             DevCenterLicenseType? licenseType = default;
             LocalAdminStatus? localAdministrator = default;
             StopOnDisconnectConfiguration stopOnDisconnect = default;
-            StopOnNoConnectConfiguration stopOnNoConnect = default;
-            SingleSignOnStatus? singleSignOnStatus = default;
+            DevCenterStopOnNoConnectConfiguration stopOnNoConnect = default;
+            DevCenterSingleSignOnStatus? singleSignOnStatus = default;
             string displayName = default;
-            VirtualNetworkType? virtualNetworkType = default;
+            DevCenterVirtualNetworkType? virtualNetworkType = default;
             IList<string> managedVirtualNetworkRegions = default;
-            ActiveHoursConfiguration activeHoursConfiguration = default;
-            DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus = default;
+            DevCenterActiveHoursConfiguration activeHoursConfiguration = default;
+            DevCenterDevBoxTunnelEnableStatus? devBoxTunnelEnableStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    devBoxDefinitionType = new PoolDevBoxDefinitionType(prop.Value.GetString());
+                    devBoxDefinitionType = new DevCenterPoolDevBoxDefinitionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("devBoxDefinitionName"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    stopOnNoConnect = StopOnNoConnectConfiguration.DeserializeStopOnNoConnectConfiguration(prop.Value, options);
+                    stopOnNoConnect = DevCenterStopOnNoConnectConfiguration.DeserializeDevCenterStopOnNoConnectConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("singleSignOnStatus"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    singleSignOnStatus = new SingleSignOnStatus(prop.Value.GetString());
+                    singleSignOnStatus = new DevCenterSingleSignOnStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    virtualNetworkType = new VirtualNetworkType(prop.Value.GetString());
+                    virtualNetworkType = new DevCenterVirtualNetworkType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("managedVirtualNetworkRegions"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    activeHoursConfiguration = ActiveHoursConfiguration.DeserializeActiveHoursConfiguration(prop.Value, options);
+                    activeHoursConfiguration = DevCenterActiveHoursConfiguration.DeserializeDevCenterActiveHoursConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("devBoxTunnelEnableStatus"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    devBoxTunnelEnableStatus = new DevBoxTunnelEnableStatus(prop.Value.GetString());
+                    devBoxTunnelEnableStatus = new DevCenterDevBoxTunnelEnableStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

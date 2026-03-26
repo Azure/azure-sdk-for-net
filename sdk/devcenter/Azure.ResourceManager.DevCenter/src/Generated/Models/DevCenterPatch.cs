@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> All Customer-managed key encryption properties for the resource. </summary>
-        public CustomerManagedKeyEncryption CustomerManagedKeyEncryption
+        public DevCenterCustomerManagedKeyEncryption CustomerManagedKeyEncryption
         {
             get
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Whether project catalogs associated with projects in this dev center can be configured to sync catalog items. </summary>
-        public CatalogItemSyncEnableStatus? CatalogItemSyncEnableStatus
+        public DevCenterCatalogItemSyncEnableStatus? CatalogItemSyncEnableStatus
         {
             get
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Indicates whether pools in this Dev Center can use Microsoft Hosted Networks. Defaults to Enabled if not set. </summary>
-        public MicrosoftHostedNetworkEnableStatus? MicrosoftHostedNetworkEnableStatus
+        public DevCenterMicrosoftHostedNetworkEnableStatus? MicrosoftHostedNetworkEnableStatus
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Indicates whether to install the Azure Monitor Agent service on Dev Boxes that belong to this dev center. </summary>
-        public InstallAzureMonitorAgentEnableStatus? DevBoxProvisioningInstallAzureMonitorAgentEnableStatus
+        public DevCenterInstallAzureMonitorAgentEnableStatus? DevBoxProvisioningInstallAzureMonitorAgentEnableStatus
         {
             get
             {

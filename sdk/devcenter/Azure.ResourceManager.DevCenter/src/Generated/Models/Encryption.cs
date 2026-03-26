@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="Encryption"/>. </summary>
         /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Encryption(CustomerManagedKeyEncryption customerManagedKeyEncryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Encryption(DevCenterCustomerManagedKeyEncryption customerManagedKeyEncryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomerManagedKeyEncryption = customerManagedKeyEncryption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> All Customer-managed key encryption properties for the resource. </summary>
-        public CustomerManagedKeyEncryption CustomerManagedKeyEncryption { get; set; }
+        public DevCenterCustomerManagedKeyEncryption CustomerManagedKeyEncryption { get; set; }
     }
 }

@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             DevCenterProvisioningState? provisioningState = default;
             ImageValidationStatus? imageValidationStatus = default;
             ImageValidationErrorDetails imageValidationErrorDetails = default;
-            CatalogResourceValidationStatus? validationStatus = default;
+            DevCenterCatalogResourceValidationStatus? validationStatus = default;
             DevCenterImageReference activeImageReference = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    validationStatus = new CatalogResourceValidationStatus(prop.Value.GetString());
+                    validationStatus = new DevCenterCatalogResourceValidationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("activeImageReference"u8))

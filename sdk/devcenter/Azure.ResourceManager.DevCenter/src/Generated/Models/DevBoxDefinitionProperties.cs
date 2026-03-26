@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="imageValidationErrorDetails"> Details for image validator error. Populated when the image validation is not successful. </param>
         /// <param name="validationStatus"> Validation status for the Dev Box Definition. </param>
         /// <param name="activeImageReference"> Image reference information for the currently active image (only populated during updates). </param>
-        internal DevBoxDefinitionProperties(DevCenterImageReference imageReference, DevCenterSku sku, string osStorageType, DevCenterHibernateSupport? hibernateSupport, IDictionary<string, BinaryData> additionalBinaryDataProperties, DevCenterProvisioningState? provisioningState, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, CatalogResourceValidationStatus? validationStatus, DevCenterImageReference activeImageReference) : base(imageReference, sku, osStorageType, hibernateSupport, additionalBinaryDataProperties)
+        internal DevBoxDefinitionProperties(DevCenterImageReference imageReference, DevCenterSku sku, string osStorageType, DevCenterHibernateSupport? hibernateSupport, IDictionary<string, BinaryData> additionalBinaryDataProperties, DevCenterProvisioningState? provisioningState, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, DevCenterCatalogResourceValidationStatus? validationStatus, DevCenterImageReference activeImageReference) : base(imageReference, sku, osStorageType, hibernateSupport, additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ImageValidationStatus = imageValidationStatus;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public ImageValidationErrorDetails ImageValidationErrorDetails { get; }
 
         /// <summary> Validation status for the Dev Box Definition. </summary>
-        public CatalogResourceValidationStatus? ValidationStatus { get; }
+        public DevCenterCatalogResourceValidationStatus? ValidationStatus { get; }
 
         /// <summary> Image reference information for the currently active image (only populated during updates). </summary>
         public DevCenterImageReference ActiveImageReference { get; }

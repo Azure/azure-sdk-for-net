@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevCenterNetworkSettings"/>. </summary>
         /// <param name="microsoftHostedNetworkEnableStatus"> Indicates whether pools in this Dev Center can use Microsoft Hosted Networks. Defaults to Enabled if not set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterNetworkSettings(MicrosoftHostedNetworkEnableStatus? microsoftHostedNetworkEnableStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterNetworkSettings(DevCenterMicrosoftHostedNetworkEnableStatus? microsoftHostedNetworkEnableStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MicrosoftHostedNetworkEnableStatus = microsoftHostedNetworkEnableStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether pools in this Dev Center can use Microsoft Hosted Networks. Defaults to Enabled if not set. </summary>
-        public MicrosoftHostedNetworkEnableStatus? MicrosoftHostedNetworkEnableStatus { get; set; }
+        public DevCenterMicrosoftHostedNetworkEnableStatus? MicrosoftHostedNetworkEnableStatus { get; set; }
     }
 }

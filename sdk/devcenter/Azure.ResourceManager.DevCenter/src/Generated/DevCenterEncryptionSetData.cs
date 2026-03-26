@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevCenter
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Devbox disk encryption enable or disable status. Indicates if Devbox disks encryption using DevCenter CMK is enabled or not. </summary>
-        public DevboxDisksEncryptionEnableStatus? DevboxDisksEncryptionEnableStatus
+        public DevCenterDevboxDisksEncryptionEnableStatus? DevboxDisksEncryptionEnableStatus
         {
             get
             {

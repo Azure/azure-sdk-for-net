@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> The status of the build. </summary>
-        public ImageDefinitionBuildStatus? Status
+        public DevCenterImageDefinitionBuildStatus? Status
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Details for image creation error. Populated when the image creation is not successful. </summary>
-        public ImageCreationErrorDetails ErrorDetails
+        public DevCenterImageCreationErrorDetails ErrorDetails
         {
             get
             {

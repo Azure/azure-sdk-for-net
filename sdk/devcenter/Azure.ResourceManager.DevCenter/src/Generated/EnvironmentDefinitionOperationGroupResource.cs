@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterCatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("EnvironmentDefinitionOperationGroupResource.GetErrorDetails");
             scope.Start();
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DevCenter
                 };
                 HttpMessage message = _environmentDefinitionOperationGroupRestClient.CreateGetErrorDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CatalogResourceValidationErrorDetails> response = Response.FromValue(CatalogResourceValidationErrorDetails.FromResponse(result), result);
+                Response<DevCenterCatalogResourceValidationErrorDetails> response = Response.FromValue(DevCenterCatalogResourceValidationErrorDetails.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CatalogResourceValidationErrorDetails> GetErrorDetails(CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterCatalogResourceValidationErrorDetails> GetErrorDetails(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _environmentDefinitionOperationGroupClientDiagnostics.CreateScope("EnvironmentDefinitionOperationGroupResource.GetErrorDetails");
             scope.Start();
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DevCenter
                 };
                 HttpMessage message = _environmentDefinitionOperationGroupRestClient.CreateGetErrorDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CatalogResourceValidationErrorDetails> response = Response.FromValue(CatalogResourceValidationErrorDetails.FromResponse(result), result);
+                Response<DevCenterCatalogResourceValidationErrorDetails> response = Response.FromValue(DevCenterCatalogResourceValidationErrorDetails.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="CustomizationTaskProperties"/>. </summary>
         internal CustomizationTaskProperties()
         {
-            Inputs = new ChangeTrackingDictionary<string, CustomizationTaskInput>();
+            Inputs = new ChangeTrackingDictionary<string, DevCenterCustomizationTaskInput>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomizationTaskProperties"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="timeout"> The default timeout for the task. </param>
         /// <param name="validationStatus"> Validation status for the Task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomizationTaskProperties(IReadOnlyDictionary<string, CustomizationTaskInput> inputs, int? timeout, CatalogResourceValidationStatus? validationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomizationTaskProperties(IReadOnlyDictionary<string, DevCenterCustomizationTaskInput> inputs, int? timeout, DevCenterCatalogResourceValidationStatus? validationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Inputs = inputs;
             Timeout = timeout;
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Inputs to the task. </summary>
-        public IReadOnlyDictionary<string, CustomizationTaskInput> Inputs { get; } = new ChangeTrackingDictionary<string, CustomizationTaskInput>();
+        public IReadOnlyDictionary<string, DevCenterCustomizationTaskInput> Inputs { get; } = new ChangeTrackingDictionary<string, DevCenterCustomizationTaskInput>();
 
         /// <summary> The default timeout for the task. </summary>
         public int? Timeout { get; }
 
         /// <summary> Validation status for the Task. </summary>
-        public CatalogResourceValidationStatus? ValidationStatus { get; }
+        public DevCenterCatalogResourceValidationStatus? ValidationStatus { get; }
     }
 }

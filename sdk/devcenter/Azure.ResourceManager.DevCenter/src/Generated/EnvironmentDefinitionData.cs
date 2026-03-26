@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Validation status for the environment definition. </summary>
-        public CatalogResourceValidationStatus? ValidationStatus
+        public DevCenterCatalogResourceValidationStatus? ValidationStatus
         {
             get
             {

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             RecommendedMachineConfiguration recommendedMachineConfiguration = default;
             DevCenterProvisioningState? provisioningState = default;
             DevCenterHibernateSupport? hibernateSupport = default;
-            ArchitectureType? architecture = default;
+            DevCenterArchitectureType? architecture = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    architecture = new ArchitectureType(prop.Value.GetString());
+                    architecture = new DevCenterArchitectureType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

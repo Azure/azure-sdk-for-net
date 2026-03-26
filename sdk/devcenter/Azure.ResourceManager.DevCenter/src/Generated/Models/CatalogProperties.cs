@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="connectionState"> The connection state of the catalog. </param>
         /// <param name="lastConnectionOn"> When the catalog was last connected. </param>
         /// <param name="lastSyncOn"> When the catalog was last synced. </param>
-        internal CatalogProperties(DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, CatalogSyncType? syncType, CatalogAutoImageBuildEnableStatus? autoImageBuildEnableStatus, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, DevCenterProvisioningState? provisioningState, DevCenterCatalogSyncState? syncState, SyncStats lastSyncStats, CatalogConnectionState? connectionState, DateTimeOffset? lastConnectionOn, DateTimeOffset? lastSyncOn) : base(gitHub, adoGit, syncType, autoImageBuildEnableStatus, tags, additionalBinaryDataProperties)
+        internal CatalogProperties(DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, DevCenterCatalogSyncType? syncType, DevCenterCatalogAutoImageBuildEnableStatus? autoImageBuildEnableStatus, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, DevCenterProvisioningState? provisioningState, DevCenterCatalogSyncState? syncState, DevCenterSyncStats lastSyncStats, DevCenterCatalogConnectionState? connectionState, DateTimeOffset? lastConnectionOn, DateTimeOffset? lastSyncOn) : base(gitHub, adoGit, syncType, autoImageBuildEnableStatus, tags, additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SyncState = syncState;
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         public DevCenterCatalogSyncState? SyncState { get; }
 
         /// <summary> Stats of the latest synchronization. </summary>
-        public SyncStats LastSyncStats { get; }
+        public DevCenterSyncStats LastSyncStats { get; }
 
         /// <summary> The connection state of the catalog. </summary>
-        public CatalogConnectionState? ConnectionState { get; }
+        public DevCenterCatalogConnectionState? ConnectionState { get; }
 
         /// <summary> When the catalog was last connected. </summary>
         public DateTimeOffset? LastConnectionOn { get; }

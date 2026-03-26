@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             string description = default;
             IReadOnlyList<DevCenterEnvironmentDefinitionParameterInfo> parameters = default;
             string templatePath = default;
-            CatalogResourceValidationStatus? validationStatus = default;
+            DevCenterCatalogResourceValidationStatus? validationStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    validationStatus = new CatalogResourceValidationStatus(prop.Value.GetString());
+                    validationStatus = new DevCenterCatalogResourceValidationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

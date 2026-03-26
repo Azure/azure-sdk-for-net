@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            InstallAzureMonitorAgentEnableStatus? installAzureMonitorAgentEnableStatus = default;
+            DevCenterInstallAzureMonitorAgentEnableStatus? installAzureMonitorAgentEnableStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    installAzureMonitorAgentEnableStatus = new InstallAzureMonitorAgentEnableStatus(prop.Value.GetString());
+                    installAzureMonitorAgentEnableStatus = new DevCenterInstallAzureMonitorAgentEnableStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="configurationPolicies"> Configuration Policies part of this project policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal ProjectPolicyProperties(IList<ResourcePolicy> resourcePolicies, IList<string> scopes, ConfigurationPolicies configurationPolicies, IDictionary<string, BinaryData> additionalBinaryDataProperties, DevCenterProvisioningState? provisioningState) : base(resourcePolicies, scopes, configurationPolicies, additionalBinaryDataProperties)
+        internal ProjectPolicyProperties(IList<DevCenterResourcePolicy> resourcePolicies, IList<string> scopes, DevCenterConfigurationPolicies configurationPolicies, IDictionary<string, BinaryData> additionalBinaryDataProperties, DevCenterProvisioningState? provisioningState) : base(resourcePolicies, scopes, configurationPolicies, additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
         }

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            CmkIdentityType? @type = default;
+            DevCenterCmkIdentityType? @type = default;
             string userAssignedIdentityResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    @type = new CmkIdentityType(prop.Value.GetString());
+                    @type = new DevCenterCmkIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentityResourceId"u8))

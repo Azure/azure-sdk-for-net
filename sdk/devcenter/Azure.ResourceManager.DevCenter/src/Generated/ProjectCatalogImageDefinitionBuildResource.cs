@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ImageDefinitionBuildDetails>> GetBuildDetailsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterImageDefinitionBuildDetails>> GetBuildDetailsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _projectCatalogImageDefinitionBuildClientDiagnostics.CreateScope("ProjectCatalogImageDefinitionBuildResource.GetBuildDetails");
             scope.Start();
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DevCenter
                 };
                 HttpMessage message = _projectCatalogImageDefinitionBuildRestClient.CreateGetBuildDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ImageDefinitionBuildDetails> response = Response.FromValue(ImageDefinitionBuildDetails.FromResponse(result), result);
+                Response<DevCenterImageDefinitionBuildDetails> response = Response.FromValue(DevCenterImageDefinitionBuildDetails.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ImageDefinitionBuildDetails> GetBuildDetails(CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterImageDefinitionBuildDetails> GetBuildDetails(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _projectCatalogImageDefinitionBuildClientDiagnostics.CreateScope("ProjectCatalogImageDefinitionBuildResource.GetBuildDetails");
             scope.Start();
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.DevCenter
                 };
                 HttpMessage message = _projectCatalogImageDefinitionBuildRestClient.CreateGetBuildDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ImageDefinitionBuildDetails> response = Response.FromValue(ImageDefinitionBuildDetails.FromResponse(result), result);
+                Response<DevCenterImageDefinitionBuildDetails> response = Response.FromValue(DevCenterImageDefinitionBuildDetails.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

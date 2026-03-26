@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="readOnly"> Whether or not this parameter is read-only.  If true, default should have a value. </param>
         /// <param name="required"> Whether or not this parameter is required. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterEnvironmentDefinitionParameterInfo(string id, string name, string description, ParameterType? @type, bool? readOnly, bool? @required, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterEnvironmentDefinitionParameterInfo(string id, string name, string description, DevCenterParameterType? @type, bool? readOnly, bool? @required, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public string Description { get; }
 
         /// <summary> A string of one of the basic JSON types (number, integer, array, object, boolean, string). </summary>
-        public ParameterType? Type { get; }
+        public DevCenterParameterType? Type { get; }
 
         /// <summary> Whether or not this parameter is read-only.  If true, default should have a value. </summary>
         public bool? ReadOnly { get; }

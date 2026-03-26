@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            IList<ResourcePolicy> resourcePolicies = default;
+            IList<DevCenterResourcePolicy> resourcePolicies = default;
             IList<string> scopes = default;
-            ConfigurationPolicies configurationPolicies = default;
+            DevCenterConfigurationPolicies configurationPolicies = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DevCenterProvisioningState? provisioningState = default;
             foreach (var prop in element.EnumerateObject())
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    List<ResourcePolicy> array = new List<ResourcePolicy>();
+                    List<DevCenterResourcePolicy> array = new List<DevCenterResourcePolicy>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourcePolicy.DeserializeResourcePolicy(item, options));
+                        array.Add(DevCenterResourcePolicy.DeserializeDevCenterResourcePolicy(item, options));
                     }
                     resourcePolicies = array;
                     continue;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    configurationPolicies = ConfigurationPolicies.DeserializeConfigurationPolicies(prop.Value, options);
+                    configurationPolicies = DevCenterConfigurationPolicies.DeserializeDevCenterConfigurationPolicies(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectPolicyProperties(resourcePolicies ?? new ChangeTrackingList<ResourcePolicy>(), scopes ?? new ChangeTrackingList<string>(), configurationPolicies, additionalBinaryDataProperties, provisioningState);
+            return new ProjectPolicyProperties(resourcePolicies ?? new ChangeTrackingList<DevCenterResourcePolicy>(), scopes ?? new ChangeTrackingList<string>(), configurationPolicies, additionalBinaryDataProperties, provisioningState);
         }
     }
 }

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 writer.WritePropertyName("resourcePolicies"u8);
                 writer.WriteStartArray();
-                foreach (ResourcePolicy item in ResourcePolicies)
+                foreach (DevCenterResourcePolicy item in ResourcePolicies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            IList<ResourcePolicy> resourcePolicies = default;
+            IList<DevCenterResourcePolicy> resourcePolicies = default;
             IList<string> scopes = default;
-            ConfigurationPolicies configurationPolicies = default;
+            DevCenterConfigurationPolicies configurationPolicies = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    List<ResourcePolicy> array = new List<ResourcePolicy>();
+                    List<DevCenterResourcePolicy> array = new List<DevCenterResourcePolicy>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourcePolicy.DeserializeResourcePolicy(item, options));
+                        array.Add(DevCenterResourcePolicy.DeserializeDevCenterResourcePolicy(item, options));
                     }
                     resourcePolicies = array;
                     continue;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    configurationPolicies = ConfigurationPolicies.DeserializeConfigurationPolicies(prop.Value, options);
+                    configurationPolicies = DevCenterConfigurationPolicies.DeserializeDevCenterConfigurationPolicies(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectPolicyUpdateProperties(resourcePolicies ?? new ChangeTrackingList<ResourcePolicy>(), scopes ?? new ChangeTrackingList<string>(), configurationPolicies, additionalBinaryDataProperties);
+            return new ProjectPolicyUpdateProperties(resourcePolicies ?? new ChangeTrackingList<DevCenterResourcePolicy>(), scopes ?? new ChangeTrackingList<string>(), configurationPolicies, additionalBinaryDataProperties);
         }
     }
 }

@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SyncErrorDetails>> GetSyncErrorDetailsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterSyncErrorDetails>> GetSyncErrorDetailsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _projectCatalogsClientDiagnostics.CreateScope("ProjectCatalogResource.GetSyncErrorDetails");
             scope.Start();
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.DevCenter
                 };
                 HttpMessage message = _projectCatalogsRestClient.CreateGetSyncErrorDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SyncErrorDetails> response = Response.FromValue(SyncErrorDetails.FromResponse(result), result);
+                Response<DevCenterSyncErrorDetails> response = Response.FromValue(DevCenterSyncErrorDetails.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SyncErrorDetails> GetSyncErrorDetails(CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterSyncErrorDetails> GetSyncErrorDetails(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _projectCatalogsClientDiagnostics.CreateScope("ProjectCatalogResource.GetSyncErrorDetails");
             scope.Start();
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.DevCenter
                 };
                 HttpMessage message = _projectCatalogsRestClient.CreateGetSyncErrorDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SyncErrorDetails> response = Response.FromValue(SyncErrorDetails.FromResponse(result), result);
+                Response<DevCenterSyncErrorDetails> response = Response.FromValue(DevCenterSyncErrorDetails.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

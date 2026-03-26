@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            CustomerManagedKeyEncryption customerManagedKeyEncryption = default;
+            DevCenterCustomerManagedKeyEncryption customerManagedKeyEncryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    customerManagedKeyEncryption = CustomerManagedKeyEncryption.DeserializeCustomerManagedKeyEncryption(prop.Value, options);
+                    customerManagedKeyEncryption = DevCenterCustomerManagedKeyEncryption.DeserializeDevCenterCustomerManagedKeyEncryption(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

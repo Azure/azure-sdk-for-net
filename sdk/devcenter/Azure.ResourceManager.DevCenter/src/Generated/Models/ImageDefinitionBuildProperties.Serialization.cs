@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                 return null;
             }
             DevCenterImageReference imageReference = default;
-            ImageDefinitionBuildStatus? status = default;
+            DevCenterImageDefinitionBuildStatus? status = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            ImageCreationErrorDetails errorDetails = default;
+            DevCenterImageCreationErrorDetails errorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    status = new ImageDefinitionBuildStatus(prop.Value.GetString());
+                    status = new DevCenterImageDefinitionBuildStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    errorDetails = ImageCreationErrorDetails.DeserializeImageCreationErrorDetails(prop.Value, options);
+                    errorDetails = DevCenterImageCreationErrorDetails.DeserializeDevCenterImageCreationErrorDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

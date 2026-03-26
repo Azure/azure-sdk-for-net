@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             DevCenterGitCatalog gitHub = default;
             DevCenterGitCatalog adoGit = default;
-            CatalogSyncType? syncType = default;
-            CatalogAutoImageBuildEnableStatus? autoImageBuildEnableStatus = default;
+            DevCenterCatalogSyncType? syncType = default;
+            DevCenterCatalogAutoImageBuildEnableStatus? autoImageBuildEnableStatus = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DevCenterProvisioningState? provisioningState = default;
             DevCenterCatalogSyncState? syncState = default;
-            SyncStats lastSyncStats = default;
-            CatalogConnectionState? connectionState = default;
+            DevCenterSyncStats lastSyncStats = default;
+            DevCenterCatalogConnectionState? connectionState = default;
             DateTimeOffset? lastConnectionOn = default;
             DateTimeOffset? lastSyncOn = default;
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    syncType = new CatalogSyncType(prop.Value.GetString());
+                    syncType = new DevCenterCatalogSyncType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("autoImageBuildEnableStatus"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    autoImageBuildEnableStatus = new CatalogAutoImageBuildEnableStatus(prop.Value.GetString());
+                    autoImageBuildEnableStatus = new DevCenterCatalogAutoImageBuildEnableStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    lastSyncStats = SyncStats.DeserializeSyncStats(prop.Value, options);
+                    lastSyncStats = DevCenterSyncStats.DeserializeDevCenterSyncStats(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("connectionState"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    connectionState = new CatalogConnectionState(prop.Value.GetString());
+                    connectionState = new DevCenterCatalogConnectionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("lastConnectionTime"u8))

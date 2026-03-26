@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="autoImageBuildEnableStatus"> Indicates whether the catalog is configured to automatically build image definitions. Defaults to enabled. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CatalogUpdateProperties(DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, CatalogSyncType? syncType, CatalogAutoImageBuildEnableStatus? autoImageBuildEnableStatus, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CatalogUpdateProperties(DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, DevCenterCatalogSyncType? syncType, DevCenterCatalogAutoImageBuildEnableStatus? autoImageBuildEnableStatus, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GitHub = gitHub;
             AdoGit = adoGit;
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         public DevCenterGitCatalog AdoGit { get; set; }
 
         /// <summary> Indicates the type of sync that is configured for the catalog. </summary>
-        public CatalogSyncType? SyncType { get; set; }
+        public DevCenterCatalogSyncType? SyncType { get; set; }
 
         /// <summary> Indicates whether the catalog is configured to automatically build image definitions. Defaults to enabled. </summary>
-        public CatalogAutoImageBuildEnableStatus? AutoImageBuildEnableStatus { get; set; }
+        public DevCenterCatalogAutoImageBuildEnableStatus? AutoImageBuildEnableStatus { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; } = new ChangeTrackingDictionary<string, string>();

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            WorkspaceStorageMode? workspaceStorageMode = default;
+            DevCenterWorkspaceStorageMode? workspaceStorageMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    workspaceStorageMode = new WorkspaceStorageMode(prop.Value.GetString());
+                    workspaceStorageMode = new DevCenterWorkspaceStorageMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

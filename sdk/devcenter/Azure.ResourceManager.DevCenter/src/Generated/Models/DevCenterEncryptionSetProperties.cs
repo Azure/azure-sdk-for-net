@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="keyEncryptionKeyIdentity"> The managed identity configuration used for key vault access. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal DevCenterEncryptionSetProperties(DevboxDisksEncryptionEnableStatus? devboxDisksEncryptionEnableStatus, Uri keyEncryptionKeyUri, DevCenterKeyEncryptionKeyIdentity keyEncryptionKeyIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties, DevCenterProvisioningState? provisioningState) : base(devboxDisksEncryptionEnableStatus, keyEncryptionKeyUri, keyEncryptionKeyIdentity, additionalBinaryDataProperties)
+        internal DevCenterEncryptionSetProperties(DevCenterDevboxDisksEncryptionEnableStatus? devboxDisksEncryptionEnableStatus, Uri keyEncryptionKeyUri, DevCenterKeyEncryptionKeyIdentity keyEncryptionKeyIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties, DevCenterProvisioningState? provisioningState) : base(devboxDisksEncryptionEnableStatus, keyEncryptionKeyUri, keyEncryptionKeyIdentity, additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
         }

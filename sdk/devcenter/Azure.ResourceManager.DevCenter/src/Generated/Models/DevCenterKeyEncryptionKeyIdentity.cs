@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="type"> The type of managed identity to use for key vault access. </param>
         /// <param name="userAssignedIdentityResourceId"> For system assigned identity, this will be null. For user assigned identity, this should be the resource ID of the identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterKeyEncryptionKeyIdentity(CmkIdentityType? @type, string userAssignedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterKeyEncryptionKeyIdentity(DevCenterCmkIdentityType? @type, string userAssignedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             UserAssignedIdentityResourceId = userAssignedIdentityResourceId;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> The type of managed identity to use for key vault access. </summary>
-        public CmkIdentityType? Type { get; set; }
+        public DevCenterCmkIdentityType? Type { get; set; }
 
         /// <summary> For system assigned identity, this will be null. For user assigned identity, this should be the resource ID of the identity. </summary>
         public string UserAssignedIdentityResourceId { get; set; }

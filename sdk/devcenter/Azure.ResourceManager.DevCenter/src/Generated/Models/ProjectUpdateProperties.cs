@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="ProjectUpdateProperties"/>. </summary>
         public ProjectUpdateProperties()
         {
-            AssignedGroups = new ChangeTrackingList<AssignedGroup>();
+            AssignedGroups = new ChangeTrackingList<DevCenterAssignedGroup>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProjectUpdateProperties"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="workspaceStorageSettings"> Settings to be used for workspace storage. </param>
         /// <param name="assignedGroups"> List of Entra ID group assignments associated with this project. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectUpdateProperties(ResourceIdentifier devCenterId, string description, int? maxDevBoxesPerUser, string displayName, ProjectCatalogSettings catalogSettings, ProjectCustomizationSettings customizationSettings, DevBoxScheduleDeleteSettings devBoxScheduleDeleteSettings, AzureAiServicesSettings azureAiServicesSettings, ServerlessGpuSessionsSettings serverlessGpuSessionsSettings, WorkspaceStorageSettings workspaceStorageSettings, IList<AssignedGroup> assignedGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectUpdateProperties(ResourceIdentifier devCenterId, string description, int? maxDevBoxesPerUser, string displayName, ProjectCatalogSettings catalogSettings, DevCenterProjectCustomizationSettings customizationSettings, DevCenterDevBoxScheduleDeleteSettings devBoxScheduleDeleteSettings, AzureAiServicesSettings azureAiServicesSettings, DevCenterServerlessGpuSessionsSettings serverlessGpuSessionsSettings, WorkspaceStorageSettings workspaceStorageSettings, IList<DevCenterAssignedGroup> assignedGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DevCenterId = devCenterId;
             Description = description;
@@ -69,25 +69,25 @@ namespace Azure.ResourceManager.DevCenter.Models
         internal ProjectCatalogSettings CatalogSettings { get; set; }
 
         /// <summary> Settings to be used for customizations. </summary>
-        public ProjectCustomizationSettings CustomizationSettings { get; set; }
+        public DevCenterProjectCustomizationSettings CustomizationSettings { get; set; }
 
         /// <summary> Dev Box Schedule Delete settings. </summary>
-        public DevBoxScheduleDeleteSettings DevBoxScheduleDeleteSettings { get; set; }
+        public DevCenterDevBoxScheduleDeleteSettings DevBoxScheduleDeleteSettings { get; set; }
 
         /// <summary> Indicates whether Azure AI services are enabled for a project. </summary>
         internal AzureAiServicesSettings AzureAiServicesSettings { get; set; }
 
         /// <summary> Settings to be used for serverless GPU. </summary>
-        public ServerlessGpuSessionsSettings ServerlessGpuSessionsSettings { get; set; }
+        public DevCenterServerlessGpuSessionsSettings ServerlessGpuSessionsSettings { get; set; }
 
         /// <summary> Settings to be used for workspace storage. </summary>
         internal WorkspaceStorageSettings WorkspaceStorageSettings { get; set; }
 
         /// <summary> List of Entra ID group assignments associated with this project. </summary>
-        public IList<AssignedGroup> AssignedGroups { get; } = new ChangeTrackingList<AssignedGroup>();
+        public IList<DevCenterAssignedGroup> AssignedGroups { get; } = new ChangeTrackingList<DevCenterAssignedGroup>();
 
         /// <summary> Indicates catalog item types that can be synced. </summary>
-        public IList<CatalogItemType> CatalogItemSyncTypes
+        public IList<DevCenterCatalogItemType> CatalogItemSyncTypes
         {
             get
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Indicates whether workspace storage is enabled. </summary>
-        public WorkspaceStorageMode? WorkspaceStorageMode
+        public DevCenterWorkspaceStorageMode? WorkspaceStorageMode
         {
             get
             {

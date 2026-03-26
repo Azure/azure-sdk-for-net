@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="activeHoursConfiguration"> Active hours configuration settings for Dev Boxes created in this pool. </param>
         /// <param name="devBoxTunnelEnableStatus"> Indicates whether Dev Box Tunnel is enabled for a the pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PoolUpdateProperties(PoolDevBoxDefinitionType? devBoxDefinitionType, string devBoxDefinitionName, DevCenterPoolDevBoxDefinitionDetail devBoxDefinition, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, StopOnNoConnectConfiguration stopOnNoConnect, SingleSignOnStatus? singleSignOnStatus, string displayName, VirtualNetworkType? virtualNetworkType, IList<string> managedVirtualNetworkRegions, ActiveHoursConfiguration activeHoursConfiguration, DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PoolUpdateProperties(DevCenterPoolDevBoxDefinitionType? devBoxDefinitionType, string devBoxDefinitionName, DevCenterPoolDevBoxDefinitionDetail devBoxDefinition, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, DevCenterStopOnNoConnectConfiguration stopOnNoConnect, DevCenterSingleSignOnStatus? singleSignOnStatus, string displayName, DevCenterVirtualNetworkType? virtualNetworkType, IList<string> managedVirtualNetworkRegions, DevCenterActiveHoursConfiguration activeHoursConfiguration, DevCenterDevBoxTunnelEnableStatus? devBoxTunnelEnableStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DevBoxDefinitionType = devBoxDefinitionType;
             DevBoxDefinitionName = devBoxDefinitionName;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Indicates if the pool is created from an existing Dev Box Definition or if one is provided directly. </summary>
-        public PoolDevBoxDefinitionType? DevBoxDefinitionType { get; set; }
+        public DevCenterPoolDevBoxDefinitionType? DevBoxDefinitionType { get; set; }
 
         /// <summary> Name of a Dev Box definition in parent Project of this Pool. Will be ignored if devBoxDefinitionType is Value. </summary>
         public string DevBoxDefinitionName { get; set; }
@@ -80,24 +80,24 @@ namespace Azure.ResourceManager.DevCenter.Models
         public StopOnDisconnectConfiguration StopOnDisconnect { get; set; }
 
         /// <summary> Stop on no connect configuration settings for Dev Boxes created in this pool. </summary>
-        public StopOnNoConnectConfiguration StopOnNoConnect { get; set; }
+        public DevCenterStopOnNoConnectConfiguration StopOnNoConnect { get; set; }
 
         /// <summary> Indicates whether Dev Boxes in this pool are created with single sign on enabled. The also requires that single sign on be enabled on the tenant. </summary>
-        public SingleSignOnStatus? SingleSignOnStatus { get; set; }
+        public DevCenterSingleSignOnStatus? SingleSignOnStatus { get; set; }
 
         /// <summary> The display name of the pool. </summary>
         public string DisplayName { get; set; }
 
         /// <summary> Indicates whether the pool uses a Virtual Network managed by Microsoft or a customer provided network. </summary>
-        public VirtualNetworkType? VirtualNetworkType { get; set; }
+        public DevCenterVirtualNetworkType? VirtualNetworkType { get; set; }
 
         /// <summary> The regions of the managed virtual network (required when managedNetworkType is Managed). </summary>
         public IList<string> ManagedVirtualNetworkRegions { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Active hours configuration settings for Dev Boxes created in this pool. </summary>
-        public ActiveHoursConfiguration ActiveHoursConfiguration { get; set; }
+        public DevCenterActiveHoursConfiguration ActiveHoursConfiguration { get; set; }
 
         /// <summary> Indicates whether Dev Box Tunnel is enabled for a the pool. </summary>
-        public DevBoxTunnelEnableStatus? DevBoxTunnelEnableStatus { get; set; }
+        public DevCenterDevBoxTunnelEnableStatus? DevBoxTunnelEnableStatus { get; set; }
     }
 }

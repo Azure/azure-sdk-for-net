@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevCenter
         internal CustomizationTaskProperties Properties { get; }
 
         /// <summary> Inputs to the task. </summary>
-        public IReadOnlyDictionary<string, CustomizationTaskInput> Inputs
+        public IReadOnlyDictionary<string, DevCenterCustomizationTaskInput> Inputs
         {
             get
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Validation status for the Task. </summary>
-        public CatalogResourceValidationStatus? ValidationStatus
+        public DevCenterCatalogResourceValidationStatus? ValidationStatus
         {
             get
             {

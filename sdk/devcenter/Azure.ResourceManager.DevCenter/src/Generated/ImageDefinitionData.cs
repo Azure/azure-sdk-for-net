@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Details about the latest build. </summary>
-        public LatestImageBuild LatestBuild
+        public DevCenterLatestImageBuild LatestBuild
         {
             get
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Validation status for the Image Definition. </summary>
-        public CatalogResourceValidationStatus? ValidationStatus
+        public DevCenterCatalogResourceValidationStatus? ValidationStatus
         {
             get
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Indicates if automatic image builds will be triggered for image definition updates. </summary>
-        public AutoImageBuildStatus? AutoImageBuild
+        public DevCenterAutoImageBuildStatus? AutoImageBuild
         {
             get
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Tasks to run at Dev Box provisioning time. </summary>
-        public IList<CustomizationTaskInstance> Tasks
+        public IList<DevCenterCustomizationTaskInstance> Tasks
         {
             get
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Tasks to run when a user first logs into a Dev Box. </summary>
-        public IList<CustomizationTaskInstance> UserTasks
+        public IList<DevCenterCustomizationTaskInstance> UserTasks
         {
             get
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Another Image Definition that this one extends. </summary>
-        public ImageDefinitionReference Extends
+        public DevCenterImageDefinitionReference Extends
         {
             get
             {

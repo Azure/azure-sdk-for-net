@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="userAssignedIdentityResourceId"> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </param>
         /// <param name="delegatedIdentityClientId"> delegated identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity and userAssignedIdentity - internal use only. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyEncryptionKeyIdentity(KeyEncryptionKeyIdentityType? identityType, ResourceIdentifier userAssignedIdentityResourceId, Guid? delegatedIdentityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyEncryptionKeyIdentity(DevCenterKeyEncryptionKeyIdentityType? identityType, ResourceIdentifier userAssignedIdentityResourceId, Guid? delegatedIdentityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityType = identityType;
             UserAssignedIdentityResourceId = userAssignedIdentityResourceId;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> The type of identity to use. Values can be systemAssignedIdentity, userAssignedIdentity, or delegatedResourceIdentity. </summary>
-        public KeyEncryptionKeyIdentityType? IdentityType { get; set; }
+        public DevCenterKeyEncryptionKeyIdentityType? IdentityType { get; set; }
 
         /// <summary> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </summary>
         public ResourceIdentifier UserAssignedIdentityResourceId { get; set; }

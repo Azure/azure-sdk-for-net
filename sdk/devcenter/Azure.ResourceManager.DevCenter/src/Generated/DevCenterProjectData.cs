@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Settings to be used for customizations. </summary>
-        public ProjectCustomizationSettings CustomizationSettings
+        public DevCenterProjectCustomizationSettings CustomizationSettings
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Dev Box Schedule Delete settings. </summary>
-        public DevBoxScheduleDeleteSettings DevBoxScheduleDeleteSettings
+        public DevCenterDevBoxScheduleDeleteSettings DevBoxScheduleDeleteSettings
         {
             get
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Settings to be used for serverless GPU. </summary>
-        public ServerlessGpuSessionsSettings ServerlessGpuSessionsSettings
+        public DevCenterServerlessGpuSessionsSettings ServerlessGpuSessionsSettings
         {
             get
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> List of Entra ID group assignments associated with this project. </summary>
-        public IList<AssignedGroup> AssignedGroups
+        public IList<DevCenterAssignedGroup> AssignedGroups
         {
             get
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Indicates catalog item types that can be synced. </summary>
-        public IList<CatalogItemType> CatalogItemSyncTypes
+        public IList<DevCenterCatalogItemType> CatalogItemSyncTypes
         {
             get
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Indicates whether workspace storage is enabled. </summary>
-        public WorkspaceStorageMode? WorkspaceStorageMode
+        public DevCenterWorkspaceStorageMode? WorkspaceStorageMode
         {
             get
             {

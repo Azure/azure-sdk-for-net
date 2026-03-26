@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
         /// <param name="validationStatus"> Validation status for the environment definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinitionProperties(string description, IReadOnlyList<DevCenterEnvironmentDefinitionParameterInfo> parameters, string templatePath, CatalogResourceValidationStatus? validationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnvironmentDefinitionProperties(string description, IReadOnlyList<DevCenterEnvironmentDefinitionParameterInfo> parameters, string templatePath, DevCenterCatalogResourceValidationStatus? validationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Parameters = parameters;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         public string TemplatePath { get; }
 
         /// <summary> Validation status for the environment definition. </summary>
-        public CatalogResourceValidationStatus? ValidationStatus { get; }
+        public DevCenterCatalogResourceValidationStatus? ValidationStatus { get; }
     }
 }

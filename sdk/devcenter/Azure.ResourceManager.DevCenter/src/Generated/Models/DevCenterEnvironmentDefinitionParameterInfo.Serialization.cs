@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             string id = default;
             string name = default;
             string description = default;
-            ParameterType? @type = default;
+            DevCenterParameterType? @type = default;
             bool? readOnly = default;
             bool? @required = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    @type = new ParameterType(prop.Value.GetString());
+                    @type = new DevCenterParameterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("readOnly"u8))

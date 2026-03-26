@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="keyEncryptionKeyUri"> Key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </param>
         /// <param name="keyEncryptionKeyIdentity"> The managed identity configuration used for key vault access. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterEncryptionSetUpdateProperties(DevboxDisksEncryptionEnableStatus? devboxDisksEncryptionEnableStatus, Uri keyEncryptionKeyUri, DevCenterKeyEncryptionKeyIdentity keyEncryptionKeyIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterEncryptionSetUpdateProperties(DevCenterDevboxDisksEncryptionEnableStatus? devboxDisksEncryptionEnableStatus, Uri keyEncryptionKeyUri, DevCenterKeyEncryptionKeyIdentity keyEncryptionKeyIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DevboxDisksEncryptionEnableStatus = devboxDisksEncryptionEnableStatus;
             KeyEncryptionKeyUri = keyEncryptionKeyUri;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Devbox disk encryption enable or disable status. Indicates if Devbox disks encryption using DevCenter CMK is enabled or not. </summary>
-        public DevboxDisksEncryptionEnableStatus? DevboxDisksEncryptionEnableStatus { get; set; }
+        public DevCenterDevboxDisksEncryptionEnableStatus? DevboxDisksEncryptionEnableStatus { get; set; }
 
         /// <summary> Key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </summary>
         public Uri KeyEncryptionKeyUri { get; set; }

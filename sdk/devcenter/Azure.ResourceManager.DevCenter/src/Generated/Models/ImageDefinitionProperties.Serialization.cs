@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 writer.WritePropertyName("tasks"u8);
                 writer.WriteStartArray();
-                foreach (CustomizationTaskInstance item in Tasks)
+                foreach (DevCenterCustomizationTaskInstance item in Tasks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 writer.WritePropertyName("userTasks"u8);
                 writer.WriteStartArray();
-                foreach (CustomizationTaskInstance item in UserTasks)
+                foreach (DevCenterCustomizationTaskInstance item in UserTasks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -183,15 +183,15 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             DevCenterImageReference imageReference = default;
             string fileUri = default;
-            LatestImageBuild latestBuild = default;
+            DevCenterLatestImageBuild latestBuild = default;
             ImageValidationStatus? imageValidationStatus = default;
             ImageValidationErrorDetails imageValidationErrorDetails = default;
-            CatalogResourceValidationStatus? validationStatus = default;
+            DevCenterCatalogResourceValidationStatus? validationStatus = default;
             DevCenterImageReference activeImageReference = default;
-            AutoImageBuildStatus? autoImageBuild = default;
-            IList<CustomizationTaskInstance> tasks = default;
-            IList<CustomizationTaskInstance> userTasks = default;
-            ImageDefinitionReference extends = default;
+            DevCenterAutoImageBuildStatus? autoImageBuild = default;
+            IList<DevCenterCustomizationTaskInstance> tasks = default;
+            IList<DevCenterCustomizationTaskInstance> userTasks = default;
+            DevCenterImageDefinitionReference extends = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    latestBuild = LatestImageBuild.DeserializeLatestImageBuild(prop.Value, options);
+                    latestBuild = DevCenterLatestImageBuild.DeserializeDevCenterLatestImageBuild(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("imageValidationStatus"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    validationStatus = new CatalogResourceValidationStatus(prop.Value.GetString());
+                    validationStatus = new DevCenterCatalogResourceValidationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("activeImageReference"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    autoImageBuild = new AutoImageBuildStatus(prop.Value.GetString());
+                    autoImageBuild = new DevCenterAutoImageBuildStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tasks"u8))
@@ -269,10 +269,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    List<CustomizationTaskInstance> array = new List<CustomizationTaskInstance>();
+                    List<DevCenterCustomizationTaskInstance> array = new List<DevCenterCustomizationTaskInstance>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CustomizationTaskInstance.DeserializeCustomizationTaskInstance(item, options));
+                        array.Add(DevCenterCustomizationTaskInstance.DeserializeDevCenterCustomizationTaskInstance(item, options));
                     }
                     tasks = array;
                     continue;
@@ -283,10 +283,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    List<CustomizationTaskInstance> array = new List<CustomizationTaskInstance>();
+                    List<DevCenterCustomizationTaskInstance> array = new List<DevCenterCustomizationTaskInstance>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CustomizationTaskInstance.DeserializeCustomizationTaskInstance(item, options));
+                        array.Add(DevCenterCustomizationTaskInstance.DeserializeDevCenterCustomizationTaskInstance(item, options));
                     }
                     userTasks = array;
                     continue;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    extends = ImageDefinitionReference.DeserializeImageDefinitionReference(prop.Value, options);
+                    extends = DevCenterImageDefinitionReference.DeserializeDevCenterImageDefinitionReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -314,8 +314,8 @@ namespace Azure.ResourceManager.DevCenter.Models
                 validationStatus,
                 activeImageReference,
                 autoImageBuild,
-                tasks ?? new ChangeTrackingList<CustomizationTaskInstance>(),
-                userTasks ?? new ChangeTrackingList<CustomizationTaskInstance>(),
+                tasks ?? new ChangeTrackingList<DevCenterCustomizationTaskInstance>(),
+                userTasks ?? new ChangeTrackingList<DevCenterCustomizationTaskInstance>(),
                 extends,
                 additionalBinaryDataProperties);
         }

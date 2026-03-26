@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevCenterProjectCatalogSettings"/>. </summary>
         /// <param name="catalogItemSyncEnableStatus"> Whether project catalogs associated with projects in this dev center can be configured to sync catalog items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterProjectCatalogSettings(CatalogItemSyncEnableStatus? catalogItemSyncEnableStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterProjectCatalogSettings(DevCenterCatalogItemSyncEnableStatus? catalogItemSyncEnableStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CatalogItemSyncEnableStatus = catalogItemSyncEnableStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether project catalogs associated with projects in this dev center can be configured to sync catalog items. </summary>
-        public CatalogItemSyncEnableStatus? CatalogItemSyncEnableStatus { get; set; }
+        public DevCenterCatalogItemSyncEnableStatus? CatalogItemSyncEnableStatus { get; set; }
     }
 }

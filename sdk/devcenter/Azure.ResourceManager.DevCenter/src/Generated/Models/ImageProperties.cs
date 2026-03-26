@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="hibernateSupport"> Indicates whether this image has hibernate enabled. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </param>
         /// <param name="architecture"> The architecture type of the image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageProperties(string description, string publisher, string offer, string sku, RecommendedMachineConfiguration recommendedMachineConfiguration, DevCenterProvisioningState? provisioningState, DevCenterHibernateSupport? hibernateSupport, ArchitectureType? architecture, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageProperties(string description, string publisher, string offer, string sku, RecommendedMachineConfiguration recommendedMachineConfiguration, DevCenterProvisioningState? provisioningState, DevCenterHibernateSupport? hibernateSupport, DevCenterArchitectureType? architecture, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Publisher = publisher;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         public DevCenterHibernateSupport? HibernateSupport { get; }
 
         /// <summary> The architecture type of the image. </summary>
-        public ArchitectureType? Architecture { get; }
+        public DevCenterArchitectureType? Architecture { get; }
     }
 }

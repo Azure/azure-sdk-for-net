@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevCenter
         internal PoolProperties Properties { get; set; }
 
         /// <summary> Indicates if the pool is created from an existing Dev Box Definition or if one is provided directly. </summary>
-        public PoolDevBoxDefinitionType? DevBoxDefinitionType
+        public DevCenterPoolDevBoxDefinitionType? DevBoxDefinitionType
         {
             get
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Stop on no connect configuration settings for Dev Boxes created in this pool. </summary>
-        public StopOnNoConnectConfiguration StopOnNoConnect
+        public DevCenterStopOnNoConnectConfiguration StopOnNoConnect
         {
             get
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Indicates whether Dev Boxes in this pool are created with single sign on enabled. The also requires that single sign on be enabled on the tenant. </summary>
-        public SingleSignOnStatus? SingleSignOnStatus
+        public DevCenterSingleSignOnStatus? SingleSignOnStatus
         {
             get
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Indicates whether the pool uses a Virtual Network managed by Microsoft or a customer provided network. </summary>
-        public VirtualNetworkType? VirtualNetworkType
+        public DevCenterVirtualNetworkType? VirtualNetworkType
         {
             get
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Active hours configuration settings for Dev Boxes created in this pool. </summary>
-        public ActiveHoursConfiguration ActiveHoursConfiguration
+        public DevCenterActiveHoursConfiguration ActiveHoursConfiguration
         {
             get
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Indicates whether Dev Box Tunnel is enabled for a the pool. </summary>
-        public DevBoxTunnelEnableStatus? DevBoxTunnelEnableStatus
+        public DevCenterDevBoxTunnelEnableStatus? DevBoxTunnelEnableStatus
         {
             get
             {

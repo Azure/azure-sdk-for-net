@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Indicates the type of sync that is configured for the catalog. </summary>
-        public CatalogSyncType? SyncType
+        public DevCenterCatalogSyncType? SyncType
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Indicates whether the catalog is configured to automatically build image definitions. Defaults to enabled. </summary>
-        public CatalogAutoImageBuildEnableStatus? AutoImageBuildEnableStatus
+        public DevCenterCatalogAutoImageBuildEnableStatus? AutoImageBuildEnableStatus
         {
             get
             {

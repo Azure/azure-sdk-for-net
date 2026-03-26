@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Indicates the type of sync that is configured for the catalog. </summary>
-        public CatalogSyncType? SyncType
+        public DevCenterCatalogSyncType? SyncType
         {
             get
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Indicates whether the catalog is configured to automatically build image definitions. Defaults to enabled. </summary>
-        public CatalogAutoImageBuildEnableStatus? AutoImageBuildEnableStatus
+        public DevCenterCatalogAutoImageBuildEnableStatus? AutoImageBuildEnableStatus
         {
             get
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Stats of the latest synchronization. </summary>
-        public SyncStats LastSyncStats
+        public DevCenterSyncStats LastSyncStats
         {
             get
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> The connection state of the catalog. </summary>
-        public CatalogConnectionState? ConnectionState
+        public DevCenterCatalogConnectionState? ConnectionState
         {
             get
             {

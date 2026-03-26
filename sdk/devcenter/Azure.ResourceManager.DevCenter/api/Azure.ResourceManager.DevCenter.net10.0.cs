@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.DevCenter
     public partial class CustomizationTaskData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.CustomizationTaskData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.CustomizationTaskData>
     {
         internal CustomizationTaskData() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DevCenter.Models.CustomizationTaskInput> Inputs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInput> Inputs { get { throw null; } }
         public int? Timeout { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus? ValidationStatus { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus? ValidationStatus { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.DevCenter
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, string taskName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.CustomizationTaskResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.CustomizationTaskResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails> GetErrorDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails> GetErrorDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.DevCenter.CustomizationTaskData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.CustomizationTaskData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.CustomizationTaskData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevCenter.CustomizationTaskData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.CustomizationTaskData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DevCenter
         public string OSStorageType { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterSku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus? ValidationStatus { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus? ValidationStatus { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -238,15 +238,15 @@ namespace Azure.ResourceManager.DevCenter
     {
         public DevCenterCatalogData() { }
         public Azure.ResourceManager.DevCenter.Models.DevCenterGitCatalog AdoGit { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.CatalogAutoImageBuildEnableStatus? AutoImageBuildEnableStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.CatalogConnectionState? ConnectionState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCatalogAutoImageBuildEnableStatus? AutoImageBuildEnableStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConnectionState? ConnectionState { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterGitCatalog GitHub { get { throw null; } set { } }
         public System.DateTimeOffset? LastConnectionOn { get { throw null; } }
         public System.DateTimeOffset? LastSyncOn { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.SyncStats LastSyncStats { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterSyncStats LastSyncStats { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState? SyncState { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.CatalogSyncType? SyncType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncType? SyncType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -284,8 +284,8 @@ namespace Azure.ResourceManager.DevCenter
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, string imageDefinitionName, string buildName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.DevCenterCatalogImageDefinitionBuildResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.DevCenterCatalogImageDefinitionBuildResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildDetails> GetBuildDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildDetails>> GetBuildDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildDetails> GetBuildDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildDetails>> GetBuildDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.DevCenter.ImageDefinitionBuildData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.ImageDefinitionBuildData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.ImageDefinitionBuildData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevCenter.ImageDefinitionBuildData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.ImageDefinitionBuildData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -321,8 +321,8 @@ namespace Azure.ResourceManager.DevCenter
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.DevCenterCatalogImageDefinitionBuildResource> GetDevCenterCatalogImageDefinitionBuild(string buildName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.DevCenterCatalogImageDefinitionBuildResource>> GetDevCenterCatalogImageDefinitionBuildAsync(string buildName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DevCenter.DevCenterCatalogImageDefinitionBuildCollection GetDevCenterCatalogImageDefinitionBuilds() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails> GetErrorDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails> GetErrorDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.DevCenter.ImageDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.ImageDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.ImageDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevCenter.ImageDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.ImageDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -351,8 +351,8 @@ namespace Azure.ResourceManager.DevCenter
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.EnvironmentDefinitionOperationGroupResource> GetEnvironmentDefinitionOperationGroup(string environmentDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.EnvironmentDefinitionOperationGroupResource>> GetEnvironmentDefinitionOperationGroupAsync(string environmentDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DevCenter.EnvironmentDefinitionOperationGroupCollection GetEnvironmentDefinitionOperationGroups() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.SyncErrorDetails> GetSyncErrorDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.SyncErrorDetails>> GetSyncErrorDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails> GetSyncErrorDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails>> GetSyncErrorDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Sync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SyncAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.DevCenter.DevCenterCatalogData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.DevCenterCatalogData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -383,13 +383,13 @@ namespace Azure.ResourceManager.DevCenter
     public partial class DevCenterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.DevCenterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.DevCenterData>
     {
         public DevCenterData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus? CatalogItemSyncEnableStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption CustomerManagedKeyEncryption { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus? DevBoxProvisioningInstallAzureMonitorAgentEnableStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus? CatalogItemSyncEnableStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption CustomerManagedKeyEncryption { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus? DevBoxProvisioningInstallAzureMonitorAgentEnableStatus { get { throw null; } set { } }
         public System.Uri DevCenterUri { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus? MicrosoftHostedNetworkEnableStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus? MicrosoftHostedNetworkEnableStatus { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.DevCenter
     public partial class DevCenterEncryptionSetData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.DevCenterEncryptionSetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.DevCenterEncryptionSetData>
     {
         public DevCenterEncryptionSetData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus? DevboxDisksEncryptionEnableStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus? DevboxDisksEncryptionEnableStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get { throw null; } set { } }
         public System.Uri KeyEncryptionKeyUri { get { throw null; } set { } }
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.DevCenter
     public partial class DevCenterImageData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.DevCenterImageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.DevCenterImageData>
     {
         public DevCenterImageData() { }
-        public Azure.ResourceManager.DevCenter.Models.ArchitectureType? Architecture { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterArchitectureType? Architecture { get { throw null; } }
         public string Description { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport? HibernateSupport { get { throw null; } }
         public string Offer { get { throw null; } }
@@ -806,12 +806,12 @@ namespace Azure.ResourceManager.DevCenter
     public partial class DevCenterPoolData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.DevCenterPoolData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.DevCenterPoolData>
     {
         public DevCenterPoolData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration ActiveHoursConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration ActiveHoursConfiguration { get { throw null; } set { } }
         public int? DevBoxCount { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionDetail DevBoxDefinition { get { throw null; } set { } }
         public string DevBoxDefinitionName { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType? DevBoxDefinitionType { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus? DevBoxTunnelEnableStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType? DevBoxDefinitionType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus? DevBoxTunnelEnableStatus { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus? HealthStatus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatusDetail> HealthStatusDetails { get { throw null; } }
@@ -820,10 +820,10 @@ namespace Azure.ResourceManager.DevCenter
         public System.Collections.Generic.IList<string> ManagedVirtualNetworkRegions { get { throw null; } }
         public string NetworkConnectionName { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus? SingleSignOnStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus? SingleSignOnStatus { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.StopOnDisconnectConfiguration StopOnDisconnect { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration StopOnNoConnect { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.VirtualNetworkType? VirtualNetworkType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration StopOnNoConnect { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType? VirtualNetworkType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -886,20 +886,20 @@ namespace Azure.ResourceManager.DevCenter
     public partial class DevCenterProjectData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.DevCenterProjectData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.DevCenterProjectData>
     {
         public DevCenterProjectData(Azure.Core.AzureLocation location) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.AssignedGroup> AssignedGroups { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup> AssignedGroups { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.AzureAiServicesMode? AzureAiServicesMode { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.CatalogItemType> CatalogItemSyncTypes { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings CustomizationSettings { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType> CatalogItemSyncTypes { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings CustomizationSettings { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings DevBoxScheduleDeleteSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings DevBoxScheduleDeleteSettings { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DevCenterId { get { throw null; } set { } }
         public System.Uri DevCenterUri { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public int? MaxDevBoxesPerUser { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings ServerlessGpuSessionsSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode? WorkspaceStorageMode { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings ServerlessGpuSessionsSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode? WorkspaceStorageMode { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1000,8 +1000,8 @@ namespace Azure.ResourceManager.DevCenter
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.DevCenterProjectEnvironmentResource> GetDevCenterProjectEnvironment(string environmentTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.DevCenterProjectEnvironmentResource>> GetDevCenterProjectEnvironmentAsync(string environmentTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DevCenter.DevCenterProjectEnvironmentCollection GetDevCenterProjectEnvironments() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.InheritedSettingsForProject> GetInheritedSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.InheritedSettingsForProject>> GetInheritedSettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedSettingsForProject> GetInheritedSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedSettingsForProject>> GetInheritedSettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.ProjectAttachedNetworkConnectionResource> GetProjectAttachedNetworkConnection(string attachedNetworkConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.ProjectAttachedNetworkConnectionResource>> GetProjectAttachedNetworkConnectionAsync(string attachedNetworkConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DevCenter.ProjectAttachedNetworkConnectionCollection GetProjectAttachedNetworkConnections() { throw null; }
@@ -1157,7 +1157,7 @@ namespace Azure.ResourceManager.DevCenter
         public string Description { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentDefinitionParameterInfo> Parameters { get { throw null; } }
         public string TemplatePath { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus? ValidationStatus { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus? ValidationStatus { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1192,8 +1192,8 @@ namespace Azure.ResourceManager.DevCenter
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string devCenterName, string catalogName, string environmentDefinitionName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.EnvironmentDefinitionOperationGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.EnvironmentDefinitionOperationGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails> GetErrorDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails> GetErrorDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.DevCenter.EnvironmentDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.EnvironmentDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.EnvironmentDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevCenter.EnvironmentDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.EnvironmentDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1209,8 +1209,8 @@ namespace Azure.ResourceManager.DevCenter
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string catalogName, string environmentDefinitionName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.EnvironmentDefinitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.EnvironmentDefinitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails> GetErrorDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails> GetErrorDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.DevCenter.EnvironmentDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.EnvironmentDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.EnvironmentDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevCenter.EnvironmentDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.EnvironmentDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1252,10 +1252,10 @@ namespace Azure.ResourceManager.DevCenter
     {
         internal ImageDefinitionBuildData() { }
         public System.DateTimeOffset? EndOn { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails ErrorDetails { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails ErrorDetails { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterImageReference ImageReference { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus? Status { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1270,16 +1270,16 @@ namespace Azure.ResourceManager.DevCenter
     {
         internal ImageDefinitionData() { }
         public Azure.ResourceManager.DevCenter.Models.DevCenterImageReference ActiveImageReference { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.AutoImageBuildStatus? AutoImageBuild { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.ImageDefinitionReference Extends { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterAutoImageBuildStatus? AutoImageBuild { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionReference Extends { get { throw null; } }
         public string FileUri { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterImageReference ImageReference { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.ImageValidationErrorDetails ImageValidationErrorDetails { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.ImageValidationStatus? ImageValidationStatus { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.LatestImageBuild LatestBuild { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance> Tasks { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance> UserTasks { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus? ValidationStatus { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterLatestImageBuild LatestBuild { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance> Tasks { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance> UserTasks { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus? ValidationStatus { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1441,8 +1441,8 @@ namespace Azure.ResourceManager.DevCenter
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string catalogName, string imageDefinitionName, string buildName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.ProjectCatalogImageDefinitionBuildResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.ProjectCatalogImageDefinitionBuildResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildDetails> GetBuildDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildDetails>> GetBuildDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildDetails> GetBuildDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildDetails>> GetBuildDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.DevCenter.ImageDefinitionBuildData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.ImageDefinitionBuildData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.ImageDefinitionBuildData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevCenter.ImageDefinitionBuildData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.ImageDefinitionBuildData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1475,8 +1475,8 @@ namespace Azure.ResourceManager.DevCenter
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string catalogName, string imageDefinitionName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.ProjectCatalogImageDefinitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.ProjectCatalogImageDefinitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails> GetErrorDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails> GetErrorDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails>> GetErrorDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.ProjectCatalogImageDefinitionBuildResource> GetProjectCatalogImageDefinitionBuild(string buildName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.ProjectCatalogImageDefinitionBuildResource>> GetProjectCatalogImageDefinitionBuildAsync(string buildName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DevCenter.ProjectCatalogImageDefinitionBuildCollection GetProjectCatalogImageDefinitionBuilds() { throw null; }
@@ -1505,8 +1505,8 @@ namespace Azure.ResourceManager.DevCenter
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.ProjectCatalogImageDefinitionResource> GetProjectCatalogImageDefinition(string imageDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.ProjectCatalogImageDefinitionResource>> GetProjectCatalogImageDefinitionAsync(string imageDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DevCenter.ProjectCatalogImageDefinitionCollection GetProjectCatalogImageDefinitions() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.SyncErrorDetails> GetSyncErrorDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.SyncErrorDetails>> GetSyncErrorDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails> GetSyncErrorDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails>> GetSyncErrorDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Sync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SyncAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.DevCenter.DevCenterCatalogData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.DevCenterCatalogData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1567,9 +1567,9 @@ namespace Azure.ResourceManager.DevCenter
     public partial class ProjectPolicyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.ProjectPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.ProjectPolicyData>
     {
         public ProjectPolicyData() { }
-        public Azure.ResourceManager.DevCenter.Models.ConfigurationPolicies ConfigurationPolicies { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterConfigurationPolicies ConfigurationPolicies { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.ResourcePolicy> ResourcePolicies { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterResourcePolicy> ResourcePolicies { get { throw null; } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1672,192 +1672,90 @@ namespace Azure.ResourceManager.DevCenter.Mocking
 }
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class ActiveHoursConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration>
-    {
-        public ActiveHoursConfiguration() { }
-        public Azure.ResourceManager.DevCenter.Models.AutoStartEnableStatus? AutoStartEnableStatus { get { throw null; } set { } }
-        public int? DaysOfWeekLimit { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DayOfWeek> DefaultDaysOfWeek { get { throw null; } }
-        public int? DefaultEndTimeHour { get { throw null; } set { } }
-        public int? DefaultStartTimeHour { get { throw null; } set { } }
-        public string DefaultTimeZone { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.KeepAwakeEnableStatus? KeepAwakeEnableStatus { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ArchitectureType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.ArchitectureType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ArchitectureType(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ArchitectureType Arm64 { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.ArchitectureType X64 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.ArchitectureType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.ArchitectureType left, Azure.ResourceManager.DevCenter.Models.ArchitectureType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.ArchitectureType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.ArchitectureType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.ArchitectureType left, Azure.ResourceManager.DevCenter.Models.ArchitectureType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public static partial class ArmDevCenterModelFactory
     {
-        public static Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration ActiveHoursConfiguration(Azure.ResourceManager.DevCenter.Models.KeepAwakeEnableStatus? keepAwakeEnableStatus = default(Azure.ResourceManager.DevCenter.Models.KeepAwakeEnableStatus?), Azure.ResourceManager.DevCenter.Models.AutoStartEnableStatus? autoStartEnableStatus = default(Azure.ResourceManager.DevCenter.Models.AutoStartEnableStatus?), string defaultTimeZone = null, int? defaultStartTimeHour = default(int?), int? defaultEndTimeHour = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DayOfWeek> defaultDaysOfWeek = null, int? daysOfWeekLimit = default(int?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeData AllowedEnvironmentTypeData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeData AllowedEnvironmentTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), string displayName = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.AttachedNetworkConnectionData AttachedNetworkConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.Core.ResourceIdentifier networkConnectionId = null, Azure.Core.AzureLocation? networkConnectionLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus? healthCheckStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus?), Azure.ResourceManager.DevCenter.Models.DomainJoinType? domainJoinType = default(Azure.ResourceManager.DevCenter.Models.DomainJoinType?)) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogConflictError CatalogConflictError(string path = null, string name = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails CatalogErrorDetails(string code = null, string message = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails CatalogResourceValidationErrorDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails> errors = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogSyncError CatalogSyncError(string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails> errorDetails = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.CustomizationTaskData CustomizationTaskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DevCenter.Models.CustomizationTaskInput> inputs = null, int? timeout = default(int?), Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus? validationStatus = default(Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus?)) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CustomizationTaskInput CustomizationTaskInput(string description = null, Azure.ResourceManager.DevCenter.Models.CustomizationTaskInputType? type = default(Azure.ResourceManager.DevCenter.Models.CustomizationTaskInputType?), bool? required = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance CustomizationTaskInstance(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem> parameters = null, string displayName = null, int? timeoutInSeconds = default(int?), string condition = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem DefinitionParametersItem(string name = null, string value = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.CustomizationTaskData CustomizationTaskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInput> inputs = null, int? timeout = default(int?), Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus? validationStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevBoxDefinitionData DevBoxDefinitionData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.DevCenter.Models.DevCenterImageReference imageReference, Azure.ResourceManager.DevCenter.Models.DevCenterSku sku, string osStorageType, Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport? hibernateSupport, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState, Azure.ResourceManager.DevCenter.Models.ImageValidationStatus? imageValidationStatus, Azure.ResourceManager.DevCenter.Models.ImageValidationErrorDetails imageValidationErrorDetails, Azure.ResourceManager.DevCenter.Models.DevCenterImageReference activeImageReference) { throw null; }
-        public static Azure.ResourceManager.DevCenter.DevBoxDefinitionData DevBoxDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevCenter.Models.DevCenterImageReference imageReference = null, Azure.ResourceManager.DevCenter.Models.DevCenterSku sku = null, string osStorageType = null, Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport? hibernateSupport = default(Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport?), Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.DevCenter.Models.ImageValidationStatus? imageValidationStatus = default(Azure.ResourceManager.DevCenter.Models.ImageValidationStatus?), Azure.ResourceManager.DevCenter.Models.ImageValidationErrorDetails imageValidationErrorDetails = null, Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus? validationStatus = default(Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterImageReference activeImageReference = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevBoxDefinitionData DevBoxDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevCenter.Models.DevCenterImageReference imageReference = null, Azure.ResourceManager.DevCenter.Models.DevCenterSku sku = null, string osStorageType = null, Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport? hibernateSupport = default(Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport?), Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.DevCenter.Models.ImageValidationStatus? imageValidationStatus = default(Azure.ResourceManager.DevCenter.Models.ImageValidationStatus?), Azure.ResourceManager.DevCenter.Models.ImageValidationErrorDetails imageValidationErrorDetails = null, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus? validationStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterImageReference activeImageReference = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevBoxDefinitionPatch DevBoxDefinitionPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.DevCenter.Models.DevCenterImageReference imageReference = null, Azure.ResourceManager.DevCenter.Models.DevCenterSku sku = null, string osStorageType = null, Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport? hibernateSupport = default(Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration DevCenterActiveHoursConfiguration(Azure.ResourceManager.DevCenter.Models.DevCenterKeepAwakeEnableStatus? keepAwakeEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterKeepAwakeEnableStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterAutoStartEnableStatus? autoStartEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterAutoStartEnableStatus?), string defaultTimeZone = null, int? defaultStartTimeHour = default(int?), int? defaultEndTimeHour = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DayOfWeek> defaultDaysOfWeek = null, int? daysOfWeekLimit = default(int?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterCapability DevCenterCapability(string name = null, string value = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.DevCenterCatalogData DevCenterCatalogData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterGitCatalog gitHub = null, Azure.ResourceManager.DevCenter.Models.DevCenterGitCatalog adoGit = null, Azure.ResourceManager.DevCenter.Models.CatalogSyncType? syncType = default(Azure.ResourceManager.DevCenter.Models.CatalogSyncType?), Azure.ResourceManager.DevCenter.Models.CatalogAutoImageBuildEnableStatus? autoImageBuildEnableStatus = default(Azure.ResourceManager.DevCenter.Models.CatalogAutoImageBuildEnableStatus?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState? syncState = default(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState?), Azure.ResourceManager.DevCenter.Models.SyncStats lastSyncStats = null, Azure.ResourceManager.DevCenter.Models.CatalogConnectionState? connectionState = default(Azure.ResourceManager.DevCenter.Models.CatalogConnectionState?), System.DateTimeOffset? lastConnectionOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastSyncOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConflictError DevCenterCatalogConflictError(string path = null, string name = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterCatalogData DevCenterCatalogData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterGitCatalog gitHub = null, Azure.ResourceManager.DevCenter.Models.DevCenterGitCatalog adoGit = null, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncType? syncType = default(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncType?), Azure.ResourceManager.DevCenter.Models.DevCenterCatalogAutoImageBuildEnableStatus? autoImageBuildEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogAutoImageBuildEnableStatus?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState? syncState = default(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState?), Azure.ResourceManager.DevCenter.Models.DevCenterSyncStats lastSyncStats = null, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConnectionState? connectionState = default(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConnectionState?), System.DateTimeOffset? lastConnectionOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastSyncOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterCatalogData DevCenterCatalogData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.DevCenter.Models.DevCenterGitCatalog gitHub, Azure.ResourceManager.DevCenter.Models.DevCenterGitCatalog adoGit, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState? syncState, System.DateTimeOffset? lastSyncOn) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails DevCenterCatalogErrorDetails(string code = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails DevCenterCatalogResourceValidationErrorDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails> errors = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncError DevCenterCatalogSyncError(string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails> errorDetails = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInput DevCenterCustomizationTaskInput(string description = null, Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInputType? type = default(Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInputType?), bool? required = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance DevCenterCustomizationTaskInstance(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem> parameters = null, string displayName = null, int? timeoutInSeconds = default(int?), string condition = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterData DevCenterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState, System.Uri devCenterUri) { throw null; }
-        public static Azure.ResourceManager.DevCenter.DevCenterData DevCenterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string displayName = null, Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption customerManagedKeyEncryption = null, Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus? catalogItemSyncEnableStatus = default(Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus?), Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus? microsoftHostedNetworkEnableStatus = default(Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus?), Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus? devBoxProvisioningInstallAzureMonitorAgentEnableStatus = default(Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), System.Uri devCenterUri = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.DevCenterEncryptionSetData DevCenterEncryptionSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus? devboxDisksEncryptionEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus?), System.Uri keyEncryptionKeyUri = null, Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.DevCenterEncryptionSetPatch DevCenterEncryptionSetPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus? devboxDisksEncryptionEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus?), System.Uri keyEncryptionKeyUri = null, Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterData DevCenterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string displayName = null, Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption customerManagedKeyEncryption = null, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus? catalogItemSyncEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus? microsoftHostedNetworkEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus? devBoxProvisioningInstallAzureMonitorAgentEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), System.Uri devCenterUri = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem DevCenterDefinitionParametersItem(string name = null, string value = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterEncryptionSetData DevCenterEncryptionSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus? devboxDisksEncryptionEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus?), System.Uri keyEncryptionKeyUri = null, Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterEncryptionSetPatch DevCenterEncryptionSetPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus? devboxDisksEncryptionEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus?), System.Uri keyEncryptionKeyUri = null, Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterEndpointDetail DevCenterEndpointDetail(int? port = default(int?)) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentDefinitionParameterInfo DevCenterEnvironmentDefinitionParameterInfo(string id = null, string name = null, string description = null, Azure.ResourceManager.DevCenter.Models.ParameterType? type = default(Azure.ResourceManager.DevCenter.Models.ParameterType?), bool? readOnly = default(bool?), bool? required = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentDefinitionParameterInfo DevCenterEnvironmentDefinitionParameterInfo(string id = null, string name = null, string description = null, Azure.ResourceManager.DevCenter.Models.DevCenterParameterType? type = default(Azure.ResourceManager.DevCenter.Models.DevCenterParameterType?), bool? readOnly = default(bool?), bool? required = default(bool?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentRole DevCenterEnvironmentRole(string roleName = null, string description = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterEnvironmentTypeData DevCenterEnvironmentTypeData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterEnvironmentTypeData DevCenterEnvironmentTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentTypePatch DevCenterEnvironmentTypePatch(string displayName = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState DevCenterFeatureState(Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable? statusModifiable = default(Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable?), Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable? valuesModifiable = default(Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable?), Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus? defaultStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue> defaultValues = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterGalleryData DevCenterGalleryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.Core.ResourceIdentifier galleryResourceId = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheck DevCenterHealthCheck(Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus? status = default(Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus?), string displayName = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string errorType = null, string recommendedAction = null, string additionalDetails = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatusDetail DevCenterHealthStatusDetail(string code = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails DevCenterImageCreationErrorDetails(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterImageData DevCenterImageData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, string publisher, string offer, string sku, Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration recommendedMachineConfiguration, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState, Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport? hibernateSupport) { throw null; }
-        public static Azure.ResourceManager.DevCenter.DevCenterImageData DevCenterImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string publisher = null, string offer = null, string sku = null, Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration recommendedMachineConfiguration = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport? hibernateSupport = default(Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport?), Azure.ResourceManager.DevCenter.Models.ArchitectureType? architecture = default(Azure.ResourceManager.DevCenter.Models.ArchitectureType?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterImageData DevCenterImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string publisher = null, string offer = null, string sku = null, Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration recommendedMachineConfiguration = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport? hibernateSupport = default(Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport?), Azure.ResourceManager.DevCenter.Models.DevCenterArchitectureType? architecture = default(Azure.ResourceManager.DevCenter.Models.DevCenterArchitectureType?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildDetails DevCenterImageDefinitionBuildDetails(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterImageReference imageReference = null, Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus? status = default(Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails errorDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskGroup> taskGroups = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTask DevCenterImageDefinitionBuildTask(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskParametersItem> parameters = null, string displayName = null, string id = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus? status = default(Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus?), System.Uri logUri = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskGroup DevCenterImageDefinitionBuildTaskGroup(string name = null, Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus? status = default(Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTask> tasks = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskParametersItem DevCenterImageDefinitionBuildTaskParametersItem(string key = null, string value = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionReference DevCenterImageDefinitionReference(string imageDefinition = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem> parameters = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterImageReference DevCenterImageReference(Azure.Core.ResourceIdentifier id = null, string exactVersion = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterInheritedProjectCatalogSettings DevCenterInheritedProjectCatalogSettings(Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable? statusModifiable = default(Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable?), Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable? valuesModifiable = default(Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable?), Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus? defaultStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue> defaultValues = null, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus? catalogItemSyncEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterInheritedSettingsForProject DevCenterInheritedSettingsForProject(Azure.ResourceManager.DevCenter.Models.DevCenterInheritedProjectCatalogSettings projectCatalogSettings = null, Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus? microsoftHostedNetworkEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState azureAiServicesSettings = null, Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState devBoxScheduleDeleteSettings = null, Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState devBoxLimitsSettings = null, Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState displayNameSettings = null, Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState devBoxTunnelSettings = null, Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState serverlessGpuSessionsSettings = null, Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState userCustomizationsSettings = null, Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState workspaceStorageSettings = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterLatestImageBuild DevCenterLatestImageBuild(string name = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus? status = default(Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterNameAvailabilityResult DevCenterNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason? reason = default(Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterNetworkConnectionData DevCenterNetworkConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier subnetId = null, string domainName = null, string organizationUnit = null, string domainUsername = null, string domainPassword = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus? healthCheckStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus?), string networkingResourceGroupName = null, Azure.ResourceManager.DevCenter.Models.DomainJoinType? domainJoinType = default(Azure.ResourceManager.DevCenter.Models.DomainJoinType?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterNetworkConnectionPatch DevCenterNetworkConnectionPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier subnetId = null, string domainName = null, string organizationUnit = null, string domainUsername = null, string domainPassword = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterOperationStatus DevCenterOperationStatus(Azure.Core.ResourceIdentifier id = null, string name = null, string status = null, float? percentComplete = default(float?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Models.OperationStatusResult> operations = null, Azure.ResponseError error = null, Azure.Core.ResourceIdentifier resourceId = null, System.BinaryData properties = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.DevCenterPatch DevCenterPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string displayName = null, Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption customerManagedKeyEncryption = null, Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus? catalogItemSyncEnableStatus = default(Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus?), Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus? microsoftHostedNetworkEnableStatus = default(Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus?), Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus? devBoxProvisioningInstallAzureMonitorAgentEnableStatus = default(Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus?)) { throw null; }
-        public static Azure.ResourceManager.DevCenter.DevCenterPoolData DevCenterPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType? devBoxDefinitionType = default(Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType?), string devBoxDefinitionName = null, Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionDetail devBoxDefinition = null, string networkConnectionName = null, Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType? licenseType = default(Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType?), Azure.ResourceManager.DevCenter.Models.LocalAdminStatus? localAdministrator = default(Azure.ResourceManager.DevCenter.Models.LocalAdminStatus?), Azure.ResourceManager.DevCenter.Models.StopOnDisconnectConfiguration stopOnDisconnect = null, Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration stopOnNoConnect = null, Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus? singleSignOnStatus = default(Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus?), string displayName = null, Azure.ResourceManager.DevCenter.Models.VirtualNetworkType? virtualNetworkType = default(Azure.ResourceManager.DevCenter.Models.VirtualNetworkType?), System.Collections.Generic.IEnumerable<string> managedVirtualNetworkRegions = null, Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration activeHoursConfiguration = null, Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus? healthStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatusDetail> healthStatusDetails = null, int? devBoxCount = default(int?), Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterPatch DevCenterPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string displayName = null, Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption customerManagedKeyEncryption = null, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus? catalogItemSyncEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus? microsoftHostedNetworkEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus? devBoxProvisioningInstallAzureMonitorAgentEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterPoolData DevCenterPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType? devBoxDefinitionType = default(Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType?), string devBoxDefinitionName = null, Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionDetail devBoxDefinition = null, string networkConnectionName = null, Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType? licenseType = default(Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType?), Azure.ResourceManager.DevCenter.Models.LocalAdminStatus? localAdministrator = default(Azure.ResourceManager.DevCenter.Models.LocalAdminStatus?), Azure.ResourceManager.DevCenter.Models.StopOnDisconnectConfiguration stopOnDisconnect = null, Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration stopOnNoConnect = null, Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus? singleSignOnStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus?), string displayName = null, Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType? virtualNetworkType = default(Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType?), System.Collections.Generic.IEnumerable<string> managedVirtualNetworkRegions = null, Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration activeHoursConfiguration = null, Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus? devBoxTunnelEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus? healthStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatusDetail> healthStatusDetails = null, int? devBoxCount = default(int?), Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterPoolData DevCenterPoolData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string devBoxDefinitionName, string networkConnectionName, Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType? licenseType, Azure.ResourceManager.DevCenter.Models.LocalAdminStatus? localAdministrator, Azure.ResourceManager.DevCenter.Models.StopOnDisconnectConfiguration stopOnDisconnect, Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus? healthStatus, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatusDetail> healthStatusDetails, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionDetail DevCenterPoolDevBoxDefinitionDetail(Azure.ResourceManager.DevCenter.Models.DevCenterImageReference imageReference = null, Azure.ResourceManager.DevCenter.Models.DevCenterSku sku = null, Azure.ResourceManager.DevCenter.Models.DevCenterImageReference activeImageReference = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.DevCenterPoolPatch DevCenterPoolPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType? devBoxDefinitionType = default(Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType?), string devBoxDefinitionName = null, Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionDetail devBoxDefinition = null, string networkConnectionName = null, Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType? licenseType = default(Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType?), Azure.ResourceManager.DevCenter.Models.LocalAdminStatus? localAdministrator = default(Azure.ResourceManager.DevCenter.Models.LocalAdminStatus?), Azure.ResourceManager.DevCenter.Models.StopOnDisconnectConfiguration stopOnDisconnect = null, Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration stopOnNoConnect = null, Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus? singleSignOnStatus = default(Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus?), string displayName = null, Azure.ResourceManager.DevCenter.Models.VirtualNetworkType? virtualNetworkType = default(Azure.ResourceManager.DevCenter.Models.VirtualNetworkType?), System.Collections.Generic.IEnumerable<string> managedVirtualNetworkRegions = null, Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration activeHoursConfiguration = null, Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus? devBoxTunnelEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterPoolPatch DevCenterPoolPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType? devBoxDefinitionType = default(Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType?), string devBoxDefinitionName = null, Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionDetail devBoxDefinition = null, string networkConnectionName = null, Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType? licenseType = default(Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType?), Azure.ResourceManager.DevCenter.Models.LocalAdminStatus? localAdministrator = default(Azure.ResourceManager.DevCenter.Models.LocalAdminStatus?), Azure.ResourceManager.DevCenter.Models.StopOnDisconnectConfiguration stopOnDisconnect = null, Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration stopOnNoConnect = null, Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus? singleSignOnStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus?), string displayName = null, Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType? virtualNetworkType = default(Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType?), System.Collections.Generic.IEnumerable<string> managedVirtualNetworkRegions = null, Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration activeHoursConfiguration = null, Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus? devBoxTunnelEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings DevCenterProjectCustomizationSettings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationManagedIdentity> identities = null, Azure.ResourceManager.DevCenter.Models.DevCenterUserCustomizationsEnableStatus? userCustomizationsEnableStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterUserCustomizationsEnableStatus?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterProjectData DevCenterProjectData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier devCenterId, string description, int? maxDevBoxesPerUser, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState, System.Uri devCenterUri) { throw null; }
-        public static Azure.ResourceManager.DevCenter.DevCenterProjectData DevCenterProjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier devCenterId = null, string description = null, int? maxDevBoxesPerUser = default(int?), string displayName = null, Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings customizationSettings = null, Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings devBoxScheduleDeleteSettings = null, Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings serverlessGpuSessionsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.AssignedGroup> assignedGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.CatalogItemType> catalogItemSyncTypes = null, Azure.ResourceManager.DevCenter.Models.AzureAiServicesMode? azureAiServicesMode = default(Azure.ResourceManager.DevCenter.Models.AzureAiServicesMode?), Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode? workspaceStorageMode = default(Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode?), Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), System.Uri devCenterUri = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterProjectData DevCenterProjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier devCenterId = null, string description = null, int? maxDevBoxesPerUser = default(int?), string displayName = null, Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings customizationSettings = null, Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings devBoxScheduleDeleteSettings = null, Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings serverlessGpuSessionsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup> assignedGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType> catalogItemSyncTypes = null, Azure.ResourceManager.DevCenter.Models.AzureAiServicesMode? azureAiServicesMode = default(Azure.ResourceManager.DevCenter.Models.AzureAiServicesMode?), Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode? workspaceStorageMode = default(Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode?), Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), System.Uri devCenterUri = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterProjectEnvironmentData DevCenterProjectEnvironmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier deploymentTargetId = null, string displayName = null, Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus? status = default(Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DevCenter.Models.DevCenterUserRoleAssignments> userRoleAssignments = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentRole> roles = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), int? environmentCount = default(int?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterProjectEnvironmentData DevCenterProjectEnvironmentData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.Core.ResourceIdentifier deploymentTargetId, Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus? status, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentRole> roles, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DevCenter.Models.DevCenterUserRoleAssignments> userRoleAssignments, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterProjectEnvironmentPatch DevCenterProjectEnvironmentPatch(Azure.Core.ResourceIdentifier deploymentTargetId = null, string displayName = null, Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus? status = default(Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DevCenter.Models.DevCenterUserRoleAssignments> userRoleAssignments = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentRole> roles = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.DevCenterProjectPatch DevCenterProjectPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier devCenterId = null, string description = null, int? maxDevBoxesPerUser = default(int?), string displayName = null, Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings customizationSettings = null, Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings devBoxScheduleDeleteSettings = null, Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings serverlessGpuSessionsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.AssignedGroup> assignedGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.CatalogItemType> catalogItemSyncTypes = null, Azure.ResourceManager.DevCenter.Models.AzureAiServicesMode? azureAiServicesMode = default(Azure.ResourceManager.DevCenter.Models.AzureAiServicesMode?), Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode? workspaceStorageMode = default(Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterProjectPatch DevCenterProjectPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier devCenterId = null, string description = null, int? maxDevBoxesPerUser = default(int?), string displayName = null, Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings customizationSettings = null, Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings devBoxScheduleDeleteSettings = null, Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings serverlessGpuSessionsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup> assignedGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType> catalogItemSyncTypes = null, Azure.ResourceManager.DevCenter.Models.AzureAiServicesMode? azureAiServicesMode = default(Azure.ResourceManager.DevCenter.Models.AzureAiServicesMode?), Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode? workspaceStorageMode = default(Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange DevCenterResourceRange(int? min = default(int?), int? max = default(int?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterScheduleData DevCenterScheduleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType? scheduledType = default(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType?), Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency? frequency = default(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency?), string time = null, string timeZone = null, Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus? state = default(Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterScheduleData DevCenterScheduleData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType? scheduledType, Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency? frequency, string time, string timeZone, Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus? state, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterSchedulePatch DevCenterSchedulePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType? scheduledType = default(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType?), Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency? frequency = default(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency?), string time = null, string timeZone = null, Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus? state = default(Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterSkuDetails DevCenterSkuDetails(string name = null, Azure.ResourceManager.DevCenter.Models.DevCenterSkuTier? tier = default(Azure.ResourceManager.DevCenter.Models.DevCenterSkuTier?), string size = null, string family = null, int? capacity = default(int?), Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), System.Collections.Generic.IEnumerable<string> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterCapability> capabilities = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails DevCenterSyncErrorDetails(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails operationError = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConflictError> conflicts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncError> errors = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterSyncStats DevCenterSyncStats(int? added = default(int?), int? updated = default(int?), int? unchanged = default(int?), int? removed = default(int?), int? validationErrors = default(int?), int? synchronizationErrors = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType> syncedCatalogItemTypes = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate DevCenterTrackedResourceUpdate(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterUsage DevCenterUsage(long? currentValue, long? limit, Azure.ResourceManager.DevCenter.Models.DevCenterUsageUnit? unit, Azure.ResourceManager.DevCenter.Models.DevCenterUsageName name) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterUsage DevCenterUsage(long? currentValue = default(long?), long? limit = default(long?), Azure.ResourceManager.DevCenter.Models.DevCenterUsageUnit? unit = default(Azure.ResourceManager.DevCenter.Models.DevCenterUsageUnit?), Azure.ResourceManager.DevCenter.Models.DevCenterUsageName name = null, string id = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterUsageName DevCenterUsageName(string localizedValue = null, string value = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterUserRoleAssignments DevCenterUserRoleAssignments(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentRole> roles = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.EndpointDependency EndpointDependency(string domainName = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterEndpointDetail> endpointDetails = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.EnvironmentDefinitionData EnvironmentDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentDefinitionParameterInfo> parameters = null, string templatePath = null, Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus? validationStatus = default(Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus?)) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.FeatureState FeatureState(Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable? statusModifiable = default(Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable?), Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable? valuesModifiable = default(Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable?), Azure.ResourceManager.DevCenter.Models.FeatureStatus? defaultStatus = default(Azure.ResourceManager.DevCenter.Models.FeatureStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DefaultValue> defaultValues = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.EnvironmentDefinitionData EnvironmentDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentDefinitionParameterInfo> parameters = null, string templatePath = null, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus? validationStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.HealthCheckStatusDetailData HealthCheckStatusDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheck> healthChecks = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails ImageCreationErrorDetails(string code = null, string message = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.ImageDefinitionBuildData ImageDefinitionBuildData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterImageReference imageReference = null, Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus? status = default(Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails errorDetails = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildDetails ImageDefinitionBuildDetails(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterImageReference imageReference = null, Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus? status = default(Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails errorDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskGroup> taskGroups = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTask ImageDefinitionBuildTask(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskParametersItem> parameters = null, string displayName = null, string id = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus? status = default(Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus?), System.Uri logUri = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskGroup ImageDefinitionBuildTaskGroup(string name = null, Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus? status = default(Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTask> tasks = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskParametersItem ImageDefinitionBuildTaskParametersItem(string key = null, string value = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.ImageDefinitionData ImageDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterImageReference imageReference = null, string fileUri = null, Azure.ResourceManager.DevCenter.Models.LatestImageBuild latestBuild = null, Azure.ResourceManager.DevCenter.Models.ImageValidationStatus? imageValidationStatus = default(Azure.ResourceManager.DevCenter.Models.ImageValidationStatus?), Azure.ResourceManager.DevCenter.Models.ImageValidationErrorDetails imageValidationErrorDetails = null, Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus? validationStatus = default(Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterImageReference activeImageReference = null, Azure.ResourceManager.DevCenter.Models.AutoImageBuildStatus? autoImageBuild = default(Azure.ResourceManager.DevCenter.Models.AutoImageBuildStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance> tasks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance> userTasks = null, Azure.ResourceManager.DevCenter.Models.ImageDefinitionReference extends = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ImageDefinitionReference ImageDefinitionReference(string imageDefinition = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem> parameters = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.ImageDefinitionBuildData ImageDefinitionBuildData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterImageReference imageReference = null, Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus? status = default(Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails errorDetails = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.ImageDefinitionData ImageDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterImageReference imageReference = null, string fileUri = null, Azure.ResourceManager.DevCenter.Models.DevCenterLatestImageBuild latestBuild = null, Azure.ResourceManager.DevCenter.Models.ImageValidationStatus? imageValidationStatus = default(Azure.ResourceManager.DevCenter.Models.ImageValidationStatus?), Azure.ResourceManager.DevCenter.Models.ImageValidationErrorDetails imageValidationErrorDetails = null, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus? validationStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterImageReference activeImageReference = null, Azure.ResourceManager.DevCenter.Models.DevCenterAutoImageBuildStatus? autoImageBuild = default(Azure.ResourceManager.DevCenter.Models.DevCenterAutoImageBuildStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance> tasks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance> userTasks = null, Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionReference extends = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.ImageValidationErrorDetails ImageValidationErrorDetails(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.ImageVersionData ImageVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string namePropertiesName = null, System.DateTimeOffset? publishedOn = default(System.DateTimeOffset?), bool? isExcludedFromLatest = default(bool?), int? osDiskImageSizeInGB = default(int?), Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.InheritedProjectCatalogSettings InheritedProjectCatalogSettings(Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable? statusModifiable = default(Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable?), Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable? valuesModifiable = default(Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable?), Azure.ResourceManager.DevCenter.Models.FeatureStatus? defaultStatus = default(Azure.ResourceManager.DevCenter.Models.FeatureStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DefaultValue> defaultValues = null, Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus? catalogItemSyncEnableStatus = default(Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus?)) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.InheritedSettingsForProject InheritedSettingsForProject(Azure.ResourceManager.DevCenter.Models.InheritedProjectCatalogSettings projectCatalogSettings = null, Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus? microsoftHostedNetworkEnableStatus = default(Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus?), Azure.ResourceManager.DevCenter.Models.FeatureState azureAiServicesSettings = null, Azure.ResourceManager.DevCenter.Models.FeatureState devBoxScheduleDeleteSettings = null, Azure.ResourceManager.DevCenter.Models.FeatureState devBoxLimitsSettings = null, Azure.ResourceManager.DevCenter.Models.FeatureState displayNameSettings = null, Azure.ResourceManager.DevCenter.Models.FeatureState devBoxTunnelSettings = null, Azure.ResourceManager.DevCenter.Models.FeatureState serverlessGpuSessionsSettings = null, Azure.ResourceManager.DevCenter.Models.FeatureState userCustomizationsSettings = null, Azure.ResourceManager.DevCenter.Models.FeatureState workspaceStorageSettings = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.LatestImageBuild LatestImageBuild(string name = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus? status = default(Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.OutboundEnvironmentEndpoint OutboundEnvironmentEndpoint(string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.EndpointDependency> endpoints = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings ProjectCustomizationSettings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationManagedIdentity> identities = null, Azure.ResourceManager.DevCenter.Models.UserCustomizationsEnableStatus? userCustomizationsEnableStatus = default(Azure.ResourceManager.DevCenter.Models.UserCustomizationsEnableStatus?)) { throw null; }
-        public static Azure.ResourceManager.DevCenter.ProjectPolicyData ProjectPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.ResourcePolicy> resourcePolicies = null, System.Collections.Generic.IEnumerable<string> scopes = null, Azure.ResourceManager.DevCenter.Models.ConfigurationPolicies configurationPolicies = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.ProjectPolicyData ProjectPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterResourcePolicy> resourcePolicies = null, System.Collections.Generic.IEnumerable<string> scopes = null, Azure.ResourceManager.DevCenter.Models.DevCenterConfigurationPolicies configurationPolicies = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration RecommendedMachineConfiguration(Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange memory = null, Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange vCpus = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.SyncErrorDetails SyncErrorDetails(Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails operationError = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.CatalogConflictError> conflicts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.CatalogSyncError> errors = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.SyncStats SyncStats(int? added = default(int?), int? updated = default(int?), int? unchanged = default(int?), int? removed = default(int?), int? validationErrors = default(int?), int? synchronizationErrors = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.CatalogItemType> syncedCatalogItemTypes = null) { throw null; }
-    }
-    public partial class AssignedGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.AssignedGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.AssignedGroup>
-    {
-        public AssignedGroup() { }
-        public System.Guid? ObjectId { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.AssignedGroupScope? Scope { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.AssignedGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.AssignedGroup PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.AssignedGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.AssignedGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.AssignedGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.AssignedGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.AssignedGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.AssignedGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.AssignedGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AssignedGroupScope : System.IEquatable<Azure.ResourceManager.DevCenter.Models.AssignedGroupScope>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AssignedGroupScope(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.AssignedGroupScope DevBox { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.AssignedGroupScope other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.AssignedGroupScope left, Azure.ResourceManager.DevCenter.Models.AssignedGroupScope right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.AssignedGroupScope (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.AssignedGroupScope? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.AssignedGroupScope left, Azure.ResourceManager.DevCenter.Models.AssignedGroupScope right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AutoImageBuildStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.AutoImageBuildStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AutoImageBuildStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.AutoImageBuildStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.AutoImageBuildStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.AutoImageBuildStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.AutoImageBuildStatus left, Azure.ResourceManager.DevCenter.Models.AutoImageBuildStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.AutoImageBuildStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.AutoImageBuildStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.AutoImageBuildStatus left, Azure.ResourceManager.DevCenter.Models.AutoImageBuildStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AutoStartEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.AutoStartEnableStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AutoStartEnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.AutoStartEnableStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.AutoStartEnableStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.AutoStartEnableStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.AutoStartEnableStatus left, Azure.ResourceManager.DevCenter.Models.AutoStartEnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.AutoStartEnableStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.AutoStartEnableStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.AutoStartEnableStatus left, Azure.ResourceManager.DevCenter.Models.AutoStartEnableStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AzureAiServicesMode : System.IEquatable<Azure.ResourceManager.DevCenter.Models.AzureAiServicesMode>
@@ -1876,292 +1774,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator !=(Azure.ResourceManager.DevCenter.Models.AzureAiServicesMode left, Azure.ResourceManager.DevCenter.Models.AzureAiServicesMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CancelOnConnectEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.CancelOnConnectEnableStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CancelOnConnectEnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CancelOnConnectEnableStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.CancelOnConnectEnableStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.CancelOnConnectEnableStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.CancelOnConnectEnableStatus left, Azure.ResourceManager.DevCenter.Models.CancelOnConnectEnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CancelOnConnectEnableStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CancelOnConnectEnableStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.CancelOnConnectEnableStatus left, Azure.ResourceManager.DevCenter.Models.CancelOnConnectEnableStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CatalogAutoImageBuildEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.CatalogAutoImageBuildEnableStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CatalogAutoImageBuildEnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogAutoImageBuildEnableStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogAutoImageBuildEnableStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.CatalogAutoImageBuildEnableStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.CatalogAutoImageBuildEnableStatus left, Azure.ResourceManager.DevCenter.Models.CatalogAutoImageBuildEnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CatalogAutoImageBuildEnableStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CatalogAutoImageBuildEnableStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.CatalogAutoImageBuildEnableStatus left, Azure.ResourceManager.DevCenter.Models.CatalogAutoImageBuildEnableStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class CatalogConflictError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CatalogConflictError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogConflictError>
-    {
-        internal CatalogConflictError() { }
-        public string Name { get { throw null; } }
-        public string Path { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.CatalogConflictError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.CatalogConflictError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.CatalogConflictError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CatalogConflictError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CatalogConflictError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.CatalogConflictError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogConflictError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogConflictError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogConflictError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CatalogConnectionState : System.IEquatable<Azure.ResourceManager.DevCenter.Models.CatalogConnectionState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CatalogConnectionState(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogConnectionState Connected { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogConnectionState Disconnected { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.CatalogConnectionState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.CatalogConnectionState left, Azure.ResourceManager.DevCenter.Models.CatalogConnectionState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CatalogConnectionState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CatalogConnectionState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.CatalogConnectionState left, Azure.ResourceManager.DevCenter.Models.CatalogConnectionState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class CatalogErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails>
-    {
-        internal CatalogErrorDetails() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CatalogItemSyncEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CatalogItemSyncEnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus left, Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus left, Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CatalogItemType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.CatalogItemType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CatalogItemType(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogItemType EnvironmentDefinition { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogItemType ImageDefinition { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.CatalogItemType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.CatalogItemType left, Azure.ResourceManager.DevCenter.Models.CatalogItemType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CatalogItemType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CatalogItemType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.CatalogItemType left, Azure.ResourceManager.DevCenter.Models.CatalogItemType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class CatalogResourceValidationErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails>
-    {
-        internal CatalogResourceValidationErrorDetails() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails> Errors { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationErrorDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CatalogResourceValidationStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CatalogResourceValidationStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus Pending { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus left, Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus left, Azure.ResourceManager.DevCenter.Models.CatalogResourceValidationStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class CatalogSyncError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CatalogSyncError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogSyncError>
-    {
-        internal CatalogSyncError() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails> ErrorDetails { get { throw null; } }
-        public string Path { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.CatalogSyncError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.CatalogSyncError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.CatalogSyncError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CatalogSyncError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CatalogSyncError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.CatalogSyncError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogSyncError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogSyncError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CatalogSyncError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CatalogSyncType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.CatalogSyncType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CatalogSyncType(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogSyncType Manual { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.CatalogSyncType Scheduled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.CatalogSyncType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.CatalogSyncType left, Azure.ResourceManager.DevCenter.Models.CatalogSyncType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CatalogSyncType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CatalogSyncType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.CatalogSyncType left, Azure.ResourceManager.DevCenter.Models.CatalogSyncType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CmkIdentityType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.CmkIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CmkIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CmkIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.CmkIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.CmkIdentityType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.CmkIdentityType left, Azure.ResourceManager.DevCenter.Models.CmkIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CmkIdentityType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CmkIdentityType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.CmkIdentityType left, Azure.ResourceManager.DevCenter.Models.CmkIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ConfigurationPolicies : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ConfigurationPolicies>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ConfigurationPolicies>
-    {
-        public ConfigurationPolicies() { }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState AzureAiServicesFeatureStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState DevBoxLimitsFeatureStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState DevBoxScheduleDeleteFeatureStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState DevBoxTunnelFeatureStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState DisplayNameFeatureStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState ProjectCatalogFeatureStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState ServerlessGpuSessionsFeatureStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState UserCustomizationsFeatureStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState WorkspaceStorageFeatureStatus { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ConfigurationPolicies JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ConfigurationPolicies PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.ConfigurationPolicies System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ConfigurationPolicies>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ConfigurationPolicies>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.ConfigurationPolicies System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ConfigurationPolicies>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ConfigurationPolicies>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ConfigurationPolicies>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomerManagedKeyEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption>
-    {
-        public CustomerManagedKeyEncryption() { }
-        public Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get { throw null; } set { } }
-        public string KeyEncryptionKeyUri { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomizationTaskInput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInput>
-    {
-        internal CustomizationTaskInput() { }
-        public string Description { get { throw null; } }
-        public bool? Required { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.CustomizationTaskInputType? Type { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.CustomizationTaskInput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.CustomizationTaskInput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.CustomizationTaskInput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.CustomizationTaskInput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CustomizationTaskInputType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInputType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CustomizationTaskInputType(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.CustomizationTaskInputType Boolean { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.CustomizationTaskInputType Number { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.CustomizationTaskInputType String { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.CustomizationTaskInputType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.CustomizationTaskInputType left, Azure.ResourceManager.DevCenter.Models.CustomizationTaskInputType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CustomizationTaskInputType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.CustomizationTaskInputType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.CustomizationTaskInputType left, Azure.ResourceManager.DevCenter.Models.CustomizationTaskInputType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class CustomizationTaskInstance : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance>
-    {
-        internal CustomizationTaskInstance() { }
-        public string Condition { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem> Parameters { get { throw null; } }
-        public int? TimeoutInSeconds { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.CustomizationTaskInstance>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public enum DayOfWeek
     {
         Monday = 0,
@@ -2171,36 +1783,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         Friday = 4,
         Saturday = 5,
         Sunday = 6,
-    }
-    public partial class DefaultValue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DefaultValue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DefaultValue>
-    {
-        public DefaultValue() { }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.DefaultValue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.DefaultValue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.DefaultValue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DefaultValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DefaultValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.DefaultValue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DefaultValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DefaultValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DefaultValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DefinitionParametersItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem>
-    {
-        internal DefinitionParametersItem() { }
-        public string Name { get { throw null; } }
-        public string Value { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DevBoxDefinitionPatch : Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevBoxDefinitionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevBoxDefinitionPatch>
     {
@@ -2219,72 +1801,123 @@ namespace Azure.ResourceManager.DevCenter.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevBoxDefinitionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevBoxDefinitionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DevBoxDeleteMode : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevBoxDeleteMode>
+    public partial class DevCenterActiveHoursConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DevBoxDeleteMode(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.DevBoxDeleteMode Auto { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.DevBoxDeleteMode Manual { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevBoxDeleteMode other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevBoxDeleteMode left, Azure.ResourceManager.DevCenter.Models.DevBoxDeleteMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevBoxDeleteMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevBoxDeleteMode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevBoxDeleteMode left, Azure.ResourceManager.DevCenter.Models.DevBoxDeleteMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DevboxDisksEncryptionEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DevboxDisksEncryptionEnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class DevBoxScheduleDeleteSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings>
-    {
-        public DevBoxScheduleDeleteSettings() { }
-        public Azure.ResourceManager.DevCenter.Models.CancelOnConnectEnableStatus? CancelOnConnectEnableStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.DevBoxDeleteMode? DeleteMode { get { throw null; } set { } }
-        public System.TimeSpan? GracePeriod { get { throw null; } set { } }
-        public System.TimeSpan? InactiveThreshold { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public DevCenterActiveHoursConfiguration() { }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterAutoStartEnableStatus? AutoStartEnableStatus { get { throw null; } set { } }
+        public int? DaysOfWeekLimit { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DayOfWeek> DefaultDaysOfWeek { get { throw null; } }
+        public int? DefaultEndTimeHour { get { throw null; } set { } }
+        public int? DefaultStartTimeHour { get { throw null; } set { } }
+        public string DefaultTimeZone { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterKeepAwakeEnableStatus? KeepAwakeEnableStatus { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DevBoxTunnelEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus>
+    public readonly partial struct DevCenterArchitectureType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterArchitectureType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DevBoxTunnelEnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus other) { throw null; }
+        public DevCenterArchitectureType(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterArchitectureType Arm64 { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterArchitectureType X64 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterArchitectureType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterArchitectureType left, Azure.ResourceManager.DevCenter.Models.DevCenterArchitectureType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterArchitectureType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterArchitectureType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterArchitectureType left, Azure.ResourceManager.DevCenter.Models.DevCenterArchitectureType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevCenterAssignedGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup>
+    {
+        public DevCenterAssignedGroup() { }
+        public System.Guid? ObjectId { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroupScope? Scope { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterAssignedGroupScope : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroupScope>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterAssignedGroupScope(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroupScope DevBox { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroupScope other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroupScope left, Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroupScope right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroupScope (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroupScope? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroupScope left, Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroupScope right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterAutoImageBuildStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterAutoImageBuildStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterAutoImageBuildStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterAutoImageBuildStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterAutoImageBuildStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterAutoImageBuildStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterAutoImageBuildStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterAutoImageBuildStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterAutoImageBuildStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterAutoImageBuildStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterAutoImageBuildStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterAutoImageBuildStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterAutoStartEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterAutoStartEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterAutoStartEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterAutoStartEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterAutoStartEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterAutoStartEnableStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterAutoStartEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterAutoStartEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterAutoStartEnableStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterAutoStartEnableStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterAutoStartEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterAutoStartEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterCancelOnConnectEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterCancelOnConnectEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterCancelOnConnectEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCancelOnConnectEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCancelOnConnectEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterCancelOnConnectEnableStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterCancelOnConnectEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterCancelOnConnectEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCancelOnConnectEnableStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCancelOnConnectEnableStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterCancelOnConnectEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterCancelOnConnectEnableStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DevCenterCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCapability>
@@ -2302,13 +1935,111 @@ namespace Azure.ResourceManager.DevCenter.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterCatalogAutoImageBuildEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogAutoImageBuildEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterCatalogAutoImageBuildEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogAutoImageBuildEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogAutoImageBuildEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogAutoImageBuildEnableStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogAutoImageBuildEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogAutoImageBuildEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCatalogAutoImageBuildEnableStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCatalogAutoImageBuildEnableStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogAutoImageBuildEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogAutoImageBuildEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevCenterCatalogConflictError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConflictError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConflictError>
+    {
+        internal DevCenterCatalogConflictError() { }
+        public string Name { get { throw null; } }
+        public string Path { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConflictError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConflictError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConflictError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConflictError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConflictError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConflictError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConflictError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConflictError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConflictError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterCatalogConnectionState : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConnectionState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterCatalogConnectionState(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConnectionState Connected { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConnectionState Disconnected { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConnectionState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConnectionState left, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConnectionState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConnectionState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConnectionState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConnectionState left, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConnectionState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevCenterCatalogErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails>
+    {
+        internal DevCenterCatalogErrorDetails() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterCatalogItemSyncEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterCatalogItemSyncEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterCatalogItemType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterCatalogItemType(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType EnvironmentDefinition { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType ImageDefinition { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType left, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType left, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DevCenterCatalogPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogPatch>
     {
         public DevCenterCatalogPatch() { }
         public Azure.ResourceManager.DevCenter.Models.DevCenterGitCatalog AdoGit { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.CatalogAutoImageBuildEnableStatus? AutoImageBuildEnableStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCatalogAutoImageBuildEnableStatus? AutoImageBuildEnableStatus { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterGitCatalog GitHub { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.CatalogSyncType? SyncType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncType? SyncType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCatalogPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2319,6 +2050,54 @@ namespace Azure.ResourceManager.DevCenter.Models
         Azure.ResourceManager.DevCenter.Models.DevCenterCatalogPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DevCenterCatalogResourceValidationErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails>
+    {
+        internal DevCenterCatalogResourceValidationErrorDetails() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails> Errors { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationErrorDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterCatalogResourceValidationStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterCatalogResourceValidationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus Pending { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogResourceValidationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevCenterCatalogSyncError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncError>
+    {
+        internal DevCenterCatalogSyncError() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails> ErrorDetails { get { throw null; } }
+        public string Path { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DevCenterCatalogSyncState : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState>
@@ -2339,10 +2118,231 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState left, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterCatalogSyncType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterCatalogSyncType(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncType Manual { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncType Scheduled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncType left, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncType left, Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterCmkIdentityType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterCmkIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterCmkIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCmkIdentityType SystemAssigned { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCmkIdentityType UserAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterCmkIdentityType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterCmkIdentityType left, Azure.ResourceManager.DevCenter.Models.DevCenterCmkIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCmkIdentityType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCmkIdentityType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterCmkIdentityType left, Azure.ResourceManager.DevCenter.Models.DevCenterCmkIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevCenterConfigurationPolicies : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterConfigurationPolicies>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterConfigurationPolicies>
+    {
+        public DevCenterConfigurationPolicies() { }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState AzureAiServicesFeatureStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState DevBoxLimitsFeatureStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState DevBoxScheduleDeleteFeatureStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState DevBoxTunnelFeatureStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState DisplayNameFeatureStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState ProjectCatalogFeatureStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState ServerlessGpuSessionsFeatureStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState UserCustomizationsFeatureStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState WorkspaceStorageFeatureStatus { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterConfigurationPolicies JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterConfigurationPolicies PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterConfigurationPolicies System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterConfigurationPolicies>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterConfigurationPolicies>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterConfigurationPolicies System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterConfigurationPolicies>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterConfigurationPolicies>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterConfigurationPolicies>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DevCenterCustomerManagedKeyEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption>
+    {
+        public DevCenterCustomerManagedKeyEncryption() { }
+        public Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get { throw null; } set { } }
+        public string KeyEncryptionKeyUri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DevCenterCustomizationTaskInput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInput>
+    {
+        internal DevCenterCustomizationTaskInput() { }
+        public string Description { get { throw null; } }
+        public bool? Required { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInputType? Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterCustomizationTaskInputType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInputType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterCustomizationTaskInputType(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInputType Boolean { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInputType Number { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInputType String { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInputType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInputType left, Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInputType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInputType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInputType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInputType left, Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInputType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevCenterCustomizationTaskInstance : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance>
+    {
+        internal DevCenterCustomizationTaskInstance() { }
+        public string Condition { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem> Parameters { get { throw null; } }
+        public int? TimeoutInSeconds { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCustomizationTaskInstance>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DevCenterDefaultValue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue>
+    {
+        public DevCenterDefaultValue() { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DevCenterDefinitionParametersItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem>
+    {
+        internal DevCenterDefinitionParametersItem() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterDevBoxDeleteMode : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxDeleteMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterDevBoxDeleteMode(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxDeleteMode Auto { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxDeleteMode Manual { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxDeleteMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxDeleteMode left, Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxDeleteMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxDeleteMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxDeleteMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxDeleteMode left, Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxDeleteMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterDevboxDisksEncryptionEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterDevboxDisksEncryptionEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevCenterDevBoxScheduleDeleteSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings>
+    {
+        public DevCenterDevBoxScheduleDeleteSettings() { }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCancelOnConnectEnableStatus? CancelOnConnectEnableStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxDeleteMode? DeleteMode { get { throw null; } set { } }
+        public System.TimeSpan? GracePeriod { get { throw null; } set { } }
+        public System.TimeSpan? InactiveThreshold { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterDevBoxTunnelEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterDevBoxTunnelEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DevCenterEncryptionSetPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterEncryptionSetPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterEncryptionSetPatch>
     {
         public DevCenterEncryptionSetPatch() { }
-        public Azure.ResourceManager.DevCenter.Models.DevboxDisksEncryptionEnableStatus? DevboxDisksEncryptionEnableStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterDevboxDisksEncryptionEnableStatus? DevboxDisksEncryptionEnableStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get { throw null; } set { } }
         public System.Uri KeyEncryptionKeyUri { get { throw null; } set { } }
@@ -2380,7 +2380,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public string Name { get { throw null; } }
         public bool? ReadOnly { get { throw null; } }
         public bool? Required { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.ParameterType? Type { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterParameterType? Type { get { throw null; } }
         protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentDefinitionParameterInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentDefinitionParameterInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2420,6 +2420,58 @@ namespace Azure.ResourceManager.DevCenter.Models
         Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentTypePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentTypePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentTypePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentTypePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DevCenterFeatureState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState>
+    {
+        public DevCenterFeatureState() { }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus? DefaultStatus { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue> DefaultValues { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable? StatusModifiable { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable? ValuesModifiable { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterFeatureStateModifiable : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterFeatureStateModifiable(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable Modifiable { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable NotModifiable { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable left, Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable left, Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterFeatureStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterFeatureStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus AutoDeploy { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DevCenterGitCatalog : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterGitCatalog>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterGitCatalog>
     {
@@ -2532,6 +2584,130 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport left, Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DevCenterImageCreationErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails>
+    {
+        internal DevCenterImageCreationErrorDetails() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DevCenterImageDefinitionBuildDetails : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildDetails>
+    {
+        internal DevCenterImageDefinitionBuildDetails() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterImageCreationErrorDetails ErrorDetails { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterImageReference ImageReference { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus? Status { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskGroup> TaskGroups { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterImageDefinitionBuildStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterImageDefinitionBuildStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus Running { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus TimedOut { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus ValidationFailed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevCenterImageDefinitionBuildTask : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTask>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTask>
+    {
+        internal DevCenterImageDefinitionBuildTask() { }
+        public string DisplayName { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.Uri LogUri { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskParametersItem> Parameters { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTask JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTask PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTask System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTask>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTask>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTask System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTask>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTask>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTask>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DevCenterImageDefinitionBuildTaskGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskGroup>
+    {
+        internal DevCenterImageDefinitionBuildTaskGroup() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus? Status { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTask> Tasks { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskGroup PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DevCenterImageDefinitionBuildTaskParametersItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskParametersItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskParametersItem>
+    {
+        internal DevCenterImageDefinitionBuildTaskParametersItem() { }
+        public string Key { get { throw null; } }
+        public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskParametersItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskParametersItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskParametersItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskParametersItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskParametersItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskParametersItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskParametersItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskParametersItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildTaskParametersItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DevCenterImageDefinitionReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionReference>
+    {
+        internal DevCenterImageDefinitionReference() { }
+        public string ImageDefinition { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterDefinitionParametersItem> Parameters { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DevCenterImageReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageReference>
     {
         public DevCenterImageReference() { }
@@ -2547,10 +2723,85 @@ namespace Azure.ResourceManager.DevCenter.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterImageReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DevCenterInheritedProjectCatalogSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedProjectCatalogSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedProjectCatalogSettings>
+    {
+        internal DevCenterInheritedProjectCatalogSettings() { }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus? CatalogItemSyncEnableStatus { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStatus? DefaultStatus { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterDefaultValue> DefaultValues { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable? StatusModifiable { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureStateModifiable? ValuesModifiable { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterInheritedProjectCatalogSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterInheritedProjectCatalogSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterInheritedProjectCatalogSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedProjectCatalogSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedProjectCatalogSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterInheritedProjectCatalogSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedProjectCatalogSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedProjectCatalogSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedProjectCatalogSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DevCenterInheritedSettingsForProject : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedSettingsForProject>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedSettingsForProject>
+    {
+        internal DevCenterInheritedSettingsForProject() { }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState AzureAiServicesSettings { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState DevBoxLimitsSettings { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState DevBoxScheduleDeleteSettings { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState DevBoxTunnelSettings { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState DisplayNameSettings { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus? MicrosoftHostedNetworkEnableStatus { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterInheritedProjectCatalogSettings ProjectCatalogSettings { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState ServerlessGpuSessionsSettings { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState UserCustomizationsSettings { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterFeatureState WorkspaceStorageSettings { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterInheritedSettingsForProject JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterInheritedSettingsForProject PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterInheritedSettingsForProject System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedSettingsForProject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedSettingsForProject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterInheritedSettingsForProject System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedSettingsForProject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedSettingsForProject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterInheritedSettingsForProject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterInstallAzureMonitorAgentEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterInstallAzureMonitorAgentEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterKeepAwakeEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterKeepAwakeEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterKeepAwakeEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterKeepAwakeEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterKeepAwakeEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterKeepAwakeEnableStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterKeepAwakeEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterKeepAwakeEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterKeepAwakeEnableStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterKeepAwakeEnableStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterKeepAwakeEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterKeepAwakeEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DevCenterKeyEncryptionKeyIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentity>
     {
         public DevCenterKeyEncryptionKeyIdentity() { }
-        public Azure.ResourceManager.DevCenter.Models.CmkIdentityType? Type { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCmkIdentityType? Type { get { throw null; } set { } }
         public string UserAssignedIdentityResourceId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2561,6 +2812,41 @@ namespace Azure.ResourceManager.DevCenter.Models
         Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterKeyEncryptionKeyIdentityType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterKeyEncryptionKeyIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentityType DelegatedResourceIdentity { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentityType SystemAssignedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentityType UserAssignedIdentity { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentityType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentityType left, Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentityType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentityType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentityType left, Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevCenterLatestImageBuild : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterLatestImageBuild>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterLatestImageBuild>
+    {
+        internal DevCenterLatestImageBuild() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterImageDefinitionBuildStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterLatestImageBuild JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterLatestImageBuild PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterLatestImageBuild System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterLatestImageBuild>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterLatestImageBuild>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterLatestImageBuild System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterLatestImageBuild>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterLatestImageBuild>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterLatestImageBuild>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DevCenterLicenseType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType>
@@ -2576,6 +2862,23 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType left, Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterMicrosoftHostedNetworkEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterMicrosoftHostedNetworkEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DevCenterNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterNameAvailabilityContent>
@@ -2659,15 +2962,36 @@ namespace Azure.ResourceManager.DevCenter.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterOperationStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterOperationStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterParameterType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterParameterType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterParameterType(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterParameterType Array { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterParameterType Boolean { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterParameterType Integer { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterParameterType Number { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterParameterType Object { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterParameterType String { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterParameterType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterParameterType left, Azure.ResourceManager.DevCenter.Models.DevCenterParameterType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterParameterType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterParameterType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterParameterType left, Azure.ResourceManager.DevCenter.Models.DevCenterParameterType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DevCenterPatch : Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterPatch>
     {
         public DevCenterPatch() { }
-        public Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus? CatalogItemSyncEnableStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.CustomerManagedKeyEncryption CustomerManagedKeyEncryption { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus? DevBoxProvisioningInstallAzureMonitorAgentEnableStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemSyncEnableStatus? CatalogItemSyncEnableStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCustomerManagedKeyEncryption CustomerManagedKeyEncryption { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterInstallAzureMonitorAgentEnableStatus? DevBoxProvisioningInstallAzureMonitorAgentEnableStatus { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus? MicrosoftHostedNetworkEnableStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterMicrosoftHostedNetworkEnableStatus? MicrosoftHostedNetworkEnableStatus { get { throw null; } set { } }
         protected override Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2677,6 +3001,23 @@ namespace Azure.ResourceManager.DevCenter.Models
         Azure.ResourceManager.DevCenter.Models.DevCenterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterPolicyAction : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterPolicyAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterPolicyAction(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterPolicyAction Allow { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterPolicyAction Deny { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterPolicyAction other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterPolicyAction left, Azure.ResourceManager.DevCenter.Models.DevCenterPolicyAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterPolicyAction (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterPolicyAction? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterPolicyAction left, Azure.ResourceManager.DevCenter.Models.DevCenterPolicyAction right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DevCenterPoolDevBoxDefinitionDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionDetail>
     {
@@ -2694,23 +3035,40 @@ namespace Azure.ResourceManager.DevCenter.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterPoolDevBoxDefinitionType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterPoolDevBoxDefinitionType(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType Reference { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType Value { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType left, Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType left, Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DevCenterPoolPatch : Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterPoolPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterPoolPatch>
     {
         public DevCenterPoolPatch() { }
-        public Azure.ResourceManager.DevCenter.Models.ActiveHoursConfiguration ActiveHoursConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterActiveHoursConfiguration ActiveHoursConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionDetail DevBoxDefinition { get { throw null; } set { } }
         public string DevBoxDefinitionName { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType? DevBoxDefinitionType { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.DevBoxTunnelEnableStatus? DevBoxTunnelEnableStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterPoolDevBoxDefinitionType? DevBoxDefinitionType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxTunnelEnableStatus? DevBoxTunnelEnableStatus { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType? LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.LocalAdminStatus? LocalAdministrator { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ManagedVirtualNetworkRegions { get { throw null; } }
         public string NetworkConnectionName { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus? SingleSignOnStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus? SingleSignOnStatus { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.StopOnDisconnectConfiguration StopOnDisconnect { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration StopOnNoConnect { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.VirtualNetworkType? VirtualNetworkType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration StopOnNoConnect { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType? VirtualNetworkType { get { throw null; } set { } }
         protected override Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2720,6 +3078,53 @@ namespace Azure.ResourceManager.DevCenter.Models
         Azure.ResourceManager.DevCenter.Models.DevCenterPoolPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterPoolPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterPoolPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterPoolPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterProjectCustomizationIdentityType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterProjectCustomizationIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationIdentityType SystemAssignedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationIdentityType UserAssignedIdentity { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationIdentityType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationIdentityType left, Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationIdentityType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationIdentityType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationIdentityType left, Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevCenterProjectCustomizationManagedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationManagedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationManagedIdentity>
+    {
+        public DevCenterProjectCustomizationManagedIdentity() { }
+        public Azure.Core.ResourceIdentifier IdentityResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationIdentityType? IdentityType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationManagedIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationManagedIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationManagedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationManagedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationManagedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationManagedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationManagedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationManagedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationManagedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DevCenterProjectCustomizationSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings>
+    {
+        public DevCenterProjectCustomizationSettings() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationManagedIdentity> Identities { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterUserCustomizationsEnableStatus? UserCustomizationsEnableStatus { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DevCenterProjectEnvironmentPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectEnvironmentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectEnvironmentPatch>
     {
@@ -2744,18 +3149,18 @@ namespace Azure.ResourceManager.DevCenter.Models
     public partial class DevCenterProjectPatch : Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterProjectPatch>
     {
         public DevCenterProjectPatch() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.AssignedGroup> AssignedGroups { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterAssignedGroup> AssignedGroups { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.AzureAiServicesMode? AzureAiServicesMode { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.CatalogItemType> CatalogItemSyncTypes { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings CustomizationSettings { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType> CatalogItemSyncTypes { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterProjectCustomizationSettings CustomizationSettings { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.DevBoxScheduleDeleteSettings DevBoxScheduleDeleteSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterDevBoxScheduleDeleteSettings DevBoxScheduleDeleteSettings { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DevCenterId { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public int? MaxDevBoxesPerUser { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings ServerlessGpuSessionsSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode? WorkspaceStorageMode { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings ServerlessGpuSessionsSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode? WorkspaceStorageMode { get { throw null; } set { } }
         protected override Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2796,6 +3201,23 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState left, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class DevCenterResourcePolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterResourcePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterResourcePolicy>
+    {
+        public DevCenterResourcePolicy() { }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterPolicyAction? Action { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string Resources { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterResourceType? ResourceType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterResourcePolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterResourcePolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterResourcePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterResourcePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterResourcePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterResourcePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterResourcePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterResourcePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterResourcePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DevCenterResourceRange : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange>
     {
@@ -2913,6 +3335,55 @@ namespace Azure.ResourceManager.DevCenter.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterScopedNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterScopedNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterServerlessGpuSessionsMode : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterServerlessGpuSessionsMode(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsMode AutoDeploy { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsMode Disabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsMode left, Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsMode left, Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevCenterServerlessGpuSessionsSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings>
+    {
+        public DevCenterServerlessGpuSessionsSettings() { }
+        public int? MaxConcurrentSessionsPerProject { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsMode? ServerlessGpuSessionsMode { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterServerlessGpuSessionsSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterSingleSignOnStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterSingleSignOnStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterSingleSignOnStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DevCenterSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterSku>
     {
         public DevCenterSku(string name) { }
@@ -2953,6 +3424,74 @@ namespace Azure.ResourceManager.DevCenter.Models
         Basic = 1,
         Standard = 2,
         Premium = 3,
+    }
+    public partial class DevCenterStopOnNoConnectConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration>
+    {
+        public DevCenterStopOnNoConnectConfiguration() { }
+        public int? GracePeriodMinutes { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectEnableStatus? Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterStopOnNoConnectEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterStopOnNoConnectEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectEnableStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectEnableStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectEnableStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterStopOnNoConnectEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevCenterSyncErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails>
+    {
+        internal DevCenterSyncErrorDetails() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogConflictError> Conflicts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogSyncError> Errors { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterCatalogErrorDetails OperationError { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterSyncErrorDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DevCenterSyncStats : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterSyncStats>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterSyncStats>
+    {
+        internal DevCenterSyncStats() { }
+        public int? Added { get { throw null; } }
+        public int? Removed { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterCatalogItemType> SyncedCatalogItemTypes { get { throw null; } }
+        public int? SynchronizationErrors { get { throw null; } }
+        public int? Unchanged { get { throw null; } }
+        public int? Updated { get { throw null; } }
+        public int? ValidationErrors { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterSyncStats JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterSyncStats PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevCenter.Models.DevCenterSyncStats System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterSyncStats>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterSyncStats>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevCenter.Models.DevCenterSyncStats System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterSyncStats>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterSyncStats>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterSyncStats>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DevCenterTrackedResourceUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate>
     {
@@ -3018,6 +3557,23 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterUsageUnit left, Azure.ResourceManager.DevCenter.Models.DevCenterUsageUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterUserCustomizationsEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterUserCustomizationsEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterUserCustomizationsEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterUserCustomizationsEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterUserCustomizationsEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterUserCustomizationsEnableStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterUserCustomizationsEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterUserCustomizationsEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterUserCustomizationsEnableStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterUserCustomizationsEnableStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterUserCustomizationsEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterUserCustomizationsEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DevCenterUserRoleAssignments : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterUserRoleAssignments>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterUserRoleAssignments>
     {
         public DevCenterUserRoleAssignments() { }
@@ -3031,6 +3587,40 @@ namespace Azure.ResourceManager.DevCenter.Models
         Azure.ResourceManager.DevCenter.Models.DevCenterUserRoleAssignments System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterUserRoleAssignments>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterUserRoleAssignments>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterUserRoleAssignments>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterVirtualNetworkType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterVirtualNetworkType(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType Managed { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType Unmanaged { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType left, Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType left, Azure.ResourceManager.DevCenter.Models.DevCenterVirtualNetworkType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterWorkspaceStorageMode : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterWorkspaceStorageMode(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode AutoDeploy { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode Disabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode left, Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode left, Azure.ResourceManager.DevCenter.Models.DevCenterWorkspaceStorageMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DomainJoinType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DomainJoinType>
@@ -3083,182 +3673,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator !=(Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus left, Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FeatureState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.FeatureState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.FeatureState>
-    {
-        public FeatureState() { }
-        public Azure.ResourceManager.DevCenter.Models.FeatureStatus? DefaultStatus { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DefaultValue> DefaultValues { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable? StatusModifiable { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable? ValuesModifiable { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.FeatureState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.FeatureState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.FeatureState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.FeatureState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.FeatureState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.FeatureState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.FeatureState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.FeatureState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.FeatureState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FeatureStateModifiable : System.IEquatable<Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FeatureStateModifiable(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable Modifiable { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable NotModifiable { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable left, Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable left, Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FeatureStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.FeatureStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FeatureStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.FeatureStatus AutoDeploy { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.FeatureStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.FeatureStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.FeatureStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.FeatureStatus left, Azure.ResourceManager.DevCenter.Models.FeatureStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.FeatureStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.FeatureStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.FeatureStatus left, Azure.ResourceManager.DevCenter.Models.FeatureStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ImageCreationErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails>
-    {
-        internal ImageCreationErrorDetails() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ImageDefinitionBuildDetails : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildDetails>
-    {
-        internal ImageDefinitionBuildDetails() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.ImageCreationErrorDetails ErrorDetails { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.DevCenterImageReference ImageReference { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus? Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskGroup> TaskGroups { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ImageDefinitionBuildStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ImageDefinitionBuildStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus Cancelled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus Running { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus TimedOut { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus ValidationFailed { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus left, Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus left, Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ImageDefinitionBuildTask : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTask>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTask>
-    {
-        internal ImageDefinitionBuildTask() { }
-        public string DisplayName { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public string Id { get { throw null; } }
-        public System.Uri LogUri { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskParametersItem> Parameters { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus? Status { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTask JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTask PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTask System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTask>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTask>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTask System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTask>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTask>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTask>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ImageDefinitionBuildTaskGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskGroup>
-    {
-        internal ImageDefinitionBuildTaskGroup() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus? Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTask> Tasks { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskGroup PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ImageDefinitionBuildTaskParametersItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskParametersItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskParametersItem>
-    {
-        internal ImageDefinitionBuildTaskParametersItem() { }
-        public string Key { get { throw null; } }
-        public string Value { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskParametersItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskParametersItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskParametersItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskParametersItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskParametersItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskParametersItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskParametersItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskParametersItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildTaskParametersItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ImageDefinitionReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionReference>
-    {
-        internal ImageDefinitionReference() { }
-        public string ImageDefinition { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DefinitionParametersItem> Parameters { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ImageDefinitionReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ImageDefinitionReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.ImageDefinitionReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.ImageDefinitionReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageDefinitionReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ImageValidationErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ImageValidationErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ImageValidationErrorDetails>
     {
         internal ImageValidationErrorDetails() { }
@@ -3294,86 +3708,11 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator !=(Azure.ResourceManager.DevCenter.Models.ImageValidationStatus left, Azure.ResourceManager.DevCenter.Models.ImageValidationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class InheritedProjectCatalogSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.InheritedProjectCatalogSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.InheritedProjectCatalogSettings>
-    {
-        internal InheritedProjectCatalogSettings() { }
-        public Azure.ResourceManager.DevCenter.Models.CatalogItemSyncEnableStatus? CatalogItemSyncEnableStatus { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureStatus? DefaultStatus { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DefaultValue> DefaultValues { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable? StatusModifiable { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureStateModifiable? ValuesModifiable { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.InheritedProjectCatalogSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.InheritedProjectCatalogSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.InheritedProjectCatalogSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.InheritedProjectCatalogSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.InheritedProjectCatalogSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.InheritedProjectCatalogSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.InheritedProjectCatalogSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.InheritedProjectCatalogSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.InheritedProjectCatalogSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class InheritedSettingsForProject : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.InheritedSettingsForProject>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.InheritedSettingsForProject>
-    {
-        internal InheritedSettingsForProject() { }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState AzureAiServicesSettings { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState DevBoxLimitsSettings { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState DevBoxScheduleDeleteSettings { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState DevBoxTunnelSettings { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState DisplayNameSettings { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus? MicrosoftHostedNetworkEnableStatus { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.InheritedProjectCatalogSettings ProjectCatalogSettings { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState ServerlessGpuSessionsSettings { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState UserCustomizationsSettings { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.FeatureState WorkspaceStorageSettings { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.InheritedSettingsForProject JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.InheritedSettingsForProject PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.InheritedSettingsForProject System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.InheritedSettingsForProject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.InheritedSettingsForProject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.InheritedSettingsForProject System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.InheritedSettingsForProject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.InheritedSettingsForProject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.InheritedSettingsForProject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct InstallAzureMonitorAgentEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public InstallAzureMonitorAgentEnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus left, Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus left, Azure.ResourceManager.DevCenter.Models.InstallAzureMonitorAgentEnableStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KeepAwakeEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.KeepAwakeEnableStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KeepAwakeEnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.KeepAwakeEnableStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.KeepAwakeEnableStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.KeepAwakeEnableStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.KeepAwakeEnableStatus left, Azure.ResourceManager.DevCenter.Models.KeepAwakeEnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.KeepAwakeEnableStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.KeepAwakeEnableStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.KeepAwakeEnableStatus left, Azure.ResourceManager.DevCenter.Models.KeepAwakeEnableStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class KeyEncryptionKeyIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentity>
     {
         public KeyEncryptionKeyIdentity() { }
         public System.Guid? DelegatedIdentityClientId { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentityType? IdentityType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterKeyEncryptionKeyIdentityType? IdentityType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier UserAssignedIdentityResourceId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3384,41 +3723,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KeyEncryptionKeyIdentityType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KeyEncryptionKeyIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentityType DelegatedResourceIdentity { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentityType SystemAssignedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentityType UserAssignedIdentity { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentityType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentityType left, Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentityType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentityType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentityType left, Azure.ResourceManager.DevCenter.Models.KeyEncryptionKeyIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class LatestImageBuild : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.LatestImageBuild>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.LatestImageBuild>
-    {
-        internal LatestImageBuild() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.ImageDefinitionBuildStatus? Status { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.LatestImageBuild JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.LatestImageBuild PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.LatestImageBuild System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.LatestImageBuild>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.LatestImageBuild>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.LatestImageBuild System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.LatestImageBuild>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.LatestImageBuild>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.LatestImageBuild>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LocalAdminStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.LocalAdminStatus>
@@ -3437,23 +3741,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator !=(Azure.ResourceManager.DevCenter.Models.LocalAdminStatus left, Azure.ResourceManager.DevCenter.Models.LocalAdminStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MicrosoftHostedNetworkEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MicrosoftHostedNetworkEnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus left, Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus left, Azure.ResourceManager.DevCenter.Models.MicrosoftHostedNetworkEnableStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class OutboundEnvironmentEndpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.OutboundEnvironmentEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.OutboundEnvironmentEndpoint>
     {
         internal OutboundEnvironmentEndpoint() { }
@@ -3469,113 +3756,11 @@ namespace Azure.ResourceManager.DevCenter.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.OutboundEnvironmentEndpoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.OutboundEnvironmentEndpoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ParameterType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.ParameterType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ParameterType(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ParameterType Array { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.ParameterType Boolean { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.ParameterType Integer { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.ParameterType Number { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.ParameterType Object { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.ParameterType String { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.ParameterType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.ParameterType left, Azure.ResourceManager.DevCenter.Models.ParameterType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.ParameterType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.ParameterType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.ParameterType left, Azure.ResourceManager.DevCenter.Models.ParameterType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PolicyAction : System.IEquatable<Azure.ResourceManager.DevCenter.Models.PolicyAction>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PolicyAction(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.PolicyAction Allow { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.PolicyAction Deny { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.PolicyAction other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.PolicyAction left, Azure.ResourceManager.DevCenter.Models.PolicyAction right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.PolicyAction (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.PolicyAction? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.PolicyAction left, Azure.ResourceManager.DevCenter.Models.PolicyAction right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PoolDevBoxDefinitionType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PoolDevBoxDefinitionType(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType Reference { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType Value { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType left, Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType left, Azure.ResourceManager.DevCenter.Models.PoolDevBoxDefinitionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProjectCustomizationIdentityType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProjectCustomizationIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ProjectCustomizationIdentityType SystemAssignedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.ProjectCustomizationIdentityType UserAssignedIdentity { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.ProjectCustomizationIdentityType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.ProjectCustomizationIdentityType left, Azure.ResourceManager.DevCenter.Models.ProjectCustomizationIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.ProjectCustomizationIdentityType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.ProjectCustomizationIdentityType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.ProjectCustomizationIdentityType left, Azure.ResourceManager.DevCenter.Models.ProjectCustomizationIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ProjectCustomizationManagedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationManagedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationManagedIdentity>
-    {
-        public ProjectCustomizationManagedIdentity() { }
-        public Azure.Core.ResourceIdentifier IdentityResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.ProjectCustomizationIdentityType? IdentityType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ProjectCustomizationManagedIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ProjectCustomizationManagedIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.ProjectCustomizationManagedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationManagedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationManagedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.ProjectCustomizationManagedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationManagedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationManagedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationManagedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ProjectCustomizationSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings>
-    {
-        public ProjectCustomizationSettings() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationManagedIdentity> Identities { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.UserCustomizationsEnableStatus? UserCustomizationsEnableStatus { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ProjectCustomizationSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ProjectPolicyPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ProjectPolicyPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ProjectPolicyPatch>
     {
         public ProjectPolicyPatch() { }
-        public Azure.ResourceManager.DevCenter.Models.ConfigurationPolicies ConfigurationPolicies { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.ResourcePolicy> ResourcePolicies { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterConfigurationPolicies ConfigurationPolicies { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.DevCenterResourcePolicy> ResourcePolicies { get { throw null; } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
         protected virtual Azure.ResourceManager.DevCenter.Models.ProjectPolicyPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3601,72 +3786,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ResourcePolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ResourcePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ResourcePolicy>
-    {
-        public ResourcePolicy() { }
-        public Azure.ResourceManager.DevCenter.Models.PolicyAction? Action { get { throw null; } set { } }
-        public string Filter { get { throw null; } set { } }
-        public string Resources { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.DevCenterResourceType? ResourceType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ResourcePolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ResourcePolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.ResourcePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ResourcePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ResourcePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.ResourcePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ResourcePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ResourcePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ResourcePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ServerlessGpuSessionsMode : System.IEquatable<Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ServerlessGpuSessionsMode(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsMode AutoDeploy { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsMode Disabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsMode other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsMode left, Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsMode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsMode left, Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ServerlessGpuSessionsSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings>
-    {
-        public ServerlessGpuSessionsSettings() { }
-        public int? MaxConcurrentSessionsPerProject { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsMode? ServerlessGpuSessionsMode { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.ServerlessGpuSessionsSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SingleSignOnStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SingleSignOnStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus left, Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus left, Azure.ResourceManager.DevCenter.Models.SingleSignOnStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class StopOnDisconnectConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.StopOnDisconnectConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.StopOnDisconnectConfiguration>
     {
@@ -3698,125 +3817,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static implicit operator Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus left, Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class StopOnNoConnectConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration>
-    {
-        public StopOnNoConnectConfiguration() { }
-        public int? GracePeriodMinutes { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.StopOnNoConnectEnableStatus? Status { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.StopOnNoConnectConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StopOnNoConnectEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.StopOnNoConnectEnableStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StopOnNoConnectEnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.StopOnNoConnectEnableStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.StopOnNoConnectEnableStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.StopOnNoConnectEnableStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.StopOnNoConnectEnableStatus left, Azure.ResourceManager.DevCenter.Models.StopOnNoConnectEnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.StopOnNoConnectEnableStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.StopOnNoConnectEnableStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.StopOnNoConnectEnableStatus left, Azure.ResourceManager.DevCenter.Models.StopOnNoConnectEnableStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SyncErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.SyncErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.SyncErrorDetails>
-    {
-        internal SyncErrorDetails() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.CatalogConflictError> Conflicts { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.CatalogSyncError> Errors { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.CatalogErrorDetails OperationError { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.SyncErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.SyncErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.SyncErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.SyncErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.SyncErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.SyncErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.SyncErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.SyncErrorDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.SyncErrorDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SyncStats : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.SyncStats>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.SyncStats>
-    {
-        internal SyncStats() { }
-        public int? Added { get { throw null; } }
-        public int? Removed { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DevCenter.Models.CatalogItemType> SyncedCatalogItemTypes { get { throw null; } }
-        public int? SynchronizationErrors { get { throw null; } }
-        public int? Unchanged { get { throw null; } }
-        public int? Updated { get { throw null; } }
-        public int? ValidationErrors { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevCenter.Models.SyncStats JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevCenter.Models.SyncStats PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevCenter.Models.SyncStats System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.SyncStats>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.SyncStats>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevCenter.Models.SyncStats System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.SyncStats>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.SyncStats>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.SyncStats>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UserCustomizationsEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.UserCustomizationsEnableStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public UserCustomizationsEnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.UserCustomizationsEnableStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.UserCustomizationsEnableStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.UserCustomizationsEnableStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.UserCustomizationsEnableStatus left, Azure.ResourceManager.DevCenter.Models.UserCustomizationsEnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.UserCustomizationsEnableStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.UserCustomizationsEnableStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.UserCustomizationsEnableStatus left, Azure.ResourceManager.DevCenter.Models.UserCustomizationsEnableStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VirtualNetworkType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.VirtualNetworkType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VirtualNetworkType(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.VirtualNetworkType Managed { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.VirtualNetworkType Unmanaged { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.VirtualNetworkType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.VirtualNetworkType left, Azure.ResourceManager.DevCenter.Models.VirtualNetworkType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.VirtualNetworkType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.VirtualNetworkType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.VirtualNetworkType left, Azure.ResourceManager.DevCenter.Models.VirtualNetworkType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WorkspaceStorageMode : System.IEquatable<Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WorkspaceStorageMode(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode AutoDeploy { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode Disabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode left, Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode left, Azure.ResourceManager.DevCenter.Models.WorkspaceStorageMode right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

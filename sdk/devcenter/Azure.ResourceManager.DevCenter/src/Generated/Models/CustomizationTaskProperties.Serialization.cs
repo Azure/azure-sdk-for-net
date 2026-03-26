@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            IReadOnlyDictionary<string, CustomizationTaskInput> inputs = default;
+            IReadOnlyDictionary<string, DevCenterCustomizationTaskInput> inputs = default;
             int? timeout = default;
-            CatalogResourceValidationStatus? validationStatus = default;
+            DevCenterCatalogResourceValidationStatus? validationStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    Dictionary<string, CustomizationTaskInput> dictionary = new Dictionary<string, CustomizationTaskInput>();
+                    Dictionary<string, DevCenterCustomizationTaskInput> dictionary = new Dictionary<string, DevCenterCustomizationTaskInput>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, CustomizationTaskInput.DeserializeCustomizationTaskInput(prop0.Value, options));
+                        dictionary.Add(prop0.Name, DevCenterCustomizationTaskInput.DeserializeDevCenterCustomizationTaskInput(prop0.Value, options));
                     }
                     inputs = dictionary;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    validationStatus = new CatalogResourceValidationStatus(prop.Value.GetString());
+                    validationStatus = new DevCenterCatalogResourceValidationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomizationTaskProperties(inputs ?? new ChangeTrackingDictionary<string, CustomizationTaskInput>(), timeout, validationStatus, additionalBinaryDataProperties);
+            return new CustomizationTaskProperties(inputs ?? new ChangeTrackingDictionary<string, DevCenterCustomizationTaskInput>(), timeout, validationStatus, additionalBinaryDataProperties);
         }
     }
 }

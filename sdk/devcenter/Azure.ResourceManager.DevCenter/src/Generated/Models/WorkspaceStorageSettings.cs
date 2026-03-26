@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="WorkspaceStorageSettings"/>. </summary>
         /// <param name="workspaceStorageMode"> Indicates whether workspace storage is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceStorageSettings(WorkspaceStorageMode? workspaceStorageMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceStorageSettings(DevCenterWorkspaceStorageMode? workspaceStorageMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkspaceStorageMode = workspaceStorageMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether workspace storage is enabled. </summary>
-        public WorkspaceStorageMode? WorkspaceStorageMode { get; set; }
+        public DevCenterWorkspaceStorageMode? WorkspaceStorageMode { get; set; }
     }
 }

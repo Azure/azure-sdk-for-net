@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            CatalogItemSyncEnableStatus? catalogItemSyncEnableStatus = default;
+            DevCenterCatalogItemSyncEnableStatus? catalogItemSyncEnableStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    catalogItemSyncEnableStatus = new CatalogItemSyncEnableStatus(prop.Value.GetString());
+                    catalogItemSyncEnableStatus = new DevCenterCatalogItemSyncEnableStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> The architecture type of the image. </summary>
-        public ArchitectureType? Architecture
+        public DevCenterArchitectureType? Architecture
         {
             get
             {

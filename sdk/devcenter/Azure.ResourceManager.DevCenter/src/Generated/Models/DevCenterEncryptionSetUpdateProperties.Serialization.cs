@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            DevboxDisksEncryptionEnableStatus? devboxDisksEncryptionEnableStatus = default;
+            DevCenterDevboxDisksEncryptionEnableStatus? devboxDisksEncryptionEnableStatus = default;
             Uri keyEncryptionKeyUri = default;
             DevCenterKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    devboxDisksEncryptionEnableStatus = new DevboxDisksEncryptionEnableStatus(prop.Value.GetString());
+                    devboxDisksEncryptionEnableStatus = new DevCenterDevboxDisksEncryptionEnableStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("keyEncryptionKeyUrl"u8))

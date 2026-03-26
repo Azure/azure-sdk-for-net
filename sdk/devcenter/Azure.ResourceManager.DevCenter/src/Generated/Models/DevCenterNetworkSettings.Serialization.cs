@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            MicrosoftHostedNetworkEnableStatus? microsoftHostedNetworkEnableStatus = default;
+            DevCenterMicrosoftHostedNetworkEnableStatus? microsoftHostedNetworkEnableStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    microsoftHostedNetworkEnableStatus = new MicrosoftHostedNetworkEnableStatus(prop.Value.GetString());
+                    microsoftHostedNetworkEnableStatus = new DevCenterMicrosoftHostedNetworkEnableStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
