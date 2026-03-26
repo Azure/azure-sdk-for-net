@@ -63,7 +63,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.AreEqual(1L, evt.SchemaVersion);
             Assert.AreEqual(ShareChangeFeedReasonType.SmbCreate, evt.Reason);
             Assert.AreEqual(ShareChangeFeedProtocol.Smb, evt.Protocol);
-            Assert.AreEqual("62616073-8020-0000-00ff-233467060cc0", evt.Id);
+            Assert.AreEqual(Guid.Parse("62616073-8020-0000-00ff-233467060cc0"), evt.Id);
             Assert.AreEqual(100L, evt.ContainerVersionNumber);
 
             Assert.IsNotNull(evt.EventData);
@@ -94,7 +94,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 { "Reason", "RestCreate" },
                 { "Protocol", "REST" },
                 { "EventTime", "2024-01-15T08:00:00Z" },
-                { "Id", "test-id" },
+                { "Id", "a1b2c3d4-e5f6-7890-abcd-ef1234567890" },
                 { "Cvnt", 50L },
                 { "Data", new Dictionary<string, object>
                     {

@@ -6,8 +6,10 @@ using System.Collections.Generic;
 namespace Azure.Storage.ChangeFeed.Common
 {
     /// <summary>
-    /// A page of change feed events, used as the return type for paginated change feed reads.
-    /// The continuation token is a serialized <see cref="ChangeFeedCursor"/>.
+    /// A page of change feed events that implements the <see cref="Page{T}"/> contract required by
+    /// <see cref="Pageable{T}"/>. Wraps a list of events together with a serialized
+    /// <see cref="ChangeFeedCursor"/> as the continuation token. This is the generic equivalent
+    /// of <c>BlobChangeFeedEventPage</c> in the Blob Change Feed package.
     /// </summary>
     internal class ChangeFeedEventPageBase<TEvent> : Page<TEvent>
     {

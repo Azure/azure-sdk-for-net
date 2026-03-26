@@ -34,12 +34,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// </summary>
         /// <param name="connectionString">A connection string that includes the account name and key or SAS token.</param>
         /// <param name="shareName">The name of the file share whose change feed will be read.</param>
-        /// <param name="blobOptions">Optional <see cref="BlobClientOptions"/> for configuring the underlying blob requests.</param>
         /// <param name="changeFeedOptions">Optional <see cref="ShareChangeFeedClientOptions"/> for tuning change feed behavior.</param>
         public ShareChangeFeedClient(
             string connectionString,
             string shareName,
-            BlobClientOptions blobOptions = default,
             ShareChangeFeedClientOptions changeFeedOptions = default)
         {
             _shareName = shareName ?? throw new ArgumentNullException(nameof(shareName));
@@ -52,7 +50,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             // Build an HTTP pipeline with shared key auth so we can call the file service
             // Get Share Properties endpoint to discover the change feed blob container name.
             StorageSharedKeyCredential sharedKeyCredential = connString.Credentials as StorageSharedKeyCredential;
-            blobOptions ??= new BlobClientOptions();
+            var blobOptions = new BlobClientOptions();
             _pipeline = HttpPipelineBuilder.Build(
                 blobOptions,
                 sharedKeyCredential != null
@@ -69,20 +67,18 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <param name="fileServiceUri">The URI of the file service endpoint (e.g., https://account.file.core.windows.net).</param>
         /// <param name="shareName">The name of the file share whose change feed will be read.</param>
         /// <param name="credential">A <see cref="StorageSharedKeyCredential"/> for authenticating requests.</param>
-        /// <param name="blobOptions">Optional <see cref="BlobClientOptions"/> for configuring the underlying blob requests.</param>
         /// <param name="changeFeedOptions">Optional <see cref="ShareChangeFeedClientOptions"/> for tuning change feed behavior.</param>
         public ShareChangeFeedClient(
             Uri fileServiceUri,
             string shareName,
             StorageSharedKeyCredential credential,
-            BlobClientOptions blobOptions = default,
             ShareChangeFeedClientOptions changeFeedOptions = default)
         {
             _shareName = shareName ?? throw new ArgumentNullException(nameof(shareName));
             _fileServiceUri = fileServiceUri ?? throw new ArgumentNullException(nameof(fileServiceUri));
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
 
-            blobOptions ??= new BlobClientOptions();
+            var blobOptions = new BlobClientOptions();
             _pipeline = HttpPipelineBuilder.Build(
                 blobOptions,
                 new StorageSharedKeyPipelinePolicy(credential));
@@ -100,20 +96,18 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <param name="fileServiceUri">The URI of the file service endpoint (e.g., https://account.file.core.windows.net).</param>
         /// <param name="shareName">The name of the file share whose change feed will be read.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> (e.g., DefaultAzureCredential) for authenticating requests.</param>
-        /// <param name="blobOptions">Optional <see cref="BlobClientOptions"/> for configuring the underlying blob requests.</param>
         /// <param name="changeFeedOptions">Optional <see cref="ShareChangeFeedClientOptions"/> for tuning change feed behavior.</param>
         public ShareChangeFeedClient(
             Uri fileServiceUri,
             string shareName,
             TokenCredential credential,
-            BlobClientOptions blobOptions = default,
             ShareChangeFeedClientOptions changeFeedOptions = default)
         {
             _shareName = shareName ?? throw new ArgumentNullException(nameof(shareName));
             _fileServiceUri = fileServiceUri ?? throw new ArgumentNullException(nameof(fileServiceUri));
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
 
-            blobOptions ??= new BlobClientOptions();
+            var blobOptions = new BlobClientOptions();
             _pipeline = HttpPipelineBuilder.Build(
                 blobOptions,
                 new BearerTokenAuthenticationPolicy(credential, Constants.DefaultScope));

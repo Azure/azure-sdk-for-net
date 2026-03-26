@@ -8,6 +8,8 @@ namespace Azure.Storage.ChangeFeed.Common
 {
     /// <summary>
     /// Factory that creates <see cref="AvroReader"/> instances for parsing Avro-formatted chunk files.
+    /// This indirection exists so that unit tests can inject a mocked <see cref="AvroReader"/> via Moq
+    /// (all methods are <c>virtual</c>). The Blob Change Feed package has an identical factory class.
     /// </summary>
     internal class AvroReaderFactory
     {

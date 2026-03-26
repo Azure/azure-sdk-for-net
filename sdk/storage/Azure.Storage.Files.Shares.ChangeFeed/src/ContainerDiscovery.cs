@@ -12,6 +12,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     /// <summary>
     /// Discovers the change feed blob container name for a given file share
     /// by calling the Get Share Properties REST API.
+    /// TODO: Replace this raw REST call by calling into Azure.Storage.Files.Shares
+    /// ShareClient.GetProperties() once that package exposes the change feed container header.
     /// </summary>
     internal static class ContainerDiscovery
     {

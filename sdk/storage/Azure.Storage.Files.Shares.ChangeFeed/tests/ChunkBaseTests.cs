@@ -36,8 +36,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 TimeWindowInterval = TimeSpan.FromMinutes(15),
                 ContainerPrefix = "$fileschangefeed-testguid/",
                 EventParser = dict => new ShareChangeFeedEvent(dict),
-                DefaultPageSize = 5000,
-                ChunkBlockDownloadSize = Constants.MB,
+                DefaultPageSize = Constants.FilesChangeFeed.DefaultPageSize,
+                ChunkBlockDownloadSize = Constants.FilesChangeFeed.ChunkBlockDownloadSize,
+                InitializationSegment = Constants.FilesChangeFeed.InitializationSegment,
+                SegmentPrefix = Constants.FilesChangeFeed.SegmentPrefix,
+                MetaSegmentsPath = Constants.FilesChangeFeed.MetaSegmentsPath,
             };
 
         /// <summary>
@@ -172,7 +175,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.AreEqual(ShareChangeFeedProtocol.Smb, changeFeedEvent.Protocol);
             Assert.AreEqual(1L, changeFeedEvent.SchemaVersion);
             Assert.AreEqual(100L, changeFeedEvent.ContainerVersionNumber);
-            Assert.AreEqual("62616073-8020-0000-00ff-233467060cc0", changeFeedEvent.Id);
+            Assert.AreEqual(Guid.Parse("62616073-8020-0000-00ff-233467060cc0"), changeFeedEvent.Id);
             Assert.AreEqual("9223442405598953472", changeFeedEvent.EventData.FileId);
             Assert.AreEqual("sample.txt", changeFeedEvent.EventData.FileName);
             Assert.AreEqual("dir/sample.txt", changeFeedEvent.EventData.FullFilePath);

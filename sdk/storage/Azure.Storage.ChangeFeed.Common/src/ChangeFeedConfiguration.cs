@@ -30,26 +30,26 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <summary>
         /// Maximum number of events returned in a single page.
         /// </summary>
-        public int DefaultPageSize { get; set; } = 5000;
+        public int DefaultPageSize { get; set; }
 
         /// <summary>
         /// Download size in bytes for each lazy-loading block read from a chunk blob.
         /// </summary>
-        public long ChunkBlockDownloadSize { get; set; } = Constants.MB;
+        public long ChunkBlockDownloadSize { get; set; }
 
         /// <summary>
         /// Year prefix used for the initialization segment that should be skipped when enumerating years.
         /// </summary>
-        public string InitializationSegment { get; set; } = "1601";
+        public string InitializationSegment { get; set; }
 
         /// <summary>
         /// Blob prefix under which segment manifests are stored.
         /// </summary>
-        public string SegmentPrefix { get; set; } = "idx/segments/";
+        public string SegmentPrefix { get; set; }
 
         /// <summary>
         /// Blob path to the meta segments JSON file that contains the last consumable timestamp.
         /// </summary>
-        public string MetaSegmentsPath { get; set; } = "meta/segments.json";
+        public string MetaSegmentsPath { get; set; }
     }
 }

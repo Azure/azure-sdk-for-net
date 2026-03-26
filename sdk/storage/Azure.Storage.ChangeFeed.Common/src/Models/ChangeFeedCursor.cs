@@ -39,6 +39,8 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="currentSegmentCursor">Cursor for the current segment position.</param>
         internal ChangeFeedCursor(string urlHost, DateTimeOffset? endDateTime, SegmentCursor currentSegmentCursor)
         {
+            // TODO: If the cursor schema diverges from Blob CF's format, bump this version
+            // so that old cursors are rejected gracefully.
             CursorVersion = 1;
             UrlHost = urlHost;
             EndTime = endDateTime;
