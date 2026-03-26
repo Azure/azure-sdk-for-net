@@ -8,6 +8,10 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 {
+    /// <summary>
+    /// Tests for <see cref="ShareChangeFeedEvent"/> deserialization from Avro record dictionaries
+    /// and for the equality semantics of reason type and protocol value types.
+    /// </summary>
     public class ShareChangeFeedEventTests : ShareChangeFeedTestBase
     {
         public ShareChangeFeedEventTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
@@ -15,6 +19,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Verifies that all top-level and nested fields are correctly deserialized from a complete Avro record dictionary.
+        /// </summary>
         [Test]
         public void Deserialization_AllFields()
         {
@@ -29,6 +36,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 { "IsDirectory", "false" },
                 { "Description", "test description" },
                 { "Initiator", "user@example.com" },
+                // Nested Identity dict exercises the recursive deserialization path
                 { "Identity", new Dictionary<string, object>
                     {
                         { "EntraOID", "550e8400-e29b-41d4-a716-446655440000" },
@@ -68,11 +76,15 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.AreEqual("test description", evt.EventData.Description);
             Assert.AreEqual("user@example.com", evt.EventData.Initiator);
 
+            // Verify nested Identity was deserialized
             Assert.IsNotNull(evt.EventData.Identity);
             Assert.AreEqual("550e8400-e29b-41d4-a716-446655440000", evt.EventData.Identity.EntraObjectId);
             Assert.AreEqual("S-1-5-21-3623811015-3361044348-30300820-1013", evt.EventData.Identity.SecurityIdentifier);
         }
 
+        /// <summary>
+        /// Verifies that IsDirectory is correctly deserialized as true and that REST protocol and reason are mapped.
+        /// </summary>
         [Test]
         public void Deserialization_IsDirectory_True()
         {
@@ -100,6 +112,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.IsTrue(evt.EventData.IsDirectory);
         }
 
+        /// <summary>
+        /// Verifies equality and inequality operators on <see cref="ShareChangeFeedReasonType"/> extensible enum values.
+        /// </summary>
         [Test]
         public void ReasonType_Equality()
         {
@@ -108,6 +123,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.IsTrue(ShareChangeFeedReasonType.RestWrite == new ShareChangeFeedReasonType("RestWrite"));
         }
 
+        /// <summary>
+        /// Verifies equality and inequality operators on <see cref="ShareChangeFeedProtocol"/> extensible enum values.
+        /// </summary>
         [Test]
         public void Protocol_Equality()
         {

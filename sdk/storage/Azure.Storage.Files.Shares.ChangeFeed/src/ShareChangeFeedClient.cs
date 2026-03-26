@@ -13,8 +13,11 @@ using Azure.Storage.ChangeFeed.Common;
 namespace Azure.Storage.Files.Shares.ChangeFeed
 {
     /// <summary>
-    /// ShareChangeFeedClient provides operations to read the change feed
-    /// for an Azure File Share.
+    /// <see cref="ShareChangeFeedClient"/> provides operations to read the
+    /// Azure Files Change Feed for a specific file share. The change feed records
+    /// all file and directory mutations (creates, renames, deletes, writes, etc.)
+    /// and is backed by Avro log segments stored in a blob container whose name
+    /// is discovered via the share properties REST API.
     /// </summary>
     public class ShareChangeFeedClient
     {
@@ -27,8 +30,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         #region ctors
         /// <summary>
         /// Initializes a new instance of <see cref="ShareChangeFeedClient"/>
-        /// using a connection string.
+        /// using a storage connection string.
         /// </summary>
+        /// <param name="connectionString">A connection string that includes the account name and key or SAS token.</param>
+        /// <param name="shareName">The name of the file share whose change feed will be read.</param>
+        /// <param name="blobOptions">Optional <see cref="BlobClientOptions"/> for configuring the underlying blob requests.</param>
+        /// <param name="changeFeedOptions">Optional <see cref="ShareChangeFeedClientOptions"/> for tuning change feed behavior.</param>
         public ShareChangeFeedClient(
             string connectionString,
             string shareName,
@@ -38,10 +45,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             _shareName = shareName ?? throw new ArgumentNullException(nameof(shareName));
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
 
+            // Parse the connection string to extract the file service endpoint for container discovery.
             StorageConnectionString connString = StorageConnectionString.Parse(connectionString);
             _fileServiceUri = connString.FileEndpoint;
 
-            // Build pipeline with shared key for the file endpoint discovery call
+            // Build an HTTP pipeline with shared key auth so we can call the file service
+            // Get Share Properties endpoint to discover the change feed blob container name.
             StorageSharedKeyCredential sharedKeyCredential = connString.Credentials as StorageSharedKeyCredential;
             blobOptions ??= new BlobClientOptions();
             _pipeline = HttpPipelineBuilder.Build(
@@ -55,8 +64,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
         /// <summary>
         /// Initializes a new instance of <see cref="ShareChangeFeedClient"/>
-        /// with a storage account URI and shared key credential.
+        /// using a file service URI and shared key credential.
         /// </summary>
+        /// <param name="fileServiceUri">The URI of the file service endpoint (e.g., https://account.file.core.windows.net).</param>
+        /// <param name="shareName">The name of the file share whose change feed will be read.</param>
+        /// <param name="credential">A <see cref="StorageSharedKeyCredential"/> for authenticating requests.</param>
+        /// <param name="blobOptions">Optional <see cref="BlobClientOptions"/> for configuring the underlying blob requests.</param>
+        /// <param name="changeFeedOptions">Optional <see cref="ShareChangeFeedClientOptions"/> for tuning change feed behavior.</param>
         public ShareChangeFeedClient(
             Uri fileServiceUri,
             string shareName,
@@ -73,14 +87,21 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 blobOptions,
                 new StorageSharedKeyPipelinePolicy(credential));
 
+            // Derive the blob service endpoint from the file endpoint (e.g., .file. -> .blob.)
+            // so we can read the change feed Avro segments from blob storage.
             Uri blobEndpoint = ContainerDiscovery.FileToBlobEndpoint(fileServiceUri);
             _blobServiceClient = new BlobServiceClient(blobEndpoint, credential, blobOptions);
         }
 
         /// <summary>
         /// Initializes a new instance of <see cref="ShareChangeFeedClient"/>
-        /// with a storage account URI and token credential.
+        /// using a file service URI and Azure Active Directory token credential.
         /// </summary>
+        /// <param name="fileServiceUri">The URI of the file service endpoint (e.g., https://account.file.core.windows.net).</param>
+        /// <param name="shareName">The name of the file share whose change feed will be read.</param>
+        /// <param name="credential">A <see cref="TokenCredential"/> (e.g., DefaultAzureCredential) for authenticating requests.</param>
+        /// <param name="blobOptions">Optional <see cref="BlobClientOptions"/> for configuring the underlying blob requests.</param>
+        /// <param name="changeFeedOptions">Optional <see cref="ShareChangeFeedClientOptions"/> for tuning change feed behavior.</param>
         public ShareChangeFeedClient(
             Uri fileServiceUri,
             string shareName,
@@ -97,18 +118,25 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 blobOptions,
                 new BearerTokenAuthenticationPolicy(credential, Constants.DefaultScope));
 
+            // Derive the blob service endpoint from the file endpoint (e.g., .file. -> .blob.)
+            // so we can read the change feed Avro segments from blob storage.
             Uri blobEndpoint = ContainerDiscovery.FileToBlobEndpoint(fileServiceUri);
             _blobServiceClient = new BlobServiceClient(blobEndpoint, credential, blobOptions);
         }
 
         /// <summary>
-        /// Constructor for mocking.
+        /// Initializes a new instance of <see cref="ShareChangeFeedClient"/> for mocking purposes.
         /// </summary>
         protected ShareChangeFeedClient() { }
 
         /// <summary>
-        /// Internal constructor for use by extension methods.
+        /// Internal constructor used by extension methods or tests to supply pre-built dependencies.
         /// </summary>
+        /// <param name="blobServiceClient">The pre-configured blob service client.</param>
+        /// <param name="pipeline">The HTTP pipeline for file service discovery calls.</param>
+        /// <param name="fileServiceUri">The file service endpoint URI.</param>
+        /// <param name="shareName">The name of the file share.</param>
+        /// <param name="changeFeedOptions">Optional change feed client options.</param>
         internal ShareChangeFeedClient(
             BlobServiceClient blobServiceClient,
             HttpPipeline pipeline,
@@ -126,8 +154,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
         #region GetChanges
         /// <summary>
-        /// Returns all change feed events for the file share.
+        /// Returns all change feed events for the file share as a synchronous pageable sequence.
         /// </summary>
+        /// <returns>A <see cref="Pageable{ShareChangeFeedEvent}"/> enumerating all change feed events.</returns>
         public virtual Pageable<ShareChangeFeedEvent> GetChanges()
             => new ShareChangeFeedPageable(
                 _blobServiceClient,
@@ -137,8 +166,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 _maxTransferSize);
 
         /// <summary>
-        /// Returns all change feed events for the file share.
+        /// Returns all change feed events for the file share as an asynchronous pageable sequence.
         /// </summary>
+        /// <returns>An <see cref="AsyncPageable{ShareChangeFeedEvent}"/> enumerating all change feed events.</returns>
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesAsync()
             => new ShareChangeFeedAsyncPageable(
                 _blobServiceClient,
@@ -148,8 +178,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 _maxTransferSize);
 
         /// <summary>
-        /// Returns change feed events within the specified time range.
+        /// Returns change feed events within the specified time range as a synchronous pageable sequence.
         /// </summary>
+        /// <param name="start">The optional inclusive start time for filtering events.</param>
+        /// <param name="end">The optional exclusive end time for filtering events.</param>
+        /// <returns>A <see cref="Pageable{ShareChangeFeedEvent}"/> enumerating matching change feed events.</returns>
         public virtual Pageable<ShareChangeFeedEvent> GetChanges(
             DateTimeOffset? start,
             DateTimeOffset? end)
@@ -163,8 +196,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 endTime: end);
 
         /// <summary>
-        /// Returns change feed events within the specified time range.
+        /// Returns change feed events within the specified time range as an asynchronous pageable sequence.
         /// </summary>
+        /// <param name="start">The optional inclusive start time for filtering events.</param>
+        /// <param name="end">The optional exclusive end time for filtering events.</param>
+        /// <returns>An <see cref="AsyncPageable{ShareChangeFeedEvent}"/> enumerating matching change feed events.</returns>
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesAsync(
             DateTimeOffset? start,
             DateTimeOffset? end)
@@ -178,8 +214,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 endTime: end);
 
         /// <summary>
-        /// Resumes reading change feed events from a continuation token.
+        /// Resumes reading change feed events from a previously obtained continuation token.
         /// </summary>
+        /// <param name="continuationToken">A continuation token returned from a previous change feed enumeration.</param>
+        /// <returns>A <see cref="Pageable{ShareChangeFeedEvent}"/> resuming from the continuation point.</returns>
         public virtual Pageable<ShareChangeFeedEvent> GetChanges(
             string continuationToken)
             => new ShareChangeFeedPageable(
@@ -191,8 +229,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 continuation: continuationToken);
 
         /// <summary>
-        /// Resumes reading change feed events from a continuation token.
+        /// Resumes reading change feed events from a previously obtained continuation token.
         /// </summary>
+        /// <param name="continuationToken">A continuation token returned from a previous change feed enumeration.</param>
+        /// <returns>An <see cref="AsyncPageable{ShareChangeFeedEvent}"/> resuming from the continuation point.</returns>
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesAsync(
             string continuationToken)
             => new ShareChangeFeedAsyncPageable(
@@ -242,8 +282,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
         #region GetLastConsumable
         /// <summary>
-        /// Gets the last consumable timestamp from the change feed.
+        /// Gets the last consumable timestamp from the change feed, indicating the most recent
+        /// time up to which events are guaranteed to be available.
         /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the operation.</param>
+        /// <returns>The last consumable <see cref="DateTimeOffset"/>, or <c>null</c> if the change feed has no data.</returns>
         public virtual DateTimeOffset? GetLastConsumable(
             CancellationToken cancellationToken = default)
             => GetLastConsumableInternal(
@@ -251,18 +294,25 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Gets the last consumable timestamp from the change feed.
+        /// Asynchronously gets the last consumable timestamp from the change feed, indicating the most recent
+        /// time up to which events are guaranteed to be available.
         /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the operation.</param>
+        /// <returns>The last consumable <see cref="DateTimeOffset"/>, or <c>null</c> if the change feed has no data.</returns>
         public virtual async Task<DateTimeOffset?> GetLastConsumableAsync(
             CancellationToken cancellationToken = default)
             => await GetLastConsumableInternal(
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
+        /// <summary>
+        /// Shared implementation for <see cref="GetLastConsumable"/> and <see cref="GetLastConsumableAsync"/>.
+        /// </summary>
         private async Task<DateTimeOffset?> GetLastConsumableInternal(
             bool async,
             CancellationToken cancellationToken)
         {
+            // First discover the blob container name by querying the file share properties.
             string containerName = await ContainerDiscovery.DiscoverContainerNameAsync(
                 _pipeline,
                 _fileServiceUri,
@@ -280,6 +330,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         }
         #endregion GetLastConsumable
 
+        /// <summary>
+        /// Creates a <see cref="ChangeFeedConfiguration{ShareChangeFeedEvent}"/> that defines
+        /// the time-window interval, blob path conventions, event parser, and other settings
+        /// specific to the Azure Files Change Feed format.
+        /// </summary>
+        /// <param name="containerName">The discovered blob container name that holds the change feed data.</param>
+        /// <returns>A configuration instance for building a change feed reader.</returns>
         internal static ChangeFeedConfiguration<ShareChangeFeedEvent> CreateConfiguration(string containerName)
             => new ChangeFeedConfiguration<ShareChangeFeedEvent>
             {

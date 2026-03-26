@@ -12,6 +12,10 @@ using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 {
+    /// <summary>
+    /// Base class for Share Change Feed tests, providing shared mock data and helper methods
+    /// for building <see cref="BlobClientOptions"/> and simulating year/segment blob hierarchies.
+    /// </summary>
     [ClientTestFixture(
         BlobClientOptions.ServiceVersion.V2026_02_06,
         BlobClientOptions.ServiceVersion.V2026_04_06,
@@ -24,12 +28,18 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
 
+        /// <summary>
+        /// Initializes the test base with async mode, service version, and optional recorded test mode.
+        /// </summary>
         public ShareChangeFeedTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
             _serviceVersion = serviceVersion;
         }
 
+        /// <summary>
+        /// Creates instrumented <see cref="BlobClientOptions"/> configured with retry policy and recording support.
+        /// </summary>
         public BlobClientOptions GetOptions()
         {
             var options = new BlobClientOptions(_serviceVersion)
@@ -52,7 +62,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         /// <summary>
-        /// Returns a page of mock year paths for test setup.
+        /// Returns a page of mock year-level prefix paths (e.g., "idx/segments/2024/") for test setup.
         /// </summary>
         public static Page<BlobHierarchyItem> GetYearPathFunc(string continuation, int? pageSizeHint)
             => new BlobHierarchyItemPage(new List<BlobHierarchyItem>
@@ -62,15 +72,19 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 BlobsModelFactory.BlobHierarchyItem("idx/segments/2024/", null),
             });
 
+        /// <summary>
+        /// Async wrapper for <see cref="GetYearPathFunc"/>.
+        /// </summary>
         public static Task<Page<BlobHierarchyItem>> GetYearPathFuncAsync(string continuation, int? pageSizeHint)
             => Task.FromResult(GetYearPathFunc(continuation, pageSizeHint));
 
         /// <summary>
-        /// Returns a page of mock 15-minute segment paths for a year.
+        /// Returns a page of mock segment paths within a single year, representing 15-minute time windows.
         /// </summary>
         public static Page<BlobHierarchyItem> GetSegmentsInYearFunc(string continuation, int? pageSizeHint)
             => new BlobHierarchyItemPage(new List<BlobHierarchyItem>
             {
+                // Each segment path uses HHmm format representing 15-minute windows: 08:00, 08:15, 08:30, 08:45, 09:00
                 BlobsModelFactory.BlobHierarchyItem(
                     null,
                     BlobsModelFactory.BlobItem("idx/segments/2024/01/15/0800/meta.json", false, null)),
@@ -88,9 +102,16 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     BlobsModelFactory.BlobItem("idx/segments/2024/01/15/0900/meta.json", false, null)),
             });
 
+        /// <summary>
+        /// Async wrapper for <see cref="GetSegmentsInYearFunc"/>.
+        /// </summary>
         public static Task<Page<BlobHierarchyItem>> GetSegmentsInYearFuncAsync(string continuation, int? pageSizeHint)
             => Task.FromResult(GetSegmentsInYearFunc(continuation, pageSizeHint));
 
+        /// <summary>
+        /// Minimal <see cref="Page{T}"/> implementation that wraps a list of <see cref="BlobHierarchyItem"/>
+        /// for use in mock pageable responses. Always returns a null continuation token (single page).
+        /// </summary>
         public class BlobHierarchyItemPage : Page<BlobHierarchyItem>
         {
             private readonly List<BlobHierarchyItem> _items;

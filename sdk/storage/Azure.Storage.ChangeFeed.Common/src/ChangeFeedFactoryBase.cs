@@ -11,12 +11,23 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.ChangeFeed.Common
 {
+    /// <summary>
+    /// Top-level factory that orchestrates the construction of a <see cref="ChangeFeedBase{TEvent}"/>,
+    /// handling cursor deserialization, time rounding, year/segment enumeration, and the full factory hierarchy.
+    /// </summary>
     internal class ChangeFeedFactoryBase<TEvent>
     {
         private readonly SegmentFactoryBase<TEvent> _segmentFactory;
         private readonly BlobContainerClient _containerClient;
         private readonly ChangeFeedConfiguration<TEvent> _config;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ChangeFeedFactoryBase{TEvent}"/> class,
+        /// creating the full factory chain (Segment -> Shard -> Chunk -> Avro).
+        /// </summary>
+        /// <param name="containerClient">Container client for the change feed container.</param>
+        /// <param name="maxTransferSize">Optional override for the chunk download block size.</param>
+        /// <param name="config">Change feed configuration.</param>
         public ChangeFeedFactoryBase(BlobContainerClient containerClient, long? maxTransferSize, ChangeFeedConfiguration<TEvent> config)
         {
             _containerClient = containerClient;
@@ -34,6 +45,12 @@ namespace Azure.Storage.ChangeFeed.Common
                 config);
         }
 
+        /// <summary>
+        /// Initializes a new instance with an externally provided segment factory (used for testing).
+        /// </summary>
+        /// <param name="containerClient">Container client for the change feed container.</param>
+        /// <param name="segmentFactory">Pre-built segment factory.</param>
+        /// <param name="config">Change feed configuration.</param>
         public ChangeFeedFactoryBase(BlobContainerClient containerClient, SegmentFactoryBase<TEvent> segmentFactory, ChangeFeedConfiguration<TEvent> config)
         {
             _containerClient = containerClient;
@@ -41,6 +58,15 @@ namespace Azure.Storage.ChangeFeed.Common
             _config = config;
         }
 
+        /// <summary>
+        /// Builds a change feed reader, either from scratch with a time window or by resuming from a continuation token.
+        /// </summary>
+        /// <param name="startTime">Optional inclusive start time (ignored when resuming from a cursor).</param>
+        /// <param name="endTime">Optional exclusive end time (ignored when resuming from a cursor).</param>
+        /// <param name="continuation">Serialized continuation token from a previous page, or null for a fresh start.</param>
+        /// <param name="async">Whether to use async APIs.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>A <see cref="ChangeFeedBase{TEvent}"/> positioned and ready to produce events.</returns>
         public async Task<ChangeFeedBase<TEvent>> BuildChangeFeed(DateTimeOffset? startTime, DateTimeOffset? endTime, string continuation, bool async, CancellationToken cancellationToken)
         {
             DateTimeOffset lastConsumable;
@@ -48,6 +74,7 @@ namespace Azure.Storage.ChangeFeed.Common
             Queue<string> segments = new Queue<string>();
             ChangeFeedCursor cursor = null;
 
+            // Resume path: deserialize the cursor and extract the start/end times from it.
             if (continuation != null)
             {
                 cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continuation);
@@ -57,6 +84,7 @@ namespace Azure.Storage.ChangeFeed.Common
             }
             else
             {
+                // Fresh start: round the requested time window to align with segment boundaries.
                 startTime = startTime.RoundDownToNearestInterval(_config.TimeWindowInterval);
                 endTime = endTime.RoundUpToNearestInterval(_config.TimeWindowInterval);
             }
@@ -78,6 +106,7 @@ namespace Azure.Storage.ChangeFeed.Common
 
             years = await GetYearPathsInternal(async, cancellationToken).ConfigureAwait(false);
 
+            // Skip year prefixes that are entirely before the requested start time.
             if (startTime.HasValue)
             {
                 while (years.Count > 0 && ChangeFeedExtensionsBase.ToDateTimeOffset(years.Peek()) < startTime.RoundDownToNearestYear())
@@ -86,6 +115,7 @@ namespace Azure.Storage.ChangeFeed.Common
 
             if (years.Count == 0) return ChangeFeedBase<TEvent>.Empty();
 
+            // Scan through years until we find one that contains matching segments within the time window.
             while (segments.Count == 0 && years.Count > 0)
             {
                 segments = await ChangeFeedExtensionsBase.GetSegmentsInYearInternal(
@@ -100,6 +130,9 @@ namespace Azure.Storage.ChangeFeed.Common
             return new ChangeFeedBase<TEvent>(_containerClient, _segmentFactory, years, segments, currentSegment, lastConsumable, startTime, endTime, _config);
         }
 
+        /// <summary>
+        /// Validates that a deserialized cursor matches the current storage account and uses a supported version.
+        /// </summary>
         private static void ValidateCursor(BlobContainerClient containerClient, ChangeFeedCursor cursor)
         {
             if (containerClient.Uri.Host != cursor.UrlHost)
@@ -108,6 +141,10 @@ namespace Azure.Storage.ChangeFeed.Common
                 throw new ArgumentException("Unsupported cursor version.");
         }
 
+        /// <summary>
+        /// Lists year-level prefixes under the segment path, filtering out the initialization segment.
+        /// </summary>
+        /// <returns>A queue of year path prefixes in chronological order.</returns>
         internal async Task<Queue<string>> GetYearPathsInternal(bool async, CancellationToken cancellationToken)
         {
             List<string> list = new List<string>();
@@ -132,6 +169,10 @@ namespace Azure.Storage.ChangeFeed.Common
             return new Queue<string>(list);
         }
 
+        /// <summary>
+        /// Downloads and parses the meta/segments.json file to determine the last consumable timestamp.
+        /// </summary>
+        /// <returns>The last consumable <see cref="DateTimeOffset"/>, or null if the metadata blob does not exist.</returns>
         internal static async Task<DateTimeOffset?> GetLastConsumableInternal(BlobContainerClient containerClient, string metaSegmentsPath, bool async, CancellationToken cancellationToken)
         {
             BlobClient blobClient = containerClient.GetBlobClient(metaSegmentsPath);

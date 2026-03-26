@@ -6,15 +6,50 @@ using System.Collections.Generic;
 
 namespace Azure.Storage.ChangeFeed.Common
 {
+    /// <summary>
+    /// Configuration settings for a change feed consumer, parameterized by the event type.
+    /// </summary>
     internal class ChangeFeedConfiguration<TEvent>
     {
+        /// <summary>
+        /// The time interval that each segment covers (e.g. one hour for Blob, one minute for Files).
+        /// </summary>
         public TimeSpan TimeWindowInterval { get; set; }
+
+        /// <summary>
+        /// The container-level prefix that the service prepends to shard paths in the segment manifest.
+        /// This is stripped when resolving actual blob paths.
+        /// </summary>
         public string ContainerPrefix { get; set; }
+
+        /// <summary>
+        /// Delegate that converts a raw Avro record dictionary into a strongly-typed event.
+        /// </summary>
         public Func<Dictionary<string, object>, TEvent> EventParser { get; set; }
+
+        /// <summary>
+        /// Maximum number of events returned in a single page.
+        /// </summary>
         public int DefaultPageSize { get; set; } = 5000;
+
+        /// <summary>
+        /// Download size in bytes for each lazy-loading block read from a chunk blob.
+        /// </summary>
         public long ChunkBlockDownloadSize { get; set; } = Constants.MB;
+
+        /// <summary>
+        /// Year prefix used for the initialization segment that should be skipped when enumerating years.
+        /// </summary>
         public string InitializationSegment { get; set; } = "1601";
+
+        /// <summary>
+        /// Blob prefix under which segment manifests are stored.
+        /// </summary>
         public string SegmentPrefix { get; set; } = "idx/segments/";
+
+        /// <summary>
+        /// Blob path to the meta segments JSON file that contains the last consumable timestamp.
+        /// </summary>
         public string MetaSegmentsPath { get; set; } = "meta/segments.json";
     }
 }

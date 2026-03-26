@@ -7,6 +7,10 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 {
+    /// <summary>
+    /// Tests for <see cref="SnapshotQueryHelper"/> which converts ISO 8601 snapshot timestamps
+    /// into hierarchical blob paths used to locate snapshot metadata.
+    /// </summary>
     public class SnapshotQueryHelperTests : ShareChangeFeedTestBase
     {
         public SnapshotQueryHelperTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
@@ -14,6 +18,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Verifies that a standard UTC timestamp on the hour is converted to the expected hierarchical path.
+        /// </summary>
         [Test]
         public void SnapshotTimestampToPath()
         {
@@ -21,6 +28,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.AreEqual("idx/snapshots/2023/07/18/08/00/00/meta.json", path);
         }
 
+        /// <summary>
+        /// Verifies that a timestamp with non-zero seconds preserves the seconds component in the path.
+        /// </summary>
         [Test]
         public void SnapshotTimestampToPath_WithSeconds()
         {
@@ -28,6 +38,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.AreEqual("idx/snapshots/2024/01/15/14/30/45/meta.json", path);
         }
 
+        /// <summary>
+        /// Verifies that a midnight timestamp produces zero-padded hour, minute, and second path segments.
+        /// </summary>
         [Test]
         public void SnapshotTimestampToPath_Midnight()
         {

@@ -17,11 +17,15 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     internal static class SnapshotQueryHelper
     {
         /// <summary>
-        /// Converts a snapshot timestamp string to the blob path for its meta.json.
-        /// e.g., "2023-07-18T08:00:00.000Z" -> "idx/snapshots/2023/07/18/08/00/00/meta.json"
+        /// Converts a snapshot timestamp string to the blob path for its <c>meta.json</c>.
+        /// For example, <c>"2023-07-18T08:00:00.000Z"</c> becomes
+        /// <c>"idx/snapshots/2023/07/18/08/00/00/meta.json"</c>.
         /// </summary>
+        /// <param name="snapshotTimestamp">An ISO 8601 timestamp string identifying the snapshot.</param>
+        /// <returns>The blob path to the snapshot's metadata JSON file.</returns>
         internal static string SnapshotTimestampToPath(string snapshotTimestamp)
         {
+            // Parse the ISO 8601 timestamp and format each component into a hierarchical path.
             DateTimeOffset ts = DateTimeOffset.Parse(snapshotTimestamp, CultureInfo.InvariantCulture);
             return string.Format(
                 CultureInfo.InvariantCulture,
@@ -35,8 +39,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         }
 
         /// <summary>
-        /// Reads and parses a snapshot meta.json from the change feed container.
+        /// Downloads and parses a snapshot <c>meta.json</c> blob from the change feed container.
         /// </summary>
+        /// <param name="containerClient">The blob container client for the change feed container.</param>
+        /// <param name="snapshotTimestamp">The ISO 8601 timestamp identifying the snapshot to read.</param>
+        /// <param name="async">Whether to execute the download asynchronously.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>A <see cref="SnapshotMetadata"/> instance parsed from the JSON content.</returns>
         internal static async Task<SnapshotMetadata> ReadSnapshotMetadataAsync(
             BlobContainerClient containerClient,
             string snapshotTimestamp,

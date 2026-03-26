@@ -6,13 +6,24 @@ using System.ComponentModel;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed
 {
+    /// <summary>
+    /// Identifies the protocol used for the operation that generated an Azure Files Change Feed event.
+    /// This is an extensible enum supporting well-known values (<see cref="Smb"/> and <see cref="Rest"/>)
+    /// and custom string values for forward compatibility.
+    /// </summary>
     public readonly struct ShareChangeFeedProtocol : IEquatable<ShareChangeFeedProtocol>
     {
         private readonly string _value;
 
+        /// <summary>
+        /// Initializes a new <see cref="ShareChangeFeedProtocol"/> with a custom string value.
+        /// </summary>
+        /// <param name="value">The protocol string.</param>
         public ShareChangeFeedProtocol(string value) { _value = value ?? throw new ArgumentNullException(nameof(value)); }
 
+        /// <summary> The operation was performed via the SMB protocol. </summary>
         public static ShareChangeFeedProtocol Smb { get; } = new ShareChangeFeedProtocol("SMB");
+        /// <summary> The operation was performed via the REST API. </summary>
         public static ShareChangeFeedProtocol Rest { get; } = new ShareChangeFeedProtocol("REST");
 
         public static implicit operator ShareChangeFeedProtocol(string value) => new ShareChangeFeedProtocol(value);

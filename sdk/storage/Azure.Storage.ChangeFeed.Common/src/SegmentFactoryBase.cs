@@ -10,14 +10,27 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.ChangeFeed.Common
 {
+    /// <summary>
+    /// Factory that creates <see cref="SegmentBase{TEvent}"/> instances by downloading and parsing
+    /// the segment manifest JSON and building a shard for each chunkFilePath listed in it.
+    /// </summary>
     internal class SegmentFactoryBase<TEvent>
     {
         private readonly BlobContainerClient _containerClient;
         private readonly ShardFactoryBase<TEvent> _shardFactory;
         private readonly ChangeFeedConfiguration<TEvent> _config;
 
+        /// <summary>
+        /// Constructor for mocking. Do not use directly.
+        /// </summary>
         public SegmentFactoryBase() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SegmentFactoryBase{TEvent}"/> class.
+        /// </summary>
+        /// <param name="containerClient">Container client for the change feed container.</param>
+        /// <param name="shardFactory">Factory used to build shard instances.</param>
+        /// <param name="config">Change feed configuration.</param>
         public SegmentFactoryBase(BlobContainerClient containerClient, ShardFactoryBase<TEvent> shardFactory, ChangeFeedConfiguration<TEvent> config)
         {
             _containerClient = containerClient;
@@ -25,6 +38,14 @@ namespace Azure.Storage.ChangeFeed.Common
             _config = config;
         }
 
+        /// <summary>
+        /// Builds a segment by downloading its manifest, constructing shards for each listed chunk file path,
+        /// and optionally resuming from a cursor position.
+        /// </summary>
+        /// <param name="async">Whether to use async APIs.</param>
+        /// <param name="manifestPath">Blob path of the segment manifest JSON.</param>
+        /// <param name="cursor">Optional segment cursor to resume from a previous position.</param>
+        /// <returns>A new <see cref="SegmentBase{TEvent}"/> ready to produce events.</returns>
 #pragma warning disable CA1822
         public virtual async Task<SegmentBase<TEvent>> BuildSegment(bool async, string manifestPath, SegmentCursor cursor = default)
 #pragma warning restore CA1822
@@ -51,6 +72,8 @@ namespace Azure.Storage.ChangeFeed.Common
                 {
                     string rawPath = shardJsonElement.ToString();
                     string shardPath;
+                    // Strip the service-specific container prefix (e.g. "$blobchangefeed/") from the raw path
+                    // so the result is a relative blob path usable with the container client.
                     if (_config.ContainerPrefix != null && rawPath.StartsWith(_config.ContainerPrefix, StringComparison.OrdinalIgnoreCase))
                         shardPath = rawPath.Substring(_config.ContainerPrefix.Length);
                     else

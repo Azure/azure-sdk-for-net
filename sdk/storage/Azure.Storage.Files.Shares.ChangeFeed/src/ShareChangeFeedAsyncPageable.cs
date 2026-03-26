@@ -11,6 +11,11 @@ using Azure.Storage.ChangeFeed.Common;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed
 {
+    /// <summary>
+    /// Asynchronous pageable implementation that enumerates Azure Files Change Feed events.
+    /// Discovers the change feed blob container, builds a change feed reader, and yields
+    /// pages of <see cref="ShareChangeFeedEvent"/> instances.
+    /// </summary>
     internal class ShareChangeFeedAsyncPageable : AsyncPageable<ShareChangeFeedEvent>
     {
         private readonly BlobServiceClient _blobServiceClient;
@@ -22,6 +27,17 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         private readonly DateTimeOffset? _endTime;
         private readonly string _continuation;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="ShareChangeFeedAsyncPageable"/>.
+        /// </summary>
+        /// <param name="blobServiceClient">The blob service client for reading change feed segments.</param>
+        /// <param name="pipeline">The HTTP pipeline for file service container discovery.</param>
+        /// <param name="fileServiceUri">The file service endpoint URI.</param>
+        /// <param name="shareName">The file share name.</param>
+        /// <param name="maxTransferSize">Optional maximum transfer size for blob downloads.</param>
+        /// <param name="startTime">Optional inclusive start time filter.</param>
+        /// <param name="endTime">Optional exclusive end time filter.</param>
+        /// <param name="continuation">Optional continuation token to resume from.</param>
         internal ShareChangeFeedAsyncPageable(
             BlobServiceClient blobServiceClient,
             HttpPipeline pipeline,
@@ -42,6 +58,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             _continuation = continuation;
         }
 
+        /// <summary>
+        /// Enumerates pages of change feed events asynchronously.
+        /// </summary>
+        /// <param name="continuationToken">Must be null; continuation is handled via the constructor parameter.</param>
+        /// <param name="pageSizeHint">Optional hint for the number of events per page.</param>
+        /// <returns>An async enumerable of pages of <see cref="ShareChangeFeedEvent"/>.</returns>
         public override async IAsyncEnumerable<Page<ShareChangeFeedEvent>> AsPages(
             string continuationToken = null,
             int? pageSizeHint = null)
@@ -51,6 +73,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 throw new ArgumentException("Continuation not supported. Use ShareChangeFeedClient.GetChangesAsync(string) instead.");
             }
 
+            // Discover the blob container name by querying file share properties,
+            // then build the change feed factory and reader from that container.
             string containerName = await ContainerDiscovery.DiscoverContainerNameAsync(
                 _pipeline,
                 _fileServiceUri,

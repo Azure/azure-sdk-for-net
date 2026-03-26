@@ -16,10 +16,16 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     internal static class ContainerDiscovery
     {
         /// <summary>
-        /// Discovers the change feed container name for a file share by reading the
-        /// x-ms-file-blob-container-for-xfiles-change-feed response header from
-        /// Get Share Properties.
+        /// Discovers the change feed container name for a file share by sending an
+        /// authenticated GET request to the file service's Get Share Properties REST API
+        /// and reading the <c>x-ms-file-blob-container-for-xfiles-change-feed</c> response header.
         /// </summary>
+        /// <param name="pipeline">The HTTP pipeline configured with authentication for the file endpoint.</param>
+        /// <param name="fileServiceUri">The file service base URI (e.g., https://account.file.core.windows.net).</param>
+        /// <param name="shareName">The file share name to query.</param>
+        /// <param name="async">Whether to execute the request asynchronously.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>The blob container name that stores the change feed data for this share.</returns>
         internal static async Task<string> DiscoverContainerNameAsync(
             HttpPipeline pipeline,
             Uri fileServiceUri,
@@ -27,7 +33,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             bool async,
             CancellationToken cancellationToken)
         {
-            // Build the request URI: https://{account}.file.core.windows.net/{shareName}?restype=share
+            // Build the REST call to: GET https://{account}.file.core.windows.net/{shareName}?restype=share
             UriBuilder uriBuilder = new UriBuilder(fileServiceUri);
             uriBuilder.Path = uriBuilder.Path.TrimEnd('/') + "/" + shareName;
             uriBuilder.Query = "restype=share";
@@ -63,11 +69,16 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         }
 
         /// <summary>
-        /// Converts a file service endpoint URI to a blob service endpoint URI.
-        /// e.g., https://account.file.core.windows.net -> https://account.blob.core.windows.net
+        /// Converts a file service endpoint URI to the corresponding blob service endpoint URI
+        /// by replacing ".file." with ".blob." in the host name.
+        /// For example, <c>https://account.file.core.windows.net</c> becomes
+        /// <c>https://account.blob.core.windows.net</c>.
         /// </summary>
+        /// <param name="fileEndpoint">The file service endpoint URI to convert.</param>
+        /// <returns>The equivalent blob service endpoint URI.</returns>
         internal static Uri FileToBlobEndpoint(Uri fileEndpoint)
         {
+            // Replace the ".file." subdomain with ".blob." to derive the blob endpoint.
             UriBuilder builder = new UriBuilder(fileEndpoint);
             builder.Host = builder.Host.Replace(".file.", ".blob.");
             builder.Path = "/";

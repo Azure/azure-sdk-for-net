@@ -16,6 +16,10 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 {
+    /// <summary>
+    /// Tests for <see cref="ChunkBase{T}"/> and <see cref="ChunkFactoryBase{T}"/>, verifying Avro chunk
+    /// iteration, HasNext semantics, and mid-block resume via block offset and event index.
+    /// </summary>
     public class ChunkBaseTests : ShareChangeFeedTestBase
     {
         public ChunkBaseTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
@@ -23,6 +27,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Returns a test configuration for the Files Change Feed with 15-minute windows and the share event parser.
+        /// </summary>
         private static ChangeFeedConfiguration<ShareChangeFeedEvent> GetConfig()
             => new ChangeFeedConfiguration<ShareChangeFeedEvent>
             {
@@ -33,6 +40,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 ChunkBlockDownloadSize = Constants.MB,
             };
 
+        /// <summary>
+        /// Verifies that HasNext returns true when the underlying Avro reader has remaining records.
+        /// </summary>
         [Test]
         public async Task HasNext_True()
         {
@@ -64,6 +74,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             avroReader.Verify(r => r.HasNext());
         }
 
+        /// <summary>
+        /// Verifies that HasNext returns false when the underlying Avro reader is exhausted.
+        /// </summary>
         [Test]
         public async Task HasNext_False()
         {
@@ -93,13 +106,18 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.IsFalse(hasNext);
         }
 
+        /// <summary>
+        /// Verifies that Next reads and deserializes an Avro record into a ShareChangeFeedEvent when resuming mid-block.
+        /// </summary>
         [Test]
         public async Task Next()
         {
             string chunkPath = "chunkPath";
+            // blockOffset and eventIndex simulate resuming from a saved cursor position mid-chunk
             long blockOffset = 5;
             long eventIndex = 10;
 
+            // Avro record dict matching the Files Change Feed schema: top-level event fields plus nested Data dict
             Dictionary<string, object> record = new Dictionary<string, object>
             {
                 { "SchemaVersion", 1L },
@@ -125,10 +143,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Mock<AvroReaderFactory> avroReaderFactory = new Mock<AvroReaderFactory>(MockBehavior.Strict);
             Mock<AvroReader> avroReader = new Mock<AvroReader>(MockBehavior.Strict);
             Mock<LazyLoadingBlobStreamFactory> lazyLoadingBlobStreamFactory = new Mock<LazyLoadingBlobStreamFactory>(MockBehavior.Strict);
+            // Two streams: dataStream carries record data from blockOffset; headStream carries the Avro header for schema parsing
             Mock<LazyLoadingBlobStream> dataStream = new Mock<LazyLoadingBlobStream>(MockBehavior.Strict);
             Mock<LazyLoadingBlobStream> headStream = new Mock<LazyLoadingBlobStream>(MockBehavior.Strict);
 
             containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
+            // Sequential setup: first call returns the data stream (from blockOffset), second returns the header stream
             lazyLoadingBlobStreamFactory.SetupSequence(r => r.BuildLazyLoadingBlobStream(
                 It.IsAny<BlobClient>(), It.IsAny<long>(), It.IsAny<long>()))
                 .Returns(dataStream.Object)
