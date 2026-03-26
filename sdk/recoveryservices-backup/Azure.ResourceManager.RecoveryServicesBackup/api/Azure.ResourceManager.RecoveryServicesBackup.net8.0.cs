@@ -4412,9 +4412,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class SqlDataDirectory : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectory>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectory>
     {
         public SqlDataDirectory() { }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryType? DirectoryType { get { throw null; } set { } }
         public string LogicalName { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.SQLDataDirectoryType? SqlDataDirectoryProperty { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectory JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectory PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4428,7 +4428,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class SqlDataDirectoryMapping : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryMapping>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryMapping>
     {
         public SqlDataDirectoryMapping() { }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.SQLDataDirectoryType? MappingType { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryType? MappingType { get { throw null; } set { } }
         public string SourceLogicalName { get { throw null; } set { } }
         public string SourcePath { get { throw null; } set { } }
         public string TargetPath { get { throw null; } set { } }
@@ -4443,21 +4443,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryMapping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SQLDataDirectoryType : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.SQLDataDirectoryType>
+    public readonly partial struct SqlDataDirectoryType : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SQLDataDirectoryType(string value) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.SQLDataDirectoryType Data { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.SQLDataDirectoryType Invalid { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.SQLDataDirectoryType Log { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.SQLDataDirectoryType other) { throw null; }
+        public SqlDataDirectoryType(string value) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryType Data { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryType Invalid { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryType Log { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.SQLDataDirectoryType left, Azure.ResourceManager.RecoveryServicesBackup.Models.SQLDataDirectoryType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.SQLDataDirectoryType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.SQLDataDirectoryType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.SQLDataDirectoryType left, Azure.ResourceManager.RecoveryServicesBackup.Models.SQLDataDirectoryType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryType left, Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryType left, Azure.ResourceManager.RecoveryServicesBackup.Models.SqlDataDirectoryType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SqlProtectedItem : Azure.ResourceManager.RecoveryServicesBackup.Models.BackupGenericProtectedItem, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesBackup.Models.SqlProtectedItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesBackup.Models.SqlProtectedItem>
