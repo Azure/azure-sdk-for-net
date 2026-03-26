@@ -218,6 +218,16 @@ namespace Azure.Generator.Provisioning
                 var resolvedName = baseProperty?.Name ?? info.PropertyName;
                 var bicepType = CreateCSharpType(inputModelProperty.Type);
                 if (bicepType == null) return null;
+
+                // Ensure "location" properties always use BicepValue<AzureLocation>,
+                // even when the TypeSpec defines them as plain string.
+                var serializedName = inputModelProperty.SerializedName ?? inputModelProperty.Name;
+                if (string.Equals(serializedName, "location", StringComparison.OrdinalIgnoreCase)
+                    && bicepType.Equals(new CSharpType(typeof(BicepValue<>), typeof(string))))
+                {
+                    bicepType = new CSharpType(typeof(BicepValue<>), typeof(Azure.Core.AzureLocation));
+                }
+
                 return ProvisioningPropertyProvider.Create(
                     resolvedName, bicepType,
                     info.IsOutput, info.IsRequired, info.BicepPath, info.DefaultValue,

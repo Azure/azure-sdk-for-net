@@ -43,7 +43,7 @@ namespace Azure.Generator.Provisioning.Providers
         // System properties that should always be required, even when marked readOnly (path parameters)
         private static readonly HashSet<string> RequiredInputProperties = new(StringComparer.OrdinalIgnoreCase)
         {
-            "name", "location"
+            "name"
         };
 
         // Properties to skip entirely (type is implied by the resource type)
