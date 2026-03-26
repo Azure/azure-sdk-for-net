@@ -80,19 +80,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
                 if (queueLength > 0)
                 {
-                    PeekedMessage message = (await _queue.PeekMessagesAsync(1).ConfigureAwait(false)).Value.FirstOrDefault();
-                    if (message != null)
+                    try
                     {
-                        if (message.InsertedOn.HasValue)
+                        PeekedMessage message = (await _queue.PeekMessagesAsync(1).ConfigureAwait(false)).Value.FirstOrDefault();
+                        if (message != null)
                         {
-                            queueTime = DateTime.UtcNow.Subtract(message.InsertedOn.Value.DateTime);
+                            if (message.InsertedOn.HasValue)
+                            {
+                                queueTime = DateTime.UtcNow.Subtract(message.InsertedOn.Value.DateTime);
+                            }
+                        }
+                        else
+                        {
+                            // ApproximateMessageCount often returns a stale value,
+                            // especially when the queue is empty.
+                            queueLength = 0;
                         }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        // ApproximateMessageCount often returns a stale value,
-                        // especially when the queue is empty.
-                        queueLength = 0;
+                        // If PeekMessages fails (e.g. message encoding mismatch, non-XML-compatible
+                        // message body), preserve the ApproximateMessagesCount from GetProperties.
+                        // The queue has messages — we just can't peek them. Resetting queueLength
+                        // to 0 here would cause the scaler to report no work and prevent scale-out.
+                        _logger.LogFunctionScaleWarning("Error peeking queue messages for scale status. " +
+                            "ApproximateMessagesCount will be used as queue length.", _functionId, ex);
                     }
                 }
             }

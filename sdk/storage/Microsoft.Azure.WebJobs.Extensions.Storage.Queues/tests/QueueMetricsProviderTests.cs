@@ -9,6 +9,7 @@ using System.Threading;
 using Azure;
 using Azure.Core.TestFramework;
 using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.DependencyInjection;
@@ -99,6 +100,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 
             var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == Microsoft.Extensions.Logging.LogLevel.Warning);
             Assert.AreEqual("Error querying for queue scale status: Things are very wrong.", warning.FormattedMessage);
+        }
+
+        [Test]
+        public async Task GetMetrics_PeekFailure_PreservesApproximateMessageCount()
+        {
+            // Simulate: GetProperties returns 5 messages, but PeekMessages throws
+            // (e.g. message encoding mismatch, non-XML-compatible body).
+            // The queue length should be preserved as 5, not reset to 0.
+            var queueProperties = new QueueProperties();
+            typeof(QueueProperties).GetProperty(nameof(QueueProperties.ApproximateMessagesCount))
+                .SetValue(queueProperties, 5);
+
+            _mockQueue.Setup(p => p.GetPropertiesAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(queueProperties, Mock.Of<Response>())));
+
+            _mockQueue.Setup(p => p.PeekMessagesAsync(
+                It.IsAny<int?>(),
+                It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new FormatException("The input is not a valid Base-64 string"));
+
+            var metrics = await _metricsProvider.GetMetricsAsync();
+
+            Assert.AreEqual(5, metrics.QueueLength);
+            Assert.AreEqual(TimeSpan.Zero, metrics.QueueTime);
+
+            var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == Microsoft.Extensions.Logging.LogLevel.Warning);
+            Assert.That(warning.FormattedMessage, Does.Contain("Error peeking queue messages"));
         }
 
         public class TestFixture : IDisposable
