@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <EnvironmentVariables>
+      <SUBSCRIPTION_ID>10b28d5e-a5a6-4274-afac-3a7ef12e3055</SUBSCRIPTION_ID>
+      <TENANT_ID>72f988bf-86f1-41af-91ab-2d7cd011db47</TENANT_ID>
+      <RELATIONSHIPS_SUBSCRIPTION_ID>10b28d5e-a5a6-4274-afac-3a7ef12e3055</RELATIONSHIPS_SUBSCRIPTION_ID>
+      <RELATIONSHIPS_TENANT_ID>72f988bf-86f1-41af-91ab-2d7cd011db47</RELATIONSHIPS_TENANT_ID>
+      <AZURE_AUTHORITY_HOST>https://login.microsoftonline.com</AZURE_AUTHORITY_HOST>
+    </EnvironmentVariables>
+  </RunConfiguration>
+</RunSettings>
