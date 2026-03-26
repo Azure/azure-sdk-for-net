@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Purview.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PurviewAccountSku"/>. </summary>
-        internal PurviewAccountSku()
+        public PurviewAccountSku()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <summary> Gets or sets the sku capacity. </summary>
-        public int? Capacity { get; }
+        public int? Capacity { get; set; }
 
         /// <summary> Gets or sets the sku name. </summary>
-        public PurviewAccountSkuName? Name { get; }
+        public PurviewAccountSkuName? Name { get; set; }
     }
 }

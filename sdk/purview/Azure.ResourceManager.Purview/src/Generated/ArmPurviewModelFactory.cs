@@ -24,8 +24,6 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="accountStatus"> Gets or sets the status of the account. </param>
         /// <param name="createdOn"> Gets the time at which the entity was created. </param>
         /// <param name="createdBy"> Gets the creator of the entity. </param>
@@ -47,10 +45,12 @@ namespace Azure.ResourceManager.Purview.Models
         /// AWS external identifier.
         /// Configured in AWS to allow use of the role arn used for scanning
         /// </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The Managed Identity of the resource. </param>
         /// <param name="sku"> Gets or sets the Sku. </param>
         /// <returns> A new <see cref="Purview.PurviewAccountData"/> instance for mocking. </returns>
-        public static PurviewAccountData PurviewAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PurviewAccountStatus accountStatus = default, DateTimeOffset? createdOn = default, string createdBy = default, string createdByObjectId = default, string defaultDomain = default, PurviewAccountEndpoint endpoints = default, string friendlyName = default, PurviewIngestionStorage ingestionStorage = default, PurviewManagedEventHubState? managedEventHubState = default, string managedResourceGroupName = default, PurviewManagedResource managedResources = default, ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess = default, PurviewAccountMergeInfo mergeInfo = default, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections = default, PurviewProvisioningState? provisioningState = default, PurviewPublicNetworkAccess? publicNetworkAccess = default, PurviewTenantEndpointState? tenantEndpointState = default, string cloudConnectorsAwsExternalId = default, ManagedServiceIdentity identity = default, PurviewAccountSku sku = default)
+        public static PurviewAccountData PurviewAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PurviewAccountStatus accountStatus = default, DateTimeOffset? createdOn = default, string createdBy = default, string createdByObjectId = default, string defaultDomain = default, PurviewAccountEndpoint endpoints = default, string friendlyName = default, PurviewIngestionStorage ingestionStorage = default, PurviewManagedEventHubState? managedEventHubState = default, string managedResourceGroupName = default, PurviewManagedResource managedResources = default, ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess = default, PurviewAccountMergeInfo mergeInfo = default, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections = default, PurviewProvisioningState? provisioningState = default, PurviewPublicNetworkAccess? publicNetworkAccess = default, PurviewTenantEndpointState? tenantEndpointState = default, string cloudConnectorsAwsExternalId = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, PurviewAccountSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -60,8 +60,6 @@ namespace Azure.ResourceManager.Purview.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
-                location,
                 accountStatus is null && createdOn is null && createdBy is null && createdByObjectId is null && defaultDomain is null && endpoints is null && friendlyName is null && ingestionStorage is null && managedEventHubState is null && managedResourceGroupName is null && managedResources is null && managedResourcesPublicNetworkAccess is null && mergeInfo is null && privateEndpointConnections is null && provisioningState is null && publicNetworkAccess is null && tenantEndpointState is null && cloudConnectorsAwsExternalId is null ? default : new PurviewAccountProperties(
                     accountStatus,
                     new CloudConnectors(cloudConnectorsAwsExternalId, null),
@@ -82,6 +80,8 @@ namespace Azure.ResourceManager.Purview.Models
                     publicNetworkAccess,
                     tenantEndpointState,
                     null),
+                tags,
+                location,
                 identity,
                 sku);
         }
@@ -213,15 +213,6 @@ namespace Azure.ResourceManager.Purview.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 connectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, null), connectionState, provisioningState, null));
-        }
-
-        /// <summary> The Sku. </summary>
-        /// <param name="capacity"> Gets or sets the sku capacity. </param>
-        /// <param name="name"> Gets or sets the sku name. </param>
-        /// <returns> A new <see cref="Models.PurviewAccountSku"/> instance for mocking. </returns>
-        public static PurviewAccountSku PurviewAccountSku(int? capacity = default, PurviewAccountSkuName? name = default)
-        {
-            return new PurviewAccountSku(capacity, name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The account update properties. </summary>
@@ -396,7 +387,7 @@ namespace Azure.ResourceManager.Purview.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PurviewAccountData PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PurviewAccountSku sku, string cloudConnectorsAwsExternalId, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, PurviewAccountEndpoint endpoints, string friendlyName, string managedResourceGroupName, PurviewManagedResource managedResources, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity)
         {
-            return PurviewAccountData(id, name, resourceType, systemData, tags, location, accountStatus: default, createdOn, createdBy, createdByObjectId, defaultDomain: default, endpoints, friendlyName, ingestionStorage: default, managedEventHubState: default, managedResourceGroupName, managedResources, managedResourcesPublicNetworkAccess: default, mergeInfo: default, privateEndpointConnections, provisioningState, publicNetworkAccess, tenantEndpointState: default, cloudConnectorsAwsExternalId, identity, sku);
+            return PurviewAccountData(id, name, resourceType, systemData, accountStatus: default, createdOn, createdBy, createdByObjectId, defaultDomain: default, endpoints, friendlyName, ingestionStorage: default, managedEventHubState: default, managedResourceGroupName, managedResources, managedResourcesPublicNetworkAccess: default, mergeInfo: default, privateEndpointConnections, provisioningState, publicNetworkAccess, tenantEndpointState: default, cloudConnectorsAwsExternalId, tags, location, identity, sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PurviewAccountEndpoint"/>. </summary>
@@ -408,6 +399,16 @@ namespace Azure.ResourceManager.Purview.Models
         public static PurviewAccountEndpoint PurviewAccountEndpoint(string catalog, string guardian, string scan)
         {
             return new PurviewAccountEndpoint(catalog, scan, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PurviewAccountSku"/>. </summary>
+        /// <param name="capacity"> Gets or sets the sku capacity. </param>
+        /// <param name="name"> Gets or sets the sku name. </param>
+        /// <returns> A new <see cref="Models.PurviewAccountSku"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PurviewAccountSku PurviewAccountSku(int? capacity, PurviewAccountSkuName? name)
+        {
+            return new PurviewAccountSku(capacity, name, additionalBinaryDataProperties: null);
         }
     }
 }
