@@ -140,11 +140,6 @@ namespace Azure.Identity
                 EnvironmentSendCertificateChain = sendCertificateChain;
             }
 
-            if (section[nameof(EnvironmentCredentialOptions.Username)] is string username)
-            {
-                EnvironmentUsername = username;
-            }
-
             if (section[nameof(EnvironmentCredentialOptions.Password)] is string password)
             {
                 EnvironmentPassword = password;
@@ -627,11 +622,6 @@ namespace Azure.Identity
         internal bool? EnvironmentSendCertificateChain { get; set; }
 
         /// <summary>
-        /// Specifies the username for the EnvironmentCredential.
-        /// </summary>
-        internal string EnvironmentUsername { get; set; }
-
-        /// <summary>
         /// Specifies the password for the EnvironmentCredential.
         /// </summary>
         internal string EnvironmentPassword { get; set; }
@@ -722,7 +712,6 @@ namespace Azure.Identity
                 dacClone.EnvironmentClientCertificatePath = EnvironmentClientCertificatePath;
                 dacClone.EnvironmentClientCertificatePassword = EnvironmentClientCertificatePassword;
                 dacClone.EnvironmentSendCertificateChain = EnvironmentSendCertificateChain;
-                dacClone.EnvironmentUsername = EnvironmentUsername;
                 dacClone.EnvironmentPassword = EnvironmentPassword;
                 dacClone.WorkloadTokenFilePath = WorkloadTokenFilePath;
             }

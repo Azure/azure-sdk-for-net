@@ -223,10 +223,6 @@
                 "type": "boolean",
                 "description": "Include the x5c header in client claims when using certificate authentication."
               },
-              "Username": {
-                "type": "string",
-                "description": "The username for username/password authentication."
-              },
               "DisableInstanceDiscovery": {
                 "type": "boolean",
                 "description": "Skip Microsoft Entra instance discovery and validation."
@@ -895,10 +891,6 @@
               "SendCertificateChain": {
                 "type": "boolean",
                 "description": "Include the x5c header in client claims when using certificate authentication."
-              },
-              "Username": {
-                "type": "string",
-                "description": "The username for username/password authentication."
               },
               "DisableInstanceDiscovery": {
                 "type": "boolean",

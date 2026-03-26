@@ -322,11 +322,6 @@ namespace Azure.Identity
                 options.SendCertificateChain = Options.EnvironmentSendCertificateChain.Value;
             }
 
-            if (!string.IsNullOrEmpty(Options.EnvironmentUsername))
-            {
-                options.Username = Options.EnvironmentUsername;
-            }
-
             if (!string.IsNullOrEmpty(Options.EnvironmentPassword))
             {
                 options.Password = Options.EnvironmentPassword;
