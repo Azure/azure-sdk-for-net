@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests creating a Shard with a ShardCursor, and then calling Shard.GetCursor().
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetCursor()
         {
             // Arrange
@@ -112,7 +112,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests Shard.HasNext().
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task HasNext_False()
         {
             // Arrange
@@ -199,7 +199,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests Shard.HasNext().
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task HasNext_ChunksLeft()
         {
             // Arrange
@@ -282,7 +282,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests Shard.HasNext().
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task HasNext_CurrentChunkHasNext()
         {
             // Arrange
@@ -371,7 +371,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// We call ShardFactory.BuildShard() with a ShardCursor, to create the Shard,
         /// Shard.Next() 4 times, Shard.GetCursor(), and then Shard.Next 4 times.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task Next()
         {
             // Arrange
@@ -553,7 +553,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests that Shard.Next() throws InvalidOperationException when HasNext() is false.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public void Next_ThrowsWhenExhausted()
         {
             // Arrange - create a Shard with no chunks and null currentChunk
@@ -576,7 +576,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests that Shard.GetCursor() returns null when _currentChunk is null.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public void GetCursor_ReturnsNullWhenNoCurrentChunk()
         {
             // Arrange - create a Shard with null currentChunk

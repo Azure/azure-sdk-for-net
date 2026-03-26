@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// Tests building a ChangeFeed with a ChangeFeedCursor, and then calling ChangeFeed.GetCursor()
         /// and making sure the cursors match.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetCursor()
         {
             // Arrange
@@ -257,7 +257,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// We call ChangeFeed.GetPage() with a page size of 3, and then again with no page size,
         /// resulting in two pages with 3 and 5 Events.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetPage()
         {
             // Arrange
@@ -609,7 +609,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests that HasNext returns false when no segments exist after the specified start time.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task NoYearsAfterStartTime()
         {
             // Arrange
@@ -727,7 +727,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests that when no segments remain in the start year, the change feed advances to the next year.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task NoSegmentsRemainingInStartYear()
         {
             // Arrange
@@ -995,7 +995,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests that calling GetPage() on an empty ChangeFeed throws InvalidOperationException.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public void GetPage_ThrowsWhenExhausted()
         {
             // Arrange
@@ -1010,7 +1010,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// Tests that HasNext() returns false when the current segment's DateTime >= endTime,
         /// even when the segment itself still has events.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public void HasNext_ReturnsFalseWhenEndTimeReached()
         {
             // Arrange
@@ -1067,7 +1067,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests that pageSize is capped to DefaultPageSize when a larger value is requested.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetPage_CapsPageSizeToDefault()
         {
             // Arrange

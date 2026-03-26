@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Test building a Segment with a SegmentCursor, and then calling Segment.GetCursor().
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetCursor()
         {
             // Arrange
@@ -135,7 +135,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests that GetCursor returns an empty shard cursors list when the segment has no shards.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetCursor_NoShards()
         {
             // Arrange
@@ -198,7 +198,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// We are round-robining the Shards, so we will return the events for
         /// the shards indexes: 0 1 2 0 1.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetPage()
         {
             // Arrange
@@ -346,7 +346,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// only returns that many events (partial round-robin).
         /// 3 shards each with events, pageSize=2 — only 2 events from shards 0 and 1.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetPage_PageSizeSmallerThanShardCount()
         {
             // Arrange
@@ -437,7 +437,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests that GetPage returns an empty list when all shards have no more events.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetPage_NoMoreEvents()
         {
             // Arrange

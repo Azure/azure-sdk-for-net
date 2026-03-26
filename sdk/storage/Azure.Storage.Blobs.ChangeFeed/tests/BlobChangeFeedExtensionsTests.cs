@@ -22,7 +22,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests conversion of segment paths to DateTimeOffset values at various levels of path granularity.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public void ToDateTimeOffsetTests()
         {
             Assert.AreEqual(
@@ -69,7 +69,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests rounding down a DateTimeOffset to the nearest hour.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public void RoundDownToNearestHourTests()
         {
             Assert.AreEqual(
@@ -86,7 +86,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests rounding up a DateTimeOffset to the nearest hour, including when already on the hour.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public void RoundUpToNearestHourTests()
         {
             Assert.AreEqual(
@@ -109,7 +109,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests rounding down a DateTimeOffset to January 1st of the same year.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public void RoundDownToNearestYearTests()
         {
             Assert.AreEqual(
@@ -126,7 +126,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests that ToDateTimeOffset throws ArgumentException for paths with fewer than three segments.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public void ToDateTimeOffset_ThrowsOnInvalidShortPaths()
         {
             // Paths with fewer than 3 non-empty segments should throw ArgumentException
@@ -146,7 +146,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests MinDateTime returns the earlier of lastConsumable and endDate.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public void MinDateTimeTests()
         {
             DateTimeOffset lastConsumable = new DateTimeOffset(2020, 6, 1, 0, 0, 0, TimeSpan.Zero);
@@ -169,7 +169,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests retrieving segment paths within a specific year filtered by start and end times.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetSegmentsInYearTest()
         {
             // Arrange

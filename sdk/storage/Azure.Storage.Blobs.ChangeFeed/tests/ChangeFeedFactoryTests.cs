@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests retrieving year paths from the change feed index, filtering out the initialization segment.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task GetYearPathsTest()
         {
             // Arrange
@@ -73,7 +73,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests that BuildChangeFeed throws ArgumentException when $blobchangefeed container doesn't exist.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task ChangeFeedNotEnabled()
         {
             // Arrange
@@ -107,7 +107,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests that BuildChangeFeed throws ArgumentException when cursor URL host doesn't match container URL host.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task ValidateCursor_HostMismatch()
         {
             // Arrange
@@ -155,7 +155,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests that BuildChangeFeed throws ArgumentException when cursor version is not supported.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task ValidateCursor_UnsupportedVersion()
         {
             // Arrange
@@ -206,7 +206,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests that BuildChangeFeed returns an empty ChangeFeed when the meta segments blob does not exist.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task ChangeFeedEnabledNoMetaSegmentsBlob()
         {
             // Arrange

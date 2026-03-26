@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Test;
+using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
@@ -60,7 +61,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests LazyBlobStream parameter validation.
         /// </summary>
-        [RecordedTest]
+        [Test]
         public async Task ReadAsync_InvalidParameterTests()
         {
             // Arrange
