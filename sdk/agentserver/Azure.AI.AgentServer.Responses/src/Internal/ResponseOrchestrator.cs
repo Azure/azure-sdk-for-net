@@ -299,7 +299,7 @@ internal sealed class ResponseOrchestrator
                     await publisher.OnNextAsync(evt);
 
                     var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(context);
-                    await _provider.CreateResponseAsync(execution.Response!, inputItems, historyItemIds);
+                    await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response!, inputItems, historyItemIds));
 
                     // Signal that response.created has been processed — unblocks
                     // the bg non-streaming endpoint path waiting for the handler's response.
@@ -693,7 +693,7 @@ internal sealed class ResponseOrchestrator
                 {
                     // Default mode: single persist at non-cancelled terminal state.
                     var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(execution.Context);
-                    await _provider.CreateResponseAsync(execution.Response, inputItems, historyItemIds);
+                    await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, inputItems, historyItemIds));
                 }
             }
         }

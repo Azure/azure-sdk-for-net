@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Hosting;
 using Azure.AI.AgentServer.Responses.Internal;
+using Azure.Core;
+using Azure.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
@@ -58,13 +61,32 @@ public static class ResponsesServerServiceCollectionExtensions
         // before calling AddResponsesServer() take precedence.
         services.TryAddSingleton<ResponsesActivitySource>();
 
-        // Register the concrete InMemoryResponsesProvider as a singleton,
-        // then forward each interface to the same instance.
-        // TryAddSingleton ensures consumer registrations before AddResponsesServer() take precedence.
+        // InMemoryResponsesProvider is always registered: it backs
+        // IResponsesCancellationSignalProvider and IResponsesStreamProvider even when
+        // FoundryStorageProvider handles IResponsesProvider in hosted environments.
         services.TryAddSingleton<InMemoryResponsesProvider>();
-        services.TryAddSingleton<IResponsesProvider>(sp => sp.GetRequiredService<InMemoryResponsesProvider>());
         services.TryAddSingleton<IResponsesCancellationSignalProvider>(sp => sp.GetRequiredService<InMemoryResponsesProvider>());
         services.TryAddSingleton<IResponsesStreamProvider>(sp => sp.GetRequiredService<InMemoryResponsesProvider>());
+
+        // Auto-detect hosted environment: if FOUNDRY_PROJECT_ENDPOINT is set,
+        // use FoundryStorageProvider for persistence; otherwise use in-memory.
+        if (!string.IsNullOrWhiteSpace(FoundryEnvironment.ProjectEndpoint))
+        {
+            services.TryAddSingleton<IResponsesProvider, FoundryStorageProvider>();
+
+            services.TryAddSingleton<TokenCredential>(_ => new DefaultAzureCredential());
+
+            services.AddTransient<BearerTokenHandler>();
+            services.AddTransient<BaseUrlRewriteHandler>();
+
+            services.AddHttpClient(FoundryStorageProvider.HttpClientName)
+                .AddHttpMessageHandler<BaseUrlRewriteHandler>()
+                .AddHttpMessageHandler<BearerTokenHandler>();
+        }
+        else
+        {
+            services.TryAddSingleton<IResponsesProvider>(sp => sp.GetRequiredService<InMemoryResponsesProvider>());
+        }
 
         services.AddSingleton<ResponseExecutionTracker>();
         services.AddHostedService(sp => sp.GetRequiredService<ResponseExecutionTracker>());

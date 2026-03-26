@@ -7,6 +7,8 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 
+using CreateResponseRequest = Azure.AI.AgentServer.Responses.CreateResponseRequest;
+
 namespace Azure.AI.AgentServer.Responses.Tests.Orchestration;
 
 /// <summary>
@@ -57,7 +59,7 @@ public class FinalizeExecutionTests : IDisposable
         execution.Response.SetCompleted();
 
         // First create the response so UpdateResponseAsync can find it
-        await _provider.CreateResponseAsync(execution.Response, null, null);
+        await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, null, null));
 
         await _orchestrator.FinalizeExecutionAsync(execution, publisher);
 

@@ -303,7 +303,7 @@ public class ResponseContextImplTests
         public void SetHistoryItemIds(string previousResponseId, string[] ids)
             => _historyItemIds[previousResponseId] = ids;
 
-        public Task CreateResponseAsync(Models.Response response, IEnumerable<OutputItem>? inputItems, IEnumerable<string>? historyItemIds, CancellationToken ct = default)
+        public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
             => Task.CompletedTask;
 
         public Task<Models.Response> GetResponseAsync(string responseId, CancellationToken ct = default)

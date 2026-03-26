@@ -32,14 +32,10 @@ public interface IResponsesProvider
     /// <summary>
     /// Persists a newly created response along with its resolved input items and history item IDs.
     /// </summary>
-    /// <param name="response">The response snapshot to store.</param>
-    /// <param name="inputItems">The resolved input items for this response, or <c>null</c> if none.</param>
-    /// <param name="historyItemIds">The resolved history item IDs, or <c>null</c> if none.</param>
+    /// <param name="request">The create-response request containing the response snapshot, input items, and history item IDs.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     Task CreateResponseAsync(
-        Models.Response response,
-        IEnumerable<OutputItem>? inputItems,
-        IEnumerable<string>? historyItemIds,
+        CreateResponseRequest request,
         CancellationToken cancellationToken = default);
 
     /// <summary>

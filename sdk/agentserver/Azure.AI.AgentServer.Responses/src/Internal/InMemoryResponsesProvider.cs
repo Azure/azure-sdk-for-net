@@ -82,38 +82,34 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
 
     /// <inheritdoc/>
     public Task CreateResponseAsync(
-        Models.Response response,
-        IEnumerable<OutputItem>? inputItems,
-        IEnumerable<string>? historyItemIds,
+        CreateResponseRequest request,
         CancellationToken cancellationToken = default)
     {
+        var response = request.Response;
+        var inputItems = request.InputItems;
+        var historyItemIds = request.HistoryItemIds;
+
         if (!_responses.TryAdd(response.Id, response))
         {
             throw new InvalidOperationException($"Response '{response.Id}' already exists.");
         }
 
         // Store input items in the item store and track their ordered IDs
-        if (inputItems is not null)
+        var inputIds = new List<string>();
+        foreach (var item in inputItems)
         {
-            var inputIds = new List<string>();
-            foreach (var item in inputItems)
+            var id = GetItemId(item);
+            if (id is not null)
             {
-                var id = GetItemId(item);
-                if (id is not null)
-                {
-                    _itemStore[id] = item;
-                    inputIds.Add(id);
-                }
+                _itemStore[id] = item;
+                inputIds.Add(id);
             }
-
-            _inputItemIds[response.Id] = inputIds;
         }
+
+        _inputItemIds[response.Id] = inputIds;
 
         // Track history item IDs (items already exist in _itemStore from prior responses)
-        if (historyItemIds is not null)
-        {
-            _historyItemIds[response.Id] = historyItemIds.ToList();
-        }
+        _historyItemIds[response.Id] = historyItemIds.ToList();
 
         // Store output items from Response.Output (non-bg mode has them populated at create time)
         StoreOutputItems(response);

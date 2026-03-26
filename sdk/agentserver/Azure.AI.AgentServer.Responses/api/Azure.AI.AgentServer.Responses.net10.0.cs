@@ -9,6 +9,13 @@ namespace Azure.AI.AgentServer.Responses
         public string? Code { get { throw null; } }
         public string? ParamName { get { throw null; } }
     }
+    public sealed partial class CreateResponseRequest
+    {
+        public CreateResponseRequest(Azure.AI.AgentServer.Responses.Models.Response response, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem>? inputItems, System.Collections.Generic.IEnumerable<string>? historyItemIds) { }
+        public System.Collections.Generic.IEnumerable<string> HistoryItemIds { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem> InputItems { get { throw null; } }
+        public Azure.AI.AgentServer.Responses.Models.Response Response { get { throw null; } }
+    }
     public partial interface IAsyncObserver<in T>
     {
         System.Threading.Tasks.ValueTask OnCompletedAsync();
@@ -41,7 +48,7 @@ namespace Azure.AI.AgentServer.Responses
     }
     public partial interface IResponsesProvider
     {
-        System.Threading.Tasks.Task CreateResponseAsync(Azure.AI.AgentServer.Responses.Models.Response response, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem>? inputItems, System.Collections.Generic.IEnumerable<string>? historyItemIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task CreateResponseAsync(Azure.AI.AgentServer.Responses.CreateResponseRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         System.Threading.Tasks.Task DeleteResponseAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.Models.AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));

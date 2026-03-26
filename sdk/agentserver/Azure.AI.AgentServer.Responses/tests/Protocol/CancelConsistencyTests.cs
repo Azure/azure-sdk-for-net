@@ -205,12 +205,12 @@ public class CancelConsistencyTests : IDisposable
         public ConcurrentBag<Models.Response> CreateCalls { get; } = new();
         public ConcurrentBag<Models.Response> UpdateCalls { get; } = new();
 
-        public Task CreateResponseAsync(Models.Response response, IEnumerable<OutputItem>? inputItems, IEnumerable<string>? historyItemIds, CancellationToken ct = default)
+        public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
         {
             // Snapshot the response at call time
-            var snapshot = response.Snapshot();
+            var snapshot = request.Response.Snapshot();
             CreateCalls.Add(snapshot);
-            _responses[response.Id] = response;
+            _responses[request.Response.Id] = request.Response;
             return Task.CompletedTask;
         }
 
