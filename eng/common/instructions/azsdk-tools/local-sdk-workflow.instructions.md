@@ -8,9 +8,11 @@ Help the user generate and build SDKs locally from TypeSpec API specifications u
 High level steps involved:
 1. Generate SDK locally
 2. Build / Compile SDK locally
-3. Run package checks
-4. Run package tests
-5. Update change log, metadata and version
+3. Commit generated changes checkpoint
+4. Run package checks
+5. Run package tests
+6. Update change log, metadata and version
+7. Commit final changes checkpoint
 
 ---
 
@@ -21,7 +23,7 @@ High level steps involved:
 **Goal**: Ensure the user understands the overall SDK generation and build process before starting.  
 **Actions**:
 
-- Present the high-level steps involved in generating and building SDK locally:
+- **MUST** present the high-level steps involved in generating and building SDK locally:
   1. Select target language
   2. Verify SDK repository
   3. Validate repository path
@@ -30,7 +32,11 @@ High level steps involved:
   6. Generate SDK using `azsdk_package_generate_code` MCP tool
   7. Identify SDK project path
   8. Build/Compile SDK using `azsdk_package_build_code` MCP tool
-- Ask the user to confirm readiness to proceed.
+  9. Commit generated changes checkpoint
+  10. Run package checks
+  11. Run package tests
+  12. Update change log, metadata and version
+  13. Commit final changes checkpoint
 
 ---
 
@@ -132,7 +138,23 @@ High level steps involved:
 
 ---
 
-### Step 3: Run package validation
+### Step 3: Stage checkpoint — Commit generated changes
+
+**Goal**: Prompt the user to commit the changes produced by the generation and build steps before proceeding to validation and testing.  
+**Actions**:
+
+- **MUST** inform the user that SDK generation and build have completed successfully.
+- **MUST** prompt the user to decide if they want to commit the changes now. Do NOT skip this prompt.
+- If the user chooses to commit:
+  - Check if the user is on the `main` branch. If so, prompt: *"You are currently on the main branch. Please create a new branch using `git checkout -b <branch-name>` before proceeding."* Suggest a reasonable default branch name based on the generation context (e.g., `sdk/<service-name>/<package-name>`) and provide the exact `git checkout -b <branch-name>` command for the user to run. Allow the user to provide a preferred branch name instead. Wait for user confirmation before continuing.
+  - Run `git add <modified-files>` to stage the changed files.
+  - Prompt the user for a commit message.
+  - Run `git commit -m "<user-provided-message>"`.
+- If the user chooses to skip, acknowledge and proceed to the next step.
+
+---
+
+### Step 4: Run package validation
 
 **Actions**:
 
@@ -140,7 +162,7 @@ High level steps involved:
 
 ---
 
-### Step 4: Run package tests
+### Step 5: Run package tests
 
 **Actions**:
 
@@ -148,10 +170,26 @@ High level steps involved:
 
 ---
 
-### Step 5: Update change log, metadata and version
+### Step 6: Update change log, metadata and version
 
 **Actions**:
 
-- Run `azsdk_package_update_metadata` MCP tool to update metadata in the identified project directory.
 - Run `azsdk_package_update_changelog_content` MCP tool to update change log in the identified project directory.
+- Run `azsdk_package_update_metadata` MCP tool to update metadata in the identified project directory.
 - Run `azsdk_package_update_version` MCP tool to update version in the identified project directory.
+
+---
+
+### Step 7: Stage checkpoint — Commit final changes
+
+**Goal**: Prompt the user to commit the final set of changes after all updates are complete.  
+**Actions**:
+
+- **MUST** inform the user that changelog, metadata, and version updates are complete.
+- **MUST** prompt the user to decide if they want to commit the changes now. Do NOT skip this prompt.
+- If the user chooses to commit:
+  - Check if the user is on the `main` branch. If so, prompt: *"You are currently on the main branch. Please create a new branch using `git checkout -b <branch-name>` before proceeding."* Suggest a reasonable default branch name based on the generation context (e.g., `sdk/<service-name>/<package-name>`) and provide the exact `git checkout -b <branch-name>` command for the user to run. Allow the user to provide a preferred branch name instead. Wait for user confirmation before continuing.
+  - Run `git add <modified-files>` to stage the changed files.
+  - Prompt the user for a commit message.
+  - Run `git commit -m "<user-provided-message>"`.
+- If the user chooses to skip, acknowledge and proceed.
