@@ -84,6 +84,7 @@ namespace Azure.ResourceManager.Storage
         // Backward-compatible overload: GetKeysAsync with old StorageListKeyExpand parameter type.
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0107 // async call wraps result, no sync alternative available
+        [ForwardsClientCalls(true)]
         public virtual AsyncPageable<StorageAccountKey> GetKeysAsync(StorageListKeyExpand? expand, CancellationToken cancellationToken)
         {
             return new DeferredAsyncPageable<StorageAccountKey>(async () =>
@@ -132,6 +133,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
 #pragma warning disable AZC0107 // async wrapper with pageable return
+        [ForwardsClientCalls(true)]
         public virtual AsyncPageable<StorageAccountKey> RegenerateKeyAsync(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));

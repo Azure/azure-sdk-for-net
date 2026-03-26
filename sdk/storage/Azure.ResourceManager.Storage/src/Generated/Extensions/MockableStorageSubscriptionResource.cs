@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<StorageAccountNameAvailabilityResult>> CheckNameAvailabilityAsync(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageAccountNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = StorageAccountsClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = StorageAccountsClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.CheckStorageAccountNameAvailability");
             scope.Start();
             try
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Storage.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StorageAccountsRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), StorageAccountNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = StorageAccountsRestClient.CreateCheckStorageAccountNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), StorageAccountNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageAccountNameAvailabilityResult> response = Response.FromValue(StorageAccountNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<StorageAccountNameAvailabilityResult> CheckNameAvailability(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<StorageAccountNameAvailabilityResult> CheckStorageAccountNameAvailability(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = StorageAccountsClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = StorageAccountsClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.CheckStorageAccountNameAvailability");
             scope.Start();
             try
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Storage.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StorageAccountsRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), StorageAccountNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = StorageAccountsRestClient.CreateCheckStorageAccountNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), StorageAccountNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageAccountNameAvailabilityResult> response = Response.FromValue(StorageAccountNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -352,18 +352,14 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="StorageUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageUsage> GetByLocationAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<StorageUsage> GetUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetByLocationAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new UsagesGetUsagesByLocationAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
 
         /// <summary>
@@ -385,18 +381,14 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="StorageUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageUsage> GetByLocation(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<StorageUsage> GetUsagesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetByLocationCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new UsagesGetUsagesByLocationCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
     }
 }

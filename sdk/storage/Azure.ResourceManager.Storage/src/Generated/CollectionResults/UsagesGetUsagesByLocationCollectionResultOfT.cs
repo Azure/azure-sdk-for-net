@@ -14,19 +14,19 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    internal partial class UsagesGetByLocationCollectionResultOfT : Pageable<StorageUsage>
+    internal partial class UsagesGetUsagesByLocationCollectionResultOfT : Pageable<StorageUsage>
     {
         private readonly Usages _client;
         private readonly Guid _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of UsagesGetByLocationCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of UsagesGetUsagesByLocationCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Usages client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public UsagesGetByLocationCollectionResultOfT(Usages client, Guid subscriptionId, string location, RequestContext context) : base(context?.CancellationToken ?? default)
+        public UsagesGetUsagesByLocationCollectionResultOfT(Usages client, Guid subscriptionId, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Storage
             _context = context;
         }
 
-        /// <summary> Gets the pages of UsagesGetByLocationCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of UsagesGetUsagesByLocationCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of UsagesGetByLocationCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of UsagesGetUsagesByLocationCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<StorageUsage>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Storage
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByLocationRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetByLocationRequest(_subscriptionId, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.GetByLocation");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetUsagesByLocationRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetUsagesByLocationRequest(_subscriptionId, _location, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.GetUsagesByLocation");
             scope.Start();
             try
             {

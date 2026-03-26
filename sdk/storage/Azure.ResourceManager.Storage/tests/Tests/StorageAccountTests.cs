@@ -4,10 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -629,7 +626,6 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Async variant fails: DeferredAsyncPageable creates diagnostic scope inside async iterator, AsyncLocal doesn't flow into state machine so test framework can't detect it.")]
         public async Task StorageAccountRegenerateKey()
         {
             JsonPathSanitizers.Add("$.keys.[*].value");
@@ -2089,7 +2085,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters())).Value;
             Assert.AreEqual(accountName, account.Id.Name);
 
-            var usages = await DefaultSubscription.GetByLocationAsync(DefaultLocation).ToEnumerableAsync();
+            var usages = await DefaultSubscription.GetUsagesByLocationAsync(DefaultLocation).ToEnumerableAsync();
             Assert.AreEqual(1, usages.Count());
             Assert.AreEqual(StorageUsageUnit.Count, usages.First().Unit);
             Assert.NotNull(usages.First().CurrentValue);
