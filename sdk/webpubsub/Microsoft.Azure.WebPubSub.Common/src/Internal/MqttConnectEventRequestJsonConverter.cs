@@ -7,24 +7,28 @@ using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
 {
-    internal class ConnectEventRequestJsonConverter : JsonConverter<ConnectEventRequest>
+    internal class MqttConnectEventRequestJsonConverter : JsonConverter<MqttConnectEventRequest>
     {
-        public override ConnectEventRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override MqttConnectEventRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             using var jsonDocument = JsonDocument.ParseValue(ref reader);
             var element = jsonDocument.RootElement;
 
-            // Tricky part to create a temp request.
-            return new ConnectEventRequest(
+            var mqtt = JsonSerializer.Deserialize(
+                element.GetProperty(MqttConnectEventRequest.MqttPropertyName).GetRawText(),
+                typeof(MqttConnectProperties),
+                options) as MqttConnectProperties;
+
+            return new MqttConnectEventRequest(
                 null,
                 JsonSerializationHelpers.ReadStringArrayDictionary(element.GetProperty(ConnectEventRequest.ClaimsProperty)),
                 JsonSerializationHelpers.ReadStringArrayDictionary(element.GetProperty(ConnectEventRequest.QueryProperty)),
-                JsonSerializationHelpers.ReadStringArray(element.GetProperty(ConnectEventRequest.SubprotocolsProperty)),
                 JsonSerializationHelpers.ReadClientCertificates(element.GetProperty(ConnectEventRequest.ClientCertificatesProperty)),
-                JsonSerializationHelpers.ReadStringArrayDictionary(element.GetProperty(ConnectEventRequest.HeadersProperty)));
+                JsonSerializationHelpers.ReadStringArrayDictionary(element.GetProperty(ConnectEventRequest.HeadersProperty)),
+                mqtt);
         }
 
-        public override void Write(Utf8JsonWriter writer, ConnectEventRequest value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, MqttConnectEventRequest value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
 
@@ -42,6 +46,9 @@ namespace Microsoft.Azure.WebPubSub.Common
 
             writer.WritePropertyName(ConnectEventRequest.ClientCertificatesProperty);
             JsonSerializationHelpers.WriteClientCertificates(writer, value.ClientCertificates);
+
+            writer.WritePropertyName(MqttConnectEventRequest.MqttPropertyName);
+            JsonSerializer.Serialize(writer, value.Mqtt, typeof(MqttConnectProperties), options);
 
             if (value.ConnectionContext != null)
             {

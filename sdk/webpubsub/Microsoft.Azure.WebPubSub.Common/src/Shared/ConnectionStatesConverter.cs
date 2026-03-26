@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-// This is shared between WPS.Common and WPS.AspNetCore
-
 namespace Microsoft.Azure.WebPubSub.Common
 {
     /// <summary>
