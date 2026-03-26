@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Hosting.Tests;
 public class MultiProtocolCompositionTests
 {
     [Test]
-    public async Task DualProtocol_BothEndpointsReachable()
+    public async Task InvocationsEndpoint_AndHealthEndpoint_BothReachable()
     {
         var builder = AgentHost.CreateBuilder();
         builder.WebApplicationBuilder.WebHost.UseTestServer();
