@@ -22,9 +22,6 @@ namespace Azure.ResourceManager.Compute
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class CommunityGalleryCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _communityGalleryClientDiagnostics;
-        private readonly CommunityGalleriesRestOperations _communityGalleryRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="CommunityGalleryCollection"/> class for mocking. </summary>
         protected CommunityGalleryCollection()
         {
@@ -35,9 +32,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CommunityGalleryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _communityGalleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CommunityGalleryResource.ResourceType.Namespace, Diagnostics);
+            _communityGalleriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CommunityGalleryResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CommunityGalleryResource.ResourceType, out string communityGalleryApiVersion);
-            _communityGalleryRestClient = new CommunityGalleriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, communityGalleryApiVersion);
+            _communityGalleriesRestClient = new CommunityGalleries(_communityGalleriesClientDiagnostics, Pipeline, Endpoint, communityGalleryApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -79,11 +76,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
-            using var scope = _communityGalleryClientDiagnostics.CreateScope("CommunityGalleryCollection.Get");
+            using var scope = _communityGalleriesClientDiagnostics.CreateScope("CommunityGalleryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _communityGalleryRestClient.GetAsync(Id.SubscriptionId, location, publicGalleryName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _communityGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, location, publicGalleryName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CommunityGalleryData> response = Response.FromValue(CommunityGalleryData.FromResponse(result), result);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = CommunityGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, location, publicGalleryName);
@@ -126,11 +126,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
-            using var scope = _communityGalleryClientDiagnostics.CreateScope("CommunityGalleryCollection.Get");
+            using var scope = _communityGalleriesClientDiagnostics.CreateScope("CommunityGalleryCollection.Get");
             scope.Start();
             try
             {
-                var response = _communityGalleryRestClient.Get(Id.SubscriptionId, location, publicGalleryName, cancellationToken);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _communityGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, location, publicGalleryName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CommunityGalleryData> response = Response.FromValue(CommunityGalleryData.FromResponse(result), result);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = CommunityGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, location, publicGalleryName);
@@ -173,12 +176,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
-            using var scope = _communityGalleryClientDiagnostics.CreateScope("CommunityGalleryCollection.Exists");
+            using var scope = _communityGalleriesClientDiagnostics.CreateScope("CommunityGalleryCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _communityGalleryRestClient.GetAsync(Id.SubscriptionId, location, publicGalleryName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _communityGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, location, publicGalleryName, context);
+                await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(!message.Response.IsError, message.Response);
             }
             catch (Exception e)
             {
@@ -217,12 +222,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
-            using var scope = _communityGalleryClientDiagnostics.CreateScope("CommunityGalleryCollection.Exists");
+            using var scope = _communityGalleriesClientDiagnostics.CreateScope("CommunityGalleryCollection.Exists");
             scope.Start();
             try
             {
-                var response = _communityGalleryRestClient.Get(Id.SubscriptionId, location, publicGalleryName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _communityGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, location, publicGalleryName, context);
+                Pipeline.Send(message, cancellationToken);
+                return Response.FromValue(!message.Response.IsError, message.Response);
             }
             catch (Exception e)
             {
@@ -261,13 +268,16 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
-            using var scope = _communityGalleryClientDiagnostics.CreateScope("CommunityGalleryCollection.GetIfExists");
+            using var scope = _communityGalleriesClientDiagnostics.CreateScope("CommunityGalleryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _communityGalleryRestClient.GetAsync(Id.SubscriptionId, location, publicGalleryName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return new NoValueResponse<CommunityGalleryResource>(response.GetRawResponse());
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _communityGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, location, publicGalleryName, context);
+                await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                if (message.Response.IsError)
+                    return new NoValueResponse<CommunityGalleryResource>(message.Response);
+                Response<CommunityGalleryData> response = Response.FromValue(CommunityGalleryData.FromResponse(message.Response), message.Response);
                 response.Value.Id = CommunityGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, location, publicGalleryName);
                 return Response.FromValue(new CommunityGalleryResource(Client, response.Value), response.GetRawResponse());
             }
@@ -308,13 +318,16 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
-            using var scope = _communityGalleryClientDiagnostics.CreateScope("CommunityGalleryCollection.GetIfExists");
+            using var scope = _communityGalleriesClientDiagnostics.CreateScope("CommunityGalleryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _communityGalleryRestClient.Get(Id.SubscriptionId, location, publicGalleryName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return new NoValueResponse<CommunityGalleryResource>(response.GetRawResponse());
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _communityGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, location, publicGalleryName, context);
+                Pipeline.Send(message, cancellationToken);
+                if (message.Response.IsError)
+                    return new NoValueResponse<CommunityGalleryResource>(message.Response);
+                Response<CommunityGalleryData> response = Response.FromValue(CommunityGalleryData.FromResponse(message.Response), message.Response);
                 response.Value.Id = CommunityGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, location, publicGalleryName);
                 return Response.FromValue(new CommunityGalleryResource(Client, response.Value), response.GetRawResponse());
             }

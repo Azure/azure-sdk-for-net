@@ -9,8 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceVmStorageProfile
+    public partial class RestorePointSourceVMStorageProfile
     {
-        public IReadOnlyList<RestorePointSourceVmDataDisk> DataDisks => DataDiskList.ToArray();
     }
 }

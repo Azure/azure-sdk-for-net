@@ -11,10 +11,12 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -274,7 +276,15 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         var initializer = signature.Initializer;
         if (initializer is not null)
         {
-            var updatedInitializer = new ConstructorInitializer(initializer.IsBase, initializer.Arguments.Where(arg => arg is VariableExpression variable && variable.Declaration.RequestedName != RawDataParameterName).ToArray());
+            var filteredArgs = initializer.Arguments
+                .Where(arg => arg is VariableExpression variable && variable.Declaration.RequestedName != RawDataParameterName)
+                .ToArray();
+            // Fix the 'id' argument in the base constructor call for resource data types.
+            // TypeSpec specs using CommonTypes v3 define 'id' as string, but the .NET base classes
+            // (ResourceData/TrackedResourceData) always expect ResourceIdentifier.
+            // Wrap the 'id' argument: base(id, ...) → base(new ResourceIdentifier(id), ...)
+            var updatedArgs = WrapResourceIdArgument(filteredArgs);
+            var updatedInitializer = new ConstructorInitializer(initializer.IsBase, updatedArgs);
             var updatedSignature = new ConstructorSignature(signature.Type, signature.Description, signature.Modifiers, signature.Parameters, signature.Attributes, updatedInitializer);
             model.FullConstructor.Update(signature: updatedSignature);
         }
@@ -283,6 +293,29 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         var statement = rawDataField.Assign(model.FullConstructor.Signature.Parameters.Single(f => f.Name.Equals(RawDataParameterName))).Terminate();
         MethodBodyStatement[] updatedBody = [statement, .. body!];
         model.FullConstructor.Update(bodyStatements: updatedBody);
+    }
+
+    /// <summary>
+    /// Wraps the 'id' argument in the base constructor initializer with new ResourceIdentifier(id)
+    /// when the parameter is a string type. This handles CommonTypes v3 specs where 'id' is string
+    /// but the .NET base class expects ResourceIdentifier.
+    /// </summary>
+    private static ValueExpression[] WrapResourceIdArgument(ValueExpression[] arguments)
+    {
+        var result = new ValueExpression[arguments.Length];
+        for (int i = 0; i < arguments.Length; i++)
+        {
+            if (arguments[i] is VariableExpression varExpr && varExpr.Declaration.RequestedName == "id"
+                && varExpr.Type.Equals(typeof(string)))
+            {
+                result[i] = New.Instance(typeof(ResourceIdentifier), varExpr);
+            }
+            else
+            {
+                result[i] = arguments[i];
+            }
+        }
+        return result;
     }
 
     private const string RawDataParameterName = "additionalBinaryDataProperties";

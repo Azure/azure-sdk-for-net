@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> A list of all virtual machines resource ids allocated against the capacity reservation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<SubResource> UtilizationInfoVirtualMachinesAllocated
+        public IReadOnlyList<SubResourceReadOnly> UtilizationInfoVirtualMachinesAllocated
         {
             get => UtilizationInfo?.VirtualMachinesAllocated;
         }

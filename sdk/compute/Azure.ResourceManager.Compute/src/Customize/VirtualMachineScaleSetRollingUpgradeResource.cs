@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -37,14 +38,17 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _virtualMachineScaleSetRollingUpgradeClientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgradeResource.AddTag");
+            using var scope = _rollingUpgradeStatusInfosClientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgradeResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _virtualMachineScaleSetRollingUpgradeRestClient.GetLatestAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _rollingUpgradeStatusInfosRestClient.CreateGetLatestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VirtualMachineScaleSetRollingUpgradeData> originalResponse = Response.FromValue(VirtualMachineScaleSetRollingUpgradeData.FromResponse(result), result);
                 return Response.FromValue(new VirtualMachineScaleSetRollingUpgradeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -78,14 +82,17 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _virtualMachineScaleSetRollingUpgradeClientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgradeResource.AddTag");
+            using var scope = _rollingUpgradeStatusInfosClientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgradeResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _virtualMachineScaleSetRollingUpgradeRestClient.GetLatest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _rollingUpgradeStatusInfosRestClient.CreateGetLatestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VirtualMachineScaleSetRollingUpgradeData> originalResponse = Response.FromValue(VirtualMachineScaleSetRollingUpgradeData.FromResponse(result), result);
                 return Response.FromValue(new VirtualMachineScaleSetRollingUpgradeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -117,7 +124,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _virtualMachineScaleSetRollingUpgradeClientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgradeResource.SetTags");
+            using var scope = _rollingUpgradeStatusInfosClientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgradeResource.SetTags");
             scope.Start();
             try
             {
@@ -125,7 +132,10 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _virtualMachineScaleSetRollingUpgradeRestClient.GetLatestAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _rollingUpgradeStatusInfosRestClient.CreateGetLatestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VirtualMachineScaleSetRollingUpgradeData> originalResponse = Response.FromValue(VirtualMachineScaleSetRollingUpgradeData.FromResponse(result), result);
                 return Response.FromValue(new VirtualMachineScaleSetRollingUpgradeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -157,7 +167,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _virtualMachineScaleSetRollingUpgradeClientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgradeResource.SetTags");
+            using var scope = _rollingUpgradeStatusInfosClientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgradeResource.SetTags");
             scope.Start();
             try
             {
@@ -165,7 +175,10 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _virtualMachineScaleSetRollingUpgradeRestClient.GetLatest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _rollingUpgradeStatusInfosRestClient.CreateGetLatestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VirtualMachineScaleSetRollingUpgradeData> originalResponse = Response.FromValue(VirtualMachineScaleSetRollingUpgradeData.FromResponse(result), result);
                 return Response.FromValue(new VirtualMachineScaleSetRollingUpgradeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -197,14 +210,17 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _virtualMachineScaleSetRollingUpgradeClientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgradeResource.RemoveTag");
+            using var scope = _rollingUpgradeStatusInfosClientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgradeResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _virtualMachineScaleSetRollingUpgradeRestClient.GetLatestAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _rollingUpgradeStatusInfosRestClient.CreateGetLatestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VirtualMachineScaleSetRollingUpgradeData> originalResponse = Response.FromValue(VirtualMachineScaleSetRollingUpgradeData.FromResponse(result), result);
                 return Response.FromValue(new VirtualMachineScaleSetRollingUpgradeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -236,14 +252,17 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _virtualMachineScaleSetRollingUpgradeClientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgradeResource.RemoveTag");
+            using var scope = _rollingUpgradeStatusInfosClientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgradeResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _virtualMachineScaleSetRollingUpgradeRestClient.GetLatest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _rollingUpgradeStatusInfosRestClient.CreateGetLatestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VirtualMachineScaleSetRollingUpgradeData> originalResponse = Response.FromValue(VirtualMachineScaleSetRollingUpgradeData.FromResponse(result), result);
                 return Response.FromValue(new VirtualMachineScaleSetRollingUpgradeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)

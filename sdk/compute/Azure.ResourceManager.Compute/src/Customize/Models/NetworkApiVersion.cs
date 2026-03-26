@@ -3,6 +3,7 @@
 
 using System.ComponentModel;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -10,10 +11,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> 2020-11-01. </summary>
         [CodeGenMember("TwoThousandTwenty1101")]
-        public static NetworkApiVersion v2020_11_01 { get; } = new NetworkApiVersion(v2020_11_01Value);
+        public static NetworkApiVersion v2020_11_01 { get; } = new NetworkApiVersion(_20201101Value);
         /// <summary> 2022-11-01. </summary>
         [CodeGenMember("TwoThousandTwentyTwo1101")]
-        public static NetworkApiVersion v2022_11_01 { get; } = new NetworkApiVersion(v2022_11_01Value);
+        public static NetworkApiVersion v2022_11_01 { get; } = new NetworkApiVersion(_20221101Value);
 
         /// <summary> 2020-11-01. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -4,10 +4,12 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute.Mocking
@@ -90,12 +92,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
-            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location, publisherName, offer, skus);
-            options.Expand = expand;
-            options.Top = top;
-            options.Orderby = orderby;
-
-            return GetVirtualMachineImagesAsync(options, cancellationToken);
+            return GetVirtualMachineImagesAsync(location.Name, publisherName, offer, skus, expand, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -128,12 +125,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
-            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location, publisherName, offer, skus);
-            options.Expand = expand;
-            options.Top = top;
-            options.Orderby = orderby;
-
-            return GetVirtualMachineImages(options, cancellationToken);
+            return GetVirtualMachineImages(location.Name, publisherName, offer, skus, expand, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -166,9 +158,21 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions(location, edgeZone, publisherName, offer, skus, version);
-
-            return await GetVirtualMachineImagesEdgeZoneAsync(options, cancellationToken).ConfigureAwait(false);
+            using var scope = VirtualMachineImagesEdgeZoneOperationGroupClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZone");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = VirtualMachineImagesEdgeZoneOperationGroupRestClient.CreateGetVirtualMachineImagesEdgeZoneRequest(location, edgeZone, publisherName, offer, skus, version, Id.SubscriptionId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VirtualMachineImage value = VirtualMachineImage.DeserializeVirtualMachineImage(System.Text.Json.JsonDocument.Parse(response.Content).RootElement, ModelSerializationExtensions.WireOptions);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -201,9 +205,21 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions(location, edgeZone, publisherName, offer, skus, version);
-
-            return GetVirtualMachineImagesEdgeZone(options, cancellationToken);
+            using var scope = VirtualMachineImagesEdgeZoneOperationGroupClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZone");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = VirtualMachineImagesEdgeZoneOperationGroupRestClient.CreateGetVirtualMachineImagesEdgeZoneRequest(location, edgeZone, publisherName, offer, skus, version, Id.SubscriptionId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VirtualMachineImage value = VirtualMachineImage.DeserializeVirtualMachineImage(System.Text.Json.JsonDocument.Parse(response.Content).RootElement, ModelSerializationExtensions.WireOptions);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -238,12 +254,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
-            SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions(location, edgeZone, publisherName, offer, skus);
-            options.Expand = expand;
-            options.Top = top;
-            options.Orderby = orderby;
-
-            return GetVirtualMachineImagesEdgeZonesAsync(options, cancellationToken);
+            return GetVirtualMachineImagesEdgeZonesAsync(location.Name, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -278,12 +289,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
-            SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions(location, edgeZone, publisherName, offer, skus);
-            options.Expand = expand;
-            options.Top = top;
-            options.Orderby = orderby;
-
-            return GetVirtualMachineImagesEdgeZones(options, cancellationToken);
+            return GetVirtualMachineImagesEdgeZones(location.Name, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken);
         }
 
         /// <summary>

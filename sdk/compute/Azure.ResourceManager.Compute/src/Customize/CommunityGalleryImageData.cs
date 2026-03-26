@@ -6,6 +6,7 @@
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -15,11 +16,11 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> This is the gallery image definition identifier. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public GalleryImageIdentifier Identifier => new GalleryImageIdentifier()
+        public new GalleryImageIdentifier Identifier => new GalleryImageIdentifier()
         {
-            Publisher = ImageIdentifier.Publisher,
-            Offer = ImageIdentifier.Offer,
-            Sku = ImageIdentifier.Sku
+            Publisher = Properties?.Identifier?.Publisher,
+            Offer = Properties?.Identifier?.Offer,
+            Sku = Properties?.Identifier?.Sku
         };
 
         // we also must add back this property to avoid breaking changes, but its payload never have this property.

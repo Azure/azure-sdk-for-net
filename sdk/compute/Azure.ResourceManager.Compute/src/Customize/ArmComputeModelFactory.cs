@@ -120,32 +120,42 @@ namespace Azure.ResourceManager.Compute.Models
                     virtualMachineProfile: virtualMachineProfile,
                     provisioningState: provisioningState,
                     overprovision: overprovision,
-                    doNotRunExtensionsOnOverprovisionedVms: doNotRunExtensionsOnOverprovisionedVms,
+                    doNotRunExtensionsOnOverprovisionedVMs: doNotRunExtensionsOnOverprovisionedVms,
                     uniqueId: uniqueId,
                     singlePlacementGroup: singlePlacementGroup,
                     zoneBalance: zoneBalance,
                     platformFaultDomainCount: platformFaultDomainCount,
-                    proximityPlacementGroupId: proximityPlacementGroupId,
-                    hostGroupId: hostGroupId,
+                    proximityPlacementGroupId: proximityPlacementGroupId?.ToString(),
+                    hostGroupId: hostGroupId?.ToString(),
                     additionalCapabilities: additionalCapabilities,
                     scaleInPolicy: scaleInPolicy,
                     orchestrationMode: orchestrationMode,
                     spotRestorePolicy: spotRestorePolicy,
                     priorityMixPolicy: priorityMixPolicy,
                     timeCreated: timeCreated,
-                    isMaximumCapacityConstrained: isMaximumCapacityConstrained,
+                    constrainedMaximumCapacity: isMaximumCapacityConstrained,
                     resiliencyPolicy: resiliencyPolicy,
                     zonalPlatformFaultDomainAlignMode: zonalPlatformFaultDomainAlignMode,
                     skuProfile: skuProfile),
                 identity: identity,
                 zones: zones,
-                extendedLocation: extendedLocation,
+                extendedLocation: extendedLocation != null ? new Resources.Models.ExtendedLocation { Name = extendedLocation.Name, ExtendedLocationType = extendedLocation.Type.HasValue ? new Resources.Models.ExtendedLocationType(extendedLocation.Type.Value.ToString()) : default(Resources.Models.ExtendedLocationType?) } : null,
                 etag: etag);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CapacityReservationGroupData CapacityReservationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> zones, IEnumerable<SubResource> capacityReservations, IEnumerable<SubResource> virtualMachinesAssociated, IEnumerable<CapacityReservationInstanceViewWithName> instanceViewCapacityReservations)
-            => CapacityReservationGroupData(id, name, resourceType, systemData, tags, location, zones, capacityReservations, virtualMachinesAssociated, null, null);
+            => CapacityReservationGroupData(
+                id: id?.ToString(),
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                zones: zones,
+                capacityReservations: default(IEnumerable<SubResourceReadOnly>),
+                virtualMachinesAssociated: default(IEnumerable<SubResourceReadOnly>),
+                instanceView: instanceViewCapacityReservations != null ? CapacityReservationGroupInstanceView(capacityReservations: instanceViewCapacityReservations) : default);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommunityGalleryInfo CommunityGalleryInfo(Uri publisherUri = null, string publisherContact = null, string eula = null, string publicNamePrefix = null, bool? communityGalleryEnabled = null, IEnumerable<string> publicNames = null)
@@ -311,20 +321,20 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineDataDisk(
                 lun,
                 name,
-                vhdUri != null ? new VirtualHardDisk(vhdUri, serializedAdditionalRawData: null) : null,
-                imageUri != null ? new VirtualHardDisk(imageUri, serializedAdditionalRawData: null) : null,
+                vhdUri != null ? new VirtualHardDisk(vhdUri.AbsoluteUri, additionalBinaryDataProperties: null) : null,
+                imageUri != null ? new VirtualHardDisk(imageUri.AbsoluteUri, additionalBinaryDataProperties: null) : null,
                 caching,
                 writeAcceleratorEnabled,
                 createOption,
                 diskSizeGB,
                 managedDisk,
-                sourceResourceId != null ? ResourceManagerModelFactory.WritableSubResource(sourceResourceId) : null,
+                sourceResourceId != null ? new ApiEntityReference(sourceResourceId.ToString(), null) : null,
                 toBeDetached,
                 diskIopsReadWrite,
                 diskMBpsReadWrite,
                 detachOption,
                 deleteOption,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.VirtualMachineDataDisk" />. </summary>

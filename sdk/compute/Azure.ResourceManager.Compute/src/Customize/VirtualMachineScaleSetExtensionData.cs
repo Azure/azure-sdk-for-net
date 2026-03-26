@@ -7,20 +7,25 @@ using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Text;
+using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     // this piece of customized code adds back the ability to set name of this class in its constructor
-    public partial class VirtualMachineScaleSetExtensionData
+    public partial class VirtualMachineScaleSetExtensionData : IJsonModel<VirtualMachineScaleSetExtensionData>
     {
         /// <summary> Initializes a new instance of VmssExtensionData. </summary>
         /// <param name="name"> The name. </param>
-        public VirtualMachineScaleSetExtensionData(string name) : base(default, name, default, default)
+        public VirtualMachineScaleSetExtensionData(string name)
         {
-            // we should make sure that we call everything inside the no parameter constructor. Otherwise the list in this model is not initialized and we will get exceptions when serializing it.
-            ProvisionAfterExtensions = new ChangeTrackingList<string>();
+            Name = name;
+        }
+
+        void IJsonModel<VirtualMachineScaleSetExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            JsonModelWriteCore(writer, options);
         }
 
         /// <summary>
@@ -56,8 +61,18 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BinaryData ProtectedSettingsFromKeyVault
         {
-            get => KeyVaultProtectedSettings is null ? null : ((IJsonModel<KeyVaultSecretReference>)KeyVaultProtectedSettings).Write(ModelSerializationExtensions.WireOptions);
-            set => KeyVaultProtectedSettings = ModelReaderWriter.Read<KeyVaultSecretReference>(value, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
+            get
+            {
+                return Properties?.ProtectedSettingsFromKeyVault is null ? null : ((IJsonModel<KeyVaultSecretReference>)Properties.ProtectedSettingsFromKeyVault).Write(ModelSerializationExtensions.WireOptions);
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetExtensionProperties();
+                }
+                Properties.ProtectedSettingsFromKeyVault = ModelReaderWriter.Read<KeyVaultSecretReference>(value, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
+            }
         }
     }
 }

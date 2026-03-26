@@ -13,6 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// If set to true, Virtual Machines deployed from the latest version of the Image Definition won&apos;t use this Image Version.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? ExcludeFromLatest { get => IsExcludedFromLatest; set => IsExcludedFromLatest = value; }
+        public bool? ExcludeFromLatest { get; set; }
     }
 }
