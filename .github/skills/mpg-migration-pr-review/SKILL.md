@@ -226,6 +226,28 @@ public partial class SomeModel
 }
 ```
 
+### 4.10 New Resource Naming — Derive from ARM Resource ID Segments (Suggestion)
+
+When a migration PR introduces **new** resource types (not present in the previous stable version), check that the resource class names align with their ARM resource ID path segments. This is a **soft guideline** — flag as a suggestion, not a blocking issue.
+
+**Pattern**: Build the resource name by concatenating segments from the ARM resource ID path:
+- **Scope prefix**: Use the RP name (e.g., `DevCenter`) for RP-scoped resources, or the scope name (e.g., `Project`) for sub-scope resources.
+- **Parent segments**: Include parent resource segments for nested resources (e.g., `Catalog` from `/catalogs/{name}/`).
+- **Resource segment**: The final segment in PascalCase (e.g., `Task` from `/tasks/{name}`).
+
+**Examples**:
+
+| ARM Resource ID Path | Suggested Resource Name |
+|---|---|
+| `.../devcenters/{name}/catalogs/{catalogName}` | `DevCenterCatalogResource` |
+| `.../devcenters/{name}/catalogs/{c}/tasks/{t}` | `DevCenterCatalogTaskResource` |
+| `.../projects/{name}/pools/{poolName}` | `ProjectPoolResource` |
+| `.../projects/{name}/catalogs/{c}/imageDefinitions/{i}` | `ProjectCatalogImageDefinitionResource` |
+
+**When to flag**: If a new resource name drifts significantly from its resource ID segments — e.g., uses an unrelated name, drops important parent context, or includes "OperationGroup" (which indicates a `ResourceName` / `@@clientName` collision in TypeSpec). Suggest renaming to better reflect the path segments.
+
+**How to fix**: Set `ResourceName` on the `LegacyOperations` template or use `@@clientName` on the TypeSpec interface. Note that `@@clientName` on the **model** renames the Data type but not the Resource/Collection classes — to rename Resource classes, target the interface or use `ResourceName`.
+
 ## Phase 5: TypeSpec Decorator Preference Review
 
 This phase checks whether the PR uses TypeSpec decorators where appropriate instead of SDK customization code. TypeSpec decorators are preferred because they:
