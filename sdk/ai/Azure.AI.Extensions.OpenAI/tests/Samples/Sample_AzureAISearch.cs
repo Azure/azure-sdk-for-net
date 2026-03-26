@@ -46,7 +46,7 @@ public class Sample_AzureAISearch : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
             Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -96,7 +96,7 @@ public class Sample_AzureAISearch : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
             Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion

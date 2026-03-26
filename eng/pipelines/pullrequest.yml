@@ -10,9 +10,6 @@ pr:
     include:
     - "*"
 
-    exclude:
-    - eng/packages/http-client-csharp/
-
 parameters:
   - name: Service
     type: string

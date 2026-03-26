@@ -114,7 +114,7 @@ options.AddPolicy(new LoggingPolicy(), PipelinePosition.PerCall);
 AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
 ```
 
-3. Use the client to create the `AgentVersion` object.
+3. Use the client to create the `ProjectsAgentVersion` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_AgentsLogging_Sync
@@ -122,7 +122,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a physics teacher with a sense of humor.",
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -134,7 +134,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a physics teacher with a sense of humor.",
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -166,7 +166,7 @@ ResponseResult response = await responseClient.CreateResponseAsync(responseOptio
 Console.WriteLine(response.GetOutputText());
 ```
 
-7. Delete the `AgentVersion` object created in this sample.
+7. Delete the `ProjectsAgentVersion` object created in this sample.
 
 Synchronous sample:
 ```C# Snippet:CleanUp_AgentsLogging_Sync

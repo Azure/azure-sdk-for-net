@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Ingress profile for the container service cluster. </summary>
-    public partial class ManagedClusterIngressProfile : IJsonModel<ManagedClusterIngressProfile>
+    internal partial class ManagedClusterIngressProfile : IJsonModel<ManagedClusterIngressProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,16 +79,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("webAppRouting"u8);
                 writer.WriteObjectValue(WebAppRouting, options);
             }
-            if (Optional.IsDefined(GatewayApi))
-            {
-                writer.WritePropertyName("gatewayAPI"u8);
-                writer.WriteObjectValue(GatewayApi, options);
-            }
-            if (Optional.IsDefined(ApplicationLoadBalancer))
-            {
-                writer.WritePropertyName("applicationLoadBalancer"u8);
-                writer.WriteObjectValue(ApplicationLoadBalancer, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -132,8 +122,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             ManagedClusterIngressProfileWebAppRouting webAppRouting = default;
-            ManagedClusterIngressProfileGatewayConfiguration gatewayApi = default;
-            ManagedClusterIngressProfileApplicationLoadBalancer applicationLoadBalancer = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,30 +134,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     webAppRouting = ManagedClusterIngressProfileWebAppRouting.DeserializeManagedClusterIngressProfileWebAppRouting(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("gatewayAPI"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    gatewayApi = ManagedClusterIngressProfileGatewayConfiguration.DeserializeManagedClusterIngressProfileGatewayConfiguration(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("applicationLoadBalancer"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    applicationLoadBalancer = ManagedClusterIngressProfileApplicationLoadBalancer.DeserializeManagedClusterIngressProfileApplicationLoadBalancer(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterIngressProfile(webAppRouting, gatewayApi, applicationLoadBalancer, additionalBinaryDataProperties);
+            return new ManagedClusterIngressProfile(webAppRouting, additionalBinaryDataProperties);
         }
     }
 }

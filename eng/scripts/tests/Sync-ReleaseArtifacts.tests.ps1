@@ -67,8 +67,12 @@ BeforeAll {
             Write-Host "  Release version $ReleaseVersion > main version $MainVersion — using release"
             return $ReleaseVersion
         }
+        elseif ($mainSemVer.CompareTo($releaseSemVer) -gt 0) {
+            Write-Host "  Main version $MainVersion > release version $ReleaseVersion — using main"
+            return $MainVersion
+        }
         else {
-            Write-Host "  Main version $MainVersion >= release version $ReleaseVersion — keeping main"
+            Write-Host "  Versions equal ($MainVersion) — no change needed"
             return $MainVersion
         }
     }

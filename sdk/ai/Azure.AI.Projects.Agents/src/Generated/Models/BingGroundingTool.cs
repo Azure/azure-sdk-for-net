@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
-    public partial class BingGroundingTool : AgentTool
+    public partial class BingGroundingTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="BingGroundingTool"/>. </summary>
         /// <param name="searchToolOptions"> The bing grounding search tool parameters. </param>

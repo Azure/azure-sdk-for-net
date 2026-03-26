@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <!-- Import common settings if not already imported (for Generator project to access LtsTargetFramework) -->
   <Import Project="$(RepoEngPath)\Directory.Build.Common.props" Condition="'$(LtsTargetFramework)' == ''" />
 
@@ -33,6 +33,7 @@
     <PackageReference Include="Azure.ResourceManager.Cdn" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
     <PackageReference Include="Azure.ResourceManager.Communication" />
+    <PackageReference Include="Azure.ResourceManager.Compute" />
     <PackageReference Include="Azure.ResourceManager.ContainerRegistry" />
     <PackageReference Include="Azure.ResourceManager.ContainerService" />
     <PackageReference Include="Azure.ResourceManager.CosmosDB" />

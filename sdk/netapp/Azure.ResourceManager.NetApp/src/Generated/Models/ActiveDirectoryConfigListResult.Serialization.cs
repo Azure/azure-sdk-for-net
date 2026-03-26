@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IReadOnlyList<ActiveDirectoryConfigData> value = default;
+            IReadOnlyList<NetAppActiveDirectoryConfigData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ActiveDirectoryConfigData> array = new List<ActiveDirectoryConfigData>();
+                    List<NetAppActiveDirectoryConfigData> array = new List<NetAppActiveDirectoryConfigData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActiveDirectoryConfigData.DeserializeActiveDirectoryConfigData(item, options));
+                        array.Add(NetAppActiveDirectoryConfigData.DeserializeNetAppActiveDirectoryConfigData(item, options));
                     }
                     value = array;
                     continue;

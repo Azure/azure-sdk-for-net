@@ -5,6 +5,14 @@
 ### Features Added
 
 ### Breaking Changes
+- `AgentVersion` was renamed to `ProjectsAgentVersion`.
+- `AgentVersionCreationOptions` was renamed to `ProjectsAgentVersionCreationOptions`.
+- `AgentDefinition` was renamed to `ProjectsAgentDefinition`.
+- `AgentRecord` was renamed to `ProjectsAgentRecord`.
+- `ProjectsAgentTool` was renamed to `ProjectsAgentTool`.
+- `PromptAgentDefinition` was renamed to `DeclarativeAgentDefinition`.
+- `AgentClient` was renamed to `AgentAdministrationClient`.
+- `AgentClientOptions` were renamed to `AgentAdministrationClientOptions`.
 
 ### Bugs Fixed
 
