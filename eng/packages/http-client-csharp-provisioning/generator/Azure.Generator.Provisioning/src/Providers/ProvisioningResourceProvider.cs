@@ -389,11 +389,6 @@ namespace Azure.Generator.Provisioning.Providers
                 CollectPropertiesFromModel(model, result, seen, basePath: null);
             }
 
-            foreach (var model in chain)
-            {
-                CollectPropertiesFromModel(model, result, seen, basePath: null);
-            }
-
             return result;
         }
 
