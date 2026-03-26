@@ -12,10 +12,11 @@ namespace Azure.AI.Extensions.OpenAI.Tests
 {
     public class ProjectsOpenAITestEnvironment : TestEnvironment
     {
-        public string PROJECT_ENDPOINT => GetRecordedVariable(nameof(PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
-        public string AGENT_NAME => WrappedGetRecordedVariable("AZURE_AI_FOUNDRY_AGENT_NAME", isSecret: false);
-        public string MODELDEPLOYMENTNAME => WrappedGetRecordedVariable("MODEL_DEPLOYMENT_NAME", isSecret: false);
-        public string EMBEDDINGMODELDEPLOYMENTNAME => WrappedGetRecordedVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME", isSecret: false);
+        public string FOUNDRY_PROJECT_ENDPOINT => GetRecordedVariable(nameof(FOUNDRY_PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
+        public string FOUNDRY_AGENT_NAME => WrappedGetRecordedVariable(nameof(FOUNDRY_AGENT_NAME), isSecret: false);
+        public string FOUNDRY_MODEL_NAME => WrappedGetRecordedVariable(nameof(FOUNDRY_MODEL_NAME), isSecret: false);
+        public string MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME => WrappedGetRecordedVariable(nameof(MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME), isSecret: false);
+        public string MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME => WrappedGetRecordedVariable(nameof(MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME), isSecret: false);
         public string INGRESS_SUBDOMAIN_SUFFIX => WrappedGetRecordedVariable(nameof(INGRESS_SUBDOMAIN_SUFFIX), isSecret: false);
         public string OPENAI_FILE_ID => WrappedGetRecordedVariable(nameof(OPENAI_FILE_ID), isSecret: false    );
         public string COMPUTER_SCREENSHOTS => WrappedGetRecordedVariable(nameof(COMPUTER_SCREENSHOTS), isSecret: false);

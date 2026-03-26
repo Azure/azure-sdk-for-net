@@ -3,9 +3,9 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Azure.AI.Projects
 {
@@ -13,10 +13,8 @@ namespace Azure.AI.Projects
     public partial class AIProjectClient : ClientConnectionProvider
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential provider used to authenticate to the service. </summary>
-        private readonly AuthenticationTokenProvider _tokenProvider;
         /// <summary> The OAuth2 flows supported by the service. </summary>
-        private readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
+        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
         {
             new Dictionary<string, object>
             {
@@ -33,11 +31,23 @@ namespace Azure.AI.Projects
         private EvaluationRules _cachedEvaluationRules;
         private EvaluationTaxonomies _cachedEvaluationTaxonomies;
         private Evaluators _cachedEvaluators;
-        private Insights _cachedInsights;
-        private Schedules _cachedSchedules;
+        private ProjectsInsights _cachedProjectsInsights;
+        private ProjectsSchedules _cachedProjectsSchedules;
         private AIProjectMemoryStoresOperations _cachedAIProjectMemoryStoresOperations;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> Initializes a new instance of ProjectsInsights. </summary>
+        public virtual ProjectsInsights GetProjectsInsightsClient()
+        {
+            return Volatile.Read(ref _cachedProjectsInsights) ?? Interlocked.CompareExchange(ref _cachedProjectsInsights, new ProjectsInsights(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectsInsights;
+        }
+
+        /// <summary> Initializes a new instance of ProjectsSchedules. </summary>
+        public virtual ProjectsSchedules GetProjectsSchedulesClient()
+        {
+            return Volatile.Read(ref _cachedProjectsSchedules) ?? Interlocked.CompareExchange(ref _cachedProjectsSchedules, new ProjectsSchedules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectsSchedules;
+        }
     }
 }

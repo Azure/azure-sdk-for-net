@@ -25,7 +25,7 @@ namespace Azure.AI.Speech.Transcription.Samples
         [RecordedTest]
         public async Task TranscribeWithPhraseList()
         {
-            TestTimeoutInSeconds = 20; // This test takes longer due to large recording
+            TestTimeoutInSeconds = 25; // This test takes longer due to large recording
 #if !SNIPPET
             var client = CreateClient();
 #else

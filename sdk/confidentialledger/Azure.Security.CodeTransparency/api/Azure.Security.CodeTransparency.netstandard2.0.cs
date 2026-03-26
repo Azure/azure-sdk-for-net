@@ -32,6 +32,7 @@ namespace Azure.Security.CodeTransparency
     {
         public static readonly string UnknownIssuerPrefix;
         protected CodeTransparencyClient() { }
+        public CodeTransparencyClient(Azure.Security.CodeTransparency.CodeTransparencyClientSettings settings) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options = null) { }
@@ -73,6 +74,13 @@ namespace Azure.Security.CodeTransparency
         {
             V2025_01_31_Preview = 1,
         }
+    }
+    public partial class CodeTransparencyClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public CodeTransparencyClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.CodeTransparencyClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class CodeTransparencyModelFactory
     {
