@@ -79,3 +79,15 @@ Common flags across all commands:
 - `--label <abel>` — Label name (leave off `%` prefix)
 - `--package <name>` — Package name
 - `--owner-type <type>` — One of `AzSdkOwner`, `PrLabel`, `ServiceOwner`
+
+## Repo inference
+
+If a `repo` parameter is not provided, tools will attempt to infer the target repository based on the current working directory. If the current repo is not an Azure SDK repo or if inference fails, ask the user to provide the target repo in the format `Azure/azure-sdk-for-python`. Valid values for the repo parameter are:
+
+- `Azure/azure-sdk-for-net`
+- `Azure/azure-sdk-for-java`
+- `Azure/azure-sdk-for-js`
+- `Azure/azure-sdk-for-python`
+- `Azure/azure-sdk-for-go`
+- `Azure/azure-sdk-for-cpp`
+- `Azure/azure-sdk-for-rust`

@@ -4,7 +4,7 @@ license: MIT
 metadata:
   version: "1.0.0"
   distribution: shared
-description: "Query and modify CODEOWNERS ownership, service labels, and package associations in Azure SDK repositories. **UTILITY SKILL**. FOR SINGLE OPERATIONS: view, add, or remove owners and labels. WHEN: \"view codeowners\", \"add package owner\", \"remove package owner\", \"add label\", \"remove label\", \"codeowners blocked PR\", \"who owns this package\", \"create service label\". INVOKES: azsdk_engsys_codeowner_view, azsdk_engsys_codeowner_add_package_owner, azsdk_engsys_codeowner_add_label_owner, azsdk_check_service_label, azsdk_create_service_label."
+description: "Query and modify CODEOWNERS ownership, service labels, and package associations in Azure SDK repositories. **UTILITY SKILL**. FOR SINGLE OPERATIONS: view, add, or remove owners and labels. WHEN: \"code owners\", \"view codeowners\", \"add package owner\", \"remove package owner\", \"add label\", \"remove label\", \"codeowners blocked PR\", \"who owns this package\", \"create service label\". INVOKES: azsdk_engsys_codeowner_view, azsdk_engsys_codeowner_add_package_owner, azsdk_engsys_codeowner_add_label_owner, azsdk_check_service_label, azsdk_create_service_label."
 compatibility:
   requires: "azure-sdk-mcp server"
 ---

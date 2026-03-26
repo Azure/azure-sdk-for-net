@@ -6,9 +6,5 @@ Edits to protected sections of the CODEOWNERS file are prohibited. If you want t
 
 ## I cannot associate my service label with a package
 
-- Ensure that the service label PR has been merged in the azure-sdk-tools repo. The label must exist before it can be associated with packages and paths.
-- Use `azsdk_check_service_label` to confirm that the label exists.
-
-## The repository I want to modify is not being inferred
-
-If the tool cannot infer the target repository from the current workspace, ask the user for the repo in the format `Azure/azure-sdk-for-net` and try the tool call with that parameter for the repo
+1. Use `azsdk_check_service_label` to confirm that the label exists.
+2. If the label does not exist, ask the user if they want to create the label using `azsdk_create_service_label`. That operation will open a PR to Azure/azure-sdk-tools and that PR must be merged before the label can be associated with packages.
