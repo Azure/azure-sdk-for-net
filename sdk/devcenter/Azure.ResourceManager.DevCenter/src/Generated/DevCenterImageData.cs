@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.DevCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterImageData"/>. </summary>
+        public DevCenterImageData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -33,14 +38,14 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Image properties. </summary>
-        internal ImageProperties Properties { get; }
+        internal ImageProperties Properties { get; set; }
 
         /// <summary> The description of the image. </summary>
         public string Description
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -49,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.Publisher;
+                return Properties is null ? default : Properties.Publisher;
             }
         }
 
@@ -58,7 +63,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.Offer;
+                return Properties is null ? default : Properties.Offer;
             }
         }
 
@@ -67,7 +72,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.Sku;
+                return Properties is null ? default : Properties.Sku;
             }
         }
 
@@ -76,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.RecommendedMachineConfiguration;
+                return Properties is null ? default : Properties.RecommendedMachineConfiguration;
             }
         }
 
@@ -85,7 +90,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -94,7 +99,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.HibernateSupport;
+                return Properties is null ? default : Properties.HibernateSupport;
             }
         }
 
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.Architecture;
+                return Properties is null ? default : Properties.Architecture;
             }
         }
     }

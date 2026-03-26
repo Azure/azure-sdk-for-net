@@ -8,12 +8,24 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The resource model definition representing SKU for DevCenter resources. </summary>
     public partial class DevCenterSkuDetails : DevCenterSku
     {
+        /// <summary> Initializes a new instance of <see cref="DevCenterSkuDetails"/>. </summary>
+        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public DevCenterSkuDetails(string name) : base(name)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Locations = new ChangeTrackingList<string>();
+            Capabilities = new ChangeTrackingList<DevCenterCapability>();
+        }
+
         /// <summary> Initializes a new instance of <see cref="DevCenterSkuDetails"/>. </summary>
         /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>

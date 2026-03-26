@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.DevCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImageVersionData"/>. </summary>
+        public ImageVersionData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImageVersionData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -33,14 +38,14 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Image version properties. </summary>
-        internal ImageVersionProperties Properties { get; }
+        internal ImageVersionProperties Properties { get; set; }
 
         /// <summary> The semantic version string. </summary>
         public string NamePropertiesName
         {
             get
             {
-                return Properties.NamePropertiesName;
+                return Properties is null ? default : Properties.NamePropertiesName;
             }
         }
 
@@ -49,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.PublishedOn;
+                return Properties is null ? default : Properties.PublishedOn;
             }
         }
 
@@ -58,7 +63,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.IsExcludedFromLatest;
+                return Properties is null ? default : Properties.IsExcludedFromLatest;
             }
         }
 
@@ -67,7 +72,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.OSDiskImageSizeInGB;
+                return Properties is null ? default : Properties.OSDiskImageSizeInGB;
             }
         }
 
@@ -76,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
     }
