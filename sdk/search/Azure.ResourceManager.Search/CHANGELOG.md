@@ -1,16 +1,18 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (2026-03-26)
 
 ### Features Added
 
-- Migrated from Swagger/AutoRest to TypeSpec-based generation (API version 2025-05-01).
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag from 'package-2025-05-01' to 'package-preview-2026-03-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/5f1f13276e3bba25876eeabedc765ac987c3b457/specification/search/resource-manager/Microsoft.Search/Search.
+- Added `KnowledgeRetrieval` property on `SearchServiceProperties` for configuring agentic retrieval billing tier.
+- Added `ServiceLevelEncryptionKey` property on `SearchEncryptionWithCmk` for service-level CMK encryption.
+- Added `SearchResourceEncryptionKey` model for encryption key configuration.
+- Added `DataIdentity` type hierarchy (`DataNoneIdentity`, `DataUserAssignedIdentity`) for identity configuration.
+- Added `AzureActiveDirectoryApplicationCredentials` model for Azure Active Directory application credentials.
+- Added `Stopped` value to `SearchServiceStatus` enum.
+- Added `GetOfferings` operation at tenant level to list all features and SKUs offered by Azure AI Search in each region.
+- Added `FeatureOffering`, `OfferingsByRegion`, `SkuOffering`, and `SkuLimits` models for offerings support.
 
 ## 1.3.0 (2025-07-23)
 
