@@ -1779,39 +1779,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [Test]
-        public void Uri_StripsSnapshotAndVersion()
-        {
-            // Arrange
-            string baseUrl = "https://storageaccount.blob.core.windows.net/container/blob";
-            string snapshotId = "2024-01-01T00:00:00.0000000Z";
-            string versionId = "2024-01-02T00:00:00.0000000Z";
-
-            // Test with snapshot
-            BlobUriBuilder builderWithSnapshot = new BlobUriBuilder(new Uri(baseUrl))
-            {
-                Snapshot = snapshotId
-            };
-            BlockBlobClient blobWithSnapshot = new BlockBlobClient(builderWithSnapshot.ToUri());
-            BlockBlobStorageResource resourceWithSnapshot = new(blobWithSnapshot);
-
-            // Assert - Uri should strip snapshot
-            Assert.AreEqual(baseUrl, resourceWithSnapshot.Uri.AbsoluteUri);
-            Assert.IsFalse(resourceWithSnapshot.Uri.Query.Contains("snapshot"));
-
-            // Test with version
-            BlobUriBuilder builderWithVersion = new BlobUriBuilder(new Uri(baseUrl))
-            {
-                VersionId = versionId
-            };
-            BlockBlobClient blobWithVersion = new BlockBlobClient(builderWithVersion.ToUri());
-            BlockBlobStorageResource resourceWithVersion = new(blobWithVersion);
-
-            // Assert - Uri should strip version
-            Assert.AreEqual(baseUrl, resourceWithVersion.Uri.AbsoluteUri);
-            Assert.IsFalse(resourceWithVersion.Uri.Query.Contains("versionid"));
-        }
-
-        [Test]
         public void Uri_StripsSas()
         {
             // Arrange
@@ -1828,5 +1795,50 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.IsFalse(storageResource.Uri.Query.Contains("sig"));
             Assert.IsFalse(storageResource.Uri.Query.Contains("sv"));
         }
+
+        #region Snapshot and Version Option Tests
+
+        /// <summary>
+        /// Tests that when options specify a snapshot, the constructor updates the internal client
+        /// to include the snapshot parameter in its URI.
+        /// </summary>
+        [Test]
+        public void Ctor_WithSnapshotInOptions_UpdatesClientUri()
+        {
+            // Arrange
+            Uri baseUri = new Uri("https://storageaccount.blob.core.windows.net/container/blob");
+            string snapshotId = "2024-01-01T00:00:00.0000000Z";
+            BlockBlobClient blobClient = new BlockBlobClient(baseUri);
+
+            // Act: Pass client without snapshot but options with snapshot
+            var options = new BlockBlobStorageResourceOptions { Snapshot = snapshotId };
+            var resource = new BlockBlobStorageResource(blobClient, options);
+
+            // Assert: Internal client should now have snapshot in URI
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(resource.BlobClient.Uri);
+            Assert.AreEqual(snapshotId, uriBuilder.Snapshot);
+        }
+
+        /// <summary>
+        /// Tests that when options specify a version, the constructor updates the internal client
+        /// to include the version parameter in its URI.
+        /// </summary>
+        [Test]
+        public void Ctor_WithVersionInOptions_UpdatesClientUri()
+        {
+            // Arrange
+            Uri baseUri = new Uri("https://storageaccount.blob.core.windows.net/container/blob");
+            string versionId = "2024-01-02T00:00:00.0000000Z";
+            BlockBlobClient blobClient = new BlockBlobClient(baseUri);
+
+            // Act: Pass client without version but options with version
+            var options = new BlockBlobStorageResourceOptions { VersionId = versionId };
+            var resource = new BlockBlobStorageResource(blobClient, options);
+
+            // Assert: Internal client should now have version in URI
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(resource.BlobClient.Uri);
+            Assert.AreEqual(versionId, uriBuilder.VersionId);
+        }
+        #endregion
     }
 }

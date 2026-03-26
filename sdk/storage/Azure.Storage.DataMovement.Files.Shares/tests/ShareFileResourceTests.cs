@@ -10,11 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Core.TestFramework.Models;
 using Azure.Storage.Test;
 using BaseShares::Azure.Storage.Files.Shares;
 using BaseShares::Azure.Storage.Files.Shares.Models;
-using BaseShares::Azure.Storage.Files.Shares.Specialized;
 using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using Moq;
 using Moq.Protected;
@@ -2639,27 +2637,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [Test]
-        public void Uri_StripsSnapshot()
-        {
-            // Arrange
-            string baseUrl = "https://storageaccount.file.core.windows.net/share/file";
-            string snapshotId = "2024-01-01T00:00:00.0000000Z";
-            ShareUriBuilder builder = new ShareUriBuilder(new Uri(baseUrl))
-            {
-                Snapshot = snapshotId
-            };
-            Uri uriWithSnapshot = builder.ToUri();
-
-            // Create client with snapshot
-            ShareFileClient fileClient = new ShareFileClient(uriWithSnapshot);
-            ShareFileStorageResource storageResource = new(fileClient);
-
-            // Assert - Uri property should return base URI without snapshot
-            Assert.AreEqual(baseUrl, storageResource.Uri.AbsoluteUri);
-            Assert.IsFalse(storageResource.Uri.Query.Contains("snapshot"));
-        }
-
-        [Test]
         public void Uri_StripsSas()
         {
             // Arrange
@@ -2676,5 +2653,82 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.IsFalse(storageResource.Uri.Query.Contains("sig"));
             Assert.IsFalse(storageResource.Uri.Query.Contains("sv"));
         }
+
+        #region Snapshot Option Tests
+
+        /// <summary>
+        /// Tests that when options specify a snapshot, the constructor updates the internal client
+        /// to include the snapshot parameter in its URI.
+        /// </summary>
+        [Test]
+        public void Ctor_WithSnapshotInOptions_UpdatesClientUri()
+        {
+            // Arrange
+            Uri baseUri = new Uri("https://storageaccount.file.core.windows.net/share/file");
+            string snapshotId = "2024-01-01T00:00:00.0000000Z";
+            ShareFileClient fileClient = new ShareFileClient(baseUri);
+
+            // Act: Pass client without snapshot but options with snapshot
+            var options = new ShareFileStorageResourceOptions { Snapshot = snapshotId };
+            var resource = new ShareFileStorageResource(fileClient, options);
+
+            // Assert: Internal client should now have snapshot in URI
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(resource.ShareFileClient.Uri);
+            Assert.AreEqual(snapshotId, uriBuilder.Snapshot);
+        }
+
+        /// <summary>
+        /// Tests that GetSourceCheckpointDetails correctly returns snapshot information
+        /// when snapshot is specified in options.
+        /// </summary>
+        [Test]
+        public void GetSourceCheckpointDetails_WithSnapshotInOptions_ReturnsSnapshot()
+        {
+            // Arrange
+            Uri uri = new Uri("https://storageaccount.file.core.windows.net/share/file");
+            ShareFileClient fileClient = new ShareFileClient(uri);
+
+            string snapshotId = "2024-01-01T00:00:00.0000000Z";
+            var options = new ShareFileStorageResourceOptions { Snapshot = snapshotId };
+            var resource = new ShareFileStorageResource(fileClient, options);
+
+            // Act
+            var checkpointDetails = resource.GetSourceCheckpointDetails();
+
+            // Assert
+            Assert.IsInstanceOf<ShareFileSourceCheckpointDetails>(checkpointDetails);
+            var shareDetails = (ShareFileSourceCheckpointDetails)checkpointDetails;
+            Assert.AreEqual(snapshotId, shareDetails.Snapshot);
+        }
+
+        /// <summary>
+        /// Tests that when client URI contains a snapshot and options also specify a snapshot,
+        /// the options snapshot takes precedence in checkpoint details.
+        /// </summary>
+        [Test]
+        public void Ctor_WithSnapshotInClientAndOptions_UsesOptionsSnapshot()
+        {
+            // Arrange
+            string snapshot1Id = "2024-01-01T00:00:00.0000000Z";
+            string snapshot2Id = "2024-01-02T00:00:00.0000000Z";
+
+            // Create URI with snapshot1
+            ShareUriBuilder builder = new ShareUriBuilder(new Uri("https://storageaccount.file.core.windows.net/share/file"))
+            {
+                Snapshot = snapshot1Id
+            };
+            ShareFileClient snapshot1Client = new ShareFileClient(builder.ToUri());
+
+            // Act: Pass client with snapshot1 but options with snapshot2
+            var options = new ShareFileStorageResourceOptions { Snapshot = snapshot2Id };
+            var resource = new ShareFileStorageResource(snapshot1Client, options);
+
+            // Assert: Resource should use snapshot2 from options
+            var checkpointDetails = resource.GetSourceCheckpointDetails();
+            var shareDetails = (ShareFileSourceCheckpointDetails)checkpointDetails;
+            Assert.AreEqual(snapshot2Id, shareDetails.Snapshot);
+        }
+
+        #endregion
     }
 }

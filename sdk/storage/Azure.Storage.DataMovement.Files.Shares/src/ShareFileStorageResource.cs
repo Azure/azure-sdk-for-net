@@ -30,7 +30,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             // SAS should not be exposed in events/logs
             ShareUriBuilder uriBuilder = new ShareUriBuilder(ShareFileClient.Uri)
             {
-                Snapshot = null,
                 Sas = null
             };
             return uriBuilder.ToUri();
@@ -58,8 +57,19 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileClient fileClient,
             ShareFileStorageResourceOptions options = default)
         {
-            ShareFileClient = fileClient;
             _options = options ?? new ShareFileStorageResourceOptions();
+
+            // If options specify a snapshot but the client doesn't have it, create a new client
+            if (!string.IsNullOrEmpty(_options.Snapshot))
+            {
+                ShareUriBuilder uriBuilder = new ShareUriBuilder(fileClient.Uri);
+                if (uriBuilder.Snapshot != _options.Snapshot)
+                {
+                    fileClient = fileClient.WithSnapshot(_options.Snapshot);
+                }
+            }
+
+            ShareFileClient = fileClient;
         }
 
         /// <summary>
