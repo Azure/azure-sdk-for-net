@@ -3,16 +3,15 @@
 
 using System;
 using Azure.Storage.Blobs;
-using Azure.Storage.ChangeFeed.Common;
 using NUnit.Framework;
 
-namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
+namespace Azure.Storage.ChangeFeed.Common.Tests
 {
     /// <summary>
-    /// Tests for <see cref="ChangeFeedExtensionsBase"/> utility methods including segment path parsing,
-    /// interval rounding, and date boundary helpers.
+    /// Tests for <see cref="ChangeFeedExtensionsBase"/> utility methods including
+    /// segment path parsing, interval-aware rounding, and time range helpers.
     /// </summary>
-    public class ChangeFeedExtensionsBaseTests : ShareChangeFeedTestBase
+    public class ChangeFeedExtensionsBaseTests : ChangeFeedCommonTestBase
     {
         public ChangeFeedExtensionsBaseTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null)
@@ -20,7 +19,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         /// <summary>
-        /// Verifies that an hourly segment path like "0200" is correctly parsed into a DateTimeOffset with only the hour component.
+        /// Verifies that an hourly path (HH00) is parsed correctly with minute=0.
         /// </summary>
         [Test]
         public void ToDateTimeOffset_HourlyPath()
@@ -30,7 +29,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         /// <summary>
-        /// Verifies that a 15-minute segment path like "0815" is correctly parsed into a DateTimeOffset with both hour and minute components.
+        /// Verifies that a 15-minute path (HHmm) is parsed with both hour and minute components.
         /// </summary>
         [Test]
         public void ToDateTimeOffset_15MinPath()
@@ -40,7 +39,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         /// <summary>
-        /// Verifies that a 15-minute segment path at "1445" correctly produces hour 14 and minute 45.
+        /// Verifies 45-minute offset parsing (e.g. 14:45).
         /// </summary>
         [Test]
         public void ToDateTimeOffset_15MinPath_0845()
@@ -49,18 +48,14 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.AreEqual(new DateTimeOffset(2024, 6, 20, 14, 45, 0, TimeSpan.Zero), result);
         }
 
-        /// <summary>
-        /// Verifies that a null path returns null rather than throwing.
-        /// </summary>
         [Test]
         public void ToDateTimeOffset_Null()
         {
-            DateTimeOffset? result = ChangeFeedExtensionsBase.ToDateTimeOffset(null);
-            Assert.IsNull(result);
+            Assert.IsNull(ChangeFeedExtensionsBase.ToDateTimeOffset(null));
         }
 
         /// <summary>
-        /// Verifies that a year-only path like "idx/segments/2023/" defaults to January 1 at midnight.
+        /// Verifies that a year-only path defaults month/day/hour/minute to minimum values.
         /// </summary>
         [Test]
         public void ToDateTimeOffset_YearOnly()
@@ -69,8 +64,14 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.AreEqual(new DateTimeOffset(2023, 1, 1, 0, 0, 0, TimeSpan.Zero), result);
         }
 
+        [Test]
+        public void ToDateTimeOffset_InvalidPath_TooShort()
+        {
+            Assert.Throws<ArgumentException>(() => ChangeFeedExtensionsBase.ToDateTimeOffset("idx/segments"));
+        }
+
         /// <summary>
-        /// Verifies that a timestamp mid-interval is rounded down to the preceding 15-minute boundary.
+        /// Verifies rounding down 08:22:30 to the nearest 15 minutes gives 08:15:00.
         /// </summary>
         [Test]
         public void RoundDownToNearestInterval_15Min()
@@ -81,7 +82,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         /// <summary>
-        /// Verifies that a timestamp already on a 15-minute boundary is unchanged after rounding down.
+        /// Verifies that an already-aligned time is unchanged when rounding down.
         /// </summary>
         [Test]
         public void RoundDownToNearestInterval_AlreadyAligned()
@@ -91,8 +92,14 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.AreEqual(new DateTimeOffset(2024, 1, 15, 8, 30, 0, TimeSpan.Zero), result);
         }
 
+        [Test]
+        public void RoundDownToNearestInterval_Null()
+        {
+            Assert.IsNull(((DateTimeOffset?)null).RoundDownToNearestInterval(TimeSpan.FromMinutes(15)));
+        }
+
         /// <summary>
-        /// Verifies that a timestamp mid-interval is rounded up to the next 15-minute boundary.
+        /// Verifies rounding up 08:22:30 to the nearest 15 minutes gives 08:30:00.
         /// </summary>
         [Test]
         public void RoundUpToNearestInterval_15Min()
@@ -103,38 +110,24 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         /// <summary>
-        /// Verifies that a timestamp already on a 15-minute boundary is unchanged after rounding up.
+        /// Verifies that an already-aligned time is unchanged when rounding up.
         /// </summary>
         [Test]
         public void RoundUpToNearestInterval_AlreadyAligned()
         {
             DateTimeOffset? input = new DateTimeOffset(2024, 1, 15, 8, 30, 0, TimeSpan.Zero);
             DateTimeOffset? result = input.RoundUpToNearestInterval(TimeSpan.FromMinutes(15));
-            Assert.AreEqual(new DateTimeOffset(2024, 1, 15, 8, 30, 0, TimeSpan.Zero), result);
+            Assert.AreEqual(input, result);
         }
 
-        /// <summary>
-        /// Verifies that rounding down a null DateTimeOffset returns null.
-        /// </summary>
-        [Test]
-        public void RoundDownToNearestInterval_Null()
-        {
-            DateTimeOffset? result = ((DateTimeOffset?)null).RoundDownToNearestInterval(TimeSpan.FromMinutes(15));
-            Assert.IsNull(result);
-        }
-
-        /// <summary>
-        /// Verifies that rounding up a null DateTimeOffset returns null.
-        /// </summary>
         [Test]
         public void RoundUpToNearestInterval_Null()
         {
-            DateTimeOffset? result = ((DateTimeOffset?)null).RoundUpToNearestInterval(TimeSpan.FromMinutes(15));
-            Assert.IsNull(result);
+            Assert.IsNull(((DateTimeOffset?)null).RoundUpToNearestInterval(TimeSpan.FromMinutes(15)));
         }
 
         /// <summary>
-        /// Verifies that rounding down works correctly with a 1-hour interval, truncating minutes and seconds.
+        /// Verifies rounding down to the nearest hour also works with the interval-based method.
         /// </summary>
         [Test]
         public void RoundDownToNearestInterval_1Hour()
@@ -144,24 +137,40 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.AreEqual(new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero), result);
         }
 
-        /// <summary>
-        /// Verifies that MinDateTime returns the end date when it is earlier than the last consumable timestamp.
-        /// </summary>
+        [Test]
+        public void RoundDownToNearestYear()
+        {
+            DateTimeOffset? input = new DateTimeOffset(2024, 6, 15, 10, 30, 0, TimeSpan.Zero);
+            DateTimeOffset? result = input.RoundDownToNearestYear();
+            Assert.AreEqual(new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero), result);
+        }
+
+        [Test]
+        public void RoundDownToNearestYear_Null()
+        {
+            Assert.IsNull(((DateTimeOffset?)null).RoundDownToNearestYear());
+        }
+
         [Test]
         public void MinDateTime_EndDateBeforeLastConsumable()
         {
-            DateTimeOffset lastConsumable = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
-            DateTimeOffset endDate = new DateTimeOffset(2024, 1, 15, 9, 0, 0, TimeSpan.Zero);
+            var lastConsumable = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
+            var endDate = new DateTimeOffset(2024, 1, 15, 9, 0, 0, TimeSpan.Zero);
             Assert.AreEqual(endDate, ChangeFeedExtensionsBase.MinDateTime(lastConsumable, endDate));
         }
 
-        /// <summary>
-        /// Verifies that MinDateTime falls back to the last consumable timestamp when no end date is provided.
-        /// </summary>
+        [Test]
+        public void MinDateTime_EndDateAfterLastConsumable()
+        {
+            var lastConsumable = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
+            var endDate = new DateTimeOffset(2024, 1, 15, 12, 0, 0, TimeSpan.Zero);
+            Assert.AreEqual(lastConsumable, ChangeFeedExtensionsBase.MinDateTime(lastConsumable, endDate));
+        }
+
         [Test]
         public void MinDateTime_NoEndDate()
         {
-            DateTimeOffset lastConsumable = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
+            var lastConsumable = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
             Assert.AreEqual(lastConsumable, ChangeFeedExtensionsBase.MinDateTime(lastConsumable, null));
         }
     }
