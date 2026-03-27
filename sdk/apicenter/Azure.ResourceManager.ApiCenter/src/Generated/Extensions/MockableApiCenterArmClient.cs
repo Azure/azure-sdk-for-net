@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             return new ApiCenterServiceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DeletedServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ApiCenterDeletedServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedServiceResource"/> object. </returns>
-        public virtual DeletedServiceResource GetDeletedServiceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiCenterDeletedServiceResource"/> object. </returns>
+        public virtual ApiCenterDeletedServiceResource GetApiCenterDeletedServiceResource(ResourceIdentifier id)
         {
-            DeletedServiceResource.ValidateResourceId(id);
-            return new DeletedServiceResource(Client, id);
+            ApiCenterDeletedServiceResource.ValidateResourceId(id);
+            return new ApiCenterDeletedServiceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ApiCenterMetadataSchemaResource"/> along with the instance operations that can be performed on it but with no data. </summary>

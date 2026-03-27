@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             return GetApiCenterServices().Get(serviceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DeletedServices in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of DeletedServices and their operations over a DeletedServiceResource. </returns>
-        public virtual DeletedServiceCollection GetDeletedServices()
+        /// <summary> Gets a collection of ApiCenterDeletedServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApiCenterDeletedServices and their operations over a ApiCenterDeletedServiceResource. </returns>
+        public virtual ApiCenterDeletedServiceCollection GetApiCenterDeletedServices()
         {
-            return GetCachedClient(client => new DeletedServiceCollection(client, Id));
+            return GetCachedClient(client => new ApiCenterDeletedServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deletedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DeletedServiceResource>> GetDeletedServiceAsync(string deletedServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiCenterDeletedServiceResource>> GetApiCenterDeletedServiceAsync(string deletedServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedServiceName, nameof(deletedServiceName));
 
-            return await GetDeletedServices().GetAsync(deletedServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetApiCenterDeletedServices().GetAsync(deletedServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deletedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DeletedServiceResource> GetDeletedService(string deletedServiceName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiCenterDeletedServiceResource> GetApiCenterDeletedService(string deletedServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedServiceName, nameof(deletedServiceName));
 
-            return GetDeletedServices().Get(deletedServiceName, cancellationToken);
+            return GetApiCenterDeletedServices().Get(deletedServiceName, cancellationToken);
         }
     }
 }

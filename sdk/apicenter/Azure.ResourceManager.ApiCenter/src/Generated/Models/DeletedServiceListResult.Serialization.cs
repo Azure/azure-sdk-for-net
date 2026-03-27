@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (DeletedServiceData item in Value)
+                foreach (ApiCenterDeletedServiceData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<DeletedServiceData> value = default;
+            IReadOnlyList<ApiCenterDeletedServiceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DeletedServiceData> array = new List<DeletedServiceData>();
+                    List<ApiCenterDeletedServiceData> array = new List<ApiCenterDeletedServiceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DeletedServiceData.DeserializeDeletedServiceData(item, options));
+                        array.Add(ApiCenterDeletedServiceData.DeserializeApiCenterDeletedServiceData(item, options));
                     }
                     value = array;
                     continue;

@@ -56,21 +56,21 @@ namespace Azure.ResourceManager.ApiCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeletedServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ApiCenterDeletedServiceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiCenterArmClient.GetDeletedServiceResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiCenterArmClient.GetApiCenterDeletedServiceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DeletedServiceResource"/> object. </returns>
-        public static DeletedServiceResource GetDeletedServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiCenterDeletedServiceResource"/> object. </returns>
+        public static ApiCenterDeletedServiceResource GetApiCenterDeletedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiCenterArmClient(client).GetDeletedServiceResource(id);
+            return GetMockableApiCenterArmClient(client).GetApiCenterDeletedServiceResource(id);
         }
 
         /// <summary>
@@ -273,27 +273,27 @@ namespace Azure.ResourceManager.ApiCenter
         }
 
         /// <summary>
-        /// Gets a collection of DeletedServices in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ApiCenterDeletedServices in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetDeletedServices()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetApiCenterDeletedServices()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DeletedServices and their operations over a DeletedServiceResource. </returns>
-        public static DeletedServiceCollection GetDeletedServices(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ApiCenterDeletedServices and their operations over a ApiCenterDeletedServiceResource. </returns>
+        public static ApiCenterDeletedServiceCollection GetApiCenterDeletedServices(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetDeletedServices();
+            return GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetApiCenterDeletedServices();
         }
 
         /// <summary>
         /// Returns details of the soft-deleted service.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetDeletedServiceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetApiCenterDeletedServiceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -301,18 +301,18 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DeletedServiceResource>> GetDeletedServiceAsync(this ResourceGroupResource resourceGroupResource, string deletedServiceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApiCenterDeletedServiceResource>> GetApiCenterDeletedServiceAsync(this ResourceGroupResource resourceGroupResource, string deletedServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetDeletedServiceAsync(deletedServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetApiCenterDeletedServiceAsync(deletedServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns details of the soft-deleted service.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetDeletedService(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetApiCenterDeletedService(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -320,11 +320,11 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DeletedServiceResource> GetDeletedService(this ResourceGroupResource resourceGroupResource, string deletedServiceName, CancellationToken cancellationToken = default)
+        public static Response<ApiCenterDeletedServiceResource> GetApiCenterDeletedService(this ResourceGroupResource resourceGroupResource, string deletedServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetDeletedService(deletedServiceName, cancellationToken);
+            return GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetApiCenterDeletedService(deletedServiceName, cancellationToken);
         }
 
         /// <summary>
@@ -367,36 +367,36 @@ namespace Azure.ResourceManager.ApiCenter
         /// Lists services within an Azure subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiCenterSubscriptionResource.GetDeletedServicesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiCenterSubscriptionResource.GetApiCenterDeletedServicesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeletedServiceResource> GetDeletedServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiCenterDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiCenterDeletedServiceResource> GetApiCenterDeletedServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiCenterSubscriptionResource(subscriptionResource).GetDeletedServicesAsync(cancellationToken);
+            return GetMockableApiCenterSubscriptionResource(subscriptionResource).GetApiCenterDeletedServicesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists services within an Azure subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiCenterSubscriptionResource.GetDeletedServices(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiCenterSubscriptionResource.GetApiCenterDeletedServices(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeletedServiceResource> GetDeletedServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiCenterDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiCenterDeletedServiceResource> GetApiCenterDeletedServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiCenterSubscriptionResource(subscriptionResource).GetDeletedServices(cancellationToken);
+            return GetMockableApiCenterSubscriptionResource(subscriptionResource).GetApiCenterDeletedServices(cancellationToken);
         }
     }
 }

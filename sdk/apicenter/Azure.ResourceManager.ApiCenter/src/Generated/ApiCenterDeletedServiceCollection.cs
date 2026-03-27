@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ApiCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeletedServiceResource"/> and their operations.
-    /// Each <see cref="DeletedServiceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DeletedServiceCollection"/> instance call the GetDeletedServices method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="ApiCenterDeletedServiceResource"/> and their operations.
+    /// Each <see cref="ApiCenterDeletedServiceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ApiCenterDeletedServiceCollection"/> instance call the GetApiCenterDeletedServices method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class DeletedServiceCollection : ArmCollection, IEnumerable<DeletedServiceResource>, IAsyncEnumerable<DeletedServiceResource>
+    public partial class ApiCenterDeletedServiceCollection : ArmCollection, IEnumerable<ApiCenterDeletedServiceResource>, IAsyncEnumerable<ApiCenterDeletedServiceResource>
     {
-        private readonly ClientDiagnostics _apiCenterDeletedServiceClientDiagnostics;
-        private readonly ApiCenterDeletedService _apiCenterDeletedServiceRestClient;
+        private readonly ClientDiagnostics _deletedServicesClientDiagnostics;
+        private readonly DeletedServices _deletedServicesRestClient;
 
-        /// <summary> Initializes a new instance of DeletedServiceCollection for mocking. </summary>
-        protected DeletedServiceCollection()
+        /// <summary> Initializes a new instance of ApiCenterDeletedServiceCollection for mocking. </summary>
+        protected ApiCenterDeletedServiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeletedServiceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenterDeletedServiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DeletedServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiCenterDeletedServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DeletedServiceResource.ResourceType, out string deletedServiceApiVersion);
-            _apiCenterDeletedServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", DeletedServiceResource.ResourceType.Namespace, Diagnostics);
-            _apiCenterDeletedServiceRestClient = new ApiCenterDeletedService(_apiCenterDeletedServiceClientDiagnostics, Pipeline, Endpoint, deletedServiceApiVersion ?? "2024-06-01-preview");
+            TryGetApiVersion(ApiCenterDeletedServiceResource.ResourceType, out string apiCenterDeletedServiceApiVersion);
+            _deletedServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterDeletedServiceResource.ResourceType.Namespace, Diagnostics);
+            _deletedServicesRestClient = new DeletedServices(_deletedServicesClientDiagnostics, Pipeline, Endpoint, apiCenterDeletedServiceApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deletedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DeletedServiceResource>> GetAsync(string deletedServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiCenterDeletedServiceResource>> GetAsync(string deletedServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedServiceName, nameof(deletedServiceName));
 
-            using DiagnosticScope scope = _apiCenterDeletedServiceClientDiagnostics.CreateScope("DeletedServiceCollection.Get");
+            using DiagnosticScope scope = _deletedServicesClientDiagnostics.CreateScope("ApiCenterDeletedServiceCollection.Get");
             scope.Start();
             try
             {
@@ -88,14 +88,14 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCenterDeletedServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deletedServiceName, context);
+                HttpMessage message = _deletedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deletedServiceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeletedServiceData> response = Response.FromValue(DeletedServiceData.FromResponse(result), result);
+                Response<ApiCenterDeletedServiceData> response = Response.FromValue(ApiCenterDeletedServiceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeletedServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiCenterDeletedServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deletedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DeletedServiceResource> Get(string deletedServiceName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiCenterDeletedServiceResource> Get(string deletedServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedServiceName, nameof(deletedServiceName));
 
-            using DiagnosticScope scope = _apiCenterDeletedServiceClientDiagnostics.CreateScope("DeletedServiceCollection.Get");
+            using DiagnosticScope scope = _deletedServicesClientDiagnostics.CreateScope("ApiCenterDeletedServiceCollection.Get");
             scope.Start();
             try
             {
@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCenterDeletedServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deletedServiceName, context);
+                HttpMessage message = _deletedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deletedServiceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeletedServiceData> response = Response.FromValue(DeletedServiceData.FromResponse(result), result);
+                Response<ApiCenterDeletedServiceData> response = Response.FromValue(ApiCenterDeletedServiceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeletedServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiCenterDeletedServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,14 +172,14 @@ namespace Azure.ResourceManager.ApiCenter
         /// </summary>
         /// <param name="filter"> OData filter parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedServiceResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiCenterDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiCenterDeletedServiceResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedServiceData, DeletedServiceResource>(new ApiCenterDeletedServiceGetAllAsyncCollectionResultOfT(_apiCenterDeletedServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filter, context), data => new DeletedServiceResource(Client, data));
+            return new AsyncPageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetAllAsyncCollectionResultOfT(_deletedServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filter, context), data => new ApiCenterDeletedServiceResource(Client, data));
         }
 
         /// <summary>
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.ApiCenter
         /// </summary>
         /// <param name="filter"> OData filter parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedServiceResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiCenterDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiCenterDeletedServiceResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedServiceData, DeletedServiceResource>(new ApiCenterDeletedServiceGetAllCollectionResultOfT(_apiCenterDeletedServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filter, context), data => new DeletedServiceResource(Client, data));
+            return new PageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetAllCollectionResultOfT(_deletedServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filter, context), data => new ApiCenterDeletedServiceResource(Client, data));
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             Argument.AssertNotNullOrEmpty(deletedServiceName, nameof(deletedServiceName));
 
-            using DiagnosticScope scope = _apiCenterDeletedServiceClientDiagnostics.CreateScope("DeletedServiceCollection.Exists");
+            using DiagnosticScope scope = _deletedServicesClientDiagnostics.CreateScope("ApiCenterDeletedServiceCollection.Exists");
             scope.Start();
             try
             {
@@ -244,17 +244,17 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCenterDeletedServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deletedServiceName, context);
+                HttpMessage message = _deletedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deletedServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DeletedServiceData> response = default;
+                Response<ApiCenterDeletedServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeletedServiceData.FromResponse(result), result);
+                        response = Response.FromValue(ApiCenterDeletedServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeletedServiceData)null, result);
+                        response = Response.FromValue((ApiCenterDeletedServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             Argument.AssertNotNullOrEmpty(deletedServiceName, nameof(deletedServiceName));
 
-            using DiagnosticScope scope = _apiCenterDeletedServiceClientDiagnostics.CreateScope("DeletedServiceCollection.Exists");
+            using DiagnosticScope scope = _deletedServicesClientDiagnostics.CreateScope("ApiCenterDeletedServiceCollection.Exists");
             scope.Start();
             try
             {
@@ -301,17 +301,17 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCenterDeletedServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deletedServiceName, context);
+                HttpMessage message = _deletedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deletedServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DeletedServiceData> response = default;
+                Response<ApiCenterDeletedServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeletedServiceData.FromResponse(result), result);
+                        response = Response.FromValue(ApiCenterDeletedServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeletedServiceData)null, result);
+                        response = Response.FromValue((ApiCenterDeletedServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -346,11 +346,11 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deletedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DeletedServiceResource>> GetIfExistsAsync(string deletedServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ApiCenterDeletedServiceResource>> GetIfExistsAsync(string deletedServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedServiceName, nameof(deletedServiceName));
 
-            using DiagnosticScope scope = _apiCenterDeletedServiceClientDiagnostics.CreateScope("DeletedServiceCollection.GetIfExists");
+            using DiagnosticScope scope = _deletedServicesClientDiagnostics.CreateScope("ApiCenterDeletedServiceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -358,26 +358,26 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCenterDeletedServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deletedServiceName, context);
+                HttpMessage message = _deletedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deletedServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DeletedServiceData> response = default;
+                Response<ApiCenterDeletedServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeletedServiceData.FromResponse(result), result);
+                        response = Response.FromValue(ApiCenterDeletedServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeletedServiceData)null, result);
+                        response = Response.FromValue((ApiCenterDeletedServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<DeletedServiceResource>(response.GetRawResponse());
+                    return new NoValueResponse<ApiCenterDeletedServiceResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeletedServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiCenterDeletedServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -407,11 +407,11 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deletedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DeletedServiceResource> GetIfExists(string deletedServiceName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ApiCenterDeletedServiceResource> GetIfExists(string deletedServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedServiceName, nameof(deletedServiceName));
 
-            using DiagnosticScope scope = _apiCenterDeletedServiceClientDiagnostics.CreateScope("DeletedServiceCollection.GetIfExists");
+            using DiagnosticScope scope = _deletedServicesClientDiagnostics.CreateScope("ApiCenterDeletedServiceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -419,26 +419,26 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCenterDeletedServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deletedServiceName, context);
+                HttpMessage message = _deletedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deletedServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DeletedServiceData> response = default;
+                Response<ApiCenterDeletedServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeletedServiceData.FromResponse(result), result);
+                        response = Response.FromValue(ApiCenterDeletedServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeletedServiceData)null, result);
+                        response = Response.FromValue((ApiCenterDeletedServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<DeletedServiceResource>(response.GetRawResponse());
+                    return new NoValueResponse<ApiCenterDeletedServiceResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeletedServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiCenterDeletedServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ApiCenter
             }
         }
 
-        IEnumerator<DeletedServiceResource> IEnumerable<DeletedServiceResource>.GetEnumerator()
+        IEnumerator<ApiCenterDeletedServiceResource> IEnumerable<ApiCenterDeletedServiceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.ApiCenter
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<DeletedServiceResource> IAsyncEnumerable<DeletedServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ApiCenterDeletedServiceResource> IAsyncEnumerable<ApiCenterDeletedServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

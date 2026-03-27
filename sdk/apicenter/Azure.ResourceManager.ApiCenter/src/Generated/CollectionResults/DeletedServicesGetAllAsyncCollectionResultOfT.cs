@@ -15,21 +15,21 @@ using Azure.ResourceManager.ApiCenter.Models;
 
 namespace Azure.ResourceManager.ApiCenter
 {
-    internal partial class ApiCenterDeletedServiceGetAllAsyncCollectionResultOfT : AsyncPageable<DeletedServiceData>
+    internal partial class DeletedServicesGetAllAsyncCollectionResultOfT : AsyncPageable<ApiCenterDeletedServiceData>
     {
-        private readonly ApiCenterDeletedService _client;
+        private readonly DeletedServices _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _filter;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ApiCenterDeletedServiceGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ApiCenterDeletedService client used to send requests. </param>
+        /// <summary> Initializes a new instance of DeletedServicesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The DeletedServices client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> OData filter parameter. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ApiCenterDeletedServiceGetAllAsyncCollectionResultOfT(ApiCenterDeletedService client, Guid subscriptionId, string resourceGroupName, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        public DeletedServicesGetAllAsyncCollectionResultOfT(DeletedServices client, Guid subscriptionId, string resourceGroupName, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.ApiCenter
             _context = context;
         }
 
-        /// <summary> Gets the pages of ApiCenterDeletedServiceGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DeletedServicesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ApiCenterDeletedServiceGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DeletedServiceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of DeletedServicesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<ApiCenterDeletedServiceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiCenter
                     yield break;
                 }
                 DeletedServiceListResult result = DeletedServiceListResult.FromResponse(response);
-                yield return Page<DeletedServiceData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ApiCenterDeletedServiceData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiCenter
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _filter, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeletedServiceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ApiCenterDeletedServiceCollection.GetAll");
             scope.Start();
             try
             {

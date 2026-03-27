@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <summary> Initializes a new instance of <see cref="DeletedServiceListResult"/>. </summary>
         internal DeletedServiceListResult()
         {
-            Value = new ChangeTrackingList<DeletedServiceData>();
+            Value = new ChangeTrackingList<ApiCenterDeletedServiceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeletedServiceListResult"/>. </summary>
         /// <param name="value"> The DeletedService items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedServiceListResult(IReadOnlyList<DeletedServiceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedServiceListResult(IReadOnlyList<ApiCenterDeletedServiceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         }
 
         /// <summary> The DeletedService items on this page. </summary>
-        public IReadOnlyList<DeletedServiceData> Value { get; }
+        public IReadOnlyList<ApiCenterDeletedServiceData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

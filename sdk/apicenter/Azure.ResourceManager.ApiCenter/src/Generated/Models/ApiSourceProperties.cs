@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="targetLifecycleStage"> The target lifecycle stage. </param>
         /// <param name="linkState"> The state of the API source link. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiSourceProperties(ApiCenterImportSpecificationModel? importSpecification, ApiCenterApiAzureApiManagementSource azureApiManagementSource, ResourceIdentifier targetEnvironmentId, ApiLifecycleStage? targetLifecycleStage, ApiCenterLinkState linkState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiSourceProperties(ApiCenterImportSpecificationModel? importSpecification, ApiCenterApiManagementSource azureApiManagementSource, ResourceIdentifier targetEnvironmentId, ApiLifecycleStage? targetLifecycleStage, ApiCenterLinkState linkState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImportSpecification = importSpecification;
             AzureApiManagementSource = azureApiManagementSource;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public ApiCenterImportSpecificationModel? ImportSpecification { get; set; }
 
         /// <summary> API source configuration for Azure API Management. </summary>
-        public ApiCenterApiAzureApiManagementSource AzureApiManagementSource { get; set; }
+        public ApiCenterApiManagementSource AzureApiManagementSource { get; set; }
 
         /// <summary> The target environment resource ID. </summary>
         public ResourceIdentifier TargetEnvironmentId { get; set; }

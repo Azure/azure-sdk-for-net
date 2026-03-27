@@ -15,56 +15,56 @@ using Azure.ResourceManager.ApiCenter;
 namespace Azure.ResourceManager.ApiCenter.Models
 {
     /// <summary> API source configuration for Azure API Management. </summary>
-    public partial class ApiCenterApiAzureApiManagementSource : IJsonModel<ApiCenterApiAzureApiManagementSource>
+    public partial class ApiCenterApiManagementSource : IJsonModel<ApiCenterApiManagementSource>
     {
-        /// <summary> Initializes a new instance of <see cref="ApiCenterApiAzureApiManagementSource"/> for deserialization. </summary>
-        internal ApiCenterApiAzureApiManagementSource()
+        /// <summary> Initializes a new instance of <see cref="ApiCenterApiManagementSource"/> for deserialization. </summary>
+        internal ApiCenterApiManagementSource()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApiCenterApiAzureApiManagementSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ApiCenterApiManagementSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiAzureApiManagementSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiManagementSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApiCenterApiAzureApiManagementSource(document.RootElement, options);
+                        return DeserializeApiCenterApiManagementSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiCenterApiAzureApiManagementSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiCenterApiManagementSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiAzureApiManagementSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiManagementSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerApiCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApiCenterApiAzureApiManagementSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiCenterApiManagementSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiCenterApiAzureApiManagementSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApiCenterApiManagementSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiCenterApiAzureApiManagementSource IPersistableModel<ApiCenterApiAzureApiManagementSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ApiCenterApiManagementSource IPersistableModel<ApiCenterApiManagementSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiCenterApiAzureApiManagementSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiCenterApiManagementSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiCenterApiAzureApiManagementSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiCenterApiManagementSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiAzureApiManagementSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiManagementSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiCenterApiAzureApiManagementSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiCenterApiManagementSource)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
@@ -106,24 +106,24 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiCenterApiAzureApiManagementSource IJsonModel<ApiCenterApiAzureApiManagementSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ApiCenterApiManagementSource IJsonModel<ApiCenterApiManagementSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApiCenterApiAzureApiManagementSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ApiCenterApiManagementSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiAzureApiManagementSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiManagementSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiCenterApiAzureApiManagementSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiCenterApiManagementSource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiCenterApiAzureApiManagementSource(document.RootElement, options);
+            return DeserializeApiCenterApiManagementSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApiCenterApiAzureApiManagementSource DeserializeApiCenterApiAzureApiManagementSource(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApiCenterApiManagementSource DeserializeApiCenterApiManagementSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApiCenterApiAzureApiManagementSource(resourceId, msiResourceId, additionalBinaryDataProperties);
+            return new ApiCenterApiManagementSource(resourceId, msiResourceId, additionalBinaryDataProperties);
         }
     }
 }

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
     {
         private ClientDiagnostics _servicesClientDiagnostics;
         private Services _servicesRestClient;
-        private ClientDiagnostics _apiCenterDeletedServiceClientDiagnostics;
-        private ApiCenterDeletedService _apiCenterDeletedServiceRestClient;
+        private ClientDiagnostics _deletedServicesClientDiagnostics;
+        private DeletedServices _deletedServicesRestClient;
 
         /// <summary> Initializes a new instance of MockableApiCenterSubscriptionResource for mocking. </summary>
         protected MockableApiCenterSubscriptionResource()
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
 
         private Services ServicesRestClient => _servicesRestClient ??= new Services(ServicesClientDiagnostics, Pipeline, Endpoint, "2024-06-01-preview");
 
-        private ClientDiagnostics ApiCenterDeletedServiceClientDiagnostics => _apiCenterDeletedServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DeletedServicesClientDiagnostics => _deletedServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApiCenterDeletedService ApiCenterDeletedServiceRestClient => _apiCenterDeletedServiceRestClient ??= new ApiCenterDeletedService(ApiCenterDeletedServiceClientDiagnostics, Pipeline, Endpoint, "2024-06-01-preview");
+        private DeletedServices DeletedServicesRestClient => _deletedServicesRestClient ??= new DeletedServices(DeletedServicesClientDiagnostics, Pipeline, Endpoint, "2024-06-01-preview");
 
         /// <summary>
         /// Lists services within an Azure subscription.
@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedServiceResource> GetDeletedServicesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiCenterDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiCenterDeletedServiceResource> GetApiCenterDeletedServicesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedServiceData, DeletedServiceResource>(new ApiCenterDeletedServiceGetBySubscriptionAsyncCollectionResultOfT(ApiCenterDeletedServiceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedServiceResource(Client, data));
+            return new AsyncPageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetBySubscriptionAsyncCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ApiCenterDeletedServiceResource(Client, data));
         }
 
         /// <summary>
@@ -146,14 +146,14 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedServiceResource> GetDeletedServices(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiCenterDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiCenterDeletedServiceResource> GetApiCenterDeletedServices(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedServiceData, DeletedServiceResource>(new ApiCenterDeletedServiceGetBySubscriptionCollectionResultOfT(ApiCenterDeletedServiceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedServiceResource(Client, data));
+            return new PageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetBySubscriptionCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ApiCenterDeletedServiceResource(Client, data));
         }
     }
 }

@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.DeletedServiceData"/> instance for mocking. </returns>
-        public static DeletedServiceData DeletedServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterDeletedServiceProperties properties = default)
+        /// <returns> A new <see cref="ApiCenter.ApiCenterDeletedServiceData"/> instance for mocking. </returns>
+        public static ApiCenterDeletedServiceData ApiCenterDeletedServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterDeletedServiceProperties properties = default)
         {
-            return new DeletedServiceData(
+            return new ApiCenterDeletedServiceData(
                 id,
                 name,
                 resourceType,
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="targetLifecycleStage"> The target lifecycle stage. </param>
         /// <param name="linkState"> The state of the API source link. </param>
         /// <returns> A new <see cref="Models.ApiSourceProperties"/> instance for mocking. </returns>
-        public static ApiSourceProperties ApiSourceProperties(ApiCenterImportSpecificationModel? importSpecification = default, ApiCenterApiAzureApiManagementSource azureApiManagementSource = default, ResourceIdentifier targetEnvironmentId = default, ApiLifecycleStage? targetLifecycleStage = default, ApiCenterLinkState linkState = default)
+        public static ApiSourceProperties ApiSourceProperties(ApiCenterImportSpecificationModel? importSpecification = default, ApiCenterApiManagementSource azureApiManagementSource = default, ResourceIdentifier targetEnvironmentId = default, ApiLifecycleStage? targetLifecycleStage = default, ApiCenterLinkState linkState = default)
         {
             return new ApiSourceProperties(
                 importSpecification,

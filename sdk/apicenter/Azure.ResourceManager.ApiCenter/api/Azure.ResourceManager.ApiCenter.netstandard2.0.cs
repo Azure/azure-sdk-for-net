@@ -175,6 +175,52 @@ namespace Azure.ResourceManager.ApiCenter
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiCenter.ApiCenterApiVersionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApiCenter.ApiCenterApiVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiCenter.ApiCenterApiVersionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApiCenter.ApiCenterApiVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class ApiCenterDeletedServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource>, System.Collections.IEnumerable
+    {
+        protected ApiCenterDeletedServiceCollection() { }
+        public virtual Azure.Response<bool> Exists(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource> Get(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource>> GetAsync(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource> GetIfExists(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource>> GetIfExistsAsync(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ApiCenterDeletedServiceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData>
+    {
+        internal ApiCenterDeletedServiceData() { }
+        public Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ApiCenterDeletedServiceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ApiCenterDeletedServiceResource() { }
+        public virtual Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deletedServiceName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ApiCenterDeploymentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApiCenter.ApiCenterDeploymentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiCenter.ApiCenterDeploymentResource>, System.Collections.IEnumerable
     {
         protected ApiCenterDeploymentCollection() { }
@@ -284,6 +330,12 @@ namespace Azure.ResourceManager.ApiCenter
         public static Azure.ResourceManager.ApiCenter.ApiCenterApiDefinitionResource GetApiCenterApiDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterApiResource GetApiCenterApiResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterApiVersionResource GetApiCenterApiVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource> GetApiCenterDeletedService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource>> GetApiCenterDeletedServiceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource GetApiCenterDeletedServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceCollection GetApiCenterDeletedServices(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource> GetApiCenterDeletedServices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource> GetApiCenterDeletedServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterDeploymentResource GetApiCenterDeploymentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterEnvironmentResource GetApiCenterEnvironmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterMetadataSchemaResource GetApiCenterMetadataSchemaResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -295,12 +347,6 @@ namespace Azure.ResourceManager.ApiCenter
         public static Azure.AsyncPageable<Azure.ResourceManager.ApiCenter.ApiCenterServiceResource> GetApiCenterServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterWorkspaceResource GetApiCenterWorkspaceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiSourceResource GetApiSourceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.ApiCenter.DeletedServiceResource> GetDeletedService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiCenter.DeletedServiceResource>> GetDeletedServiceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ApiCenter.DeletedServiceResource GetDeletedServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ApiCenter.DeletedServiceCollection GetDeletedServices(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.ApiCenter.DeletedServiceResource> GetDeletedServices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.ApiCenter.DeletedServiceResource> GetDeletedServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ApiCenterMetadataSchemaCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApiCenter.ApiCenterMetadataSchemaResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiCenter.ApiCenterMetadataSchemaResource>, System.Collections.IEnumerable
     {
@@ -547,52 +593,6 @@ namespace Azure.ResourceManager.ApiCenter
         public static Azure.ResourceManager.ApiCenter.AzureResourceManagerApiCenterContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    public partial class DeletedServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApiCenter.DeletedServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiCenter.DeletedServiceResource>, System.Collections.IEnumerable
-    {
-        protected DeletedServiceCollection() { }
-        public virtual Azure.Response<bool> Exists(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApiCenter.DeletedServiceResource> Get(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ApiCenter.DeletedServiceResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiCenter.DeletedServiceResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiCenter.DeletedServiceResource>> GetAsync(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.ApiCenter.DeletedServiceResource> GetIfExists(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApiCenter.DeletedServiceResource>> GetIfExistsAsync(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ApiCenter.DeletedServiceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApiCenter.DeletedServiceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ApiCenter.DeletedServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiCenter.DeletedServiceResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class DeletedServiceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>
-    {
-        internal DeletedServiceData() { }
-        public Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties Properties { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ApiCenter.DeletedServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ApiCenter.DeletedServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DeletedServiceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected DeletedServiceResource() { }
-        public virtual Azure.ResourceManager.ApiCenter.DeletedServiceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deletedServiceName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApiCenter.DeletedServiceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiCenter.DeletedServiceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.ApiCenter.DeletedServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ApiCenter.DeletedServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
 }
 namespace Azure.ResourceManager.ApiCenter.Mocking
 {
@@ -602,50 +602,35 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         public virtual Azure.ResourceManager.ApiCenter.ApiCenterApiDefinitionResource GetApiCenterApiDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ApiCenter.ApiCenterApiResource GetApiCenterApiResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ApiCenter.ApiCenterApiVersionResource GetApiCenterApiVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource GetApiCenterDeletedServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ApiCenter.ApiCenterDeploymentResource GetApiCenterDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ApiCenter.ApiCenterEnvironmentResource GetApiCenterEnvironmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ApiCenter.ApiCenterMetadataSchemaResource GetApiCenterMetadataSchemaResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ApiCenter.ApiCenterServiceResource GetApiCenterServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ApiCenter.ApiCenterWorkspaceResource GetApiCenterWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ApiCenter.ApiSourceResource GetApiSourceResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.ApiCenter.DeletedServiceResource GetDeletedServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableApiCenterResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableApiCenterResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource> GetApiCenterDeletedService(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource>> GetApiCenterDeletedServiceAsync(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceCollection GetApiCenterDeletedServices() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApiCenter.ApiCenterServiceResource> GetApiCenterService(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiCenter.ApiCenterServiceResource>> GetApiCenterServiceAsync(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ApiCenter.ApiCenterServiceCollection GetApiCenterServices() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApiCenter.DeletedServiceResource> GetDeletedService(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiCenter.DeletedServiceResource>> GetDeletedServiceAsync(string deletedServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ApiCenter.DeletedServiceCollection GetDeletedServices() { throw null; }
     }
     public partial class MockableApiCenterSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableApiCenterSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource> GetApiCenterDeletedServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceResource> GetApiCenterDeletedServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ApiCenter.ApiCenterServiceResource> GetApiCenterServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiCenter.ApiCenterServiceResource> GetApiCenterServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ApiCenter.DeletedServiceResource> GetDeletedServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiCenter.DeletedServiceResource> GetDeletedServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ApiCenter.Models
 {
-    public partial class ApiCenterApiAzureApiManagementSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource>
-    {
-        public ApiCenterApiAzureApiManagementSource(Azure.Core.ResourceIdentifier resourceId) { }
-        public Azure.Core.ResourceIdentifier MsiResourceId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ApiCenterApiDefinitionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiDefinitionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiDefinitionProperties>
     {
         public ApiCenterApiDefinitionProperties(string title) { }
@@ -661,6 +646,21 @@ namespace Azure.ResourceManager.ApiCenter.Models
         Azure.ResourceManager.ApiCenter.Models.ApiCenterApiDefinitionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiDefinitionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiDefinitionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiDefinitionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ApiCenterApiManagementSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiManagementSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiManagementSource>
+    {
+        public ApiCenterApiManagementSource(Azure.Core.ResourceIdentifier resourceId) { }
+        public Azure.Core.ResourceIdentifier MsiResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterApiManagementSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterApiManagementSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ApiCenter.Models.ApiCenterApiManagementSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiManagementSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiManagementSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApiCenter.Models.ApiCenterApiManagementSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiManagementSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiManagementSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiManagementSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ApiCenterApiProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiProperties>
     {
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
     public partial class ApiSourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiSourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiSourceProperties>
     {
         public ApiSourceProperties() { }
-        public Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource AzureApiManagementSource { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiCenter.Models.ApiCenterApiManagementSource AzureApiManagementSource { get { throw null; } set { } }
         public Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel? ImportSpecification { get { throw null; } set { } }
         public Azure.ResourceManager.ApiCenter.Models.ApiCenterLinkState LinkState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetEnvironmentId { get { throw null; } set { } }
@@ -1164,6 +1164,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static Azure.ResourceManager.ApiCenter.Models.ApiCenterApiDefinitionProperties ApiCenterApiDefinitionProperties(string title = null, string description = null, Azure.ResourceManager.ApiCenter.Models.ApiSpecificationDetails specification = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.Models.ApiCenterApiProperties ApiCenterApiProperties(string title = null, Azure.ResourceManager.ApiCenter.Models.ApiKind kind = default(Azure.ResourceManager.ApiCenter.Models.ApiKind), string description = null, string summary = null, Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage? lifecycleStage = default(Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage?), System.Uri termsOfServiceUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiCenter.Models.ApiExternalDocumentation> externalDocumentation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiCenter.Models.ApiContactInformation> contacts = null, Azure.ResourceManager.ApiCenter.Models.ApiLicenseInformation license = null, System.BinaryData customProperties = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterApiVersionData ApiCenterApiVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.ApiCenterApiVersionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ApiCenter.ApiCenterDeletedServiceData ApiCenterDeletedServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties ApiCenterDeletedServiceProperties(System.DateTimeOffset? scheduledPurgeOn = default(System.DateTimeOffset?), System.DateTimeOffset? softDeletionOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterDeploymentData ApiCenterDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.ApiCenterDeploymentProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterEnvironmentData ApiCenterEnvironmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.ApiCenterEnvironmentProperties properties = null) { throw null; }
@@ -1177,10 +1178,9 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static Azure.ResourceManager.ApiCenter.Models.ApiCenterServiceProperties ApiCenterServiceProperties(Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState? provisioningState = default(Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState?), bool? isRestore = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterWorkspaceData ApiCenterWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.ApiCenterWorkspaceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiSourceData ApiSourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.ApiSourceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ApiCenter.Models.ApiSourceProperties ApiSourceProperties(Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel? importSpecification = default(Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel?), Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource azureApiManagementSource = null, Azure.Core.ResourceIdentifier targetEnvironmentId = null, Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage? targetLifecycleStage = default(Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage?), Azure.ResourceManager.ApiCenter.Models.ApiCenterLinkState linkState = null) { throw null; }
+        public static Azure.ResourceManager.ApiCenter.Models.ApiSourceProperties ApiSourceProperties(Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel? importSpecification = default(Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel?), Azure.ResourceManager.ApiCenter.Models.ApiCenterApiManagementSource azureApiManagementSource = null, Azure.Core.ResourceIdentifier targetEnvironmentId = null, Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage? targetLifecycleStage = default(Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage?), Azure.ResourceManager.ApiCenter.Models.ApiCenterLinkState linkState = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.Models.ApiSpecExportResult ApiSpecExportResult(Azure.ResourceManager.ApiCenter.Models.ApiSpecExportResultFormat? format = default(Azure.ResourceManager.ApiCenter.Models.ApiSpecExportResultFormat?), string value = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.Models.ApiSpecificationDetails ApiSpecificationDetails(string name = null, string version = null) { throw null; }
-        public static Azure.ResourceManager.ApiCenter.DeletedServiceData DeletedServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.Models.EnvironmentOnboardingInformation EnvironmentOnboardingInformation(string instructions = null, System.Collections.Generic.IEnumerable<System.Uri> developerPortalUri = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.Models.MetadataSchemaExportResult MetadataSchemaExportResult(Azure.ResourceManager.ApiCenter.Models.MetadataSchemaExportFormat? format = default(Azure.ResourceManager.ApiCenter.Models.MetadataSchemaExportFormat?), string value = null) { throw null; }
     }

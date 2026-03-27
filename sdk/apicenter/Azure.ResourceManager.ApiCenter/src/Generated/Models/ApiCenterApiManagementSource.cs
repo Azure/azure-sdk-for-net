@@ -13,26 +13,26 @@ using Azure.ResourceManager.ApiCenter;
 namespace Azure.ResourceManager.ApiCenter.Models
 {
     /// <summary> API source configuration for Azure API Management. </summary>
-    public partial class ApiCenterApiAzureApiManagementSource
+    public partial class ApiCenterApiManagementSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterApiAzureApiManagementSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenterApiManagementSource"/>. </summary>
         /// <param name="resourceId"> API Management service resource ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public ApiCenterApiAzureApiManagementSource(ResourceIdentifier resourceId)
+        public ApiCenterApiManagementSource(ResourceIdentifier resourceId)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             ResourceId = resourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterApiAzureApiManagementSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenterApiManagementSource"/>. </summary>
         /// <param name="resourceId"> API Management service resource ID. </param>
         /// <param name="msiResourceId"> The resource ID of the managed identity that has access to the API Management instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCenterApiAzureApiManagementSource(ResourceIdentifier resourceId, ResourceIdentifier msiResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiCenterApiManagementSource(ResourceIdentifier resourceId, ResourceIdentifier msiResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             MsiResourceId = msiResourceId;

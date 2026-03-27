@@ -18,58 +18,58 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiCenter
 {
     /// <summary> Soft-deleted service entity. </summary>
-    public partial class DeletedServiceData : ResourceData, IJsonModel<DeletedServiceData>
+    public partial class ApiCenterDeletedServiceData : ResourceData, IJsonModel<ApiCenterDeletedServiceData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterDeletedServiceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeletedServiceData(document.RootElement, options);
+                        return DeserializeApiCenterDeletedServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeletedServiceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiCenterDeletedServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterDeletedServiceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerApiCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeletedServiceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiCenterDeletedServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeletedServiceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApiCenterDeletedServiceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeletedServiceData IPersistableModel<DeletedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeletedServiceData)PersistableModelCreateCore(data, options);
+        ApiCenterDeletedServiceData IPersistableModel<ApiCenterDeletedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApiCenterDeletedServiceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeletedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiCenterDeletedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeletedServiceData"/> from. </param>
-        internal static DeletedServiceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApiCenterDeletedServiceData"/> from. </param>
+        internal static ApiCenterDeletedServiceData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDeletedServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeApiCenterDeletedServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeletedServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiCenterDeletedServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterDeletedServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedServiceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiCenterDeletedServiceData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -95,24 +95,24 @@ namespace Azure.ResourceManager.ApiCenter
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeletedServiceData IJsonModel<DeletedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeletedServiceData)JsonModelCreateCore(ref reader, options);
+        ApiCenterDeletedServiceData IJsonModel<ApiCenterDeletedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApiCenterDeletedServiceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterDeletedServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedServiceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiCenterDeletedServiceData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeletedServiceData(document.RootElement, options);
+            return DeserializeApiCenterDeletedServiceData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeletedServiceData DeserializeDeletedServiceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApiCenterDeletedServiceData DeserializeApiCenterDeletedServiceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ApiCenter
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeletedServiceData(
+            return new ApiCenterDeletedServiceData(
                 id,
                 name,
                 resourceType,

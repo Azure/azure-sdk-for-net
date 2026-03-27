@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 return null;
             }
             ApiCenterImportSpecificationModel? importSpecification = default;
-            ApiCenterApiAzureApiManagementSource azureApiManagementSource = default;
+            ApiCenterApiManagementSource azureApiManagementSource = default;
             ResourceIdentifier targetEnvironmentId = default;
             ApiLifecycleStage? targetLifecycleStage = default;
             ApiCenterLinkState linkState = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                     {
                         continue;
                     }
-                    azureApiManagementSource = ApiCenterApiAzureApiManagementSource.DeserializeApiCenterApiAzureApiManagementSource(prop.Value, options);
+                    azureApiManagementSource = ApiCenterApiManagementSource.DeserializeApiCenterApiManagementSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("targetEnvironmentId"u8))
