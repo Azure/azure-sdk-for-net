@@ -875,7 +875,7 @@ namespace Azure.Storage.Blobs
                 HasLegalHold = response.Headers.LegalHold.GetValueOrDefault(),
                 BlobContentLength = response.Headers.BlobContentLength.GetValueOrDefault(),
                 BlobContentType = response.Headers.BlobContentType,
-                BlobContentEncoding = response.Headers.BlobContentType,
+                BlobContentEncoding = response.Headers.BlobContentEncoding,
                 BlobContentMD5 = response.Headers.BlobContentMD5,
                 BlobCreatedOn = response.Headers.BlobCreationTime.GetValueOrDefault()
             };
