@@ -13,6 +13,18 @@ The CODEOWNERS tools manage a data model in Azure DevOps that is rendered into t
 
 A **package** has a **PR Label** (applied to PRs touching its files) and **source owners** (PR reviewers). A **Service Label** groups packages under a service and has **Service Owners** contacted for escalations. A package's PR Label should be the Service Label for the package's service.
 
+### Resolve the Repo
+
+Tools that add owners or labels use a `repo` argument. If the current context is not an Azure SDK repository, ask the user for the target repository. Valid values for `repo` are:
+
+- `Azure/azure-sdk-for-net`
+- `Azure/azure-sdk-for-java`
+- `Azure/azure-sdk-for-js`
+- `Azure/azure-sdk-for-python`
+- `Azure/azure-sdk-for-go`
+- `Azure/azure-sdk-for-cpp`
+- `Azure/azure-sdk-for-rust`
+
 ## View
 
 Query CODEOWNERS associations. Provide at least one parameter.
@@ -76,18 +88,6 @@ Common flags across all commands:
 
 - `--repo <owner/repo>` — Target repository (e.g. `Azure/azure-sdk-for-python`)
 - `--github-user <user>` — GitHub username (leave off `@` prefix)
-- `--label <abel>` — Label name (leave off `%` prefix)
+- `--label <label>` — Label name (leave off `%` prefix)
 - `--package <name>` — Package name
 - `--owner-type <type>` — One of `AzSdkOwner`, `PrLabel`, `ServiceOwner`
-
-## Repo inference
-
-If a `repo` parameter is not provided, tools will attempt to infer the target repository based on the current working directory. If the current repo is not an Azure SDK repo or if inference fails, ask the user to provide the target repo in the format `Azure/azure-sdk-for-python`. Valid values for the repo parameter are:
-
-- `Azure/azure-sdk-for-net`
-- `Azure/azure-sdk-for-java`
-- `Azure/azure-sdk-for-js`
-- `Azure/azure-sdk-for-python`
-- `Azure/azure-sdk-for-go`
-- `Azure/azure-sdk-for-cpp`
-- `Azure/azure-sdk-for-rust`

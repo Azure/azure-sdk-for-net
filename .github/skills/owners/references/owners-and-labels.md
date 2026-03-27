@@ -21,7 +21,7 @@ If adding fails because the label does not exist, prompt the user to use a diffe
 
 ## Adding Service Owners to a Label
 
-Use `azsdk_engsys_codeowner_add_label_owner`. Provide the GitHub username(s), owner type (e.g. "Service Owner"), label name, and target repository.
+Use `azsdk_engsys_codeowner_add_label_owner`. Provide the GitHub username(s), owner type (e.g. `ServiceOwner`), label name, and target repository.
 
 ## Creating a Service Label
 
@@ -30,7 +30,7 @@ Service labels identify Azure services. The label may already exist.
 1. Collect the label from the user (e.g. `Storage`) and check with `azsdk_check_service_label`.
 2. If it does not exist, collect a URL to public documentation for the service and create with `azsdk_create_service_label`.
 
-This opens a PR to azure-sdk-tools. Once merged, associate the label with packages using `add_package_label` and `add_label_owner`.
+This opens a PR to azure-sdk-tools. Once merged, associate the label with packages using `azsdk_engsys_codeowner_add_package_label` and `azsdk_engsys_codeowner_add_label_owner`.
 
 ### Label Naming Conventions
 

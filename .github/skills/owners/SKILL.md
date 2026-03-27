@@ -23,11 +23,11 @@ compatibility:
 | `azsdk_check_service_label` | Check if service label exists |
 | `azsdk_create_service_label` | Create service label |
 
-**CLI fallback:** When MCP is unavailable, use `azsdk config codeowners` CLI. See [operations reference](references/operations-reference.md) for CLI equivalents.
+**CLI fallback:** `azsdk config codeowners` CLI when MCP is unavailable.
 
 ## Repository Resolution
 
-Infer `repo` from workspace inside `Azure/azure-sdk-for-*` repos. Otherwise, ask the user.
+Infer `repo` from workspace in `Azure/azure-sdk-for-*` repos. Otherwise, ask.
 
 ## Workflow
 
@@ -35,7 +35,7 @@ Infer `repo` from workspace inside `Azure/azure-sdk-for-*` repos. Otherwise, ask
 2. **Modify** — Add/remove [owners or labels](references/owners-and-labels.md).
 3. **Verify** — Re-query to confirm.
 
-New labels: `azsdk_check_service_label` → `azsdk_create_service_label` → `add_package_label`. See [data model](references/operations-reference.md).
+New labels: `azsdk_check_service_label` → `azsdk_create_service_label` → PR merged → `azsdk_engsys_codeowner_add_package_label`. See [data model](references/operations-reference.md).
 
 ## Examples
 

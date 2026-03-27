@@ -5,10 +5,10 @@ description: |
 tags:
   - basic
 inputs:
-  prompt: "Does the KeyVault service label exist?"
+  prompt: "Does the Key Vault service label exist?"
 expected:
   output_contains:
-    - "KeyVault"
+    - "Key Vault"
     - "label"
   outcomes:
     - type: tool_called
