@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public void SnapshotTimestampToPath()
         {
             string path = SnapshotQueryHelper.SnapshotTimestampToPath("2023-07-18T08:00:00.000Z");
-            Assert.AreEqual("idx/snapshots/2023/07/18/08/00/00/meta.json", path);
+            Assert.AreEqual("idx/snapshot/2023/07/18/08/00/00/meta.json", path);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public void SnapshotTimestampToPath_WithSeconds()
         {
             string path = SnapshotQueryHelper.SnapshotTimestampToPath("2024-01-15T14:30:45.000Z");
-            Assert.AreEqual("idx/snapshots/2024/01/15/14/30/45/meta.json", path);
+            Assert.AreEqual("idx/snapshot/2024/01/15/14/30/45/meta.json", path);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public void SnapshotTimestampToPath_Midnight()
         {
             string path = SnapshotQueryHelper.SnapshotTimestampToPath("2024-06-01T00:00:00.000Z");
-            Assert.AreEqual("idx/snapshots/2024/06/01/00/00/00/meta.json", path);
+            Assert.AreEqual("idx/snapshot/2024/06/01/00/00/00/meta.json", path);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         {
             // Arrange
             string snapshotTimestamp = "2024-01-15T08:00:00.000Z";
-            string expectedPath = "idx/snapshots/2024/01/15/08/00/00/meta.json";
+            string expectedPath = "idx/snapshot/2024/01/15/08/00/00/meta.json";
 
             string json = @"{
                 ""version"": 0,
@@ -123,7 +123,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         /// <summary>
-        /// Verifies that ReadSnapshotMetadataAsync throws an <see cref="InvalidOperationException"/>
+        /// Verifies that ReadSnapshotMetadataAsync throws an <see cref="ArgumentException"/>
         /// with a helpful message when the snapshot meta.json blob does not exist.
         /// </summary>
         [Test]
@@ -131,7 +131,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         {
             // Arrange
             string snapshotTimestamp = "2024-03-01T12:00:00.000Z";
-            string expectedPath = "idx/snapshots/2024/03/01/12/00/00/meta.json";
+            string expectedPath = "idx/snapshot/2024/03/01/12/00/00/meta.json";
 
             Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
             Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
@@ -161,7 +161,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             }
 
             // Act & Assert
-            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
                 async () => await SnapshotQueryHelper.ReadSnapshotMetadataAsync(
                     containerClient.Object,
                     snapshotTimestamp,

@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             DateTimeOffset ts = DateTimeOffset.Parse(snapshotTimestamp, CultureInfo.InvariantCulture);
             return string.Format(
                 CultureInfo.InvariantCulture,
-                "idx/snapshots/{0:D4}/{1:D2}/{2:D2}/{3:D2}/{4:D2}/{5:D2}/meta.json",
+                "idx/snapshot/{0:D4}/{1:D2}/{2:D2}/{3:D2}/{4:D2}/{5:D2}/meta.json",
                 ts.Year,
                 ts.Month,
                 ts.Day,
@@ -70,7 +70,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
             {
-                throw new InvalidOperationException(
+                throw new ArgumentException(
                     $"Snapshot metadata not found for timestamp '{snapshotTimestamp}' (path: {path}). " +
                     $"Verify that a share snapshot was taken at this time and that the change feed has finished publishing its metadata.",
                     ex);
