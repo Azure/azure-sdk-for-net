@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Sample6_Tier2Builder.md (Tier 2). Compiled to prevent rot.
+    /// Code snippets backing Sample6_Tier2HostingBuilder.md. Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]

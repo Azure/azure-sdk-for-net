@@ -105,7 +105,7 @@ Use `AgentHost.CreateBuilder()` when you need to:
 - Override **shutdown timeout**, **port binding**, or **tracing** at the builder level
 - Access the underlying `WebApplicationBuilder` for advanced configuration
 
-For the simplest single-protocol experience, see [Tier 1 — Customize the One-Liner](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample5_HostingAndConfiguration.md).
-For adding agent endpoints to an existing app, see [Tier 3 — Self-Hosted](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample7_Tier3SelfHosted.md).
+For the simplest single-protocol experience, see [Tier 1 — Customize the One-Liner](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample5_Tier1HostingCustomize.md).
+For adding agent endpoints to an existing app, see [Tier 3 — Self-Hosted](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample7_Tier3SelfHosting.md).
 
 ````
