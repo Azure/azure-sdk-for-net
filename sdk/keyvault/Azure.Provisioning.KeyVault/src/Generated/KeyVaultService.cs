@@ -19,12 +19,12 @@ namespace Azure.Provisioning.KeyVault
     /// <summary> Resource information with extended details. </summary>
     public partial class KeyVaultService : ProvisionableResource
     {
-        private KeyVaultProperties _properties;
-        private BicepValue<string> _name;
-        private BicepValue<AzureLocation> _location;
-        private BicepDictionary<string> _tags;
         private BicepValue<ResourceIdentifier> _id;
+        private BicepValue<string> _name;
         private SystemData _systemData;
+        private BicepDictionary<string> _tags;
+        private BicepValue<AzureLocation> _location;
+        private KeyVaultProperties _properties;
 
         /// <summary> Creates a new KeyVaultService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -33,18 +33,13 @@ namespace Azure.Provisioning.KeyVault
         {
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        public KeyVaultProperties Properties
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                return _id;
             }
         }
 
@@ -63,18 +58,13 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
-        public BicepValue<AzureLocation> Location
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
         {
             get
             {
                 Initialize();
-                return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
+                return _systemData;
             }
         }
 
@@ -93,23 +83,33 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
+        /// <summary> Gets or sets the Location. </summary>
+        public BicepValue<AzureLocation> Location
         {
             get
             {
                 Initialize();
-                return _id;
+                return _location;
+            }
+            set
+            {
+                Initialize();
+                _location.Assign(value);
             }
         }
 
-        /// <summary> Gets the SystemData. </summary>
-        public SystemData SystemData
+        /// <summary> Gets or sets the Properties. </summary>
+        public KeyVaultProperties Properties
         {
             get
             {
                 Initialize();
-                return _systemData;
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -117,12 +117,12 @@ namespace Azure.Provisioning.KeyVault
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<KeyVaultProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
+            _properties = DefineModelProperty<KeyVaultProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

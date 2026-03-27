@@ -16,15 +16,15 @@ namespace Azure.Provisioning.KeyVault
     /// <summary> Private endpoint connection resource. </summary>
     public partial class ManagedHsmPrivateEndpointConnection : ProvisionableResource
     {
-        private ManagedHsmPrivateEndpointConnectionProperties _properties;
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
+        private SystemData _systemData;
+        private BicepDictionary<string> _tags;
+        private BicepValue<AzureLocation> _location;
+        private ManagedHsmPrivateEndpointConnectionProperties _properties;
         private ManagedHsmSku _sku;
         private ManagedServiceIdentity _identity;
         private BicepValue<ETag> _eTag;
-        private BicepValue<AzureLocation> _location;
-        private BicepDictionary<string> _tags;
-        private BicepValue<ResourceIdentifier> _id;
-        private SystemData _systemData;
         private ResourceReference<ManagedHsm> _parent;
 
         /// <summary> Creates a new ManagedHsmPrivateEndpointConnection. </summary>
@@ -34,18 +34,13 @@ namespace Azure.Provisioning.KeyVault
         {
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal ManagedHsmPrivateEndpointConnectionProperties Properties
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                return _id;
             }
         }
 
@@ -61,6 +56,61 @@ namespace Azure.Provisioning.KeyVault
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
+        {
+            get
+            {
+                Initialize();
+                return _systemData;
+            }
+        }
+
+        /// <summary> Gets or sets the Tags. </summary>
+        public BicepDictionary<string> Tags
+        {
+            get
+            {
+                Initialize();
+                return _tags;
+            }
+            set
+            {
+                Initialize();
+                _tags.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Location. </summary>
+        public BicepValue<AzureLocation> Location
+        {
+            get
+            {
+                Initialize();
+                return _location;
+            }
+            set
+            {
+                Initialize();
+                _location.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        internal ManagedHsmPrivateEndpointConnectionProperties Properties
+        {
+            get
+            {
+                Initialize();
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -106,56 +156,6 @@ namespace Azure.Provisioning.KeyVault
             {
                 Initialize();
                 _eTag.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Location. </summary>
-        public BicepValue<AzureLocation> Location
-        {
-            get
-            {
-                Initialize();
-                return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Tags. </summary>
-        public BicepDictionary<string> Tags
-        {
-            get
-            {
-                Initialize();
-                return _tags;
-            }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-        }
-
-        /// <summary> Gets the SystemData. </summary>
-        public SystemData SystemData
-        {
-            get
-            {
-                Initialize();
-                return _systemData;
             }
         }
 
@@ -221,15 +221,15 @@ namespace Azure.Provisioning.KeyVault
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<ManagedHsmPrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
+            _properties = DefineModelProperty<ManagedHsmPrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<ManagedHsmSku>(nameof(Sku), new string[] { "sku" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _parent = DefineResource<ManagedHsm>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
