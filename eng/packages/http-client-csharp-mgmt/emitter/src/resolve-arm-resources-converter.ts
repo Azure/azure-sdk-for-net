@@ -437,9 +437,8 @@ function convertResolvedResourceToMetadata(
         const responseModelId = methodResponseModelIdMap?.get(methodId);
         const isResourceList =
           sdkMethodKind === "paging" &&
-          !!responseModelId &&
-          !!resourceModelIds &&
-          resourceModelIds.has(responseModelId);
+          resourceModelIds !== undefined &&
+          resourceModelIds.has(responseModelId!);
         methods.push({
           methodId,
           kind: isResourceList
