@@ -1,5 +1,11 @@
 # Release History
 
+## 5.3.7-hotfix (Unreleased)
+
+### Bugs Fixed
+
+- Fix QueueMetricsProvider: preserve ApproximateMessagesCount when PeekMessages fails
+
 ## 5.3.7 (2025-10-29)
 
 ### Other Changes
