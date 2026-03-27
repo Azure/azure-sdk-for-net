@@ -406,6 +406,13 @@ export function postProcessArmResources(
     }
   }
 
+  // Step 3.5: Relocate cross-resource list actions
+  // When a spec models a list-children operation as an Action on a parent resource
+  // (e.g., blobContainersList as ArmResourceActionSync on BlobService that lists BlobContainers),
+  // detect that the Action's operationPath matches a child resource's collection path
+  // and reclassify it as a List on the child resource.
+  relocateCrossResourceListActions(validResources);
+
   // Step 4: Populate resourceScope for all resource methods
   // For each method, find the longest matching resource path that is a prefix of the method's operation path
   for (const resource of validResources) {
@@ -663,4 +670,80 @@ function canBeListResourceScope(
   }
   // here it means every segment in resourceInstancePath matches the corresponding segment in listPath
   return true;
+}
+
+/**
+ * Detects Action methods whose operationPath matches a child resource's collection path
+ * and relocates them to the child resource as List operations.
+ *
+ * This handles the pattern where a TypeSpec spec models a list-children operation as an
+ * ArmResourceActionSync on a parent resource (e.g., blobContainersList on BlobService)
+ * rather than as ArmResourceListByParent on the child interface (BlobContainers).
+ *
+ * The detection works by comparing each Action's operationPath against the "collection path"
+ * of every other resource. A collection path is derived by stripping the last /{parameter}
+ * segment from a resource's resourceIdPattern.
+ *
+ * Example:
+ *   - Container resourceIdPattern: .../blobServices/default/containers/{containerName}
+ *   - Container collection path:   .../blobServices/default/containers
+ *   - Action operationPath:        .../blobServices/default/containers  ← match!
+ *   - Result: Action is moved from BlobService to Container and reclassified as List
+ */
+function relocateCrossResourceListActions(
+  validResources: ArmResourceSchema[]
+): void {
+  // Build a lookup: collection path → target child resource
+  // Collection path = resourceIdPattern with last /{variable} segment stripped
+  const collectionPathToResource = new Map<string, ArmResourceSchema>();
+  for (const resource of validResources) {
+    const pattern = resource.metadata.resourceIdPattern;
+    const lastSlashIndex = pattern.lastIndexOf("/");
+    if (lastSlashIndex <= 0) continue;
+
+    const lastSegment = pattern.substring(lastSlashIndex + 1);
+    if (isVariableSegment(lastSegment)) {
+      const collectionPath = pattern.substring(0, lastSlashIndex);
+      collectionPathToResource.set(collectionPath, resource);
+    }
+  }
+
+  // Find Action methods that should be relocated to a child resource
+  const relocations: Array<{
+    sourceResource: ArmResourceSchema;
+    targetResource: ArmResourceSchema;
+    method: ResourceMethod;
+  }> = [];
+
+  for (const resource of validResources) {
+    for (const method of resource.metadata.methods) {
+      if (method.kind !== ResourceOperationKind.Action) continue;
+
+      const targetResource = collectionPathToResource.get(
+        method.operationPath
+      );
+      if (targetResource && targetResource !== resource) {
+        relocations.push({
+          sourceResource: resource,
+          targetResource: targetResource,
+          method: method
+        });
+      }
+    }
+  }
+
+  // Apply relocations: move methods from source to target and reclassify as List
+  for (const { sourceResource, targetResource, method } of relocations) {
+    // Remove from source
+    const sourceIndex = sourceResource.metadata.methods.indexOf(method);
+    if (sourceIndex >= 0) {
+      sourceResource.metadata.methods.splice(sourceIndex, 1);
+    }
+
+    // Add to target as a List operation
+    targetResource.metadata.methods.push({
+      ...method,
+      kind: ResourceOperationKind.List
+    });
+  }
 }

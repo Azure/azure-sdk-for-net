@@ -3386,8 +3386,7 @@ interface BlobServices {
 
   /** Lists all containers in the blob service - modeled as action on parent */
   @post
-  @segment("containers")
-  listContainers is ArmResourceActionSync<
+  containers is ArmResourceActionSync<
     BlobService,
     void,
     ListContainerItems
@@ -3445,51 +3444,42 @@ interface Containers {
       blobServiceResource.metadata.resourceIdPattern
     );
 
-    // --- Current (incorrect) behavior ---
-    // The listContainers action is on BlobService as kind=Action
+    // After fix: listContainers should have been moved from BlobService to Container
     const blobServiceMethods = blobServiceResource.metadata.methods;
-    const listContainersOnService = blobServiceMethods.find((m: any) =>
-      m.methodId.includes("listContainers")
-    );
-
-    // Document current behavior: the list action is on the parent service resource
-    // TODO: After fix, this method should no longer be on BlobService
-    ok(
-      listContainersOnService,
-      "CURRENT BEHAVIOR: listContainers is on BlobService (should be moved to Container after fix)"
-    );
-    strictEqual(
-      listContainersOnService!.kind,
-      "Action",
-      "CURRENT BEHAVIOR: listContainers is classified as Action (should be List after fix)"
-    );
-
-    // Document that Container has NO list method currently
     const containerMethods = containerResource.metadata.methods;
+
+    // The listContainers method should be on Container as kind=List
     const listOnContainer = containerMethods.find(
       (m: any) => m.kind === "List"
     );
-
-    // TODO: After fix, Container SHOULD have a List method
-    strictEqual(
+    ok(
       listOnContainer,
-      undefined,
-      "CURRENT BEHAVIOR: Container has no List method (should have one after fix)"
+      "listContainers should be on Container as a List method"
+    );
+    strictEqual(listOnContainer!.kind, "List");
+    ok(
+      listOnContainer!.methodId.includes("containers"),
+      "The List method should be the relocated containers operation"
     );
 
-    // --- Expected behavior after fix (uncomment when implementing) ---
-    // // The listContainers method should be on Container as kind=List
-    // const listOnContainerFixed = containerMethods.find(
-    //   (m: any) => m.kind === "List"
-    // );
-    // ok(listOnContainerFixed, "listContainers should be on Container as a List method");
-    // strictEqual(listOnContainerFixed!.kind, "List");
-    //
-    // // BlobService should NOT have the listContainers action anymore
-    // const listContainersOnServiceFixed = blobServiceMethods.find((m: any) =>
-    //   m.methodId.includes("listContainers")
-    // );
-    // strictEqual(listContainersOnServiceFixed, undefined,
-    //   "listContainers should no longer be on BlobService");
+    // BlobService should NOT have the listContainers action anymore
+    const listContainersOnService = blobServiceMethods.find((m: any) =>
+      m.methodId.includes("containers") && m.kind === "Action"
+    );
+    strictEqual(
+      listContainersOnService,
+      undefined,
+      "listContainers should no longer be on BlobService"
+    );
+
+    // BlobService should still have its own methods (Read + Create)
+    ok(
+      blobServiceMethods.some((m: any) => m.kind === "Read"),
+      "BlobService should still have Read"
+    );
+    ok(
+      blobServiceMethods.some((m: any) => m.kind === "Create"),
+      "BlobService should still have Create"
+    );
   });
 });
