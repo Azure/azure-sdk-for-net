@@ -57,13 +57,23 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             BlobClient blobClient = containerClient.GetBlobClient(path);
             BlobDownloadStreamingResult result;
 
-            if (async)
+            try
             {
-                result = await blobClient.DownloadStreamingAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (async)
+                {
+                    result = await blobClient.DownloadStreamingAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    result = blobClient.DownloadStreaming(cancellationToken: cancellationToken);
+                }
             }
-            else
+            catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
             {
-                result = blobClient.DownloadStreaming(cancellationToken: cancellationToken);
+                throw new InvalidOperationException(
+                    $"Snapshot metadata not found for timestamp '{snapshotTimestamp}' (path: {path}). " +
+                    $"Verify that a share snapshot was taken at this time and that the change feed has finished publishing its metadata.",
+                    ex);
             }
 
             JsonDocument json = null;
