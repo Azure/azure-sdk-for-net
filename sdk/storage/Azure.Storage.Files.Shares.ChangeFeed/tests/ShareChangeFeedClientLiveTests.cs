@@ -29,13 +29,18 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         /// <summary>
-        /// Creates a <see cref="ShareChangeFeedClient"/> via the extension method on <see cref="ShareClient"/>.
+        /// Creates a <see cref="ShareChangeFeedClient"/> using shared key credentials directly.
+        /// We construct the client without using an instrumented ShareClient to avoid the
+        /// test framework's sync/async proxy interceptor on internal discovery calls.
         /// </summary>
         private ShareChangeFeedClient GetChangeFeedClient(string shareName = null)
         {
-            ShareServiceClient serviceClient = GetShareServiceClient_SharedKey();
-            ShareClient shareClient = serviceClient.GetShareClient(shareName ?? TestShareName);
-            return shareClient.GetShareChangeFeedClient();
+            return new ShareChangeFeedClient(
+                new Uri(TestConfigDefault.FileServiceEndpoint),
+                shareName ?? TestShareName,
+                new StorageSharedKeyCredential(
+                    TestConfigDefault.AccountName,
+                    TestConfigDefault.AccountKey));
         }
 
         /// <summary>
@@ -49,7 +54,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             await shareServiceClient.GetSharesAsync().ToListAsync();
 
             // Arrange
-            ShareChangeFeedClient client = GetChangeFeedClient("changefeedshare");
+            ShareChangeFeedClient client = GetChangeFeedClient("changefeedtestingshare3");
 
             // Act
             List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();
