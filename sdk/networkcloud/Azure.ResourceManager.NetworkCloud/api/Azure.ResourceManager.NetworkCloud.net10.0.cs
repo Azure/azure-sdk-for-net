@@ -3787,6 +3787,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string ExtendedLocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.ResourceManager.Resources.Models.ExtendedLocation (Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation value) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

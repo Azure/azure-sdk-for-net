@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
                     MaxUnavailable = "0",
                 },
             };
-            ArmOperation<NetworkCloudAgentPoolResource> lro = await networkCloudAgentPool.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudAgentPoolResource> lro = await networkCloudAgentPool.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudAgentPoolResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

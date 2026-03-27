@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
                 CollectionInterval = 15L,
                 EnabledMetrics = { "metric1", "metric2" },
             };
-            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> lro = await networkCloudClusterMetricsConfiguration.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> lro = await networkCloudClusterMetricsConfiguration.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudClusterMetricsConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

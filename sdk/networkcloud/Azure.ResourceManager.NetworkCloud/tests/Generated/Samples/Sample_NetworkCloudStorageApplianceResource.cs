@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 },
                 SerialNumber = "BM1219XXX",
             };
-            ArmOperation<NetworkCloudStorageApplianceResource> lro = await networkCloudStorageAppliance.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudStorageApplianceResource> lro = await networkCloudStorageAppliance.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudStorageApplianceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

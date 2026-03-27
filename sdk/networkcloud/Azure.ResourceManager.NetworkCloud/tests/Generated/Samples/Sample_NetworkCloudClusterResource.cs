@@ -103,7 +103,7 @@ StorageApplianceName = "vmName",
                 },
                 ComputeDeploymentThreshold = new ValidationThreshold(ValidationThresholdGrouping.PerCluster, ValidationThresholdType.PercentSuccess, 90L),
             };
-            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -159,7 +159,7 @@ StorageApplianceName = "vmName",
                     },
                 },
             };
-            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -225,7 +225,7 @@ ContainerUri = new Uri("https://myaccount.blob.core.windows.net/myContainer2?res
 }},
                 },
             };
-            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -265,7 +265,7 @@ ContainerUri = new Uri("https://myaccount.blob.core.windows.net/myContainer2?res
 },
                 ClusterLocation = "Foo Street, 3rd Floor, row 9",
             };
-            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -305,7 +305,7 @@ ContainerUri = new Uri("https://myaccount.blob.core.windows.net/myContainer2?res
 },
                 RuntimeProtectionEnforcementLevel = RuntimeProtectionEnforcementLevel.OnDemand,
             };
-            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -353,7 +353,7 @@ ContainerUri = new Uri("https://myaccount.blob.core.windows.net/myContainer2?res
                     VaultUri = new Uri("https://keyvaultname.vault.azure.net/"),
                 },
             };
-            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -397,7 +397,7 @@ ContainerUri = new Uri("https://myaccount.blob.core.windows.net/myContainer2?res
                     WaitTimeMinutes = 10L,
                 },
             };
-            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -437,7 +437,7 @@ ContainerUri = new Uri("https://myaccount.blob.core.windows.net/myContainer2?res
 },
                 VulnerabilityScanningContainerScan = VulnerabilityScanningSettingsContainerScan.Enabled,
             };
-            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

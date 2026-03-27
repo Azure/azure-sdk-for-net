@@ -157,7 +157,7 @@ OnlyUseHostIPs = BfdEnabled.True,
 ["key2"] = "myvalue2"
 },
             };
-            ArmOperation<NetworkCloudKubernetesClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kubernetesClusterName, data);
+            ArmOperation<NetworkCloudKubernetesClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kubernetesClusterName, data, default);
             NetworkCloudKubernetesClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -286,7 +286,7 @@ AutoAssign = BfdEnabled.True,
 ["key2"] = "myvalue2"
 },
             };
-            ArmOperation<NetworkCloudKubernetesClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kubernetesClusterName, data);
+            ArmOperation<NetworkCloudKubernetesClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kubernetesClusterName, data, default);
             NetworkCloudKubernetesClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

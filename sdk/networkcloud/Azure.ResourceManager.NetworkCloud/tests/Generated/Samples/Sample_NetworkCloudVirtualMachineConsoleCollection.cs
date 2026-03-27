@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 ["key2"] = "myvalue2"
 },
             };
-            ArmOperation<NetworkCloudVirtualMachineConsoleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, consoleName, data);
+            ArmOperation<NetworkCloudVirtualMachineConsoleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, consoleName, data, default);
             NetworkCloudVirtualMachineConsoleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
                 RackLocation = "Rack 2B",
                 RackSerialNumber = "RACK_SERIAL_NUMBER",
             };
-            ArmOperation<NetworkCloudRackResource> lro = await networkCloudRack.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudRackResource> lro = await networkCloudRack.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudRackResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

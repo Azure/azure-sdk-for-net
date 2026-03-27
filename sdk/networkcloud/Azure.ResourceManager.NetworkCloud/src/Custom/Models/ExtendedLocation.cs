@@ -100,6 +100,23 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The extended location type, for example, CustomLocation. </summary>
         public string ExtendedLocationType { get; set; }
 
+        /// <summary>
+        /// Implicit conversion to <see cref="Azure.ResourceManager.Resources.Models.ExtendedLocation"/>
+        /// so that generated backward-compat ModelFactory methods can pass this local type where the
+        /// ARM common type is expected.
+        /// </summary>
+        public static implicit operator Azure.ResourceManager.Resources.Models.ExtendedLocation(ExtendedLocation value)
+        {
+            if (value == null) return null;
+            return new Azure.ResourceManager.Resources.Models.ExtendedLocation
+            {
+                Name = value.Name,
+                ExtendedLocationType = value.ExtendedLocationType != null
+                    ? new Azure.ResourceManager.Resources.Models.ExtendedLocationType(value.ExtendedLocationType)
+                    : (Azure.ResourceManager.Resources.Models.ExtendedLocationType?)null
+            };
+        }
+
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExtendedLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

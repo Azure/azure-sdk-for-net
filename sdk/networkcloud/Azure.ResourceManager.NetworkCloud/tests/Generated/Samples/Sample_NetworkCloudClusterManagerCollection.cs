@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 ["key2"] = "myvalue2"
 },
             };
-            ArmOperation<NetworkCloudClusterManagerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterManagerName, data);
+            ArmOperation<NetworkCloudClusterManagerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterManagerName, data, default);
             NetworkCloudClusterManagerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 ["key2"] = "myvalue2"
 },
             };
-            ArmOperation<NetworkCloudClusterManagerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterManagerName, data);
+            ArmOperation<NetworkCloudClusterManagerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterManagerName, data, default);
             NetworkCloudClusterManagerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

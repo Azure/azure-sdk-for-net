@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 ["key2"] = "myvalue2"
 },
             };
-            NetworkCloudL3NetworkResource result = await networkCloudL3Network.UpdateAsync(patch);
+            NetworkCloudL3NetworkResource result = await networkCloudL3Network.UpdateAsync(patch, default);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

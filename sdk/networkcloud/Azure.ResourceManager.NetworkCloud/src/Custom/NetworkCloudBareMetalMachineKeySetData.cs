@@ -13,6 +13,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    // Backward compat: The old Swagger/AutoRest API used a constructor with the local
+    // ExtendedLocation type and exposed OSGroupName as a flat property. The new TypeSpec-
+    // generated code uses the ARM common ExtendedLocation type and nests OSGroupName under
+    // Properties. This file suppresses the generated constructor and preserves the old API
+    // surface to avoid breaking existing consumers.
     [CodeGenSuppress("NetworkCloudBareMetalMachineKeySetData", typeof(AzureLocation), typeof(string), typeof(DateTimeOffset), typeof(IEnumerable<IPAddress>), typeof(BareMetalMachineKeySetPrivilegeLevel), typeof(IEnumerable<KeySetUser>), typeof(ExtendedLocation))]
     public partial class NetworkCloudBareMetalMachineKeySetData
     {

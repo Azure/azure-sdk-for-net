@@ -11,28 +11,18 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    // Backward compat: The old Swagger/AutoRest code defined a local ExtendedLocation model
+    // (Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation) with string properties.
+    // The new TypeSpec spec uses the ARM common type (Azure.ResourceManager.Resources.Models.ExtendedLocation).
+    // This customization preserves the old public API surface:
+    //   - Constructor accepting the local ExtendedLocation type
+    //   - ExtendedLocation property returning the local type
+    // The implicit conversion operator on the local ExtendedLocation type allows the generated
+    // backward-compat ModelFactory methods to work correctly.
     [CodeGenSuppress("NetworkCloudBareMetalMachineData", typeof(AzureLocation), typeof(string), typeof(AdministrativeCredentials), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(ResourceIdentifier), typeof(long), typeof(string), typeof(ExtendedLocation))]
+    [CodeGenSuppress("ExtendedLocation")]
     public partial class NetworkCloudBareMetalMachineData
     {
-        // Backward compat: CACertificate was flattened in old autorest code but not in new generator.
-        // Expose it through internal Properties to maintain API surface.
-
-        /// <summary> The information of the certificate authority for the bare metal machine. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public NetworkCloudCertificateInfo CACertificate => Properties?.CACertificate;
-
-        /// <summary> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public IPAddress OamIPv4Address => Properties?.OamIPv4Address;
-
-        /// <summary> The IPv6 address that is assigned to the bare metal machine during the cluster deployment. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string OamIPv6Address => Properties?.OamIPv6Address;
-
-        /// <summary> The OS image currently in the machine. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string OSImage => Properties?.OSImage;
-
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineData"/>. </summary>
         public NetworkCloudBareMetalMachineData(AzureLocation location, ExtendedLocation extendedLocation, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long rackSlot, string serialNumber)
             : base(location)

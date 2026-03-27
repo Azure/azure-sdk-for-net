@@ -89,7 +89,7 @@ Port = 443L,
                     StorageApplianceId = new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/StorageAppliances/storageApplianceName"),
                 },
             };
-            ArmOperation<NetworkCloudCloudServicesNetworkResource> lro = await networkCloudCloudServicesNetwork.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudCloudServicesNetworkResource> lro = await networkCloudCloudServicesNetwork.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudCloudServicesNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
