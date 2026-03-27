@@ -14,8 +14,12 @@ namespace Azure.GeneratorAgent.Mcp.Tools;
 [McpServerToolType]
 public static class ValidateTspConfigTool
 {
-    private static readonly Regex s_emitterKeyRegex = new(
+    private static readonly Regex s_dpgEmitterKeyRegex = new(
         @"""?@azure-typespec/http-client-csharp(?!-mgmt)""?\s*:",
+        RegexOptions.Compiled);
+
+    private static readonly Regex s_mgmtEmitterKeyRegex = new(
+        @"""?@azure-typespec/http-client-csharp-mgmt""?\s*:",
         RegexOptions.Compiled);
 
     private static readonly Regex s_emitterOutputDirRegex = new(
@@ -109,11 +113,18 @@ public static class ValidateTspConfigTool
         {
             var issues = new List<string>();
 
+            // Determine emitter key based on package plane
+            var isMgmt = sdkNamespace.StartsWith("Azure.ResourceManager.", StringComparison.Ordinal);
+            var emitterKeyRegex = isMgmt ? s_mgmtEmitterKeyRegex : s_dpgEmitterKeyRegex;
+            var emitterKeyName = isMgmt
+                ? "@azure-typespec/http-client-csharp-mgmt"
+                : "@azure-typespec/http-client-csharp";
+
             // Check emitter key exists and extract its section for scoped validation
-            var emitterMatch = s_emitterKeyRegex.Match(content);
+            var emitterMatch = emitterKeyRegex.Match(content);
             if (!emitterMatch.Success)
             {
-                issues.Add("Missing '@azure-typespec/http-client-csharp' key under options");
+                issues.Add($"Missing '{emitterKeyName}' key under options");
                 return new TspConfigValidationResult
                 {
                     Success = true,
@@ -152,17 +163,14 @@ public static class ValidateTspConfigTool
                 issues.Add("Missing 'model-namespace' field");
             }
 
-            // Check for invalid properties within the @azure-typespec/http-client-csharp section.
-            // Only emitter-output-dir, namespace, model-namespace, clear-output-folder, flavor are valid.
-            // Anything else (e.g., package-dir from Python emitter) causes the TypeSpec compiler
-            // to fail with "invalid-schema: must NOT have additional properties".
+            // Check for invalid properties within the emitter section.
             var emitterProperties = s_yamlPropertyRegex.Matches(emitterSection);
             foreach (Match prop in emitterProperties)
             {
                 var key = prop.Groups["key"].Value;
                 if (!s_validCSharpEmitterProperties.Contains(key))
                 {
-                    issues.Add($"Invalid property '{key}' in @azure-typespec/http-client-csharp section — not a recognized emitter option");
+                    issues.Add($"Invalid property '{key}' in {emitterKeyName} section — not a recognized emitter option");
                 }
             }
 
@@ -182,7 +190,7 @@ public static class ValidateTspConfigTool
 
     /// <summary>
     /// Fixes a tspconfig.yaml to have the correct emitter configuration.
-    /// Inserts or replaces the @azure-typespec/http-client-csharp section.
+    /// Detects plane from sdkNamespace and inserts or replaces the appropriate emitter section.
     /// </summary>
     public static (bool Success, string? Error) FixTspConfig(string tspConfigPath, string sdkNamespace)
     {
@@ -194,9 +202,14 @@ public static class ValidateTspConfigTool
                 return (false, $"File not found: {normalizedPath}");
             }
 
+            var isMgmt = sdkNamespace.StartsWith("Azure.ResourceManager.", StringComparison.Ordinal);
+            var emitterKey = isMgmt
+                ? "@azure-typespec/http-client-csharp-mgmt"
+                : "@azure-typespec/http-client-csharp";
+
             var content = File.ReadAllText(normalizedPath);
             var correctSection =
-                $"  \"@azure-typespec/http-client-csharp\":\n" +
+                $"  \"{emitterKey}\":\n" +
                 $"    emitter-output-dir: \"{{output-dir}}/{{service-dir}}/{{namespace}}\"\n" +
                 $"    namespace: {sdkNamespace}\n" +
                 $"    model-namespace: false";
