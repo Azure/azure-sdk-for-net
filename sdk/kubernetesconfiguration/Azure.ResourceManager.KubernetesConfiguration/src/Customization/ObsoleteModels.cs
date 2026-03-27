@@ -10,6 +10,13 @@ using System.Runtime.InteropServices;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
+    // Customization reason: The KubernetesConfiguration service spec was split into separate TypeSpec
+    // projects (extensions, fluxConfigurations, sourceControlConfigurations). The current SDK only
+    // generates from the "extensions" project, so FluxConfiguration, SourceControlConfiguration, and
+    // their supporting types (Helm, AzureBlob, Bucket, Git, Kustomization, ServicePrincipal, etc.)
+    // are no longer auto-generated. These types are preserved here as [Obsolete] stubs with all
+    // operations throwing NotSupportedException, ensuring existing code compiled against the previous
+    // GA SDK (v1.2.0) continues to compile without breaking changes (ApiCompatVersion = 1.2.0).
     // ---------------------------------------------------------------
     // Extensible enum struct types (removed during TypeSpec migration)
     // ---------------------------------------------------------------

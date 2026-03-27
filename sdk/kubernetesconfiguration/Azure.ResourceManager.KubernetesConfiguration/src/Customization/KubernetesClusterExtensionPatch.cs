@@ -8,8 +8,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    // Setters restored for backward API compatibility — the new TypeSpec generator omits
-    // setters on collection properties, but the previous GA had them.
+    // Customization reason: The new TypeSpec generator generates getter-only collection properties
+    // (ConfigurationSettings, ConfigurationProtectedSettings), but the previous GA SDK (v1.2.0,
+    // ApiCompatVersion) exposed these properties with public setters. To maintain backward API
+    // compatibility and avoid breaking changes, we suppress the generated getter-only properties
+    // and replace them with custom implementations that include both getters and setters.
     [CodeGenSuppress("ConfigurationSettings")]
     [CodeGenSuppress("ConfigurationProtectedSettings")]
     public partial class KubernetesClusterExtensionPatch

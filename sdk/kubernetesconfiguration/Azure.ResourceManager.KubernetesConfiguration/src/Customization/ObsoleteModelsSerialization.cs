@@ -9,6 +9,11 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
+    // Customization reason: Serialization interface implementations (IJsonModel<T>, IPersistableModel<T>)
+    // for the obsolete model types defined in ObsoleteModels.cs. These are required because the previous
+    // GA SDK (v1.2.0) exposed these types with serialization support. All methods throw
+    // NotSupportedException since the types are no longer functional after the service spec split.
+
     // Serialization interfaces preserved for API compatibility on obsolete type HelmOperatorProperties.
     public partial class HelmOperatorProperties : IJsonModel<HelmOperatorProperties>, IPersistableModel<HelmOperatorProperties>
     {

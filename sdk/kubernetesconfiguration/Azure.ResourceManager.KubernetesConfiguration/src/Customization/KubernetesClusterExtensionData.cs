@@ -12,12 +12,13 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    // Note: The @@alternateType decorator in client.tsp maps AksAssignedIdentity back
-    // to ManagedServiceIdentity for backward compatibility with the old AutoRest SDK (1.2.0).
-    // PackageUri type was also mapped back to Uri via @@alternateType.
-
-    // Setters restored for backward API compatibility — the new TypeSpec generator omits
-    // setters on collection properties, but the previous GA had them.
+    // Customization reason: The new TypeSpec generator generates getter-only collection properties
+    // (ConfigurationSettings, ConfigurationProtectedSettings, Statuses), but the previous GA SDK
+    // (v1.2.0, ApiCompatVersion) exposed these properties with public setters. To maintain backward
+    // API compatibility and avoid breaking changes, we suppress the generated getter-only properties
+    // and replace them with custom implementations that include both getters and setters.
+    // Additionally, the @@alternateType decorator in client.tsp maps AksAssignedIdentity back to
+    // ManagedServiceIdentity and PackageUri back to Uri for backward compatibility with AutoRest SDK.
     [CodeGenSuppress("ConfigurationSettings")]
     [CodeGenSuppress("ConfigurationProtectedSettings")]
     [CodeGenSuppress("Statuses")]

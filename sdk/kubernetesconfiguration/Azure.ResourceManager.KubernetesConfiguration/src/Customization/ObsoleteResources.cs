@@ -14,6 +14,13 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
+    // Customization reason: The KubernetesConfiguration service spec was split into separate TypeSpec
+    // projects. FluxConfiguration and SourceControlConfiguration resource types, their collections,
+    // extension methods, and mockable resource classes are no longer auto-generated since the SDK now
+    // only generates from the "extensions" project. These types are preserved as [Obsolete] stubs
+    // with all operations throwing NotSupportedException, ensuring backward API compatibility with
+    // the previous GA SDK (v1.2.0, ApiCompatVersion = 1.2.0).
+
     /// <summary> The KubernetesFluxConfiguration data model. </summary>
     [Obsolete("This type is obsolete and will be removed in a future version. The service spec has been split into separate TypeSpec projects.")]
     [EditorBrowsable(EditorBrowsableState.Never)]

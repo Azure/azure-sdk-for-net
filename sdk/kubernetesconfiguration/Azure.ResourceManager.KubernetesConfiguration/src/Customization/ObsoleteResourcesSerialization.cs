@@ -10,6 +10,13 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
+    // Customization reason: Serialization interface implementations (IJsonModel<T>, IPersistableModel<T>)
+    // for the obsolete resource types defined in ObsoleteResources.cs (KubernetesFluxConfigurationData,
+    // KubernetesFluxConfigurationResource, KubernetesSourceControlConfigurationData,
+    // KubernetesSourceControlConfigurationResource). These are required because the previous GA SDK
+    // (v1.2.0) exposed these types with serialization support. All methods throw NotSupportedException
+    // since the types are no longer functional after the service spec split.
+
     // Serialization interfaces preserved for API compatibility on obsolete type.
     public partial class KubernetesFluxConfigurationData : IJsonModel<KubernetesFluxConfigurationData>, IPersistableModel<KubernetesFluxConfigurationData>
     {
