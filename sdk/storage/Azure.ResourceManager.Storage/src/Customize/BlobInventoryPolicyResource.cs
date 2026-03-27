@@ -7,8 +7,6 @@
 // to preserve prior GA behavior. The resource's Update sends PATCH which differs from recordings.
 
 using System.ComponentModel;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Storage.Models;
 
@@ -16,22 +14,9 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class BlobInventoryPolicyResource
     {
-        // Backward-compatible overload: delegates to collection CreateOrUpdate (PUT) with default name.
+        // Backward-compatible overload: 4-param CreateResourceIdentifier (old GA took BlobInventoryPolicyName).
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual ArmOperation<BlobInventoryPolicyResource> CreateOrUpdate(WaitUntil waitUntil, BlobInventoryPolicyData data, CancellationToken cancellationToken = default)
-        {
-            var collection = new BlobInventoryPolicyCollection(Client, Id.Parent);
-            return collection.CreateOrUpdate(waitUntil, BlobInventoryPolicyName.Default, data, cancellationToken);
-        }
-
-        // Backward-compatible overload: delegates to collection CreateOrUpdateAsync (PUT) with default name.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Task<ArmOperation<BlobInventoryPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BlobInventoryPolicyData data, CancellationToken cancellationToken = default)
-        {
-            var collection = new BlobInventoryPolicyCollection(Client, Id.Parent);
-            return collection.CreateOrUpdateAsync(waitUntil, BlobInventoryPolicyName.Default, data, cancellationToken);
-        }
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, BlobInventoryPolicyName blobInventoryPolicyName)
+            => CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
     }
 }

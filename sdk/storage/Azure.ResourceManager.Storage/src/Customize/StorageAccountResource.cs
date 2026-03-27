@@ -51,16 +51,6 @@ namespace Azure.ResourceManager.Storage
         public virtual ArmOperation Failover(WaitUntil waitUntil, StorageAccountFailoverType? failoverType, CancellationToken cancellationToken) =>
             Failover(waitUntil, failoverType.HasValue ? new FailoverRequestFailoverType(failoverType.Value.ToString()) : (FailoverRequestFailoverType?)null, cancellationToken);
 
-        // Backward-compatible overload: Parameterless GetBlobInventoryPolicy.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual BlobInventoryPolicyResource GetBlobInventoryPolicy()
-            => GetBlobInventoryPolicy(BlobInventoryPolicyName.Default).Value;
-
-        // Backward-compatible overload: Parameterless GetStorageAccountManagementPolicy.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicy()
-            => GetStorageAccountManagementPolicy(ManagementPolicyName.Default).Value;
-
         // Backward-compat: prior GA returned Pageable<StorageAccountKey> instead of Response<StorageAccountListKeysResult>.
 
         // Backward-compatible overload: GetKeys with old StorageListKeyExpand parameter type.
