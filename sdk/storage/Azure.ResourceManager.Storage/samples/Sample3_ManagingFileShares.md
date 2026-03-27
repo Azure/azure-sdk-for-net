@@ -68,10 +68,11 @@ FileShareResource fileShare = await fileShareCreateOperation.WaitForCompletionAs
 ***List all file shares***
 
 ```C# Snippet:Managing_FileShares_ListFileShares
-AsyncPageable<FileShareItem> response = fileService.GetAllAsync();
-await foreach (FileShareItem fileShare in response)
+FileShareCollection fileShareCollection = fileService.GetFileShares();
+AsyncPageable<FileShareResource> response = fileShareCollection.GetAllAsync();
+await foreach (FileShareResource fileShare in response)
 {
-    Console.WriteLine(fileShare.Name);
+    Console.WriteLine(fileShare.Id.Name);
 }
 ```
 

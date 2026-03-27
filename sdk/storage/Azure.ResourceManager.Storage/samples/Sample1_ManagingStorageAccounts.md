@@ -47,8 +47,7 @@ StorageAccountResource storageAccount = accountCreateOperation.Value;
 ### Get keys on a storage account
 
 ```C# Snippet:Managing_StorageAccounts_GetKeys
-StorageAccountListKeysResult keysResult = (await storageAccount.GetKeysAsync()).Value;
-foreach (StorageAccountKey key in keysResult.Keys)
+await foreach (StorageAccountKey key in storageAccount.GetKeysAsync())
 {
     Console.WriteLine(key.Value);
 }

@@ -68,10 +68,11 @@ BlobContainerResource blobContainer = blobContainerCreateOperation.Value;
 ***List all blob containers***
 
 ```C# Snippet:Managing_BlobContainers_ListBlobContainers
-AsyncPageable<ListContainerItem> response = blobService.GetAllAsync();
-await foreach (ListContainerItem blobContainer in response)
+BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
+AsyncPageable<BlobContainerResource> response = blobContainerCollection.GetAllAsync();
+await foreach (BlobContainerResource blobContainer in response)
 {
-    Console.WriteLine(blobContainer.Name);
+    Console.WriteLine(blobContainer.Id.Name);
 }
 ```
 
