@@ -310,7 +310,7 @@ public class DynamicIndexClassificationTests
     }
 
     [Test]
-    public void Classify_WithIndex_TypeNotInGenerated_FallsThrough()
+    public void Classify_WithIndex_TypeNotInGenerated_IsNotDeterministic()
     {
         var index = GeneratedCodeIndex.Build(_tempDir);
 
@@ -325,12 +325,13 @@ public class DynamicIndexClassificationTests
 
         var result = DeterministicFixRegistry.Classify(error, index);
 
-        // Should still match the static CS0246 rule but with empty args
-        Assert.That(result.ToolArgs, Is.Empty);
+        // Type not in static mappings or Generated/ — classified as non-deterministic
+        Assert.That(result.IsDeterministic, Is.False);
+        Assert.That(result.Reason, Does.Contain("CompletelyMadeUpType"));
     }
 
     [Test]
-    public void Classify_WithoutIndex_BehavesAsBeforeForUnknownTypes()
+    public void Classify_WithoutIndex_UnknownType_IsNotDeterministic()
     {
         var error = new BuildError
         {
@@ -341,11 +342,11 @@ public class DynamicIndexClassificationTests
             Severity = "error"
         };
 
-        // Without index (null), falls through to static rules
-        var result = DeterministicFixRegistry.Classify(error);
+        // Without index (null), type not in static mappings — non-deterministic
+        var result = DeterministicFixRegistry.Classify(error, null);
 
-        // Static rule matches but can't resolve the type
-        Assert.That(result.ToolArgs, Is.Empty);
+        Assert.That(result.IsDeterministic, Is.False);
+        Assert.That(result.Reason, Does.Contain("MessageTemplateQuickAction"));
     }
 
     [Test]

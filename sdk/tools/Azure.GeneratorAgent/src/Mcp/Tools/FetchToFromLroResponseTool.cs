@@ -26,6 +26,11 @@ public static class FetchToFromLroResponseTool
         @"\bFetch\((?<args>[^)]+)\)",
         RegexOptions.Compiled);
 
+    // Extracts the type name from a variable assignment prefix (e.g., "MyModel result = ")
+    private static readonly Regex s_varTypePrefixRegex = new(
+        @"^(?<type>\w+)\s+\w+\s*=\s*$",
+        RegexOptions.Compiled);
+
     // Matches FromLroResponse methods in Generated/ code
     private static readonly Regex s_fromLroResponseRegex = new(
         @"static\s+(?<returnType>\w+)\s+FromLroResponse\s*\(",
@@ -119,7 +124,7 @@ public static class FetchToFromLroResponseTool
             var args = match.Groups["args"].Value;
 
             // Try to extract the type from the prefix (e.g., "MyModel result = ")
-            var typeMatch = Regex.Match(prefix.Trim(), @"^(?<type>\w+)\s+\w+\s*=\s*$");
+            var typeMatch = s_varTypePrefixRegex.Match(prefix.Trim());
             if (typeMatch.Success)
             {
                 var varType = typeMatch.Groups["type"].Value;

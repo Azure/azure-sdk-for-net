@@ -30,7 +30,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -54,7 +54,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.That(result.IsDeterministic, Is.True);
     }
@@ -73,7 +73,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -97,7 +97,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -120,7 +120,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -176,7 +176,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -199,7 +199,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -223,7 +223,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -247,7 +247,7 @@ public class DeterministicFixRegistryTests
             Severity = "warning"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -269,7 +269,7 @@ public class DeterministicFixRegistryTests
             Severity = "warning"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -293,7 +293,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -315,12 +315,37 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
-        // Still deterministic because the add_using rule matches, but with empty args
-        // since the type isn't in our mapping
-        Assert.That(result.IsDeterministic, Is.True);
-        Assert.That(result.ToolArgs, Is.Empty);
+        // Not deterministic: the type isn't in static TypeToNamespace and no Generated/ index
+        // is available, so the error requires LLM reasoning (likely a renamed or removed type).
+        Assert.That(result.IsDeterministic, Is.False);
+        Assert.That(result.Reason, Does.Contain("SomeCompletelyUnknownType"));
+        Assert.That(result.Reason, Does.Contain("not found"));
+    }
+
+    [Test]
+    public void Classify_UnknownType_CS0246_WithEmptyIndex_IsNotDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 10,
+            Code = "CS0246",
+            Message = "The type or namespace name 'ConversationAuthoringExportedModel' could not be found",
+            Severity = "error"
+        };
+
+        // Pass an empty GeneratedCodeIndex (simulates type not existing in Generated/ either)
+        var index = GeneratedCodeIndex.Build(Path.GetTempPath());
+
+        var result = DeterministicFixRegistry.Classify(error, index);
+
+        // Not deterministic: type is not in static mappings AND not in Generated/ code
+        Assert.That(result.IsDeterministic, Is.False);
+        Assert.That(result.Reason, Does.Contain("ConversationAuthoringExportedModel"));
+        Assert.That(result.Reason, Does.Contain("not found"));
+        Assert.That(result.ToolName, Is.Null);
     }
 
     // --- Registry structure tests ---
@@ -367,7 +392,7 @@ public class DeterministicFixRegistryTests
     [Test]
     public void Classify_NullError_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => DeterministicFixRegistry.Classify(null!));
+        Assert.Throws<ArgumentNullException>(() => DeterministicFixRegistry.Classify(null!, null));
     }
 
     // --- Migration pattern rules ---
@@ -384,7 +409,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -406,7 +431,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -428,7 +453,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -452,7 +477,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -475,7 +500,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -504,7 +529,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -534,7 +559,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -558,7 +583,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.That(result.IsDeterministic, Is.True);
     }
@@ -575,7 +600,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -599,7 +624,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -620,7 +645,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -643,7 +668,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -667,7 +692,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -689,7 +714,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -713,7 +738,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -737,7 +762,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -789,7 +814,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -810,7 +835,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -831,7 +856,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -853,7 +878,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -879,7 +904,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -900,7 +925,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -925,7 +950,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -948,7 +973,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -973,7 +998,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -997,7 +1022,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1022,7 +1047,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1046,7 +1071,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1127,7 +1152,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1150,7 +1175,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1173,7 +1198,7 @@ public class DeterministicFixRegistryTests
             Severity = "warning"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1195,7 +1220,7 @@ public class DeterministicFixRegistryTests
             Severity = "warning"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1218,7 +1243,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1243,7 +1268,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1267,7 +1292,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1291,7 +1316,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1315,7 +1340,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1340,7 +1365,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1365,7 +1390,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1390,7 +1415,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1415,7 +1440,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1439,7 +1464,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1464,7 +1489,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1489,7 +1514,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1513,7 +1538,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1538,7 +1563,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -1562,7 +1587,7 @@ public class DeterministicFixRegistryTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {

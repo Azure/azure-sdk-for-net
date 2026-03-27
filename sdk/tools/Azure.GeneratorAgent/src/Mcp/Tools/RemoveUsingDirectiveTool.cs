@@ -43,7 +43,7 @@ public static class RemoveUsingDirectiveTool
             var content = File.ReadAllText(normalizedPath);
             var regex = new Regex(
                 $@"^\s*using\s+{namespacePattern}\s*;\s*\r?\n?",
-                RegexOptions.Compiled | RegexOptions.Multiline);
+                RegexOptions.Multiline);
 
             var matchCount = regex.Matches(content).Count;
             if (matchCount == 0)

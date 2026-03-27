@@ -52,7 +52,7 @@ public static class RegexReplacementTool
             }
 
             var content = File.ReadAllText(normalizedPath);
-            var options = RegexOptions.Compiled | (singleLine ? RegexOptions.Singleline : RegexOptions.None);
+            var options = singleLine ? RegexOptions.Singleline : RegexOptions.None;
             var regex = new Regex(pattern, options);
             var matchCount = regex.Matches(content).Count;
             if (matchCount == 0)

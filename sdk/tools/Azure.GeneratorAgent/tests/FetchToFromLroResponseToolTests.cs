@@ -214,7 +214,7 @@ public class FetchToFromLroResponseToolTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -235,7 +235,7 @@ public class FetchToFromLroResponseToolTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -256,7 +256,7 @@ public class FetchToFromLroResponseToolTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {
@@ -278,7 +278,7 @@ public class FetchToFromLroResponseToolTests
             Severity = "error"
         };
 
-        var result = DeterministicFixRegistry.Classify(error);
+        var result = DeterministicFixRegistry.Classify(error, null);
 
         Assert.Multiple(() =>
         {

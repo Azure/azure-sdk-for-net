@@ -150,11 +150,6 @@ public static class DeterministicFixRegistry
     public static IReadOnlyList<FixRule> Rules { get; } = BuildRules();
 
     /// <summary>
-    /// Classifies a build error as deterministic (with tool + args) or requiring LLM reasoning.
-    /// </summary>
-    public static ClassifiedError Classify(BuildError error) => Classify(error, null);
-
-    /// <summary>
     /// Classifies a build error using both static rules and a dynamic index built from Generated/ code.
     /// The index allows automatic resolution of CS0246 errors for types discovered in the generated output,
     /// without needing hardcoded TypeToNamespace entries.
@@ -184,6 +179,30 @@ public static class DeterministicFixRegistry
                     {
                         return resolved;
                     }
+
+                    // Type not found in static TypeToNamespace OR Generated/ code — it was
+                    // likely renamed or removed by the new generator. Classify as non-deterministic
+                    // so the LLM can reason about whether this is a rename, removal, or restructuring.
+                    var missingType = match.Groups["typeName"].Success ? match.Groups["typeName"].Value : "unknown";
+                    return new ClassifiedError
+                    {
+                        Error = error,
+                        IsDeterministic = false,
+                        Reason = $"Type '{missingType}' not found in static mappings or Generated/ code — likely renamed or removed. Requires reasoning to resolve."
+                    };
+                }
+
+                // If add_using_directive matched but no index was provided and args are empty,
+                // the type isn't in static mappings either — classify as non-deterministic.
+                if (rule.ToolName == "add_using_directive" && args.Count == 0 && index is null)
+                {
+                    var missingType = match.Groups["typeName"].Success ? match.Groups["typeName"].Value : "unknown";
+                    return new ClassifiedError
+                    {
+                        Error = error,
+                        IsDeterministic = false,
+                        Reason = $"Type '{missingType}' not found in static mappings (no Generated/ index available). Requires reasoning to resolve."
+                    };
                 }
 
                 return new ClassifiedError
@@ -559,16 +578,6 @@ public static class DeterministicFixRegistry
             ExtractArgs = (err, m) =>
             {
                 var typeName = m.Groups["typeName"].Value;
-                // Check field renames first
-                if (FieldRenames.ContainsKey(typeName))
-                {
-                    return new Dictionary<string, string>
-                    {
-                        ["filePath"] = err.FilePath,
-                        ["pattern"] = $@"\b{Regex.Escape(typeName)}\b",
-                        ["replacement"] = FieldRenames[typeName]
-                    };
-                }
                 if (TypeToNamespace.TryGetValue(typeName, out var ns))
                 {
                     return new Dictionary<string, string>

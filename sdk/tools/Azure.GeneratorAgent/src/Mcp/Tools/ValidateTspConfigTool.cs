@@ -15,7 +15,7 @@ namespace Azure.GeneratorAgent.Mcp.Tools;
 public static class ValidateTspConfigTool
 {
     private static readonly Regex s_emitterKeyRegex = new(
-        @"""?@azure-typespec/http-client-csharp""?\s*:",
+        @"""?@azure-typespec/http-client-csharp(?!-mgmt)""?\s*:",
         RegexOptions.Compiled);
 
     private static readonly Regex s_emitterOutputDirRegex = new(
@@ -52,19 +52,35 @@ public static class ValidateTspConfigTool
         @"^(?<indent>\s+)(?<key>[a-zA-Z][a-zA-Z0-9-]*)\s*:",
         RegexOptions.Compiled | RegexOptions.Multiline);
 
+    /// <summary>
+    /// Matches the start of a top-level YAML key (at most 2 spaces indent), used to
+    /// delimit the emitter section from the next section.
+    /// </summary>
+    private static readonly Regex s_nextTopLevelKeyRegex = new(
+        @"^\s{0,2}""?[a-zA-Z@]",
+        RegexOptions.Compiled | RegexOptions.Multiline);
+
+    /// <summary>
+    /// Matches the existing @azure-typespec/http-client-csharp emitter section
+    /// in tspconfig.yaml for replacement.
+    /// </summary>
+    private static readonly Regex s_emitterSectionRegex = new(
+        @"(\s*""?@azure-typespec/http-client-csharp""?\s*:)[\s\S]*?(?=\n\s*""?@|\n\s*emit\b|\n[^\s]|\z)",
+        RegexOptions.Compiled);
+
     [McpServerTool(Name = "validate_tsp_config"), Description("Validate that a tspconfig.yaml has correct @azure-typespec/http-client-csharp emitter configuration.")]
     public static string Execute(
         [Description("Absolute path to the tspconfig.yaml file")] string tspConfigPath,
-        [Description("Expected SDK namespace (e.g., Azure.Storage.Blobs)")] string expectedNamespace)
+        [Description("SDK namespace for context (e.g., Azure.Storage.Blobs). Used by FixTspConfig, not checked during validation.")] string sdkNamespace)
     {
-        var result = ValidateInProcess(tspConfigPath, expectedNamespace);
+        var result = ValidateInProcess(tspConfigPath, sdkNamespace);
         return JsonSerializer.Serialize(result);
     }
 
     /// <summary>
     /// In-process validation for the orchestrator (reads from file).
     /// </summary>
-    public static TspConfigValidationResult ValidateInProcess(string tspConfigPath, string expectedNamespace)
+    public static TspConfigValidationResult ValidateInProcess(string tspConfigPath, string sdkNamespace)
     {
         try
         {
@@ -75,7 +91,7 @@ public static class ValidateTspConfigTool
             }
 
             var content = File.ReadAllText(normalizedPath);
-            return ValidateContent(content, expectedNamespace);
+            return ValidateContent(content, sdkNamespace);
         }
         catch (Exception ex)
         {
@@ -87,7 +103,7 @@ public static class ValidateTspConfigTool
     /// Validates tspconfig.yaml content from a string. Used by both file-based validation
     /// and remote validation (where content is fetched from GitHub).
     /// </summary>
-    public static TspConfigValidationResult ValidateContent(string content, string expectedNamespace)
+    public static TspConfigValidationResult ValidateContent(string content, string sdkNamespace)
     {
         try
         {
@@ -110,8 +126,7 @@ public static class ValidateTspConfigTool
             // Extract the emitter section: from the emitter key to the next top-level key or EOF
             var sectionStart = emitterMatch.Index;
             var sectionEnd = content.Length;
-            var nextKeyRegex = new Regex(@"^\s{0,2}""?[a-zA-Z@]", RegexOptions.Multiline);
-            var nextKeys = nextKeyRegex.Matches(content, sectionStart + emitterMatch.Length);
+            var nextKeys = s_nextTopLevelKeyRegex.Matches(content, sectionStart + emitterMatch.Length);
             foreach (Match nk in nextKeys)
             {
                 sectionEnd = nk.Index;
@@ -169,7 +184,7 @@ public static class ValidateTspConfigTool
     /// Fixes a tspconfig.yaml to have the correct emitter configuration.
     /// Inserts or replaces the @azure-typespec/http-client-csharp section.
     /// </summary>
-    public static (bool Success, string? Error) FixTspConfig(string tspConfigPath, string expectedNamespace)
+    public static (bool Success, string? Error) FixTspConfig(string tspConfigPath, string sdkNamespace)
     {
         try
         {
@@ -183,18 +198,13 @@ public static class ValidateTspConfigTool
             var correctSection =
                 $"  \"@azure-typespec/http-client-csharp\":\n" +
                 $"    emitter-output-dir: \"{{output-dir}}/{{service-dir}}/{{namespace}}\"\n" +
-                $"    namespace: {expectedNamespace}\n" +
+                $"    namespace: {sdkNamespace}\n" +
                 $"    model-namespace: false";
 
             // Try to find and replace the existing section
-            var sectionRegex = new Regex(
-                @"(\s*""?@azure-typespec/http-client-csharp""?\s*:)[\s\S]*?(?=\n\s*""?@|\n\s*emit\b|\n[^\s]|\z)",
-                RegexOptions.Compiled);
-
-            var replaced = sectionRegex.Replace(content, "\n" + correctSection);
-            if (!ReferenceEquals(replaced, content))
+            if (s_emitterSectionRegex.IsMatch(content))
             {
-                content = replaced;
+                content = s_emitterSectionRegex.Replace(content, "\n" + correctSection);
             }
             else if (content.Contains("options:", StringComparison.Ordinal))
             {

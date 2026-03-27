@@ -18,8 +18,8 @@ public sealed class CommitIterationResult
     public string Message { get; set; } = string.Empty;
 
     /// <summary>
-    /// When true, indicates the tool exhausted all remote candidates and needs a local specs path
-    /// to create a fallback commit. The caller should ask the user for the path and re-call with localSpecsPath.
+    /// When true, indicates that tspconfig.yaml was fixed locally and all subsequent code generation
+    /// should use the local spec path (i.e., pass /p:LocalSpecRepo to dotnet build /t:GenerateCode).
     /// </summary>
-    public bool NeedsLocalSpecsPath { get; set; }
+    public bool UseLocalSpecs { get; set; }
 }

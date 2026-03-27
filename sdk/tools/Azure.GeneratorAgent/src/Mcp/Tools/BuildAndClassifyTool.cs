@@ -14,7 +14,7 @@ namespace Azure.GeneratorAgent.Mcp.Tools;
 [McpServerToolType]
 public static class BuildAndClassifyTool
 {
-    [McpServerTool(Name = "build_and_classify"), Description("Run dotnet build on a project, parse errors, and classify each as deterministic or requires-reasoning.")]
+    [McpServerTool(Name = "build_and_classify"), Description("Run dotnet build on a project, parse errors, and classify each as deterministic or requires-reasoning. Returns up to 20 errors per call — fix those first, then re-run to see remaining errors.")]
     public static async Task<string> ExecuteAsync(
         [Description("Absolute path to the project directory or .csproj file")] string projectPath)
     {
@@ -23,14 +23,18 @@ public static class BuildAndClassifyTool
             var (buildResult, classified) = await ExecuteInProcessAsync(projectPath).ConfigureAwait(false);
             var deterministicCount = classified.Count(c => c.IsDeterministic);
 
+            // Cap returned errors to avoid overwhelming the LLM — total count is still reported
+            var returnedErrors = classified.Take(20).ToList();
+
             return JsonSerializer.Serialize(new
             {
                 success = buildResult.Success,
                 exitCode = buildResult.ExitCode,
                 totalErrors = buildResult.Errors.Count,
+                returnedErrors = returnedErrors.Count,
                 deterministicCount,
                 requiresReasoningCount = classified.Count - deterministicCount,
-                classifiedErrors = classified,
+                classifiedErrors = returnedErrors,
                 rawOutput = CSharpPatterns.Truncate(buildResult.RawOutput, 5000),
                 buildFailureHint = !buildResult.Success && buildResult.Errors.Count == 0
                     ? GetBuildFailureHint(buildResult.RawOutput)
@@ -68,6 +72,14 @@ public static class BuildAndClassifyTool
     private static async Task<(string Output, int ExitCode)> RunBuildAsync(string projectPath)
     {
         var workDir = Directory.Exists(projectPath) ? projectPath : Path.GetDirectoryName(projectPath)!;
+
+        // If the path is the package root (contains a src/ subdirectory), build from src/
+        var srcDir = Path.Combine(workDir, "src");
+        if (Directory.Exists(srcDir))
+        {
+            workDir = srcDir;
+        }
+
         return await ProcessRunner.RunAsync("dotnet", "build /clp:ErrorsOnly", workDir).ConfigureAwait(false);
     }
 

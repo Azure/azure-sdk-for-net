@@ -186,20 +186,6 @@ public static class BuildOutputParser
         return errors;
     }
 
-    /// <summary>
-    /// Determines whether the build output indicates a successful build.
-    /// </summary>
-    public static bool IsSuccess(string buildOutput)
-    {
-        if (string.IsNullOrWhiteSpace(buildOutput))
-        {
-            return false;
-        }
-
-        return buildOutput.Contains("Build succeeded", StringComparison.OrdinalIgnoreCase)
-            && !buildOutput.Contains(": error ", StringComparison.OrdinalIgnoreCase);
-    }
-
     private static BuildError CreateError(string file, string line, string col, string code, string message, string severity)
     {
         return new BuildError

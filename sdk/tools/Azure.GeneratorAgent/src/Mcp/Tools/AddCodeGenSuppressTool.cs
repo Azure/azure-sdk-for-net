@@ -333,11 +333,12 @@ public static class AddCodeGenSuppressTool
         var classLineStart = content.LastIndexOf('\n', classMatch.Index) + 1;
 
         // Detect indentation
-        var indent = "";
-        for (var i = classLineStart; i < content.Length && content[i] is ' ' or '\t'; i++)
+        var indentLength = 0;
+        while (classLineStart + indentLength < content.Length && content[classLineStart + indentLength] is ' ' or '\t')
         {
-            indent += content[i];
+            indentLength++;
         }
+        var indent = content.Substring(classLineStart, indentLength);
 
         var insertion = $"{indent}{attribute}\n";
         return content.Insert(classLineStart, insertion);

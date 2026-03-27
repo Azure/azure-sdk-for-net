@@ -111,33 +111,6 @@ public class BuildOutputParserTests
     }
 
     [Test]
-    public void IsSuccess_SuccessfulBuild_ReturnsTrue()
-    {
-        var output = """
-            Build succeeded.
-                0 Warning(s)
-                0 Error(s)
-            """;
-        Assert.That(BuildOutputParser.IsSuccess(output), Is.True);
-    }
-
-    [Test]
-    public void IsSuccess_FailedBuild_ReturnsFalse()
-    {
-        var output = """
-            C:\src\A.cs(1,1): error CS0246: something
-            Build FAILED.
-            """;
-        Assert.That(BuildOutputParser.IsSuccess(output), Is.False);
-    }
-
-    [Test]
-    public void IsSuccess_EmptyOutput_ReturnsFalse()
-    {
-        Assert.That(BuildOutputParser.IsSuccess(string.Empty), Is.False);
-    }
-
-    [Test]
     public void Parse_UnixStyleGeneratedPath_SetsIsGenerated()
     {
         var output = "/home/user/src/Generated/Model.cs(5,1): error CS1061: something";
