@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ListQueue item in Value)
+                foreach (StorageQueueData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            IReadOnlyList<ListQueue> value = default;
+            IReadOnlyList<StorageQueueData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ListQueue> array = new List<ListQueue>();
+                    List<StorageQueueData> array = new List<StorageQueueData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ListQueue.DeserializeListQueue(item, options));
+                        array.Add(StorageQueueData.DeserializeStorageQueueData(item, options));
                     }
                     value = array;
                     continue;

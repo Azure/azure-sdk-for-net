@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -297,88 +296,6 @@ namespace Azure.ResourceManager.Storage
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets a list of all the queues under the specified storage account
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> QueueServices_QueueList. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="QueueServiceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
-        /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ListQueue"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ListQueue> GetAllAsync(string maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new QueueServicesGetAllAsyncCollectionResultOfT(
-                _queueServicesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                maxpagesize,
-                filter,
-                context);
-        }
-
-        /// <summary>
-        /// Gets a list of all the queues under the specified storage account
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> QueueServices_QueueList. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="QueueServiceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
-        /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ListQueue"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ListQueue> GetAll(string maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new QueueServicesGetAllCollectionResultOfT(
-                _queueServicesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                maxpagesize,
-                filter,
-                context);
         }
 
         /// <summary> Gets a collection of StorageQueues in the <see cref="QueueServiceResource"/>. </summary>

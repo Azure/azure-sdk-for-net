@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -21,10 +24,12 @@ namespace Azure.ResourceManager.Storage
     /// Each <see cref="BlobContainerResource"/> in the collection will belong to the same instance of <see cref="BlobServiceResource"/>.
     /// To get a <see cref="BlobContainerCollection"/> instance call the GetBlobContainers method from an instance of <see cref="BlobServiceResource"/>.
     /// </summary>
-    public partial class BlobContainerCollection : ArmCollection
+    public partial class BlobContainerCollection : ArmCollection, IEnumerable<BlobContainerResource>, IAsyncEnumerable<BlobContainerResource>
     {
         private readonly ClientDiagnostics _blobContainersClientDiagnostics;
         private readonly BlobContainers _blobContainersRestClient;
+        private readonly ClientDiagnostics _blobServicesClientDiagnostics;
+        private readonly BlobServices _blobServicesRestClient;
 
         /// <summary> Initializes a new instance of BlobContainerCollection for mocking. </summary>
         protected BlobContainerCollection()
@@ -39,6 +44,8 @@ namespace Azure.ResourceManager.Storage
             TryGetApiVersion(BlobContainerResource.ResourceType, out string blobContainerApiVersion);
             _blobContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", BlobContainerResource.ResourceType.Namespace, Diagnostics);
             _blobContainersRestClient = new BlobContainers(_blobContainersClientDiagnostics, Pipeline, Endpoint, blobContainerApiVersion ?? "2025-08-01");
+            _blobServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", BlobContainerResource.ResourceType.Namespace, Diagnostics);
+            _blobServicesRestClient = new BlobServices(_blobServicesClientDiagnostics, Pipeline, Endpoint, blobContainerApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 
@@ -258,6 +265,84 @@ namespace Azure.ResourceManager.Storage
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists all containers and does not support a prefix like data plane. Also SRP today does not return continuation token.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BlobServices_BlobContainersList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
+        /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
+        /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BlobContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(string maxpagesize = default, string filter = default, BlobContainerState? include = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BlobContainerData, BlobContainerResource>(new BlobServicesListAsyncCollectionResultOfT(
+                _blobServicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                maxpagesize,
+                filter,
+                include?.ToString(),
+                context), data => new BlobContainerResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all containers and does not support a prefix like data plane. Also SRP today does not return continuation token.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BlobServices_BlobContainersList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
+        /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
+        /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BlobContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BlobContainerResource> GetAll(string maxpagesize = default, string filter = default, BlobContainerState? include = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BlobContainerData, BlobContainerResource>(new BlobServicesListCollectionResultOfT(
+                _blobServicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                maxpagesize,
+                filter,
+                include?.ToString(),
+                context), data => new BlobContainerResource(Client, data));
         }
 
         /// <summary>
@@ -494,6 +579,22 @@ namespace Azure.ResourceManager.Storage
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<BlobContainerResource> IEnumerable<BlobContainerResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<BlobContainerResource> IAsyncEnumerable<BlobContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

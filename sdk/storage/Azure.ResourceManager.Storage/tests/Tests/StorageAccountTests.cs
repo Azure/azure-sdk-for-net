@@ -1384,10 +1384,6 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Needs re-recording: CreateOrUpdate moved from resource to collection in TypeSpec " +
-            "because BlobInventoryPolicy is missing @singleton decorator in spec (name should always be 'default'). " +
-            "Backward-compat wrapper delegates to collection but changes the recorded request sequence. " +
-            "See https://github.com/Azure/azure-rest-api-specs/blob/main/specification/storage/Storage.Management/BlobInventoryPolicy.tsp#L17-L27")]
         public async Task CreateUpdateGetDeleteBlobInventoryPolicy()
         {
             //create resource group and storage account
@@ -1482,10 +1478,6 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Needs re-recording: CreateOrUpdate moved from resource to collection in TypeSpec " +
-            "because ManagementPolicy is missing @singleton decorator in spec (name should always be 'default'). " +
-            "Backward-compat wrapper delegates to collection but changes the recorded request sequence. " +
-            "See https://github.com/Azure/azure-rest-api-specs/blob/main/specification/storage/Storage.Management/ManagementPolicy.tsp#L17-L27")]
         public async Task SetGetDeleteManagementPolicy()
         {
             //create resource group and storage account

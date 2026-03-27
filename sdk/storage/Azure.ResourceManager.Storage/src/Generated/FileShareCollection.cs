@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,10 +23,12 @@ namespace Azure.ResourceManager.Storage
     /// Each <see cref="FileShareResource"/> in the collection will belong to the same instance of <see cref="FileServiceResource"/>.
     /// To get a <see cref="FileShareCollection"/> instance call the GetFileShares method from an instance of <see cref="FileServiceResource"/>.
     /// </summary>
-    public partial class FileShareCollection : ArmCollection
+    public partial class FileShareCollection : ArmCollection, IEnumerable<FileShareResource>, IAsyncEnumerable<FileShareResource>
     {
         private readonly ClientDiagnostics _fileSharesClientDiagnostics;
         private readonly FileShares _fileSharesRestClient;
+        private readonly ClientDiagnostics _fileServicesClientDiagnostics;
+        private readonly FileServices _fileServicesRestClient;
 
         /// <summary> Initializes a new instance of FileShareCollection for mocking. </summary>
         protected FileShareCollection()
@@ -39,6 +43,8 @@ namespace Azure.ResourceManager.Storage
             TryGetApiVersion(FileShareResource.ResourceType, out string fileShareApiVersion);
             _fileSharesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", FileShareResource.ResourceType.Namespace, Diagnostics);
             _fileSharesRestClient = new FileShares(_fileSharesClientDiagnostics, Pipeline, Endpoint, fileShareApiVersion ?? "2025-08-01");
+            _fileServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", FileShareResource.ResourceType.Namespace, Diagnostics);
+            _fileServicesRestClient = new FileServices(_fileServicesClientDiagnostics, Pipeline, Endpoint, fileShareApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 
@@ -264,6 +270,84 @@ namespace Azure.ResourceManager.Storage
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists all shares.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FileServices_FileSharesList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxpagesize"> Optional. Specified maximum number of shares that can be included in the list. </param>
+        /// <param name="filter"> Optional. When specified, only share names starting with the filter will be listed. </param>
+        /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter ','. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FileShareResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FileShareResource> GetAllAsync(string maxpagesize = default, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileServicesGetAllAsyncCollectionResultOfT(
+                _fileServicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                maxpagesize,
+                filter,
+                expand,
+                context), data => new FileShareResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all shares.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FileServices_FileSharesList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxpagesize"> Optional. Specified maximum number of shares that can be included in the list. </param>
+        /// <param name="filter"> Optional. When specified, only share names starting with the filter will be listed. </param>
+        /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter ','. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FileShareResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FileShareResource> GetAll(string maxpagesize = default, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<FileShareData, FileShareResource>(new FileServicesGetAllCollectionResultOfT(
+                _fileServicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                maxpagesize,
+                filter,
+                expand,
+                context), data => new FileShareResource(Client, data));
         }
 
         /// <summary>
@@ -508,6 +592,22 @@ namespace Azure.ResourceManager.Storage
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<FileShareResource> IEnumerable<FileShareResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<FileShareResource> IAsyncEnumerable<FileShareResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

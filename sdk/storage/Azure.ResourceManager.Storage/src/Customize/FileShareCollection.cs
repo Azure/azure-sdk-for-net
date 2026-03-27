@@ -7,48 +7,14 @@
 // implementations matching the prior GA surface. The new generator moves list operations to
 // the parent FileServiceResource, so these overloads delegate there via PageableWrapper.
 
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using Azure.Core;
-using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class FileShareCollection : IEnumerable<FileShareResource>, IAsyncEnumerable<FileShareResource>
+    public partial class FileShareCollection
     {
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        IEnumerator<FileShareResource> IEnumerable<FileShareResource>.GetEnumerator()
-            => GetAll((string)null, null, null, default).GetEnumerator();
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        IEnumerator IEnumerable.GetEnumerator()
-            => GetAll((string)null, null, null, default).GetEnumerator();
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        IAsyncEnumerator<FileShareResource> IAsyncEnumerable<FileShareResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-            => GetAllAsync((string)null, null, null, cancellationToken).GetAsyncEnumerator(cancellationToken);
-
-        // Backward-compatible overload: Lists all file shares.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Pageable<FileShareResource> GetAll(string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
-            => new PageableWrapper<FileShareItem, FileShareResource>(
-                Client.GetFileServiceResource(Id).GetAll(maxpagesize, filter, expand, cancellationToken),
-                item => Client.GetFileShareResource(item.Id));
-
-        // Backward-compatible overload: Lists all file shares.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual AsyncPageable<FileShareResource> GetAllAsync(string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
-            => new AsyncPageableWrapper<FileShareItem, FileShareResource>(
-                Client.GetFileServiceResource(Id).GetAllAsync(maxpagesize, filter, expand, cancellationToken),
-                item => Client.GetFileShareResource(item.Id));
-
         // Backward-compatible overload with int maxpagesize: Lists all file shares.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]

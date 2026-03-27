@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,10 +23,12 @@ namespace Azure.ResourceManager.Storage
     /// Each <see cref="StorageQueueResource"/> in the collection will belong to the same instance of <see cref="QueueServiceResource"/>.
     /// To get a <see cref="StorageQueueCollection"/> instance call the GetStorageQueues method from an instance of <see cref="QueueServiceResource"/>.
     /// </summary>
-    public partial class StorageQueueCollection : ArmCollection
+    public partial class StorageQueueCollection : ArmCollection, IEnumerable<StorageQueueResource>, IAsyncEnumerable<StorageQueueResource>
     {
         private readonly ClientDiagnostics _queueClientDiagnostics;
         private readonly Queue _queueRestClient;
+        private readonly ClientDiagnostics _queueServicesClientDiagnostics;
+        private readonly QueueServices _queueServicesRestClient;
 
         /// <summary> Initializes a new instance of StorageQueueCollection for mocking. </summary>
         protected StorageQueueCollection()
@@ -39,6 +43,8 @@ namespace Azure.ResourceManager.Storage
             TryGetApiVersion(StorageQueueResource.ResourceType, out string storageQueueApiVersion);
             _queueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageQueueResource.ResourceType.Namespace, Diagnostics);
             _queueRestClient = new Queue(_queueClientDiagnostics, Pipeline, Endpoint, storageQueueApiVersion ?? "2025-08-01");
+            _queueServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageQueueResource.ResourceType.Namespace, Diagnostics);
+            _queueServicesRestClient = new QueueServices(_queueServicesClientDiagnostics, Pipeline, Endpoint, storageQueueApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 
@@ -258,6 +264,80 @@ namespace Azure.ResourceManager.Storage
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a list of all the queues under the specified storage account
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QueueServices_QueueList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
+        /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageQueueResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageQueueResource> GetAllAsync(string maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<StorageQueueData, StorageQueueResource>(new QueueServicesGetAllAsyncCollectionResultOfT(
+                _queueServicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                maxpagesize,
+                filter,
+                context), data => new StorageQueueResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets a list of all the queues under the specified storage account
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QueueServices_QueueList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
+        /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageQueueResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageQueueResource> GetAll(string maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<StorageQueueData, StorageQueueResource>(new QueueServicesGetAllCollectionResultOfT(
+                _queueServicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                maxpagesize,
+                filter,
+                context), data => new StorageQueueResource(Client, data));
         }
 
         /// <summary>
@@ -494,6 +574,22 @@ namespace Azure.ResourceManager.Storage
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<StorageQueueResource> IEnumerable<StorageQueueResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<StorageQueueResource> IAsyncEnumerable<StorageQueueResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

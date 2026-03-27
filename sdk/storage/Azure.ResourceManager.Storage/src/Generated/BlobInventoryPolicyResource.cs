@@ -70,16 +70,6 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
@@ -95,7 +85,7 @@ namespace Azure.ResourceManager.Storage
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -127,7 +117,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobInventoryPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, BlobInventoryPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _blobInventoryPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BlobInventoryPolicyData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BlobInventoryPolicyData> response = Response.FromValue(BlobInventoryPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -151,7 +141,7 @@ namespace Azure.ResourceManager.Storage
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -183,7 +173,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobInventoryPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, BlobInventoryPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _blobInventoryPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BlobInventoryPolicyData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BlobInventoryPolicyData> response = Response.FromValue(BlobInventoryPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -207,7 +197,7 @@ namespace Azure.ResourceManager.Storage
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -234,7 +224,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobInventoryPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _blobInventoryPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BlobInventoryPolicyData> response = Response.FromValue(BlobInventoryPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +245,7 @@ namespace Azure.ResourceManager.Storage
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -282,7 +272,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobInventoryPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _blobInventoryPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BlobInventoryPolicyData> response = Response.FromValue(BlobInventoryPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -303,7 +293,7 @@ namespace Azure.ResourceManager.Storage
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -331,7 +321,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobInventoryPoliciesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _blobInventoryPoliciesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -354,7 +344,7 @@ namespace Azure.ResourceManager.Storage
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -382,7 +372,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobInventoryPoliciesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _blobInventoryPoliciesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

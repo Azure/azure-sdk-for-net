@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ListContainerItem item in Value)
+                foreach (BlobContainerData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            IReadOnlyList<ListContainerItem> value = default;
+            IReadOnlyList<BlobContainerData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ListContainerItem> array = new List<ListContainerItem>();
+                    List<BlobContainerData> array = new List<BlobContainerData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ListContainerItem.DeserializeListContainerItem(item, options));
+                        array.Add(BlobContainerData.DeserializeBlobContainerData(item, options));
                     }
                     value = array;
                     continue;

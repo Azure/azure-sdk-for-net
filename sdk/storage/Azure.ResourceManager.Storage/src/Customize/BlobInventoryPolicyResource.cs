@@ -14,9 +14,12 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class BlobInventoryPolicyResource
     {
-        // Backward-compatible overload: 4-param CreateResourceIdentifier (old GA took BlobInventoryPolicyName).
+        // Backward-compatible CreateResourceIdentifier was generated for singleton resource previously.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, BlobInventoryPolicyName blobInventoryPolicyName)
-            => CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}";
+            return new ResourceIdentifier(resourceId);
+        }
     }
 }

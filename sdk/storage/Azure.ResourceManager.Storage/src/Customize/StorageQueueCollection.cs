@@ -7,48 +7,14 @@
 // implementations matching the prior GA surface. The new generator moves list operations to
 // the parent QueueServiceResource, so these overloads delegate there via PageableWrapper.
 
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using Azure.Core;
-using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class StorageQueueCollection : IEnumerable<StorageQueueResource>, IAsyncEnumerable<StorageQueueResource>
+    public partial class StorageQueueCollection
     {
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        IEnumerator<StorageQueueResource> IEnumerable<StorageQueueResource>.GetEnumerator()
-            => GetAll((string)null, null, default).GetEnumerator();
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        IEnumerator IEnumerable.GetEnumerator()
-            => GetAll((string)null, null, default).GetEnumerator();
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        IAsyncEnumerator<StorageQueueResource> IAsyncEnumerable<StorageQueueResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-            => GetAllAsync((string)null, null, cancellationToken).GetAsyncEnumerator(cancellationToken);
-
-        // Backward-compatible overload: Lists all queues.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Pageable<StorageQueueResource> GetAll(string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
-            => new PageableWrapper<ListQueue, StorageQueueResource>(
-                Client.GetQueueServiceResource(Id).GetAll(maxpagesize, filter, cancellationToken),
-                item => Client.GetStorageQueueResource(item.Id));
-
-        // Backward-compatible overload: Lists all queues.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual AsyncPageable<StorageQueueResource> GetAllAsync(string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
-            => new AsyncPageableWrapper<ListQueue, StorageQueueResource>(
-                Client.GetQueueServiceResource(Id).GetAllAsync(maxpagesize, filter, cancellationToken),
-                item => Client.GetStorageQueueResource(item.Id));
-
         // Backward-compatible overload with int maxpagesize: Lists all queues.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]

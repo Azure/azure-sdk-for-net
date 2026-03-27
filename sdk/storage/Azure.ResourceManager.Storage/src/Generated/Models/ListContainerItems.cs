@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="ListContainerItems"/>. </summary>
         internal ListContainerItems()
         {
-            Value = new ChangeTrackingList<ListContainerItem>();
+            Value = new ChangeTrackingList<BlobContainerData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListContainerItems"/>. </summary>
         /// <param name="value"> The ListContainerItem items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListContainerItems(IReadOnlyList<ListContainerItem> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListContainerItems(IReadOnlyList<BlobContainerData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The ListContainerItem items on this page. </summary>
         [WirePath("value")]
-        public IReadOnlyList<ListContainerItem> Value { get; }
+        public IReadOnlyList<BlobContainerData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

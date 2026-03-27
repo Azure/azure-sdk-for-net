@@ -3,9 +3,7 @@
 
 #nullable disable
 
-// Backward-compat: Adds CreateOrUpdate overloads that forward to the collection's CreateOrUpdate (PUT)
-// to preserve prior GA behavior. The resource's Update sends PATCH which differs from recordings.
-
+// Backward-compatible CreateResourceIdentifier was generated for singleton resource previously.
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Storage.Models;
@@ -17,6 +15,9 @@ namespace Azure.ResourceManager.Storage
         // Backward-compatible overload: 4-param CreateResourceIdentifier (old GA took ManagementPolicyName).
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, ManagementPolicyName managementPolicyName)
-            => CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}";
+            return new ResourceIdentifier(resourceId);
+        }
     }
 }

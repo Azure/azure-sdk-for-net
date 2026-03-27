@@ -204,80 +204,6 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageSku(name, tier, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <param name="version"> The version of the deleted blob container. </param>
-        /// <param name="isDeleted"> Indicates whether the blob container was deleted. </param>
-        /// <param name="deletedOn"> Blob container deletion time. </param>
-        /// <param name="remainingRetentionDays"> Remaining retention days for soft deleted blob container. </param>
-        /// <param name="defaultEncryptionScope"> Default the container to use specified encryption scope for all writes. </param>
-        /// <param name="preventEncryptionScopeOverride"> Block override of encryption scope from the container default. </param>
-        /// <param name="publicAccess"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
-        /// <param name="lastModifiedOn"> Returns the date and time the container was last modified. </param>
-        /// <param name="leaseStatus"> The lease status of the container. </param>
-        /// <param name="leaseState"> Lease state of the container. </param>
-        /// <param name="leaseDuration"> Specifies whether the lease on a container is of infinite or fixed duration, only when the container is leased. </param>
-        /// <param name="metadata"> A name-value pair to associate with the container as metadata. </param>
-        /// <param name="immutabilityPolicy"> The ImmutabilityPolicy property of the container. </param>
-        /// <param name="legalHold"> The LegalHold property of the container. </param>
-        /// <param name="hasLegalHold"> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </param>
-        /// <param name="hasImmutabilityPolicy"> The hasImmutabilityPolicy public property is set to true by SRP if ImmutabilityPolicy has been created for this container. The hasImmutabilityPolicy public property is set to false by SRP if ImmutabilityPolicy has not been created for this container. </param>
-        /// <param name="immutableStorageWithVersioning"> The object level immutability property of the container. The property is immutable and can only be set to true at the container creation time. Existing containers must undergo a migration process. </param>
-        /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
-        /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
-        /// <returns> A new <see cref="Models.ListContainerItem"/> instance for mocking. </returns>
-        public static ListContainerItem ListContainerItem(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string etag = default, string version = default, bool? isDeleted = default, DateTimeOffset? deletedOn = default, int? remainingRetentionDays = default, string defaultEncryptionScope = default, bool? preventEncryptionScopeOverride = default, StoragePublicAccessType? publicAccess = default, DateTimeOffset? lastModifiedOn = default, StorageLeaseStatus? leaseStatus = default, StorageLeaseState? leaseState = default, StorageLeaseDurationType? leaseDuration = default, IDictionary<string, string> metadata = default, BlobContainerImmutabilityPolicy immutabilityPolicy = default, LegalHoldProperties legalHold = default, bool? hasLegalHold = default, bool? hasImmutabilityPolicy = default, ImmutableStorageWithVersioning immutableStorageWithVersioning = default, bool? enableNfsV3RootSquash = default, bool? enableNfsV3AllSquash = default)
-        {
-            return new ListContainerItem(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                etag,
-                version is null && isDeleted is null && deletedOn is null && remainingRetentionDays is null && defaultEncryptionScope is null && preventEncryptionScopeOverride is null && publicAccess is null && lastModifiedOn is null && leaseStatus is null && leaseState is null && leaseDuration is null && metadata is null && immutabilityPolicy is null && legalHold is null && hasLegalHold is null && hasImmutabilityPolicy is null && immutableStorageWithVersioning is null && enableNfsV3RootSquash is null && enableNfsV3AllSquash is null ? default : new ContainerProperties(
-                    version,
-                    isDeleted,
-                    deletedOn,
-                    remainingRetentionDays,
-                    defaultEncryptionScope,
-                    preventEncryptionScopeOverride,
-                    publicAccess,
-                    lastModifiedOn,
-                    leaseStatus,
-                    leaseState,
-                    leaseDuration,
-                    metadata,
-                    immutabilityPolicy,
-                    legalHold,
-                    hasLegalHold,
-                    hasImmutabilityPolicy,
-                    immutableStorageWithVersioning,
-                    enableNfsV3RootSquash,
-                    enableNfsV3AllSquash,
-                    null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <returns> A new <see cref="Models.AzureEntityResource"/> instance for mocking. </returns>
-        public static AzureEntityResource AzureEntityResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string etag = default)
-        {
-            return new AzureEntityResource(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                etag);
-        }
-
         /// <summary> The CheckNameAvailability operation response. </summary>
         /// <param name="isNameAvailable"> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> Gets the reason that a storage account name could not be used. The Reason element is only returned if NameAvailable is false. </param>
@@ -934,77 +860,6 @@ namespace Azure.ResourceManager.Storage.Models
             return new LeaseShareResponse(leaseId, leaseTimeSeconds, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <param name="lastModifiedOn"> Returns the date and time the share was last modified. </param>
-        /// <param name="metadata"> A name-value pair to associate with the share as metadata. </param>
-        /// <param name="shareQuota"> The provisioned size of the share, in gibibytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. For file shares created under Files Provisioned v2 account type, please refer to the GetFileServiceUsage API response for the minimum and maximum allowed provisioned storage size. </param>
-        /// <param name="provisionedIops"> The provisioned IOPS of the share. This property is only for file shares created under Files Provisioned v2 account type. Please refer to the GetFileServiceUsage API response for the minimum and maximum allowed value for provisioned IOPS. </param>
-        /// <param name="provisionedBandwidthMibps"> The provisioned bandwidth of the share, in mebibytes per second. This property is only for file shares created under Files Provisioned v2 account type. Please refer to the GetFileServiceUsage API response for the minimum and maximum allowed value for provisioned bandwidth. </param>
-        /// <param name="includedBurstIops"> The calculated burst IOPS of the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
-        /// <param name="maxBurstCreditsForIops"> The calculated maximum burst credits for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
-        /// <param name="nextAllowedQuotaDowngradeOn"> Returns the next allowed provisioned storage size downgrade time for the share. This property is only for file shares created under Files Provisioned v1 SSD and Files Provisioned v2 account type. </param>
-        /// <param name="nextAllowedProvisionedIopsDowngradeOn"> Returns the next allowed provisioned IOPS downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
-        /// <param name="nextAllowedProvisionedBandwidthDowngradeOn"> Returns the next allowed provisioned bandwidth downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
-        /// <param name="enabledProtocol"> The authentication protocol that is used for the file share. Can only be specified when creating a share. </param>
-        /// <param name="rootSquash"> The property is for NFS share only. The default is NoRootSquash. </param>
-        /// <param name="version"> The version of the share. </param>
-        /// <param name="isDeleted"> Indicates whether the share was deleted. </param>
-        /// <param name="deletedOn"> The deleted time if the share was deleted. </param>
-        /// <param name="remainingRetentionDays"> Remaining retention days for share that was soft deleted. </param>
-        /// <param name="accessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. </param>
-        /// <param name="accessTierChangeOn"> Indicates the last modification time for share access tier. </param>
-        /// <param name="accessTierStatus"> Indicates if there is a pending transition for access tier. </param>
-        /// <param name="shareUsageBytes"> The approximate size of the data stored on the share. Note that this value may not include all recently created or recently resized files. </param>
-        /// <param name="leaseStatus"> The lease status of the share. </param>
-        /// <param name="leaseState"> Lease state of the share. </param>
-        /// <param name="leaseDuration"> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </param>
-        /// <param name="signedIdentifiers"> List of stored access policies specified on the share. </param>
-        /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param "snapshots". </param>
-        /// <param name="fileSharePaidBursting"> File Share Paid Bursting properties. </param>
-        /// <returns> A new <see cref="Models.FileShareItem"/> instance for mocking. </returns>
-        public static FileShareItem FileShareItem(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string etag = default, DateTimeOffset? lastModifiedOn = default, IDictionary<string, string> metadata = default, int? shareQuota = default, int? provisionedIops = default, int? provisionedBandwidthMibps = default, int? includedBurstIops = default, long? maxBurstCreditsForIops = default, DateTimeOffset? nextAllowedQuotaDowngradeOn = default, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn = default, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn = default, FileShareEnabledProtocol? enabledProtocol = default, RootSquashType? rootSquash = default, string version = default, bool? isDeleted = default, DateTimeOffset? deletedOn = default, int? remainingRetentionDays = default, FileShareAccessTier? accessTier = default, DateTimeOffset? accessTierChangeOn = default, string accessTierStatus = default, long? shareUsageBytes = default, StorageLeaseStatus? leaseStatus = default, StorageLeaseState? leaseState = default, StorageLeaseDurationType? leaseDuration = default, IEnumerable<StorageSignedIdentifier> signedIdentifiers = default, DateTimeOffset? snapshotOn = default, FileSharePropertiesFileSharePaidBursting fileSharePaidBursting = default)
-        {
-            return new FileShareItem(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                etag,
-                lastModifiedOn is null && metadata is null && shareQuota is null && provisionedIops is null && provisionedBandwidthMibps is null && includedBurstIops is null && maxBurstCreditsForIops is null && nextAllowedQuotaDowngradeOn is null && nextAllowedProvisionedIopsDowngradeOn is null && nextAllowedProvisionedBandwidthDowngradeOn is null && enabledProtocol is null && rootSquash is null && version is null && isDeleted is null && deletedOn is null && remainingRetentionDays is null && accessTier is null && accessTierChangeOn is null && accessTierStatus is null && shareUsageBytes is null && leaseStatus is null && leaseState is null && leaseDuration is null && signedIdentifiers is null && snapshotOn is null && fileSharePaidBursting is null ? default : new FileShareProperties(
-                    lastModifiedOn,
-                    metadata,
-                    shareQuota,
-                    provisionedIops,
-                    provisionedBandwidthMibps,
-                    includedBurstIops,
-                    maxBurstCreditsForIops,
-                    nextAllowedQuotaDowngradeOn,
-                    nextAllowedProvisionedIopsDowngradeOn,
-                    nextAllowedProvisionedBandwidthDowngradeOn,
-                    enabledProtocol,
-                    rootSquash,
-                    version,
-                    isDeleted,
-                    deletedOn,
-                    remainingRetentionDays,
-                    accessTier,
-                    accessTierChangeOn,
-                    accessTierStatus,
-                    shareUsageBytes,
-                    leaseStatus,
-                    leaseState,
-                    leaseDuration,
-                    (signedIdentifiers ?? new ChangeTrackingList<StorageSignedIdentifier>()).ToList(),
-                    snapshotOn,
-                    fileSharePaidBursting,
-                    null));
-        }
-
         /// <summary> File service usage in storage account including account limits, file share limits and constants used in recommendations and bursting formula. </summary>
         /// <param name="storageAccountLimits"> Maximum provisioned storage, IOPS, bandwidth and number of file shares limits for the storage account. </param>
         /// <param name="fileShareLimits"> Minimum and maximum provisioned storage, IOPS and bandwidth limits for a file share in the storage account. </param>
@@ -1117,16 +972,17 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="metadata"> A name-value pair that represents queue metadata. </param>
-        /// <returns> A new <see cref="Models.ListQueue"/> instance for mocking. </returns>
-        public static ListQueue ListQueue(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> metadata = default)
+        /// <param name="approximateMessageCount"> Integer indicating an approximate number of messages in the queue. This number is not lower than the actual number of messages in the queue, but could be higher. </param>
+        /// <returns> A new <see cref="Storage.StorageQueueData"/> instance for mocking. </returns>
+        public static StorageQueueData StorageQueueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> metadata = default, int? approximateMessageCount = default)
         {
-            return new ListQueue(
+            return new StorageQueueData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                metadata is null ? default : new ListQueueProperties(metadata, null));
+                metadata is null && approximateMessageCount is null ? default : new QueueProperties(metadata, approximateMessageCount, null));
         }
 
         /// <summary> Filters limit rule actions to a subset of blobs within the storage account. If multiple filters are defined, a logical AND is performed on all filters. </summary>
@@ -1560,24 +1416,6 @@ namespace Azure.ResourceManager.Storage.Models
             value ??= new ChangeTrackingList<StoragePrivateLinkResourceData>();
 
             return new StoragePrivateLinkResourceListResult(value.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="metadata"> A name-value pair that represents queue metadata. </param>
-        /// <param name="approximateMessageCount"> Integer indicating an approximate number of messages in the queue. This number is not lower than the actual number of messages in the queue, but could be higher. </param>
-        /// <returns> A new <see cref="Storage.StorageQueueData"/> instance for mocking. </returns>
-        public static StorageQueueData StorageQueueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> metadata = default, int? approximateMessageCount = default)
-        {
-            return new StorageQueueData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                metadata is null && approximateMessageCount is null ? default : new QueueProperties(metadata, approximateMessageCount, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

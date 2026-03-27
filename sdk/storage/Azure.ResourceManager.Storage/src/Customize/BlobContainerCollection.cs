@@ -19,49 +19,18 @@ namespace Azure.ResourceManager.Storage
     // The prior GA SDK implemented IEnumerable<BlobContainerResource> on this collection type.
     // The new generator no longer emits that interface. These explicit implementations delegate
     // to the backward-compat GetAll/GetAllAsync overloads below.
-    public partial class BlobContainerCollection : IEnumerable<BlobContainerResource>, IAsyncEnumerable<BlobContainerResource>
+    public partial class BlobContainerCollection
     {
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        IEnumerator<BlobContainerResource> IEnumerable<BlobContainerResource>.GetEnumerator()
-            => GetAll((string)null, null, null, default).GetEnumerator();
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        IEnumerator IEnumerable.GetEnumerator()
-            => GetAll((string)null, null, null, default).GetEnumerator();
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        IAsyncEnumerator<BlobContainerResource> IAsyncEnumerable<BlobContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-            => GetAllAsync((string)null, null, null, cancellationToken).GetAsyncEnumerator(cancellationToken);
-
-        // Backward-compatible overload: Lists all containers.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Pageable<BlobContainerResource> GetAll(string maxpagesize, string filter, BlobContainerState? include, CancellationToken cancellationToken)
-            => new PageableWrapper<ListContainerItem, BlobContainerResource>(
-                Client.GetBlobServiceResource(Id).GetAll(maxpagesize, filter, include, cancellationToken),
-                item => Client.GetBlobContainerResource(item.Id));
-
-        // Backward-compatible overload: Lists all containers.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(string maxpagesize, string filter, BlobContainerState? include, CancellationToken cancellationToken)
-            => new AsyncPageableWrapper<ListContainerItem, BlobContainerResource>(
-                Client.GetBlobServiceResource(Id).GetAllAsync(maxpagesize, filter, include, cancellationToken),
-                item => Client.GetBlobContainerResource(item.Id));
-
         // Backward-compatible overload with int maxpagesize: Lists all containers.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public virtual Pageable<BlobContainerResource> GetAll(int? maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BlobContainerResource> GetAll(int? maxpagesize, string filter, BlobContainerState? include, CancellationToken cancellationToken)
             => GetAll(maxpagesize?.ToString(), filter, include, cancellationToken);
 
         // Backward-compatible overload with int maxpagesize: Lists all containers.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(int? maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(int? maxpagesize, string filter, BlobContainerState? include, CancellationToken cancellationToken)
             => GetAllAsync(maxpagesize?.ToString(), filter, include, cancellationToken);
     }
 }

@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Storage
     {
         private readonly ClientDiagnostics _fileSharesClientDiagnostics;
         private readonly FileShares _fileSharesRestClient;
+        private readonly ClientDiagnostics _fileServicesClientDiagnostics;
+        private readonly FileServices _fileServicesRestClient;
         private readonly FileShareData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/fileServices/shares";
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.Storage
             TryGetApiVersion(ResourceType, out string fileShareApiVersion);
             _fileSharesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
             _fileSharesRestClient = new FileShares(_fileSharesClientDiagnostics, Pipeline, Endpoint, fileShareApiVersion ?? "2025-08-01");
+            _fileServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
+            _fileServicesRestClient = new FileServices(_fileServicesClientDiagnostics, Pipeline, Endpoint, fileShareApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

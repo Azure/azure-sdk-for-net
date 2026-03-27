@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string accountName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string accountName, string blobInventoryPolicyName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,7 +51,8 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/inventoryPolicies/default", false);
+            uri.AppendPath("/inventoryPolicies/", false);
+            uri.AppendPath(blobInventoryPolicyName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Storage
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string accountName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string accountName, string blobInventoryPolicyName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -74,7 +75,8 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/inventoryPolicies/default", false);
+            uri.AppendPath("/inventoryPolicies/", false);
+            uri.AppendPath(blobInventoryPolicyName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -89,7 +91,7 @@ namespace Azure.ResourceManager.Storage
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string accountName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string accountName, string blobInventoryPolicyName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -99,7 +101,8 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/inventoryPolicies/default", false);
+            uri.AppendPath("/inventoryPolicies/", false);
+            uri.AppendPath(blobInventoryPolicyName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

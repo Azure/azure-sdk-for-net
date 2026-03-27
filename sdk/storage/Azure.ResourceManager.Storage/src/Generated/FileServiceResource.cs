@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -297,92 +296,6 @@ namespace Azure.ResourceManager.Storage
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Lists all shares.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileServices_FileSharesList. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FileServiceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="maxpagesize"> Optional. Specified maximum number of shares that can be included in the list. </param>
-        /// <param name="filter"> Optional. When specified, only share names starting with the filter will be listed. </param>
-        /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter ','. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FileShareItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FileShareItem> GetAllAsync(string maxpagesize = default, string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new FileServicesGetAllAsyncCollectionResultOfT(
-                _fileServicesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                maxpagesize,
-                filter,
-                expand,
-                context);
-        }
-
-        /// <summary>
-        /// Lists all shares.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileServices_FileSharesList. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FileServiceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="maxpagesize"> Optional. Specified maximum number of shares that can be included in the list. </param>
-        /// <param name="filter"> Optional. When specified, only share names starting with the filter will be listed. </param>
-        /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter ','. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FileShareItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FileShareItem> GetAll(string maxpagesize = default, string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new FileServicesGetAllCollectionResultOfT(
-                _fileServicesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                maxpagesize,
-                filter,
-                expand,
-                context);
         }
 
         /// <summary> Gets a collection of FileShares in the <see cref="FileServiceResource"/>. </summary>

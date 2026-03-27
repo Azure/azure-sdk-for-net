@@ -14,7 +14,7 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    internal partial class QueueServicesGetAllCollectionResultOfT : Pageable<ListQueue>
+    internal partial class QueueServicesGetAllCollectionResultOfT : Pageable<StorageQueueData>
     {
         private readonly QueueServices _client;
         private readonly Guid _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of QueueServicesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ListQueue>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<StorageQueueData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage
                     yield break;
                 }
                 ListQueueResource result = ListQueueResource.FromResponse(response);
-                yield return Page<ListQueue>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<StorageQueueData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Storage
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _maxpagesize, _filter, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _maxpagesize, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("QueueServiceResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageQueueCollection.GetAll");
             scope.Start();
             try
             {
