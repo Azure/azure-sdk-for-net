@@ -151,9 +151,66 @@ namespace Azure.Generator.Visitors
             if (method.IsLroMethod())
             {
                 UpdateMethodSignature(method);
+
+                // Rewrite typed LRO convenience methods that directly forward to the protocol method.
+                if (method.Kind != ScmMethodKind.Protocol && method.ServiceMethod is InputLongRunningServiceMethod
+                    && method.ServiceMethod.Response.Type != null
+                    && !HasFromValueReturn(method))
+                {
+                    RewriteSimpleForwardBody(method);
+                }
             }
 
             return method;
+        }
+
+        private static bool HasFromValueReturn(ScmMethodProvider method)
+        {
+            if (method.BodyStatements is not MethodBodyStatements bodyStatements)
+            {
+                return false;
+            }
+
+            return bodyStatements.Statements.OfType<ExpressionStatement>().Any(s =>
+                s.Expression is KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression { MethodName: "FromValue" } });
+        }
+
+        private static void RewriteSimpleForwardBody(ScmMethodProvider method)
+        {
+            if (method.BodyStatements is not MethodBodyStatements bodyStatements)
+            {
+                return;
+            }
+
+            var serviceMethod = method.ServiceMethod!;
+            var (conversionExpression, response, diagnosticsProperty, scopeName) =
+                BuildConvertCallComponents(serviceMethod, method);
+
+            var resultType = new CSharpType(typeof(Operation<>), typeof(BinaryData));
+            var resultVar = new VariableExpression(resultType, "result");
+
+            var newStatements = new List<MethodBodyStatement>();
+            foreach (var statement in bodyStatements.Statements)
+            {
+                if (statement is ExpressionStatement { Expression: KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression protocolCallExpression } })
+                {
+                    newStatements.Add(Declare(resultVar, protocolCallExpression));
+                    newStatements.Add(new KeywordExpression("return",
+                        Static(typeof(ProtocolOperationHelpers)).Invoke("Convert",
+                        [
+                            resultVar,
+                            new FuncExpression([response.Declaration], conversionExpression),
+                            diagnosticsProperty,
+                            Literal(scopeName),
+                        ])).Terminate());
+                }
+                else
+                {
+                    newStatements.Add(statement);
+                }
+            }
+
+            method.Update(bodyStatements: new MethodBodyStatements(newStatements));
         }
 
         private static void UpdateMethodSignature(ScmMethodProvider method)
@@ -244,22 +301,6 @@ namespace Azure.Generator.Visitors
                             Literal(scopeName),
                         ]);
                     break;
-                }
-                // Wrap typed LRO convenience methods that directly forward to the protocol method.
-                case KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression protocolCallExpression }
-                    when serviceMethod.Response.Type != null:
-                {
-                    var (conversionExpression, response, diagnosticsProperty, scopeName) =
-                        BuildConvertCallComponents(serviceMethod, scmMethod);
-
-                    return new KeywordExpression("return",
-                        Static(typeof(ProtocolOperationHelpers)).Invoke("Convert",
-                        [
-                            protocolCallExpression,
-                            new FuncExpression([response.Declaration], conversionExpression),
-                            diagnosticsProperty,
-                            Literal(scopeName),
-                        ])).Terminate();
                 }
             }
 
