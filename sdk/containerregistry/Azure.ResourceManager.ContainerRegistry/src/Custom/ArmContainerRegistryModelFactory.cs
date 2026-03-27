@@ -13,9 +13,9 @@ using GenFactory = Azure.ResourceManager.ContainerRegistry.ArmContainerRegistryM
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> Backward-compatibility shim. Delegates to the generated factory in
-    /// <c>Azure.ResourceManager.ContainerRegistry.ArmContainerRegistryModelFactory</c>.
-    /// All methods are hidden from IntelliSense. </summary>
+    // Backward-compatibility shim. Delegates to the generated factory in
+    // <c>Azure.ResourceManager.ContainerRegistry.ArmContainerRegistryModelFactory</c>.
+    // All methods are hidden from IntelliSense. 
     public static partial class ArmContainerRegistryModelFactory
     {
         /// <summary> Backward compatibility. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Backward compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryPrivateLinkResourceData ContainerRegistryPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IEnumerable<string> requiredMembers, IEnumerable<string> requiredZoneNames)
-            => GenFactory.ContainerRegistryPrivateLinkResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, groupId: groupId, requiredMembers: requiredMembers, requiredZoneNames: requiredZoneNames, groupName: default);
+            => GenFactory.ContainerRegistryPrivateLinkResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, groupId: groupId, requiredMembers: requiredMembers, requiredZoneNames: requiredZoneNames);
 
         /// <summary> Backward compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

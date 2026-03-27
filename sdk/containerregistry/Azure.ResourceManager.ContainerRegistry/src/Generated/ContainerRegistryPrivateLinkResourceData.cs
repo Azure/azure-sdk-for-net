@@ -8,30 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ContainerRegistry;
+using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ContainerRegistry.Models
+namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary> A private link resource. </summary>
-    public partial class MyPrivateLinkResource : ResourceData
+    public partial class ContainerRegistryPrivateLinkResourceData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MyPrivateLinkResource"/>. </summary>
-        internal MyPrivateLinkResource()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MyPrivateLinkResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="groupName"> The name of the private link resource. </param>
+        /// <param name="name"> The name of the private link resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> A resource that supports private link capabilities. </param>
-        internal MyPrivateLinkResource(ResourceIdentifier id, string groupName, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerRegistryPrivateLinkResourceProperties properties) : base(id, groupName, resourceType, systemData)
+        internal ContainerRegistryPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerRegistryPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -58,16 +53,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             get
             {
                 return Properties.RequiredMembers;
-            }
-        }
-
-        /// <summary> The private link resource private link DNS zone name. </summary>
-        [WirePath("properties.requiredZoneNames")]
-        public IList<string> RequiredZoneNames
-        {
-            get
-            {
-                return Properties.RequiredZoneNames;
             }
         }
     }

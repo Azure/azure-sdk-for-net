@@ -134,14 +134,13 @@ namespace Azure.ResourceManager.ContainerRegistry
                 return null;
             }
             ResourceIdentifier id = default;
-            string groupName = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ReplicationProperties properties = default;
-            string name = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 if (prop.NameEquals("name"u8))
                 {
-                    groupName = prop.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -218,14 +217,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
             return new ContainerRegistryReplicationData(
                 id,
-                groupName,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties,
-                name);
+                properties);
         }
     }
 }

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkResourceListResult"/>. </summary>
         internal ContainerRegistryPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<ContainerRegistryPrivateLinkResource>();
+            Value = new ChangeTrackingList<ContainerRegistryPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> The list of private link resources. Since this list may be incomplete, the nextLink field should be used to request the next list of private link resources. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of private link resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryPrivateLinkResourceListResult(IList<ContainerRegistryPrivateLinkResource> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryPrivateLinkResourceListResult(IList<ContainerRegistryPrivateLinkResourceData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The list of private link resources. Since this list may be incomplete, the nextLink field should be used to request the next list of private link resources. </summary>
         [WirePath("value")]
-        public IList<ContainerRegistryPrivateLinkResource> Value { get; }
+        public IList<ContainerRegistryPrivateLinkResourceData> Value { get; }
 
         /// <summary> The URI that can be used to request the next list of private link resources. </summary>
         [WirePath("nextLink")]

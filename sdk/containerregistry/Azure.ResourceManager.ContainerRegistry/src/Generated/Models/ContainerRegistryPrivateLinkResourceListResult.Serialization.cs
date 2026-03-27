@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ContainerRegistryPrivateLinkResource item in Value)
+                foreach (ContainerRegistryPrivateLinkResourceData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            IList<ContainerRegistryPrivateLinkResource> value = default;
+            IList<ContainerRegistryPrivateLinkResourceData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    List<ContainerRegistryPrivateLinkResource> array = new List<ContainerRegistryPrivateLinkResource>();
+                    List<ContainerRegistryPrivateLinkResourceData> array = new List<ContainerRegistryPrivateLinkResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryPrivateLinkResource.DeserializeContainerRegistryPrivateLinkResource(item, options));
+                        array.Add(ContainerRegistryPrivateLinkResourceData.DeserializeContainerRegistryPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryPrivateLinkResourceListResult(value ?? new ChangeTrackingList<ContainerRegistryPrivateLinkResource>(), nextLink, additionalBinaryDataProperties);
+            return new ContainerRegistryPrivateLinkResourceListResult(value ?? new ChangeTrackingList<ContainerRegistryPrivateLinkResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

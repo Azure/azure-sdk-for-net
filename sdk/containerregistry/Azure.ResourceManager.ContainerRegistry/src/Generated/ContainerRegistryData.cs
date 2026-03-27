@@ -32,21 +32,19 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="groupName"> The name of the private link resource. </param>
+        /// <param name="name"> The name of the private link resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of the container registry. </param>
-        /// <param name="name"> The name of the container registry. </param>
         /// <param name="sku"> The SKU of the container registry. </param>
         /// <param name="identity"> The identity of the container registry. </param>
-        internal ContainerRegistryData(ResourceIdentifier id, string groupName, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, RegistryProperties properties, string name, ContainerRegistrySku sku, ManagedServiceIdentity identity) : base(id, groupName, resourceType, systemData, tags, location)
+        internal ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, RegistryProperties properties, ContainerRegistrySku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Name = name;
             Sku = sku;
             Identity = identity;
         }
@@ -54,10 +52,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> The properties of the container registry. </summary>
         [WirePath("properties")]
         internal RegistryProperties Properties { get; set; }
-
-        /// <summary> The name of the container registry. </summary>
-        [WirePath("name")]
-        public string Name { get; }
 
         /// <summary> The SKU of the container registry. </summary>
         [WirePath("sku")]

@@ -26,28 +26,22 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentialSetData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="groupName"> The name of the private link resource. </param>
+        /// <param name="name"> The name of the private link resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the credential set. </param>
-        /// <param name="name"> The name of the credential set. </param>
         /// <param name="identity"> Identities associated with the resource. This is used to access the KeyVault secrets. </param>
-        internal ContainerRegistryCredentialSetData(ResourceIdentifier id, string groupName, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CredentialSetProperties properties, string name, ManagedServiceIdentity identity) : base(id, groupName, resourceType, systemData)
+        internal ContainerRegistryCredentialSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CredentialSetProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Name = name;
             Identity = identity;
         }
 
         /// <summary> The properties of the credential set. </summary>
         [WirePath("properties")]
         internal CredentialSetProperties Properties { get; set; }
-
-        /// <summary> The name of the credential set. </summary>
-        [WirePath("name")]
-        public string Name { get; }
 
         /// <summary> Identities associated with the resource. This is used to access the KeyVault secrets. </summary>
         [WirePath("identity")]
