@@ -145,12 +145,9 @@ known_content_issues:
   - ['sdk/provisioning/Azure.Provisioning.Kubernetes/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/provisioning/Azure.Provisioning.Deployment/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
 
-  - ['sdk/agentserver/Azure.AI.AgentServer.AgentFramework/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
-  - ['sdk/agentserver/Azure.AI.AgentServer.Contracts/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
-  - ['sdk/agentserver/Azure.AI.AgentServer.Core/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   # Server-side hosting libraries: titles use 'library for .NET' (not 'client library'),
   # and have no 'Authenticate the Client' section since there is no client to authenticate.
-  - ['sdk/agentserver/Azure.AI.AgentServer.Hosting/README.md','Server-side library - title and auth section do not match client SDK pattern']
+  - ['sdk/agentserver/Azure.AI.AgentServer.Core/README.md','Server-side library - title and auth section do not match client SDK pattern']
   - ['sdk/agentserver/Azure.AI.AgentServer.Invocations/README.md','Server-side library - title and auth section do not match client SDK pattern']
 
   - ['sdk/tools/Azure.SdkAnalyzers/README.md','Not a package - internal tooling']
