@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeGallery.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
     public partial class SharedGalleryImageVersionData : PirSharedGalleryResource
@@ -53,15 +53,6 @@ namespace ComputeCombine
             get
             {
                 return Properties.EndOfLifeOn;
-            }
-        }
-
-        /// <summary> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </summary>
-        public bool? ExcludeFromLatest
-        {
-            get
-            {
-                return Properties.ExcludeFromLatest;
             }
         }
 

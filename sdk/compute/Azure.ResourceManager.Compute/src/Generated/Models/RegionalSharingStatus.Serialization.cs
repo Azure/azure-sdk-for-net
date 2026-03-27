@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Gallery regional sharing status. </summary>
     public partial class RegionalSharingStatus : IJsonModel<RegionalSharingStatus>
@@ -40,7 +40,7 @@ namespace ComputeGallery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RegionalSharingStatus)} does not support writing '{options.Format}' format.");
             }

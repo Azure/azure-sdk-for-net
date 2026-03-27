@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes scaling information of a sku. </summary>
     public partial class VirtualMachineScaleSetSkuCapacity

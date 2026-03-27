@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Describes a Virtual Machine run command. </summary>
     public partial class VirtualMachineRunCommandData : TrackedResourceData
@@ -34,7 +34,7 @@ namespace ComputeCombine
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine run command. </param>
-        internal VirtualMachineRunCommandData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineRunCommandProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineRunCommandData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineRunCommandProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

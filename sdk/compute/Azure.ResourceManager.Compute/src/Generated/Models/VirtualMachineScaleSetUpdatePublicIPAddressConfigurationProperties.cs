@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machines scale set IP Configuration's PublicIPAddress configuration. </summary>
     internal partial class VirtualMachineScaleSetUpdatePublicIPAddressConfigurationProperties

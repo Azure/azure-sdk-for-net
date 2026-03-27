@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies additional settings to be applied when patch mode AutomaticByPlatform is selected in Linux patch settings. </summary>
     public partial class LinuxVMGuestPatchAutomaticByPlatformSettings : IJsonModel<LinuxVMGuestPatchAutomaticByPlatformSettings>
@@ -40,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LinuxVMGuestPatchAutomaticByPlatformSettings)} does not support writing '{options.Format}' format.");
             }
@@ -126,7 +126,7 @@ namespace Compute.Models
             {
                 return null;
             }
-            LinuxVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default;
+            LinuxVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default;
             bool? bypassPlatformSafetyChecksOnUserSchedule = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    rebootSetting = new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(prop.Value.GetString());
+                    rebootSetting = new LinuxVMGuestPatchAutomaticByPlatformRebootSetting(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("bypassPlatformSafetyChecksOnUserSchedule"u8))

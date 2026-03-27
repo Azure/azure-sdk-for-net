@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the boot diagnostic settings state. Minimum api-version: 2015-06-15. </summary>
     internal partial class DiagnosticsProfile

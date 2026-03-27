@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the storage profile of a Gallery Image Version. </summary>
     public partial class GalleryImageVersionStorageProfile : IJsonModel<GalleryImageVersionStorageProfile>
@@ -40,7 +40,7 @@ namespace ComputeGallery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support writing '{options.Format}' format.");
             }
@@ -136,7 +136,7 @@ namespace ComputeGallery.Models
             {
                 return null;
             }
-            GalleryArtifactVersionFullSource source = default;
+            GalleryArtifactVersionSource source = default;
             GalleryOSDiskImage osDiskImage = default;
             IList<GalleryDataDiskImage> dataDiskImages = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,7 +148,7 @@ namespace ComputeGallery.Models
                     {
                         continue;
                     }
-                    source = GalleryArtifactVersionFullSource.DeserializeGalleryArtifactVersionFullSource(prop.Value, options);
+                    source = GalleryArtifactVersionSource.DeserializeGalleryArtifactVersionSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("osDiskImage"u8))

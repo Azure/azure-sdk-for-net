@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an available virtual machine scale set sku. </summary>
     public partial class VirtualMachineScaleSetSku
@@ -26,7 +26,7 @@ namespace Compute.Models
         /// <param name="sku"> The Sku. </param>
         /// <param name="capacity"> Specifies the number of virtual machines in the scale set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetSku(string resourceType, ComputeCombineSku sku, VirtualMachineScaleSetSkuCapacity capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetSku(string resourceType, ComputeSku sku, VirtualMachineScaleSetSkuCapacity capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             Sku = sku;
@@ -38,7 +38,7 @@ namespace Compute.Models
         public string ResourceType { get; }
 
         /// <summary> The Sku. </summary>
-        public ComputeCombineSku Sku { get; }
+        public ComputeSku Sku { get; }
 
         /// <summary> Specifies the number of virtual machines in the scale set. </summary>
         public VirtualMachineScaleSetSkuCapacity Capacity { get; }

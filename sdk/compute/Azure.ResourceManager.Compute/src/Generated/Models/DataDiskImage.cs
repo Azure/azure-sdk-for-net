@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains the data disk images information. </summary>
     public partial class DataDiskImage

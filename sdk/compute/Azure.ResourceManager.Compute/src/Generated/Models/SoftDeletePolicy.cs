@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains information about the soft deletion policy of the gallery. </summary>
     internal partial class SoftDeletePolicy

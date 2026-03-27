@@ -9,9 +9,8 @@ using System;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using ComputeCombine;
 
-namespace Compute
+namespace Azure.ResourceManager.Compute
 {
     internal partial class VirtualMachineImagesOperationGroup
     {
@@ -159,7 +158,7 @@ namespace Compute
             }
             if (top != null)
             {
-                uri.AppendQuery("$top", ComputeCombine.TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (@orderby != null)
             {
@@ -187,7 +186,8 @@ namespace Compute
             uri.AppendPath(offer, true);
             uri.AppendPath("/skus/", false);
             uri.AppendPath(skus, true);
-            uri.AppendPath("/versions?$expand=Properties", false);
+            uri.AppendPath("/versions", false);
+            uri.AppendQuery("$expand", "Properties", true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -195,7 +195,7 @@ namespace Compute
             uri.AppendQuery("$expand", expand, true);
             if (top != null)
             {
-                uri.AppendQuery("$top", ComputeCombine.TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (@orderby != null)
             {

@@ -13,7 +13,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     internal static partial class ModelSerializationExtensions
     {

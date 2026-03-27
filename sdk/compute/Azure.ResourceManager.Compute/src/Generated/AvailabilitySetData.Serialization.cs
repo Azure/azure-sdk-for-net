@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability set are allocated to different nodes to maximize availability. For more information about availability sets, see [Availability sets overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview). For more information on Azure planned maintenance, see [Maintenance and updates for Virtual Machines in Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates). Currently, a VM can only be added to an availability set at creation time. An existing VM cannot be added to an availability set. </summary>
     public partial class AvailabilitySetData : TrackedResourceData, IJsonModel<AvailabilitySetData>
@@ -49,7 +49,7 @@ namespace ComputeCombine
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support writing '{options.Format}' format.");
             }
@@ -72,9 +72,7 @@ namespace ComputeCombine
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(availabilitySetData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(availabilitySetData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AvailabilitySetData"/> from. </param>
@@ -140,7 +138,7 @@ namespace ComputeCombine
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
@@ -148,12 +146,16 @@ namespace ComputeCombine
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             AvailabilitySetProperties properties = default;
-            ComputeCombineSku sku = default;
+            ComputeSku sku = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -176,7 +178,7 @@ namespace ComputeCombine
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, ComputeCombineContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -220,7 +222,7 @@ namespace ComputeCombine
                     {
                         continue;
                     }
-                    sku = ComputeCombineSku.DeserializeComputeCombineSku(prop.Value, options);
+                    sku = ComputeSku.DeserializeComputeSku(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the strategy to be used when selecting the storage account type. Cannot be specified along with storageAccountType, but can be overridden per region by specifying targetRegions[].storageAccountType. This property is not updatable. </summary>
     public readonly partial struct StorageAccountStrategy : IEquatable<StorageAccountStrategy>

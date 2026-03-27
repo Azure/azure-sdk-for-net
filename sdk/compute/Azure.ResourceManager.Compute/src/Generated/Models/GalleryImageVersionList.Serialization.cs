@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Gallery Image version operation response. </summary>
     internal partial class GalleryImageVersionList : IJsonModel<GalleryImageVersionList>
@@ -46,7 +46,7 @@ namespace ComputeGallery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GalleryImageVersionList)} does not support writing '{options.Format}' format.");
             }

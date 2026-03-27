@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Compute.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Compute
+namespace Azure.ResourceManager.Compute
 {
     internal partial class VirtualMachineSizesOperationGroupGetAllAsyncCollectionResultOfT : AsyncPageable<VirtualMachineSize>
     {
@@ -66,7 +66,7 @@ namespace Compute
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeCombineSubscriptionResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetAll");
             scope.Start();
             try
             {

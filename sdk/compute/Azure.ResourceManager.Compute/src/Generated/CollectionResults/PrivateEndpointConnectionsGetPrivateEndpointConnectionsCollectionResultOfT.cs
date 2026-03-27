@@ -10,12 +10,11 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using ComputeCombine;
-using ComputeDisk.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeDisk
+namespace Azure.ResourceManager.Compute
 {
-    internal partial class PrivateEndpointConnectionsGetPrivateEndpointConnectionsCollectionResultOfT : Pageable<ComputeCombinePrivateEndpointConnectionData>
+    internal partial class PrivateEndpointConnectionsGetPrivateEndpointConnectionsCollectionResultOfT : Pageable<ComputePrivateEndpointConnectionData>
     {
         private readonly PrivateEndpointConnections _client;
         private readonly string _subscriptionId;
@@ -42,7 +41,7 @@ namespace ComputeDisk
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PrivateEndpointConnectionsGetPrivateEndpointConnectionsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ComputeCombinePrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ComputePrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,8 +51,8 @@ namespace ComputeDisk
                 {
                     yield break;
                 }
-                ComputeCombinePrivateEndpointConnectionListResult result = ComputeCombinePrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<ComputeCombinePrivateEndpointConnectionData>.FromValues((IReadOnlyList<ComputeCombinePrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ComputePrivateEndpointConnectionListResult result = ComputePrivateEndpointConnectionListResult.FromResponse(response);
+                yield return Page<ComputePrivateEndpointConnectionData>.FromValues((IReadOnlyList<ComputePrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

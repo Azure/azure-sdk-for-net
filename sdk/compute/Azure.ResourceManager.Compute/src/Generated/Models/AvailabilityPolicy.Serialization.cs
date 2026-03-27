@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> In the case of an availability or connectivity issue with the data disk, specify the behavior of your VM. </summary>
     internal partial class AvailabilityPolicy : IJsonModel<AvailabilityPolicy>
@@ -40,7 +40,7 @@ namespace ComputeDisk.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AvailabilityPolicy)} does not support writing '{options.Format}' format.");
             }

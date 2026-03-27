@@ -10,10 +10,9 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Compute.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Compute
+namespace Azure.ResourceManager.Compute
 {
     internal partial class ProximityPlacementGroupsGetBySubscriptionCollectionResultOfT : Pageable<ProximityPlacementGroupData>
     {
@@ -62,7 +61,7 @@ namespace Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeCombineSubscriptionResource.GetProximityPlacementGroups");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetProximityPlacementGroups");
             scope.Start();
             try
             {

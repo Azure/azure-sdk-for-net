@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </summary>
-    public partial class SecurityPostureReferenceUpdate
+    internal partial class SecurityPostureReferenceUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

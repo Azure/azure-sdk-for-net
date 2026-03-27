@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the mode of VM Guest Patch Assessment for the IaaS virtual machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>ImageDefault</b> - You control the timing of patch assessments on a virtual machine. &lt;br /&gt;&lt;br /&gt; <b>AutomaticByPlatform</b> - The platform will trigger periodic patch assessments. The property provisionVMAgent must be true. </summary>
     public readonly partial struct LinuxPatchAssessmentMode : IEquatable<LinuxPatchAssessmentMode>

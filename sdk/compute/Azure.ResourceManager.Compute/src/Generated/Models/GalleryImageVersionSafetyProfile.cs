@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the safety profile of the Gallery Image Version. </summary>
     public partial class GalleryImageVersionSafetyProfile : GalleryArtifactSafetyProfileBase

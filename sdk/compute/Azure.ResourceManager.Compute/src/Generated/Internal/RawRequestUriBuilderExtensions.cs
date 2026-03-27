@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     internal static partial class RawRequestUriBuilderExtensions
     {

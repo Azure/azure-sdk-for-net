@@ -7,7 +7,7 @@
 
 using System;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class EndpointTypesExtensions
     {

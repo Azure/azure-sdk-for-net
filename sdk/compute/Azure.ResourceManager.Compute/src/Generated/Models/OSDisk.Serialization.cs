@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the operating system disk used by the virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
     public partial class OSDisk : IJsonModel<OSDisk>
@@ -46,7 +45,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OSDisk)} does not support writing '{options.Format}' format.");
             }
@@ -184,13 +183,13 @@ namespace Compute.Models
             string name = default;
             VirtualHardDisk vhd = default;
             VirtualHardDisk image = default;
-            CachingType? caching = default;
+            CachingTypes? caching = default;
             bool? writeAcceleratorEnabled = default;
             DiffDiskSettings diffDiskSettings = default;
-            DiskCreateOptionType createOption = default;
+            DiskCreateOptionTypes createOption = default;
             int? diskSizeGB = default;
-            VirtualMachineManagedDisk managedDisk = default;
-            DiskDeleteOptionType? deleteOption = default;
+            ManagedDiskParameters managedDisk = default;
+            DiskDeleteOptionTypes? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -241,7 +240,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    caching = prop.Value.GetString().ToCachingType();
+                    caching = prop.Value.GetString().ToCachingTypes();
                     continue;
                 }
                 if (prop.NameEquals("writeAcceleratorEnabled"u8))
@@ -264,7 +263,7 @@ namespace Compute.Models
                 }
                 if (prop.NameEquals("createOption"u8))
                 {
-                    createOption = new DiskCreateOptionType(prop.Value.GetString());
+                    createOption = new DiskCreateOptionTypes(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskSizeGB"u8))
@@ -282,7 +281,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    managedDisk = VirtualMachineManagedDisk.DeserializeVirtualMachineManagedDisk(prop.Value, options);
+                    managedDisk = ManagedDiskParameters.DeserializeManagedDiskParameters(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("deleteOption"u8))
@@ -291,7 +290,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    deleteOption = new DiskDeleteOptionType(prop.Value.GetString());
+                    deleteOption = new DiskDeleteOptionTypes(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

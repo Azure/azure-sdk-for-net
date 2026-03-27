@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The Private Endpoint resource. </summary>
     internal partial class PrivateEndpoint

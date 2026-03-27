@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
     internal partial class CapacityReservationOperationSource : IOperationSource<CapacityReservationResource>

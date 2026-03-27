@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The instance view of a capacity reservation that includes the name of the capacity reservation. It is used for the response to the instance view of a capacity reservation group. </summary>
     public partial class CapacityReservationInstanceViewWithName : CapacityReservationInstanceView

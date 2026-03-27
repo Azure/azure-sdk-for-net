@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Type of repair action (replace, restart, reimage) that will be used for repairing unhealthy virtual machines in the scale set. Default value is replace. </summary>
     public readonly partial struct RepairAction : IEquatable<RepairAction>

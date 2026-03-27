@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal ComputeUsage(int currentValue, long limit, ComputeUsageName name)
+        internal ComputeUsage(int currentValue, long limit, UsageName name)
         {
             CurrentValue = currentValue;
             Limit = limit;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeUsage(string unit, int currentValue, long limit, ComputeUsageName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeUsage(string unit, int currentValue, long limit, UsageName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Unit = unit;
             CurrentValue = currentValue;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.Compute.Models
         public long Limit { get; }
 
         /// <summary> The name of the type of usage. </summary>
-        public ComputeUsageName Name { get; }
+        public UsageName Name { get; }
     }
 }

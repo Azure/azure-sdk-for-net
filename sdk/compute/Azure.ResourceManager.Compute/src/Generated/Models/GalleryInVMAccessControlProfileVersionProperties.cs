@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of an inVMAccessControlProfile version. </summary>
     internal partial class GalleryInVMAccessControlProfileVersionProperties : GalleryResourceProfileVersionPropertiesBase

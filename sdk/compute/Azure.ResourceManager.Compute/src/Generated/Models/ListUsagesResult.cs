@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Usages operation response. </summary>
     internal partial class ListUsagesResult
@@ -19,7 +19,7 @@ namespace Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="ListUsagesResult"/>. </summary>
         /// <param name="value"> The list of compute resource usages. </param>
-        internal ListUsagesResult(IEnumerable<ComputeCombineUsage> value)
+        internal ListUsagesResult(IEnumerable<ComputeUsage> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Compute.Models
         /// <param name="value"> The list of compute resource usages. </param>
         /// <param name="nextLink"> The URI to fetch the next page of compute resource usage information. Call ListNext() with this to fetch the next page of compute resource usage information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListUsagesResult(IList<ComputeCombineUsage> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListUsagesResult(IList<ComputeUsage> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Compute.Models
         }
 
         /// <summary> The list of compute resource usages. </summary>
-        public IList<ComputeCombineUsage> Value { get; }
+        public IList<ComputeUsage> Value { get; }
 
         /// <summary> The URI to fetch the next page of compute resource usage information. Call ListNext() with this to fetch the next page of compute resource usage information. </summary>
         public Uri NextLink { get; }

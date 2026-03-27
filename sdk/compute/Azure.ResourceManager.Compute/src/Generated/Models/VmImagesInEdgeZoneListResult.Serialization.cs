@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List VmImages in EdgeZone operation response. </summary>
     public partial class VmImagesInEdgeZoneListResult : IJsonModel<VmImagesInEdgeZoneListResult>
@@ -41,7 +41,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VmImagesInEdgeZoneListResult)} does not support writing '{options.Format}' format.");
             }
@@ -86,7 +86,7 @@ namespace Compute.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (VirtualMachineImageBase item in Value)
+                foreach (VirtualMachineImageResource item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Compute.Models
             {
                 return null;
             }
-            IList<VirtualMachineImageBase> value = default;
+            IList<VirtualMachineImageResource> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
+                    List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item, options));
+                        array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VmImagesInEdgeZoneListResult(value ?? new ChangeTrackingList<VirtualMachineImageBase>(), nextLink, additionalBinaryDataProperties);
+            return new VmImagesInEdgeZoneListResult(value ?? new ChangeTrackingList<VirtualMachineImageResource>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

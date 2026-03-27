@@ -8,11 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Common.Models;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the dedicated host group that the dedicated hosts should be assigned to. Currently, a dedicated host can only be added to a dedicated host group at creation time. An existing dedicated host cannot be added to another dedicated host group. </summary>
     public partial class DedicatedHostGroupData : TrackedResourceData
@@ -37,7 +36,7 @@ namespace ComputeCombine
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Dedicated Host Group Properties. </param>
         /// <param name="zones"> The availability zones. </param>
-        internal DedicatedHostGroupData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DedicatedHostGroupProperties properties, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
+        internal DedicatedHostGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DedicatedHostGroupProperties properties, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

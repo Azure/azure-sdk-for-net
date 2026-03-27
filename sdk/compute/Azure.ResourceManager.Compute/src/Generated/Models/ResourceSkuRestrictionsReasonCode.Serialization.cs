@@ -7,7 +7,7 @@
 
 using System;
 
-namespace ComputeSku.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class ResourceSkuRestrictionsReasonCodeExtensions
     {

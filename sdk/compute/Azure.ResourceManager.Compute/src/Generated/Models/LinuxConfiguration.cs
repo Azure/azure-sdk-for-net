@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the Linux operating system settings on the virtual machine. For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </summary>
     public partial class LinuxConfiguration
@@ -37,9 +37,6 @@ namespace Compute.Models
             EnableVMAgentPlatformUpdates = enableVMAgentPlatformUpdates;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Specifies whether password authentication should be disabled. </summary>
-        public bool? DisablePasswordAuthentication { get; set; }
 
         /// <summary> Specifies the ssh key configuration for a Linux OS. </summary>
         internal SshConfiguration Ssh { get; set; }

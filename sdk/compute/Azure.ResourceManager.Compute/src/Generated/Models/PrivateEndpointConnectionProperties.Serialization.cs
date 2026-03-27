@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Properties of the PrivateEndpointConnectProperties. </summary>
     internal partial class PrivateEndpointConnectionProperties : IJsonModel<PrivateEndpointConnectionProperties>
@@ -45,7 +45,7 @@ namespace ComputeDisk.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PrivateEndpointConnectionProperties)} does not support writing '{options.Format}' format.");
             }
@@ -134,8 +134,8 @@ namespace ComputeDisk.Models
                 return null;
             }
             PrivateEndpoint privateEndpoint = default;
-            ComputeCombinePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            ComputeCombinePrivateEndpointConnectionProvisioningState? provisioningState = default;
+            ComputePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            ComputePrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,7 +150,7 @@ namespace ComputeDisk.Models
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = ComputeCombinePrivateLinkServiceConnectionState.DeserializeComputeCombinePrivateLinkServiceConnectionState(prop.Value, options);
+                    privateLinkServiceConnectionState = ComputePrivateLinkServiceConnectionState.DeserializeComputePrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -159,7 +159,7 @@ namespace ComputeDisk.Models
                     {
                         continue;
                     }
-                    provisioningState = new ComputeCombinePrivateEndpointConnectionProvisioningState(prop.Value.GetString());
+                    provisioningState = new ComputePrivateEndpointConnectionProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

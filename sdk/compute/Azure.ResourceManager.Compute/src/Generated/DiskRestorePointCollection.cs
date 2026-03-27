@@ -15,9 +15,8 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using ComputeDisk;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="DiskRestorePointResource"/> and their operations.
@@ -40,7 +39,7 @@ namespace ComputeCombine
         internal DiskRestorePointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DiskRestorePointResource.ResourceType, out string diskRestorePointApiVersion);
-            _diskRestorePointsClientDiagnostics = new ClientDiagnostics("ComputeCombine", DiskRestorePointResource.ResourceType.Namespace, Diagnostics);
+            _diskRestorePointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskRestorePointResource.ResourceType.Namespace, Diagnostics);
             _diskRestorePointsRestClient = new DiskRestorePoints(_diskRestorePointsClientDiagnostics, Pipeline, Endpoint, diskRestorePointApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }

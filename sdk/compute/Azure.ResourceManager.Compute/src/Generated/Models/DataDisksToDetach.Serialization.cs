@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the data disk to be detached. </summary>
     public partial class DataDisksToDetach : IJsonModel<DataDisksToDetach>
@@ -45,7 +45,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataDisksToDetach)} does not support writing '{options.Format}' format.");
             }
@@ -129,7 +129,7 @@ namespace Compute.Models
                 return null;
             }
             string diskId = default;
-            DiskDetachOptionType? detachOption = default;
+            DiskDetachOptionTypes? detachOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    detachOption = new DiskDetachOptionType(prop.Value.GetString());
+                    detachOption = new DiskDetachOptionTypes(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

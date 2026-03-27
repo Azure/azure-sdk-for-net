@@ -14,11 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using Compute;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a CapacityReservationGroup along with the instance operations that can be performed on it.
@@ -53,7 +52,7 @@ namespace ComputeCombine
         internal CapacityReservationGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string capacityReservationGroupApiVersion);
-            _capacityReservationGroupsClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _capacityReservationGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             _capacityReservationGroupsRestClient = new CapacityReservationGroups(_capacityReservationGroupsClientDiagnostics, Pipeline, Endpoint, capacityReservationGroupApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -333,7 +332,7 @@ namespace ComputeCombine
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(response, rehydrationToken);
+                ComputeArmOperation operation = new ComputeArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -384,7 +383,7 @@ namespace ComputeCombine
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(response, rehydrationToken);
+                ComputeArmOperation operation = new ComputeArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
     public partial class RestorePointCollectionSourceProperties

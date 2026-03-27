@@ -16,9 +16,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Compute;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="ImageResource"/> and their operations.
@@ -41,7 +40,7 @@ namespace ComputeCombine
         internal ImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ImageResource.ResourceType, out string imageApiVersion);
-            _imagesClientDiagnostics = new ClientDiagnostics("ComputeCombine", ImageResource.ResourceType.Namespace, Diagnostics);
+            _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ImageResource.ResourceType.Namespace, Diagnostics);
             _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, imageApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -94,7 +93,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _imagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, ImageData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<ImageResource> operation = new ComputeCombineArmOperation<ImageResource>(
+                ComputeArmOperation<ImageResource> operation = new ComputeArmOperation<ImageResource>(
                     new ImageOperationSource(Client),
                     _imagesClientDiagnostics,
                     Pipeline,
@@ -152,7 +151,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _imagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, ImageData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<ImageResource> operation = new ComputeCombineArmOperation<ImageResource>(
+                ComputeArmOperation<ImageResource> operation = new ComputeArmOperation<ImageResource>(
                     new ImageOperationSource(Client),
                     _imagesClientDiagnostics,
                     Pipeline,

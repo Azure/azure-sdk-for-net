@@ -9,9 +9,8 @@ using System;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using ComputeCombine;
 
-namespace Compute
+namespace Azure.ResourceManager.Compute
 {
     internal partial class VirtualMachines
     {
@@ -140,7 +139,7 @@ namespace Compute
             }
             if (forceDeletion != null)
             {
-                uri.AppendQuery("forceDeletion", ComputeCombine.TypeFormatters.ConvertToString(forceDeletion), true);
+                uri.AppendQuery("forceDeletion", TypeFormatters.ConvertToString(forceDeletion), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -367,7 +366,7 @@ namespace Compute
             }
             if (hibernate != null)
             {
-                uri.AppendQuery("hibernate", ComputeCombine.TypeFormatters.ConvertToString(hibernate), true);
+                uri.AppendQuery("hibernate", TypeFormatters.ConvertToString(hibernate), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -485,7 +484,7 @@ namespace Compute
             }
             if (skipShutdown != null)
             {
-                uri.AppendQuery("skipShutdown", ComputeCombine.TypeFormatters.ConvertToString(skipShutdown), true);
+                uri.AppendQuery("skipShutdown", TypeFormatters.ConvertToString(skipShutdown), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -557,7 +556,7 @@ namespace Compute
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -604,7 +603,7 @@ namespace Compute
             }
             if (sasUriExpirationTimeInMinutes != null)
             {
-                uri.AppendQuery("sasUriExpirationTimeInMinutes", ComputeCombine.TypeFormatters.ConvertToString(sasUriExpirationTimeInMinutes), true);
+                uri.AppendQuery("sasUriExpirationTimeInMinutes", TypeFormatters.ConvertToString(sasUriExpirationTimeInMinutes), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -748,7 +747,7 @@ namespace Compute
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }

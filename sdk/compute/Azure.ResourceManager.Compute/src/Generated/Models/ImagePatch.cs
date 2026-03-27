@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The source user image virtual hard disk. Only tags may be updated. </summary>
-    public partial class ImagePatch : ComputeResourcePatch
+    public partial class ImagePatch : UpdateResource
     {
         /// <summary> Initializes a new instance of <see cref="ImagePatch"/>. </summary>
         public ImagePatch()

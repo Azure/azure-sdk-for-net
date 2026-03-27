@@ -15,11 +15,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using Compute;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="VirtualMachineScaleSetResource"/> and their operations.
@@ -42,7 +41,7 @@ namespace ComputeCombine
         internal VirtualMachineScaleSetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(VirtualMachineScaleSetResource.ResourceType, out string virtualMachineScaleSetApiVersion);
-            _virtualMachineScaleSetsClientDiagnostics = new ClientDiagnostics("ComputeCombine", VirtualMachineScaleSetResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachineScaleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetResource.ResourceType.Namespace, Diagnostics);
             _virtualMachineScaleSetsRestClient = new VirtualMachineScaleSets(_virtualMachineScaleSetsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -96,7 +95,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineScaleSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, VirtualMachineScaleSetData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<VirtualMachineScaleSetResource> operation = new ComputeCombineArmOperation<VirtualMachineScaleSetResource>(
+                ComputeArmOperation<VirtualMachineScaleSetResource> operation = new ComputeArmOperation<VirtualMachineScaleSetResource>(
                     new VirtualMachineScaleSetOperationSource(Client),
                     _virtualMachineScaleSetsClientDiagnostics,
                     Pipeline,
@@ -155,7 +154,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineScaleSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, VirtualMachineScaleSetData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<VirtualMachineScaleSetResource> operation = new ComputeCombineArmOperation<VirtualMachineScaleSetResource>(
+                ComputeArmOperation<VirtualMachineScaleSetResource> operation = new ComputeArmOperation<VirtualMachineScaleSetResource>(
                     new VirtualMachineScaleSetOperationSource(Client),
                     _virtualMachineScaleSetsClientDiagnostics,
                     Pipeline,
@@ -300,7 +299,7 @@ namespace ComputeCombine
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsGetAllAsyncCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new VirtualMachineScaleSetResource(Client, data));
+            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsListAsyncCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -328,7 +327,7 @@ namespace ComputeCombine
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsGetAllCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new VirtualMachineScaleSetResource(Client, data));
+            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsListCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>

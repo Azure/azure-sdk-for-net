@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Common.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Api error base. </summary>
     public partial class ApiErrorBase : IJsonModel<ApiErrorBase>
@@ -40,7 +40,7 @@ namespace Common.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ApiErrorBase)} does not support writing '{options.Format}' format.");
             }

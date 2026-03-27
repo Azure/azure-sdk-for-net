@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using ComputeGallery.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the Shared Gallery that you want to create or update. </summary>
     public partial class SharedGalleryData : PirSharedGalleryResource, IJsonModel<SharedGalleryData>
@@ -41,7 +41,7 @@ namespace ComputeCombine
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SharedGalleryData)} does not support writing '{options.Format}' format.");
             }

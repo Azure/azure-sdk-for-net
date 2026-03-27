@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace ComputeSku.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The scale type applicable to the sku. </summary>
     public enum ResourceSkuCapacityScaleType

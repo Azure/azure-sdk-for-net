@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the user-defined constraints for resource hardware placement. </summary>
     public partial class Placement

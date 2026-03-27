@@ -16,9 +16,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Compute;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="AvailabilitySetResource"/> and their operations.
@@ -41,7 +40,7 @@ namespace ComputeCombine
         internal AvailabilitySetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(AvailabilitySetResource.ResourceType, out string availabilitySetApiVersion);
-            _availabilitySetsClientDiagnostics = new ClientDiagnostics("ComputeCombine", AvailabilitySetResource.ResourceType.Namespace, Diagnostics);
+            _availabilitySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", AvailabilitySetResource.ResourceType.Namespace, Diagnostics);
             _availabilitySetsRestClient = new AvailabilitySets(_availabilitySetsClientDiagnostics, Pipeline, Endpoint, availabilitySetApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -97,7 +96,7 @@ namespace ComputeCombine
                 Response<AvailabilitySetData> response = Response.FromValue(AvailabilitySetData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation<AvailabilitySetResource> operation = new ComputeCombineArmOperation<AvailabilitySetResource>(Response.FromValue(new AvailabilitySetResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeArmOperation<AvailabilitySetResource> operation = new ComputeArmOperation<AvailabilitySetResource>(Response.FromValue(new AvailabilitySetResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -152,7 +151,7 @@ namespace ComputeCombine
                 Response<AvailabilitySetData> response = Response.FromValue(AvailabilitySetData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation<AvailabilitySetResource> operation = new ComputeCombineArmOperation<AvailabilitySetResource>(Response.FromValue(new AvailabilitySetResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeArmOperation<AvailabilitySetResource> operation = new ComputeArmOperation<AvailabilitySetResource>(Response.FromValue(new AvailabilitySetResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

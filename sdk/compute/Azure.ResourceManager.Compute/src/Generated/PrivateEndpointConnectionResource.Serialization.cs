@@ -9,31 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    public partial class PrivateEndpointConnectionResource : IJsonModel<ComputeCombinePrivateEndpointConnectionData>
+    public partial class PrivateEndpointConnectionResource : IJsonModel<ComputePrivateEndpointConnectionData>
     {
-        private static IJsonModel<ComputeCombinePrivateEndpointConnectionData> s_dataDeserializationInstance;
+        private static IJsonModel<ComputePrivateEndpointConnectionData> s_dataDeserializationInstance;
 
-        private static IJsonModel<ComputeCombinePrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ComputeCombinePrivateEndpointConnectionData();
+        private static IJsonModel<ComputePrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ComputePrivateEndpointConnectionData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComputeCombinePrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ComputeCombinePrivateEndpointConnectionData>)Data).Write(writer, options);
+        void IJsonModel<ComputePrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ComputePrivateEndpointConnectionData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeCombinePrivateEndpointConnectionData IJsonModel<ComputeCombinePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ComputePrivateEndpointConnectionData IJsonModel<ComputePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeCombinePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ComputeCombinePrivateEndpointConnectionData>(Data, options, ComputeCombineContext.Default);
+        BinaryData IPersistableModel<ComputePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ComputePrivateEndpointConnectionData>(Data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeCombinePrivateEndpointConnectionData IPersistableModel<ComputeCombinePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputeCombinePrivateEndpointConnectionData>(data, options, ComputeCombineContext.Default);
+        ComputePrivateEndpointConnectionData IPersistableModel<ComputePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputePrivateEndpointConnectionData>(data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeCombinePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ComputePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -16,9 +16,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using ComputeDisk;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="DiskEncryptionSetResource"/> and their operations.
@@ -41,7 +40,7 @@ namespace ComputeCombine
         internal DiskEncryptionSetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DiskEncryptionSetResource.ResourceType, out string diskEncryptionSetApiVersion);
-            _diskEncryptionSetsClientDiagnostics = new ClientDiagnostics("ComputeCombine", DiskEncryptionSetResource.ResourceType.Namespace, Diagnostics);
+            _diskEncryptionSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskEncryptionSetResource.ResourceType.Namespace, Diagnostics);
             _diskEncryptionSetsRestClient = new DiskEncryptionSets(_diskEncryptionSetsClientDiagnostics, Pipeline, Endpoint, diskEncryptionSetApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
@@ -94,7 +93,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskEncryptionSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, DiskEncryptionSetData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<DiskEncryptionSetResource> operation = new ComputeCombineArmOperation<DiskEncryptionSetResource>(
+                ComputeArmOperation<DiskEncryptionSetResource> operation = new ComputeArmOperation<DiskEncryptionSetResource>(
                     new DiskEncryptionSetOperationSource(Client),
                     _diskEncryptionSetsClientDiagnostics,
                     Pipeline,
@@ -152,7 +151,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskEncryptionSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, DiskEncryptionSetData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<DiskEncryptionSetResource> operation = new ComputeCombineArmOperation<DiskEncryptionSetResource>(
+                ComputeArmOperation<DiskEncryptionSetResource> operation = new ComputeArmOperation<DiskEncryptionSetResource>(
                     new DiskEncryptionSetOperationSource(Client),
                     _diskEncryptionSetsClientDiagnostics,
                     Pipeline,

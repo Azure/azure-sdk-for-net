@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a gallery script definition. </summary>
     public partial class GalleryScriptProperties

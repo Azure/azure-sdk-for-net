@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Gets the Operating System type. </summary>
     public readonly partial struct OperatingSystemType : IEquatable<OperatingSystemType>

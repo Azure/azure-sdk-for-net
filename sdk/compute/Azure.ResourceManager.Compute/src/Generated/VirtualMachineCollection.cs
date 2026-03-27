@@ -15,11 +15,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using Compute;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="VirtualMachineResource"/> and their operations.
@@ -42,7 +41,7 @@ namespace ComputeCombine
         internal VirtualMachineCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(VirtualMachineResource.ResourceType, out string virtualMachineApiVersion);
-            _virtualMachinesClientDiagnostics = new ClientDiagnostics("ComputeCombine", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
             _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Endpoint, virtualMachineApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -96,7 +95,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, VirtualMachineData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<VirtualMachineResource> operation = new ComputeCombineArmOperation<VirtualMachineResource>(
+                ComputeArmOperation<VirtualMachineResource> operation = new ComputeArmOperation<VirtualMachineResource>(
                     new VirtualMachineOperationSource(Client),
                     _virtualMachinesClientDiagnostics,
                     Pipeline,
@@ -155,7 +154,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, VirtualMachineData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<VirtualMachineResource> operation = new ComputeCombineArmOperation<VirtualMachineResource>(
+                ComputeArmOperation<VirtualMachineResource> operation = new ComputeArmOperation<VirtualMachineResource>(
                     new VirtualMachineOperationSource(Client),
                     _virtualMachinesClientDiagnostics,
                     Pipeline,
@@ -209,7 +208,7 @@ namespace ComputeCombine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToString(), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToSerialString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualMachineData> response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,7 +258,7 @@ namespace ComputeCombine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToString(), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToSerialString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualMachineData> response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -302,7 +301,7 @@ namespace ComputeCombine
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesListAsyncCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -338,7 +337,7 @@ namespace ComputeCombine
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesGetAllCollectionResultOfT(
+            return new PageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesListCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -381,7 +380,7 @@ namespace ComputeCombine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToString(), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToSerialString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineData> response = default;
@@ -439,7 +438,7 @@ namespace ComputeCombine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToString(), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToSerialString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineData> response = default;
@@ -497,7 +496,7 @@ namespace ComputeCombine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToString(), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToSerialString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineData> response = default;
@@ -559,7 +558,7 @@ namespace ComputeCombine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToString(), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToSerialString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineData> response = default;

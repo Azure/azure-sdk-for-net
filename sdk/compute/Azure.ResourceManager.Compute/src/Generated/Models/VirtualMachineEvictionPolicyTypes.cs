@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the eviction policy for the Azure Spot VM/VMSS. </summary>
     public readonly partial struct VirtualMachineEvictionPolicyTypes : IEquatable<VirtualMachineEvictionPolicyTypes>

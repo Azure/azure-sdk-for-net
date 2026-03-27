@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Properties of the disk for which update is pending. </summary>
     internal partial class PropertyUpdatesInProgress

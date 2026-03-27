@@ -14,11 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using Compute;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a VirtualMachineExtension along with the instance operations that can be performed on it.
@@ -53,7 +52,7 @@ namespace ComputeCombine
         internal VirtualMachineExtensionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string virtualMachineExtensionApiVersion);
-            _virtualMachineExtensionsClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _virtualMachineExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             _virtualMachineExtensionsRestClient = new VirtualMachineExtensions(_virtualMachineExtensionsClientDiagnostics, Pipeline, Endpoint, virtualMachineExtensionApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -232,7 +231,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualMachineExtensionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<VirtualMachineExtensionResource> operation = new ComputeCombineArmOperation<VirtualMachineExtensionResource>(
+                ComputeArmOperation<VirtualMachineExtensionResource> operation = new ComputeArmOperation<VirtualMachineExtensionResource>(
                     new VirtualMachineExtensionOperationSource(Client),
                     _virtualMachineExtensionsClientDiagnostics,
                     Pipeline,
@@ -291,7 +290,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualMachineExtensionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<VirtualMachineExtensionResource> operation = new ComputeCombineArmOperation<VirtualMachineExtensionResource>(
+                ComputeArmOperation<VirtualMachineExtensionResource> operation = new ComputeArmOperation<VirtualMachineExtensionResource>(
                     new VirtualMachineExtensionOperationSource(Client),
                     _virtualMachineExtensionsClientDiagnostics,
                     Pipeline,
@@ -346,7 +345,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_virtualMachineExtensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineExtensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -395,7 +394,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_virtualMachineExtensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineExtensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

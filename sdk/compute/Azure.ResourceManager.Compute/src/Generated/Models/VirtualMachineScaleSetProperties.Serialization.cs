@@ -9,13 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a Virtual Machine Scale Set. </summary>
-    internal partial class VirtualMachineScaleSetProperties : IJsonModel<VirtualMachineScaleSetProperties>
+    public partial class VirtualMachineScaleSetProperties : IJsonModel<VirtualMachineScaleSetProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -41,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetProperties)} does not support writing '{options.Format}' format.");
             }
@@ -237,7 +236,7 @@ namespace Compute.Models
             {
                 return null;
             }
-            VirtualMachineScaleSetUpgradePolicy upgradePolicy = default;
+            UpgradePolicy upgradePolicy = default;
             ScheduledEventsPolicy scheduledEventsPolicy = default;
             AutomaticRepairsPolicy automaticRepairsPolicy = default;
             VirtualMachineScaleSetVMProfile virtualMachineProfile = default;
@@ -254,12 +253,12 @@ namespace Compute.Models
             ScaleInPolicy scaleInPolicy = default;
             OrchestrationMode? orchestrationMode = default;
             SpotRestorePolicy spotRestorePolicy = default;
-            VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default;
+            PriorityMixPolicy priorityMixPolicy = default;
             DateTimeOffset? timeCreated = default;
             bool? constrainedMaximumCapacity = default;
             ResiliencyPolicy resiliencyPolicy = default;
             ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
-            ComputeSkuProfile skuProfile = default;
+            SkuProfile skuProfile = default;
             HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -270,7 +269,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    upgradePolicy = VirtualMachineScaleSetUpgradePolicy.DeserializeVirtualMachineScaleSetUpgradePolicy(prop.Value, options);
+                    upgradePolicy = UpgradePolicy.DeserializeUpgradePolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scheduledEventsPolicy"u8))
@@ -415,7 +414,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    priorityMixPolicy = VirtualMachineScaleSetPriorityMixPolicy.DeserializeVirtualMachineScaleSetPriorityMixPolicy(prop.Value, options);
+                    priorityMixPolicy = PriorityMixPolicy.DeserializePriorityMixPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("timeCreated"u8))
@@ -460,7 +459,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    skuProfile = ComputeSkuProfile.DeserializeComputeSkuProfile(prop.Value, options);
+                    skuProfile = SkuProfile.DeserializeSkuProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("highSpeedInterconnectPlacement"u8))

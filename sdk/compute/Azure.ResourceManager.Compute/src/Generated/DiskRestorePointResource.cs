@@ -13,10 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using ComputeDisk;
-using ComputeDisk.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a DiskRestorePoint along with the instance operations that can be performed on it.
@@ -51,7 +50,7 @@ namespace ComputeCombine
         internal DiskRestorePointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string diskRestorePointApiVersion);
-            _diskRestorePointsClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _diskRestorePointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             _diskRestorePointsRestClient = new DiskRestorePoints(_diskRestorePointsClientDiagnostics, Pipeline, Endpoint, diskRestorePointApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
@@ -229,7 +228,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskRestorePointsRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GrantAccessData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<AccessUri> operation = new ComputeCombineArmOperation<AccessUri>(
+                ComputeArmOperation<AccessUri> operation = new ComputeArmOperation<AccessUri>(
                     new AccessUriOperationSource(),
                     _diskRestorePointsClientDiagnostics,
                     Pipeline,
@@ -288,7 +287,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskRestorePointsRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GrantAccessData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<AccessUri> operation = new ComputeCombineArmOperation<AccessUri>(
+                ComputeArmOperation<AccessUri> operation = new ComputeArmOperation<AccessUri>(
                     new AccessUriOperationSource(),
                     _diskRestorePointsClientDiagnostics,
                     Pipeline,
@@ -343,7 +342,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskRestorePointsRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_diskRestorePointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_diskRestorePointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -392,7 +391,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskRestorePointsRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_diskRestorePointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_diskRestorePointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

@@ -10,9 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using ComputeGallery.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
     internal partial class SharingUpdateOperationSource : IOperationSource<SharingUpdate>

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Instance view statuses summary for virtual machines of a virtual machine scale set. </summary>
     internal partial class VirtualMachineScaleSetInstanceViewStatusesSummary : IJsonModel<VirtualMachineScaleSetInstanceViewStatusesSummary>
@@ -40,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceViewStatusesSummary)} does not support writing '{options.Format}' format.");
             }

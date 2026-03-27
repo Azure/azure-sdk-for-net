@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> List of supported capabilities persisted on the disk resource for VM use. </summary>
     public partial class SupportedCapabilities : IJsonModel<SupportedCapabilities>
@@ -41,7 +40,7 @@ namespace ComputeDisk.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SupportedCapabilities)} does not support writing '{options.Format}' format.");
             }

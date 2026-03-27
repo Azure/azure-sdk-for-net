@@ -16,9 +16,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Compute;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="ProximityPlacementGroupResource"/> and their operations.
@@ -41,7 +40,7 @@ namespace ComputeCombine
         internal ProximityPlacementGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ProximityPlacementGroupResource.ResourceType, out string proximityPlacementGroupApiVersion);
-            _proximityPlacementGroupsClientDiagnostics = new ClientDiagnostics("ComputeCombine", ProximityPlacementGroupResource.ResourceType.Namespace, Diagnostics);
+            _proximityPlacementGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProximityPlacementGroupResource.ResourceType.Namespace, Diagnostics);
             _proximityPlacementGroupsRestClient = new ProximityPlacementGroups(_proximityPlacementGroupsClientDiagnostics, Pipeline, Endpoint, proximityPlacementGroupApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -97,7 +96,7 @@ namespace ComputeCombine
                 Response<ProximityPlacementGroupData> response = Response.FromValue(ProximityPlacementGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation<ProximityPlacementGroupResource> operation = new ComputeCombineArmOperation<ProximityPlacementGroupResource>(Response.FromValue(new ProximityPlacementGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeArmOperation<ProximityPlacementGroupResource> operation = new ComputeArmOperation<ProximityPlacementGroupResource>(Response.FromValue(new ProximityPlacementGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -152,7 +151,7 @@ namespace ComputeCombine
                 Response<ProximityPlacementGroupData> response = Response.FromValue(ProximityPlacementGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation<ProximityPlacementGroupResource> operation = new ComputeCombineArmOperation<ProximityPlacementGroupResource>(Response.FromValue(new ProximityPlacementGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeArmOperation<ProximityPlacementGroupResource> operation = new ComputeArmOperation<ProximityPlacementGroupResource>(Response.FromValue(new ProximityPlacementGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

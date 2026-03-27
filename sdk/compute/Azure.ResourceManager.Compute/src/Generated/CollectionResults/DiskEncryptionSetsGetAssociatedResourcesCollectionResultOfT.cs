@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using ComputeDisk.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeDisk
+namespace Azure.ResourceManager.Compute
 {
     internal partial class DiskEncryptionSetsGetAssociatedResourcesCollectionResultOfT : Pageable<string>
     {

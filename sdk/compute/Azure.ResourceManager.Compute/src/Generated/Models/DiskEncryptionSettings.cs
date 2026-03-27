@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Encryption Settings for a Disk. </summary>
     public partial class DiskEncryptionSettings

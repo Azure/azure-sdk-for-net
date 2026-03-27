@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Information of community gallery if current gallery is shared to community. </summary>
     public partial class CommunityGalleryInfo : IJsonModel<CommunityGalleryInfo>
@@ -40,7 +40,7 @@ namespace ComputeGallery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support writing '{options.Format}' format.");
             }
@@ -77,7 +77,7 @@ namespace ComputeGallery.Models
             if (Optional.IsDefined(PublisherUri))
             {
                 writer.WritePropertyName("publisherUri"u8);
-                writer.WriteStringValue(PublisherUri);
+                writer.WriteStringValue(PublisherUri.AbsoluteUri);
             }
             if (Optional.IsDefined(PublisherContact))
             {
@@ -156,7 +156,7 @@ namespace ComputeGallery.Models
             {
                 return null;
             }
-            string publisherUri = default;
+            Uri publisherUri = default;
             string publisherContact = default;
             string eula = default;
             string publicNamePrefix = default;
@@ -167,7 +167,11 @@ namespace ComputeGallery.Models
             {
                 if (prop.NameEquals("publisherUri"u8))
                 {
-                    publisherUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publisherUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("publisherContact"u8))

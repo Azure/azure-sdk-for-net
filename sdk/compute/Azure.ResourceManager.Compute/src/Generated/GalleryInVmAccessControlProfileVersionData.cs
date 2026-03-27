@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using ComputeGallery.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the gallery inVMAccessControlProfile version that you want to create or update. </summary>
     public partial class GalleryInVMAccessControlProfileVersionData : TrackedResourceData
@@ -34,7 +34,7 @@ namespace ComputeCombine
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes the properties of an inVMAccessControlProfile version. </param>
-        internal GalleryInVMAccessControlProfileVersionData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, GalleryInVMAccessControlProfileVersionProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal GalleryInVMAccessControlProfileVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, GalleryInVMAccessControlProfileVersionProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

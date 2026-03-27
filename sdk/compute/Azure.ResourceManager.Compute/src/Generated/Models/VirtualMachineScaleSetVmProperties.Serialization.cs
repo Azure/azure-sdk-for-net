@@ -9,57 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a virtual machine scale set virtual machine. </summary>
-    internal partial class VirtualMachineScaleSetVmProperties : IJsonModel<VirtualMachineScaleSetVmProperties>
+    internal partial class VirtualMachineScaleSetVMProperties : IJsonModel<VirtualMachineScaleSetVMProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualMachineScaleSetVmProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VirtualMachineScaleSetVMProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVirtualMachineScaleSetVmProperties(document.RootElement, options);
+                        return DeserializeVirtualMachineScaleSetVMProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualMachineScaleSetVmProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualMachineScaleSetVMProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineScaleSetVmProperties IPersistableModel<VirtualMachineScaleSetVmProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualMachineScaleSetVMProperties IPersistableModel<VirtualMachineScaleSetVMProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualMachineScaleSetVmProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualMachineScaleSetVMProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VirtualMachineScaleSetVmProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualMachineScaleSetVMProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +69,10 @@ namespace Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(LatestModelApplied))
             {
@@ -189,24 +188,24 @@ namespace Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineScaleSetVmProperties IJsonModel<VirtualMachineScaleSetVmProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualMachineScaleSetVMProperties IJsonModel<VirtualMachineScaleSetVMProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualMachineScaleSetVmProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VirtualMachineScaleSetVMProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualMachineScaleSetVmProperties(document.RootElement, options);
+            return DeserializeVirtualMachineScaleSetVMProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VirtualMachineScaleSetVmProperties DeserializeVirtualMachineScaleSetVmProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualMachineScaleSetVMProperties DeserializeVirtualMachineScaleSetVMProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -214,21 +213,21 @@ namespace Compute.Models
             }
             bool? latestModelApplied = default;
             string vmId = default;
-            VirtualMachineScaleSetVmInstanceView instanceView = default;
-            VirtualMachineHardwareProfile hardwareProfile = default;
-            ResilientVmDeletionStatus? resilientVMDeletionStatus = default;
-            VirtualMachineStorageProfile storageProfile = default;
+            VirtualMachineScaleSetVMInstanceView instanceView = default;
+            HardwareProfile hardwareProfile = default;
+            ResilientVMDeletionStatus? resilientVMDeletionStatus = default;
+            StorageProfile storageProfile = default;
             AdditionalCapabilities additionalCapabilities = default;
-            VirtualMachineOSProfile osProfile = default;
+            OSProfile osProfile = default;
             SecurityProfile securityProfile = default;
-            VirtualMachineNetworkProfile networkProfile = default;
+            NetworkProfile networkProfile = default;
             VirtualMachineScaleSetVMNetworkProfileConfiguration networkProfileConfiguration = default;
             DiagnosticsProfile diagnosticsProfile = default;
             SubResource availabilitySet = default;
             string provisioningState = default;
             string licenseType = default;
             string modelDefinitionApplied = default;
-            VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = default;
+            VirtualMachineScaleSetVMProtectionPolicy protectionPolicy = default;
             string userData = default;
             DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -254,7 +253,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    instanceView = VirtualMachineScaleSetVmInstanceView.DeserializeVirtualMachineScaleSetVmInstanceView(prop.Value, options);
+                    instanceView = VirtualMachineScaleSetVMInstanceView.DeserializeVirtualMachineScaleSetVMInstanceView(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("hardwareProfile"u8))
@@ -263,7 +262,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(prop.Value, options);
+                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resilientVMDeletionStatus"u8))
@@ -272,7 +271,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    resilientVMDeletionStatus = new ResilientVmDeletionStatus(prop.Value.GetString());
+                    resilientVMDeletionStatus = new ResilientVMDeletionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storageProfile"u8))
@@ -281,7 +280,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    storageProfile = VirtualMachineStorageProfile.DeserializeVirtualMachineStorageProfile(prop.Value, options);
+                    storageProfile = StorageProfile.DeserializeStorageProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("additionalCapabilities"u8))
@@ -299,7 +298,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(prop.Value, options);
+                    osProfile = OSProfile.DeserializeOSProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("securityProfile"u8))
@@ -317,7 +316,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    networkProfile = VirtualMachineNetworkProfile.DeserializeVirtualMachineNetworkProfile(prop.Value, options);
+                    networkProfile = NetworkProfile.DeserializeNetworkProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("networkProfileConfiguration"u8))
@@ -368,7 +367,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    protectionPolicy = VirtualMachineScaleSetVmProtectionPolicy.DeserializeVirtualMachineScaleSetVmProtectionPolicy(prop.Value, options);
+                    protectionPolicy = VirtualMachineScaleSetVMProtectionPolicy.DeserializeVirtualMachineScaleSetVMProtectionPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("userData"u8))
@@ -390,7 +389,7 @@ namespace Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineScaleSetVmProperties(
+            return new VirtualMachineScaleSetVMProperties(
                 latestModelApplied,
                 vmId,
                 instanceView,

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The source for the disk image. </summary>
     public partial class GalleryDiskImageSource : GalleryArtifactVersionSource
@@ -21,16 +21,11 @@ namespace ComputeGallery.Models
         /// <summary> Initializes a new instance of <see cref="GalleryDiskImageSource"/>. </summary>
         /// <param name="id"> The id of the gallery artifact version source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="uri"> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </param>
         /// <param name="storageAccountId"> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </param>
-        internal GalleryDiskImageSource(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string uri, string storageAccountId) : base(id, additionalBinaryDataProperties)
+        internal GalleryDiskImageSource(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string storageAccountId) : base(id, additionalBinaryDataProperties)
         {
-            Uri = uri;
             StorageAccountId = storageAccountId;
         }
-
-        /// <summary> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </summary>
-        public string Uri { get; set; }
 
         /// <summary> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </summary>
         public string StorageAccountId { get; set; }

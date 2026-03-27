@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Describes a Virtual Machine Extension. </summary>
     public partial class VirtualMachineExtensionData : TrackedResourceData
@@ -34,7 +34,7 @@ namespace ComputeCombine
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Extension. </param>
-        internal VirtualMachineExtensionData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineExtensionProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineExtensionProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -219,23 +219,6 @@ namespace ComputeCombine
                     Properties = new VirtualMachineExtensionProperties();
                 }
                 Properties.SuppressFailures = value.Value;
-            }
-        }
-
-        /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
-        public KeyVaultSecretReference ProtectedSettingsFromKeyVault
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProtectedSettingsFromKeyVault;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineExtensionProperties();
-                }
-                Properties.ProtectedSettingsFromKeyVault = value;
             }
         }
 

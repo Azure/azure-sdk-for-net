@@ -15,10 +15,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using ComputeGallery;
-using ComputeGallery.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="GalleryImageVersionResource"/> and their operations.
@@ -41,7 +40,7 @@ namespace ComputeCombine
         internal GalleryImageVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(GalleryImageVersionResource.ResourceType, out string galleryImageVersionApiVersion);
-            _galleryImageVersionsClientDiagnostics = new ClientDiagnostics("ComputeCombine", GalleryImageVersionResource.ResourceType.Namespace, Diagnostics);
+            _galleryImageVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", GalleryImageVersionResource.ResourceType.Namespace, Diagnostics);
             _galleryImageVersionsRestClient = new GalleryImageVersions(_galleryImageVersionsClientDiagnostics, Pipeline, Endpoint, galleryImageVersionApiVersion ?? "2025-03-03");
             ValidateResourceId(id);
         }
@@ -94,7 +93,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryImageVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, GalleryImageVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<GalleryImageVersionResource> operation = new ComputeCombineArmOperation<GalleryImageVersionResource>(
+                ComputeArmOperation<GalleryImageVersionResource> operation = new ComputeArmOperation<GalleryImageVersionResource>(
                     new GalleryImageVersionOperationSource(Client),
                     _galleryImageVersionsClientDiagnostics,
                     Pipeline,
@@ -152,7 +151,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryImageVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, GalleryImageVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<GalleryImageVersionResource> operation = new ComputeCombineArmOperation<GalleryImageVersionResource>(
+                ComputeArmOperation<GalleryImageVersionResource> operation = new ComputeArmOperation<GalleryImageVersionResource>(
                     new GalleryImageVersionOperationSource(Client),
                     _galleryImageVersionsClientDiagnostics,
                     Pipeline,

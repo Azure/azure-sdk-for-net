@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The current state of the service. </summary>
     public readonly partial struct OrchestrationServiceState : IEquatable<OrchestrationServiceState>

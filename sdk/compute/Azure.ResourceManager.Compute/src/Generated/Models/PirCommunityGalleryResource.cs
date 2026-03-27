@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Base information about the community gallery resource in azure compute gallery. </summary>
     public partial class PirCommunityGalleryResource

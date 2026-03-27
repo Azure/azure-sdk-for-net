@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes Protocol and thumbprint of Windows Remote Management listener. </summary>
     public partial class WinRMListener

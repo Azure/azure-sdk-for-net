@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Properties of the PrivateEndpointConnectProperties. </summary>
     internal partial class PrivateEndpointConnectionProperties
@@ -20,7 +20,7 @@ namespace ComputeDisk.Models
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between DiskAccess and Virtual Network. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkServiceConnectionState"/> is null. </exception>
-        public PrivateEndpointConnectionProperties(ComputeCombinePrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        public PrivateEndpointConnectionProperties(ComputePrivateLinkServiceConnectionState privateLinkServiceConnectionState)
         {
             Argument.AssertNotNull(privateLinkServiceConnectionState, nameof(privateLinkServiceConnectionState));
 
@@ -32,7 +32,7 @@ namespace ComputeDisk.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between DiskAccess and Virtual Network. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(PrivateEndpoint privateEndpoint, ComputeCombinePrivateLinkServiceConnectionState privateLinkServiceConnectionState, ComputeCombinePrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointConnectionProperties(PrivateEndpoint privateEndpoint, ComputePrivateLinkServiceConnectionState privateLinkServiceConnectionState, ComputePrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -44,10 +44,10 @@ namespace ComputeDisk.Models
         internal PrivateEndpoint PrivateEndpoint { get; }
 
         /// <summary> A collection of information about the state of the connection between DiskAccess and Virtual Network. </summary>
-        public ComputeCombinePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public ComputePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        public ComputeCombinePrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        public ComputePrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>
         public string PrivateEndpointId

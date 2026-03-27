@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> disk encryption set resource update properties. </summary>
     internal partial class DiskEncryptionSetUpdateProperties

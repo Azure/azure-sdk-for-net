@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery Script Definition that you want to update. </summary>
     public partial class GalleryScriptPatch : UpdateResourceDefinition

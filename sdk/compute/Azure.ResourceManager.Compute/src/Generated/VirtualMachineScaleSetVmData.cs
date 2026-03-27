@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Describes a virtual machine scale set virtual machine. </summary>
     public partial class VirtualMachineScaleSetVMData : TrackedResourceData
@@ -43,7 +43,7 @@ namespace ComputeCombine
         /// <param name="zones"> The virtual machine zones. </param>
         /// <param name="identity"> The identity of the virtual machine, if configured. </param>
         /// <param name="eTag"> Etag is property returned in Update/Get response of the VMSS VM, so that customer can supply it in the header to ensure optimistic updates. </param>
-        internal VirtualMachineScaleSetVMData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineScaleSetVmProperties properties, string instanceId, ComputeCombineSku sku, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, VirtualMachineIdentity identity, string eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineScaleSetVMData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineScaleSetVMProperties properties, string instanceId, ComputeSku sku, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, VirtualMachineIdentity identity, string eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -57,13 +57,13 @@ namespace ComputeCombine
         }
 
         /// <summary> Describes the properties of a virtual machine scale set virtual machine. </summary>
-        internal VirtualMachineScaleSetVmProperties Properties { get; set; }
+        internal VirtualMachineScaleSetVMProperties Properties { get; set; }
 
         /// <summary> The virtual machine instance ID. </summary>
         public string InstanceId { get; }
 
         /// <summary> The virtual machine SKU. </summary>
-        public ComputeCombineSku Sku { get; }
+        public ComputeSku Sku { get; }
 
         /// <summary> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click <b>Want to deploy programmatically, Get Started -&gt;</b>. Enter any required information and then click <b>Save</b>. </summary>
         public ComputePlan Plan { get; set; }
@@ -99,7 +99,7 @@ namespace ComputeCombine
         }
 
         /// <summary> The virtual machine instance view. </summary>
-        public VirtualMachineScaleSetVmInstanceView InstanceView
+        public VirtualMachineScaleSetVMInstanceView InstanceView
         {
             get
             {
@@ -108,7 +108,7 @@ namespace ComputeCombine
         }
 
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
-        public VirtualMachineHardwareProfile HardwareProfile
+        public HardwareProfile HardwareProfile
         {
             get
             {
@@ -118,14 +118,14 @@ namespace ComputeCombine
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVmProperties();
+                    Properties = new VirtualMachineScaleSetVMProperties();
                 }
                 Properties.HardwareProfile = value;
             }
         }
 
         /// <summary> Specifies the resilient VM deletion status for the virtual machine. </summary>
-        public ResilientVmDeletionStatus? ResilientVMDeletionStatus
+        public ResilientVMDeletionStatus? ResilientVMDeletionStatus
         {
             get
             {
@@ -135,14 +135,14 @@ namespace ComputeCombine
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVmProperties();
+                    Properties = new VirtualMachineScaleSetVMProperties();
                 }
                 Properties.ResilientVMDeletionStatus = value.Value;
             }
         }
 
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-        public VirtualMachineStorageProfile StorageProfile
+        public StorageProfile StorageProfile
         {
             get
             {
@@ -152,7 +152,7 @@ namespace ComputeCombine
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVmProperties();
+                    Properties = new VirtualMachineScaleSetVMProperties();
                 }
                 Properties.StorageProfile = value;
             }
@@ -169,14 +169,14 @@ namespace ComputeCombine
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVmProperties();
+                    Properties = new VirtualMachineScaleSetVMProperties();
                 }
                 Properties.AdditionalCapabilities = value;
             }
         }
 
         /// <summary> Specifies the operating system settings for the virtual machine. </summary>
-        public VirtualMachineOSProfile OsProfile
+        public OSProfile OsProfile
         {
             get
             {
@@ -186,7 +186,7 @@ namespace ComputeCombine
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVmProperties();
+                    Properties = new VirtualMachineScaleSetVMProperties();
                 }
                 Properties.OsProfile = value;
             }
@@ -203,14 +203,14 @@ namespace ComputeCombine
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVmProperties();
+                    Properties = new VirtualMachineScaleSetVMProperties();
                 }
                 Properties.SecurityProfile = value;
             }
         }
 
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
-        public VirtualMachineNetworkProfile NetworkProfile
+        public NetworkProfile NetworkProfile
         {
             get
             {
@@ -220,7 +220,7 @@ namespace ComputeCombine
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVmProperties();
+                    Properties = new VirtualMachineScaleSetVMProperties();
                 }
                 Properties.NetworkProfile = value;
             }
@@ -246,7 +246,7 @@ namespace ComputeCombine
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVmProperties();
+                    Properties = new VirtualMachineScaleSetVMProperties();
                 }
                 Properties.LicenseType = value;
             }
@@ -262,7 +262,7 @@ namespace ComputeCombine
         }
 
         /// <summary> Specifies the protection policy of the virtual machine. </summary>
-        public VirtualMachineScaleSetVmProtectionPolicy ProtectionPolicy
+        public VirtualMachineScaleSetVMProtectionPolicy ProtectionPolicy
         {
             get
             {
@@ -272,7 +272,7 @@ namespace ComputeCombine
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVmProperties();
+                    Properties = new VirtualMachineScaleSetVMProperties();
                 }
                 Properties.ProtectionPolicy = value;
             }
@@ -289,7 +289,7 @@ namespace ComputeCombine
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVmProperties();
+                    Properties = new VirtualMachineScaleSetVMProperties();
                 }
                 Properties.UserData = value;
             }
@@ -311,7 +311,7 @@ namespace ComputeCombine
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVmProperties();
+                    Properties = new VirtualMachineScaleSetVMProperties();
                 }
                 return Properties.NetworkInterfaceConfigurations;
             }
@@ -328,7 +328,7 @@ namespace ComputeCombine
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVmProperties();
+                    Properties = new VirtualMachineScaleSetVMProperties();
                 }
                 Properties.BootDiagnostics = value;
             }
@@ -345,7 +345,7 @@ namespace ComputeCombine
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVmProperties();
+                    Properties = new VirtualMachineScaleSetVMProperties();
                 }
                 Properties.AvailabilitySetId = value;
             }

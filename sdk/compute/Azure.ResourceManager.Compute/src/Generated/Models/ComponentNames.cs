@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The component name. Currently, the only allowable value is Microsoft-Windows-Shell-Setup. </summary>
     public enum ComponentNames

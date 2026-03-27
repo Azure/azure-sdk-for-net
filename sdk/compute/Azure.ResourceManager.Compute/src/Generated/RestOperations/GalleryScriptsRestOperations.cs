@@ -10,7 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace ComputeGallery
+namespace Azure.ResourceManager.Compute
 {
     internal partial class GalleryScripts
     {

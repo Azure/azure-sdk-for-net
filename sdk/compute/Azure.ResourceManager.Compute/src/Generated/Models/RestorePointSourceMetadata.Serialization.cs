@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of the Virtual Machine for which the restore point was created. The properties provided are a subset and the snapshot of the overall Virtual Machine properties captured at the time of the restore point creation. </summary>
     public partial class RestorePointSourceMetadata : IJsonModel<RestorePointSourceMetadata>
@@ -40,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support writing '{options.Format}' format.");
             }
@@ -166,9 +166,9 @@ namespace Compute.Models
             {
                 return null;
             }
-            VirtualMachineHardwareProfile hardwareProfile = default;
+            HardwareProfile hardwareProfile = default;
             RestorePointSourceVMStorageProfile storageProfile = default;
-            VirtualMachineOSProfile osProfile = default;
+            OSProfile osProfile = default;
             DiagnosticsProfile diagnosticsProfile = default;
             string licenseType = default;
             string vmId = default;
@@ -185,7 +185,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(prop.Value, options);
+                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("storageProfile"u8))
@@ -203,7 +203,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(prop.Value, options);
+                    osProfile = OSProfile.DeserializeOSProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diagnosticsProfile"u8))

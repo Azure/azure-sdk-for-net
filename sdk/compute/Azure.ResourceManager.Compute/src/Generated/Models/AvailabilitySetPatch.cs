@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the availability set that the virtual machine should be assigned to. Only tags may be updated. </summary>
-    public partial class AvailabilitySetPatch : ComputeResourcePatch
+    public partial class AvailabilitySetPatch : UpdateResource
     {
         /// <summary> Initializes a new instance of <see cref="AvailabilitySetPatch"/>. </summary>
         public AvailabilitySetPatch()
@@ -24,7 +23,7 @@ namespace Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The instance view of a resource. </param>
         /// <param name="sku"> Sku of the availability set. </param>
-        internal AvailabilitySetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, AvailabilitySetProperties properties, ComputeCombineSku sku) : base(tags, additionalBinaryDataProperties)
+        internal AvailabilitySetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, AvailabilitySetProperties properties, ComputeSku sku) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Sku = sku;
@@ -34,7 +33,7 @@ namespace Compute.Models
         internal AvailabilitySetProperties Properties { get; set; }
 
         /// <summary> Sku of the availability set. </summary>
-        public ComputeCombineSku Sku { get; set; }
+        public ComputeSku Sku { get; set; }
 
         /// <summary> Update Domain count. </summary>
         public int? PlatformUpdateDomainCount

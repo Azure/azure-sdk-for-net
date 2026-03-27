@@ -8,11 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Common.Models;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the Dedicated host. </summary>
     public partial class DedicatedHostData : TrackedResourceData
@@ -24,7 +23,7 @@ namespace ComputeCombine
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> SKU of the dedicated host for Hardware Generation and VM family. Only name is required to be set. List Microsoft.Compute SKUs for a list of possible values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public DedicatedHostData(AzureLocation location, ComputeCombineSku sku) : base(location)
+        public DedicatedHostData(AzureLocation location, ComputeSku sku) : base(location)
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
@@ -41,7 +40,7 @@ namespace ComputeCombine
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the dedicated host. </param>
         /// <param name="sku"> SKU of the dedicated host for Hardware Generation and VM family. Only name is required to be set. List Microsoft.Compute SKUs for a list of possible values. </param>
-        internal DedicatedHostData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DedicatedHostProperties properties, ComputeCombineSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal DedicatedHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DedicatedHostProperties properties, ComputeSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -52,7 +51,7 @@ namespace ComputeCombine
         internal DedicatedHostProperties Properties { get; set; }
 
         /// <summary> SKU of the dedicated host for Hardware Generation and VM family. Only name is required to be set. List Microsoft.Compute SKUs for a list of possible values. </summary>
-        public ComputeCombineSku Sku { get; set; }
+        public ComputeSku Sku { get; set; }
 
         /// <summary> Fault domain of the dedicated host within a dedicated host group. </summary>
         public int? PlatformFaultDomain

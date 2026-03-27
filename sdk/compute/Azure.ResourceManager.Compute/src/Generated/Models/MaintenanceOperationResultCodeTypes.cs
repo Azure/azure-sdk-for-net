@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The Last Maintenance Operation Result Code. </summary>
     public enum MaintenanceOperationResultCodeTypes

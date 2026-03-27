@@ -10,13 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Image. </summary>
-    public partial class VirtualMachineImage : VirtualMachineImageBase, IJsonModel<VirtualMachineImage>
+    public partial class VirtualMachineImage : VirtualMachineImageResource, IJsonModel<VirtualMachineImage>
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineImage"/> for deserialization. </summary>
         internal VirtualMachineImage()
@@ -47,7 +46,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineImage)} does not support writing '{options.Format}' format.");
             }

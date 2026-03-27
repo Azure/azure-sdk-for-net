@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes virtual machine scale set operating system disk Update Object. This should be used for Updating VMSS OS Disk. </summary>
-    public partial class VirtualMachineScaleSetUpdateOSDisk
+    internal partial class VirtualMachineScaleSetUpdateOSDisk
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -33,7 +33,7 @@ namespace Compute.Models
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only). &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the OS disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>. For an Ephemeral OS Disk, the default value is set to <b>Delete</b>. User cannot change the delete option for Ephemeral OS Disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdateOSDisk(CachingType? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, int? diskSizeGB, VirtualHardDisk image, IList<string> vhdContainers, VirtualMachineScaleSetManagedDiskParameters managedDisk, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetUpdateOSDisk(CachingTypes? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, int? diskSizeGB, VirtualHardDisk image, IList<string> vhdContainers, VirtualMachineScaleSetManagedDiskParameters managedDisk, DiskDeleteOptionTypes? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Caching = caching;
             WriteAcceleratorEnabled = writeAcceleratorEnabled;
@@ -47,7 +47,7 @@ namespace Compute.Models
         }
 
         /// <summary> The caching type. </summary>
-        public CachingType? Caching { get; set; }
+        public CachingTypes? Caching { get; set; }
 
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? WriteAcceleratorEnabled { get; set; }
@@ -68,7 +68,7 @@ namespace Compute.Models
         public VirtualMachineScaleSetManagedDiskParameters ManagedDisk { get; set; }
 
         /// <summary> Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only). &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the OS disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>. For an Ephemeral OS Disk, the default value is set to <b>Delete</b>. User cannot change the delete option for Ephemeral OS Disk. </summary>
-        public DiskDeleteOptionType? DeleteOption { get; set; }
+        public DiskDeleteOptionTypes? DeleteOption { get; set; }
 
         /// <summary> Specifies the virtual hard disk's uri. </summary>
         public string ImageUri

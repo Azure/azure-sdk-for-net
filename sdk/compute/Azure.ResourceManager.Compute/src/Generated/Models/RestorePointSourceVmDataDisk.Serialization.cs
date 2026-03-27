@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a data disk. </summary>
     public partial class RestorePointSourceVMDataDisk : IJsonModel<RestorePointSourceVMDataDisk>
@@ -40,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RestorePointSourceVMDataDisk)} does not support writing '{options.Format}' format.");
             }
@@ -153,9 +153,9 @@ namespace Compute.Models
             }
             int? lun = default;
             string name = default;
-            CachingType? caching = default;
+            CachingTypes? caching = default;
             int? diskSizeGB = default;
-            VirtualMachineManagedDisk managedDisk = default;
+            ManagedDiskParameters managedDisk = default;
             DiskRestorePointAttributes diskRestorePoint = default;
             bool? writeAcceleratorEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -181,7 +181,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    caching = prop.Value.GetString().ToCachingType();
+                    caching = prop.Value.GetString().ToCachingTypes();
                     continue;
                 }
                 if (prop.NameEquals("diskSizeGB"u8))
@@ -199,7 +199,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    managedDisk = VirtualMachineManagedDisk.DeserializeVirtualMachineManagedDisk(prop.Value, options);
+                    managedDisk = ManagedDiskParameters.DeserializeManagedDiskParameters(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diskRestorePoint"u8))

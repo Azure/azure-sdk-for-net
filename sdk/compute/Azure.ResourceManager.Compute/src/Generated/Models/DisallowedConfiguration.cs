@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the disallowed configuration for a virtual machine image. </summary>
     internal partial class DisallowedConfiguration

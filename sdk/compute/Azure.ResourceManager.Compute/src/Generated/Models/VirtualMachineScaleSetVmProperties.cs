@@ -7,22 +7,21 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a virtual machine scale set virtual machine. </summary>
-    internal partial class VirtualMachineScaleSetVmProperties
+    internal partial class VirtualMachineScaleSetVMProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmProperties"/>. </summary>
-        public VirtualMachineScaleSetVmProperties()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMProperties"/>. </summary>
+        public VirtualMachineScaleSetVMProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMProperties"/>. </summary>
         /// <param name="latestModelApplied"> Specifies whether the latest model has been applied to the virtual machine. </param>
         /// <param name="vmId"> Azure VM unique ID. </param>
         /// <param name="instanceView"> The virtual machine instance view. </param>
@@ -43,7 +42,7 @@ namespace Compute.Models
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVmProperties(bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, ResilientVmDeletionStatus? resilientVMDeletionStatus, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, VirtualMachineScaleSetVMNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, SubResource availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVMProperties(bool? latestModelApplied, string vmId, VirtualMachineScaleSetVMInstanceView instanceView, HardwareProfile hardwareProfile, ResilientVMDeletionStatus? resilientVMDeletionStatus, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, SecurityProfile securityProfile, NetworkProfile networkProfile, VirtualMachineScaleSetVMNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, SubResource availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVMProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LatestModelApplied = latestModelApplied;
             VmId = vmId;
@@ -74,28 +73,28 @@ namespace Compute.Models
         public string VmId { get; }
 
         /// <summary> The virtual machine instance view. </summary>
-        public VirtualMachineScaleSetVmInstanceView InstanceView { get; }
+        public VirtualMachineScaleSetVMInstanceView InstanceView { get; }
 
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
-        public VirtualMachineHardwareProfile HardwareProfile { get; set; }
+        public HardwareProfile HardwareProfile { get; set; }
 
         /// <summary> Specifies the resilient VM deletion status for the virtual machine. </summary>
-        public ResilientVmDeletionStatus? ResilientVMDeletionStatus { get; set; }
+        public ResilientVMDeletionStatus? ResilientVMDeletionStatus { get; set; }
 
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-        public VirtualMachineStorageProfile StorageProfile { get; set; }
+        public StorageProfile StorageProfile { get; set; }
 
         /// <summary> Specifies additional capabilities enabled or disabled on the virtual machine in the scale set. For instance: whether the virtual machine has the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary> Specifies the operating system settings for the virtual machine. </summary>
-        public VirtualMachineOSProfile OsProfile { get; set; }
+        public OSProfile OsProfile { get; set; }
 
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>
         public SecurityProfile SecurityProfile { get; set; }
 
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
-        public VirtualMachineNetworkProfile NetworkProfile { get; set; }
+        public NetworkProfile NetworkProfile { get; set; }
 
         /// <summary> Specifies the network profile configuration of the virtual machine. </summary>
         internal VirtualMachineScaleSetVMNetworkProfileConfiguration NetworkProfileConfiguration { get; set; }
@@ -116,7 +115,7 @@ namespace Compute.Models
         public string ModelDefinitionApplied { get; }
 
         /// <summary> Specifies the protection policy of the virtual machine. </summary>
-        public VirtualMachineScaleSetVmProtectionPolicy ProtectionPolicy { get; set; }
+        public VirtualMachineScaleSetVMProtectionPolicy ProtectionPolicy { get; set; }
 
         /// <summary> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </summary>
         public string UserData { get; set; }

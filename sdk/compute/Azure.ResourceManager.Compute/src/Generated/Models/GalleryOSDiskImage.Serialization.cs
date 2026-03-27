@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the OS disk image. </summary>
     public partial class GalleryOSDiskImage : GalleryDiskImage, IJsonModel<GalleryOSDiskImage>
@@ -40,7 +40,7 @@ namespace ComputeGallery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GalleryOSDiskImage)} does not support writing '{options.Format}' format.");
             }
@@ -104,7 +104,7 @@ namespace ComputeGallery.Models
             }
             int? sizeInGB = default;
             HostCaching? hostCaching = default;
-            GalleryDiskImageSource source = default;
+            GalleryArtifactVersionSource source = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,7 +132,7 @@ namespace ComputeGallery.Models
                     {
                         continue;
                     }
-                    source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(prop.Value, options);
+                    source = GalleryArtifactVersionSource.DeserializeGalleryArtifactVersionSource(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

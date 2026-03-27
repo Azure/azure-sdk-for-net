@@ -9,18 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the gallery image definition identifier. </summary>
     public partial class GalleryImageIdentifier : IJsonModel<GalleryImageIdentifier>
     {
-        /// <summary> Initializes a new instance of <see cref="GalleryImageIdentifier"/> for deserialization. </summary>
-        internal GalleryImageIdentifier()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual GalleryImageIdentifier PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -45,7 +40,7 @@ namespace ComputeGallery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GalleryImageIdentifier)} does not support writing '{options.Format}' format.");
             }

@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine run command. </summary>
-    public partial class VirtualMachineRunCommandUpdate : ComputeResourcePatch
+    public partial class VirtualMachineRunCommandUpdate : UpdateResource
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandUpdate"/>. </summary>
         public VirtualMachineRunCommandUpdate()

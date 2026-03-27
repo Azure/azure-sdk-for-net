@@ -5,35 +5,13 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
+using Azure.ResourceManager;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    public partial class SharedGalleryImageResource : IJsonModel<SharedGalleryImageData>
+    public partial class SharedGalleryImageResource : ArmResource, IJsonModel<SharedGalleryImageData>
     {
-        private static IJsonModel<SharedGalleryImageData> s_dataDeserializationInstance;
-
-        private static IJsonModel<SharedGalleryImageData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SharedGalleryImageData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SharedGalleryImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SharedGalleryImageData>)Data).Write(writer, options);
-
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SharedGalleryImageData IJsonModel<SharedGalleryImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SharedGalleryImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SharedGalleryImageData>(Data, options, ComputeCombineContext.Default);
-
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SharedGalleryImageData IPersistableModel<SharedGalleryImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SharedGalleryImageData>(data, options, ComputeCombineContext.Default);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SharedGalleryImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

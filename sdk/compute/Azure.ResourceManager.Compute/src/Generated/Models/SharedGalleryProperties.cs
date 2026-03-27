@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the properties of a shared gallery. </summary>
     internal partial class SharedGalleryProperties

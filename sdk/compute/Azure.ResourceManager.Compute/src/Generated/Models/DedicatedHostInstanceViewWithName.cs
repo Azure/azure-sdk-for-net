@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The instance view of a dedicated host that includes the name of the dedicated host. It is used for the response to the instance view of a dedicated host group. </summary>
     public partial class DedicatedHostInstanceViewWithName : DedicatedHostInstanceView

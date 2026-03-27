@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Used to specify the file format when making request for SAS on a VHDX file format snapshot. </summary>
     public readonly partial struct FileFormat : IEquatable<FileFormat>

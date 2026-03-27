@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
     public partial class ProximityPlacementGroupResource : IJsonModel<ProximityPlacementGroupData>
@@ -27,11 +27,11 @@ namespace ComputeCombine
         ProximityPlacementGroupData IJsonModel<ProximityPlacementGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProximityPlacementGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProximityPlacementGroupData>(Data, options, ComputeCombineContext.Default);
+        BinaryData IPersistableModel<ProximityPlacementGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProximityPlacementGroupData>(Data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProximityPlacementGroupData IPersistableModel<ProximityPlacementGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProximityPlacementGroupData>(data, options, ComputeCombineContext.Default);
+        ProximityPlacementGroupData IPersistableModel<ProximityPlacementGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProximityPlacementGroupData>(data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ProximityPlacementGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

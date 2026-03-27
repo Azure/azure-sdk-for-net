@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Usages operation response. </summary>
     internal partial class ListUsagesResult : IJsonModel<ListUsagesResult>
@@ -46,7 +46,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ListUsagesResult)} does not support writing '{options.Format}' format.");
             }
@@ -89,7 +89,7 @@ namespace Compute.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ComputeCombineUsage item in Value)
+            foreach (ComputeUsage item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Compute.Models
             {
                 return null;
             }
-            IList<ComputeCombineUsage> value = default;
+            IList<ComputeUsage> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ComputeCombineUsage> array = new List<ComputeCombineUsage>();
+                    List<ComputeUsage> array = new List<ComputeUsage>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputeCombineUsage.DeserializeComputeCombineUsage(item, options));
+                        array.Add(ComputeUsage.DeserializeComputeUsage(item, options));
                     }
                     value = array;
                     continue;

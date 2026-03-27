@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a gallery image definition. </summary>
     internal partial class CommunityGalleryImageProperties

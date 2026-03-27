@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
     public partial class SnapshotResource : IJsonModel<SnapshotData>
@@ -27,11 +27,11 @@ namespace ComputeCombine
         SnapshotData IJsonModel<SnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SnapshotData>(Data, options, ComputeCombineContext.Default);
+        BinaryData IPersistableModel<SnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SnapshotData>(Data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SnapshotData IPersistableModel<SnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SnapshotData>(data, options, ComputeCombineContext.Default);
+        SnapshotData IPersistableModel<SnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SnapshotData>(data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

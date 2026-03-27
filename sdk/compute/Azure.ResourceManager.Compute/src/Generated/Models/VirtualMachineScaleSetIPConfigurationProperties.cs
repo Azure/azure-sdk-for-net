@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set network profile's IP configuration properties. </summary>
     internal partial class VirtualMachineScaleSetIPConfigurationProperties

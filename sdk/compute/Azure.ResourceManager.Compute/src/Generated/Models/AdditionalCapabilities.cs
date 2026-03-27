@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Enables or disables a capability on the virtual machine or virtual machine scale set. </summary>
     public partial class AdditionalCapabilities

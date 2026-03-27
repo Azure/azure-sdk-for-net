@@ -7,7 +7,7 @@
 
 using Azure;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     internal partial class ErrorResult<T> : Response<T>
     {

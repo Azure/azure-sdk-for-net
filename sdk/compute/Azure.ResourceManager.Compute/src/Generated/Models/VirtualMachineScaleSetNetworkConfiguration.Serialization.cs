@@ -9,12 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set network profile's network configurations. </summary>
-    public partial class VirtualMachineScaleSetNetworkConfiguration : IJsonModel<VirtualMachineScaleSetNetworkConfiguration>
+    public partial class VirtualMachineScaleSetNetworkConfiguration : ComputeWriteableSubResourceData, IJsonModel<VirtualMachineScaleSetNetworkConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkConfiguration"/> for deserialization. </summary>
         internal VirtualMachineScaleSetNetworkConfiguration()
@@ -45,7 +45,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetNetworkConfiguration)} does not support writing '{options.Format}' format.");
             }

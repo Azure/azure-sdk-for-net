@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Update Restore Point collection parameters. </summary>
-    public partial class RestorePointCollectionPatch : ComputeResourcePatch
+    public partial class RestorePointCollectionPatch : UpdateResource
     {
         /// <summary> Initializes a new instance of <see cref="RestorePointCollectionPatch"/>. </summary>
         public RestorePointCollectionPatch()

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The security profile of a gallery image version. </summary>
     internal partial class ImageVersionSecurityProfile

@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Update. </summary>
-    public partial class VirtualMachinePatch : ComputeResourcePatch
+    public partial class VirtualMachinePatch : UpdateResource
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePatch"/>. </summary>
         public VirtualMachinePatch()
@@ -48,7 +48,7 @@ namespace Compute.Models
         public IList<string> Zones { get; }
 
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
-        public VirtualMachineHardwareProfile HardwareProfile
+        public HardwareProfile HardwareProfile
         {
             get
             {
@@ -82,7 +82,7 @@ namespace Compute.Models
         }
 
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-        public VirtualMachineStorageProfile StorageProfile
+        public StorageProfile StorageProfile
         {
             get
             {
@@ -116,7 +116,7 @@ namespace Compute.Models
         }
 
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public VirtualMachineOSProfile OsProfile
+        public OSProfile OsProfile
         {
             get
             {
@@ -133,7 +133,7 @@ namespace Compute.Models
         }
 
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
-        public VirtualMachineNetworkProfile NetworkProfile
+        public NetworkProfile NetworkProfile
         {
             get
             {

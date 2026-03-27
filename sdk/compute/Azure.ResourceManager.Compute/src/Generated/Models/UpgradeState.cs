@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Code indicating the current status of the upgrade. </summary>
     public enum UpgradeState

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a single certificate reference in a Key Vault, and where the certificate should reside on the VM. </summary>
     public partial class VaultCertificate

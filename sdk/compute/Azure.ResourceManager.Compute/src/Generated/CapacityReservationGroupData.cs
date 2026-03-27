@@ -8,11 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Common.Models;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the capacity reservation group that the capacity reservations should be assigned to. Currently, a capacity reservation can only be added to a capacity reservation group at creation time. An existing capacity reservation cannot be added or moved to another capacity reservation group. </summary>
     public partial class CapacityReservationGroupData : TrackedResourceData
@@ -37,7 +36,7 @@ namespace ComputeCombine
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> capacity reservation group Properties. </param>
         /// <param name="zones"> The availability zones. </param>
-        internal CapacityReservationGroupData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CapacityReservationGroupProperties properties, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
+        internal CapacityReservationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CapacityReservationGroupProperties properties, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

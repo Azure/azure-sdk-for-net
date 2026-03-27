@@ -14,11 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using Compute;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a DedicatedHostGroup along with the instance operations that can be performed on it.
@@ -53,7 +52,7 @@ namespace ComputeCombine
         internal DedicatedHostGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string dedicatedHostGroupApiVersion);
-            _dedicatedHostGroupsClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _dedicatedHostGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             _dedicatedHostGroupsRestClient = new DedicatedHostGroups(_dedicatedHostGroupsClientDiagnostics, Pipeline, Endpoint, dedicatedHostGroupApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -127,7 +126,7 @@ namespace ComputeCombine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHostGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand?.ToString(), context);
+                HttpMessage message = _dedicatedHostGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand?.ToSerialString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DedicatedHostGroupData> response = Response.FromValue(DedicatedHostGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +175,7 @@ namespace ComputeCombine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHostGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand?.ToString(), context);
+                HttpMessage message = _dedicatedHostGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand?.ToSerialString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DedicatedHostGroupData> response = Response.FromValue(DedicatedHostGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -333,7 +332,7 @@ namespace ComputeCombine
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(response, rehydrationToken);
+                ComputeArmOperation operation = new ComputeArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -384,7 +383,7 @@ namespace ComputeCombine
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(response, rehydrationToken);
+                ComputeArmOperation operation = new ComputeArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

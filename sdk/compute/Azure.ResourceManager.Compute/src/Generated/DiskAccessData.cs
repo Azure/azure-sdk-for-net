@@ -8,11 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Common.Models;
-using ComputeDisk.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> disk access resource. </summary>
     public partial class DiskAccessData : TrackedResourceData
@@ -36,7 +35,7 @@ namespace ComputeCombine
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"></param>
         /// <param name="extendedLocation"> The extended location where the disk access will be created. Extended location cannot be changed. </param>
-        internal DiskAccessData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DiskAccessProperties properties, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal DiskAccessData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DiskAccessProperties properties, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -50,7 +49,7 @@ namespace ComputeCombine
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> A readonly collection of private endpoint connections created on the disk. Currently only one endpoint connection is supported. </summary>
-        public IReadOnlyList<ComputeCombinePrivateEndpointConnectionData> PrivateEndpointConnections
+        public IReadOnlyList<ComputePrivateEndpointConnectionData> PrivateEndpointConnections
         {
             get
             {

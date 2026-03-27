@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Refers to the security capability of the disk supported to create a Trusted launch or Confidential VM. </summary>
     public readonly partial struct SupportedSecurityOption : IEquatable<SupportedSecurityOption>

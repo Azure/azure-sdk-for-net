@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies additional settings to be applied when patch mode AutomaticByPlatform is selected in Linux patch settings. </summary>
     public partial class LinuxVMGuestPatchAutomaticByPlatformSettings
@@ -25,7 +25,7 @@ namespace Compute.Models
         /// <param name="rebootSetting"> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </param>
         /// <param name="bypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LinuxVMGuestPatchAutomaticByPlatformSettings(LinuxVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting, bool? bypassPlatformSafetyChecksOnUserSchedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LinuxVMGuestPatchAutomaticByPlatformSettings(LinuxVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting, bool? bypassPlatformSafetyChecksOnUserSchedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RebootSetting = rebootSetting;
             BypassPlatformSafetyChecksOnUserSchedule = bypassPlatformSafetyChecksOnUserSchedule;
@@ -33,7 +33,7 @@ namespace Compute.Models
         }
 
         /// <summary> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </summary>
-        public LinuxVmGuestPatchAutomaticByPlatformRebootSetting? RebootSetting { get; set; }
+        public LinuxVMGuestPatchAutomaticByPlatformRebootSetting? RebootSetting { get; set; }
 
         /// <summary> Enables customer to schedule patching without accidental upgrades. </summary>
         public bool? BypassPlatformSafetyChecksOnUserSchedule { get; set; }

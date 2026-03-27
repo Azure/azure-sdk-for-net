@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Information of community gallery if current gallery is shared to community. </summary>
     public partial class CommunityGalleryInfo
@@ -31,7 +31,7 @@ namespace ComputeGallery.Models
         /// <param name="communityGalleryEnabled"> Contains info about whether community gallery sharing is enabled. </param>
         /// <param name="publicNames"> Community gallery public name list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommunityGalleryInfo(string publisherUri, string publisherContact, string eula, string publicNamePrefix, bool? communityGalleryEnabled, IReadOnlyList<string> publicNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommunityGalleryInfo(Uri publisherUri, string publisherContact, string eula, string publicNamePrefix, bool? communityGalleryEnabled, IReadOnlyList<string> publicNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublisherUri = publisherUri;
             PublisherContact = publisherContact;
@@ -41,9 +41,6 @@ namespace ComputeGallery.Models
             PublicNames = publicNames;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The link to the publisher website. Visible to all users. </summary>
-        public string PublisherUri { get; set; }
 
         /// <summary> Community gallery publisher support email. The email address of the publisher. Visible to all users. </summary>
         public string PublisherContact { get; set; }

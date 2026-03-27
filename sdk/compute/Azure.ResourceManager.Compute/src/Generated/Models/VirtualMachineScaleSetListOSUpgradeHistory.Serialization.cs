@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> List of Virtual Machine Scale Set OS Upgrade History operation response. </summary>
     internal partial class VirtualMachineScaleSetListOSUpgradeHistory : IJsonModel<VirtualMachineScaleSetListOSUpgradeHistory>
@@ -46,7 +46,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetListOSUpgradeHistory)} does not support writing '{options.Format}' format.");
             }

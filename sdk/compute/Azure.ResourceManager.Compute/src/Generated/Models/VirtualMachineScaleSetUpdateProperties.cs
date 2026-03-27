@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a Virtual Machine Scale Set. </summary>
     internal partial class VirtualMachineScaleSetUpdateProperties
@@ -38,7 +37,7 @@ namespace Compute.Models
         /// <param name="zonalPlatformFaultDomainAlignMode"> Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. </param>
         /// <param name="skuProfile"> Specifies the sku profile for the virtual machine scale set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdateProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, bool? singlePlacementGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, SubResource proximityPlacementGroup, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, SpotRestorePolicy spotRestorePolicy, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetUpdateProperties(UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, bool? singlePlacementGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, SubResource proximityPlacementGroup, PriorityMixPolicy priorityMixPolicy, SpotRestorePolicy spotRestorePolicy, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, SkuProfile skuProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpgradePolicy = upgradePolicy;
             AutomaticRepairsPolicy = automaticRepairsPolicy;
@@ -58,7 +57,7 @@ namespace Compute.Models
         }
 
         /// <summary> The upgrade policy. </summary>
-        public VirtualMachineScaleSetUpgradePolicy UpgradePolicy { get; set; }
+        public UpgradePolicy UpgradePolicy { get; set; }
 
         /// <summary> Policy for automatic repairs. </summary>
         public AutomaticRepairsPolicy AutomaticRepairsPolicy { get; set; }
@@ -85,7 +84,7 @@ namespace Compute.Models
         internal SubResource ProximityPlacementGroup { get; set; }
 
         /// <summary> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </summary>
-        public VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy { get; set; }
+        public PriorityMixPolicy PriorityMixPolicy { get; set; }
 
         /// <summary> Specifies the Spot Restore properties for the virtual machine scale set. </summary>
         public SpotRestorePolicy SpotRestorePolicy { get; set; }
@@ -97,7 +96,7 @@ namespace Compute.Models
         public ZonalPlatformFaultDomainAlignMode? ZonalPlatformFaultDomainAlignMode { get; set; }
 
         /// <summary> Specifies the sku profile for the virtual machine scale set. </summary>
-        public ComputeSkuProfile SkuProfile { get; set; }
+        public SkuProfile SkuProfile { get; set; }
 
         /// <summary> Resource Id. </summary>
         public string ProximityPlacementGroupId

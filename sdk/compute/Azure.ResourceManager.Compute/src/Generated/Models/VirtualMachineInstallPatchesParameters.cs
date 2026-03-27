@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Input for InstallPatches as directly received by the API. </summary>
     public partial class VirtualMachineInstallPatchesParameters

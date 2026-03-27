@@ -15,9 +15,8 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using ComputeGallery;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="GalleryApplicationResource"/> and their operations.
@@ -40,7 +39,7 @@ namespace ComputeCombine
         internal GalleryApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(GalleryApplicationResource.ResourceType, out string galleryApplicationApiVersion);
-            _galleryApplicationsClientDiagnostics = new ClientDiagnostics("ComputeCombine", GalleryApplicationResource.ResourceType.Namespace, Diagnostics);
+            _galleryApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", GalleryApplicationResource.ResourceType.Namespace, Diagnostics);
             _galleryApplicationsRestClient = new GalleryApplications(_galleryApplicationsClientDiagnostics, Pipeline, Endpoint, galleryApplicationApiVersion ?? "2025-03-03");
             ValidateResourceId(id);
         }
@@ -93,7 +92,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryApplicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, GalleryApplicationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<GalleryApplicationResource> operation = new ComputeCombineArmOperation<GalleryApplicationResource>(
+                ComputeArmOperation<GalleryApplicationResource> operation = new ComputeArmOperation<GalleryApplicationResource>(
                     new GalleryApplicationOperationSource(Client),
                     _galleryApplicationsClientDiagnostics,
                     Pipeline,
@@ -151,7 +150,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryApplicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, GalleryApplicationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<GalleryApplicationResource> operation = new ComputeCombineArmOperation<GalleryApplicationResource>(
+                ComputeArmOperation<GalleryApplicationResource> operation = new ComputeArmOperation<GalleryApplicationResource>(
                     new GalleryApplicationOperationSource(Client),
                     _galleryApplicationsClientDiagnostics,
                     Pipeline,

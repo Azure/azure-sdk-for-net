@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains the IP tag associated with the public IP address. </summary>
     public partial class VirtualMachineIpTag

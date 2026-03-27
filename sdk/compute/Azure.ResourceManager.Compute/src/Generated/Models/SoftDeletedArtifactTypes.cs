@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> artifact type of the soft-deleted resource. </summary>
     public readonly partial struct SoftDeletedArtifactTypes : IEquatable<SoftDeletedArtifactTypes>

@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Scale Set Extension. </summary>
     public partial class VirtualMachineScaleSetExtensionPatch : SubResourceReadOnly
@@ -214,23 +213,6 @@ namespace Compute.Models
                     Properties = new VirtualMachineScaleSetExtensionProperties();
                 }
                 Properties.SuppressFailures = value.Value;
-            }
-        }
-
-        /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
-        public KeyVaultSecretReference ProtectedSettingsFromKeyVault
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProtectedSettingsFromKeyVault;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineScaleSetExtensionProperties();
-                }
-                Properties.ProtectedSettingsFromKeyVault = value;
             }
         }
     }

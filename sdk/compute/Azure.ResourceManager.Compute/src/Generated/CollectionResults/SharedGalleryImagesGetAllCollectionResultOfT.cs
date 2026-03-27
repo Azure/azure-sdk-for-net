@@ -10,10 +10,9 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using ComputeCombine;
-using ComputeGallery.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeGallery
+namespace Azure.ResourceManager.Compute
 {
     internal partial class SharedGalleryImagesGetAllCollectionResultOfT : Pageable<SharedGalleryImageData>
     {

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The SAS URIs of the console screenshot and serial log blobs. </summary>
     public partial class RetrieveBootDiagnosticsDataResult

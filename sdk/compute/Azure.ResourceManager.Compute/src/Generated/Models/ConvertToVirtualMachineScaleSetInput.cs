@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the Virtual Machine Scale Set to convert from Availability Set. </summary>
     public partial class ConvertToVirtualMachineScaleSetInput

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies settings related to VM Guest Patching on Linux. </summary>
     public partial class LinuxPatchSettings

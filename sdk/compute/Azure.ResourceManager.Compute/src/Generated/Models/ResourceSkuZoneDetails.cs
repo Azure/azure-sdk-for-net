@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeSku.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes The zonal capabilities of a SKU. </summary>
     public partial class ResourceSkuZoneDetails

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The configuration parameters for zone allocation of a virtual machine scale set. </summary>
     public partial class ZoneAllocationPolicy

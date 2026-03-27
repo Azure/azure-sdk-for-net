@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an Operating System disk. </summary>
     public partial class ImageOSDisk : ImageDisk, IJsonModel<ImageOSDisk>
@@ -46,7 +45,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ImageOSDisk)} does not support writing '{options.Format}' format.");
             }
@@ -115,7 +114,7 @@ namespace Compute.Models
             SubResource snapshot = default;
             SubResource managedDisk = default;
             string blobUri = default;
-            CachingType? caching = default;
+            CachingTypes? caching = default;
             int? diskSizeGB = default;
             StorageAccountTypes? storageAccountType = default;
             DiskEncryptionSetParameters diskEncryptionSet = default;
@@ -153,7 +152,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    caching = prop.Value.GetString().ToCachingType();
+                    caching = prop.Value.GetString().ToCachingTypes();
                     continue;
                 }
                 if (prop.NameEquals("diskSizeGB"u8))

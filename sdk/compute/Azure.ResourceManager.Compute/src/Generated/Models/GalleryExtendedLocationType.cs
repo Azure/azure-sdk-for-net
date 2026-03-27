@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> It is type of the extended location. </summary>
     public readonly partial struct GalleryExtendedLocationType : IEquatable<GalleryExtendedLocationType>

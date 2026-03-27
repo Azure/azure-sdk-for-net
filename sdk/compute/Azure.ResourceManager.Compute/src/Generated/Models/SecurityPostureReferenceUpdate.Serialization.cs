@@ -9,12 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </summary>
-    public partial class SecurityPostureReferenceUpdate : IJsonModel<SecurityPostureReferenceUpdate>
+    internal partial class SecurityPostureReferenceUpdate : IJsonModel<SecurityPostureReferenceUpdate>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -40,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SecurityPostureReferenceUpdate)} does not support writing '{options.Format}' format.");
             }

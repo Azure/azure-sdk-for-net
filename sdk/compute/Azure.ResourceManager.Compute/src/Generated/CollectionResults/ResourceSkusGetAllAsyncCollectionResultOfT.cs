@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using ComputeSku.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeSku
+namespace Azure.ResourceManager.Compute
 {
     internal partial class ResourceSkusGetAllAsyncCollectionResultOfT : AsyncPageable<ResourceSku>
     {
@@ -68,7 +68,7 @@ namespace ComputeSku
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _filter, _includeExtendedLocations, _context) : _client.CreateGetAllRequest(_subscriptionId, _filter, _includeExtendedLocations, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeCombineSubscriptionResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetAll");
             scope.Start();
             try
             {

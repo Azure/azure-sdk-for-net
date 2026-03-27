@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies Reboot related Scheduled Event related configurations. </summary>
     internal partial class UserInitiatedReboot

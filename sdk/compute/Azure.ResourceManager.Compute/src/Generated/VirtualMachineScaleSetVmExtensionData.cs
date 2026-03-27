@@ -8,10 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Common.Models;
-using Compute.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Describes a VMSS VM Extension. </summary>
     public partial class VirtualMachineScaleSetVMExtensionData : SubResourceReadOnly

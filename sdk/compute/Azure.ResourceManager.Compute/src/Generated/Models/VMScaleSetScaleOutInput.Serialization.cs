@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The input for ScaleOut. </summary>
     public partial class VMScaleSetScaleOutInput : IJsonModel<VMScaleSetScaleOutInput>
@@ -46,7 +46,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VMScaleSetScaleOutInput)} does not support writing '{options.Format}' format.");
             }
@@ -69,9 +69,7 @@ namespace Compute.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(vmScaleSetScaleOutInput, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(vmScaleSetScaleOutInput, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

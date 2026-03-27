@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The source of the gallery artifact version. </summary>
     public partial class GalleryArtifactVersionFullSource : GalleryArtifactVersionSource

@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
     public partial class DiskResource : IJsonModel<DiskData>
@@ -27,11 +27,11 @@ namespace ComputeCombine
         DiskData IJsonModel<DiskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DiskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskData>(Data, options, ComputeCombineContext.Default);
+        BinaryData IPersistableModel<DiskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskData>(Data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiskData IPersistableModel<DiskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskData>(data, options, ComputeCombineContext.Default);
+        DiskData IPersistableModel<DiskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskData>(data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DiskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

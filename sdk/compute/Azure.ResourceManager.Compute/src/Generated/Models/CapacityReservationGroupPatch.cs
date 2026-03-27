@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the capacity reservation group. Only tags can be updated. </summary>
-    public partial class CapacityReservationGroupPatch : ComputeResourcePatch
+    public partial class CapacityReservationGroupPatch : UpdateResource
     {
         /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupPatch"/>. </summary>
         public CapacityReservationGroupPatch()

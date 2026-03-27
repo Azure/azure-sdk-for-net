@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Common.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Api error base. </summary>
     public partial class ApiErrorBase

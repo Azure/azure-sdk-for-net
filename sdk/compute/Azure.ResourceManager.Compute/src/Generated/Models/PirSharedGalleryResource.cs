@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Base information about the shared gallery resource in pir. </summary>
     public partial class PirSharedGalleryResource : PirResource

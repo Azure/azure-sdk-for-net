@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Common.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The state of snapshot which determines the access availability of the snapshot. </summary>
     public readonly partial struct SnapshotAccessState : IEquatable<SnapshotAccessState>

@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The status of the latest virtual machine scale set rolling upgrade. </summary>
     internal partial class RollingUpgradeStatusInfoProperties

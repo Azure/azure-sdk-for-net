@@ -9,7 +9,7 @@ using System;
 using System.Threading;
 using Azure;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     internal static partial class RequestContextExtensions
     {

@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a Virtual Machine Scale Set Extension. </summary>
     internal partial class VirtualMachineScaleSetExtensionProperties

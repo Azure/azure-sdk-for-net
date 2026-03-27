@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The state of the patch after the installation operation completed. </summary>
     public readonly partial struct PatchInstallationState : IEquatable<PatchInstallationState>

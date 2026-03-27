@@ -15,9 +15,8 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using ComputeGallery;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="GalleryScriptVersionResource"/> and their operations.
@@ -40,7 +39,7 @@ namespace ComputeCombine
         internal GalleryScriptVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(GalleryScriptVersionResource.ResourceType, out string galleryScriptVersionApiVersion);
-            _galleryScriptVersionsClientDiagnostics = new ClientDiagnostics("ComputeCombine", GalleryScriptVersionResource.ResourceType.Namespace, Diagnostics);
+            _galleryScriptVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", GalleryScriptVersionResource.ResourceType.Namespace, Diagnostics);
             _galleryScriptVersionsRestClient = new GalleryScriptVersions(_galleryScriptVersionsClientDiagnostics, Pipeline, Endpoint, galleryScriptVersionApiVersion ?? "2025-03-03");
             ValidateResourceId(id);
         }
@@ -93,7 +92,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryScriptVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, GalleryScriptVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<GalleryScriptVersionResource> operation = new ComputeCombineArmOperation<GalleryScriptVersionResource>(
+                ComputeArmOperation<GalleryScriptVersionResource> operation = new ComputeArmOperation<GalleryScriptVersionResource>(
                     new GalleryScriptVersionOperationSource(Client),
                     _galleryScriptVersionsClientDiagnostics,
                     Pipeline,
@@ -151,7 +150,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryScriptVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, GalleryScriptVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<GalleryScriptVersionResource> operation = new ComputeCombineArmOperation<GalleryScriptVersionResource>(
+                ComputeArmOperation<GalleryScriptVersionResource> operation = new ComputeArmOperation<GalleryScriptVersionResource>(
                     new GalleryScriptVersionOperationSource(Client),
                     _galleryScriptVersionsClientDiagnostics,
                     Pipeline,

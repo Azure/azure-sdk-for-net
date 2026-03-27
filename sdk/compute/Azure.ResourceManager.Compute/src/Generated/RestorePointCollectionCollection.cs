@@ -15,11 +15,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using Compute;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="RestorePointCollectionResource"/> and their operations.
@@ -42,7 +41,7 @@ namespace ComputeCombine
         internal RestorePointCollectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(RestorePointCollectionResource.ResourceType, out string restorePointCollectionApiVersion);
-            _restorePointCollectionsClientDiagnostics = new ClientDiagnostics("ComputeCombine", RestorePointCollectionResource.ResourceType.Namespace, Diagnostics);
+            _restorePointCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePointCollectionResource.ResourceType.Namespace, Diagnostics);
             _restorePointCollectionsRestClient = new RestorePointCollections(_restorePointCollectionsClientDiagnostics, Pipeline, Endpoint, restorePointCollectionApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -98,7 +97,7 @@ namespace ComputeCombine
                 Response<RestorePointCollectionData> response = Response.FromValue(RestorePointCollectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation<RestorePointCollectionResource> operation = new ComputeCombineArmOperation<RestorePointCollectionResource>(Response.FromValue(new RestorePointCollectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeArmOperation<RestorePointCollectionResource> operation = new ComputeArmOperation<RestorePointCollectionResource>(Response.FromValue(new RestorePointCollectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -153,7 +152,7 @@ namespace ComputeCombine
                 Response<RestorePointCollectionData> response = Response.FromValue(RestorePointCollectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation<RestorePointCollectionResource> operation = new ComputeCombineArmOperation<RestorePointCollectionResource>(Response.FromValue(new RestorePointCollectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeArmOperation<RestorePointCollectionResource> operation = new ComputeArmOperation<RestorePointCollectionResource>(Response.FromValue(new RestorePointCollectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -292,7 +291,7 @@ namespace ComputeCombine
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RestorePointCollectionData, RestorePointCollectionResource>(new RestorePointCollectionsGetAllAsyncCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new RestorePointCollectionResource(Client, data));
+            return new AsyncPageableWrapper<RestorePointCollectionData, RestorePointCollectionResource>(new RestorePointCollectionsListAsyncCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new RestorePointCollectionResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +319,7 @@ namespace ComputeCombine
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RestorePointCollectionData, RestorePointCollectionResource>(new RestorePointCollectionsGetAllCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new RestorePointCollectionResource(Client, data));
+            return new PageableWrapper<RestorePointCollectionData, RestorePointCollectionResource>(new RestorePointCollectionsListCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new RestorePointCollectionResource(Client, data));
         }
 
         /// <summary>

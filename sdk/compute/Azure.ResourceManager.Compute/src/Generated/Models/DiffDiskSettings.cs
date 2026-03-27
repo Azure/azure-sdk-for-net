@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the parameters of ephemeral disk settings that can be specified for operating system disk. <b>Note:</b> The ephemeral disk settings can only be specified for managed disk. </summary>
     public partial class DiffDiskSettings

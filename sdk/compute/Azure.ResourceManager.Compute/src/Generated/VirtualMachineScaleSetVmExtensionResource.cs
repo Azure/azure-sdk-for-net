@@ -13,10 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Compute;
-using Compute.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a VirtualMachineScaleSetVMExtension along with the instance operations that can be performed on it.
@@ -51,7 +50,7 @@ namespace ComputeCombine
         internal VirtualMachineScaleSetVMExtensionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string virtualMachineScaleSetVMExtensionApiVersion);
-            _virtualMachineScaleSetVMExtensionsClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _virtualMachineScaleSetVMExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             _virtualMachineScaleSetVMExtensionsRestClient = new VirtualMachineScaleSetVMExtensions(_virtualMachineScaleSetVMExtensionsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetVMExtensionApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -231,7 +230,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineScaleSetVMExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, VirtualMachineScaleSetVMExtensionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<VirtualMachineScaleSetVMExtensionResource> operation = new ComputeCombineArmOperation<VirtualMachineScaleSetVMExtensionResource>(
+                ComputeArmOperation<VirtualMachineScaleSetVMExtensionResource> operation = new ComputeArmOperation<VirtualMachineScaleSetVMExtensionResource>(
                     new VirtualMachineScaleSetVMExtensionOperationSource(Client),
                     _virtualMachineScaleSetVMExtensionsClientDiagnostics,
                     Pipeline,
@@ -290,7 +289,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineScaleSetVMExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, VirtualMachineScaleSetVMExtensionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<VirtualMachineScaleSetVMExtensionResource> operation = new ComputeCombineArmOperation<VirtualMachineScaleSetVMExtensionResource>(
+                ComputeArmOperation<VirtualMachineScaleSetVMExtensionResource> operation = new ComputeArmOperation<VirtualMachineScaleSetVMExtensionResource>(
                     new VirtualMachineScaleSetVMExtensionOperationSource(Client),
                     _virtualMachineScaleSetVMExtensionsClientDiagnostics,
                     Pipeline,
@@ -345,7 +344,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineScaleSetVMExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_virtualMachineScaleSetVMExtensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetVMExtensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -394,7 +393,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineScaleSetVMExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_virtualMachineScaleSetVMExtensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetVMExtensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

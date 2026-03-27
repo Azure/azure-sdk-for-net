@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set updatable network profile's IP configuration.Use this object for updating network profile's IP Configuration. </summary>
     internal partial class VirtualMachineScaleSetUpdateNetworkConfigurationProperties : IJsonModel<VirtualMachineScaleSetUpdateNetworkConfigurationProperties>
@@ -41,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkConfigurationProperties)} does not support writing '{options.Format}' format.");
             }

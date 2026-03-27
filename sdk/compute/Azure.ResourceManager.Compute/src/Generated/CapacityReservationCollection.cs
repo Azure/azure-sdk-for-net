@@ -15,10 +15,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Compute;
-using Compute.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="CapacityReservationResource"/> and their operations.
@@ -41,7 +40,7 @@ namespace ComputeCombine
         internal CapacityReservationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(CapacityReservationResource.ResourceType, out string capacityReservationApiVersion);
-            _capacityReservationsClientDiagnostics = new ClientDiagnostics("ComputeCombine", CapacityReservationResource.ResourceType.Namespace, Diagnostics);
+            _capacityReservationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CapacityReservationResource.ResourceType.Namespace, Diagnostics);
             _capacityReservationsRestClient = new CapacityReservations(_capacityReservationsClientDiagnostics, Pipeline, Endpoint, capacityReservationApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -94,7 +93,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _capacityReservationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, CapacityReservationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<CapacityReservationResource> operation = new ComputeCombineArmOperation<CapacityReservationResource>(
+                ComputeArmOperation<CapacityReservationResource> operation = new ComputeArmOperation<CapacityReservationResource>(
                     new CapacityReservationOperationSource(Client),
                     _capacityReservationsClientDiagnostics,
                     Pipeline,
@@ -152,7 +151,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _capacityReservationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, CapacityReservationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<CapacityReservationResource> operation = new ComputeCombineArmOperation<CapacityReservationResource>(
+                ComputeArmOperation<CapacityReservationResource> operation = new ComputeArmOperation<CapacityReservationResource>(
                     new CapacityReservationOperationSource(Client),
                     _capacityReservationsClientDiagnostics,
                     Pipeline,
@@ -292,7 +291,7 @@ namespace ComputeCombine
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CapacityReservationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CapacityReservationResource> GetAllAsync(CapacityReservationGroupGetExpand? expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CapacityReservationResource> GetAllAsync(ExpandTypesForGetCapacityReservationGroups? expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -327,7 +326,7 @@ namespace ComputeCombine
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CapacityReservationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CapacityReservationResource> GetAll(CapacityReservationGroupGetExpand? expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<CapacityReservationResource> GetAll(ExpandTypesForGetCapacityReservationGroups? expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

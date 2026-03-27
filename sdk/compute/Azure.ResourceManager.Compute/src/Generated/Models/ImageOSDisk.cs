@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an Operating System disk. </summary>
     public partial class ImageOSDisk : ImageDisk
@@ -34,7 +33,7 @@ namespace Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from a custom image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
         /// <param name="osState"> The OS State. For managed images, use Generalized. </param>
-        internal ImageOSDisk(SubResource snapshot, SubResource managedDisk, string blobUri, CachingType? caching, int? diskSizeGB, StorageAccountTypes? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties, OperatingSystemTypes osType, OperatingSystemStateTypes osState) : base(snapshot, managedDisk, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSet, additionalBinaryDataProperties)
+        internal ImageOSDisk(SubResource snapshot, SubResource managedDisk, string blobUri, CachingTypes? caching, int? diskSizeGB, StorageAccountTypes? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties, OperatingSystemTypes osType, OperatingSystemStateTypes osState) : base(snapshot, managedDisk, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSet, additionalBinaryDataProperties)
         {
             OsType = osType;
             OsState = osState;

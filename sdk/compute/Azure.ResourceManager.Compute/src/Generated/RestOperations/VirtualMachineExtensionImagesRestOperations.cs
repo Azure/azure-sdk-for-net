@@ -9,9 +9,8 @@ using System;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using ComputeCombine;
 
-namespace Compute
+namespace Azure.ResourceManager.Compute
 {
     internal partial class VirtualMachineExtensionImages
     {
@@ -114,7 +113,7 @@ namespace Compute
             }
             if (top != null)
             {
-                uri.AppendQuery("$top", ComputeCombine.TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (@orderby != null)
             {

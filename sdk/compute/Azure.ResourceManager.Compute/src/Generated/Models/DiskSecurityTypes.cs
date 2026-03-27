@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the SecurityType of the VM. Applicable for OS disks only. </summary>
     public readonly partial struct DiskSecurityTypes : IEquatable<DiskSecurityTypes>

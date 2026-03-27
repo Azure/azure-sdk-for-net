@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set operating system disk. </summary>
     public partial class VirtualMachineScaleSetOSDisk : IJsonModel<VirtualMachineScaleSetOSDisk>
@@ -46,7 +45,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetOSDisk)} does not support writing '{options.Format}' format.");
             }
@@ -185,16 +184,16 @@ namespace Compute.Models
                 return null;
             }
             string name = default;
-            CachingType? caching = default;
+            CachingTypes? caching = default;
             bool? writeAcceleratorEnabled = default;
-            DiskCreateOptionType createOption = default;
+            DiskCreateOptionTypes createOption = default;
             DiffDiskSettings diffDiskSettings = default;
             int? diskSizeGB = default;
             OperatingSystemTypes? osType = default;
             VirtualHardDisk image = default;
             IList<string> vhdContainers = default;
             VirtualMachineScaleSetManagedDiskParameters managedDisk = default;
-            DiskDeleteOptionType? deleteOption = default;
+            DiskDeleteOptionTypes? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,7 +208,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    caching = prop.Value.GetString().ToCachingType();
+                    caching = prop.Value.GetString().ToCachingTypes();
                     continue;
                 }
                 if (prop.NameEquals("writeAcceleratorEnabled"u8))
@@ -223,7 +222,7 @@ namespace Compute.Models
                 }
                 if (prop.NameEquals("createOption"u8))
                 {
-                    createOption = new DiskCreateOptionType(prop.Value.GetString());
+                    createOption = new DiskCreateOptionTypes(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diffDiskSettings"u8))
@@ -298,7 +297,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    deleteOption = new DiskDeleteOptionType(prop.Value.GetString());
+                    deleteOption = new DiskDeleteOptionTypes(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a Virtual Machine. </summary>
     internal partial class VirtualMachineProperties : IJsonModel<VirtualMachineProperties>
@@ -41,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineProperties)} does not support writing '{options.Format}' format.");
             }
@@ -252,12 +251,12 @@ namespace Compute.Models
             {
                 return null;
             }
-            VirtualMachineHardwareProfile hardwareProfile = default;
+            HardwareProfile hardwareProfile = default;
             ScheduledEventsPolicy scheduledEventsPolicy = default;
-            VirtualMachineStorageProfile storageProfile = default;
+            StorageProfile storageProfile = default;
             AdditionalCapabilities additionalCapabilities = default;
-            VirtualMachineOSProfile osProfile = default;
-            VirtualMachineNetworkProfile networkProfile = default;
+            OSProfile osProfile = default;
+            NetworkProfile networkProfile = default;
             SecurityProfile securityProfile = default;
             DiagnosticsProfile diagnosticsProfile = default;
             SubResource availabilitySet = default;
@@ -288,7 +287,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(prop.Value, options);
+                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scheduledEventsPolicy"u8))
@@ -306,7 +305,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    storageProfile = VirtualMachineStorageProfile.DeserializeVirtualMachineStorageProfile(prop.Value, options);
+                    storageProfile = StorageProfile.DeserializeStorageProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("additionalCapabilities"u8))
@@ -324,7 +323,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(prop.Value, options);
+                    osProfile = OSProfile.DeserializeOSProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("networkProfile"u8))
@@ -333,7 +332,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    networkProfile = VirtualMachineNetworkProfile.DeserializeVirtualMachineNetworkProfile(prop.Value, options);
+                    networkProfile = NetworkProfile.DeserializeNetworkProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("securityProfile"u8))

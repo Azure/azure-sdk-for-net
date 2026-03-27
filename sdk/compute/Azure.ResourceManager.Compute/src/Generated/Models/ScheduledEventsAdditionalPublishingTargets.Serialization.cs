@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The ScheduledEventsAdditionalPublishingTargets. </summary>
     internal partial class ScheduledEventsAdditionalPublishingTargets : IJsonModel<ScheduledEventsAdditionalPublishingTargets>
@@ -40,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ScheduledEventsAdditionalPublishingTargets)} does not support writing '{options.Format}' format.");
             }

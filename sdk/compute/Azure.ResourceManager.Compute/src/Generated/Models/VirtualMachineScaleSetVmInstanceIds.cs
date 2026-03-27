@@ -7,26 +7,26 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies a list of virtual machine instance IDs from the VM scale set. </summary>
-    public partial class VirtualMachineScaleSetVmInstanceIds
+    public partial class VirtualMachineScaleSetVMInstanceIDs
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmInstanceIds"/>. </summary>
-        public VirtualMachineScaleSetVmInstanceIds()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMInstanceIDs"/>. </summary>
+        public VirtualMachineScaleSetVMInstanceIDs()
         {
             InstanceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmInstanceIds"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMInstanceIDs"/>. </summary>
         /// <param name="instanceIds"> The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual machines in the virtual machine scale set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVmInstanceIds(IList<string> instanceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVMInstanceIDs(IList<string> instanceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstanceIds = instanceIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

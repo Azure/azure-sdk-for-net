@@ -13,10 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Compute;
-using Compute.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="RestorePointResource"/> and their operations.
@@ -39,7 +38,7 @@ namespace ComputeCombine
         internal RestorePointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(RestorePointResource.ResourceType, out string restorePointApiVersion);
-            _restorePointsClientDiagnostics = new ClientDiagnostics("ComputeCombine", RestorePointResource.ResourceType.Namespace, Diagnostics);
+            _restorePointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePointResource.ResourceType.Namespace, Diagnostics);
             _restorePointsRestClient = new RestorePoints(_restorePointsClientDiagnostics, Pipeline, Endpoint, restorePointApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -92,7 +91,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, RestorePointData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<RestorePointResource> operation = new ComputeCombineArmOperation<RestorePointResource>(
+                ComputeArmOperation<RestorePointResource> operation = new ComputeArmOperation<RestorePointResource>(
                     new RestorePointOperationSource(Client),
                     _restorePointsClientDiagnostics,
                     Pipeline,
@@ -150,7 +149,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, RestorePointData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<RestorePointResource> operation = new ComputeCombineArmOperation<RestorePointResource>(
+                ComputeArmOperation<RestorePointResource> operation = new ComputeArmOperation<RestorePointResource>(
                     new RestorePointOperationSource(Client),
                     _restorePointsClientDiagnostics,
                     Pipeline,

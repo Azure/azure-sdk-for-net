@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The name of the signature template that contains default UEFI keys. </summary>
     public readonly partial struct UefiSignatureTemplateName : IEquatable<UefiSignatureTemplateName>

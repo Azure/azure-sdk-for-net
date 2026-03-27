@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the type of the proximity placement group. Possible values are: <b>Standard</b> : Co-locate resources within an Azure region or Availability Zone. <b>Ultra</b> : For future use. </summary>
     public readonly partial struct ProximityPlacementGroupType : IEquatable<ProximityPlacementGroupType>

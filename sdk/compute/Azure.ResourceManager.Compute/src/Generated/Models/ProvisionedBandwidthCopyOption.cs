@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> If this field is set on a snapshot and createOption is CopyStart, the snapshot will be copied at a quicker speed. </summary>
     public readonly partial struct ProvisionedBandwidthCopyOption : IEquatable<ProvisionedBandwidthCopyOption>

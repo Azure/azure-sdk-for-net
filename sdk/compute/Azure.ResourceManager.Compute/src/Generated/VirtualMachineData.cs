@@ -8,11 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Common.Models;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Describes a Virtual Machine. </summary>
     public partial class VirtualMachineData : TrackedResourceData
@@ -45,7 +44,7 @@ namespace ComputeCombine
         /// <param name="managedBy"> ManagedBy is set to Virtual Machine Scale Set(VMSS) flex ARM resourceID, if the VM is part of the VMSS. This property is used by platform for internal resource group delete optimization. </param>
         /// <param name="eTag"> Etag is property returned in Create/Update/Get response of the VM, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <param name="placement"> Placement section specifies the user-defined constraints for virtual machine hardware placement. This property cannot be changed once VM is provisioned. Minimum api-version: 2024-11-01. </param>
-        internal VirtualMachineData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineProperties properties, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, VirtualMachineIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, string managedBy, string eTag, Placement placement) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineProperties properties, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, VirtualMachineIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, string managedBy, string eTag, Placement placement) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -87,7 +86,7 @@ namespace ComputeCombine
         public Placement Placement { get; set; }
 
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
-        public VirtualMachineHardwareProfile HardwareProfile
+        public HardwareProfile HardwareProfile
         {
             get
             {
@@ -121,7 +120,7 @@ namespace ComputeCombine
         }
 
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-        public VirtualMachineStorageProfile StorageProfile
+        public StorageProfile StorageProfile
         {
             get
             {
@@ -155,7 +154,7 @@ namespace ComputeCombine
         }
 
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public VirtualMachineOSProfile OsProfile
+        public OSProfile OsProfile
         {
             get
             {
@@ -172,7 +171,7 @@ namespace ComputeCombine
         }
 
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
-        public VirtualMachineNetworkProfile NetworkProfile
+        public NetworkProfile NetworkProfile
         {
             get
             {

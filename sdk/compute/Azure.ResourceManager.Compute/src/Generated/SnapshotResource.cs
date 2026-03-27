@@ -14,11 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using ComputeDisk;
-using ComputeDisk.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a Snapshot along with the instance operations that can be performed on it.
@@ -53,7 +52,7 @@ namespace ComputeCombine
         internal SnapshotResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string snapshotApiVersion);
-            _snapshotsClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _snapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             _snapshotsRestClient = new Snapshots(_snapshotsClientDiagnostics, Pipeline, Endpoint, snapshotApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
@@ -229,7 +228,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _snapshotsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SnapshotPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<SnapshotResource> operation = new ComputeCombineArmOperation<SnapshotResource>(
+                ComputeArmOperation<SnapshotResource> operation = new ComputeArmOperation<SnapshotResource>(
                     new SnapshotOperationSource(Client),
                     _snapshotsClientDiagnostics,
                     Pipeline,
@@ -288,7 +287,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _snapshotsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SnapshotPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<SnapshotResource> operation = new ComputeCombineArmOperation<SnapshotResource>(
+                ComputeArmOperation<SnapshotResource> operation = new ComputeArmOperation<SnapshotResource>(
                     new SnapshotOperationSource(Client),
                     _snapshotsClientDiagnostics,
                     Pipeline,
@@ -343,7 +342,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _snapshotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_snapshotsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_snapshotsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -392,7 +391,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _snapshotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_snapshotsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_snapshotsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -445,7 +444,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _snapshotsRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GrantAccessData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<AccessUri> operation = new ComputeCombineArmOperation<AccessUri>(
+                ComputeArmOperation<AccessUri> operation = new ComputeArmOperation<AccessUri>(
                     new AccessUriOperationSource(),
                     _snapshotsClientDiagnostics,
                     Pipeline,
@@ -504,7 +503,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _snapshotsRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GrantAccessData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<AccessUri> operation = new ComputeCombineArmOperation<AccessUri>(
+                ComputeArmOperation<AccessUri> operation = new ComputeArmOperation<AccessUri>(
                     new AccessUriOperationSource(),
                     _snapshotsClientDiagnostics,
                     Pipeline,
@@ -559,7 +558,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _snapshotsRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_snapshotsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_snapshotsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -608,7 +607,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _snapshotsRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_snapshotsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_snapshotsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

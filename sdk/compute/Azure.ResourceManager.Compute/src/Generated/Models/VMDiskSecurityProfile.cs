@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the security profile settings for the managed disk. <b>Note:</b> It can only be set for Confidential VMs. </summary>
     public partial class VMDiskSecurityProfile

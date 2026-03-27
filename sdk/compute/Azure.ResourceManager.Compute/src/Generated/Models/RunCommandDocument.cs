@@ -8,10 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a Run Command. </summary>
     public partial class RunCommandDocument : RunCommandDocumentBase

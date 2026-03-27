@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a network interface reference properties. </summary>
     internal partial class NetworkInterfaceReferenceProperties

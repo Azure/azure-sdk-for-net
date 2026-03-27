@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     internal partial class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {

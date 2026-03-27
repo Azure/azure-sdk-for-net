@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the capacity reservation. </summary>
     public partial class CapacityReservationData : TrackedResourceData, IJsonModel<CapacityReservationData>
@@ -49,7 +49,7 @@ namespace ComputeCombine
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CapacityReservationData)} does not support writing '{options.Format}' format.");
             }
@@ -72,9 +72,7 @@ namespace ComputeCombine
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(capacityReservationData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(capacityReservationData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CapacityReservationData"/> from. </param>
@@ -152,7 +150,7 @@ namespace ComputeCombine
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
@@ -160,13 +158,17 @@ namespace ComputeCombine
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             CapacityReservationProperties properties = default;
-            ComputeCombineSku sku = default;
+            ComputeSku sku = default;
             IList<string> zones = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -189,7 +191,7 @@ namespace ComputeCombine
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, ComputeCombineContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -229,7 +231,7 @@ namespace ComputeCombine
                 }
                 if (prop.NameEquals("sku"u8))
                 {
-                    sku = ComputeCombineSku.DeserializeComputeCombineSku(prop.Value, options);
+                    sku = ComputeSku.DeserializeComputeSku(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("zones"u8))

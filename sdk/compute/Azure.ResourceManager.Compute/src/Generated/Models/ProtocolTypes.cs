@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the protocol of WinRM listener. Possible values are: <b>http,</b> <b>https.</b>. </summary>
     public enum ProtocolTypes

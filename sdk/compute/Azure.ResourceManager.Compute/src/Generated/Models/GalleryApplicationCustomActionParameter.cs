@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The definition of a parameter that can be passed to a custom action of a Gallery Application Version. </summary>
     public partial class GalleryApplicationCustomActionParameter

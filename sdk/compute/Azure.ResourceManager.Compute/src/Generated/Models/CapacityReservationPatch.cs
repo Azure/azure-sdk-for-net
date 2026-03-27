@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the capacity reservation. sku.capacity cannot be updated for Block Capacity Reservation. Tags can be update for all Capacity Reservation Types. </summary>
-    public partial class CapacityReservationPatch : ComputeResourcePatch
+    public partial class CapacityReservationPatch : UpdateResource
     {
         /// <summary> Initializes a new instance of <see cref="CapacityReservationPatch"/>. </summary>
         public CapacityReservationPatch()
@@ -24,7 +23,7 @@ namespace Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Capacity reservation. </param>
         /// <param name="sku"> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set. Currently VM Skus with the capability called 'CapacityReservationSupported' set to true are supported. When 'CapacityReservationSupported' is true, the SKU capability also specifies the 'SupportedCapacityReservationTypes', which lists the types of capacity reservations (such as Targeted or Block) that the SKU supports. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. <b>Note:</b> The SKU name and capacity cannot be updated for Block capacity reservations. </param>
-        internal CapacityReservationPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, CapacityReservationProperties properties, ComputeCombineSku sku) : base(tags, additionalBinaryDataProperties)
+        internal CapacityReservationPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, CapacityReservationProperties properties, ComputeSku sku) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Sku = sku;
@@ -34,7 +33,7 @@ namespace Compute.Models
         internal CapacityReservationProperties Properties { get; set; }
 
         /// <summary> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set. Currently VM Skus with the capability called 'CapacityReservationSupported' set to true are supported. When 'CapacityReservationSupported' is true, the SKU capability also specifies the 'SupportedCapacityReservationTypes', which lists the types of capacity reservations (such as Targeted or Block) that the SKU supports. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. <b>Note:</b> The SKU name and capacity cannot be updated for Block capacity reservations. </summary>
-        public ComputeCombineSku Sku { get; set; }
+        public ComputeSku Sku { get; set; }
 
         /// <summary> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </summary>
         public string ReservationId

@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Compute.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Compute
+namespace Azure.ResourceManager.Compute
 {
-    internal partial class UsageOperationGroupGetAllAsyncCollectionResultOfT : AsyncPageable<ComputeCombineUsage>
+    internal partial class UsageOperationGroupGetAllAsyncCollectionResultOfT : AsyncPageable<ComputeUsage>
     {
         private readonly UsageOperationGroup _client;
         private readonly string _subscriptionId;
@@ -39,7 +39,7 @@ namespace Compute
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of UsageOperationGroupGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ComputeCombineUsage>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ComputeUsage>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Compute
                     yield break;
                 }
                 ListUsagesResult result = ListUsagesResult.FromResponse(response);
-                yield return Page<ComputeCombineUsage>.FromValues((IReadOnlyList<ComputeCombineUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ComputeUsage>.FromValues((IReadOnlyList<ComputeUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -65,7 +65,7 @@ namespace Compute
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeCombineSubscriptionResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetAll");
             scope.Start();
             try
             {

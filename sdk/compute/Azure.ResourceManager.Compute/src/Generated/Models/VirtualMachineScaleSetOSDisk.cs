@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set operating system disk. </summary>
     public partial class VirtualMachineScaleSetOSDisk
@@ -20,7 +19,7 @@ namespace Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetOSDisk"/>. </summary>
         /// <param name="createOption"> Specifies how the virtual machines in the scale set should be created. The only allowed value is: <b>FromImage.</b> This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference element described above. If you are using a marketplace image, you  also use the plan element previously described. </param>
-        public VirtualMachineScaleSetOSDisk(DiskCreateOptionType createOption)
+        public VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes createOption)
         {
             CreateOption = createOption;
             VhdContainers = new ChangeTrackingList<string>();
@@ -39,7 +38,7 @@ namespace Compute.Models
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only). &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the OS disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>. For an Ephemeral OS Disk, the default value is set to <b>Delete</b>. User cannot change the delete option for Ephemeral OS Disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetOSDisk(string name, CachingType? caching, bool? writeAcceleratorEnabled, DiskCreateOptionType createOption, DiffDiskSettings diffDiskSettings, int? diskSizeGB, OperatingSystemTypes? osType, VirtualHardDisk image, IList<string> vhdContainers, VirtualMachineScaleSetManagedDiskParameters managedDisk, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetOSDisk(string name, CachingTypes? caching, bool? writeAcceleratorEnabled, DiskCreateOptionTypes createOption, DiffDiskSettings diffDiskSettings, int? diskSizeGB, OperatingSystemTypes? osType, VirtualHardDisk image, IList<string> vhdContainers, VirtualMachineScaleSetManagedDiskParameters managedDisk, DiskDeleteOptionTypes? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Caching = caching;
@@ -59,13 +58,13 @@ namespace Compute.Models
         public string Name { get; set; }
 
         /// <summary> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: <b>None for Standard storage. ReadOnly for Premium storage.</b>. </summary>
-        public CachingType? Caching { get; set; }
+        public CachingTypes? Caching { get; set; }
 
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? WriteAcceleratorEnabled { get; set; }
 
         /// <summary> Specifies how the virtual machines in the scale set should be created. The only allowed value is: <b>FromImage.</b> This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference element described above. If you are using a marketplace image, you  also use the plan element previously described. </summary>
-        public DiskCreateOptionType CreateOption { get; set; }
+        public DiskCreateOptionTypes CreateOption { get; set; }
 
         /// <summary> Specifies the ephemeral disk Settings for the operating system disk used by the virtual machine scale set. </summary>
         public DiffDiskSettings DiffDiskSettings { get; set; }
@@ -86,7 +85,7 @@ namespace Compute.Models
         public VirtualMachineScaleSetManagedDiskParameters ManagedDisk { get; set; }
 
         /// <summary> Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only). &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the OS disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>. For an Ephemeral OS Disk, the default value is set to <b>Delete</b>. User cannot change the delete option for Ephemeral OS Disk. </summary>
-        public DiskDeleteOptionType? DeleteOption { get; set; }
+        public DiskDeleteOptionTypes? DeleteOption { get; set; }
 
         /// <summary> Specifies the virtual hard disk's uri. </summary>
         public string ImageUri

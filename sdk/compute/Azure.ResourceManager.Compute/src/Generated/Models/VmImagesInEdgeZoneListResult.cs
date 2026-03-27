@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List VmImages in EdgeZone operation response. </summary>
     public partial class VmImagesInEdgeZoneListResult
@@ -20,14 +20,14 @@ namespace Compute.Models
         /// <summary> Initializes a new instance of <see cref="VmImagesInEdgeZoneListResult"/>. </summary>
         internal VmImagesInEdgeZoneListResult()
         {
-            Value = new ChangeTrackingList<VirtualMachineImageBase>();
+            Value = new ChangeTrackingList<VirtualMachineImageResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VmImagesInEdgeZoneListResult"/>. </summary>
         /// <param name="value"> The list of VMImages in EdgeZone. </param>
         /// <param name="nextLink"> The URI to fetch the next page of VMImages in EdgeZone. Call ListNext() with this URI to fetch the next page of VmImages. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmImagesInEdgeZoneListResult(IList<VirtualMachineImageBase> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmImagesInEdgeZoneListResult(IList<VirtualMachineImageResource> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Compute.Models
         }
 
         /// <summary> The list of VMImages in EdgeZone. </summary>
-        public IList<VirtualMachineImageBase> Value { get; }
+        public IList<VirtualMachineImageResource> Value { get; }
 
         /// <summary> The URI to fetch the next page of VMImages in EdgeZone. Call ListNext() with this URI to fetch the next page of VmImages. </summary>
         public string NextLink { get; }

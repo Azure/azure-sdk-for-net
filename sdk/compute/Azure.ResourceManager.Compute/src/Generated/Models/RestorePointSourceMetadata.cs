@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of the Virtual Machine for which the restore point was created. The properties provided are a subset and the snapshot of the overall Virtual Machine properties captured at the time of the restore point creation. </summary>
     public partial class RestorePointSourceMetadata
@@ -33,7 +33,7 @@ namespace Compute.Models
         /// <param name="userData"> UserData associated with the source VM for which restore point is captured, which is a base-64 encoded value. </param>
         /// <param name="hyperVGeneration"> HyperVGeneration of the source VM for which restore point is captured. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile, RestorePointSourceVMStorageProfile storageProfile, VirtualMachineOSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, string location, string userData, HyperVGenerationTypes? hyperVGeneration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointSourceMetadata(HardwareProfile hardwareProfile, RestorePointSourceVMStorageProfile storageProfile, OSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, string location, string userData, HyperVGenerationTypes? hyperVGeneration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
@@ -49,13 +49,13 @@ namespace Compute.Models
         }
 
         /// <summary> Gets the hardware profile. </summary>
-        public VirtualMachineHardwareProfile HardwareProfile { get; }
+        public HardwareProfile HardwareProfile { get; }
 
         /// <summary> Gets the storage profile. </summary>
         public RestorePointSourceVMStorageProfile StorageProfile { get; set; }
 
         /// <summary> Gets the OS profile. </summary>
-        public VirtualMachineOSProfile OsProfile { get; }
+        public OSProfile OsProfile { get; }
 
         /// <summary> Gets the diagnostics profile. </summary>
         internal DiagnosticsProfile DiagnosticsProfile { get; }

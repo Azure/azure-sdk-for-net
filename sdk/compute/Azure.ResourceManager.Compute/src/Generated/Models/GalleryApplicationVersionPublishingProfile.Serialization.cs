@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The publishing profile of a gallery image version. </summary>
     public partial class GalleryApplicationVersionPublishingProfile : GalleryArtifactPublishingProfileBase, IJsonModel<GalleryApplicationVersionPublishingProfile>
@@ -45,7 +45,7 @@ namespace ComputeGallery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support writing '{options.Format}' format.");
             }

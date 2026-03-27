@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an Operating System disk. </summary>
     public partial class RestorePointSourceVMOSDisk
@@ -31,7 +31,7 @@ namespace Compute.Models
         /// <param name="diskRestorePoint"> Contains Disk Restore Point properties. </param>
         /// <param name="writeAcceleratorEnabled"> Shows true if the disk is write-accelerator enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointSourceVMOSDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointSourceVMOSDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingTypes? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsType = osType;
             EncryptionSettings = encryptionSettings;
@@ -54,13 +54,13 @@ namespace Compute.Models
         public string Name { get; }
 
         /// <summary> Gets the caching type. </summary>
-        public CachingType? Caching { get; }
+        public CachingTypes? Caching { get; }
 
         /// <summary> Gets the disk size in GB. </summary>
         public int? DiskSizeGB { get; }
 
         /// <summary> Gets the managed disk details. </summary>
-        public VirtualMachineManagedDisk ManagedDisk { get; set; }
+        public ManagedDiskParameters ManagedDisk { get; set; }
 
         /// <summary> Contains Disk Restore Point properties. </summary>
         public DiskRestorePointAttributes DiskRestorePoint { get; set; }

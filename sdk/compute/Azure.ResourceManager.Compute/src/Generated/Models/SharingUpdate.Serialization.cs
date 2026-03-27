@@ -11,9 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery sharing profile update. </summary>
     public partial class SharingUpdate : IJsonModel<SharingUpdate>
@@ -47,7 +47,7 @@ namespace ComputeGallery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SharingUpdate)} does not support writing '{options.Format}' format.");
             }
@@ -70,9 +70,7 @@ namespace ComputeGallery.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sharingUpdate, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(sharingUpdate, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SharingUpdate"/> from. </param>

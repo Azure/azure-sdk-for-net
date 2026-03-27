@@ -10,7 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Compute
+namespace Azure.ResourceManager.Compute
 {
     internal partial class AvailabilitySets
     {
@@ -357,7 +357,7 @@ namespace Compute
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }

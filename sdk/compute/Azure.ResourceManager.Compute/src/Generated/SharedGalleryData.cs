@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeGallery.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the Shared Gallery that you want to create or update. </summary>
     public partial class SharedGalleryData : PirSharedGalleryResource

@@ -7,26 +7,25 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The instance view of a virtual machine scale set VM. </summary>
-    public partial class VirtualMachineScaleSetVmInstanceView
+    public partial class VirtualMachineScaleSetVMInstanceView
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmInstanceView"/>. </summary>
-        internal VirtualMachineScaleSetVmInstanceView()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMInstanceView"/>. </summary>
+        internal VirtualMachineScaleSetVMInstanceView()
         {
             Disks = new ChangeTrackingList<DiskInstanceView>();
             Extensions = new ChangeTrackingList<VirtualMachineExtensionInstanceView>();
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmInstanceView"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMInstanceView"/>. </summary>
         /// <param name="platformUpdateDomain"> The Update Domain count. </param>
         /// <param name="platformFaultDomain"> The Fault Domain count. </param>
         /// <param name="rdpThumbPrint"> The Remote desktop certificate thumbprint. </param>
@@ -44,7 +43,7 @@ namespace Compute.Models
         /// <param name="osVersion"> The version of Operating System running on the hybrid machine. </param>
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine [V1, V2]. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVmInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IList<DiskInstanceView> disks, IList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, IList<InstanceViewStatus> statuses, string assignedHost, string placementGroupId, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVMInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IList<DiskInstanceView> disks, IList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, IList<InstanceViewStatus> statuses, string assignedHost, string placementGroupId, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;

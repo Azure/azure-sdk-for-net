@@ -12,18 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-<<<<<<< HEAD
-using Azure.ResourceManager.Models;
-using Common.Models;
-using ComputeDisk.Models;
-
-namespace ComputeCombine
-=======
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
->>>>>>> fork/migration/compute-typespec
 {
     /// <summary> Disk resource. </summary>
     public partial class DiskData : TrackedResourceData, IJsonModel<DiskData>
@@ -57,11 +49,7 @@ namespace Azure.ResourceManager.Compute
             switch (format)
             {
                 case "J":
-<<<<<<< HEAD
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
-=======
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
->>>>>>> fork/migration/compute-typespec
                 default:
                     throw new FormatException($"The model {nameof(DiskData)} does not support writing '{options.Format}' format.");
             }
@@ -84,13 +72,7 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-<<<<<<< HEAD
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(diskData, ModelSerializationExtensions.WireOptions);
-            return content;
-=======
             return RequestContent.Create(diskData, ModelSerializationExtensions.WireOptions);
->>>>>>> fork/migration/compute-typespec
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DiskData"/> from. </param>
@@ -196,7 +178,7 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
@@ -213,7 +195,11 @@ namespace Azure.ResourceManager.Compute
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -236,11 +222,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-<<<<<<< HEAD
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, ComputeCombineContext.Default);
-=======
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
->>>>>>> fork/migration/compute-typespec
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

@@ -15,9 +15,8 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using ComputeGallery;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="GalleryScriptResource"/> and their operations.
@@ -40,7 +39,7 @@ namespace ComputeCombine
         internal GalleryScriptCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(GalleryScriptResource.ResourceType, out string galleryScriptApiVersion);
-            _galleryScriptsClientDiagnostics = new ClientDiagnostics("ComputeCombine", GalleryScriptResource.ResourceType.Namespace, Diagnostics);
+            _galleryScriptsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", GalleryScriptResource.ResourceType.Namespace, Diagnostics);
             _galleryScriptsRestClient = new GalleryScripts(_galleryScriptsClientDiagnostics, Pipeline, Endpoint, galleryScriptApiVersion ?? "2025-03-03");
             ValidateResourceId(id);
         }
@@ -93,7 +92,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, GalleryScriptData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_galleryScriptsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_galleryScriptsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -145,7 +144,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, GalleryScriptData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_galleryScriptsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_galleryScriptsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

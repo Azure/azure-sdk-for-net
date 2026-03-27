@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
     public readonly partial struct NetworkInterfaceAuxiliaryMode : IEquatable<NetworkInterfaceAuxiliaryMode>

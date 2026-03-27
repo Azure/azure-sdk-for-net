@@ -11,10 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Common.Models;
-using Compute.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Describes a Virtual Machine Scale Set Extension. </summary>
     public partial class VirtualMachineScaleSetExtensionData : SubResourceReadOnly, IJsonModel<VirtualMachineScaleSetExtensionData>
@@ -43,7 +42,7 @@ namespace ComputeCombine
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetExtensionData)} does not support writing '{options.Format}' format.");
             }
@@ -66,9 +65,7 @@ namespace ComputeCombine
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(virtualMachineScaleSetExtensionData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(virtualMachineScaleSetExtensionData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VirtualMachineScaleSetExtensionData"/> from. </param>
@@ -76,15 +73,6 @@ namespace ComputeCombine
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeVirtualMachineScaleSetExtensionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VirtualMachineScaleSetExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
         }
 
         /// <param name="writer"> The JSON writer. </param>

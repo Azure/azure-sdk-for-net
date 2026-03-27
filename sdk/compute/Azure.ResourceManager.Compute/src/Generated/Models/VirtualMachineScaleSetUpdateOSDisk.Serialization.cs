@@ -9,12 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes virtual machine scale set operating system disk Update Object. This should be used for Updating VMSS OS Disk. </summary>
-    public partial class VirtualMachineScaleSetUpdateOSDisk : IJsonModel<VirtualMachineScaleSetUpdateOSDisk>
+    internal partial class VirtualMachineScaleSetUpdateOSDisk : IJsonModel<VirtualMachineScaleSetUpdateOSDisk>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -40,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSDisk)} does not support writing '{options.Format}' format.");
             }
@@ -166,14 +166,14 @@ namespace Compute.Models
             {
                 return null;
             }
-            CachingType? caching = default;
+            CachingTypes? caching = default;
             bool? writeAcceleratorEnabled = default;
             DiffDiskSettings diffDiskSettings = default;
             int? diskSizeGB = default;
             VirtualHardDisk image = default;
             IList<string> vhdContainers = default;
             VirtualMachineScaleSetManagedDiskParameters managedDisk = default;
-            DiskDeleteOptionType? deleteOption = default;
+            DiskDeleteOptionTypes? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,7 +183,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    caching = prop.Value.GetString().ToCachingType();
+                    caching = prop.Value.GetString().ToCachingTypes();
                     continue;
                 }
                 if (prop.NameEquals("writeAcceleratorEnabled"u8))
@@ -258,7 +258,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    deleteOption = new DiskDeleteOptionType(prop.Value.GetString());
+                    deleteOption = new DiskDeleteOptionTypes(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

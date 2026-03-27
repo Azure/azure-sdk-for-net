@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </summary>
     public partial class DiskPurchasePlan

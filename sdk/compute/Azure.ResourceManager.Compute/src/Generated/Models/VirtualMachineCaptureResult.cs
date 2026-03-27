@@ -8,10 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Output of virtual machine capture operation. </summary>
     public partial class VirtualMachineCaptureResult : SubResource

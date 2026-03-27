@@ -16,14 +16,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-<<<<<<< HEAD
-using ComputeDisk;
-
-namespace ComputeCombine
-=======
 
 namespace Azure.ResourceManager.Compute
->>>>>>> fork/migration/compute-typespec
 {
     /// <summary>
     /// A class representing a collection of <see cref="DiskResource"/> and their operations.
@@ -46,11 +40,7 @@ namespace Azure.ResourceManager.Compute
         internal DiskCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DiskResource.ResourceType, out string diskApiVersion);
-<<<<<<< HEAD
-            _disksClientDiagnostics = new ClientDiagnostics("ComputeCombine", DiskResource.ResourceType.Namespace, Diagnostics);
-=======
             _disksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskResource.ResourceType.Namespace, Diagnostics);
->>>>>>> fork/migration/compute-typespec
             _disksRestClient = new Disks(_disksClientDiagnostics, Pipeline, Endpoint, diskApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
@@ -103,11 +93,7 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, DiskData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-<<<<<<< HEAD
-                ComputeCombineArmOperation<DiskResource> operation = new ComputeCombineArmOperation<DiskResource>(
-=======
                 ComputeArmOperation<DiskResource> operation = new ComputeArmOperation<DiskResource>(
->>>>>>> fork/migration/compute-typespec
                     new DiskOperationSource(Client),
                     _disksClientDiagnostics,
                     Pipeline,
@@ -165,11 +151,7 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, DiskData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-<<<<<<< HEAD
-                ComputeCombineArmOperation<DiskResource> operation = new ComputeCombineArmOperation<DiskResource>(
-=======
                 ComputeArmOperation<DiskResource> operation = new ComputeArmOperation<DiskResource>(
->>>>>>> fork/migration/compute-typespec
                     new DiskOperationSource(Client),
                     _disksClientDiagnostics,
                     Pipeline,

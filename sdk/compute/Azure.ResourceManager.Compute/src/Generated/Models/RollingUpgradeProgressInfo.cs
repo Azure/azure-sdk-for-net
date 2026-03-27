@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Information about the number of virtual machine instances in each upgrade state. </summary>
     public partial class RollingUpgradeProgressInfo
