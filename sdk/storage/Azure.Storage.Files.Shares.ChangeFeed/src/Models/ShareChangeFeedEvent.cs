@@ -37,7 +37,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <summary>
         /// A unique identifier for this change feed event.
         /// </summary>
-        public Guid Id { get; internal set; }
+        public string Id { get; internal set; }
 
         /// <summary>
         /// The container version number (Cvnt) at the time of this event. Used for
@@ -61,7 +61,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             Reason = new ShareChangeFeedReasonType((string)record["Reason"]);
             Protocol = new ShareChangeFeedProtocol((string)record["Protocol"]);
             EventTime = DateTimeOffset.Parse((string)record["EventTime"], CultureInfo.InvariantCulture);
-            Id = Guid.Parse((string)record["Id"]);
+            Id = (string)record["Id"];
             record.TryGetValue("Cvnt", out object cvnt);
             ContainerVersionNumber = cvnt is long c ? c : 0;
             if (record.TryGetValue("Data", out object data) && data is Dictionary<string, object> dataDict)

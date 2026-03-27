@@ -50,9 +50,6 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         //[Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
         public async Task GetChanges_ReturnsEvents()
         {
-            ShareServiceClient shareServiceClient = GetShareServiceClient_SharedKey();
-            await shareServiceClient.GetSharesAsync().ToListAsync();
-
             // Arrange
             ShareChangeFeedClient client = GetChangeFeedClient("changefeedtestingshare3");
 
@@ -135,7 +132,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             ShareChangeFeedClient client = GetChangeFeedClient();
 
             // Act - read the first page
-            HashSet<Guid> firstPageIds = new HashSet<Guid>();
+            HashSet<string> firstPageIds = new HashSet<string>();
             string continuationToken = null;
 
             if (IsAsync)
@@ -164,7 +161,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             }
 
             // Act - resume from continuation token and read the next page
-            HashSet<Guid> secondPageIds = new HashSet<Guid>();
+            HashSet<string> secondPageIds = new HashSet<string>();
             if (continuationToken != null)
             {
                 if (IsAsync)
