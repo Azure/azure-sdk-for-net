@@ -56,9 +56,7 @@ import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import {
   getCrossLanguageDefinitionId,
   getClientType,
-  SdkModelType,
-  SdkPagingServiceMethod,
-  SdkHttpOperation
+  SdkModelType
 } from "@azure-tools/typespec-client-generator-core";
 import {
   isVariableSegment,
@@ -126,22 +124,12 @@ export function resolveArmResources(
         (method.kind === "paging" || method.kind === "lropaging") &&
         !methodResponseModelIdMap.has(method.crossLanguageDefinitionId)
       ) {
-        const pagingMethod =
-          method as SdkPagingServiceMethod<SdkHttpOperation>;
-        const segments = pagingMethod.pagingMetadata?.pageItemsSegments;
-        if (segments && segments.length > 0) {
-          const itemsType = segments[segments.length - 1].type;
-          if (itemsType.kind === "array" && itemsType.valueType.kind === "model") {
-            methodResponseModelIdMap.set(
-              method.crossLanguageDefinitionId,
-              (itemsType.valueType as SdkModelType).crossLanguageDefinitionId
-            );
-          } else if (itemsType.kind === "model") {
-            methodResponseModelIdMap.set(
-              method.crossLanguageDefinitionId,
-              (itemsType as SdkModelType).crossLanguageDefinitionId
-            );
-          }
+        const responseType = method.response?.type;
+        if (responseType?.kind === "array" && responseType.valueType.kind === "model") {
+          methodResponseModelIdMap.set(
+            method.crossLanguageDefinitionId,
+            (responseType.valueType as SdkModelType).crossLanguageDefinitionId
+          );
         }
       }
     }

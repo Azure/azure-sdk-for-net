@@ -28,8 +28,7 @@ import {
   getClientType,
   SdkHttpOperation,
   SdkMethod,
-  SdkModelType,
-  SdkPagingServiceMethod
+  SdkModelType
 } from "@azure-tools/typespec-client-generator-core";
 import pluralize from "pluralize";
 import {
@@ -906,24 +905,17 @@ function getResourceModelId(
 }
 
 /**
- * Extracts the page item model's crossLanguageDefinitionId from a paging method.
- * Returns undefined if the item type is not a model (e.g., metadata or scalar types).
+ * Extracts the page item model's crossLanguageDefinitionId from a paging method
+ * using the method's response type (which is an array of the item type).
+ * Returns undefined if the item type is not a model.
  */
 function getPagingItemModelId(
   method: SdkMethod<SdkHttpOperation>
 ): string | undefined {
   if (method.kind !== "paging" && method.kind !== "lropaging") return undefined;
-  const pagingMethod = method as SdkPagingServiceMethod<SdkHttpOperation>;
-  const segments = pagingMethod.pagingMetadata?.pageItemsSegments;
-  if (!segments || segments.length === 0) return undefined;
-  // The last segment's type is the items array; extract the element type
-  const itemsType = segments[segments.length - 1].type;
-  if (itemsType.kind === "array" && itemsType.valueType.kind === "model") {
-    return (itemsType.valueType as SdkModelType).crossLanguageDefinitionId;
-  }
-  // Fallback: the items property might directly be a model (non-array case)
-  if (itemsType.kind === "model") {
-    return (itemsType as SdkModelType).crossLanguageDefinitionId;
+  const responseType = method.response?.type;
+  if (responseType?.kind === "array" && responseType.valueType.kind === "model") {
+    return (responseType.valueType as SdkModelType).crossLanguageDefinitionId;
   }
   return undefined;
 }
