@@ -53,7 +53,6 @@ The MCP server provides deterministic fix tools for the build-fix cycle. Configu
 | `fetch_to_fromlro` | CS0103/CS1061 for `Fetch` method calls in custom LRO code | Replaces `Fetch(response)` with `Model.FromLroResponse(response)` |
 | `add_codegen_suppress` | CS0111 (duplicate member definition from custom + generated clash) | Adds `[CodeGenSuppress]` attribute to custom partial class, scanning Generated/ for member signature |
 | `classify_errors` | Re-classify errors after partial fixes | Classifies errors against the deterministic fix registry |
-| `run_code_generation` | After spec/TypeSpec changes or CodeGen* attribute changes. Pass `localSpecsPath` for local spec iteration (full path to spec directory containing `main.tsp`, or repo root — the tool resolves via `tsp-location.yaml`). | Runs `dotnet build /t:generateCode` |
 | `validate_tsp_config` | Before code generation (if not already validated by `commit_iteration`) | Validates `tspconfig.yaml` emitter section: checks `@azure-typespec/http-client-csharp` key exists, required fields present (`emitter-output-dir`, `namespace`, `model-namespace`), and no invalid properties. Works on file path or string content. |
 | `commit_iteration` | At migration start and whenever code generation fails with a spec-level error. | Finds a valid spec commit remotely. Supports strict (`commitOverride`), auto-resolve (iterates forward), and fallback (fixes `tspconfig.yaml` locally when `localSpecsPath` is provided — no git commit needed). Returns `useLocalSpecs=true` when tspconfig was fixed locally. See Phase 2 for details. |
 | `pregen_cleanup` | Before first code generation | Removes `IncludeAutorestDependency` from `.csproj` |
@@ -350,7 +349,7 @@ These are also handled by MCP tools during build-fix, but can be applied before 
 
 ### Generation Mode
 
-Code generation operates in one of two modes. Check `gen_mode` in session state before every `run_code_generation` call:
+Code generation operates in one of two modes:
 
 ```sql
 SELECT value FROM session_state WHERE key = 'gen_mode';
@@ -374,10 +373,10 @@ UPDATE session_state SET value = 'local' WHERE key = 'gen_mode';
 
 ### Running Code Generation
 
-Call `run_code_generation` with the project path. Pass `localSpecsPath` **only** when `gen_mode` is `local`:
+Pass `localSpecsPath` **only** when in local mode:
 
-- **Remote mode**: `run_code_generation(projectPath)`
-- **Local mode**: `run_code_generation(projectPath, localSpecsPath)`
+- **Remote mode**: `dotnet build /t:GenerateCode`
+- **Local mode**: `dotnet build /t:GenerateCode /p:LocalSpecRepo=<localSpecsPath>`
 
 **Always use `dotnet build /t:GenerateCode`. Do NOT use `tsp-client update`.**
 
