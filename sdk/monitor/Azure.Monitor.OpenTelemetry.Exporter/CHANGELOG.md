@@ -12,6 +12,9 @@
 
 ### Other Changes
 
+* Update OpenTelemetry dependencies
+  - OpenTelemetry.Extensions.Hosting 1.15.1
+
 * Made `AzureMonitorLogExporter`, `AzureMonitorMetricExporter`, `AzureMonitorTraceExporter`.
    ([#56344](https://github.com/Azure/azure-sdk-for-net/pull/56344))
 * Made options `EnablePerfCounters` and `EnableStandardMetrics` public in `AzureMonitorExporterOptions`.

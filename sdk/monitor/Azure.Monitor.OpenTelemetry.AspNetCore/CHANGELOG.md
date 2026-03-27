@@ -39,6 +39,11 @@
 
 ### Other Changes
 
+* Update OpenTelemetry dependencies
+  - OpenTelemetry.Extensions.Hosting 1.15.1
+  - OpenTelemetry.Instrumentation.AspNetCore 1.15.1
+  - OpenTelemetry.Instrumentation.Http 1.15.1
+
 ## 1.4.0 (2025-11-14)
 
 ### Features Added
