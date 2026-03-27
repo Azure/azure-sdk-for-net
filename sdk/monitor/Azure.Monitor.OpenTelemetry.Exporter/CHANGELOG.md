@@ -21,7 +21,7 @@
   ([#57549](https://github.com/Azure/azure-sdk-for-net/pull/57549))
 * Made `AzureMonitorLogExporter`, `AzureMonitorMetricExporter`, and `AzureMonitorTraceExporter` public for direct use when configuring OpenTelemetry.
    ([#56344](https://github.com/Azure/azure-sdk-for-net/pull/56344))
-* Made options `EnablePerfCounters` and `EnableStandardMetrics` public in `AzureMonitorExporterOptions`.
+* Made options `EnablePerformanceCounters` and `EnableStandardMetrics` public in `AzureMonitorExporterOptions`.
    ([#56344](https://github.com/Azure/azure-sdk-for-net/pull/56344))
 
 ## 1.6.0 (2026-01-28)
