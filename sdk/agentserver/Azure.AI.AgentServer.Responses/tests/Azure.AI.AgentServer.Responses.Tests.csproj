@@ -25,6 +25,7 @@
   <!-- ASP.NET Core packages require net8.0 or later -->
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="OpenAI" />
   </ItemGroup>
 
   <!-- Source project targets RequiredRunnableTargetFrameworks (net8.0+) -->

@@ -59,7 +59,7 @@ public class ResponsesModelFactoryTests
     [Test]
     public void ResponsesModelFactory_ResponseCreatedEvent_ReturnsValidInstance()
     {
-        var response = new Models.ResponseObject("resp_123", "gpt-4o");
+        var response = ResponsesModelFactory.ResponseObject(id: "resp_123", model: "gpt-4o");
         var evt = ResponsesModelFactory.ResponseCreatedEvent(
             response: response,
             sequenceNumber: 1);
