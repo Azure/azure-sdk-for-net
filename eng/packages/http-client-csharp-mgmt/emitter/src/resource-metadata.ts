@@ -3,6 +3,7 @@
 
 import {
   isVariableSegment,
+  isPrefix,
   findLongestPrefixMatch,
   countProviderSegments
 } from "./utils.js";
@@ -693,21 +694,6 @@ function canBeListResourceScope(
 function relocateCrossResourceListActions(
   validResources: ArmResourceSchema[]
 ): void {
-  // Build a lookup: collection path → target child resource
-  // Collection path = resourceIdPattern with last /{variable} segment stripped
-  const collectionPathToResource = new Map<string, ArmResourceSchema>();
-  for (const resource of validResources) {
-    const pattern = resource.metadata.resourceIdPattern;
-    const lastSlashIndex = pattern.lastIndexOf("/");
-    if (lastSlashIndex <= 0) continue;
-
-    const lastSegment = pattern.substring(lastSlashIndex + 1);
-    if (isVariableSegment(lastSegment)) {
-      const collectionPath = pattern.substring(0, lastSlashIndex);
-      collectionPathToResource.set(collectionPath, resource);
-    }
-  }
-
   // Find Action methods that should be relocated to a child resource
   const relocations: Array<{
     sourceResource: ArmResourceSchema;
@@ -719,15 +705,28 @@ function relocateCrossResourceListActions(
     for (const method of resource.metadata.methods) {
       if (method.kind !== ResourceOperationKind.Action) continue;
 
-      const targetResource = collectionPathToResource.get(
-        method.operationPath
-      );
-      if (targetResource && targetResource !== resource) {
+      // Find the child resource whose resourceIdPattern is exactly the action's
+      // operationPath plus one variable segment (the resource name parameter).
+      // This means the action is at the child resource's collection path.
+      for (const candidate of validResources) {
+        if (candidate === resource) continue;
+        if (!isPrefix(method.operationPath, candidate.metadata.resourceIdPattern))
+          continue;
+        // Ensure the difference is exactly one segment (the resource name)
+        const opSegments = method.operationPath
+          .split("/")
+          .filter((s) => s.length > 0);
+        const resSegments = candidate.metadata.resourceIdPattern
+          .split("/")
+          .filter((s) => s.length > 0);
+        if (resSegments.length !== opSegments.length + 1) continue;
+
         relocations.push({
           sourceResource: resource,
-          targetResource: targetResource,
+          targetResource: candidate,
           method: method
         });
+        break;
       }
     }
   }
