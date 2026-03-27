@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (2026-03-27)
+## 1.7.0 (2026-03-27)
 
 ### Features Added
 
@@ -8,9 +8,6 @@
   ([#56891](https://github.com/Azure/azure-sdk-for-net/pull/56891))
 - Changed gen-ai semantic convention attribute truncation from exempt to 256KB limit.
   ([#57194](https://github.com/Azure/azure-sdk-for-net/pull/57194))
-- Mapped classic TelemetryContext to tags for requests, dependencies, exceptions, traces.
-  ([#56813](https://github.com/Azure/azure-sdk-for-net/pull/56813))
-
 ### Bugs Fixed
 
 - Fixed AOT warning regression by using the source generator for `ConfigurationBinder` calls.
