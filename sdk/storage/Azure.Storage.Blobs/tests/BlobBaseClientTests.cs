@@ -1773,6 +1773,7 @@ namespace Azure.Storage.Blobs.Test
 
         [LiveOnly]
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
         public async Task DownloadToAsync_EnableDataLocality_WithRequestAsserts()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
