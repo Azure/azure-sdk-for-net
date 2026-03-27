@@ -90,39 +90,39 @@ public class ExternalConsumerValidationTests
     }
 
     [Test]
-    public void Consumer_CanConstruct_OutputItemOutputMessage()
+    public void Consumer_CanConstruct_OutputItemMessage()
     {
-        var content = new OutputMessageContentOutputTextContent(
+        var content = new MessageContentOutputTextContent(
             text: "Hello world",
             annotations: Array.Empty<Annotation>(),
             logprobs: Array.Empty<LogProb>());
         Assert.That(content, Is.Not.Null);
 
-        var outputMsg = new OutputItemOutputMessage(
+        var outputMsg = new OutputItemMessage(
             id: "msg_test",
-            content: new List<OutputMessageContent> { content },
-            status: OutputItemOutputMessageStatus.Completed);
+            content: new List<MessageContent> { content },
+            status: MessageStatus.Completed);
         Assert.That(outputMsg, Is.Not.Null);
     }
 
     [Test]
     public void Consumer_CanConstruct_ResponseOutputItemDoneEvent()
     {
-        var content = new OutputMessageContentOutputTextContent(
+        var content = new MessageContentOutputTextContent(
             text: "Hello world",
             annotations: Array.Empty<Annotation>(),
             logprobs: Array.Empty<LogProb>());
-        var outputMsg = new OutputItemOutputMessage(
+        var outputMsg = new OutputItemMessage(
             id: "msg_test",
-            content: new List<OutputMessageContent> { content },
-            status: OutputItemOutputMessageStatus.Completed);
+            content: new List<MessageContent> { content },
+            status: MessageStatus.Completed);
         var evt = new ResponseOutputItemDoneEvent(
             sequenceNumber: 6,
             outputIndex: 0,
             item: outputMsg);
 
         Assert.That(evt, Is.Not.Null);
-        XAssert.IsType<OutputItemOutputMessage>(evt.Item);
+        XAssert.IsType<OutputItemMessage>(evt.Item);
     }
 
     [Test]

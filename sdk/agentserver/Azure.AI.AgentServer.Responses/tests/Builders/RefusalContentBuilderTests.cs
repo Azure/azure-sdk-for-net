@@ -197,9 +197,9 @@ public class RefusalContentBuilderTests
         refusal.EmitDone("I can't help with that.");
         msg.EmitContentDone(refusal);
         var evt = msg.EmitDone();
-        var item = XAssert.IsType<OutputItemOutputMessage>(evt.Item);
+        var item = XAssert.IsType<OutputItemMessage>(evt.Item);
         XAssert.Single(item.Content);
-        var content = XAssert.IsType<OutputMessageContentRefusalContent>(item.Content[0]);
+        var content = XAssert.IsType<MessageContentRefusalContent>(item.Content[0]);
         Assert.That(content.Refusal, Is.EqualTo("I can't help with that."));
     }
 
@@ -220,10 +220,10 @@ public class RefusalContentBuilderTests
         msg.EmitContentDone(refusal);
 
         var evt = msg.EmitDone();
-        var item = XAssert.IsType<OutputItemOutputMessage>(evt.Item);
+        var item = XAssert.IsType<OutputItemMessage>(evt.Item);
         Assert.That(item.Content.Count, Is.EqualTo(2));
-        XAssert.IsType<OutputMessageContentOutputTextContent>(item.Content[0]);
-        XAssert.IsType<OutputMessageContentRefusalContent>(item.Content[1]);
+        XAssert.IsType<MessageContentOutputTextContent>(item.Content[0]);
+        XAssert.IsType<MessageContentRefusalContent>(item.Content[1]);
     }
 
     // ── Sequence numbers ──────────────────────────────────────

@@ -70,7 +70,7 @@ public class SimpleTextResponseTests
         var itemDoneEvt = (ResponseOutputItemDoneEvent)events[8];
 
         var itemId = message.ItemId;
-        var addedItem = XAssert.IsType<OutputItemOutputMessage>(addedEvt.Item);
+        var addedItem = XAssert.IsType<OutputItemMessage>(addedEvt.Item);
         Assert.That(addedItem.Id, Is.EqualTo(itemId));
         Assert.That(contentAddedEvt.ItemId, Is.EqualTo(itemId));
         Assert.That(delta1Evt.ItemId, Is.EqualTo(itemId));
@@ -95,12 +95,12 @@ public class SimpleTextResponseTests
         Assert.That(contentDoneEvt.ContentIndex, Is.EqualTo(0));
 
         // Assert: final done message has completed status and accumulated content
-        var doneItem = XAssert.IsType<OutputItemOutputMessage>(itemDoneEvt.Item);
+        var doneItem = XAssert.IsType<OutputItemMessage>(itemDoneEvt.Item);
         Assert.That(doneItem.Id, Is.EqualTo(itemId));
-        Assert.That(doneItem.Status, Is.EqualTo(OutputItemOutputMessageStatus.Completed));
+        Assert.That(doneItem.Status, Is.EqualTo(MessageStatus.Completed));
         XAssert.Single(doneItem.Content);
 
-        var finalContent = XAssert.IsType<OutputMessageContentOutputTextContent>(doneItem.Content[0]);
+        var finalContent = XAssert.IsType<MessageContentOutputTextContent>(doneItem.Content[0]);
         Assert.That(finalContent.Text, Is.EqualTo("Hello, world!"));
     }
 

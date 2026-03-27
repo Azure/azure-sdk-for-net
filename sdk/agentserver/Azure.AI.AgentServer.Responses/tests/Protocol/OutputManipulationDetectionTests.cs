@@ -64,10 +64,10 @@ public class OutputManipulationDetectionTests : ProtocolTestBase
         yield return stream.EmitCreated();
 
         // Directly manipulate Output without using builder events (FR-008a violation)
-        stream.Response.Output.Add(new OutputItemOutputMessage(
+        stream.Response.Output.Add(new OutputItemMessage(
             "fake-item-id",
-            Array.Empty<OutputMessageContent>(),
-            OutputItemOutputMessageStatus.Completed));
+            MessageStatus.Completed,
+            Array.Empty<MessageContent>()));
 
         yield return stream.EmitCompleted();
     }

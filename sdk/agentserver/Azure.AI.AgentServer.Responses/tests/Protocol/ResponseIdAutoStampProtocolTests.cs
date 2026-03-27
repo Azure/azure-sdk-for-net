@@ -168,10 +168,10 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
 
         var message = stream.AddOutputItemMessage();
         // Set custom response_id before emitting
-        var outputMsg = new OutputItemOutputMessage(
+        var outputMsg = new OutputItemMessage(
             id: message.ItemId,
-            content: Array.Empty<OutputMessageContent>(),
-            status: OutputItemOutputMessageStatus.InProgress)
+            content: Array.Empty<MessageContent>(),
+            status: MessageStatus.InProgress)
         {
             ResponseId = customResponseId,
         };
@@ -226,10 +226,10 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
         yield return new ResponseCreatedEvent(0, response);
 
         // Directly construct output item event without setting ResponseId
-        var outputItem = new OutputItemOutputMessage(
+        var outputItem = new OutputItemMessage(
             id: "msg_direct_001",
-            content: Array.Empty<OutputMessageContent>(),
-            status: OutputItemOutputMessageStatus.InProgress);
+            content: Array.Empty<MessageContent>(),
+            status: MessageStatus.InProgress);
         // ResponseId intentionally NOT set — Layer 2 should stamp it
         yield return new ResponseOutputItemAddedEvent(0, 0, outputItem);
         yield return new ResponseOutputItemDoneEvent(0, 0, outputItem);

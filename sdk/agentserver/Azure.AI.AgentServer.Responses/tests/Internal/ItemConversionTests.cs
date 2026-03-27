@@ -41,7 +41,7 @@ public class ItemConversionTests
     }
 
     [Test]
-    public void ToOutputItem_ItemOutputMessage_ReturnsOutputItemOutputMessage()
+    public void ToOutputItem_ItemOutputMessage_ReturnsOutputItemMessage()
     {
         var content = new List<OutputMessageContent>
         {
@@ -51,9 +51,9 @@ public class ItemConversionTests
 
         var result = ItemConversion.ToOutputItem(outputMsg, PartitionKeyHint);
 
-        var converted = XAssert.IsType<OutputItemOutputMessage>(result);
+        var converted = XAssert.IsType<OutputItemMessage>(result);
         XAssert.StartsWith("om_", converted.Id);
-        Assert.That(converted.Status, Is.EqualTo(OutputItemOutputMessageStatus.Completed));
+        Assert.That(converted.Status, Is.EqualTo(MessageStatus.Completed));
         XAssert.Single(converted.Content);
     }
 

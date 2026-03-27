@@ -16,13 +16,12 @@ using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using NUnit.Framework;
 using OpenAI.Responses;
-
+using CodeInterpreterTool = Azure.AI.AgentServer.Responses.Models.CodeInterpreterTool;
+using FileSearchTool = Azure.AI.AgentServer.Responses.Models.FileSearchTool;
+using FunctionTool = Azure.AI.AgentServer.Responses.Models.FunctionTool;
 // Disambiguate types that exist in both Azure and OpenAI namespaces
 using MessageRole = Azure.AI.AgentServer.Responses.Models.MessageRole;
-using FunctionTool = Azure.AI.AgentServer.Responses.Models.FunctionTool;
 using WebSearchPreviewTool = Azure.AI.AgentServer.Responses.Models.WebSearchPreviewTool;
-using FileSearchTool = Azure.AI.AgentServer.Responses.Models.FileSearchTool;
-using CodeInterpreterTool = Azure.AI.AgentServer.Responses.Models.CodeInterpreterTool;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Interop;
 
@@ -809,8 +808,7 @@ public class OpenAIWireComplianceTests
             """);
         var openAiItem = ModelReaderWriter.Read<ResponseItem>(json)!;
         var azureItem = openAiItem.Translate().To<Item>();
-        Assert.That(azureItem, Is.InstanceOf<ItemMessage>()
-            .Or.InstanceOf<ItemOutputMessage>());
+        Assert.That(azureItem, Is.InstanceOf<ItemMessage>());
     }
 
     // ═══════════════════════════════════════════════════════════════════

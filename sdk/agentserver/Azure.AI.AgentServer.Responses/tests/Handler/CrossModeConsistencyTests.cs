@@ -126,12 +126,12 @@ public class CrossModeConsistencyTests : IDisposable
         var response = new Models.ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
         yield return new ResponseCreatedEvent(0, response);
 
-        var textContent = new OutputMessageContentOutputTextContent(
+        var textContent = new MessageContentOutputTextContent(
             "Hello world", Array.Empty<Annotation>(), Array.Empty<LogProb>());
-        var msg = new OutputItemOutputMessage(
+        var msg = new OutputItemMessage(
             "msg_1",
-            new OutputMessageContent[] { textContent },
-            OutputItemOutputMessageStatus.Completed);
+            MessageStatus.Completed,
+            new MessageContent[] { textContent });
         yield return new ResponseOutputItemAddedEvent(0, 0, msg);
         yield return new ResponseOutputItemDoneEvent(0, 0, msg);
 

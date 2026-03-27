@@ -11,12 +11,8 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// The OutputMessageContent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OutputMessageContentOutputTextContent"/> and <see cref="OutputMessageContentRefusalContent"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownOutputMessageContent))]
-    public abstract partial class OutputMessageContent : IJsonModel<OutputMessageContent>
+    internal abstract partial class OutputMessageContent : IJsonModel<OutputMessageContent>
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContent"/> for deserialization. </summary>
         internal OutputMessageContent()

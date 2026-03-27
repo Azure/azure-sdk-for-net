@@ -106,10 +106,10 @@ public class OutputItemMessageBuilderTests
 
         var evt = msg.EmitAdded();
 
-        var item = XAssert.IsType<OutputItemOutputMessage>(evt.Item);
+        var item = XAssert.IsType<OutputItemMessage>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(msg.ItemId));
         Assert.That(item.Content, Is.Empty);
-        Assert.That(item.Status, Is.EqualTo(OutputItemOutputMessageStatus.InProgress));
+        Assert.That(item.Status, Is.EqualTo(MessageStatus.InProgress));
     }
 
     [Test]
@@ -191,12 +191,12 @@ public class OutputItemMessageBuilderTests
 
         var evt = msg.EmitDone();
 
-        var item = XAssert.IsType<OutputItemOutputMessage>(evt.Item);
+        var item = XAssert.IsType<OutputItemMessage>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(msg.ItemId));
-        Assert.That(item.Status, Is.EqualTo(OutputItemOutputMessageStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(MessageStatus.Completed));
         XAssert.Single(item.Content);
 
-        var content = XAssert.IsType<OutputMessageContentOutputTextContent>(item.Content[0]);
+        var content = XAssert.IsType<MessageContentOutputTextContent>(item.Content[0]);
         Assert.That(content.Text, Is.EqualTo("Hello, world!"));
     }
 
@@ -214,8 +214,8 @@ public class OutputItemMessageBuilderTests
 
         var evt = msg.EmitDone();
 
-        var item = XAssert.IsType<OutputItemOutputMessage>(evt.Item);
+        var item = XAssert.IsType<OutputItemMessage>(evt.Item);
         XAssert.Single(item.Content);
-        Assert.That(item.Status, Is.EqualTo(OutputItemOutputMessageStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(MessageStatus.Completed));
     }
 }

@@ -40,10 +40,10 @@ internal static class ItemConversion
                 message.Role,
                 message.GetContentExpanded()),
 
-            ItemOutputMessage outputMessage => new OutputItemOutputMessage(
+            ItemOutputMessage outputMessage => new OutputItemMessage(
                 id,
-                outputMessage.Content,
-                outputMessage.Status),
+                ConvertStatus(outputMessage.Status),
+                ConvertOutputMessageContent(outputMessage.Content)),
 
             // --- Function tool calls ---
             ItemFunctionToolCall funcCall => new OutputItemFunctionToolCall(
@@ -298,5 +298,34 @@ internal static class ItemConversion
             // null or unknown → default to timeout
             _ => new FunctionShellCallOutputTimeoutOutcome(),
         };
+    }
+
+    private static MessageStatus ConvertStatus(OutputItemOutputMessageStatus status)
+    {
+        return status switch
+        {
+            OutputItemOutputMessageStatus.InProgress => MessageStatus.InProgress,
+            OutputItemOutputMessageStatus.Completed => MessageStatus.Completed,
+            OutputItemOutputMessageStatus.Incomplete => MessageStatus.Incomplete,
+            _ => MessageStatus.InProgress,
+        };
+    }
+
+    private static IEnumerable<MessageContent> ConvertOutputMessageContent(
+        IList<OutputMessageContent> items)
+    {
+        foreach (var item in items)
+        {
+            switch (item)
+            {
+                case OutputMessageContentOutputTextContent text:
+                    yield return new MessageContentOutputTextContent(
+                        text.Text, text.Annotations, text.Logprobs);
+                    break;
+                case OutputMessageContentRefusalContent refusal:
+                    yield return new MessageContentRefusalContent(refusal.Refusal);
+                    break;
+            }
+        }
     }
 }

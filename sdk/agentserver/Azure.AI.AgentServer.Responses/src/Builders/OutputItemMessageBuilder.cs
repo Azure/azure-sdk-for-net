@@ -10,10 +10,10 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a message-type output item. Manages the content index
 /// counter within the message and provides factory methods for content part scopes.
 /// </summary>
-public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemOutputMessage>
+public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
 {
     private long _contentIndex;
-    private readonly List<OutputMessageContent> _completedContents = new();
+    private readonly List<MessageContent> _completedContents = new();
 
     /// <summary>
     /// Initializes a new instance of <see cref="OutputItemMessageBuilder"/>.
@@ -38,12 +38,10 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemOutputMessag
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this message.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var message = new OutputItemOutputMessage(
+        var message = new OutputItemMessage(
             id: _itemId,
-            content: Array.Empty<OutputMessageContent>(),
-            status: OutputItemOutputMessageStatus.InProgress);
-        // The OpenAI SDK recognises "message" but not "output_message"
-        message.Type = OutputItemType.Message;
+            status: MessageStatus.InProgress,
+            content: Array.Empty<MessageContent>());
         return EmitAdded(message);
     }
 
@@ -79,7 +77,7 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemOutputMessag
             text: textContent.FinalText ?? string.Empty,
             annotations: Array.Empty<Annotation>(),
             logprobs: Array.Empty<LogProb>());
-        _completedContents.Add(new OutputMessageContentOutputTextContent(
+        _completedContents.Add(new MessageContentOutputTextContent(
             text: textContent.FinalText ?? string.Empty,
             annotations: Array.Empty<Annotation>(),
             logprobs: Array.Empty<LogProb>()));
@@ -97,7 +95,7 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemOutputMessag
     {
         var part = new OutputContentRefusalContent(
             refusal: refusalContent.FinalRefusal ?? string.Empty);
-        _completedContents.Add(new OutputMessageContentRefusalContent(
+        _completedContents.Add(new MessageContentRefusalContent(
             refusal: refusalContent.FinalRefusal ?? string.Empty));
         return new ResponseContentPartDoneEvent(
             _stream.NextSequenceNumber(), _itemId, _outputIndex, refusalContent.ContentIndex, part);
@@ -119,12 +117,10 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemOutputMessag
             ]);
         }
 
-        var message = new OutputItemOutputMessage(
+        var message = new OutputItemMessage(
             id: _itemId,
-            content: _completedContents,
-            status: OutputItemOutputMessageStatus.Completed);
-        // The OpenAI SDK recognises "message" but not "output_message"
-        message.Type = OutputItemType.Message;
+            status: MessageStatus.Completed,
+            content: _completedContents);
         return EmitDone(message);
     }
 }

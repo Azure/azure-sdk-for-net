@@ -45,9 +45,6 @@ public static class OutputItemExtensions
         switch (item)
         {
             // --- OpenAI base types ---
-            case OutputItemOutputMessage m:
-                id = m.Id;
-                return true;
             case OutputItemMessage m:
                 id = m.Id;
                 return true;

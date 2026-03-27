@@ -35,7 +35,7 @@ public class BuilderAccumulationTests
         msg.EmitDone();
 
         XAssert.Single(response.Output);
-        var output = XAssert.IsType<OutputItemOutputMessage>(response.Output[0]);
+        var output = XAssert.IsType<OutputItemMessage>(response.Output[0]);
         Assert.That(output.Id, Is.EqualTo(msg.ItemId));
     }
 
@@ -73,7 +73,7 @@ public class BuilderAccumulationTests
         fc.EmitDone();
 
         Assert.That(response.Output.Count, Is.EqualTo(2));
-        XAssert.IsType<OutputItemOutputMessage>(response.Output[0]);
+        XAssert.IsType<OutputItemMessage>(response.Output[0]);
         XAssert.IsType<OutputItemFunctionToolCall>(response.Output[1]);
     }
 
@@ -93,7 +93,7 @@ public class BuilderAccumulationTests
         var completed = stream.EmitCompleted();
 
         XAssert.Single(completed.Response.Output);
-        XAssert.IsType<OutputItemOutputMessage>(completed.Response.Output[0]);
+        XAssert.IsType<OutputItemMessage>(completed.Response.Output[0]);
     }
 
     [Test]

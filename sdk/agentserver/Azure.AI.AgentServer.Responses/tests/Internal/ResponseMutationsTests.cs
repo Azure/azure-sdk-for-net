@@ -57,13 +57,13 @@ public class ResponseMutationsTests
     public void SetCompleted_ComputesOutputText()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        var msg = new OutputItemOutputMessage(
+        var msg = new OutputItemMessage(
             "msg_1",
-            new OutputMessageContent[]
+            MessageStatus.Completed,
+            new MessageContent[]
             {
-                new OutputMessageContentOutputTextContent("Hello ", Array.Empty<Annotation>(), Array.Empty<LogProb>())
-            },
-            OutputItemOutputMessageStatus.Completed);
+                new MessageContentOutputTextContent("Hello ", Array.Empty<Annotation>(), Array.Empty<LogProb>())
+            });
         response.Output.Add(msg);
 
         response.SetCompleted();
@@ -173,13 +173,13 @@ public class ResponseMutationsTests
     public void SetFailed_ComputesOutputText()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        var msg = new OutputItemOutputMessage(
+        var msg = new OutputItemMessage(
             "msg_1",
-            new OutputMessageContent[]
+            MessageStatus.Completed,
+            new MessageContent[]
             {
-                new OutputMessageContentOutputTextContent("Partial", Array.Empty<Annotation>(), Array.Empty<LogProb>())
-            },
-            OutputItemOutputMessageStatus.Completed);
+                new MessageContentOutputTextContent("Partial", Array.Empty<Annotation>(), Array.Empty<LogProb>())
+            });
         response.Output.Add(msg);
 
         response.SetFailed();
@@ -245,13 +245,13 @@ public class ResponseMutationsTests
     public void SetIncomplete_ComputesOutputText()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        var msg = new OutputItemOutputMessage(
+        var msg = new OutputItemMessage(
             "msg_1",
-            new OutputMessageContent[]
+            MessageStatus.Completed,
+            new MessageContent[]
             {
-                new OutputMessageContentOutputTextContent("Partial output", Array.Empty<Annotation>(), Array.Empty<LogProb>())
-            },
-            OutputItemOutputMessageStatus.Completed);
+                new MessageContentOutputTextContent("Partial output", Array.Empty<Annotation>(), Array.Empty<LogProb>())
+            });
         response.Output.Add(msg);
 
         response.SetIncomplete();
@@ -265,14 +265,14 @@ public class ResponseMutationsTests
     public void ComputeOutputText_ConcatenatesTextFromOutputMessages()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        response.Output.Add(new OutputItemOutputMessage(
+        response.Output.Add(new OutputItemMessage(
             "msg_1",
-            new OutputMessageContent[]
+            MessageStatus.Completed,
+            new MessageContent[]
             {
-                new OutputMessageContentOutputTextContent("Hello ", Array.Empty<Annotation>(), Array.Empty<LogProb>()),
-                new OutputMessageContentOutputTextContent("World", Array.Empty<Annotation>(), Array.Empty<LogProb>())
-            },
-            OutputItemOutputMessageStatus.Completed));
+                new MessageContentOutputTextContent("Hello ", Array.Empty<Annotation>(), Array.Empty<LogProb>()),
+                new MessageContentOutputTextContent("World", Array.Empty<Annotation>(), Array.Empty<LogProb>())
+            }));
 
         var result = response.ComputeOutputText();
 
@@ -306,20 +306,20 @@ public class ResponseMutationsTests
     public void ComputeOutputText_ConcatenatesAcrossMultipleMessages()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        response.Output.Add(new OutputItemOutputMessage(
+        response.Output.Add(new OutputItemMessage(
             "msg_1",
-            new OutputMessageContent[]
+            MessageStatus.Completed,
+            new MessageContent[]
             {
-                new OutputMessageContentOutputTextContent("First ", Array.Empty<Annotation>(), Array.Empty<LogProb>())
-            },
-            OutputItemOutputMessageStatus.Completed));
-        response.Output.Add(new OutputItemOutputMessage(
+                new MessageContentOutputTextContent("First ", Array.Empty<Annotation>(), Array.Empty<LogProb>())
+            }));
+        response.Output.Add(new OutputItemMessage(
             "msg_2",
-            new OutputMessageContent[]
+            MessageStatus.Completed,
+            new MessageContent[]
             {
-                new OutputMessageContentOutputTextContent("Second", Array.Empty<Annotation>(), Array.Empty<LogProb>())
-            },
-            OutputItemOutputMessageStatus.Completed));
+                new MessageContentOutputTextContent("Second", Array.Empty<Annotation>(), Array.Empty<LogProb>())
+            }));
 
         var result = response.ComputeOutputText();
 
@@ -481,10 +481,10 @@ public class ResponseMutationsTests
     public void UpdateFromEvent_OutputItemAddedEvent_SetsItemAtIndex()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        var item = new OutputItemOutputMessage(
+        var item = new OutputItemMessage(
             "msg_1",
-            Array.Empty<OutputMessageContent>(),
-            OutputItemOutputMessageStatus.InProgress);
+            MessageStatus.InProgress,
+            Array.Empty<MessageContent>());
         var evt = new ResponseOutputItemAddedEvent(0, 0, item);
 
         response.UpdateFromEvent(evt);
@@ -497,10 +497,10 @@ public class ResponseMutationsTests
     public void UpdateFromEvent_OutputItemDoneEvent_SetsItemAtIndex()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        var item = new OutputItemOutputMessage(
+        var item = new OutputItemMessage(
             "msg_1",
-            Array.Empty<OutputMessageContent>(),
-            OutputItemOutputMessageStatus.Completed);
+            MessageStatus.Completed,
+            Array.Empty<MessageContent>());
         var evt = new ResponseOutputItemDoneEvent(0, 0, item);
 
         response.UpdateFromEvent(evt);
@@ -527,10 +527,10 @@ public class ResponseMutationsTests
     public void SetOutputItemAtIndex_PadsListWithNulls()
     {
         var output = new List<OutputItem>();
-        var item = new OutputItemOutputMessage(
+        var item = new OutputItemMessage(
             "msg_1",
-            Array.Empty<OutputMessageContent>(),
-            OutputItemOutputMessageStatus.Completed);
+            MessageStatus.Completed,
+            Array.Empty<MessageContent>());
 
         output.SetOutputItemAtIndex(2, item);
 
@@ -544,8 +544,8 @@ public class ResponseMutationsTests
     public void SetOutputItemAtIndex_ReplacesExistingItem()
     {
         var output = new List<OutputItem>();
-        var item1 = new OutputItemOutputMessage("msg_1", Array.Empty<OutputMessageContent>(), OutputItemOutputMessageStatus.InProgress);
-        var item2 = new OutputItemOutputMessage("msg_1", Array.Empty<OutputMessageContent>(), OutputItemOutputMessageStatus.Completed);
+        var item1 = new OutputItemMessage("msg_1", MessageStatus.InProgress, Array.Empty<MessageContent>());
+        var item2 = new OutputItemMessage("msg_1", MessageStatus.Completed, Array.Empty<MessageContent>());
 
         output.SetOutputItemAtIndex(0, item1);
         output.SetOutputItemAtIndex(0, item2);

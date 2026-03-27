@@ -107,10 +107,10 @@ public class RawEventInteropTests
 
             new ResponseOutputItemAddedEvent(
                 sequenceNumber: 2, outputIndex: 0,
-                item: new OutputItemOutputMessage(
+                item: new OutputItemMessage(
                     id: itemId,
-                    content: Array.Empty<OutputMessageContent>(),
-                    status: OutputItemOutputMessageStatus.InProgress)),
+                    content: Array.Empty<MessageContent>(),
+                    status: MessageStatus.InProgress)),
 
             new ResponseContentPartAddedEvent(
                 sequenceNumber: 3, itemId: itemId, outputIndex: 0, contentIndex: 0,
@@ -134,13 +134,13 @@ public class RawEventInteropTests
 
             new ResponseOutputItemDoneEvent(
                 sequenceNumber: 7, outputIndex: 0,
-                item: new OutputItemOutputMessage(
+                item: new OutputItemMessage(
                     id: itemId,
-                    content: new[] { new OutputMessageContentOutputTextContent(
+                    content: new[] { new MessageContentOutputTextContent(
                         text: "Hello!",
                         annotations: Array.Empty<Annotation>(),
                         logprobs: Array.Empty<LogProb>()) },
-                    status: OutputItemOutputMessageStatus.Completed)),
+                    status: MessageStatus.Completed)),
 
             new ResponseCompletedEvent(sequenceNumber: 8, response: response),
         };

@@ -28,7 +28,7 @@ public class StudyTutorHandler : ResponseHandler
         var history = await context.GetHistoryAsync(cancellationToken);
 
         var currentInput = request.GetInputText();
-        var turnNumber = history.OfType<OutputItemOutputMessage>().Count() + 1;
+        var turnNumber = history.OfType<OutputItemMessage>().Count() + 1;
 
         // In a real agent, pass the history + current question to a model.
         string reply;
@@ -39,9 +39,9 @@ public class StudyTutorHandler : ResponseHandler
         }
         else
         {
-            var lastMessage = history.OfType<OutputItemOutputMessage>().LastOrDefault();
+            var lastMessage = history.OfType<OutputItemMessage>().LastOrDefault();
             var lastText = lastMessage?.Content
-                .OfType<OutputMessageContentOutputTextContent>()
+                .OfType<MessageContentOutputTextContent>()
                 .FirstOrDefault()?.Text ?? "(none)";
 
             reply = $"[Turn {turnNumber}] Building on our previous discussion " +

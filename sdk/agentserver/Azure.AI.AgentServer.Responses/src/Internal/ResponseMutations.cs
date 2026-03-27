@@ -113,13 +113,13 @@ internal static class ResponseMutations
 
     /// <summary>
     /// Computes <c>OutputText</c> by concatenating text from all
-    /// <see cref="OutputItemOutputMessage"/> items in <c>Response.Output</c>.
+    /// <see cref="OutputItemMessage"/> items in <c>Response.Output</c>.
     /// </summary>
     internal static string ComputeOutputText(this Models.ResponseObject response)
     {
         var texts = response.Output
-            .OfType<OutputItemOutputMessage>()
-            .SelectMany(msg => msg.Content.OfType<OutputMessageContentOutputTextContent>())
+            .OfType<OutputItemMessage>()
+            .SelectMany(msg => msg.Content.OfType<MessageContentOutputTextContent>())
             .Select(tc => tc.Text);
 
         return string.Concat(texts);

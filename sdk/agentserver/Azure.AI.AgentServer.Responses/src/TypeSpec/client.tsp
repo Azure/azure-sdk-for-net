@@ -174,6 +174,7 @@ namespace Azure.AI.Projects {
   @@usage(OpenAI.OutputItemMcpToolCall, Usage.input | Usage.output);
   @@usage(OpenAI.OutputItemMessage, Usage.input | Usage.output);
   @@usage(OpenAI.OutputItemOutputMessage, Usage.input | Usage.output);
+  @@access(OpenAI.OutputItemOutputMessage, Access.internal);
   @@usage(OpenAI.OutputItemReasoningItem, Usage.input | Usage.output);
   @@usage(OpenAI.OutputItemWebSearchToolCall, Usage.input | Usage.output);
   @@usage(OpenAI.FunctionToolCallOutputResource, Usage.input | Usage.output);
@@ -183,9 +184,13 @@ namespace Azure.AI.Projects {
   @@usage(OpenAI.OutputContentReasoningTextContent, Usage.input | Usage.output);
   @@usage(OpenAI.OutputContentRefusalContent, Usage.input | Usage.output);
 
-  // --- OutputMessageContent subtypes (2 concrete types) ---
+  // --- OutputMessageContent subtypes (internal — use MessageContent instead) ---
   @@usage(OpenAI.OutputMessageContentOutputTextContent, Usage.input | Usage.output);
+  @@access(OpenAI.OutputMessageContentOutputTextContent, Access.internal);
   @@usage(OpenAI.OutputMessageContentRefusalContent, Usage.input | Usage.output);
+  @@access(OpenAI.OutputMessageContentRefusalContent, Access.internal);
+  @@access(OpenAI.OutputMessageContent, Access.internal);
+  @@access(OpenAI.ItemOutputMessage, Access.internal);
 
   // --- Azure.AI.Projects OutputItem subtypes (22 concrete types) ---
   @@usage(Azure.AI.Projects.A2AToolCall, Usage.input | Usage.output);

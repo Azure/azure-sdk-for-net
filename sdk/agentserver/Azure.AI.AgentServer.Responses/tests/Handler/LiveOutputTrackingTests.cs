@@ -316,16 +316,16 @@ public class LiveOutputTrackingTests : IDisposable
         return await response.Content.ReadFromJsonAsync<JsonElement>();
     }
 
-    private static OutputItemOutputMessage CreateOutputMessage(string id, string text)
+    private static OutputItemMessage CreateOutputMessage(string id, string text)
     {
-        var content = new OutputMessageContentOutputTextContent(
+        var content = new MessageContentOutputTextContent(
             text: text,
             annotations: Array.Empty<Annotation>(),
             logprobs: Array.Empty<LogProb>());
-        return new OutputItemOutputMessage(
+        return new OutputItemMessage(
             id: id,
-            content: new List<OutputMessageContent> { content },
-            status: OutputItemOutputMessageStatus.Completed);
+            content: new List<MessageContent> { content },
+            status: MessageStatus.Completed);
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> YieldEvents(

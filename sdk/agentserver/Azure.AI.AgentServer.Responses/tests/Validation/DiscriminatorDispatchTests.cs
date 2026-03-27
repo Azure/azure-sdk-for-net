@@ -94,7 +94,7 @@ public class DiscriminatorDispatchTests
         }
         """, OutputItemValidator.Validate);
 
-        // Should dispatch to OutputItemMessageValidator or OutputItemOutputMessageValidator
+        // Should dispatch to OutputItemMessageValidator or OutputItemMessageValidator
         XAssert.DoesNotContain(result.Errors, e => e.Message.Contains("discriminator"));
     }
 

@@ -9,11 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// The OutputMessageContent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OutputMessageContentOutputTextContent"/> and <see cref="OutputMessageContentRefusalContent"/>.
-    /// </summary>
-    public abstract partial class OutputMessageContent
+    internal abstract partial class OutputMessageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

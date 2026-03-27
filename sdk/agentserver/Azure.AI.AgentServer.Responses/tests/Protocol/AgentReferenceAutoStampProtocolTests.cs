@@ -174,10 +174,10 @@ public class AgentReferenceAutoStampProtocolTests : ProtocolTestBase
         yield return stream.EmitCreated();
 
         var message = stream.AddOutputItemMessage();
-        var item = new OutputItemOutputMessage(
+        var item = new OutputItemMessage(
             id: message.ItemId,
-            content: Array.Empty<OutputMessageContent>(),
-            status: OutputItemOutputMessageStatus.InProgress)
+            content: Array.Empty<MessageContent>(),
+            status: MessageStatus.InProgress)
         {
             AgentReference = new AgentReference("handler-agent") { Version = "9.0" },
         };
@@ -201,10 +201,10 @@ public class AgentReferenceAutoStampProtocolTests : ProtocolTestBase
         yield return new ResponseCreatedEvent(0, response);
 
         // Directly construct output item without setting AgentReference
-        var outputItem = new OutputItemOutputMessage(
+        var outputItem = new OutputItemMessage(
             id: "msg_direct_agref_001",
-            content: Array.Empty<OutputMessageContent>(),
-            status: OutputItemOutputMessageStatus.InProgress);
+            content: Array.Empty<MessageContent>(),
+            status: MessageStatus.InProgress);
         yield return new ResponseOutputItemAddedEvent(0, 0, outputItem);
         yield return new ResponseOutputItemDoneEvent(0, 0, outputItem);
 

@@ -57,10 +57,10 @@ public class OutputItemBuilderAutoStampTests
         var builder = stream.AddOutputItemMessage();
 
         // Create an item with handler-set ResponseId
-        var item = new OutputItemOutputMessage(
+        var item = new OutputItemMessage(
             id: builder.ItemId,
-            content: Array.Empty<OutputMessageContent>(),
-            status: OutputItemOutputMessageStatus.InProgress)
+            content: Array.Empty<MessageContent>(),
+            status: MessageStatus.InProgress)
         {
             ResponseId = handlerResponseId,
         };
@@ -99,10 +99,10 @@ public class OutputItemBuilderAutoStampTests
         var stream = new ResponseEventStream(ctx, request);
         var builder = stream.AddOutputItemMessage();
 
-        var item = new OutputItemOutputMessage(
+        var item = new OutputItemMessage(
             id: builder.ItemId,
-            content: Array.Empty<OutputMessageContent>(),
-            status: OutputItemOutputMessageStatus.InProgress)
+            content: Array.Empty<MessageContent>(),
+            status: MessageStatus.InProgress)
         {
             AgentReference = handlerAgentRef,
         };

@@ -134,7 +134,7 @@ public class ProcessEventsTests : IDisposable
         await ConsumeProcessedEvents(new CreateResponse(), execution, context, publisher);
 
         XAssert.Single(execution.Response.Output);
-        var msg = XAssert.IsType<OutputItemOutputMessage>(execution.Response.Output[0]);
+        var msg = XAssert.IsType<OutputItemMessage>(execution.Response.Output[0]);
         Assert.That(msg.Id, Is.EqualTo("item_01"));
     }
 
@@ -262,16 +262,16 @@ public class ProcessEventsTests : IDisposable
         return (events, observer);
     }
 
-    private static OutputItemOutputMessage CreateOutputMessage(string id, string text)
+    private static OutputItemMessage CreateOutputMessage(string id, string text)
     {
-        var content = new OutputMessageContentOutputTextContent(
+        var content = new MessageContentOutputTextContent(
             text: text,
             annotations: Array.Empty<Annotation>(),
             logprobs: Array.Empty<LogProb>());
-        return new OutputItemOutputMessage(
+        return new OutputItemMessage(
             id: id,
-            content: new List<OutputMessageContent> { content },
-            status: OutputItemOutputMessageStatus.Completed);
+            content: new List<MessageContent> { content },
+            status: MessageStatus.Completed);
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> YieldEvents(

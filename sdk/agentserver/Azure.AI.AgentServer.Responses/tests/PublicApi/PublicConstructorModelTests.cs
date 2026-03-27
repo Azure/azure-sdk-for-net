@@ -38,7 +38,7 @@ public class PublicConstructorModelTests
         new object[] { typeof(OutputItemMcpListTools) },
         new object[] { typeof(OutputItemMcpToolCall) },
         new object[] { typeof(OutputItemMessage) },
-        new object[] { typeof(OutputItemOutputMessage) },
+        new object[] { typeof(OutputItemMessage) },
         new object[] { typeof(OutputItemReasoningItem) },
         new object[] { typeof(OutputItemWebSearchToolCall) },
         new object[] { typeof(FunctionToolCallOutputResource) },
@@ -90,12 +90,12 @@ public class PublicConstructorModelTests
     };
 
     /// <summary>
-    /// Concrete OutputMessageContent subtypes.
+    /// Concrete MessageContent subtypes.
     /// </summary>
-    public static IEnumerable<object[]> OutputMessageContentTypes => new[]
+    public static IEnumerable<object[]> MessageContentTypes => new[]
     {
-        new object[] { typeof(OutputMessageContentOutputTextContent) },
-        new object[] { typeof(OutputMessageContentRefusalContent) },
+        new object[] { typeof(MessageContentOutputTextContent) },
+        new object[] { typeof(MessageContentRefusalContent) },
     };
 
     // ========================================
@@ -122,8 +122,8 @@ public class PublicConstructorModelTests
             $"{type.Name} should have at least one public constructor but has none.");
     }
 
-    [TestCaseSource(nameof(OutputMessageContentTypes))]
-    public void OutputMessageContentSubtype_HasAtLeastOnePublicConstructor(Type type)
+    [TestCaseSource(nameof(MessageContentTypes))]
+    public void MessageContentSubtype_HasAtLeastOnePublicConstructor(Type type)
     {
         var publicCtors = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
         Assert.That(publicCtors.Length > 0, Is.True,
@@ -186,16 +186,16 @@ public class PublicConstructorModelTests
     }
 
     [Test]
-    public void OutputMessageContent_HasNoPublicConstructors()
+    public void MessageContent_HasNoPublicConstructors()
     {
-        var publicCtors = typeof(OutputMessageContent).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+        var publicCtors = typeof(MessageContent).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
         Assert.That(publicCtors, Is.Empty);
     }
 
     [Test]
-    public void OutputMessageContent_IsAbstract()
+    public void MessageContent_IsAbstract()
     {
-        Assert.That(typeof(OutputMessageContent).IsAbstract, Is.True);
+        Assert.That(typeof(MessageContent).IsAbstract, Is.True);
     }
 
     // ========================================

@@ -1268,7 +1268,7 @@ namespace Azure.AI.AgentServer.Responses
 
         /// <summary>
         /// Content item used to generate a response.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MemorySearchToolCallItemParam"/>, <see cref="Models.ComputerCallOutputItemParam"/>, <see cref="Models.FunctionCallOutputItemParam"/>, <see cref="Models.CompactionSummaryItemParam"/>, <see cref="Models.FunctionShellCallItemParam"/>, <see cref="Models.FunctionShellCallOutputItemParam"/>, <see cref="Models.ApplyPatchToolCallItemParam"/>, <see cref="Models.ApplyPatchToolCallOutputItemParam"/>, <see cref="Models.MCPApprovalResponse"/>, <see cref="Models.ItemReferenceParam"/>, <see cref="Models.ItemMessage"/>, <see cref="Models.ItemOutputMessage"/>, <see cref="Models.ItemFileSearchToolCall"/>, <see cref="Models.ItemComputerToolCall"/>, <see cref="Models.ItemWebSearchToolCall"/>, <see cref="Models.ItemFunctionToolCall"/>, <see cref="Models.ItemReasoningItem"/>, <see cref="Models.ItemImageGenToolCall"/>, <see cref="Models.ItemCodeInterpreterToolCall"/>, <see cref="Models.ItemLocalShellToolCall"/>, <see cref="Models.ItemLocalShellToolCallOutput"/>, <see cref="Models.ItemMcpListTools"/>, <see cref="Models.ItemMcpApprovalRequest"/>, <see cref="Models.ItemMcpToolCall"/>, <see cref="Models.ItemCustomToolCallOutput"/>, and <see cref="Models.ItemCustomToolCall"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MemorySearchToolCallItemParam"/>, <see cref="Models.ComputerCallOutputItemParam"/>, <see cref="Models.FunctionCallOutputItemParam"/>, <see cref="Models.CompactionSummaryItemParam"/>, <see cref="Models.FunctionShellCallItemParam"/>, <see cref="Models.FunctionShellCallOutputItemParam"/>, <see cref="Models.ApplyPatchToolCallItemParam"/>, <see cref="Models.ApplyPatchToolCallOutputItemParam"/>, <see cref="Models.MCPApprovalResponse"/>, <see cref="Models.ItemReferenceParam"/>, <see cref="Models.ItemMessage"/>, <see cref="Models.ItemFileSearchToolCall"/>, <see cref="Models.ItemComputerToolCall"/>, <see cref="Models.ItemWebSearchToolCall"/>, <see cref="Models.ItemFunctionToolCall"/>, <see cref="Models.ItemReasoningItem"/>, <see cref="Models.ItemImageGenToolCall"/>, <see cref="Models.ItemCodeInterpreterToolCall"/>, <see cref="Models.ItemLocalShellToolCall"/>, <see cref="Models.ItemLocalShellToolCallOutput"/>, <see cref="Models.ItemMcpListTools"/>, <see cref="Models.ItemMcpApprovalRequest"/>, <see cref="Models.ItemMcpToolCall"/>, <see cref="Models.ItemCustomToolCallOutput"/>, and <see cref="Models.ItemCustomToolCall"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Models.Item"/> instance for mocking. </returns>
@@ -1863,59 +1863,6 @@ namespace Azure.AI.AgentServer.Responses
                 filename,
                 fileUrl,
                 fileData);
-        }
-
-        /// <summary> Output message. </summary>
-        /// <param name="id"> The unique ID of the output message. </param>
-        /// <param name="content"> The content of the output message. </param>
-        /// <param name="status">
-        /// The status of the message input. One of `in_progress`, `completed`, or
-        ///   `incomplete`. Populated when input items are returned via API.
-        /// </param>
-        /// <returns> A new <see cref="Models.ItemOutputMessage"/> instance for mocking. </returns>
-        public static ItemOutputMessage ItemOutputMessage(string id = default, IEnumerable<OutputMessageContent> content = default, OutputItemOutputMessageStatus status = default)
-        {
-            content ??= new ChangeTrackingList<OutputMessageContent>();
-
-            return new ItemOutputMessage(
-                ItemType.OutputMessage,
-                additionalBinaryDataProperties: null,
-                id,
-                "assistant",
-                content.ToList(),
-                status);
-        }
-
-        /// <summary>
-        /// The OutputMessageContent.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.OutputMessageContentOutputTextContent"/> and <see cref="Models.OutputMessageContentRefusalContent"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="Models.OutputMessageContent"/> instance for mocking. </returns>
-        public static OutputMessageContent OutputMessageContent(string @type = default)
-        {
-            return new UnknownOutputMessageContent(new OutputMessageContentType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Output text. </summary>
-        /// <param name="text"> The text output from the model. </param>
-        /// <param name="annotations"> The annotations of the text output. </param>
-        /// <param name="logprobs"></param>
-        /// <returns> A new <see cref="Models.OutputMessageContentOutputTextContent"/> instance for mocking. </returns>
-        public static OutputMessageContentOutputTextContent OutputMessageContentOutputTextContent(string text = default, IEnumerable<Annotation> annotations = default, IEnumerable<LogProb> logprobs = default)
-        {
-            annotations ??= new ChangeTrackingList<Annotation>();
-            logprobs ??= new ChangeTrackingList<LogProb>();
-
-            return new OutputMessageContentOutputTextContent(OutputMessageContentType.OutputText, additionalBinaryDataProperties: null, text, annotations.ToList(), logprobs.ToList());
-        }
-
-        /// <summary> Refusal. </summary>
-        /// <param name="refusal"> The refusal explanation from the model. </param>
-        /// <returns> A new <see cref="Models.OutputMessageContentRefusalContent"/> instance for mocking. </returns>
-        public static OutputMessageContentRefusalContent OutputMessageContentRefusalContent(string refusal = default)
-        {
-            return new OutputMessageContentRefusalContent(OutputMessageContentType.Refusal, additionalBinaryDataProperties: null, refusal);
         }
 
         /// <summary> File search tool call. </summary>
@@ -2746,7 +2693,7 @@ namespace Azure.AI.AgentServer.Responses
 
         /// <summary>
         /// The OutputItem.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.StructuredOutputsOutputItem"/>, <see cref="Models.WorkflowActionOutputItem"/>, <see cref="Models.OAuthConsentRequestOutputItem"/>, <see cref="Models.MemorySearchToolCallItemResource"/>, <see cref="Models.BingGroundingToolCall"/>, <see cref="Models.BingGroundingToolCallOutput"/>, <see cref="Models.SharepointGroundingToolCall"/>, <see cref="Models.SharepointGroundingToolCallOutput"/>, <see cref="Models.AzureAISearchToolCall"/>, <see cref="Models.AzureAISearchToolCallOutput"/>, <see cref="Models.BingCustomSearchToolCall"/>, <see cref="Models.BingCustomSearchToolCallOutput"/>, <see cref="Models.OpenApiToolCall"/>, <see cref="Models.OpenApiToolCallOutput"/>, <see cref="Models.BrowserAutomationToolCall"/>, <see cref="Models.BrowserAutomationToolCallOutput"/>, <see cref="Models.FabricDataAgentToolCall"/>, <see cref="Models.FabricDataAgentToolCallOutput"/>, <see cref="Models.AzureFunctionToolCall"/>, <see cref="Models.AzureFunctionToolCallOutput"/>, <see cref="Models.A2AToolCall"/>, <see cref="Models.A2AToolCallOutput"/>, <see cref="Models.FunctionToolCallOutputResource"/>, <see cref="Models.OutputItemOutputMessage"/>, <see cref="Models.OutputItemFileSearchToolCall"/>, <see cref="Models.OutputItemFunctionToolCall"/>, <see cref="Models.OutputItemWebSearchToolCall"/>, <see cref="Models.OutputItemComputerToolCall"/>, <see cref="Models.OutputItemReasoningItem"/>, <see cref="Models.OutputItemCompactionBody"/>, <see cref="Models.OutputItemImageGenToolCall"/>, <see cref="Models.OutputItemCodeInterpreterToolCall"/>, <see cref="Models.OutputItemLocalShellToolCall"/>, <see cref="Models.OutputItemFunctionShellCall"/>, <see cref="Models.OutputItemFunctionShellCallOutput"/>, <see cref="Models.OutputItemApplyPatchToolCall"/>, <see cref="Models.OutputItemApplyPatchToolCallOutput"/>, <see cref="Models.OutputItemMcpToolCall"/>, <see cref="Models.OutputItemMcpListTools"/>, <see cref="Models.OutputItemMcpApprovalRequest"/>, <see cref="Models.OutputItemCustomToolCall"/>, <see cref="Models.OutputItemMessage"/>, <see cref="Models.OutputItemComputerToolCallOutputResource"/>, <see cref="Models.OutputItemLocalShellToolCallOutput"/>, <see cref="Models.OutputItemMcpApprovalResponseResource"/>, and <see cref="Models.OutputItemCustomToolCallOutput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.StructuredOutputsOutputItem"/>, <see cref="Models.WorkflowActionOutputItem"/>, <see cref="Models.OAuthConsentRequestOutputItem"/>, <see cref="Models.MemorySearchToolCallItemResource"/>, <see cref="Models.BingGroundingToolCall"/>, <see cref="Models.BingGroundingToolCallOutput"/>, <see cref="Models.SharepointGroundingToolCall"/>, <see cref="Models.SharepointGroundingToolCallOutput"/>, <see cref="Models.AzureAISearchToolCall"/>, <see cref="Models.AzureAISearchToolCallOutput"/>, <see cref="Models.BingCustomSearchToolCall"/>, <see cref="Models.BingCustomSearchToolCallOutput"/>, <see cref="Models.OpenApiToolCall"/>, <see cref="Models.OpenApiToolCallOutput"/>, <see cref="Models.BrowserAutomationToolCall"/>, <see cref="Models.BrowserAutomationToolCallOutput"/>, <see cref="Models.FabricDataAgentToolCall"/>, <see cref="Models.FabricDataAgentToolCallOutput"/>, <see cref="Models.AzureFunctionToolCall"/>, <see cref="Models.AzureFunctionToolCallOutput"/>, <see cref="Models.A2AToolCall"/>, <see cref="Models.A2AToolCallOutput"/>, <see cref="Models.FunctionToolCallOutputResource"/>, <see cref="Models.OutputItemFileSearchToolCall"/>, <see cref="Models.OutputItemFunctionToolCall"/>, <see cref="Models.OutputItemWebSearchToolCall"/>, <see cref="Models.OutputItemComputerToolCall"/>, <see cref="Models.OutputItemReasoningItem"/>, <see cref="Models.OutputItemCompactionBody"/>, <see cref="Models.OutputItemImageGenToolCall"/>, <see cref="Models.OutputItemCodeInterpreterToolCall"/>, <see cref="Models.OutputItemLocalShellToolCall"/>, <see cref="Models.OutputItemFunctionShellCall"/>, <see cref="Models.OutputItemFunctionShellCallOutput"/>, <see cref="Models.OutputItemApplyPatchToolCall"/>, <see cref="Models.OutputItemApplyPatchToolCallOutput"/>, <see cref="Models.OutputItemMcpToolCall"/>, <see cref="Models.OutputItemMcpListTools"/>, <see cref="Models.OutputItemMcpApprovalRequest"/>, <see cref="Models.OutputItemCustomToolCall"/>, <see cref="Models.OutputItemMessage"/>, <see cref="Models.OutputItemComputerToolCallOutputResource"/>, <see cref="Models.OutputItemLocalShellToolCallOutput"/>, <see cref="Models.OutputItemMcpApprovalResponseResource"/>, and <see cref="Models.OutputItemCustomToolCallOutput"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="createdBy"> The information about the creator of the item. </param>
@@ -3324,33 +3271,6 @@ namespace Azure.AI.AgentServer.Responses
                 id,
                 callId,
                 output,
-                status);
-        }
-
-        /// <summary> Output message. </summary>
-        /// <param name="createdBy"> The information about the creator of the item. </param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="id"> The unique ID of the output message. </param>
-        /// <param name="content"> The content of the output message. </param>
-        /// <param name="status">
-        /// The status of the message input. One of `in_progress`, `completed`, or
-        ///   `incomplete`. Populated when input items are returned via API.
-        /// </param>
-        /// <returns> A new <see cref="Models.OutputItemOutputMessage"/> instance for mocking. </returns>
-        public static OutputItemOutputMessage OutputItemOutputMessage(BinaryData createdBy = default, AgentReference agentReference = default, string responseId = default, string id = default, IEnumerable<OutputMessageContent> content = default, OutputItemOutputMessageStatus status = default)
-        {
-            content ??= new ChangeTrackingList<OutputMessageContent>();
-
-            return new OutputItemOutputMessage(
-                OutputItemType.OutputMessage,
-                createdBy,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties: null,
-                id,
-                "assistant",
-                content.ToList(),
                 status);
         }
 

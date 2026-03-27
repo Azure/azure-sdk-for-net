@@ -7,24 +7,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Output text. </summary>
-    public partial class OutputMessageContentOutputTextContent : OutputMessageContent
+    internal partial class OutputMessageContentOutputTextContent : OutputMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentOutputTextContent"/>. </summary>
         /// <param name="text"> The text output from the model. </param>
         /// <param name="annotations"> The annotations of the text output. </param>
         /// <param name="logprobs"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="annotations"/> or <paramref name="logprobs"/> is null. </exception>
         public OutputMessageContentOutputTextContent(string text, IEnumerable<Annotation> annotations, IEnumerable<LogProb> logprobs) : base(OutputMessageContentType.OutputText)
         {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(annotations, nameof(annotations));
-            Argument.AssertNotNull(logprobs, nameof(logprobs));
-
             Text = text;
             Annotations = annotations.ToList();
             Logprobs = logprobs.ToList();
