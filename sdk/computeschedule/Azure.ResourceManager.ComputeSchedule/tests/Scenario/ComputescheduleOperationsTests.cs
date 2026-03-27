@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 OsType.Windows,
                 new PriorityProfile
                 {
-                    Type = new PriorityType("regular"),
+                    Type = PriorityType.Regular,
                     AllocationStrategy = AllocationStrategy.Prioritized,
                 });
 
