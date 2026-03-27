@@ -1,4 +1,4 @@
-# Sample 6: Streaming OpenAI Proxy — Forward to an upstream server
+# Sample 8: Streaming OpenAI Proxy — Forward to an upstream server
 
 This sample shows how to implement a `ResponseHandler` that acts as a **streaming proxy**: it receives requests from clients, forwards them to an upstream [OpenAI-compatible responses server](https://platform.openai.com/docs/api-reference/responses) using the [OpenAI .NET SDK](https://github.com/openai/openai-dotnet), and streams each event back as it arrives.
 
@@ -21,7 +21,7 @@ dotnet add package OpenAI
 
 ## Implement the handler
 
-```C# Snippet:Responses_Sample6_StreamingProxyHandler
+```C# Snippet:Responses_Sample8_StreamingProxyHandler
 public class StreamingProxyHandler : ResponseHandler
 {
     private readonly ResponsesClient _upstream;
@@ -64,7 +64,7 @@ public class StreamingProxyHandler : ResponseHandler
 
 Register the OpenAI `ResponsesClient` as a singleton service. Set `UPSTREAM_ENDPOINT` to point at another responses server, or leave it unset to call OpenAI directly.
 
-```C# Snippet:Responses_Sample6_StartServer
+```C# Snippet:Responses_Sample8_StartServer
 ResponsesServer.Run<StreamingProxyHandler>(configure: builder =>
 {
     builder.Services.AddSingleton(new ResponsesClient(

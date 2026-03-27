@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Runtime.CompilerServices;
-using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +11,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Sample5_HostingAndConfiguration.md. Compiled to prevent rot.
+    /// Code snippets backing Sample5_HostingAndConfiguration.md (Tier 1). Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
@@ -27,6 +26,25 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
             {
                 builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
             });
+
+            #endregion
+        }
+
+        [Test]
+        public void FactoryDelegate()
+        {
+            #region Snippet:Responses_Sample5_FactoryDelegate
+
+            ResponsesServer.Run(
+                factory: sp =>
+                {
+                    var kb = sp.GetRequiredService<IKnowledgeBase>();
+                    return new KnowledgeHandler(kb);
+                },
+                configure: builder =>
+                {
+                    builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
+                });
 
             #endregion
         }
@@ -78,37 +96,6 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     });
                 });
             });
-
-            #endregion
-        }
-
-        [Test]
-        public void BuilderWithFactory()
-        {
-            #region Snippet:Responses_Sample5_BuilderWithFactory
-
-            var builder = AgentHost.CreateBuilder();
-
-            // Register services on the builder.
-            builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
-
-            // Use a factory delegate for handler construction.
-            builder.AddResponses(factory: sp =>
-            {
-                var kb = sp.GetRequiredService<IKnowledgeBase>();
-                return new KnowledgeHandler(kb);
-            });
-
-            // Configuration and tracing work the same way.
-            builder.ConfigureTracing(tracing =>
-            {
-                tracing.AddSource("MyAgent.BusinessLogic");
-            });
-
-            builder.ConfigureShutdown(TimeSpan.FromSeconds(15));
-
-            var app = builder.Build();
-            app.Run();
 
             #endregion
         }

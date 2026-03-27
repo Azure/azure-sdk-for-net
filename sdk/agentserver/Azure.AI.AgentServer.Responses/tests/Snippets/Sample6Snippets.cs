@@ -1,87 +1,128 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable OPENAI001 // Responses API is experimental in the OpenAI SDK
-
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using OpenAI;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
+    /// <summary>
+    /// Code snippets backing Sample6_Tier2Builder.md (Tier 2). Compiled to prevent rot.
+    /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
     public class Sample6Snippets
     {
         [Test]
-        public void StartServer()
+        public void BuilderGeneric()
         {
-            #region Snippet:Responses_Sample6_StartServer
-            ResponsesServer.Run<StreamingProxyHandler>(configure: builder =>
-            {
-                builder.Services.AddSingleton(new ResponsesClient(
-                    new ApiKeyCredential(
-                        Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "your-api-key"),
-                    new OpenAIClientOptions
-                    {
-                        Endpoint = new Uri(
-                            Environment.GetEnvironmentVariable("UPSTREAM_ENDPOINT")
-                                ?? "https://api.openai.com/v1")
-                    }));
-            });
+            #region Snippet:Responses_Sample6_BuilderGeneric
+
+            var builder = AgentHost.CreateBuilder();
+
+            // Register services that the handler depends on.
+            builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
+
+            // Register the Responses protocol with a concrete handler type.
+            builder.AddResponses<KnowledgeHandler>();
+
+            var app = builder.Build();
+            app.Run();
+
             #endregion
         }
 
         [Test]
-        public void Implement_StreamingProxyHandler()
+        public void BuilderWithFactory()
         {
-            var handler = new StreamingProxyHandler(new ResponsesClient("test-key"));
+            #region Snippet:Responses_Sample6_BuilderWithFactory
+
+            var builder = AgentHost.CreateBuilder();
+
+            // Register services on the builder.
+            builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
+
+            // Use a factory delegate for handler construction.
+            builder.AddResponses(factory: sp =>
+            {
+                var kb = sp.GetRequiredService<IKnowledgeBase>();
+                return new KnowledgeHandler(kb);
+            });
+
+            // Configuration and tracing work the same way.
+            builder.ConfigureTracing(tracing =>
+            {
+                tracing.AddSource("MyAgent.BusinessLogic");
+            });
+
+            builder.ConfigureShutdown(TimeSpan.FromSeconds(15));
+
+            var app = builder.Build();
+            app.Run();
+
+            #endregion
+        }
+
+        [Test]
+        public void Implement_KnowledgeHandler()
+        {
+            var handler = new KnowledgeHandler(new WikiKnowledgeBase());
             Assert.That(handler, Is.Not.Null);
         }
 
-        #region Snippet:Responses_Sample6_StreamingProxyHandler
-        public class StreamingProxyHandler : ResponseHandler
-        {
-            private readonly ResponsesClient _upstream;
+        #region Snippet:Responses_Sample6_KnowledgeHandler
 
-            public StreamingProxyHandler(ResponsesClient upstream) => _upstream = upstream;
+        public class KnowledgeHandler : ResponseHandler
+        {
+            private readonly IKnowledgeBase _kb;
+
+            public KnowledgeHandler(IKnowledgeBase kb) => _kb = kb;
 
             public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
-                // Build the upstream request using the OpenAI .NET SDK.
-                var options = new CreateResponseOptions()
-                {
-                    Model = request.Model,
-                    Instructions = request.Instructions,
-                };
+                var stream = new ResponseEventStream(context, request);
 
-                // Translate every input item with full fidelity. Both model
-                // stacks share the same JSON wire contract, so
-                // .Translate().To<T>() round-trips through JSON to convert:
-                //   our Item → JSON → OpenAI ResponseItem.
-                foreach (Item item in request.GetInputExpanded())
-                {
-                    options.InputItems.Add(item.Translate().To<ResponseItem>());
-                }
+                yield return stream.EmitCreated();
+                yield return stream.EmitInProgress();
 
-                // Stream from the upstream server. Each event is translated back
-                // using the same pattern in reverse.
-                await foreach (StreamingResponseUpdate update in
-                    _upstream.CreateResponseStreamingAsync(options, cancellationToken))
-                {
-                    yield return update.Translate().To<ResponseStreamEvent>();
-                }
+                var message = stream.AddOutputItemMessage();
+                yield return message.EmitAdded();
+
+                var text = message.AddTextContent();
+                yield return text.EmitAdded();
+
+                var question = request.GetInputText();
+                var answer = await _kb.SearchAsync(question, cancellationToken);
+
+                yield return text.EmitDelta(answer);
+                yield return text.EmitDone(answer);
+
+                yield return message.EmitContentDone(text);
+                yield return message.EmitDone();
+                yield return stream.EmitCompleted();
             }
         }
+
         #endregion
+
+        // Supporting types for the sample.
+
+        public interface IKnowledgeBase
+        {
+            Task<string> SearchAsync(string query, CancellationToken cancellationToken);
+        }
+
+        public class WikiKnowledgeBase : IKnowledgeBase
+        {
+            public Task<string> SearchAsync(string query, CancellationToken cancellationToken) =>
+                Task.FromResult($"Here is what I found about \"{query}\": [mock knowledge base result]");
+        }
     }
 }

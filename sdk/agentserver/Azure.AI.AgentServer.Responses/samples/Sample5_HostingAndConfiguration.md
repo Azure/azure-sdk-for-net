@@ -1,5 +1,5 @@
 ````markdown
-# Sample 5: Tier 1 Customization — Services, Configuration, and Tracing
+# Sample 5: Tier 1 — Customize the One-Liner
 
 This sample shows the **customization surface** of `ResponsesServer.Run<THandler>()`. The one-line entry point accepts an optional `configure` callback that gives you access to the underlying `AgentHostBuilder`, so you can register services, read configuration, and add custom tracing — all while keeping the Tier 1 zero-config experience.
 
@@ -57,6 +57,25 @@ public class KnowledgeHandler : ResponseHandler
         yield return stream.EmitCompleted();
     }
 }
+```
+
+## Use a factory delegate for full control
+
+When your handler needs constructor parameters that cannot be resolved through DI,
+use the `Func<IServiceProvider, ResponseHandler>` overload for full control over
+handler construction:
+
+```C# Snippet:Responses_Sample5_FactoryDelegate
+ResponsesServer.Run(
+    factory: sp =>
+    {
+        var kb = sp.GetRequiredService<IKnowledgeBase>();
+        return new KnowledgeHandler(kb);
+    },
+    configure: builder =>
+    {
+        builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
+    });
 ```
 
 ## Add configuration and tracing
@@ -128,38 +147,6 @@ Use `ResponsesServer.Run(factory: ...)` when you need:
 - **Full control** over handler construction with non-DI parameters
 - **Runtime decisions** about which handler implementation to create
 
-## Use the builder directly (Tier 2)
-
-When you need more control — or want to compose multiple protocols — use
-`AgentHost.CreateBuilder()` directly. All the same customization is available,
-and you can use the factory delegate overload on the builder too:
-
-```C# Snippet:Responses_Sample5_BuilderWithFactory
-var builder = AgentHost.CreateBuilder();
-
-// Register services on the builder.
-builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
-
-// Use a factory delegate for handler construction.
-builder.AddResponses(factory: sp =>
-{
-    var kb = sp.GetRequiredService<IKnowledgeBase>();
-    return new KnowledgeHandler(kb);
-});
-
-// Configuration and tracing work the same way.
-builder.ConfigureTracing(tracing =>
-{
-    tracing.AddSource("MyAgent.BusinessLogic");
-});
-
-builder.ConfigureShutdown(TimeSpan.FromSeconds(15));
-
-var app = builder.Build();
-app.Run();
-```
-
-The builder pattern is especially useful when composing multiple protocols on a
-single host. For details, see the [Multi-protocol Composition](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples/Sample2_MultiProtocol.md) Core sample.
+For more control, see [Tier 2 — Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample6_Tier2Builder.md) and [Tier 3 — Self-Hosted](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample7_Tier3SelfHosted.md).
 
 ````

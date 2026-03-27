@@ -1,4 +1,4 @@
-# Sample 7: Non-Streaming OpenAI Proxy — Call upstream and build event stream
+# Sample 9: Non-Streaming OpenAI Proxy — Call upstream and build event stream
 
 This sample shows how to implement a `ResponseHandler` that acts as a **non-streaming proxy**: it calls an upstream [OpenAI-compatible responses server](https://platform.openai.com/docs/api-reference/responses) using the [OpenAI .NET SDK](https://github.com/openai/openai-dotnet), waits for the complete response, and translates every output item back into a standard SSE event stream for the client.
 
@@ -23,7 +23,7 @@ dotnet add package OpenAI
 
 ## Implement the handler
 
-```C# Snippet:Responses_Sample7_NonStreamingProxyHandler
+```C# Snippet:Responses_Sample9_NonStreamingProxyHandler
 public class NonStreamingProxyHandler : ResponseHandler
 {
     private readonly ResponsesClient _upstream;
@@ -75,7 +75,7 @@ public class NonStreamingProxyHandler : ResponseHandler
 
 ## Start the server
 
-```C# Snippet:Responses_Sample7_StartServer
+```C# Snippet:Responses_Sample9_StartServer
 ResponsesServer.Run<NonStreamingProxyHandler>(configure: builder =>
 {
     builder.Services.AddSingleton(new ResponsesClient(
