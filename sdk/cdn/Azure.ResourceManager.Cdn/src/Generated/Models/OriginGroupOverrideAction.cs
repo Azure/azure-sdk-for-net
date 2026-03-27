@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,28 +15,25 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class OriginGroupOverrideAction : DeliveryRuleAction
     {
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideAction"/>. </summary>
+        /// <param name="parameters"> Defines the parameters for the action. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public OriginGroupOverrideAction(OriginGroupOverrideActionProperties parameters) : base(DeliveryRuleActionName.OriginGroupOverride)
+        {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            Parameters = parameters;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideAction"/>. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal OriginGroupOverrideAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> additionalBinaryDataProperties, OriginGroupOverrideActionParameters parameters) : base(name, additionalBinaryDataProperties)
+        internal OriginGroupOverrideAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> additionalBinaryDataProperties, OriginGroupOverrideActionProperties parameters) : base(name, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        internal OriginGroupOverrideActionParameters Parameters { get; set; }
-
-        /// <summary> Resource ID. </summary>
-        public string ParametersOriginGroupId
-        {
-            get
-            {
-                return Parameters is null ? default : Parameters.OriginGroupId;
-            }
-            set
-            {
-                Parameters = new OriginGroupOverrideActionParameters(value);
-            }
-        }
+        public OriginGroupOverrideActionProperties Parameters { get; set; }
     }
 }

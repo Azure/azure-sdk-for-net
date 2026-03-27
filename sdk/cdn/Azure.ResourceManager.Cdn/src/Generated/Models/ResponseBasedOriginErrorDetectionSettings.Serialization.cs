@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            ResponseBasedDetectedErrorTypes? responseBasedDetectedErrorTypes = default;
+            ResponseBasedDetectedErrorType? responseBasedDetectedErrorTypes = default;
             int? responseBasedFailoverThresholdPercentage = default;
             IList<HttpErrorRange> httpErrorRanges = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    responseBasedDetectedErrorTypes = prop.Value.GetString().ToResponseBasedDetectedErrorTypes();
+                    responseBasedDetectedErrorTypes = prop.Value.GetString().ToResponseBasedDetectedErrorType();
                     continue;
                 }
                 if (prop.NameEquals("responseBasedFailoverThresholdPercentage"u8))

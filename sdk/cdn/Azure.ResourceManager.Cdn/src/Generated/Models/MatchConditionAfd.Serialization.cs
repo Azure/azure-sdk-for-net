@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             MatchVariable matchVariable = default;
             string selector = default;
-            Operator matchOperator = default;
+            MatchOperator matchOperator = default;
             bool? negateCondition = default;
             IList<string> matchValue = default;
             IList<TransformType> transforms = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("operator"u8))
                 {
-                    matchOperator = new Operator(prop.Value.GetString());
+                    matchOperator = new MatchOperator(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("negateCondition"u8))

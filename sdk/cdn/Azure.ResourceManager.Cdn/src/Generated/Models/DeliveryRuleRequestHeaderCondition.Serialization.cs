@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             MatchVariable name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RequestHeaderMatchConditionParameters parameters = default;
+            RequestHeaderMatchCondition parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = RequestHeaderMatchConditionParameters.DeserializeRequestHeaderMatchConditionParameters(prop.Value, options);
+                    parameters = RequestHeaderMatchCondition.DeserializeRequestHeaderMatchCondition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

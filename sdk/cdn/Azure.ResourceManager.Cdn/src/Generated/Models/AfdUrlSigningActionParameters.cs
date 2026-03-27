@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
 
             TypeName = typeName;
-            ParameterNameOverride = new ChangeTrackingList<UrlSigningParamIdentifier>();
+            ParameterNameOverride = new ChangeTrackingList<UriSigningParamIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AfdUrlSigningActionParameters"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="algorithm"> Algorithm to use for URL signing. </param>
         /// <param name="parameterNameOverride"> Defines which query string parameters in the url to be considered for expires, key id etc. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AfdUrlSigningActionParameters(TypeName typeName, ResourceReference keyGroupReference, UriSigningAlgorithm? algorithm, IList<UrlSigningParamIdentifier> parameterNameOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AfdUrlSigningActionParameters(TypeName typeName, ResourceReference keyGroupReference, UriSigningAlgorithm? algorithm, IList<UriSigningParamIdentifier> parameterNameOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TypeName = typeName;
             KeyGroupReference = keyGroupReference;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public UriSigningAlgorithm? Algorithm { get; set; }
 
         /// <summary> Defines which query string parameters in the url to be considered for expires, key id etc. </summary>
-        public IList<UrlSigningParamIdentifier> ParameterNameOverride { get; }
+        public IList<UriSigningParamIdentifier> ParameterNameOverride { get; }
 
         /// <summary> Resource ID. </summary>
         public string KeyGroupReferenceId

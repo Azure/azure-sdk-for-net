@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             MatchVariable name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            HostNameMatchConditionParameters parameters = default;
+            HostNameMatchCondition parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = HostNameMatchConditionParameters.DeserializeHostNameMatchConditionParameters(prop.Value, options);
+                    parameters = HostNameMatchCondition.DeserializeHostNameMatchCondition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleCookiesCondition"/>. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleCookiesCondition(CookiesMatchConditionParameters parameters) : base(MatchVariable.Cookies)
+        public DeliveryRuleCookiesCondition(CookiesMatchCondition parameters) : base(MatchVariable.Cookies)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleCookiesCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, CookiesMatchConditionParameters parameters) : base(name, additionalBinaryDataProperties)
+        internal DeliveryRuleCookiesCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, CookiesMatchCondition parameters) : base(name, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public CookiesMatchConditionParameters Parameters { get; set; }
+        public CookiesMatchCondition Parameters { get; set; }
     }
 }

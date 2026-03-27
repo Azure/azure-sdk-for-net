@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Cdn
         /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium) profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.CanMigrateAsync(WaitUntil, CanMigrateParameters, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.CanMigrateAsync(WaitUntil, CanMigrateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Properties needed to check if cdn profile or classic frontdoor can be migrated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation<CanMigrateResult>> CanMigrateAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CanMigrateParameters content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<CanMigrateResult>> CanMigrateAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CanMigrateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Cdn
         /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium) profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.CanMigrate(WaitUntil, CanMigrateParameters, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.CanMigrate(WaitUntil, CanMigrateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Properties needed to check if cdn profile or classic frontdoor can be migrated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation<CanMigrateResult> CanMigrate(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CanMigrateParameters content, CancellationToken cancellationToken = default)
+        public static ArmOperation<CanMigrateResult> CanMigrate(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CanMigrateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -793,14 +793,14 @@ namespace Azure.ResourceManager.Cdn
         /// Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnSubscriptionResource.ValidateProbeAsync(ValidateProbeInput, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnSubscriptionResource.ValidateProbeAsync(ValidateProbeContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ValidateProbeResult>> ValidateProbeAsync(this SubscriptionResource subscriptionResource, ValidateProbeInput content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ValidateProbeResult>> ValidateProbeAsync(this SubscriptionResource subscriptionResource, ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -811,14 +811,14 @@ namespace Azure.ResourceManager.Cdn
         /// Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnSubscriptionResource.ValidateProbe(ValidateProbeInput, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnSubscriptionResource.ValidateProbe(ValidateProbeContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ValidateProbeResult> ValidateProbe(this SubscriptionResource subscriptionResource, ValidateProbeInput content, CancellationToken cancellationToken = default)
+        public static Response<ValidateProbeResult> ValidateProbe(this SubscriptionResource subscriptionResource, ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

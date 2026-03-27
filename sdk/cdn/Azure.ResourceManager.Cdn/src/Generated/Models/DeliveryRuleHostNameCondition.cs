@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleHostNameCondition"/>. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleHostNameCondition(HostNameMatchConditionParameters parameters) : base(MatchVariable.HostName)
+        public DeliveryRuleHostNameCondition(HostNameMatchCondition parameters) : base(MatchVariable.HostName)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleHostNameCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, HostNameMatchConditionParameters parameters) : base(name, additionalBinaryDataProperties)
+        internal DeliveryRuleHostNameCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, HostNameMatchCondition parameters) : base(name, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public HostNameMatchConditionParameters Parameters { get; set; }
+        public HostNameMatchCondition Parameters { get; set; }
     }
 }

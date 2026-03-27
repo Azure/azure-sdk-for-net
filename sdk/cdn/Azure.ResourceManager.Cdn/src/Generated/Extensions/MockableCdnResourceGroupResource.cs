@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <param name="content"> Properties needed to check if cdn profile or classic frontdoor can be migrated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<CanMigrateResult>> CanMigrateAsync(WaitUntil waitUntil, CanMigrateParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CanMigrateResult>> CanMigrateAsync(WaitUntil waitUntil, CanMigrateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProfilesRestClient.CreateCanMigrateRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), CanMigrateParameters.ToRequestContent(content), context);
+                HttpMessage message = ProfilesRestClient.CreateCanMigrateRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), CanMigrateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CanMigrateResult> operation = new CdnArmOperation<CanMigrateResult>(
                     new CanMigrateResultOperationSource(),
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <param name="content"> Properties needed to check if cdn profile or classic frontdoor can be migrated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<CanMigrateResult> CanMigrate(WaitUntil waitUntil, CanMigrateParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CanMigrateResult> CanMigrate(WaitUntil waitUntil, CanMigrateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProfilesRestClient.CreateCanMigrateRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), CanMigrateParameters.ToRequestContent(content), context);
+                HttpMessage message = ProfilesRestClient.CreateCanMigrateRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), CanMigrateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CanMigrateResult> operation = new CdnArmOperation<CanMigrateResult>(
                     new CanMigrateResultOperationSource(),

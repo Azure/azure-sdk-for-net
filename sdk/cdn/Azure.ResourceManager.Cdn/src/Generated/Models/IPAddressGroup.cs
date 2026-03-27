@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="IPAddressGroup"/>. </summary>
         internal IPAddressGroup()
         {
-            Ipv4Addresses = new ChangeTrackingList<CidrIpAddress>();
-            Ipv6Addresses = new ChangeTrackingList<CidrIpAddress>();
+            Ipv4Addresses = new ChangeTrackingList<CidrIPAddress>();
+            Ipv6Addresses = new ChangeTrackingList<CidrIPAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IPAddressGroup"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="ipv4Addresses"> The list of ip v4 addresses. </param>
         /// <param name="ipv6Addresses"> The list of ip v6 addresses. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IPAddressGroup(string deliveryRegion, IList<CidrIpAddress> ipv4Addresses, IList<CidrIpAddress> ipv6Addresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPAddressGroup(string deliveryRegion, IList<CidrIPAddress> ipv4Addresses, IList<CidrIPAddress> ipv6Addresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeliveryRegion = deliveryRegion;
             Ipv4Addresses = ipv4Addresses;
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public string DeliveryRegion { get; }
 
         /// <summary> The list of ip v4 addresses. </summary>
-        public IList<CidrIpAddress> Ipv4Addresses { get; }
+        public IList<CidrIPAddress> Ipv4Addresses { get; }
 
         /// <summary> The list of ip v6 addresses. </summary>
-        public IList<CidrIpAddress> Ipv6Addresses { get; }
+        public IList<CidrIPAddress> Ipv6Addresses { get; }
     }
 }

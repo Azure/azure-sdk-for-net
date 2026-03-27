@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             MatchVariable name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RemoteAddressMatchConditionParameters parameters = default;
+            RemoteAddressMatchCondition parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = RemoteAddressMatchConditionParameters.DeserializeRemoteAddressMatchConditionParameters(prop.Value, options);
+                    parameters = RemoteAddressMatchCondition.DeserializeRemoteAddressMatchCondition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

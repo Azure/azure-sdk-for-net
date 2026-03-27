@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
             SecureDeliveryProtocolType protocolType = default;
             CdnMinimumTlsVersion? minimumTlsVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            CdnCertificateSourceParameters certificateSourceParameters = default;
+            CdnCertificateSource certificateSourceParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("certificateSource"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("certificateSourceParameters"u8))
                 {
-                    certificateSourceParameters = CdnCertificateSourceParameters.DeserializeCdnCertificateSourceParameters(prop.Value, options);
+                    certificateSourceParameters = CdnCertificateSource.DeserializeCdnCertificateSource(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

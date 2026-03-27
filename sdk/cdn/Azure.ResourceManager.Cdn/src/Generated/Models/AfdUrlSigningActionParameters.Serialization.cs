@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("parameterNameOverride"u8);
                 writer.WriteStartArray();
-                foreach (UrlSigningParamIdentifier item in ParameterNameOverride)
+                foreach (UriSigningParamIdentifier item in ParameterNameOverride)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Cdn.Models
             TypeName typeName = default;
             ResourceReference keyGroupReference = default;
             UriSigningAlgorithm? algorithm = default;
-            IList<UrlSigningParamIdentifier> parameterNameOverride = default;
+            IList<UriSigningParamIdentifier> parameterNameOverride = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<UrlSigningParamIdentifier> array = new List<UrlSigningParamIdentifier>();
+                    List<UriSigningParamIdentifier> array = new List<UriSigningParamIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UrlSigningParamIdentifier.DeserializeUrlSigningParamIdentifier(item, options));
+                        array.Add(UriSigningParamIdentifier.DeserializeUriSigningParamIdentifier(item, options));
                     }
                     parameterNameOverride = array;
                     continue;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AfdUrlSigningActionParameters(typeName, keyGroupReference, algorithm, parameterNameOverride ?? new ChangeTrackingList<UrlSigningParamIdentifier>(), additionalBinaryDataProperties);
+            return new AfdUrlSigningActionParameters(typeName, keyGroupReference, algorithm, parameterNameOverride ?? new ChangeTrackingList<UriSigningParamIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

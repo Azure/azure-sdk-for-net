@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleRequestUriCondition"/>. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleRequestUriCondition(RequestUriMatchConditionParameters parameters) : base(MatchVariable.RequestUri)
+        public DeliveryRuleRequestUriCondition(RequestUriMatchCondition parameters) : base(MatchVariable.RequestUri)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleRequestUriCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, RequestUriMatchConditionParameters parameters) : base(name, additionalBinaryDataProperties)
+        internal DeliveryRuleRequestUriCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, RequestUriMatchCondition parameters) : base(name, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public RequestUriMatchConditionParameters Parameters { get; set; }
+        public RequestUriMatchCondition Parameters { get; set; }
     }
 }

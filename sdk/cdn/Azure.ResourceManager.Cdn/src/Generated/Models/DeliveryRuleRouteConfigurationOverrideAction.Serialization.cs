@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             DeliveryRuleActionName name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RouteConfigurationOverrideActionParameters parameters = default;
+            RouteConfigurationOverrideActionProperties parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = RouteConfigurationOverrideActionParameters.DeserializeRouteConfigurationOverrideActionParameters(prop.Value, options);
+                    parameters = RouteConfigurationOverrideActionProperties.DeserializeRouteConfigurationOverrideActionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

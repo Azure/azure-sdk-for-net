@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             DeliveryRuleActionName name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OriginGroupOverrideActionParameters parameters = default;
+            OriginGroupOverrideActionProperties parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = OriginGroupOverrideActionParameters.DeserializeOriginGroupOverrideActionParameters(prop.Value, options);
+                    parameters = OriginGroupOverrideActionProperties.DeserializeOriginGroupOverrideActionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

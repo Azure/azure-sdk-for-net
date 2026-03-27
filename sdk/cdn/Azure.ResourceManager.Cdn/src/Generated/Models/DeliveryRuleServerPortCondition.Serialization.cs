@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             MatchVariable name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ServerPortMatchConditionParameters parameters = default;
+            ServerPortMatchCondition parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = ServerPortMatchConditionParameters.DeserializeServerPortMatchConditionParameters(prop.Value, options);
+                    parameters = ServerPortMatchCondition.DeserializeServerPortMatchCondition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> The list of paths to the content and the list of linked domains to be purged. Path can be a full URL, e.g. '/pictures/city.png' which removes a single file, or a directory with a wildcard, e.g. '/pictures/*' which removes all folders and files in the directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> PurgeContentAsync(WaitUntil waitUntil, FrontDoorPurgeParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> PurgeContentAsync(WaitUntil waitUntil, FrontDoorPurgeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdEndpointsRestClient.CreatePurgeContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorPurgeParameters.ToRequestContent(content), context);
+                HttpMessage message = _afdEndpointsRestClient.CreatePurgeContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorPurgeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation operation = new CdnArmOperation(_afdEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> The list of paths to the content and the list of linked domains to be purged. Path can be a full URL, e.g. '/pictures/city.png' which removes a single file, or a directory with a wildcard, e.g. '/pictures/*' which removes all folders and files in the directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation PurgeContent(WaitUntil waitUntil, FrontDoorPurgeParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation PurgeContent(WaitUntil waitUntil, FrontDoorPurgeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdEndpointsRestClient.CreatePurgeContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorPurgeParameters.ToRequestContent(content), context);
+                HttpMessage message = _afdEndpointsRestClient.CreatePurgeContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorPurgeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation operation = new CdnArmOperation(_afdEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)

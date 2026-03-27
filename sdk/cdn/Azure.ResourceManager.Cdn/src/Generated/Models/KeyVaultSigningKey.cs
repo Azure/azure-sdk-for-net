@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="secretName"> The name of secret in Key Vault. </param>
         /// <param name="secretVersion"> The version(GUID) of secret in Key Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="secretVersion"/> is null. </exception>
-        public KeyVaultSigningKey(KeyVaultSigningKeyParametersType typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion)
+        public KeyVaultSigningKey(KeyVaultSigningKeyType typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion)
         {
             Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="secretName"> The name of secret in Key Vault. </param>
         /// <param name="secretVersion"> The version(GUID) of secret in Key Vault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultSigningKey(KeyVaultSigningKeyParametersType typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultSigningKey(KeyVaultSigningKeyType typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TypeName = typeName;
             SubscriptionId = subscriptionId;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the TypeName. </summary>
-        public KeyVaultSigningKeyParametersType TypeName { get; set; }
+        public KeyVaultSigningKeyType TypeName { get; set; }
 
         /// <summary> Subscription Id of the user's Key Vault containing the secret. </summary>
         public string SubscriptionId { get; set; }

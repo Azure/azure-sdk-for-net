@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for delivery rule match conditions
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RemoteAddressMatchConditionParameters"/>, <see cref="RequestMethodMatchConditionParameters"/>, <see cref="QueryStringMatchConditionParameters"/>, <see cref="PostArgsMatchConditionParameters"/>, <see cref="RequestUriMatchConditionParameters"/>, <see cref="RequestHeaderMatchConditionParameters"/>, <see cref="RequestBodyMatchConditionParameters"/>, <see cref="RequestSchemeMatchConditionParameters"/>, <see cref="UrlPathMatchConditionParameters"/>, <see cref="UrlFileExtensionMatchConditionParameters"/>, <see cref="UrlFileNameMatchConditionParameters"/>, <see cref="HttpVersionMatchConditionParameters"/>, <see cref="CookiesMatchConditionParameters"/>, <see cref="IsDeviceMatchConditionParameters"/>, <see cref="SocketAddrMatchConditionParameters"/>, <see cref="ClientPortMatchConditionParameters"/>, <see cref="ServerPortMatchConditionParameters"/>, <see cref="HostNameMatchConditionParameters"/>, and <see cref="SslProtocolMatchConditionParameters"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RemoteAddressMatchCondition"/>, <see cref="RequestMethodMatchCondition"/>, <see cref="QueryStringMatchCondition"/>, <see cref="PostArgsMatchCondition"/>, <see cref="RequestUriMatchCondition"/>, <see cref="RequestHeaderMatchCondition"/>, <see cref="RequestBodyMatchCondition"/>, <see cref="RequestSchemeMatchCondition"/>, <see cref="UriPathMatchCondition"/>, <see cref="UriFileExtensionMatchCondition"/>, <see cref="UriFileNameMatchCondition"/>, <see cref="HttpVersionMatchCondition"/>, <see cref="CookiesMatchCondition"/>, <see cref="IsDeviceMatchCondition"/>, <see cref="SocketAddressMatchCondition"/>, <see cref="ClientPortMatchCondition"/>, <see cref="ServerPortMatchCondition"/>, <see cref="HostNameMatchCondition"/>, and <see cref="DeliveryRuleSslProtocolMatchCondition"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDeliveryRuleConditionProperties))]
     public abstract partial class DeliveryRuleConditionProperties : IJsonModel<DeliveryRuleConditionProperties>
@@ -131,43 +131,43 @@ namespace Azure.ResourceManager.Cdn.Models
                 switch (discriminator.GetString())
                 {
                     case "DeliveryRuleRemoteAddressConditionParameters":
-                        return RemoteAddressMatchConditionParameters.DeserializeRemoteAddressMatchConditionParameters(element, options);
+                        return RemoteAddressMatchCondition.DeserializeRemoteAddressMatchCondition(element, options);
                     case "DeliveryRuleRequestMethodConditionParameters":
-                        return RequestMethodMatchConditionParameters.DeserializeRequestMethodMatchConditionParameters(element, options);
+                        return RequestMethodMatchCondition.DeserializeRequestMethodMatchCondition(element, options);
                     case "DeliveryRuleQueryStringConditionParameters":
-                        return QueryStringMatchConditionParameters.DeserializeQueryStringMatchConditionParameters(element, options);
+                        return QueryStringMatchCondition.DeserializeQueryStringMatchCondition(element, options);
                     case "DeliveryRulePostArgsConditionParameters":
-                        return PostArgsMatchConditionParameters.DeserializePostArgsMatchConditionParameters(element, options);
+                        return PostArgsMatchCondition.DeserializePostArgsMatchCondition(element, options);
                     case "DeliveryRuleRequestUriConditionParameters":
-                        return RequestUriMatchConditionParameters.DeserializeRequestUriMatchConditionParameters(element, options);
+                        return RequestUriMatchCondition.DeserializeRequestUriMatchCondition(element, options);
                     case "DeliveryRuleRequestHeaderConditionParameters":
-                        return RequestHeaderMatchConditionParameters.DeserializeRequestHeaderMatchConditionParameters(element, options);
+                        return RequestHeaderMatchCondition.DeserializeRequestHeaderMatchCondition(element, options);
                     case "DeliveryRuleRequestBodyConditionParameters":
-                        return RequestBodyMatchConditionParameters.DeserializeRequestBodyMatchConditionParameters(element, options);
+                        return RequestBodyMatchCondition.DeserializeRequestBodyMatchCondition(element, options);
                     case "DeliveryRuleRequestSchemeConditionParameters":
-                        return RequestSchemeMatchConditionParameters.DeserializeRequestSchemeMatchConditionParameters(element, options);
+                        return RequestSchemeMatchCondition.DeserializeRequestSchemeMatchCondition(element, options);
                     case "DeliveryRuleUrlPathMatchConditionParameters":
-                        return UrlPathMatchConditionParameters.DeserializeUrlPathMatchConditionParameters(element, options);
+                        return UriPathMatchCondition.DeserializeUriPathMatchCondition(element, options);
                     case "DeliveryRuleUrlFileExtensionMatchConditionParameters":
-                        return UrlFileExtensionMatchConditionParameters.DeserializeUrlFileExtensionMatchConditionParameters(element, options);
+                        return UriFileExtensionMatchCondition.DeserializeUriFileExtensionMatchCondition(element, options);
                     case "DeliveryRuleUrlFilenameConditionParameters":
-                        return UrlFileNameMatchConditionParameters.DeserializeUrlFileNameMatchConditionParameters(element, options);
+                        return UriFileNameMatchCondition.DeserializeUriFileNameMatchCondition(element, options);
                     case "DeliveryRuleHttpVersionConditionParameters":
-                        return HttpVersionMatchConditionParameters.DeserializeHttpVersionMatchConditionParameters(element, options);
+                        return HttpVersionMatchCondition.DeserializeHttpVersionMatchCondition(element, options);
                     case "DeliveryRuleCookiesConditionParameters":
-                        return CookiesMatchConditionParameters.DeserializeCookiesMatchConditionParameters(element, options);
+                        return CookiesMatchCondition.DeserializeCookiesMatchCondition(element, options);
                     case "DeliveryRuleIsDeviceConditionParameters":
-                        return IsDeviceMatchConditionParameters.DeserializeIsDeviceMatchConditionParameters(element, options);
+                        return IsDeviceMatchCondition.DeserializeIsDeviceMatchCondition(element, options);
                     case "DeliveryRuleSocketAddrConditionParameters":
-                        return SocketAddrMatchConditionParameters.DeserializeSocketAddrMatchConditionParameters(element, options);
+                        return SocketAddressMatchCondition.DeserializeSocketAddressMatchCondition(element, options);
                     case "DeliveryRuleClientPortConditionParameters":
-                        return ClientPortMatchConditionParameters.DeserializeClientPortMatchConditionParameters(element, options);
+                        return ClientPortMatchCondition.DeserializeClientPortMatchCondition(element, options);
                     case "DeliveryRuleServerPortConditionParameters":
-                        return ServerPortMatchConditionParameters.DeserializeServerPortMatchConditionParameters(element, options);
+                        return ServerPortMatchCondition.DeserializeServerPortMatchCondition(element, options);
                     case "DeliveryRuleHostNameConditionParameters":
-                        return HostNameMatchConditionParameters.DeserializeHostNameMatchConditionParameters(element, options);
+                        return HostNameMatchCondition.DeserializeHostNameMatchCondition(element, options);
                     case "DeliveryRuleSslProtocolConditionParameters":
-                        return SslProtocolMatchConditionParameters.DeserializeSslProtocolMatchConditionParameters(element, options);
+                        return DeliveryRuleSslProtocolMatchCondition.DeserializeDeliveryRuleSslProtocolMatchCondition(element, options);
                 }
             }
             return UnknownDeliveryRuleConditionProperties.DeserializeUnknownDeliveryRuleConditionProperties(element, options);

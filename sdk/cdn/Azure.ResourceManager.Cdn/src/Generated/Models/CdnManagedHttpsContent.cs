@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -15,11 +16,13 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of <see cref="CdnManagedHttpsContent"/>. </summary>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
-        /// <param name="certificateType"> Type of certificate used. </param>
-        public CdnManagedHttpsContent(SecureDeliveryProtocolType protocolType, CdnManagedCertificateType? certificateType) : base(CertificateSource.Cdn, protocolType)
+        /// <param name="certificateSourceParameters"> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateSourceParameters"/> is null. </exception>
+        public CdnManagedHttpsContent(SecureDeliveryProtocolType protocolType, CdnCertificateSource certificateSourceParameters) : base(CertificateSource.Cdn, protocolType)
         {
+            Argument.AssertNotNull(certificateSourceParameters, nameof(certificateSourceParameters));
 
-            CertificateSourceParameters = certificateType is null ? default : new CdnCertificateSourceParameters(certificateType.Value);
+            CertificateSourceParameters = certificateSourceParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnManagedHttpsContent"/>. </summary>
@@ -28,25 +31,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="certificateSourceParameters"> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </param>
-        internal CdnManagedHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnCertificateSourceParameters certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion, additionalBinaryDataProperties)
+        internal CdnManagedHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnCertificateSource certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion, additionalBinaryDataProperties)
         {
             CertificateSourceParameters = certificateSourceParameters;
         }
 
         /// <summary> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </summary>
-        internal CdnCertificateSourceParameters CertificateSourceParameters { get; set; }
-
-        /// <summary> Type of certificate used. </summary>
-        public CdnManagedCertificateType? CertificateType
-        {
-            get
-            {
-                return CertificateSourceParameters is null ? default : CertificateSourceParameters.CertificateType;
-            }
-            set
-            {
-                CertificateSourceParameters = value.HasValue ? new CdnCertificateSourceParameters(value.Value) : default;
-            }
-        }
+        public CdnCertificateSource CertificateSourceParameters { get; set; }
     }
 }

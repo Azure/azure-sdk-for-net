@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Input of the validate probe API. </summary>
         /// <param name="probeURL"> The probe URL to validate. </param>
-        /// <returns> A new <see cref="Models.ValidateProbeInput"/> instance for mocking. </returns>
-        public static ValidateProbeInput ValidateProbeInput(string probeURL = default)
+        /// <returns> A new <see cref="Models.ValidateProbeContent"/> instance for mocking. </returns>
+        public static ValidateProbeContent ValidateProbeContent(string probeURL = default)
         {
-            return new ValidateProbeInput(probeURL, additionalBinaryDataProperties: null);
+            return new ValidateProbeContent(probeURL, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Output of the validate probe API. </summary>
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <param name="classicResourceReferenceId"> Resource ID. </param>
-        /// <returns> A new <see cref="Models.CanMigrateParameters"/> instance for mocking. </returns>
-        public static CanMigrateParameters CanMigrateParameters(string classicResourceReferenceId = default)
+        /// <returns> A new <see cref="Models.CanMigrateContent"/> instance for mocking. </returns>
+        public static CanMigrateContent CanMigrateContent(string classicResourceReferenceId = default)
         {
-            return new CanMigrateParameters(classicResourceReferenceId is null ? default : new ResourceReference(classicResourceReferenceId, null), additionalBinaryDataProperties: null);
+            return new CanMigrateContent(classicResourceReferenceId is null ? default : new ResourceReference(classicResourceReferenceId, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="skuName"> Name of the pricing tier. </param>
@@ -283,13 +283,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Parameters required for content purge. </summary>
         /// <param name="contentPaths"> The path to the content to be purged. Can describe a file path or a wild card directory. </param>
         /// <param name="domains"> List of domains. </param>
-        /// <returns> A new <see cref="Models.FrontDoorPurgeParameters"/> instance for mocking. </returns>
-        public static FrontDoorPurgeParameters FrontDoorPurgeParameters(IEnumerable<string> contentPaths = default, IEnumerable<string> domains = default)
+        /// <returns> A new <see cref="Models.FrontDoorPurgeContent"/> instance for mocking. </returns>
+        public static FrontDoorPurgeContent FrontDoorPurgeContent(IEnumerable<string> contentPaths = default, IEnumerable<string> domains = default)
         {
             contentPaths ??= new ChangeTrackingList<string>();
             domains ??= new ChangeTrackingList<string>();
 
-            return new FrontDoorPurgeParameters(contentPaths.ToList(), domains.ToList(), additionalBinaryDataProperties: null);
+            return new FrontDoorPurgeContent(contentPaths.ToList(), domains.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Describes resource usage. </summary>
@@ -682,13 +682,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.RemoteAddressMatchConditionParameters"/> instance for mocking. </returns>
-        public static RemoteAddressMatchConditionParameters RemoteAddressMatchConditionParameters(RemoteAddressOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.RemoteAddressMatchCondition"/> instance for mocking. </returns>
+        public static RemoteAddressMatchCondition RemoteAddressMatchCondition(RemoteAddressOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new RemoteAddressMatchConditionParameters(
+            return new RemoteAddressMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleRemoteAddressConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -702,13 +702,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        /// <returns> A new <see cref="Models.RequestMethodMatchConditionParameters"/> instance for mocking. </returns>
-        public static RequestMethodMatchConditionParameters RequestMethodMatchConditionParameters(RequestMethodOperator @operator = default, bool? negateCondition = default, IEnumerable<PreTransformCategory> transforms = default, IEnumerable<RequestMethodMatchConditionMatchValue> matchValues = default)
+        /// <returns> A new <see cref="Models.RequestMethodMatchCondition"/> instance for mocking. </returns>
+        public static RequestMethodMatchCondition RequestMethodMatchCondition(RequestMethodOperator @operator = default, bool? negateCondition = default, IEnumerable<PreTransformCategory> transforms = default, IEnumerable<RequestMethodMatchConditionMatchValue> matchValues = default)
         {
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
             matchValues ??= new ChangeTrackingList<RequestMethodMatchConditionMatchValue>();
 
-            return new RequestMethodMatchConditionParameters(
+            return new RequestMethodMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleRequestMethodConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -722,13 +722,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.QueryStringMatchConditionParameters"/> instance for mocking. </returns>
-        public static QueryStringMatchConditionParameters QueryStringMatchConditionParameters(QueryStringOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.QueryStringMatchCondition"/> instance for mocking. </returns>
+        public static QueryStringMatchCondition QueryStringMatchCondition(QueryStringOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new QueryStringMatchConditionParameters(
+            return new QueryStringMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleQueryStringConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -743,13 +743,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.PostArgsMatchConditionParameters"/> instance for mocking. </returns>
-        public static PostArgsMatchConditionParameters PostArgsMatchConditionParameters(string selector = default, PostArgsOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.PostArgsMatchCondition"/> instance for mocking. </returns>
+        public static PostArgsMatchCondition PostArgsMatchCondition(string selector = default, PostArgsOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new PostArgsMatchConditionParameters(
+            return new PostArgsMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRulePostArgsConditionParameters,
                 additionalBinaryDataProperties: null,
                 selector,
@@ -764,13 +764,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.RequestUriMatchConditionParameters"/> instance for mocking. </returns>
-        public static RequestUriMatchConditionParameters RequestUriMatchConditionParameters(RequestUriOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.RequestUriMatchCondition"/> instance for mocking. </returns>
+        public static RequestUriMatchCondition RequestUriMatchCondition(RequestUriOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new RequestUriMatchConditionParameters(
+            return new RequestUriMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleRequestUriConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -785,13 +785,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.RequestHeaderMatchConditionParameters"/> instance for mocking. </returns>
-        public static RequestHeaderMatchConditionParameters RequestHeaderMatchConditionParameters(string selector = default, RequestHeaderOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.RequestHeaderMatchCondition"/> instance for mocking. </returns>
+        public static RequestHeaderMatchCondition RequestHeaderMatchCondition(string selector = default, RequestHeaderOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new RequestHeaderMatchConditionParameters(
+            return new RequestHeaderMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleRequestHeaderConditionParameters,
                 additionalBinaryDataProperties: null,
                 selector,
@@ -806,13 +806,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.RequestBodyMatchConditionParameters"/> instance for mocking. </returns>
-        public static RequestBodyMatchConditionParameters RequestBodyMatchConditionParameters(RequestBodyOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.RequestBodyMatchCondition"/> instance for mocking. </returns>
+        public static RequestBodyMatchCondition RequestBodyMatchCondition(RequestBodyOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new RequestBodyMatchConditionParameters(
+            return new RequestBodyMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleRequestBodyConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -826,13 +826,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        /// <returns> A new <see cref="Models.RequestSchemeMatchConditionParameters"/> instance for mocking. </returns>
-        public static RequestSchemeMatchConditionParameters RequestSchemeMatchConditionParameters(RequestSchemeOperator @operator = default, bool? negateCondition = default, IEnumerable<PreTransformCategory> transforms = default, IEnumerable<RequestSchemeMatchConditionMatchValue> matchValues = default)
+        /// <returns> A new <see cref="Models.RequestSchemeMatchCondition"/> instance for mocking. </returns>
+        public static RequestSchemeMatchCondition RequestSchemeMatchCondition(RequestSchemeOperator @operator = default, bool? negateCondition = default, IEnumerable<PreTransformCategory> transforms = default, IEnumerable<RequestSchemeMatchConditionMatchValue> matchValues = default)
         {
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
             matchValues ??= new ChangeTrackingList<RequestSchemeMatchConditionMatchValue>();
 
-            return new RequestSchemeMatchConditionParameters(
+            return new RequestSchemeMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleRequestSchemeConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -846,13 +846,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.UrlPathMatchConditionParameters"/> instance for mocking. </returns>
-        public static UrlPathMatchConditionParameters UrlPathMatchConditionParameters(UriPathOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.UriPathMatchCondition"/> instance for mocking. </returns>
+        public static UriPathMatchCondition UriPathMatchCondition(UriPathOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new UrlPathMatchConditionParameters(
+            return new UriPathMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleUrlPathMatchConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -866,13 +866,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.UrlFileExtensionMatchConditionParameters"/> instance for mocking. </returns>
-        public static UrlFileExtensionMatchConditionParameters UrlFileExtensionMatchConditionParameters(UriFileExtensionOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.UriFileExtensionMatchCondition"/> instance for mocking. </returns>
+        public static UriFileExtensionMatchCondition UriFileExtensionMatchCondition(UriFileExtensionOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new UrlFileExtensionMatchConditionParameters(
+            return new UriFileExtensionMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleUrlFileExtensionMatchConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -886,13 +886,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.UrlFileNameMatchConditionParameters"/> instance for mocking. </returns>
-        public static UrlFileNameMatchConditionParameters UrlFileNameMatchConditionParameters(UriFileNameOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.UriFileNameMatchCondition"/> instance for mocking. </returns>
+        public static UriFileNameMatchCondition UriFileNameMatchCondition(UriFileNameOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new UrlFileNameMatchConditionParameters(
+            return new UriFileNameMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleUrlFilenameConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -906,13 +906,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.HttpVersionMatchConditionParameters"/> instance for mocking. </returns>
-        public static HttpVersionMatchConditionParameters HttpVersionMatchConditionParameters(HttpVersionOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.HttpVersionMatchCondition"/> instance for mocking. </returns>
+        public static HttpVersionMatchCondition HttpVersionMatchCondition(HttpVersionOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new HttpVersionMatchConditionParameters(
+            return new HttpVersionMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleHttpVersionConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -927,13 +927,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.CookiesMatchConditionParameters"/> instance for mocking. </returns>
-        public static CookiesMatchConditionParameters CookiesMatchConditionParameters(string selector = default, CookiesOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.CookiesMatchCondition"/> instance for mocking. </returns>
+        public static CookiesMatchCondition CookiesMatchCondition(string selector = default, CookiesOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new CookiesMatchConditionParameters(
+            return new CookiesMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleCookiesConditionParameters,
                 additionalBinaryDataProperties: null,
                 selector,
@@ -948,13 +948,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.IsDeviceMatchConditionParameters"/> instance for mocking. </returns>
-        public static IsDeviceMatchConditionParameters IsDeviceMatchConditionParameters(IsDeviceOperator @operator = default, bool? negateCondition = default, IEnumerable<IsDeviceMatchConditionMatchValue> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.IsDeviceMatchCondition"/> instance for mocking. </returns>
+        public static IsDeviceMatchCondition IsDeviceMatchCondition(IsDeviceOperator @operator = default, bool? negateCondition = default, IEnumerable<IsDeviceMatchConditionMatchValue> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<IsDeviceMatchConditionMatchValue>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new IsDeviceMatchConditionParameters(
+            return new IsDeviceMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleIsDeviceConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -968,13 +968,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.SocketAddrMatchConditionParameters"/> instance for mocking. </returns>
-        public static SocketAddrMatchConditionParameters SocketAddrMatchConditionParameters(SocketAddressOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.SocketAddressMatchCondition"/> instance for mocking. </returns>
+        public static SocketAddressMatchCondition SocketAddressMatchCondition(SocketAddressOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new SocketAddrMatchConditionParameters(
+            return new SocketAddressMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleSocketAddrConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -988,13 +988,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.ClientPortMatchConditionParameters"/> instance for mocking. </returns>
-        public static ClientPortMatchConditionParameters ClientPortMatchConditionParameters(ClientPortOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.ClientPortMatchCondition"/> instance for mocking. </returns>
+        public static ClientPortMatchCondition ClientPortMatchCondition(ClientPortOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new ClientPortMatchConditionParameters(
+            return new ClientPortMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleClientPortConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -1008,13 +1008,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.ServerPortMatchConditionParameters"/> instance for mocking. </returns>
-        public static ServerPortMatchConditionParameters ServerPortMatchConditionParameters(ServerPortOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.ServerPortMatchCondition"/> instance for mocking. </returns>
+        public static ServerPortMatchCondition ServerPortMatchCondition(ServerPortOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new ServerPortMatchConditionParameters(
+            return new ServerPortMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleServerPortConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -1028,13 +1028,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.HostNameMatchConditionParameters"/> instance for mocking. </returns>
-        public static HostNameMatchConditionParameters HostNameMatchConditionParameters(HostNameOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.HostNameMatchCondition"/> instance for mocking. </returns>
+        public static HostNameMatchCondition HostNameMatchCondition(HostNameOperator @operator = default, bool? negateCondition = default, IEnumerable<string> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new HostNameMatchConditionParameters(
+            return new HostNameMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleHostNameConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -1048,13 +1048,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.SslProtocolMatchConditionParameters"/> instance for mocking. </returns>
-        public static SslProtocolMatchConditionParameters SslProtocolMatchConditionParameters(SslProtocolOperator @operator = default, bool? negateCondition = default, IEnumerable<DeliveryRuleSslProtocol> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
+        /// <returns> A new <see cref="Models.DeliveryRuleSslProtocolMatchCondition"/> instance for mocking. </returns>
+        public static DeliveryRuleSslProtocolMatchCondition DeliveryRuleSslProtocolMatchCondition(SslProtocolOperator @operator = default, bool? negateCondition = default, IEnumerable<DeliveryRuleSslProtocol> matchValues = default, IEnumerable<PreTransformCategory> transforms = default)
         {
             matchValues ??= new ChangeTrackingList<DeliveryRuleSslProtocol>();
             transforms ??= new ChangeTrackingList<PreTransformCategory>();
 
-            return new SslProtocolMatchConditionParameters(
+            return new DeliveryRuleSslProtocolMatchCondition(
                 DeliveryRuleConditionParametersType.DeliveryRuleSslProtocolConditionParameters,
                 additionalBinaryDataProperties: null,
                 @operator,
@@ -1068,9 +1068,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="algorithm"> Algorithm to use for URL signing. </param>
         /// <param name="parameterNameOverride"> Defines which query string parameters in the url to be considered for expires, key id etc. </param>
         /// <returns> A new <see cref="Models.AfdUrlSigningActionParameters"/> instance for mocking. </returns>
-        public static AfdUrlSigningActionParameters AfdUrlSigningActionParameters(TypeName typeName = default, string keyGroupReferenceId = default, UriSigningAlgorithm? algorithm = default, IEnumerable<UrlSigningParamIdentifier> parameterNameOverride = default)
+        public static AfdUrlSigningActionParameters AfdUrlSigningActionParameters(TypeName typeName = default, string keyGroupReferenceId = default, UriSigningAlgorithm? algorithm = default, IEnumerable<UriSigningParamIdentifier> parameterNameOverride = default)
         {
-            parameterNameOverride ??= new ChangeTrackingList<UrlSigningParamIdentifier>();
+            parameterNameOverride ??= new ChangeTrackingList<UriSigningParamIdentifier>();
 
             return new AfdUrlSigningActionParameters(typeName, keyGroupReferenceId is null ? default : new ResourceReference(keyGroupReferenceId, null), algorithm, parameterNameOverride.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1078,12 +1078,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Defines the parameters for the Url Signing action. </summary>
         /// <param name="algorithm"> Algorithm to use for URL signing. </param>
         /// <param name="parameterNameOverride"> Defines which query string parameters in the url to be considered for expires, key id etc. </param>
-        /// <returns> A new <see cref="Models.UrlSigningActionParameters"/> instance for mocking. </returns>
-        public static UrlSigningActionParameters UrlSigningActionParameters(UriSigningAlgorithm? algorithm = default, IEnumerable<UrlSigningParamIdentifier> parameterNameOverride = default)
+        /// <returns> A new <see cref="Models.UriSigningActionProperties"/> instance for mocking. </returns>
+        public static UriSigningActionProperties UriSigningActionProperties(UriSigningAlgorithm? algorithm = default, IEnumerable<UriSigningParamIdentifier> parameterNameOverride = default)
         {
-            parameterNameOverride ??= new ChangeTrackingList<UrlSigningParamIdentifier>();
+            parameterNameOverride ??= new ChangeTrackingList<UriSigningParamIdentifier>();
 
-            return new UrlSigningActionParameters(DeliveryRuleActionParametersType.DeliveryRuleUrlSigningActionParameters, additionalBinaryDataProperties: null, algorithm, parameterNameOverride.ToList());
+            return new UriSigningActionProperties(DeliveryRuleActionParametersType.DeliveryRuleUrlSigningActionParameters, additionalBinaryDataProperties: null, algorithm, parameterNameOverride.ToList());
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1202,7 +1202,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="matchValue"> List of possible match values. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <returns> A new <see cref="Models.MatchConditionAfd"/> instance for mocking. </returns>
-        public static MatchConditionAfd MatchConditionAfd(MatchVariable matchVariable = default, string selector = default, Operator matchOperator = default, bool? negateCondition = default, IEnumerable<string> matchValue = default, IEnumerable<TransformType> transforms = default)
+        public static MatchConditionAfd MatchConditionAfd(MatchVariable matchVariable = default, string selector = default, MatchOperator matchOperator = default, bool? negateCondition = default, IEnumerable<string> matchValue = default, IEnumerable<TransformType> transforms = default)
         {
             matchValue ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<TransformType>();
@@ -1688,7 +1688,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="responseBasedFailoverThresholdPercentage"> The percentage of failed requests in the sample where failover should trigger. </param>
         /// <param name="httpErrorRanges"> The list of Http status code ranges that are considered as server errors for origin and it is marked as unhealthy. </param>
         /// <returns> A new <see cref="Models.ResponseBasedOriginErrorDetectionSettings"/> instance for mocking. </returns>
-        public static ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings(ResponseBasedDetectedErrorTypes? responseBasedDetectedErrorTypes = default, int? responseBasedFailoverThresholdPercentage = default, IEnumerable<HttpErrorRange> httpErrorRanges = default)
+        public static ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings(ResponseBasedDetectedErrorType? responseBasedDetectedErrorTypes = default, int? responseBasedFailoverThresholdPercentage = default, IEnumerable<HttpErrorRange> httpErrorRanges = default)
         {
             httpErrorRanges ??= new ChangeTrackingList<HttpErrorRange>();
 
@@ -1700,7 +1700,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="action"> Action of the geo filter, i.e. allow or block access. </param>
         /// <param name="countryCodes"> Two letter country or region codes defining user country or region access in a geo filter, e.g. AU, MX, US. </param>
         /// <returns> A new <see cref="Models.GeoFilter"/> instance for mocking. </returns>
-        public static GeoFilter GeoFilter(string relativePath = default, GeoFilterActions action = default, IEnumerable<string> countryCodes = default)
+        public static GeoFilter GeoFilter(string relativePath = default, GeoFilterAction action = default, IEnumerable<string> countryCodes = default)
         {
             countryCodes ??= new ChangeTrackingList<string>();
 
@@ -1772,22 +1772,22 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Parameters required for content purge. </summary>
         /// <param name="contentPaths"> The path to the content to be purged. Can describe a file path or a wild card directory. </param>
-        /// <returns> A new <see cref="Models.PurgeParameters"/> instance for mocking. </returns>
-        public static PurgeParameters PurgeParameters(IEnumerable<string> contentPaths = default)
+        /// <returns> A new <see cref="Models.PurgeContent"/> instance for mocking. </returns>
+        public static PurgeContent PurgeContent(IEnumerable<string> contentPaths = default)
         {
             contentPaths ??= new ChangeTrackingList<string>();
 
-            return new PurgeParameters(contentPaths.ToList(), additionalBinaryDataProperties: null);
+            return new PurgeContent(contentPaths.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Parameters required for content load. </summary>
         /// <param name="contentPaths"> The path to the content to be loaded. Path should be a relative file URL of the origin. </param>
-        /// <returns> A new <see cref="Models.LoadParameters"/> instance for mocking. </returns>
-        public static LoadParameters LoadParameters(IEnumerable<string> contentPaths = default)
+        /// <returns> A new <see cref="Models.LoadContent"/> instance for mocking. </returns>
+        public static LoadContent LoadContent(IEnumerable<string> contentPaths = default)
         {
             contentPaths ??= new ChangeTrackingList<string>();
 
-            return new LoadParameters(contentPaths.ToList(), additionalBinaryDataProperties: null);
+            return new LoadContent(contentPaths.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2102,12 +2102,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Parameters required for profile upgrade. </summary>
         /// <param name="wafMappingList"> Web Application Firewall (WAF) and security policy mapping for the profile upgrade. </param>
-        /// <returns> A new <see cref="Models.ProfileUpgradeParameters"/> instance for mocking. </returns>
-        public static ProfileUpgradeParameters ProfileUpgradeParameters(IEnumerable<ProfileChangeSkuWafMapping> wafMappingList = default)
+        /// <returns> A new <see cref="Models.ProfileUpgradeContent"/> instance for mocking. </returns>
+        public static ProfileUpgradeContent ProfileUpgradeContent(IEnumerable<ProfileChangeSkuWafMapping> wafMappingList = default)
         {
             wafMappingList ??= new ChangeTrackingList<ProfileChangeSkuWafMapping>();
 
-            return new ProfileUpgradeParameters(wafMappingList.ToList(), additionalBinaryDataProperties: null);
+            return new ProfileUpgradeContent(wafMappingList.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="securityPolicyName"> The security policy name. </param>
@@ -2459,7 +2459,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="matchValue"> List of possible match values. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <returns> A new <see cref="Models.CustomRuleMatchCondition"/> instance for mocking. </returns>
-        public static CustomRuleMatchCondition CustomRuleMatchCondition(WafMatchVariable matchVariable = default, string selector = default, Operator matchOperator = default, bool? negateCondition = default, IEnumerable<string> matchValue = default, IEnumerable<TransformType> transforms = default)
+        public static CustomRuleMatchCondition CustomRuleMatchCondition(WafMatchVariable matchVariable = default, string selector = default, MatchOperator matchOperator = default, bool? negateCondition = default, IEnumerable<string> matchValue = default, IEnumerable<TransformType> transforms = default)
         {
             matchValue ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<TransformType>();
@@ -2538,10 +2538,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="ipv4Addresses"> The list of ip v4 addresses. </param>
         /// <param name="ipv6Addresses"> The list of ip v6 addresses. </param>
         /// <returns> A new <see cref="Models.IPAddressGroup"/> instance for mocking. </returns>
-        public static IPAddressGroup IPAddressGroup(string deliveryRegion = default, IEnumerable<CidrIpAddress> ipv4Addresses = default, IEnumerable<CidrIpAddress> ipv6Addresses = default)
+        public static IPAddressGroup IPAddressGroup(string deliveryRegion = default, IEnumerable<CidrIPAddress> ipv4Addresses = default, IEnumerable<CidrIPAddress> ipv6Addresses = default)
         {
-            ipv4Addresses ??= new ChangeTrackingList<CidrIpAddress>();
-            ipv6Addresses ??= new ChangeTrackingList<CidrIpAddress>();
+            ipv4Addresses ??= new ChangeTrackingList<CidrIPAddress>();
+            ipv6Addresses ??= new ChangeTrackingList<CidrIPAddress>();
 
             return new IPAddressGroup(deliveryRegion, ipv4Addresses.ToList(), ipv6Addresses.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2549,10 +2549,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> CIDR Ip address. </summary>
         /// <param name="baseIpAddress"> Ip address itself. </param>
         /// <param name="prefixLength"> The length of the prefix of the ip address. </param>
-        /// <returns> A new <see cref="Models.CidrIpAddress"/> instance for mocking. </returns>
-        public static CidrIpAddress CidrIpAddress(string baseIpAddress = default, int? prefixLength = default)
+        /// <returns> A new <see cref="Models.CidrIPAddress"/> instance for mocking. </returns>
+        public static CidrIPAddress CidrIPAddress(string baseIpAddress = default, int? prefixLength = default)
         {
-            return new CidrIpAddress(baseIpAddress, prefixLength, additionalBinaryDataProperties: null);
+            return new CidrIPAddress(baseIpAddress, prefixLength, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.CdnEndpointData"/>. </summary>

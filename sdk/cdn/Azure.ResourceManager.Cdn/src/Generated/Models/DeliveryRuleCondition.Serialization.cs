@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// A condition for the delivery rule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeliveryRuleRemoteAddressCondition"/>, <see cref="DeliveryRuleRequestMethodCondition"/>, <see cref="DeliveryRuleQueryStringCondition"/>, <see cref="DeliveryRulePostArgsCondition"/>, <see cref="DeliveryRuleRequestUriCondition"/>, <see cref="DeliveryRuleRequestHeaderCondition"/>, <see cref="DeliveryRuleRequestBodyCondition"/>, <see cref="DeliveryRuleRequestSchemeCondition"/>, <see cref="DeliveryRuleUrlPathCondition"/>, <see cref="DeliveryRuleUrlFileExtensionCondition"/>, <see cref="DeliveryRuleUrlFileNameCondition"/>, <see cref="DeliveryRuleHttpVersionCondition"/>, <see cref="DeliveryRuleCookiesCondition"/>, <see cref="DeliveryRuleIsDeviceCondition"/>, <see cref="DeliveryRuleSocketAddrCondition"/>, <see cref="DeliveryRuleClientPortCondition"/>, <see cref="DeliveryRuleServerPortCondition"/>, <see cref="DeliveryRuleHostNameCondition"/>, and <see cref="DeliveryRuleSslProtocolCondition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeliveryRuleRemoteAddressCondition"/>, <see cref="DeliveryRuleRequestMethodCondition"/>, <see cref="DeliveryRuleQueryStringCondition"/>, <see cref="DeliveryRulePostArgsCondition"/>, <see cref="DeliveryRuleRequestUriCondition"/>, <see cref="DeliveryRuleRequestHeaderCondition"/>, <see cref="DeliveryRuleRequestBodyCondition"/>, <see cref="DeliveryRuleRequestSchemeCondition"/>, <see cref="DeliveryRuleUriPathCondition"/>, <see cref="DeliveryRuleUriFileExtensionCondition"/>, <see cref="DeliveryRuleUriFileNameCondition"/>, <see cref="DeliveryRuleHttpVersionCondition"/>, <see cref="DeliveryRuleCookiesCondition"/>, <see cref="DeliveryRuleIsDeviceCondition"/>, <see cref="DeliveryRuleSocketAddressCondition"/>, <see cref="DeliveryRuleClientPortCondition"/>, <see cref="DeliveryRuleServerPortCondition"/>, <see cref="DeliveryRuleHostNameCondition"/>, and <see cref="DeliveryRuleSslProtocolCondition"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDeliveryRuleCondition))]
     public abstract partial class DeliveryRuleCondition : IJsonModel<DeliveryRuleCondition>
@@ -147,11 +147,11 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "RequestScheme":
                         return DeliveryRuleRequestSchemeCondition.DeserializeDeliveryRuleRequestSchemeCondition(element, options);
                     case "UrlPath":
-                        return DeliveryRuleUrlPathCondition.DeserializeDeliveryRuleUrlPathCondition(element, options);
+                        return DeliveryRuleUriPathCondition.DeserializeDeliveryRuleUriPathCondition(element, options);
                     case "UrlFileExtension":
-                        return DeliveryRuleUrlFileExtensionCondition.DeserializeDeliveryRuleUrlFileExtensionCondition(element, options);
+                        return DeliveryRuleUriFileExtensionCondition.DeserializeDeliveryRuleUriFileExtensionCondition(element, options);
                     case "UrlFileName":
-                        return DeliveryRuleUrlFileNameCondition.DeserializeDeliveryRuleUrlFileNameCondition(element, options);
+                        return DeliveryRuleUriFileNameCondition.DeserializeDeliveryRuleUriFileNameCondition(element, options);
                     case "HttpVersion":
                         return DeliveryRuleHttpVersionCondition.DeserializeDeliveryRuleHttpVersionCondition(element, options);
                     case "Cookies":
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "IsDevice":
                         return DeliveryRuleIsDeviceCondition.DeserializeDeliveryRuleIsDeviceCondition(element, options);
                     case "SocketAddr":
-                        return DeliveryRuleSocketAddrCondition.DeserializeDeliveryRuleSocketAddrCondition(element, options);
+                        return DeliveryRuleSocketAddressCondition.DeserializeDeliveryRuleSocketAddressCondition(element, options);
                     case "ClientPort":
                         return DeliveryRuleClientPortCondition.DeserializeDeliveryRuleClientPortCondition(element, options);
                     case "ServerPort":

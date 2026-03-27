@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="DeliveryRulePostArgsCondition"/>. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRulePostArgsCondition(PostArgsMatchConditionParameters parameters) : base(MatchVariable.PostArgs)
+        public DeliveryRulePostArgsCondition(PostArgsMatchCondition parameters) : base(MatchVariable.PostArgs)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRulePostArgsCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, PostArgsMatchConditionParameters parameters) : base(name, additionalBinaryDataProperties)
+        internal DeliveryRulePostArgsCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, PostArgsMatchCondition parameters) : base(name, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public PostArgsMatchConditionParameters Parameters { get; set; }
+        public PostArgsMatchCondition Parameters { get; set; }
     }
 }

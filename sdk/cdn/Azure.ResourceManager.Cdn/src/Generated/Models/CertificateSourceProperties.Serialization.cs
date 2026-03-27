@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for certificate source
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnCertificateSourceParameters"/> and <see cref="KeyVaultCertificateSourceParameters"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnCertificateSource"/> and <see cref="KeyVaultCertificateSource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCertificateSourceProperties))]
     public abstract partial class CertificateSourceProperties : IJsonModel<CertificateSourceProperties>
@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.Cdn.Models
                 switch (discriminator.GetString())
                 {
                     case "CdnCertificateSourceParameters":
-                        return CdnCertificateSourceParameters.DeserializeCdnCertificateSourceParameters(element, options);
+                        return CdnCertificateSource.DeserializeCdnCertificateSource(element, options);
                     case "KeyVaultCertificateSourceParameters":
-                        return KeyVaultCertificateSourceParameters.DeserializeKeyVaultCertificateSourceParameters(element, options);
+                        return KeyVaultCertificateSource.DeserializeKeyVaultCertificateSource(element, options);
                 }
             }
             return UnknownCertificateSourceProperties.DeserializeUnknownCertificateSourceProperties(element, options);

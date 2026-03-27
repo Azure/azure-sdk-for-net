@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="matchOperator"> Comparison type to use for matching with the variable value. </param>
         /// <param name="matchValue"> List of possible match values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="matchValue"/> is null. </exception>
-        public MatchConditionAfd(MatchVariable matchVariable, Operator matchOperator, IEnumerable<string> matchValue)
+        public MatchConditionAfd(MatchVariable matchVariable, MatchOperator matchOperator, IEnumerable<string> matchValue)
         {
             Argument.AssertNotNull(matchValue, nameof(matchValue));
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="matchValue"> List of possible match values. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MatchConditionAfd(MatchVariable matchVariable, string selector, Operator matchOperator, bool? negateCondition, IList<string> matchValue, IList<TransformType> transforms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MatchConditionAfd(MatchVariable matchVariable, string selector, MatchOperator matchOperator, bool? negateCondition, IList<string> matchValue, IList<TransformType> transforms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MatchVariable = matchVariable;
             Selector = selector;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public string Selector { get; set; }
 
         /// <summary> Comparison type to use for matching with the variable value. </summary>
-        public Operator MatchOperator { get; set; }
+        public MatchOperator MatchOperator { get; set; }
 
         /// <summary> Describes if the result of this condition should be negated. </summary>
         public bool? NegateCondition { get; set; }

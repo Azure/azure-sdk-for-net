@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             DeliveryRuleActionName name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            CacheExpirationActionParameters parameters = default;
+            CacheExpirationActionProperties parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = CacheExpirationActionParameters.DeserializeCacheExpirationActionParameters(prop.Value, options);
+                    parameters = CacheExpirationActionProperties.DeserializeCacheExpirationActionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for delivery rule actions
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UrlRedirectActionParameters"/>, <see cref="UrlSigningActionParameters"/>, <see cref="OriginGroupOverrideActionParameters"/>, <see cref="DeliveryRuleEdgeActionParameters"/>, <see cref="UrlRewriteActionParameters"/>, <see cref="HeaderActionParameters"/>, <see cref="CacheExpirationActionParameters"/>, <see cref="CacheKeyQueryStringActionParameters"/>, and <see cref="RouteConfigurationOverrideActionParameters"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UriRedirectActionProperties"/>, <see cref="UriSigningActionProperties"/>, <see cref="OriginGroupOverrideActionProperties"/>, <see cref="DeliveryRuleEdgeActionParameters"/>, <see cref="UriRewriteActionProperties"/>, <see cref="HeaderActionProperties"/>, <see cref="CacheExpirationActionProperties"/>, <see cref="CacheKeyQueryStringActionProperties"/>, and <see cref="RouteConfigurationOverrideActionProperties"/>.
     /// </summary>
     public abstract partial class DeliveryRuleActionProperties
     {

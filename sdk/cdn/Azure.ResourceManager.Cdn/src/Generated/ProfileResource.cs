@@ -2056,7 +2056,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Profile upgrade input parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProfileResource>> UpgradeAsync(WaitUntil waitUntil, ProfileUpgradeParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProfileResource>> UpgradeAsync(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2068,7 +2068,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfileUpgradeParameters.ToRequestContent(content), context);
+                HttpMessage message = _afdProfilesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfileUpgradeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<ProfileResource> operation = new CdnArmOperation<ProfileResource>(
                     new ProfileOperationSource(Client),
@@ -2115,7 +2115,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Profile upgrade input parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ProfileResource> Upgrade(WaitUntil waitUntil, ProfileUpgradeParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProfileResource> Upgrade(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2127,7 +2127,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfileUpgradeParameters.ToRequestContent(content), context);
+                HttpMessage message = _afdProfilesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfileUpgradeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<ProfileResource> operation = new CdnArmOperation<ProfileResource>(
                     new ProfileOperationSource(Client),

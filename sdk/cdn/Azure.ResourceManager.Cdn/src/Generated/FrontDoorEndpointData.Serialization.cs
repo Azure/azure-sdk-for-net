@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(frontDoorEndpointData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(frontDoorEndpointData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FrontDoorEndpointData"/> from. </param>

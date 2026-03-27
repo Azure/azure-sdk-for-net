@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> CIDR Ip address. </summary>
-    public partial class CidrIpAddress
+    public partial class CidrIPAddress
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CidrIpAddress"/>. </summary>
-        internal CidrIpAddress()
+        /// <summary> Initializes a new instance of <see cref="CidrIPAddress"/>. </summary>
+        internal CidrIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CidrIpAddress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CidrIPAddress"/>. </summary>
         /// <param name="baseIpAddress"> Ip address itself. </param>
         /// <param name="prefixLength"> The length of the prefix of the ip address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CidrIpAddress(string baseIpAddress, int? prefixLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CidrIPAddress(string baseIpAddress, int? prefixLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BaseIpAddress = baseIpAddress;
             PrefixLength = prefixLength;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="certificateSourceParameters"> Defines the certificate source parameters using user's keyvault certificate for enabling SSL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateSourceParameters"/> is null. </exception>
-        public UserManagedHttpsContent(SecureDeliveryProtocolType protocolType, KeyVaultCertificateSourceParameters certificateSourceParameters) : base(CertificateSource.AzureKeyVault, protocolType)
+        public UserManagedHttpsContent(SecureDeliveryProtocolType protocolType, KeyVaultCertificateSource certificateSourceParameters) : base(CertificateSource.AzureKeyVault, protocolType)
         {
             Argument.AssertNotNull(certificateSourceParameters, nameof(certificateSourceParameters));
 
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="certificateSourceParameters"> Defines the certificate source parameters using user's keyvault certificate for enabling SSL. </param>
-        internal UserManagedHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties, KeyVaultCertificateSourceParameters certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion, additionalBinaryDataProperties)
+        internal UserManagedHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties, KeyVaultCertificateSource certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion, additionalBinaryDataProperties)
         {
             CertificateSourceParameters = certificateSourceParameters;
         }
 
         /// <summary> Defines the certificate source parameters using user's keyvault certificate for enabling SSL. </summary>
-        public KeyVaultCertificateSourceParameters CertificateSourceParameters { get; set; }
+        public KeyVaultCertificateSource CertificateSourceParameters { get; set; }
     }
 }

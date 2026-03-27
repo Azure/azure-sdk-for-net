@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(knowledgeSourceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(knowledgeSourceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeSourceData"/> from. </param>

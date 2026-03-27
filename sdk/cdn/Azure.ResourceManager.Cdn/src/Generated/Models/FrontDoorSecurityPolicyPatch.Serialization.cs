@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(frontDoorSecurityPolicyPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(frontDoorSecurityPolicyPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

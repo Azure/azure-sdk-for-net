@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             string relativePath = default;
-            GeoFilterActions action = default;
+            GeoFilterAction action = default;
             IList<string> countryCodes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("action"u8))
                 {
-                    action = prop.Value.GetString().ToGeoFilterActions();
+                    action = prop.Value.GetString().ToGeoFilterAction();
                     continue;
                 }
                 if (prop.NameEquals("countryCodes"u8))

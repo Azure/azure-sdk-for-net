@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CdnCustomDomainResource>> CreateAsync(WaitUntil waitUntil, string customDomainName, CustomDomainParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CdnCustomDomainResource>> CreateAsync(WaitUntil waitUntil, string customDomainName, CdnCustomDomainCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             Argument.AssertNotNull(content, nameof(content));
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, CustomDomainParameters.ToRequestContent(content), context);
+                HttpMessage message = _customDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, CdnCustomDomainCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnCustomDomainResource> operation = new CdnArmOperation<CdnCustomDomainResource>(
                     new CdnCustomDomainOperationSource(Client),
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CdnCustomDomainResource> Create(WaitUntil waitUntil, string customDomainName, CustomDomainParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CdnCustomDomainResource> Create(WaitUntil waitUntil, string customDomainName, CdnCustomDomainCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             Argument.AssertNotNull(content, nameof(content));
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, CustomDomainParameters.ToRequestContent(content), context);
+                HttpMessage message = _customDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, CdnCustomDomainCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnCustomDomainResource> operation = new CdnArmOperation<CdnCustomDomainResource>(
                     new CdnCustomDomainOperationSource(Client),
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> The path to the content to be loaded. Path should be a full URL, e.g. ‘/pictures/city.png' which loads a single file . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> LoadContentAsync(WaitUntil waitUntil, LoadParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> LoadContentAsync(WaitUntil waitUntil, LoadContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateLoadContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, LoadParameters.ToRequestContent(content), context);
+                HttpMessage message = _endpointsRestClient.CreateLoadContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, Models.LoadContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation operation = new CdnArmOperation(_endpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> The path to the content to be loaded. Path should be a full URL, e.g. ‘/pictures/city.png' which loads a single file . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation LoadContent(WaitUntil waitUntil, LoadParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation LoadContent(WaitUntil waitUntil, LoadContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateLoadContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, LoadParameters.ToRequestContent(content), context);
+                HttpMessage message = _endpointsRestClient.CreateLoadContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, Models.LoadContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation operation = new CdnArmOperation(_endpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> The path to the content to be purged. Path can be a full URL, e.g. '/pictures/city.png' which removes a single file, or a directory with a wildcard, e.g. '/pictures/*' which removes all folders and files in the directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> PurgeContentAsync(WaitUntil waitUntil, PurgeParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> PurgeContentAsync(WaitUntil waitUntil, PurgeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreatePurgeContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PurgeParameters.ToRequestContent(content), context);
+                HttpMessage message = _endpointsRestClient.CreatePurgeContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, Models.PurgeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation operation = new CdnArmOperation(_endpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> The path to the content to be purged. Path can be a full URL, e.g. '/pictures/city.png' which removes a single file, or a directory with a wildcard, e.g. '/pictures/*' which removes all folders and files in the directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation PurgeContent(WaitUntil waitUntil, PurgeParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation PurgeContent(WaitUntil waitUntil, PurgeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreatePurgeContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PurgeParameters.ToRequestContent(content), context);
+                HttpMessage message = _endpointsRestClient.CreatePurgeContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, Models.PurgeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation operation = new CdnArmOperation(_endpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

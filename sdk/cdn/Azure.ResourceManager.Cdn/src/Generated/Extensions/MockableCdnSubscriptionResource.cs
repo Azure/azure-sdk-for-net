@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ValidateProbeResult>> ValidateProbeAsync(ValidateProbeInput content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ValidateProbeResult>> ValidateProbeAsync(ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CdnClientRestClient.CreateValidateProbeRequest(Guid.Parse(Id.SubscriptionId), ValidateProbeInput.ToRequestContent(content), context);
+                HttpMessage message = CdnClientRestClient.CreateValidateProbeRequest(Guid.Parse(Id.SubscriptionId), ValidateProbeContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ValidateProbeResult> response = Response.FromValue(ValidateProbeResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ValidateProbeResult> ValidateProbe(ValidateProbeInput content, CancellationToken cancellationToken = default)
+        public virtual Response<ValidateProbeResult> ValidateProbe(ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CdnClientRestClient.CreateValidateProbeRequest(Guid.Parse(Id.SubscriptionId), ValidateProbeInput.ToRequestContent(content), context);
+                HttpMessage message = CdnClientRestClient.CreateValidateProbeRequest(Guid.Parse(Id.SubscriptionId), ValidateProbeContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ValidateProbeResult> response = Response.FromValue(ValidateProbeResult.FromResponse(result), result);
                 if (response.Value == null)

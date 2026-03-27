@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolCondition"/>. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleSslProtocolCondition(SslProtocolMatchConditionParameters parameters) : base(MatchVariable.SslProtocol)
+        public DeliveryRuleSslProtocolCondition(DeliveryRuleSslProtocolMatchCondition parameters) : base(MatchVariable.SslProtocol)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleSslProtocolCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, SslProtocolMatchConditionParameters parameters) : base(name, additionalBinaryDataProperties)
+        internal DeliveryRuleSslProtocolCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeliveryRuleSslProtocolMatchCondition parameters) : base(name, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public SslProtocolMatchConditionParameters Parameters { get; set; }
+        public DeliveryRuleSslProtocolMatchCondition Parameters { get; set; }
     }
 }

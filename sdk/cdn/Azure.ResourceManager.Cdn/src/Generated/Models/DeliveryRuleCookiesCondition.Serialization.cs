@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             MatchVariable name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            CookiesMatchConditionParameters parameters = default;
+            CookiesMatchCondition parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = CookiesMatchConditionParameters.DeserializeCookiesMatchConditionParameters(prop.Value, options);
+                    parameters = CookiesMatchCondition.DeserializeCookiesMatchCondition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

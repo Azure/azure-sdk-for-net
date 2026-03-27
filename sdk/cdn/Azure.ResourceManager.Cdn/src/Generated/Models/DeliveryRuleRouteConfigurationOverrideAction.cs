@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>. </summary>
         /// <param name="parameters"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleRouteConfigurationOverrideAction(RouteConfigurationOverrideActionParameters parameters) : base(DeliveryRuleActionName.RouteConfigurationOverride)
+        public DeliveryRuleRouteConfigurationOverrideAction(RouteConfigurationOverrideActionProperties parameters) : base(DeliveryRuleActionName.RouteConfigurationOverride)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal DeliveryRuleRouteConfigurationOverrideAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> additionalBinaryDataProperties, RouteConfigurationOverrideActionParameters parameters) : base(name, additionalBinaryDataProperties)
+        internal DeliveryRuleRouteConfigurationOverrideAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> additionalBinaryDataProperties, RouteConfigurationOverrideActionProperties parameters) : base(name, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public RouteConfigurationOverrideActionParameters Parameters { get; set; }
+        public RouteConfigurationOverrideActionProperties Parameters { get; set; }
     }
 }
