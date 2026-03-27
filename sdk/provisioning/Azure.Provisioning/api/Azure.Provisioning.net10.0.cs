@@ -1075,6 +1075,15 @@ namespace Azure.Provisioning.Expressions
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
+namespace Azure.Provisioning.Expressions.AST.Expressions
+{
+    public partial class IfConditionExpression : Azure.Provisioning.Expressions.BicepExpression
+    {
+        public IfConditionExpression(Azure.Provisioning.Expressions.BicepExpression condition, Azure.Provisioning.Expressions.BicepExpression body) { }
+        public Azure.Provisioning.Expressions.BicepExpression Body { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Condition { get { throw null; } }
+    }
+}
 namespace Azure.Provisioning.Primitives
 {
     public partial class BicepLiteral : Azure.Provisioning.Primitives.ProvisionableConstruct
