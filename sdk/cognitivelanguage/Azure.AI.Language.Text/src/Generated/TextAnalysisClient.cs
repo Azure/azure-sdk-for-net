@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -334,8 +335,8 @@ namespace Azure.AI.Language.Text
 
             AnalyzeTextSubmitJobRequest spreadModel = new AnalyzeTextSubmitJobRequest(
                 displayName,
-                default,
-                default,
+                textInput,
+                actions?.ToList() as IList<AnalyzeTextOperationAction> ?? new ChangeTrackingList<AnalyzeTextOperationAction>(),
                 defaultLanguage,
                 cancelAfter,
                 default);
@@ -358,8 +359,8 @@ namespace Azure.AI.Language.Text
 
             AnalyzeTextSubmitJobRequest spreadModel = new AnalyzeTextSubmitJobRequest(
                 displayName,
-                default,
-                default,
+                textInput,
+                actions?.ToList() as IList<AnalyzeTextOperationAction> ?? new ChangeTrackingList<AnalyzeTextOperationAction>(),
                 defaultLanguage,
                 cancelAfter,
                 default);

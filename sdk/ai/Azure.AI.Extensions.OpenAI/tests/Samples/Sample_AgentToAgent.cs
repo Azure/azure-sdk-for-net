@@ -54,7 +54,7 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant.",
             Tools = { a2aTool }
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -119,7 +119,7 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant.",
             Tools = { a2aTool }
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion

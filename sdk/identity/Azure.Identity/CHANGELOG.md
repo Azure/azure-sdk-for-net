@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- `AddAzureClient`, `AddKeyedAzureClient`, and `WithAzureCredential` return type changed from `IHostApplicationBuilder` to `IClientBuilder` to align with the `IClientBuilder` composition change in System.ClientModel.
+
 ### Bugs Fixed
 
 ### Other Changes

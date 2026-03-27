@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class UnknownAgentDefinition : AgentDefinition, IJsonModel<AgentDefinition>
+    internal partial class UnknownAgentDefinition : ProjectsAgentDefinition, IJsonModel<ProjectsAgentDefinition>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAgentDefinition"/> for deserialization. </summary>
         internal UnknownAgentDefinition()
@@ -18,47 +18,47 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsAgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProjectsAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentDefinition(document.RootElement, options);
+                        return DeserializeProjectsAgentDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectsAgentDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProjectsAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectsAgentDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProjectsAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentDefinition IPersistableModel<AgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProjectsAgentDefinition IPersistableModel<ProjectsAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProjectsAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProjectsAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,29 +69,29 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProjectsAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectsAgentDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentDefinition IJsonModel<AgentDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProjectsAgentDefinition IJsonModel<ProjectsAgentDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsAgentDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProjectsAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectsAgentDefinition)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentDefinition(document.RootElement, options);
+            return DeserializeProjectsAgentDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
@@ -102,14 +102,14 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            AgentKind kind = default;
+            ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new AgentKind(prop.Value.GetString());
+                    kind = new ProjectsAgentKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rai_config"u8))

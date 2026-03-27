@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="ElasticAccountUpdateProperties"/>. </summary>
         /// <param name="encryption"> Encryption settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticAccountUpdateProperties(ElasticEncryption encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticAccountUpdateProperties(NetAppElasticEncryption encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Encryption = encryption;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Encryption settings. </summary>
-        public ElasticEncryption Encryption { get; set; }
+        public NetAppElasticEncryption Encryption { get; set; }
     }
 }

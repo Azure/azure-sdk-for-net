@@ -8,7 +8,7 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalComputerUsePreviewTool : AgentTool
+    internal partial class InternalComputerUsePreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalComputerUsePreviewTool"/>. </summary>
         /// <param name="environment"> The type of computer environment to control. </param>

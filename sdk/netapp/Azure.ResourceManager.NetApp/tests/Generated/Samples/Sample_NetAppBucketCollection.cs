@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_BucketsCreateOrUpdate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/Buckets_CreateOrUpdate.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Buckets_CreateOrUpdate.json
             // this example is just showing the usage of "Buckets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppBucketData data = new NetAppBucketData
             {
                 Path = "/path",
-                FileSystemUser = new NetAppBucketFileSystemUser
+                FileSystemUser = new NetAppFileSystemUser
                 {
-                    NfsUser = new NetAppBucketNfsUser
+                    NfsUser = new NetAppNfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.NetApp.Samples
                 {
                     Fqdn = "fullyqualified.domainname.com",
                     CertificateObject = "<REDACTED>",
+                    OnCertificateConflictAction = NetAppOnCertificateConflictAction.Update,
                 },
                 Permissions = NetAppBucketPermission.ReadOnly,
             };
@@ -73,9 +74,77 @@ namespace Azure.ResourceManager.NetApp.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_BucketsCreateOrUpdateWithAkv()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Buckets_CreateOrUpdateWithAkv.json
+            // this example is just showing the usage of "Buckets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetAppVolumeResource created on azure
+            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myRG";
+            string accountName = "account1";
+            string poolName = "pool1";
+            string volumeName = "volume1";
+            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
+
+            // get the collection of this NetAppBucketResource
+            NetAppBucketCollection collection = netAppVolume.GetNetAppBuckets();
+
+            // invoke the operation
+            string bucketName = "bucket1";
+            NetAppBucketData data = new NetAppBucketData
+            {
+                Path = "/path",
+                FileSystemUser = new NetAppFileSystemUser
+                {
+                    NfsUser = new NetAppNfsUser
+                    {
+                        UserId = 1001L,
+                        GroupId = 1000L,
+                    },
+                },
+                Server = new NetAppBucketServerProperties
+                {
+                    Fqdn = "fullyqualified.domainname.com",
+                    OnCertificateConflictAction = NetAppOnCertificateConflictAction.Fail,
+                },
+                Permissions = NetAppBucketPermission.ReadOnly,
+                KeyVaultDetails = new NetAppKeyVaultDetails
+                {
+                    CertificateKeyVaultDetails = new CertificateKeyVaultDetails
+                    {
+                        CertificateKeyVaultUri = new Uri("https://REDACTED.vault.azure.net/"),
+                        CertificateName = "my-certificate",
+                    },
+                    CredentialsKeyVaultDetails = new CredentialsKeyVaultDetails
+                    {
+                        CredentialsKeyVaultUri = new Uri("https://REDACTED.vault.azure.net/"),
+                        SecretName = "my-secret",
+                    },
+                },
+            };
+            ArmOperation<NetAppBucketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
+            NetAppBucketResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetAppBucketData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BucketsGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/Buckets_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Buckets_Get.json
             // this example is just showing the usage of "Buckets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,7 +180,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_BucketsList()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/Buckets_List.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Buckets_List.json
             // this example is just showing the usage of "Buckets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,7 +218,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_BucketsGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/Buckets_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Buckets_Get.json
             // this example is just showing the usage of "Buckets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,7 +250,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_BucketsGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/Buckets_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Buckets_Get.json
             // this example is just showing the usage of "Buckets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

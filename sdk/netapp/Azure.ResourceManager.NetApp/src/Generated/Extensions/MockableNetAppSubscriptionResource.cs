@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableNetAppSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _activeDirectoryConfigClientDiagnostics;
-        private ActiveDirectoryConfigsRestOperations _activeDirectoryConfigRestClient;
-        private ClientDiagnostics _elasticAccountClientDiagnostics;
-        private ElasticAccountsRestOperations _elasticAccountRestClient;
+        private ClientDiagnostics _netAppActiveDirectoryConfigActiveDirectoryConfigsClientDiagnostics;
+        private ActiveDirectoryConfigsRestOperations _netAppActiveDirectoryConfigActiveDirectoryConfigsRestClient;
+        private ClientDiagnostics _netAppElasticAccountElasticAccountsClientDiagnostics;
+        private ElasticAccountsRestOperations _netAppElasticAccountElasticAccountsRestClient;
         private ClientDiagnostics _netAppResourceClientDiagnostics;
         private NetAppResourceRestOperations _netAppResourceRestClient;
         private ClientDiagnostics _netAppResourceQuotaLimitsClientDiagnostics;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         {
         }
 
-        private ClientDiagnostics ActiveDirectoryConfigClientDiagnostics => _activeDirectoryConfigClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", ActiveDirectoryConfigResource.ResourceType.Namespace, Diagnostics);
-        private ActiveDirectoryConfigsRestOperations ActiveDirectoryConfigRestClient => _activeDirectoryConfigRestClient ??= new ActiveDirectoryConfigsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ActiveDirectoryConfigResource.ResourceType));
-        private ClientDiagnostics ElasticAccountClientDiagnostics => _elasticAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", ElasticAccountResource.ResourceType.Namespace, Diagnostics);
-        private ElasticAccountsRestOperations ElasticAccountRestClient => _elasticAccountRestClient ??= new ElasticAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ElasticAccountResource.ResourceType));
+        private ClientDiagnostics NetAppActiveDirectoryConfigActiveDirectoryConfigsClientDiagnostics => _netAppActiveDirectoryConfigActiveDirectoryConfigsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppActiveDirectoryConfigResource.ResourceType.Namespace, Diagnostics);
+        private ActiveDirectoryConfigsRestOperations NetAppActiveDirectoryConfigActiveDirectoryConfigsRestClient => _netAppActiveDirectoryConfigActiveDirectoryConfigsRestClient ??= new ActiveDirectoryConfigsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetAppActiveDirectoryConfigResource.ResourceType));
+        private ClientDiagnostics NetAppElasticAccountElasticAccountsClientDiagnostics => _netAppElasticAccountElasticAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppElasticAccountResource.ResourceType.Namespace, Diagnostics);
+        private ElasticAccountsRestOperations NetAppElasticAccountElasticAccountsRestClient => _netAppElasticAccountElasticAccountsRestClient ??= new ElasticAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetAppElasticAccountResource.ResourceType));
         private ClientDiagnostics NetAppResourceClientDiagnostics => _netAppResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private NetAppResourceRestOperations NetAppResourceRestClient => _netAppResourceRestClient ??= new NetAppResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics NetAppResourceQuotaLimitsClientDiagnostics => _netAppResourceQuotaLimitsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -145,17 +145,17 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ActiveDirectoryConfigResource"/></description>
+        /// <description><see cref="NetAppActiveDirectoryConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ActiveDirectoryConfigResource> GetActiveDirectoryConfigsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetAppActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppActiveDirectoryConfigResource> GetNetAppActiveDirectoryConfigsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ActiveDirectoryConfigRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ActiveDirectoryConfigRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ActiveDirectoryConfigResource(Client, ActiveDirectoryConfigData.DeserializeActiveDirectoryConfigData(e)), ActiveDirectoryConfigClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetActiveDirectoryConfigs", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppActiveDirectoryConfigActiveDirectoryConfigsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppActiveDirectoryConfigActiveDirectoryConfigsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppActiveDirectoryConfigResource(Client, NetAppActiveDirectoryConfigData.DeserializeNetAppActiveDirectoryConfigData(e)), NetAppActiveDirectoryConfigActiveDirectoryConfigsClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppActiveDirectoryConfigs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -175,17 +175,17 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ActiveDirectoryConfigResource"/></description>
+        /// <description><see cref="NetAppActiveDirectoryConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ActiveDirectoryConfigResource> GetActiveDirectoryConfigs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppActiveDirectoryConfigResource> GetNetAppActiveDirectoryConfigs(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ActiveDirectoryConfigRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ActiveDirectoryConfigRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ActiveDirectoryConfigResource(Client, ActiveDirectoryConfigData.DeserializeActiveDirectoryConfigData(e)), ActiveDirectoryConfigClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetActiveDirectoryConfigs", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppActiveDirectoryConfigActiveDirectoryConfigsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppActiveDirectoryConfigActiveDirectoryConfigsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppActiveDirectoryConfigResource(Client, NetAppActiveDirectoryConfigData.DeserializeNetAppActiveDirectoryConfigData(e)), NetAppActiveDirectoryConfigActiveDirectoryConfigsClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppActiveDirectoryConfigs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,17 +205,17 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ElasticAccountResource"/></description>
+        /// <description><see cref="NetAppElasticAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticAccountResource> GetElasticAccountsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetAppElasticAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppElasticAccountResource> GetNetAppElasticAccountsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticAccountResource(Client, ElasticAccountData.DeserializeElasticAccountData(e)), ElasticAccountClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetElasticAccounts", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppElasticAccountElasticAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppElasticAccountElasticAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppElasticAccountResource(Client, NetAppElasticAccountData.DeserializeNetAppElasticAccountData(e)), NetAppElasticAccountElasticAccountsClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppElasticAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,17 +235,17 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ElasticAccountResource"/></description>
+        /// <description><see cref="NetAppElasticAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticAccountResource> GetElasticAccounts(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppElasticAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppElasticAccountResource> GetNetAppElasticAccounts(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticAccountResource(Client, ElasticAccountData.DeserializeElasticAccountData(e)), ElasticAccountClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetElasticAccounts", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppElasticAccountElasticAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppElasticAccountElasticAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppElasticAccountResource(Client, NetAppElasticAccountData.DeserializeNetAppElasticAccountData(e)), NetAppElasticAccountElasticAccountsClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppElasticAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
