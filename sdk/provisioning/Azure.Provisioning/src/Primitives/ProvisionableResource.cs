@@ -155,6 +155,12 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
             body = new ObjectExpression([.. obj.Properties, new PropertyExpression("dependsOn", dependencies)]);
         }
 
+        // check if the resource has a condition
+        if (!BicepMetadata.Condition.IsEmpty)
+        {
+            body = new IfConditionExpression(BicepMetadata.Condition.Compile(), body);
+        }
+
         // Create a resource declaration
         ResourceStatement resource = BicepSyntax.Declare.Resource(
             BicepIdentifier,
@@ -177,12 +183,6 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
         if (BicepMetadata.BatchSize.HasValue)
         {
             resource = resource.Decorate("batchSize", BicepSyntax.Value(BicepMetadata.BatchSize.Value));
-        }
-
-        // Apply condition if specified
-        if (!BicepMetadata.Condition.IsEmpty)
-        {
-            resource.Condition = BicepMetadata.Condition.Compile();
         }
 
         yield return resource;

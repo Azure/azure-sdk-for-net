@@ -950,6 +950,7 @@ namespace Azure.Provisioning.Expressions
     {
         public ResourceStatement(string name, Azure.Provisioning.Expressions.BicepExpression type, Azure.Provisioning.Expressions.BicepExpression body) { }
         public Azure.Provisioning.Expressions.BicepExpression Body { get { throw null; } }
+        [System.ObsoleteAttribute("Condition is no longer handled in this way. Construct Body via a IfConditionExpression instead.")]
         public Azure.Provisioning.Expressions.BicepExpression? Condition { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.DecoratorExpression> Decorators { get { throw null; } }
         public bool Existing { get { throw null; } set { } }
@@ -1057,6 +1058,15 @@ namespace Azure.Provisioning.Expressions
         Azure.Provisioning.Expressions.BicepStatement System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepStatement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+}
+namespace Azure.Provisioning.Expressions.AST.Expressions
+{
+    public partial class IfConditionExpression : Azure.Provisioning.Expressions.BicepExpression
+    {
+        public IfConditionExpression(Azure.Provisioning.Expressions.BicepExpression condition, Azure.Provisioning.Expressions.BicepExpression body) { }
+        public Azure.Provisioning.Expressions.BicepExpression Body { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Condition { get { throw null; } }
     }
 }
 namespace Azure.Provisioning.Primitives

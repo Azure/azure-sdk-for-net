@@ -439,4 +439,49 @@ public class InfrastructureJsonRoundTripTests
         Assert.IsTrue(mainBicep.Contains("existing"),
             $"Expected 'existing' keyword in Bicep output.\n{mainBicep}");
     }
+
+    [Test]
+    public void RoundTrip_ResourceWithMetadata()
+    {
+        Infrastructure infra = new();
+        StorageAccount storage = new("storage", StorageAccount.ResourceVersions.V2024_01_01)
+        {
+            Kind = StorageKind.StorageV2,
+            Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+        };
+        storage.BicepMetadata.Description = "Production storage account";
+        storage.BicepMetadata.BatchSize = 3;
+        storage.BicepMetadata.OnlyIfNotExists = true;
+        storage.BicepMetadata.Condition = new ProvisioningParameter("deployStorage", typeof(bool)) { Value = true };
+        infra.Add(storage);
+
+        SerializationTestHelpers.AssertJsonRoundTrip(infra);
+
+        // Verify metadata survives deserialization and re-hydration
+        string json = SerializationTestHelpers.SerializeToJson(infra);
+        Infrastructure deserialized = SerializationTestHelpers.DeserializeFromJson(json);
+        var roundTripped = deserialized.GetProvisionableResources()
+            .OfType<StorageAccount>().Single();
+
+        Assert.AreEqual("Production storage account", roundTripped.BicepMetadata.Description,
+            "Description should survive round-trip");
+        Assert.AreEqual((uint)3, roundTripped.BicepMetadata.BatchSize,
+            "BatchSize should survive round-trip");
+        Assert.IsTrue(roundTripped.BicepMetadata.OnlyIfNotExists,
+            "OnlyIfNotExists should survive round-trip");
+        Assert.IsFalse(roundTripped.BicepMetadata.Condition.IsEmpty,
+            "Condition should survive round-trip");
+
+        // Verify Bicep output contains all decorators and condition
+        ProvisioningPlan plan = deserialized.Build();
+        string mainBicep = plan.Compile()["main.bicep"];
+        Assert.IsTrue(mainBicep.Contains("@description('Production storage account')"),
+            $"Expected @description decorator in Bicep output.\n{mainBicep}");
+        Assert.IsTrue(mainBicep.Contains("@batchSize(3)"),
+            $"Expected @batchSize decorator in Bicep output.\n{mainBicep}");
+        Assert.IsTrue(mainBicep.Contains("@onlyIfNotExists()"),
+            $"Expected @onlyIfNotExists decorator in Bicep output.\n{mainBicep}");
+        Assert.IsTrue(mainBicep.Contains("if (deployStorage)"),
+            $"Expected condition in Bicep output.\n{mainBicep}");
+    }
 }

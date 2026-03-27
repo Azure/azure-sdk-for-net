@@ -337,6 +337,8 @@ public class SchemaComplianceTests
         }
     }
 
+    private static readonly HashSet<string> ValidResourceValueKinds = new() { "object", "if-condition", "for-expression" };
+
     private static void AssertResourceDeclarationNode(JsonElement node, string key)
     {
         Assert.AreEqual(key, node.GetProperty("bicepIdentifier").GetString(), $"Resource key '{key}' mismatch with bicepIdentifier");
@@ -344,7 +346,9 @@ public class SchemaComplianceTests
         Assert.IsTrue(node.TryGetProperty("apiVersion", out _), $"Resource '{key}' missing 'apiVersion'");
         Assert.IsTrue(node.TryGetProperty("existing", out _), $"Resource '{key}' missing 'existing'");
         Assert.IsTrue(node.TryGetProperty("value", out JsonElement value), $"Resource '{key}' missing 'value'");
-        Assert.AreEqual("object", value.GetProperty("kind").GetString(), $"Resource '{key}' value must be ObjectValue");
+        string valueKind = value.GetProperty("kind").GetString()!;
+        Assert.IsTrue(ValidResourceValueKinds.Contains(valueKind),
+            $"Resource '{key}' value kind '{valueKind}' not in {string.Join(", ", ValidResourceValueKinds)}");
         AssertExpressionNode(value, $"resource '{key}'.value");
         if (node.TryGetProperty("decorators", out JsonElement decs))
             AssertDecoratorsNode(decs, $"resource '{key}'");
@@ -355,7 +359,9 @@ public class SchemaComplianceTests
         Assert.AreEqual(key, node.GetProperty("bicepIdentifier").GetString(), $"Module key '{key}' mismatch");
         Assert.IsTrue(node.TryGetProperty("path", out _), $"Module '{key}' missing 'path'");
         Assert.IsTrue(node.TryGetProperty("value", out JsonElement value), $"Module '{key}' missing 'value'");
-        Assert.AreEqual("object", value.GetProperty("kind").GetString(), $"Module '{key}' value must be ObjectValue");
+        string valueKind = value.GetProperty("kind").GetString()!;
+        Assert.IsTrue(ValidResourceValueKinds.Contains(valueKind),
+            $"Module '{key}' value kind '{valueKind}' not in {string.Join(", ", ValidResourceValueKinds)}");
         AssertExpressionNode(value, $"module '{key}'.value");
         if (node.TryGetProperty("decorators", out JsonElement decs))
             AssertDecoratorsNode(decs, $"module '{key}'");
@@ -451,6 +457,12 @@ public class SchemaComplianceTests
             case "contextual-variable":
                 Assert.IsTrue(node.TryGetProperty("context", out _), $"ContextualVariable at {path} missing 'context'");
                 Assert.IsTrue(node.TryGetProperty("property", out _), $"ContextualVariable at {path} missing 'property'");
+                break;
+            case "if-condition":
+                Assert.IsTrue(node.TryGetProperty("condition", out JsonElement ifCond), $"IfCondition at {path} missing 'condition'");
+                Assert.IsTrue(node.TryGetProperty("body", out JsonElement ifBody), $"IfCondition at {path} missing 'body'");
+                AssertExpressionNode(ifCond, $"{path}.condition");
+                AssertExpressionNode(ifBody, $"{path}.body");
                 break;
         }
     }
