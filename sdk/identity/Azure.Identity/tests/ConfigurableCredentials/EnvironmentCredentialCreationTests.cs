@@ -280,26 +280,6 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.Environment
 
         [Test]
         [NonParallelizable]
-        public void Password_ConfigWinsOverEnvVar()
-        {
-            var env = BaseEnvVars(clientSecret: null);
-            env["AZURE_USERNAME"] = "env-user";
-            env["AZURE_PASSWORD"] = "env-pass";
-            using (new TestEnvVar(env))
-            {
-                IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:Password"] = "config-pass";
-
-                var envCred = GetUnderlying(CreateFromConfig(config));
-                var inner = ReadProperty<Azure.Core.TokenCredential>(envCred, "Credential") as UsernamePasswordCredential;
-                Assert.IsNotNull(inner, "Should create a UsernamePasswordCredential");
-
-                Assert.AreEqual("config-pass", ReadField<string>(inner, "_password"));
-            }
-        }
-
-        [Test]
-        [NonParallelizable]
         public void Password_FallsBackToEnvVar()
         {
             var env = BaseEnvVars(clientSecret: null);

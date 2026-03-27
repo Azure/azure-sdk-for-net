@@ -62,23 +62,6 @@
         },
         {
           "if": {
-            "required": [
-              "Password"
-            ]
-          },
-          "then": {
-            "title": "⚠️ Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
-            "description": "⚠️ Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
-            "properties": {
-              "Password": {
-                "not": {},
-                "description": "⚠️ Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
-              }
-            }
-          }
-        },
-        {
-          "if": {
             "properties": {
               "CredentialSource": {
                 "const": "AzureCliCredential"
@@ -652,23 +635,6 @@
               "ClientCertificatePassword": {
                 "not": {},
                 "description": "⚠️ Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "required": [
-              "Password"
-            ]
-          },
-          "then": {
-            "title": "⚠️ Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
-            "description": "⚠️ Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
-            "properties": {
-              "Password": {
-                "not": {},
-                "description": "⚠️ Do NOT put passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
               }
             }
           }

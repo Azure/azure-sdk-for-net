@@ -140,12 +140,7 @@ namespace Azure.Identity
                 EnvironmentSendCertificateChain = sendCertificateChain;
             }
 
-            if (section[nameof(EnvironmentCredentialOptions.Password)] is string password)
-            {
-                EnvironmentPassword = password;
-            }
-
-            if (section[nameof(WorkloadIdentityCredentialOptions.TokenFilePath)] is string tokenFilePath)
+if (section[nameof(WorkloadIdentityCredentialOptions.TokenFilePath)] is string tokenFilePath)
             {
                 WorkloadTokenFilePath = tokenFilePath;
             }
@@ -621,12 +616,7 @@ namespace Azure.Identity
         /// </summary>
         internal bool? EnvironmentSendCertificateChain { get; set; }
 
-        /// <summary>
-        /// Specifies the password for the EnvironmentCredential.
-        /// </summary>
-        internal string EnvironmentPassword { get; set; }
-
-        /// <summary>
+/// <summary>
         /// Specifies the token file path for the WorkloadIdentityCredential.
         /// </summary>
         internal string WorkloadTokenFilePath { get; set; }
@@ -712,8 +702,7 @@ namespace Azure.Identity
                 dacClone.EnvironmentClientCertificatePath = EnvironmentClientCertificatePath;
                 dacClone.EnvironmentClientCertificatePassword = EnvironmentClientCertificatePassword;
                 dacClone.EnvironmentSendCertificateChain = EnvironmentSendCertificateChain;
-                dacClone.EnvironmentPassword = EnvironmentPassword;
-                dacClone.WorkloadTokenFilePath = WorkloadTokenFilePath;
+dacClone.WorkloadTokenFilePath = WorkloadTokenFilePath;
             }
             else if (clone is InteractiveBrowserCredentialOptions ibcClone)
             {
