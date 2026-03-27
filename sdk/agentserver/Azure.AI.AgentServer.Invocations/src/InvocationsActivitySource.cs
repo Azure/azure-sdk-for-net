@@ -39,8 +39,46 @@ public class InvocationsActivitySource
     }
 
     /// <summary>
+    /// Builds the span display name following the pattern in §4.1 of the invocation protocol spec:
+    /// <c>invoke_agent {Name}:{Version}</c>, <c>invoke_agent {Name}</c>, or <c>invoke_agent</c>.
+    /// </summary>
+    private static string BuildSpanDisplayName(string? agentName, string? agentVersion)
+    {
+        if (!string.IsNullOrEmpty(agentName) && !string.IsNullOrEmpty(agentVersion))
+        {
+            return $"invoke_agent {agentName}:{agentVersion}";
+        }
+
+        if (!string.IsNullOrEmpty(agentName))
+        {
+            return $"invoke_agent {agentName}";
+        }
+
+        return "invoke_agent";
+    }
+
+    /// <summary>
+    /// Builds the <c>gen_ai.agent.id</c> value:
+    /// <c>{Name}:{Version}</c>, <c>{Name}</c>, or empty string when agent info is unavailable.
+    /// </summary>
+    private static string BuildAgentId(string? agentName, string? agentVersion)
+    {
+        if (!string.IsNullOrEmpty(agentName) && !string.IsNullOrEmpty(agentVersion))
+        {
+            return $"{agentName}:{agentVersion}";
+        }
+
+        if (!string.IsNullOrEmpty(agentName))
+        {
+            return agentName;
+        }
+
+        return string.Empty;
+    }
+
+    /// <summary>
     /// Starts a tracing span for a <c>POST /invocations</c> request.
-    /// Sets GenAI semantic convention tags and baggage keys.
+    /// Sets GenAI semantic convention tags and baggage keys per the invocation protocol spec §4.
     /// </summary>
     /// <param name="context">The invocation context with resolved IDs.</param>
     /// <param name="headers">The request headers (for trace propagation).</param>
@@ -49,11 +87,11 @@ public class InvocationsActivitySource
         InvocationContext context,
         IHeaderDictionary headers)
     {
-        var agentName = FoundryEnvironment.AgentName ?? "unknown";
-        var agentVersion = FoundryEnvironment.AgentVersion ?? "unknown";
+        var agentName = FoundryEnvironment.AgentName;
+        var agentVersion = FoundryEnvironment.AgentVersion;
 
         var activity = _activitySource.StartActivity(
-            $"invoke_agent {agentName}:{agentVersion}",
+            BuildSpanDisplayName(agentName, agentVersion),
             ActivityKind.Server);
 
         if (activity is null)
@@ -61,19 +99,36 @@ public class InvocationsActivitySource
             return null;
         }
 
-        // GenAI semantic conventions
-        activity.SetTag("gen_ai.system", "azure.ai.agentserver");
+        // Identity & GenAI convention tags (§4.2)
+        activity.SetTag("service.name", "azure.ai.agentserver");
+        activity.SetTag("gen_ai.provider.name", "AzureAI Hosted Agents");
         activity.SetTag("gen_ai.operation.name", "invoke_agent");
+        activity.SetTag("gen_ai.response.id", context.InvocationId);
+        activity.SetTag("gen_ai.agent.id", BuildAgentId(agentName, agentVersion));
 
-        // Azure-namespaced identity tags
-        activity.SetTag("azure.ai.agentserver.agent.name", agentName);
-        activity.SetTag("azure.ai.agentserver.agent.version", agentVersion);
-        activity.SetTag("azure.ai.agentserver.invocation.id", context.InvocationId);
-        activity.SetTag("azure.ai.agentserver.session.id", context.SessionId);
+        if (!string.IsNullOrEmpty(context.SessionId))
+        {
+            activity.SetTag("gen_ai.conversation.id", context.SessionId);
+        }
 
-        // Baggage for downstream correlation
-        activity.SetBaggage("invocation_id", context.InvocationId);
-        activity.SetBaggage("session_id", context.SessionId);
+        if (!string.IsNullOrEmpty(agentName))
+        {
+            activity.SetTag("gen_ai.agent.name", agentName);
+        }
+
+        if (!string.IsNullOrEmpty(agentVersion))
+        {
+            activity.SetTag("gen_ai.agent.version", agentVersion);
+        }
+
+        // Namespaced tags (§4.2)
+        activity.SetTag("azure.ai.agentserver.invocations.invocation_id", context.InvocationId);
+        activity.SetTag("azure.ai.agentserver.invocations.session_id", context.SessionId ?? string.Empty);
+        activity.SetTag("microsoft.foundry.project.id", FoundryEnvironment.ProjectArmId ?? string.Empty);
+
+        // Baggage for downstream correlation (§4.3)
+        activity.SetBaggage("azure.ai.agentserver.invocation_id", context.InvocationId);
+        activity.SetBaggage("azure.ai.agentserver.session_id", context.SessionId ?? string.Empty);
 
         // x-request-id propagation (if present in headers)
         if (headers.TryGetValue("x-request-id", out var requestId))

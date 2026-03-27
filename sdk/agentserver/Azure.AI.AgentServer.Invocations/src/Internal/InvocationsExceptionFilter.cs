@@ -22,7 +22,10 @@ internal static class InvocationsExceptionFilter
         }
 
         activity.SetStatus(ActivityStatusCode.Error, exception.Message);
-        activity.SetTag("error.type", exception.GetType().FullName);
+
+        // Error tags per invocation protocol spec §4.2 / §4.4
+        activity.SetTag("azure.ai.agentserver.invocations.error.code", exception.GetType().FullName);
+        activity.SetTag("azure.ai.agentserver.invocations.error.message", exception.Message);
 
         // Add exception event per OTel semantic conventions
         var tags = new ActivityTagsCollection
