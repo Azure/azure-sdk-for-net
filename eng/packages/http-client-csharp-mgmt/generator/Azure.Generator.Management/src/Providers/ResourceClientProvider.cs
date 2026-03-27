@@ -453,25 +453,38 @@ namespace Azure.Generator.Management.Providers
 
         private (bool IsPatch, ResourceMethod? UpdateMethod) PopulateUpdateMethod()
         {
-            // First try to find a patch method that has a body parameter whose model defines a tags property.
-            // A bodyless PATCH or one whose body model lacks tags cannot carry tag changes, so skip it.
+            // First try to find a patch method that has a body parameter whose model defines a tags property
+            // and returns content. A bodyless PATCH, one whose body model lacks tags, or one that returns
+            // no content cannot be used for tag operations — skip it.
             var patchMethod = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update);
             var patchBodyParameter = patchMethod?.InputMethod.Operation.Parameters.OfType<InputBodyParameter>().FirstOrDefault();
             if (patchMethod is not null && patchBodyParameter is not null)
             {
-                if (ModelHasTags(patchBodyParameter.Type as InputModelType))
+                if (ModelHasTags(patchBodyParameter.Type as InputModelType) && OperationReturnsContent(patchMethod.InputMethod))
                 {
                     return (true, patchMethod);
                 }
 
-                // PATCH has a body but the body model does not define tags — do not fall back to PUT,
-                // as the resource intentionally omits tags from its update path.
+                // PATCH has a body but either the body model does not define tags or the operation
+                // returns no content — do not fall back to PUT, as the resource intentionally omits
+                // tags from its update path.
                 return (false, null);
             }
 
             // If there is no patch method with a body, fall back to the put method
             var putMethod = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Create);
             return (false, putMethod);
+        }
+
+        private static bool OperationReturnsContent(InputServiceMethod method)
+        {
+            if (method is InputLongRunningServiceMethod lroMethod)
+            {
+                return lroMethod.LongRunningServiceMetadata.ReturnType is not null;
+            }
+
+            var response = method.Operation.Responses.FirstOrDefault(r => !r.IsErrorResponse);
+            return response?.BodyType is not null;
         }
 
         private List<MethodProvider> BuildGetChildResourceMethods()

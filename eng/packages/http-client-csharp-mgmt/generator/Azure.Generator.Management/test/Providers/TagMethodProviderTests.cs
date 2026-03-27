@@ -195,6 +195,23 @@ namespace Azure.Generator.Management.Tests.Providers
             }
         }
 
+        [TestCase]
+        public void Verify_NoTagMethods_WhenPatchReturnsNoContent()
+        {
+            var (client, models) = InputResourceData.ClientWithResourcePatchNoContent();
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.IsNotNull(resourceClientProvider);
+
+            // Verify that no tag methods are generated when PATCH returns no content
+            var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
+            foreach (var tagMethodName in tagMethodNames)
+            {
+                var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
+                Assert.IsNull(method, $"Tag method '{tagMethodName}' should not be generated when PATCH returns no content.");
+            }
+        }
+
         private static MethodProvider GetTagMethodByName(string methodName, bool isAsync)
         {
             var (resource, restClient) = GetResourceClientProvider();
