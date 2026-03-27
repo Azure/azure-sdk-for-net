@@ -150,12 +150,12 @@ namespace Azure.Identity
                 WorkloadTokenFilePath = tokenFilePath;
             }
 
-            if (section[nameof(AzurePipelinesServiceConnectionId)] is string azurePipelinesServiceConnectionId)
+            if (section[nameof(AzurePipelinesCredential.ServiceConnectionId)] is string azurePipelinesServiceConnectionId)
             {
                 AzurePipelinesServiceConnectionId = azurePipelinesServiceConnectionId;
             }
 
-            if (section[nameof(AzurePipelinesSystemAccessToken)] is string azurePipelinesSystemAccessToken)
+            if (section[nameof(AzurePipelinesCredential.SystemAccessToken)] is string azurePipelinesSystemAccessToken)
             {
                 AzurePipelinesSystemAccessToken = azurePipelinesSystemAccessToken;
             }

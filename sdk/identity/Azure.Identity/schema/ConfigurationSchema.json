@@ -469,14 +469,6 @@
                 "type": "string",
                 "description": "The client (application) ID."
               },
-              "AzurePipelinesServiceConnectionId": {
-                "type": "string",
-                "description": "The Azure Pipelines service connection ID."
-              },
-              "AzurePipelinesSystemAccessToken": {
-                "type": "string",
-                "description": "The System.AccessToken value from the Azure Pipelines build."
-              },
               "DisableInstanceDiscovery": {
                 "type": "boolean",
                 "description": "Skip Microsoft Entra instance discovery and validation."
@@ -496,6 +488,14 @@
               },
               "Diagnostics": {
                 "$ref": "#/definitions/diagnostics"
+              },
+              "ServiceConnectionId": {
+                "type": "string",
+                "description": "The Azure Pipelines service connection ID."
+              },
+              "SystemAccessToken": {
+                "type": "string",
+                "description": "The System.AccessToken value from the Azure Pipelines build."
               }
             }
           }
@@ -1017,14 +1017,6 @@
                 "type": "string",
                 "description": "The client (application) ID."
               },
-              "AzurePipelinesServiceConnectionId": {
-                "type": "string",
-                "description": "The Azure Pipelines service connection ID."
-              },
-              "AzurePipelinesSystemAccessToken": {
-                "type": "string",
-                "description": "The System.AccessToken value from the Azure Pipelines build."
-              },
               "DisableInstanceDiscovery": {
                 "type": "boolean",
                 "description": "Skip Microsoft Entra instance discovery and validation."
@@ -1038,6 +1030,14 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "ServiceConnectionId": {
+                "type": "string",
+                "description": "The Azure Pipelines service connection ID."
+              },
+              "SystemAccessToken": {
+                "type": "string",
+                "description": "The System.AccessToken value from the Azure Pipelines build."
               }
             }
           }
