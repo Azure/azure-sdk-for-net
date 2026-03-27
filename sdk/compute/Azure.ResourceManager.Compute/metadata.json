@@ -1,8 +1,0 @@
-{
-  "apiVersions": {
-    "Compute": "2025-04-01",
-    "ComputeDisk": "2025-01-02",
-    "ComputeGallery": "2025-03-03",
-    "ComputeSku": "2021-07-01"
-  }
-}
