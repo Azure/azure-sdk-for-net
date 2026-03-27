@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Net;
-using Azure.AI.AgentServer.Hosting;
+using Azure.AI.AgentServer.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

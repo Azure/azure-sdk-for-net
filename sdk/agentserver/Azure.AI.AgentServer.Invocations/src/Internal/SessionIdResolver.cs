@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.AgentServer.Hosting;
+using Azure.AI.AgentServer.Core;
 using Microsoft.AspNetCore.Http;
 
 namespace Azure.AI.AgentServer.Invocations.Internal;

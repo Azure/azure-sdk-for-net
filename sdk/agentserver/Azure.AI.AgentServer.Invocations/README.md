@@ -18,7 +18,7 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 
 - An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
 - [.NET 8](https://dotnet.microsoft.com/download) or later
-- The `Azure.AI.AgentServer.Hosting` package (installed automatically as a dependency)
+- The `Azure.AI.AgentServer.Core` package (installed automatically as a dependency)
 
 ### Configure the server
 
@@ -81,7 +81,7 @@ You can familiarise yourself with different APIs using [Samples](https://github.
 ### Common errors
 
 - **404 on invocation endpoint**: Ensure your handler is registered via `AddInvocations<THandler>()` on the builder. If you registered on `IServiceCollection` directly without mapping endpoints, the routes will not be created.
-- **Handler not found**: The Invocations protocol requires `Azure.AI.AgentServer.Hosting` for the underlying host. If you see startup errors, verify that you are using `AgentHost.CreateBuilder()` or `InvocationsServer.Run<THandler>()`.
+- **Handler not found**: The Invocations protocol requires `Azure.AI.AgentServer.Core` for the underlying host. If you see startup errors, verify that you are using `AgentHost.CreateBuilder()` or `InvocationsServer.Run<THandler>()`.
 
 ### Logging
 
@@ -90,7 +90,7 @@ The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Invocations
 ## Next steps
 
 - [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples) — Getting started, custom operations
-- [Azure.AI.AgentServer.Hosting](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Hosting) — Shared hosting foundation
+- [Azure.AI.AgentServer.Core](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core) — Shared hosting foundation
 - [Azure.AI.AgentServer.Responses](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses) — Responses protocol implementation
 
 ## Contributing

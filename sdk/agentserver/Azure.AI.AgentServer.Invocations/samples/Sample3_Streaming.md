@@ -95,6 +95,6 @@ data: {"type":"done","invocation_id":"..."}
 
 ## Implementation pattern
 
-This is the **SSE Streaming** pattern from the Invocations protocol. The agent controls the `Content-Type` and writes directly to the response stream. The Hosting framework's SSE keep-alive ensures the connection stays open for slow consumers.
+This is the **SSE Streaming** pattern from the Invocations protocol. The agent controls the `Content-Type` and writes directly to the response stream. The Core framework's SSE keep-alive ensures the connection stays open for slow consumers.
 
 Use this when your agent generates output incrementally — code generation, text completion, log tailing, or any scenario where the caller benefits from seeing partial results.
