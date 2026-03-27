@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Evaluation task for the schedule. </summary>
-    public partial class EvaluationScheduleTask : ScheduleTask
+    public partial class EvaluationScheduleTask : ProjectsScheduleTask
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationScheduleTask"/>. </summary>
         /// <param name="evalId"> Identifier of the evaluation group. </param>
