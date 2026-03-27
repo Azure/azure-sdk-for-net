@@ -951,7 +951,7 @@ public class CrossApiE2eTests : ProtocolTestBase
             var output1 = doc1.RootElement.GetProperty("output");
             Assert.That(output1.GetArrayLength(), Is.EqualTo(1));
             var item1Added = output1[0];
-            Assert.That(item1Added.GetProperty("type").GetString(), Is.EqualTo("output_message"));
+            Assert.That(item1Added.GetProperty("type").GetString(), Is.EqualTo("message"));
             // Item is in_progress — content should be empty
             Assert.That(item1Added.GetProperty("status").GetString(), Is.EqualTo("in_progress"));
             var content1 = item1Added.GetProperty("content");

@@ -42,6 +42,8 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemOutputMessag
             id: _itemId,
             content: Array.Empty<OutputMessageContent>(),
             status: OutputItemOutputMessageStatus.InProgress);
+        // The OpenAI SDK recognises "message" but not "output_message"
+        message.Type = OutputItemType.Message;
         return EmitAdded(message);
     }
 
@@ -121,6 +123,8 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemOutputMessag
             id: _itemId,
             content: _completedContents,
             status: OutputItemOutputMessageStatus.Completed);
+        // The OpenAI SDK recognises "message" but not "output_message"
+        message.Type = OutputItemType.Message;
         return EmitDone(message);
     }
 }

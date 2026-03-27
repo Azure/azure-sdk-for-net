@@ -47,7 +47,7 @@ public class ResponseShapeProtocolTests : ProtocolTestBase
         Assert.That(output.GetArrayLength() > 0, Is.True, "Expected at least one output item");
 
         var firstItem = output[0];
-        Assert.That(firstItem.GetProperty("type").GetString(), Is.EqualTo("output_message"));
+        Assert.That(firstItem.GetProperty("type").GetString(), Is.EqualTo("message"));
         Assert.That(firstItem.TryGetProperty("id", out _), Is.True, "Output item missing 'id'");
         Assert.That(firstItem.TryGetProperty("role", out _), Is.True, "Output item missing 'role'");
         Assert.That(firstItem.TryGetProperty("content", out _), Is.True, "Output item missing 'content'");
