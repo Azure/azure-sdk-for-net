@@ -5,12 +5,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Evaluation action model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContinuousEvaluationRuleAction"/> and <see cref="HumanEvaluationPreviewRuleAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContinuousEvaluationRuleAction"/> and <see cref="Projects.HumanEvaluationPreviewRuleAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEvaluationRuleAction))]
     public abstract partial class EvaluationRuleAction : IJsonModel<EvaluationRuleAction>
@@ -129,7 +130,7 @@ namespace Azure.AI.Projects
                     case "continuousEvaluation":
                         return ContinuousEvaluationRuleAction.DeserializeContinuousEvaluationRuleAction(element, options);
                     case "humanEvaluationPreview":
-                        return HumanEvaluationPreviewRuleAction.DeserializeHumanEvaluationPreviewRuleAction(element, options);
+                        return Projects.HumanEvaluationPreviewRuleAction.DeserializeHumanEvaluationPreviewRuleAction(element, options);
                 }
             }
             return UnknownEvaluationRuleAction.DeserializeUnknownEvaluationRuleAction(element, options);

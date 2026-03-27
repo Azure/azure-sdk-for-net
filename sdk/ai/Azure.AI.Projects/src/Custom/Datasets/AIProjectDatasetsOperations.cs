@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Management
 {
+    [CodeGenType("AIProjectDatasetsOperations")]
     public partial class AIProjectDatasetsOperations
     {
         private readonly AuthenticationTokenProvider _tokenProvider;

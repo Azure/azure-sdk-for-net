@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Management
 {
     /// <summary> Blob reference details. </summary>
     public partial class AIProjectBlobReference

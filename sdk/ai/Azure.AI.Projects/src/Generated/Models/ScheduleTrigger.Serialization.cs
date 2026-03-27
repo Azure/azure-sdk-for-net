@@ -5,15 +5,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Base model for Trigger of the schedule.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CronTrigger"/>, <see cref="RecurrenceTrigger"/>, and <see cref="OneTimeTrigger"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTrigger))]
-    public abstract partial class ScheduleTrigger : IJsonModel<ScheduleTrigger>
+    public abstract partial class ScheduleTrigger : IJsonModel<Projects.ScheduleTrigger>
     {
         /// <summary> Initializes a new instance of <see cref="ScheduleTrigger"/> for deserialization. </summary>
         internal ScheduleTrigger()
@@ -24,45 +25,45 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ScheduleTrigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduleTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Projects.ScheduleTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeScheduleTrigger(document.RootElement, options);
+                        return Projects.ScheduleTrigger.DeserializeScheduleTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduleTrigger)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Projects.ScheduleTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduleTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Projects.ScheduleTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduleTrigger)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Projects.ScheduleTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScheduleTrigger>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<Projects.ScheduleTrigger>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScheduleTrigger IPersistableModel<ScheduleTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        Projects.ScheduleTrigger IPersistableModel<Projects.ScheduleTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => (Projects.ScheduleTrigger)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScheduleTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Projects.ScheduleTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ScheduleTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Projects.ScheduleTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,10 +74,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduleTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Projects.ScheduleTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduleTrigger)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Projects.ScheduleTrigger)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -99,24 +100,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScheduleTrigger IJsonModel<ScheduleTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        Projects.ScheduleTrigger IJsonModel<Projects.ScheduleTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (Projects.ScheduleTrigger)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ScheduleTrigger JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduleTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Projects.ScheduleTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduleTrigger)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Projects.ScheduleTrigger)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScheduleTrigger(document.RootElement, options);
+            return Projects.ScheduleTrigger.DeserializeScheduleTrigger(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ScheduleTrigger DeserializeScheduleTrigger(JsonElement element, ModelReaderWriterOptions options)
+        internal static Projects.ScheduleTrigger DeserializeScheduleTrigger(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

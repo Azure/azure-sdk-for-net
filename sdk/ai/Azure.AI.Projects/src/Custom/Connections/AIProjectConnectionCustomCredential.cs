@@ -3,10 +3,10 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Management
 {
+    [CodeGenType("AIProjectConnectionCustomCredential")]
     public partial class AIProjectConnectionCustomCredential
     {
         [CodeGenMember("AdditionalProperties")]

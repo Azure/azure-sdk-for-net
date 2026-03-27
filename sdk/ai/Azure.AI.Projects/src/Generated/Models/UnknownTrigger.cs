@@ -4,10 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    internal partial class UnknownTrigger : ScheduleTrigger
+    internal partial class UnknownTrigger : Projects.ScheduleTrigger
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTrigger"/>. </summary>
         /// <param name="type"> Type of the trigger. </param>

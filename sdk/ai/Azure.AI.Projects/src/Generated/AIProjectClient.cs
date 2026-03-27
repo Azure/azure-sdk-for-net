@@ -6,6 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
+using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
@@ -27,7 +29,7 @@ namespace Azure.AI.Projects
         private AIProjectDatasetsOperations _cachedAIProjectDatasetsOperations;
         private AIProjectIndexesOperations _cachedAIProjectIndexesOperations;
         private AIProjectDeploymentsOperations _cachedAIProjectDeploymentsOperations;
-        private RedTeams _cachedRedTeams;
+        private Evaluation.RedTeams _cachedRedTeams;
         private EvaluationRules _cachedEvaluationRules;
         private EvaluationTaxonomies _cachedEvaluationTaxonomies;
         private ProjectEvaluators _cachedProjectEvaluators;

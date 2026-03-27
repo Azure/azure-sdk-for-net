@@ -7,11 +7,12 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Schedule model. </summary>
-    public partial class ProjectsSchedule : IJsonModel<ProjectsSchedule>
+    public partial class ProjectsSchedule : IJsonModel<Projects.ProjectsSchedule>
     {
         /// <summary> Initializes a new instance of <see cref="ProjectsSchedule"/> for deserialization. </summary>
         internal ProjectsSchedule()
@@ -22,41 +23,41 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ProjectsSchedule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Projects.ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProjectsSchedule(document.RootElement, options);
+                        return Projects.ProjectsSchedule.DeserializeProjectsSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProjectsSchedule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Projects.ProjectsSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Projects.ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProjectsSchedule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Projects.ProjectsSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProjectsSchedule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<Projects.ProjectsSchedule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectsSchedule IPersistableModel<ProjectsSchedule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        Projects.ProjectsSchedule IPersistableModel<Projects.ProjectsSchedule>.Create(BinaryData data, ModelReaderWriterOptions options) => (Projects.ProjectsSchedule)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProjectsSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Projects.ProjectsSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="projectsSchedule"> The <see cref="ProjectsSchedule"/> to serialize into <see cref="BinaryContent"/>. </param>
         public static implicit operator BinaryContent(ProjectsSchedule projectsSchedule)
@@ -73,12 +74,12 @@ namespace Azure.AI.Projects
         {
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeProjectsSchedule(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return Projects.ProjectsSchedule.DeserializeProjectsSchedule(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProjectsSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Projects.ProjectsSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -89,10 +90,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Projects.ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectsSchedule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Projects.ProjectsSchedule)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -117,9 +118,9 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(ProvisioningStatus.Value.ToString());
             }
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger, options);
+            writer.WriteObjectValue<Projects.ScheduleTrigger>(Trigger, options);
             writer.WritePropertyName("task"u8);
-            writer.WriteObjectValue(Task, options);
+            writer.WriteObjectValue<ProjectsScheduleTask>(Task, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -187,24 +188,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectsSchedule IJsonModel<ProjectsSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        Projects.ProjectsSchedule IJsonModel<Projects.ProjectsSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (Projects.ProjectsSchedule)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ProjectsSchedule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Projects.ProjectsSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectsSchedule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Projects.ProjectsSchedule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProjectsSchedule(document.RootElement, options);
+            return Projects.ProjectsSchedule.DeserializeProjectsSchedule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProjectsSchedule DeserializeProjectsSchedule(JsonElement element, ModelReaderWriterOptions options)
+        internal static Projects.ProjectsSchedule DeserializeProjectsSchedule(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -215,7 +216,7 @@ namespace Azure.AI.Projects
             string description = default;
             bool enabled = default;
             ScheduleProvisioningStatus? provisioningStatus = default;
-            ScheduleTrigger trigger = default;
+            Projects.ScheduleTrigger trigger = default;
             ProjectsScheduleTask task = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, string> properties = default;
@@ -254,7 +255,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("trigger"u8))
                 {
-                    trigger = ScheduleTrigger.DeserializeScheduleTrigger(prop.Value, options);
+                    trigger = Projects.ScheduleTrigger.DeserializeScheduleTrigger(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("task"u8))
@@ -326,7 +327,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectsSchedule(
+            return new Projects.ProjectsSchedule(
                 id,
                 displayName,
                 description,

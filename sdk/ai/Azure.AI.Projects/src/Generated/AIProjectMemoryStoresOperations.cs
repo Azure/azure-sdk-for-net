@@ -8,8 +8,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> The AIProjectMemoryStoresOperations sub-client. </summary>
     public partial class AIProjectMemoryStoresOperations
@@ -92,8 +93,8 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(definition, nameof(definition));
 
-            InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata ?? new ChangeTrackingDictionary<string, string>(), definition, default);
-            ClientResult result = CreateMemoryStore(spreadModel, cancellationToken.ToRequestOptions());
+            Projects.InternalCreateMemoryStoreRequest spreadModel = new Projects.InternalCreateMemoryStoreRequest(name, description, metadata ?? new ChangeTrackingDictionary<string, string>(), definition, default);
+            ClientResult result = this.CreateMemoryStore(spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
@@ -111,8 +112,8 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(definition, nameof(definition));
 
-            InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata ?? new ChangeTrackingDictionary<string, string>(), definition, default);
-            ClientResult result = await CreateMemoryStoreAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            Projects.InternalCreateMemoryStoreRequest spreadModel = new Projects.InternalCreateMemoryStoreRequest(name, description, metadata ?? new ChangeTrackingDictionary<string, string>(), definition, default);
+            ClientResult result = await this.CreateMemoryStoreAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 

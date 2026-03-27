@@ -9,9 +9,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects;
 
-namespace Azure.Core
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Paged collection of Schedule items. </summary>
     internal partial class PagedSchedule : IJsonModel<PagedSchedule>
     {
         /// <summary> Initializes a new instance of <see cref="PagedSchedule"/> for deserialization. </summary>
@@ -87,7 +86,7 @@ namespace Azure.Core
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ProjectsSchedule item in Value)
+            foreach (Projects.ProjectsSchedule item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -139,17 +138,17 @@ namespace Azure.Core
             {
                 return null;
             }
-            IList<ProjectsSchedule> value = default;
+            IList<Projects.ProjectsSchedule> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ProjectsSchedule> array = new List<ProjectsSchedule>();
+                    List<Projects.ProjectsSchedule> array = new List<Projects.ProjectsSchedule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProjectsSchedule.DeserializeProjectsSchedule(item, options));
+                        array.Add(Projects.ProjectsSchedule.DeserializeProjectsSchedule(item, options));
                     }
                     value = array;
                     continue;

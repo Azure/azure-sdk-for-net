@@ -7,10 +7,11 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
-    internal partial class InternalMemorySearchOptions : IJsonModel<InternalMemorySearchOptions>
+    internal partial class InternalMemorySearchOptions : IJsonModel<Projects.InternalMemorySearchOptions>
     {
         /// <summary> Initializes a new instance of <see cref="InternalMemorySearchOptions"/> for deserialization. </summary>
         internal InternalMemorySearchOptions()
@@ -21,41 +22,41 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalMemorySearchOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMemorySearchOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Projects.InternalMemorySearchOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalMemorySearchOptions(document.RootElement, options);
+                        return Projects.InternalMemorySearchOptions.DeserializeInternalMemorySearchOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalMemorySearchOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Projects.InternalMemorySearchOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMemorySearchOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Projects.InternalMemorySearchOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalMemorySearchOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Projects.InternalMemorySearchOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalMemorySearchOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<Projects.InternalMemorySearchOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalMemorySearchOptions IPersistableModel<InternalMemorySearchOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        Projects.InternalMemorySearchOptions IPersistableModel<Projects.InternalMemorySearchOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => (Projects.InternalMemorySearchOptions)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalMemorySearchOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Projects.InternalMemorySearchOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="internalMemorySearchOptions"> The <see cref="InternalMemorySearchOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
         public static implicit operator BinaryContent(InternalMemorySearchOptions internalMemorySearchOptions)
@@ -69,7 +70,7 @@ namespace Azure.AI.Projects
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalMemorySearchOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Projects.InternalMemorySearchOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +81,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMemorySearchOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Projects.InternalMemorySearchOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalMemorySearchOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Projects.InternalMemorySearchOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope);
@@ -105,7 +106,7 @@ namespace Azure.AI.Projects
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options, options);
+                writer.WriteObjectValue<MemorySearchResultOptions>(Options, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,24 +127,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalMemorySearchOptions IJsonModel<InternalMemorySearchOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        Projects.InternalMemorySearchOptions IJsonModel<Projects.InternalMemorySearchOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (Projects.InternalMemorySearchOptions)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalMemorySearchOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalMemorySearchOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Projects.InternalMemorySearchOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalMemorySearchOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Projects.InternalMemorySearchOptions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalMemorySearchOptions(document.RootElement, options);
+            return Projects.InternalMemorySearchOptions.DeserializeInternalMemorySearchOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static InternalMemorySearchOptions DeserializeInternalMemorySearchOptions(JsonElement element, ModelReaderWriterOptions options)
+        internal static Projects.InternalMemorySearchOptions DeserializeInternalMemorySearchOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -194,7 +195,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalMemorySearchOptions(scope, items ?? new ChangeTrackingList<InputItem>(), previousSearchId, options0, additionalBinaryDataProperties);
+            return new Projects.InternalMemorySearchOptions(scope, items ?? new ChangeTrackingList<InputItem>(), previousSearchId, options0, additionalBinaryDataProperties);
         }
     }
 }

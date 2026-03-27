@@ -5,8 +5,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Management
 {
+    [CodeGenType("AIProjectConnectionsOperations")]
     public partial class AIProjectConnectionsOperations
     {
         /// <summary>

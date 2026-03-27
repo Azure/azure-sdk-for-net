@@ -3,6 +3,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects.Memory;
 using Azure.Core;
 using OpenAI;
 
@@ -95,7 +97,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(FunctionShellCallOutputOutcomeParam))]
     [ModelReaderWriterBuildable(typeof(FunctionShellCallOutputTimeoutOutcomeParam))]
     [ModelReaderWriterBuildable(typeof(HourlyRecurrenceSchedule))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.HumanEvaluationPreviewRuleAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HumanEvaluationPreviewRuleAction))]
     [ModelReaderWriterBuildable(typeof(InputContent))]
     [ModelReaderWriterBuildable(typeof(InputContentInputFileContent))]
@@ -161,7 +162,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(MemoryItem))]
     [ModelReaderWriterBuildable(typeof(MemoryOperation))]
     [ModelReaderWriterBuildable(typeof(MemorySearchItem))]
-    [ModelReaderWriterBuildable(typeof(MemorySearchResultOptions))]
+    [ModelReaderWriterBuildable(typeof(Memory.MemorySearchResultOptions))]
     [ModelReaderWriterBuildable(typeof(MemoryStore))]
     [ModelReaderWriterBuildable(typeof(MemoryStoreDefaultDefinition))]
     [ModelReaderWriterBuildable(typeof(MemoryStoreDefaultOptions))]
@@ -170,7 +171,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(MemoryStoreOperationUsage))]
     [ModelReaderWriterBuildable(typeof(MemoryStoreSearchResponse))]
     [ModelReaderWriterBuildable(typeof(MemoryUpdateResult))]
-    [ModelReaderWriterBuildable(typeof(MemoryUpdateResultDetails))]
+    [ModelReaderWriterBuildable(typeof(Memory.MemoryUpdateResultDetails))]
     [ModelReaderWriterBuildable(typeof(MessageContent))]
     [ModelReaderWriterBuildable(typeof(ModelDeployment))]
     [ModelReaderWriterBuildable(typeof(ModelDeploymentSku))]
@@ -195,7 +196,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(PagedScheduleRun))]
     [ModelReaderWriterBuildable(typeof(PendingUploadConfiguration))]
     [ModelReaderWriterBuildable(typeof(PendingUploadResult))]
-    [ModelReaderWriterBuildable(typeof(ProjectInsight))]
+    [ModelReaderWriterBuildable(typeof(ProjectsInsight))]
     [ModelReaderWriterBuildable(typeof(ProjectsSchedule))]
     [ModelReaderWriterBuildable(typeof(ProjectsScheduleTask))]
     [ModelReaderWriterBuildable(typeof(PromptBasedEvaluatorDefinition))]

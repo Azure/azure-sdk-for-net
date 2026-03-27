@@ -7,78 +7,79 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The response body for cluster insights. </summary>
-    public partial class ProjectInsight : IJsonModel<ProjectInsight>
+    public partial class ProjectsInsight : IJsonModel<ProjectsInsight>
     {
-        /// <summary> Initializes a new instance of <see cref="ProjectInsight"/> for deserialization. </summary>
-        internal ProjectInsight()
+        /// <summary> Initializes a new instance of <see cref="ProjectsInsight"/> for deserialization. </summary>
+        internal ProjectsInsight()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProjectInsight PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProjectsInsight PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectInsight>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProjectsInsight>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProjectInsight(document.RootElement, options);
+                        return DeserializeProjectsInsight(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProjectInsight)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectsInsight)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectInsight>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProjectsInsight>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProjectInsight)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectsInsight)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProjectInsight>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProjectsInsight>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectInsight IPersistableModel<ProjectInsight>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProjectsInsight IPersistableModel<ProjectsInsight>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProjectInsight>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProjectsInsight>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="projectInsight"> The <see cref="ProjectInsight"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(ProjectInsight projectInsight)
+        /// <param name="projectsInsight"> The <see cref="ProjectsInsight"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(ProjectsInsight projectsInsight)
         {
-            if (projectInsight == null)
+            if (projectsInsight == null)
             {
                 return null;
             }
-            return BinaryContent.Create(projectInsight, ModelSerializationExtensions.WireOptions);
+            return BinaryContent.Create(projectsInsight, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ProjectInsight"/> from. </param>
-        public static explicit operator ProjectInsight(ClientResult result)
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ProjectsInsight"/> from. </param>
+        public static explicit operator ProjectsInsight(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeProjectInsight(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeProjectsInsight(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProjectInsight>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProjectsInsight>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -89,10 +90,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectInsight>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProjectsInsight>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectInsight)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectsInsight)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -137,24 +138,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectInsight IJsonModel<ProjectInsight>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProjectsInsight IJsonModel<ProjectsInsight>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProjectInsight JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProjectsInsight JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectInsight>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProjectsInsight>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectInsight)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectsInsight)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProjectInsight(document.RootElement, options);
+            return DeserializeProjectsInsight(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProjectInsight DeserializeProjectInsight(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProjectsInsight DeserializeProjectsInsight(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -208,7 +209,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectInsight(
+            return new ProjectsInsight(
                 id,
                 metadata,
                 state,
