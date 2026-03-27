@@ -7,7 +7,7 @@ namespace Azure.AI.AgentServer.Responses;
 
 /// <summary>
 /// Provides event streaming infrastructure for Server-Sent Events (SSE) delivery.
-/// Implement this interface to back SSE streaming with a custom transport
+/// Extend this class to back SSE streaming with a custom transport
 /// (e.g., Redis Streams, Kafka, Azure Service Bus).
 /// </summary>
 /// <remarks>
@@ -22,7 +22,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// <c>AddResponsesServer()</c>.
 /// </para>
 /// </remarks>
-public interface IResponsesStreamProvider
+public abstract class ResponsesStreamProvider
 {
     /// <summary>
     /// Creates an event publisher for the specified response.
@@ -37,7 +37,7 @@ public interface IResponsesStreamProvider
     /// before storing. The SDK calls <c>OnCompletedAsync</c> when the
     /// event stream ends.
     /// </returns>
-    Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(
+    public abstract Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(
         string responseId,
         CancellationToken cancellationToken = default);
 
@@ -60,7 +60,7 @@ public interface IResponsesStreamProvider
     /// A disposable resource that the SDK releases on SSE client disconnect.
     /// The implementation should clean up its subscription state when disposed.
     /// </returns>
-    Task<IAsyncDisposable> SubscribeToEventsAsync(
+    public abstract Task<IAsyncDisposable> SubscribeToEventsAsync(
         string responseId,
         IAsyncObserver<ResponseStreamEvent> observer,
         long? cursor = null,

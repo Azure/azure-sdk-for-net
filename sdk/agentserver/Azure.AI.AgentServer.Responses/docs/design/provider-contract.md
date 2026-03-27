@@ -1,14 +1,14 @@
 # Provider Contract — .NET Implementation
 
-> .NET-specific `IResponsesProvider` interface and `InMemoryResponsesProvider` implementation details. For language-agnostic persistence rules, see [Library Behavioural Specification — Persistence Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#persistence-contract) (S-034–S-038).
+> .NET-specific `ResponsesProvider` abstract class and `InMemoryResponsesProvider` implementation details. For language-agnostic persistence rules, see [Library Behavioural Specification — Persistence Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#persistence-contract) (S-034–S-038).
 
 ---
 
-## IResponsesProvider Interface
+## ResponsesProvider Abstract Class
 
-`IResponsesProvider`, `IResponsesCancellationSignalProvider`, and `IResponsesStreamProvider` are the three pluggable provider interfaces that the library delegates state persistence, cancellation signalling, and event streaming to ([S-034](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#persistence-contract)).
+`ResponsesProvider`, `ResponsesCancellationSignalProvider`, and `ResponsesStreamProvider` are the three pluggable provider abstract classes that the library delegates state persistence, cancellation signalling, and event streaming to ([S-034](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#persistence-contract)).
 
-The provider contract is split into three focused interfaces. `IResponsesProvider` handles state persistence:
+The provider contract is split into three focused abstract classes. `ResponsesProvider` handles state persistence:
 
 | Method | Signature | Purpose |
 |--------|-----------|---------|
@@ -20,14 +20,14 @@ The provider contract is split into three focused interfaces. `IResponsesProvide
 | `GetItemsAsync` | `Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string>, CancellationToken)` | Batch lookup output items by ID |
 | `GetHistoryItemIdsAsync` | `Task<IEnumerable<string>> GetHistoryItemIdsAsync(string?, string?, int, CancellationToken)` | Retrieve history item IDs for a conversation chain |
 
-`IResponsesCancellationSignalProvider` handles cancellation coordination:
+`ResponsesCancellationSignalProvider` handles cancellation coordination:
 
 | Method | Signature | Purpose |
 |--------|-----------|---------|
 | `CancelResponseAsync` | `Task CancelResponseAsync(string id, CancellationToken)` | Signal cancellation (fire-and-forget) |
 | `GetResponseCancellationTokenAsync` | `Task<CancellationToken> GetResponseCancellationTokenAsync(string id, CancellationToken)` | Return a token that fires when cancel is requested |
 
-`IResponsesStreamProvider` handles SSE event streaming:
+`ResponsesStreamProvider` handles SSE event streaming:
 
 | Method | Signature | Purpose |
 |--------|-----------|---------|
@@ -38,7 +38,7 @@ The provider contract is split into three focused interfaces. `IResponsesProvide
 
 ```csharp
 // Register custom provider before AddResponsesServer — TryAddSingleton skips the default
-builder.Services.AddSingleton<IResponsesProvider, MyRedisResponsesProvider>();
+builder.Services.AddSingleton<ResponsesProvider, MyRedisResponsesProvider>();
 builder.Services.AddResponsesServer();
 ```
 
@@ -98,7 +98,7 @@ services.Configure<InMemoryProviderOptions>(opts =>
 });
 ```
 
-Custom `IResponsesProvider` implementations manage their own retention and eviction strategy — `InMemoryProviderOptions` only affects the built-in in-memory provider.
+Custom `ResponsesProvider` implementations manage their own retention and eviction strategy — `InMemoryProviderOptions` only affects the built-in in-memory provider.
 
 ---
 

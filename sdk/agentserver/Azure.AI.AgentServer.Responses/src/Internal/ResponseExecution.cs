@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <see cref="Response"/> instead of maintaining a separate boolean flag.
 /// </para>
 /// State persistence, event streaming, and sequence numbering are delegated to
-/// <see cref="IResponsesProvider"/> and <see cref="SeekableReplaySubject"/>.
+/// <see cref="ResponsesProvider"/> and <see cref="SeekableReplaySubject"/>.
 /// </summary>
 internal sealed class ResponseExecution : IDisposable
 {

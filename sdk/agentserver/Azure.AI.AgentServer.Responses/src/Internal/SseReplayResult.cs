@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
 /// An <see cref="IResult"/> implementation that replays cached response events as SSE.
-/// Subscribes to the <see cref="IResponsesStreamProvider"/> event stream to get
+/// Subscribes to the <see cref="ResponsesStreamProvider"/> event stream to get
 /// buffered events (replay) and live events (if the response is still in-flight).
 /// </summary>
 /// <remarks>
@@ -19,7 +19,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </remarks>
 internal sealed class SseReplayResult : IResult
 {
-    private readonly IResponsesStreamProvider _streamProvider;
+    private readonly ResponsesStreamProvider _streamProvider;
     private readonly string _responseId;
     private readonly JsonSerializerOptions _jsonOptions;
     private readonly ILogger _logger;
@@ -27,7 +27,7 @@ internal sealed class SseReplayResult : IResult
     private readonly long? _startingAfter;
 
     public SseReplayResult(
-        IResponsesStreamProvider streamProvider,
+        ResponsesStreamProvider streamProvider,
         string responseId,
         JsonSerializerOptions jsonOptions,
         ILogger logger,

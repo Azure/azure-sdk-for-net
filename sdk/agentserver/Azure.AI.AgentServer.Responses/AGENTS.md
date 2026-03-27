@@ -22,7 +22,7 @@ The Responses library has three **authoritative contract documents** that define
 | Document | Path | Defines |
 |----------|------|---------|
 | Error handling | `docs/design/error-handling.md` | Exception hierarchy, error mapping |
-| Provider contract | `docs/design/provider-contract.md` | `IResponsesProvider`, `IResponsesCancellationSignalProvider`, `IResponsesStreamProvider` |
+| Provider contract | `docs/design/provider-contract.md` | `ResponsesProvider`, `ResponsesCancellationSignalProvider`, `ResponsesStreamProvider` |
 | Orchestration | `docs/design/orchestration.md` | `ResponseOrchestrator` pipeline, event processing |
 | Doc ownership matrix | `docs/doc-ownership-matrix.md` | Topic-to-document mapping, canonical sources |
 

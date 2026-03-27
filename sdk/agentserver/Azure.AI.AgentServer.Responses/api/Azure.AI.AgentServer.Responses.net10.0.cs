@@ -397,26 +397,6 @@ namespace Azure.AI.AgentServer.Responses
         public InMemoryProviderOptions() { }
         public System.TimeSpan EventStreamTtl { get { throw null; } set { } }
     }
-    public partial interface IResponsesCancellationSignalProvider
-    {
-        System.Threading.Tasks.Task CancelResponseAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.Task<System.Threading.CancellationToken> GetResponseCancellationTokenAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-    }
-    public partial interface IResponsesProvider
-    {
-        System.Threading.Tasks.Task CreateResponseAsync(Azure.AI.AgentServer.Responses.CreateResponseRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.Task DeleteResponseAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.Models.AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem?>> GetItemsAsync(System.Collections.Generic.IEnumerable<string> itemIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.Models.ResponseObject> GetResponseAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.Task UpdateResponseAsync(Azure.AI.AgentServer.Responses.Models.ResponseObject response, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-    }
-    public partial interface IResponsesStreamProvider
-    {
-        System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.IAsyncObserver<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.Task<System.IAsyncDisposable> SubscribeToEventsAsync(string responseId, Azure.AI.AgentServer.Responses.IAsyncObserver<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> observer, long? cursor = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-    }
     public partial class OutputItemBuilder<T> where T : Azure.AI.AgentServer.Responses.Models.OutputItem
     {
         protected OutputItemBuilder() { }
@@ -646,6 +626,23 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Core.AgentHostBuilder AddResponses(this Azure.AI.AgentServer.Core.AgentHostBuilder builder, System.Func<System.IServiceProvider, Azure.AI.AgentServer.Responses.ResponseHandler> factory, System.Action<Azure.AI.AgentServer.Responses.ResponsesServerOptions>? configure = null) { throw null; }
         public static Azure.AI.AgentServer.Core.AgentHostBuilder AddResponses<THandler>(this Azure.AI.AgentServer.Core.AgentHostBuilder builder, System.Action<Azure.AI.AgentServer.Responses.ResponsesServerOptions>? configure = null) where THandler : Azure.AI.AgentServer.Responses.ResponseHandler { throw null; }
     }
+    public abstract partial class ResponsesCancellationSignalProvider
+    {
+        protected ResponsesCancellationSignalProvider() { }
+        public abstract System.Threading.Tasks.Task CancelResponseAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<System.Threading.CancellationToken> GetResponseCancellationTokenAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
+    public abstract partial class ResponsesProvider
+    {
+        protected ResponsesProvider() { }
+        public abstract System.Threading.Tasks.Task CreateResponseAsync(Azure.AI.AgentServer.Responses.CreateResponseRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task DeleteResponseAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.Models.AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem?>> GetItemsAsync(System.Collections.Generic.IEnumerable<string> itemIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.Models.ResponseObject> GetResponseAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task UpdateResponseAsync(Azure.AI.AgentServer.Responses.Models.ResponseObject response, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
     public static partial class ResponsesServer
     {
         public static void Run(System.Func<System.IServiceProvider, Azure.AI.AgentServer.Responses.ResponseHandler> factory, string[]? args = null, System.Action<Azure.AI.AgentServer.Core.AgentHostBuilder>? configure = null) { }
@@ -664,6 +661,12 @@ namespace Azure.AI.AgentServer.Responses
     public static partial class ResponsesServerServiceCollectionExtensions
     {
         public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddResponsesServer(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Azure.AI.AgentServer.Responses.ResponsesServerOptions>? configure = null) { throw null; }
+    }
+    public abstract partial class ResponsesStreamProvider
+    {
+        protected ResponsesStreamProvider() { }
+        public abstract System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.IAsyncObserver<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<System.IAsyncDisposable> SubscribeToEventsAsync(string responseId, Azure.AI.AgentServer.Responses.IAsyncObserver<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> observer, long? cursor = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public static partial class ResponsesTracingConstants
     {

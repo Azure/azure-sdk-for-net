@@ -27,46 +27,46 @@ public class ServiceRegistrationTests
     // ═══════════════════════════════════════════════════════════════════════
 
     [Test]
-    public void Custom_IResponsesProvider_Takes_Precedence_Over_Default()
+    public void Custom_ResponsesProvider_Takes_Precedence_Over_Default()
     {
         var custom = new StubResponsesProvider();
         var services = new ServiceCollection();
-        services.AddSingleton<IResponsesProvider>(custom);
+        services.AddSingleton<ResponsesProvider>(custom);
         services.AddSingleton<ResponseHandler>(new TestHandler());
         services.AddResponsesServer();
 
         using var sp = services.BuildServiceProvider();
-        var resolved = sp.GetRequiredService<IResponsesProvider>();
+        var resolved = sp.GetRequiredService<ResponsesProvider>();
 
         Assert.That(resolved, Is.SameAs(custom));
     }
 
     [Test]
-    public void Custom_IResponsesCancellationSignalProvider_Takes_Precedence_Over_Default()
+    public void Custom_ResponsesCancellationSignalProvider_Takes_Precedence_Over_Default()
     {
         var custom = new StubCancellationProvider();
         var services = new ServiceCollection();
-        services.AddSingleton<IResponsesCancellationSignalProvider>(custom);
+        services.AddSingleton<ResponsesCancellationSignalProvider>(custom);
         services.AddSingleton<ResponseHandler>(new TestHandler());
         services.AddResponsesServer();
 
         using var sp = services.BuildServiceProvider();
-        var resolved = sp.GetRequiredService<IResponsesCancellationSignalProvider>();
+        var resolved = sp.GetRequiredService<ResponsesCancellationSignalProvider>();
 
         Assert.That(resolved, Is.SameAs(custom));
     }
 
     [Test]
-    public void Custom_IResponsesStreamProvider_Takes_Precedence_Over_Default()
+    public void Custom_ResponsesStreamProvider_Takes_Precedence_Over_Default()
     {
         var custom = new StubStreamProvider();
         var services = new ServiceCollection();
-        services.AddSingleton<IResponsesStreamProvider>(custom);
+        services.AddSingleton<ResponsesStreamProvider>(custom);
         services.AddSingleton<ResponseHandler>(new TestHandler());
         services.AddResponsesServer();
 
         using var sp = services.BuildServiceProvider();
-        var resolved = sp.GetRequiredService<IResponsesStreamProvider>();
+        var resolved = sp.GetRequiredService<ResponsesStreamProvider>();
 
         Assert.That(resolved, Is.SameAs(custom));
     }
@@ -79,13 +79,14 @@ public class ServiceRegistrationTests
         services.AddResponsesServer();
 
         using var sp = services.BuildServiceProvider();
-        var state = sp.GetRequiredService<IResponsesProvider>();
-        var cancel = sp.GetRequiredService<IResponsesCancellationSignalProvider>();
-        var stream = sp.GetRequiredService<IResponsesStreamProvider>();
+        var state = sp.GetRequiredService<ResponsesProvider>();
+        var cancel = sp.GetRequiredService<ResponsesCancellationSignalProvider>();
+        var stream = sp.GetRequiredService<ResponsesStreamProvider>();
 
-        // All three should resolve to the same InMemoryResponsesProvider instance
-        Assert.That(cancel, Is.SameAs(state));
-        Assert.That(stream, Is.SameAs(cancel));
+        // State should be InMemoryResponsesProvider; cancel and stream are adapters backed by same provider
+        Assert.That(state, Is.InstanceOf<InMemoryResponsesProvider>());
+        Assert.That(cancel, Is.InstanceOf<InMemoryCancellationSignalProvider>());
+        Assert.That(stream, Is.InstanceOf<InMemoryStreamProvider>());
     }
 
     [Test]
@@ -93,21 +94,21 @@ public class ServiceRegistrationTests
     {
         var customState = new StubResponsesProvider();
         var services = new ServiceCollection();
-        services.AddSingleton<IResponsesProvider>(customState);
+        services.AddSingleton<ResponsesProvider>(customState);
         services.AddSingleton<ResponseHandler>(new TestHandler());
         services.AddResponsesServer();
 
         using var sp = services.BuildServiceProvider();
-        var state = sp.GetRequiredService<IResponsesProvider>();
-        var cancel = sp.GetRequiredService<IResponsesCancellationSignalProvider>();
-        var stream = sp.GetRequiredService<IResponsesStreamProvider>();
+        var state = sp.GetRequiredService<ResponsesProvider>();
+        var cancel = sp.GetRequiredService<ResponsesCancellationSignalProvider>();
+        var stream = sp.GetRequiredService<ResponsesStreamProvider>();
 
         // Custom state provider
         Assert.That(state, Is.SameAs(customState));
 
-        // Cancel and stream should resolve to InMemory (same instance)
-        Assert.That(stream, Is.SameAs(cancel));
-        Assert.That(cancel, Is.Not.TypeOf<StubResponsesProvider>());
+        // Cancel and stream should resolve to InMemory adapters (not custom)
+        Assert.That(cancel, Is.InstanceOf<InMemoryCancellationSignalProvider>());
+        Assert.That(stream, Is.InstanceOf<InMemoryStreamProvider>());
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -125,9 +126,9 @@ public class ServiceRegistrationTests
         using var factory = new TestWebApplicationFactory(
             configureTestServices: services =>
             {
-                services.AddSingleton<IResponsesProvider>(stateProvider);
-                services.AddSingleton<IResponsesCancellationSignalProvider>(cancelProvider);
-                services.AddSingleton<IResponsesStreamProvider>(streamProvider);
+                services.AddSingleton<ResponsesProvider>(stateProvider);
+                services.AddSingleton<ResponsesCancellationSignalProvider>(cancelProvider);
+                services.AddSingleton<ResponsesStreamProvider>(streamProvider);
             });
         using var client = factory.CreateClient();
 
@@ -173,9 +174,9 @@ public class ServiceRegistrationTests
             handler: blockingHandler,
             configureTestServices: services =>
             {
-                services.AddSingleton<IResponsesProvider>(stateProvider);
-                services.AddSingleton<IResponsesCancellationSignalProvider>(cancelProvider);
-                services.AddSingleton<IResponsesStreamProvider>(streamProvider);
+                services.AddSingleton<ResponsesProvider>(stateProvider);
+                services.AddSingleton<ResponsesCancellationSignalProvider>(cancelProvider);
+                services.AddSingleton<ResponsesStreamProvider>(streamProvider);
             });
         using var client = factory.CreateClient();
 
@@ -208,53 +209,53 @@ public class ServiceRegistrationTests
     // Stub/Recording types for unit tests
     // ═══════════════════════════════════════════════════════════════════════
 
-    private sealed class StubResponsesProvider : IResponsesProvider
+    private sealed class StubResponsesProvider : ResponsesProvider
     {
-        public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default) => Task.CompletedTask;
-        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default) => Task.CompletedTask;
+        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
-        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default) => Task.CompletedTask;
-        public Task DeleteResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default) => Task.CompletedTask;
+        public override Task DeleteResponseAsync(string responseId, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
-        public Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
+        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
             => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
-        public Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken ct = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
-        public Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken ct = default)
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<string>());
     }
 
-    private sealed class StubCancellationProvider : IResponsesCancellationSignalProvider
+    private sealed class StubCancellationProvider : ResponsesCancellationSignalProvider
     {
-        public Task CancelResponseAsync(string responseId, CancellationToken ct = default) => Task.CompletedTask;
-        public Task<CancellationToken> GetResponseCancellationTokenAsync(string responseId, CancellationToken ct = default)
+        public override Task CancelResponseAsync(string responseId, CancellationToken ct = default) => Task.CompletedTask;
+        public override Task<CancellationToken> GetResponseCancellationTokenAsync(string responseId, CancellationToken ct = default)
             => Task.FromResult(CancellationToken.None);
     }
 
-    private sealed class StubStreamProvider : IResponsesStreamProvider
+    private sealed class StubStreamProvider : ResponsesStreamProvider
     {
-        public Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, CancellationToken ct = default)
+        public override Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, CancellationToken ct = default)
             => throw new NotImplementedException();
-        public Task<IAsyncDisposable> SubscribeToEventsAsync(string responseId, IAsyncObserver<ResponseStreamEvent> observer, long? cursor = null, CancellationToken ct = default)
+        public override Task<IAsyncDisposable> SubscribeToEventsAsync(string responseId, IAsyncObserver<ResponseStreamEvent> observer, long? cursor = null, CancellationToken ct = default)
             => throw new NotImplementedException();
     }
 
     /// <summary>
     /// State-only recording provider with working in-memory storage.
     /// </summary>
-    private sealed class RecordingStateProvider : IResponsesProvider
+    private sealed class RecordingStateProvider : ResponsesProvider
     {
         private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
         {
             Calls.Add("CreateResponseAsync");
             _responses.TryAdd(request.Response.Id, request.Response);
             return Task.CompletedTask;
         }
 
-        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -262,14 +263,14 @@ public class ServiceRegistrationTests
             return Task.FromResult(response);
         }
 
-        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default)
+        public override Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;
             return Task.CompletedTask;
         }
 
-        public Task DeleteResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task DeleteResponseAsync(string responseId, CancellationToken ct = default)
         {
             Calls.Add("DeleteResponseAsync");
             if (!_responses.TryRemove(responseId, out _))
@@ -277,25 +278,25 @@ public class ServiceRegistrationTests
             return Task.CompletedTask;
         }
 
-        public Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
+        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
             => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
 
-        public Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken ct = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
 
-        public Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken ct = default)
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<string>());
     }
 
     /// <summary>
     /// Cancellation-only recording provider with working CTS backing.
     /// </summary>
-    private sealed class RecordingCancelProvider : IResponsesCancellationSignalProvider
+    private sealed class RecordingCancelProvider : ResponsesCancellationSignalProvider
     {
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _ctsSources = new();
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public Task CancelResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task CancelResponseAsync(string responseId, CancellationToken ct = default)
         {
             Calls.Add("CancelResponseAsync");
             if (_ctsSources.TryGetValue(responseId, out var cts))
@@ -307,7 +308,7 @@ public class ServiceRegistrationTests
             return Task.CompletedTask;
         }
 
-        public Task<CancellationToken> GetResponseCancellationTokenAsync(string responseId, CancellationToken ct = default)
+        public override Task<CancellationToken> GetResponseCancellationTokenAsync(string responseId, CancellationToken ct = default)
         {
             Calls.Add("GetResponseCancellationTokenAsync");
             var cts = _ctsSources.GetOrAdd(responseId, _ => new CancellationTokenSource());
@@ -318,20 +319,20 @@ public class ServiceRegistrationTests
     /// <summary>
     /// Stream-only recording provider with working SeekableReplaySubject backing.
     /// </summary>
-    private sealed class RecordingStreamProvider : IResponsesStreamProvider, IDisposable
+    private sealed class RecordingStreamProvider : ResponsesStreamProvider, IDisposable
     {
         private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
         private readonly TimeSpan _ttl = TimeSpan.FromMinutes(30);
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, CancellationToken ct = default)
+        public override Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, CancellationToken ct = default)
         {
             Calls.Add("CreateEventPublisherAsync");
             var subject = _subjects.GetOrAdd(responseId, _ => new SeekableReplaySubject(_ttl));
             return Task.FromResult(subject.GetPublisher());
         }
 
-        public async Task<IAsyncDisposable> SubscribeToEventsAsync(
+        public override async Task<IAsyncDisposable> SubscribeToEventsAsync(
             string responseId,
             IAsyncObserver<ResponseStreamEvent> observer,
             long? cursor = null,

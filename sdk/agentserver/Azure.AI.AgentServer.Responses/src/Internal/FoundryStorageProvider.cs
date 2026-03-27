@@ -6,12 +6,12 @@ using Azure.AI.AgentServer.Responses.Models;
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
-/// HTTP-backed implementation of <see cref="IResponsesProvider"/> that persists
+/// HTTP-backed implementation of <see cref="ResponsesProvider"/> that persists
 /// state to the Azure AI Foundry storage API.
 /// The storage base URL is derived from <c>FOUNDRY_PROJECT_ENDPOINT</c> + <c>/storage</c>
 /// (rewritten by <see cref="BaseUrlRewriteHandler"/>).
 /// </summary>
-internal sealed class FoundryStorageProvider : IResponsesProvider
+internal sealed class FoundryStorageProvider : ResponsesProvider
 {
     internal const string HttpClientName = "FoundryStorage";
     private const string ApiVersion = "v1";
@@ -45,7 +45,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
     }
 
     /// <inheritdoc/>
-    public async Task CreateResponseAsync(
+    public override async Task CreateResponseAsync(
         CreateResponseRequest request,
         CancellationToken cancellationToken = default)
     {
@@ -56,7 +56,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
     }
 
     /// <inheritdoc/>
-    public async Task<Models.ResponseObject> GetResponseAsync(
+    public override async Task<Models.ResponseObject> GetResponseAsync(
         string responseId,
         CancellationToken cancellationToken = default)
     {
@@ -70,7 +70,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
     }
 
     /// <inheritdoc/>
-    public async Task UpdateResponseAsync(
+    public override async Task UpdateResponseAsync(
         Models.ResponseObject response,
         CancellationToken cancellationToken = default)
     {
@@ -83,7 +83,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
     }
 
     /// <inheritdoc/>
-    public async Task DeleteResponseAsync(
+    public override async Task DeleteResponseAsync(
         string responseId,
         CancellationToken cancellationToken = default)
     {
@@ -95,7 +95,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
     }
 
     /// <inheritdoc/>
-    public async Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+    public override async Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
         string responseId,
         int limit = 20,
         bool ascending = false,
@@ -120,7 +120,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<OutputItem?>> GetItemsAsync(
+    public override async Task<IEnumerable<OutputItem?>> GetItemsAsync(
         IEnumerable<string> itemIds,
         CancellationToken cancellationToken = default)
     {
@@ -134,7 +134,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<string>> GetHistoryItemIdsAsync(
+    public override async Task<IEnumerable<string>> GetHistoryItemIdsAsync(
         string? previousResponseId,
         string? conversationId,
         int limit,

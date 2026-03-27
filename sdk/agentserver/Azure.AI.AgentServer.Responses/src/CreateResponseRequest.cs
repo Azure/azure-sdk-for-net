@@ -7,7 +7,7 @@ namespace Azure.AI.AgentServer.Responses;
 
 /// <summary>
 /// Encapsulates the data required to persist a newly created response.
-/// Passed to <see cref="IResponsesProvider.CreateResponseAsync"/>.
+/// Passed to <see cref="ResponsesProvider.CreateResponseAsync"/>.
 /// </summary>
 /// <remarks>
 /// <para>

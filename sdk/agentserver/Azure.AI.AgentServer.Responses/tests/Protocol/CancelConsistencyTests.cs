@@ -32,9 +32,9 @@ public class CancelConsistencyTests : IDisposable
             _handler,
             configureTestServices: services =>
             {
-                services.AddSingleton<IResponsesProvider>(_spy);
-                services.AddSingleton<IResponsesCancellationSignalProvider>(_spy);
-                services.AddSingleton<IResponsesStreamProvider>(_spy);
+                services.AddSingleton<ResponsesProvider>(_spy);
+                services.AddSingleton<ResponsesCancellationSignalProvider>(_spy.AsCancellationProvider());
+                services.AddSingleton<ResponsesStreamProvider>(_spy.AsStreamProvider());
             });
         _client = _factory.CreateClient();
     }
@@ -196,7 +196,7 @@ public class CancelConsistencyTests : IDisposable
     /// <summary>
     /// Spy provider that records Create and Update calls with response snapshots.
     /// </summary>
-    private sealed class RecordingProvider : IResponsesProvider, IResponsesCancellationSignalProvider, IResponsesStreamProvider
+    private sealed class RecordingProvider : ResponsesProvider
     {
         private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
         private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
@@ -205,7 +205,7 @@ public class CancelConsistencyTests : IDisposable
         public ConcurrentBag<Models.ResponseObject> CreateCalls { get; } = new();
         public ConcurrentBag<Models.ResponseObject> UpdateCalls { get; } = new();
 
-        public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
         {
             // Snapshot the response at call time
             var snapshot = request.Response.Snapshot();
@@ -214,7 +214,7 @@ public class CancelConsistencyTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
         {
             if (!_responses.TryGetValue(responseId, out var response))
             {
@@ -223,7 +223,7 @@ public class CancelConsistencyTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default)
+        public override Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default)
         {
             // Snapshot the response at call time
             var snapshot = response.Snapshot();
@@ -232,21 +232,42 @@ public class CancelConsistencyTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public Task DeleteResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task DeleteResponseAsync(string responseId, CancellationToken ct = default)
         {
             if (!_responses.TryRemove(responseId, out _))
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
             return Task.CompletedTask;
         }
 
-        public Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
+        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
             => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
 
-        public Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken ct = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
 
-        public Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken ct = default)
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<string>());
+
+        // --- Adapter factories for DI registration ---
+
+        internal ResponsesCancellationSignalProvider AsCancellationProvider() => new CancellationAdapter(this);
+        internal ResponsesStreamProvider AsStreamProvider() => new StreamAdapter(this);
+
+        private sealed class CancellationAdapter(RecordingProvider provider) : ResponsesCancellationSignalProvider
+        {
+            public override Task CancelResponseAsync(string responseId, CancellationToken ct = default)
+                => provider.CancelResponseAsync(responseId, ct);
+            public override Task<CancellationToken> GetResponseCancellationTokenAsync(string responseId, CancellationToken ct = default)
+                => provider.GetResponseCancellationTokenAsync(responseId, ct);
+        }
+
+        private sealed class StreamAdapter(RecordingProvider provider) : ResponsesStreamProvider
+        {
+            public override Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, CancellationToken ct = default)
+                => provider.CreateEventPublisherAsync(responseId, ct);
+            public override Task<IAsyncDisposable> SubscribeToEventsAsync(string responseId, IAsyncObserver<ResponseStreamEvent> observer, long? cursor = null, CancellationToken ct = default)
+                => provider.SubscribeToEventsAsync(responseId, observer, cursor, ct);
+        }
 
         public Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(
             string responseId, CancellationToken ct = default)

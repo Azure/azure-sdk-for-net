@@ -17,9 +17,9 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 internal sealed class ResponseOrchestrator
 {
     private readonly ResponseHandler _handler;
-    private readonly IResponsesProvider _provider;
-    private readonly IResponsesCancellationSignalProvider _cancellationProvider;
-    private readonly IResponsesStreamProvider _streamProvider;
+    private readonly ResponsesProvider _provider;
+    private readonly ResponsesCancellationSignalProvider _cancellationProvider;
+    private readonly ResponsesStreamProvider _streamProvider;
     private readonly ResponseExecutionTracker _tracker;
     private readonly ILogger<ResponseOrchestrator> _logger;
 
@@ -28,9 +28,9 @@ internal sealed class ResponseOrchestrator
     /// </summary>
     public ResponseOrchestrator(
         ResponseHandler handler,
-        IResponsesProvider provider,
-        IResponsesCancellationSignalProvider cancellationProvider,
-        IResponsesStreamProvider streamProvider,
+        ResponsesProvider provider,
+        ResponsesCancellationSignalProvider cancellationProvider,
+        ResponsesStreamProvider streamProvider,
         ResponseExecutionTracker tracker,
         ILogger<ResponseOrchestrator> logger)
     {

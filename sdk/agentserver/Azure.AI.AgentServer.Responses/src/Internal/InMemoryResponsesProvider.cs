@@ -8,15 +8,16 @@ using Microsoft.Extensions.Options;
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
-/// Default in-memory implementation of <see cref="IResponsesProvider"/>,
-/// <see cref="IResponsesCancellationSignalProvider"/>, and <see cref="IResponsesStreamProvider"/>.
+/// Default in-memory implementation of <see cref="ResponsesProvider"/>,
+/// with cancellation and streaming capabilities exposed via
+/// <see cref="InMemoryCancellationSignalProvider"/> and <see cref="InMemoryStreamProvider"/> adapters.
 /// Stores responses, event streams, and cancellation tokens in concurrent dictionaries.
 /// </summary>
 /// <remarks>
 /// <para>
 /// This implementation is suitable for single-instance deployments.
-/// For multi-instance or distributed deployments, consumers should implement
-/// the provider interfaces with a distributed backend (e.g., Redis, SQL).
+/// For multi-instance or distributed deployments, consumers should extend
+/// the provider abstract classes with a distributed backend (e.g., Redis, SQL).
 /// </para>
 /// <para>
 /// Response data (envelopes, items, history, conversation membership) is retained
@@ -30,7 +31,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// replay buffering with time-based eviction and cursor-based seeking.
 /// </para>
 /// </remarks>
-internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponsesCancellationSignalProvider, IResponsesStreamProvider, IDisposable
+internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 {
     // --- Response envelopes ---
     private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
@@ -81,7 +82,7 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
     }
 
     /// <inheritdoc/>
-    public Task CreateResponseAsync(
+    public override Task CreateResponseAsync(
         CreateResponseRequest request,
         CancellationToken cancellationToken = default)
     {
@@ -127,7 +128,7 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
     }
 
     /// <inheritdoc/>
-    public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
+    public override Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
     {
         // Deleted response → 400 (distinguish from never-existed → 404)
         bool isDeleted;
@@ -150,7 +151,7 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
     }
 
     /// <inheritdoc/>
-    public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default)
+    public override Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default)
     {
         _responses[response.Id] = response;
 
@@ -169,7 +170,7 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
     }
 
     /// <inheritdoc/>
-    public Task DeleteResponseAsync(string responseId, CancellationToken cancellationToken = default)
+    public override Task DeleteResponseAsync(string responseId, CancellationToken cancellationToken = default)
     {
         if (!_responses.TryRemove(responseId, out _))
         {
@@ -191,7 +192,7 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
               or ResponseStatus.Cancelled or ResponseStatus.Incomplete;
 
     /// <inheritdoc/>
-    public Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+    public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
         string responseId,
         int limit = 20,
         bool ascending = false,
@@ -282,7 +283,7 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<OutputItem?>> GetItemsAsync(
+    public override Task<IEnumerable<OutputItem?>> GetItemsAsync(
         IEnumerable<string> itemIds,
         CancellationToken cancellationToken = default)
     {
@@ -291,7 +292,7 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<string>> GetHistoryItemIdsAsync(
+    public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(
         string? previousResponseId,
         string? conversationId,
         int limit,
@@ -427,7 +428,9 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
 
     // --- Streaming ---
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Creates an event publisher backed by a <see cref="SeekableReplaySubject"/>.
+    /// </summary>
     public Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(
         string responseId, CancellationToken cancellationToken = default)
     {
@@ -435,7 +438,9 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
         return Task.FromResult(subject.GetPublisher());
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Subscribes to events by seeking into the <see cref="SeekableReplaySubject"/>.
+    /// </summary>
     public async Task<IAsyncDisposable> SubscribeToEventsAsync(
         string responseId,
         IAsyncObserver<ResponseStreamEvent> observer,
@@ -454,7 +459,9 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
 
     // --- Cancellation ---
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Signals cancellation via the per-response <see cref="CancellationTokenSource"/>.
+    /// </summary>
     public Task CancelResponseAsync(string responseId, CancellationToken cancellationToken = default)
     {
         if (_cancellationTokenSources.TryGetValue(responseId, out var cts))
@@ -473,7 +480,9 @@ internal sealed class InMemoryResponsesProvider : IResponsesProvider, IResponses
         return Task.CompletedTask;
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Returns a token linked to the per-response <see cref="CancellationTokenSource"/>.
+    /// </summary>
     public Task<CancellationToken> GetResponseCancellationTokenAsync(
         string responseId, CancellationToken cancellationToken = default)
     {

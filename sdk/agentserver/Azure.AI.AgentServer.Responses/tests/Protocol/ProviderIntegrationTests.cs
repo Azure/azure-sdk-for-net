@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// T019 — Protocol tests verifying IResponsesProvider DI integration.
+/// T019 — Protocol tests verifying ResponsesProvider DI integration.
 /// A recording decorator wraps the default InMemoryResponsesProvider and tracks
 /// which provider methods are invoked during standard API operations.
 /// Covers SC-003.
@@ -37,9 +37,9 @@ public class ProviderDiIntegrationTests : IDisposable
             configureTestServices: services =>
             {
                 // Register spy before AddResponsesServer so TryAddSingleton skips the defaults
-                services.AddSingleton<IResponsesProvider>(_spy);
-                services.AddSingleton<IResponsesCancellationSignalProvider>(_spy);
-                services.AddSingleton<IResponsesStreamProvider>(_spy);
+                services.AddSingleton<ResponsesProvider>(_spy);
+                services.AddSingleton<ResponsesCancellationSignalProvider>(_spy.AsCancellationProvider());
+                services.AddSingleton<ResponsesStreamProvider>(_spy.AsStreamProvider());
             });
         _client = _factory.CreateClient();
     }
@@ -168,10 +168,10 @@ public class ProviderDiIntegrationTests : IDisposable
     }
 
     /// <summary>
-    /// A recording decorator around IResponsesProvider that delegates all operations
+    /// A recording decorator around ResponsesProvider that delegates all operations
     /// to ConcurrentDictionary-backed in-memory storage while recording method calls.
     /// </summary>
-    private sealed class RecordingResponsesProvider : IResponsesProvider, IResponsesCancellationSignalProvider, IResponsesStreamProvider, IDisposable
+    private sealed class RecordingResponsesProvider : ResponsesProvider, IDisposable
     {
         private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
         private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
@@ -180,14 +180,14 @@ public class ProviderDiIntegrationTests : IDisposable
 
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken cancellationToken = default)
+        public override Task CreateResponseAsync(CreateResponseRequest request, CancellationToken cancellationToken = default)
         {
             Calls.Add("CreateResponseAsync");
             _responses.TryAdd(request.Response.Id, request.Response);
             return Task.CompletedTask;
         }
 
-        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
+        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -197,14 +197,14 @@ public class ProviderDiIntegrationTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default)
+        public override Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;
             return Task.CompletedTask;
         }
 
-        public Task DeleteResponseAsync(string responseId, CancellationToken cancellationToken = default)
+        public override Task DeleteResponseAsync(string responseId, CancellationToken cancellationToken = default)
         {
             Calls.Add("DeleteResponseAsync");
             if (!_responses.TryRemove(responseId, out _))
@@ -212,14 +212,35 @@ public class ProviderDiIntegrationTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
+        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
             => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
 
-        public Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken cancellationToken = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken cancellationToken = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
 
-        public Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken cancellationToken = default)
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken cancellationToken = default)
             => Task.FromResult(Enumerable.Empty<string>());
+
+        // --- Adapter factories for DI registration ---
+
+        internal ResponsesCancellationSignalProvider AsCancellationProvider() => new CancellationAdapter(this);
+        internal ResponsesStreamProvider AsStreamProvider() => new StreamAdapter(this);
+
+        private sealed class CancellationAdapter(RecordingResponsesProvider provider) : ResponsesCancellationSignalProvider
+        {
+            public override Task CancelResponseAsync(string responseId, CancellationToken cancellationToken = default)
+                => provider.CancelResponseAsync(responseId, cancellationToken);
+            public override Task<CancellationToken> GetResponseCancellationTokenAsync(string responseId, CancellationToken cancellationToken = default)
+                => provider.GetResponseCancellationTokenAsync(responseId, cancellationToken);
+        }
+
+        private sealed class StreamAdapter(RecordingResponsesProvider provider) : ResponsesStreamProvider
+        {
+            public override Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, CancellationToken cancellationToken = default)
+                => provider.CreateEventPublisherAsync(responseId, cancellationToken);
+            public override Task<IAsyncDisposable> SubscribeToEventsAsync(string responseId, IAsyncObserver<ResponseStreamEvent> observer, long? cursor = null, CancellationToken cancellationToken = default)
+                => provider.SubscribeToEventsAsync(responseId, observer, cursor, cancellationToken);
+        }
 
         public Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(
             string responseId, CancellationToken cancellationToken = default)
@@ -404,8 +425,8 @@ public class DefaultProviderZeroRegressionTests : ProtocolTestBase
 
 /// <summary>
 /// T014 — Protocol tests verifying partial provider override:
-/// register only IResponsesProvider (custom) while IResponsesCancellationSignalProvider
-/// and IResponsesStreamProvider fall back to the SDK's in-memory defaults.
+/// register only ResponsesProvider (custom) while ResponsesCancellationSignalProvider
+/// and ResponsesStreamProvider fall back to the SDK's in-memory defaults.
 /// </summary>
 public class PartialProviderOverrideTests : IDisposable
 {
@@ -422,8 +443,8 @@ public class PartialProviderOverrideTests : IDisposable
             _handler,
             configureTestServices: services =>
             {
-                // Register ONLY IResponsesProvider — streaming and cancellation fall back to defaults
-                services.AddSingleton<IResponsesProvider>(_stateProvider);
+                // Register ONLY ResponsesProvider — streaming and cancellation fall back to defaults
+                services.AddSingleton<ResponsesProvider>(_stateProvider);
             });
         _client = _factory.CreateClient();
     }
@@ -582,22 +603,22 @@ public class PartialProviderOverrideTests : IDisposable
 
     /// <summary>
     /// A state-only provider that handles Create/Get/Update with in-memory storage
-    /// but does NOT implement IResponsesCancellationSignalProvider or IResponsesStreamProvider.
+    /// but does NOT implement ResponsesCancellationSignalProvider or ResponsesStreamProvider.
     /// </summary>
-    private sealed class StateOnlyProvider : IResponsesProvider
+    private sealed class StateOnlyProvider : ResponsesProvider
     {
         private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
 
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken cancellationToken = default)
+        public override Task CreateResponseAsync(CreateResponseRequest request, CancellationToken cancellationToken = default)
         {
             Calls.Add("CreateResponseAsync");
             _responses.TryAdd(request.Response.Id, request.Response);
             return Task.CompletedTask;
         }
 
-        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
+        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -607,14 +628,14 @@ public class PartialProviderOverrideTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default)
+        public override Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;
             return Task.CompletedTask;
         }
 
-        public Task DeleteResponseAsync(string responseId, CancellationToken cancellationToken = default)
+        public override Task DeleteResponseAsync(string responseId, CancellationToken cancellationToken = default)
         {
             Calls.Add("DeleteResponseAsync");
             if (!_responses.TryRemove(responseId, out _))
@@ -622,13 +643,13 @@ public class PartialProviderOverrideTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
+        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
             => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
 
-        public Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken cancellationToken = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken cancellationToken = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
 
-        public Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken cancellationToken = default)
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken cancellationToken = default)
             => Task.FromResult(Enumerable.Empty<string>());
     }
 }

@@ -4,12 +4,12 @@
 namespace Azure.AI.AgentServer.Responses;
 
 /// <summary>
-/// Options for configuring the built-in in-memory <see cref="IResponsesProvider"/> implementation.
+/// Options for configuring the built-in in-memory <see cref="ResponsesProvider"/> implementation.
 /// </summary>
 /// <remarks>
 /// <para>
 /// These options only affect the built-in <c>InMemoryResponsesProvider</c>.
-/// Custom <see cref="IResponsesProvider"/> implementations manage their own
+/// Custom <see cref="ResponsesProvider"/> implementations manage their own
 /// storage and eviction policies independently.
 /// </para>
 /// <para>

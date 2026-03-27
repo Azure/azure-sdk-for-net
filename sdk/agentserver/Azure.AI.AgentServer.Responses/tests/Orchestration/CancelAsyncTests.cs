@@ -27,7 +27,7 @@ public class CancelAsyncTests : IDisposable
             Options.Create(new InMemoryProviderOptions()), TimeProvider.System);
         _tracker = new ResponseExecutionTracker(NullLogger<ResponseExecutionTracker>.Instance);
         _orchestrator = new ResponseOrchestrator(
-            _handler, _provider, _provider, _provider, _tracker,
+            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), new InMemoryStreamProvider(_provider), _tracker,
             NullLogger<ResponseOrchestrator>.Instance);
     }
 

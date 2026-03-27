@@ -231,7 +231,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 ```
 
 - **Inline items** are converted to their corresponding `OutputItem` subtypes with a generated type-specific ID and `status: completed`. For example, a `{"type":"message","role":"user","content":"Hi"}` becomes an `OutputItemMessage` with a `msg_` prefixed ID, a function call output becomes `OutputItemFunctionCallOutput` with an `fco_` prefixed ID, and so on for all 24+ supported item types.
-- **Item references** (e.g., `{"type":"item_reference","id":"msg_123"}`) are batch-resolved via `IResponsesProvider.GetItemsAsync`.
+- **Item references** (e.g., `{"type":"item_reference","id":"msg_123"}`) are batch-resolved via `ResponsesProvider.GetItemsAsync`.
 - **Input order is preserved** — items are returned in the same order as in the request.
 - **Lazy singleton** — the result is computed once on first call and cached. Subsequent calls return the same instance. Thread-safe.
 
@@ -245,7 +245,7 @@ var history = await context.GetHistoryAsync(ct);
 // Empty if no previous_response_id or conversation context
 ```
 
-- **Two-step resolution**: First resolves history item IDs via `IResponsesProvider.GetHistoryItemIdsAsync`, then fetches actual items via `GetItemsAsync`.
+- **Two-step resolution**: First resolves history item IDs via `ResponsesProvider.GetHistoryItemIdsAsync`, then fetches actual items via `GetItemsAsync`.
 - **Ascending order** — items are returned oldest-first (ascending by position).
 - **Configurable limit** — controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: 100).
 - **Lazy singleton** — computed once and cached, like `GetInputItemsAsync`.
@@ -917,27 +917,29 @@ The server delegates state persistence, event streaming, and cancellation to thr
 
 #### Provider Interface Split
 
-The provider contract is split into **three focused interfaces**, each with a single responsibility:
+The provider contract is split into **three focused abstract classes**, each with a single responsibility:
 
-| Interface | Responsibility | Methods |
+| Abstract class | Responsibility | Methods |
 |---|---|---|
-| `IResponsesProvider` | State persistence (CRUD for responses, input items, history) | `CreateResponseAsync`, `GetResponseAsync`, `UpdateResponseAsync`, `DeleteResponseAsync`, `GetInputItemsAsync`, `GetItemsAsync`, `GetHistoryItemIdsAsync` |
-| `IResponsesCancellationSignalProvider` | Cancellation signal coordination | `CancelResponseAsync`, `GetResponseCancellationTokenAsync` |
-| `IResponsesStreamProvider` | SSE event streaming (publish/subscribe) | `CreateEventPublisherAsync`, `SubscribeToEventsAsync` |
+| `ResponsesProvider` | State persistence (CRUD for responses, input items, history) | `CreateResponseAsync`, `GetResponseAsync`, `UpdateResponseAsync`, `DeleteResponseAsync`, `GetInputItemsAsync`, `GetItemsAsync`, `GetHistoryItemIdsAsync` |
+| `ResponsesCancellationSignalProvider` | Cancellation signal coordination | `CancelResponseAsync`, `GetResponseCancellationTokenAsync` |
+| `ResponsesStreamProvider` | SSE event streaming (publish/subscribe) | `CreateEventPublisherAsync`, `SubscribeToEventsAsync` |
 
-The default in-memory provider implements all three interfaces. You can override **any subset** — the library falls back to the in-memory implementation for unregistered interfaces.
+The default in-memory provider extends `ResponsesProvider` and provides companion adapters for cancellation and streaming. You can override **any subset** — the library falls back to the in-memory implementation for unregistered types.
 
 ```csharp
 // Override only state persistence (e.g., use a database)
-services.AddSingleton<IResponsesProvider, MyDatabaseProvider>();
+services.AddSingleton<ResponsesProvider, MyDatabaseProvider>();
 
 // Override only cancellation (e.g., use Redis pub/sub)
-services.AddSingleton<IResponsesCancellationSignalProvider, MyRedisSignalProvider>();
+services.AddSingleton<ResponsesCancellationSignalProvider, MyRedisSignalProvider>();
 
-// Override all three
-services.AddSingleton<IResponsesProvider, MyProvider>();
-services.AddSingleton<IResponsesCancellationSignalProvider, MyProvider>();
-services.AddSingleton<IResponsesStreamProvider, MyProvider>();
+// Override state with companion adapters for cancellation and streaming
+services.AddSingleton<ResponsesProvider, MyProvider>();
+services.AddSingleton<ResponsesCancellationSignalProvider>(sp =>
+    sp.GetRequiredService<MyProvider>().AsCancellationProvider());
+services.AddSingleton<ResponsesStreamProvider>(sp =>
+    sp.GetRequiredService<MyProvider>().AsStreamProvider());
 ```
 
 For multi-instance or durable scenarios, see [Library Behavioural Specification — Persistence Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#persistence-contract) for the abstract provider contract, and [.NET Design — Provider Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md) for implementation details.
@@ -949,7 +951,7 @@ For multi-instance or durable scenarios, see [Library Behavioural Specification 
 | Option | Type | Default | Description |
 |---|---|---|---|
 | `DefaultModel` | `string?` | `null` | Default model when `model` is omitted from `CreateResponse`. Falls back to `""` if null |
-| `DefaultFetchHistoryCount` | `int` | `100` | Maximum number of history items to resolve when `GetHistoryAsync()` is called. Controls the `limit` parameter passed to `IResponsesProvider.GetHistoryItemIdsAsync` |
+| `DefaultFetchHistoryCount` | `int` | `100` | Maximum number of history items to resolve when `GetHistoryAsync()` is called. Controls the `limit` parameter passed to `ResponsesProvider.GetHistoryItemIdsAsync` |
 
 **Platform environment variables** (read once at startup via `FoundryEnvironment`):
 
@@ -1144,7 +1146,7 @@ builder.Services.Configure<InMemoryProviderOptions>(opts =>
 });
 ```
 
-If you register a custom `IResponsesProvider`, you manage your own retention strategy. `InMemoryProviderOptions` only affects the built-in in-memory provider.
+If you register a custom `ResponsesProvider`, you manage your own retention strategy. `InMemoryProviderOptions` only affects the built-in in-memory provider.
 
 See [Event Stream Replay Availability (B35)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#event-stream-replay-availability-rule-b35) for the protocol-level behaviour. See [.NET Design — Provider Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md) for implementation details.
 

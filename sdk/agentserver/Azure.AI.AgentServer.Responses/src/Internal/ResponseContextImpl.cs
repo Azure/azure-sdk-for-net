@@ -11,11 +11,11 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// Enhanced implementation of <see cref="ResponseContext"/> that resolves
 /// input items and conversation history from the request, using lazy-cached async resolution.
 /// Inline items are converted via <see cref="ItemConversion"/>; item
-/// references are resolved via <see cref="IResponsesProvider.GetItemsAsync"/>.
+/// references are resolved via <see cref="ResponsesProvider.GetItemsAsync"/>.
 /// </summary>
 internal sealed class ResponseContextImpl : ResponseContext
 {
-    private readonly IResponsesProvider _provider;
+    private readonly ResponsesProvider _provider;
     private readonly CreateResponse _request;
     private readonly int _historyLimit;
     private readonly Lazy<Task<IReadOnlyList<OutputItem>>> _inputItems;
@@ -37,7 +37,7 @@ internal sealed class ResponseContextImpl : ResponseContext
     /// <param name="queryParameters">Query parameters from the request, or <c>null</c> for empty.</param>
     public ResponseContextImpl(
         string responseId,
-        IResponsesProvider provider,
+        ResponsesProvider provider,
         CreateResponse request,
         IOptions<ResponsesServerOptions>? options = null,
         BinaryData? rawBody = null,
@@ -75,7 +75,7 @@ internal sealed class ResponseContextImpl : ResponseContext
 
     /// <summary>
     /// Gets the cached history item IDs. Used by the orchestrator to pass IDs
-    /// to <see cref="IResponsesProvider.CreateResponseAsync"/> without duplicating storage.
+    /// to <see cref="ResponsesProvider.CreateResponseAsync"/> without duplicating storage.
     /// </summary>
     internal Task<IReadOnlyList<string>> GetHistoryItemIdsAsync()
         => _historyItemIds.Value;

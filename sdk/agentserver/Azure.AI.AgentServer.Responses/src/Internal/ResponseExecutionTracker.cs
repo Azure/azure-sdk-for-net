@@ -11,7 +11,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <summary>
 /// Singleton service that tracks in-flight and recently-completed response executions.
 /// Provides pipeline context (execution tasks, cancellation, completion tracking).
-/// State persistence and eviction are delegated to <see cref="IResponsesProvider"/>.
+/// State persistence and eviction are delegated to <see cref="ResponsesProvider"/>.
 /// Implements <see cref="IHostedService"/> for graceful shutdown.
 /// </summary>
 internal sealed class ResponseExecutionTracker : IHostedService, IDisposable

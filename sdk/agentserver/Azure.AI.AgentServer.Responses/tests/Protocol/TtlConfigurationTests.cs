@@ -161,7 +161,7 @@ public class TtlConfigurationTests : IDisposable
     }
 
     // ═══════════════════════════════════════════════════════════════════════
-    // T048: Custom IResponsesProvider — InMemoryProviderOptions has no effect
+    // T048: Custom ResponsesProvider — InMemoryProviderOptions has no effect
     // ═══════════════════════════════════════════════════════════════════════
 
     [Test]
@@ -175,9 +175,9 @@ public class TtlConfigurationTests : IDisposable
             configureOptions: opts => { },
             configureTestServices: services =>
             {
-                services.AddSingleton<IResponsesProvider>(spy);
-                services.AddSingleton<IResponsesCancellationSignalProvider>(spy);
-                services.AddSingleton<IResponsesStreamProvider>(spy);
+                services.AddSingleton<ResponsesProvider>(spy);
+                services.AddSingleton<ResponsesCancellationSignalProvider>(spy.AsCancellationProvider());
+                services.AddSingleton<ResponsesStreamProvider>(spy.AsStreamProvider());
                 services.Configure<InMemoryProviderOptions>(opts =>
                 {
                     opts.EventStreamTtl = TimeSpan.FromMilliseconds(1);
@@ -289,23 +289,23 @@ public class TtlConfigurationTests : IDisposable
     }
 
     /// <summary>
-    /// A custom IResponsesProvider that never evicts — proves InMemoryProviderOptions has no effect.
+    /// A custom ResponsesProvider that never evicts — proves InMemoryProviderOptions has no effect.
     /// </summary>
-    private sealed class NoEvictionProvider : IResponsesProvider, IResponsesCancellationSignalProvider, IResponsesStreamProvider
+    private sealed class NoEvictionProvider : ResponsesProvider
     {
         private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
         private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _cts = new();
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
         {
             Calls.Add("CreateResponseAsync");
             _responses[request.Response.Id] = request.Response;
             return Task.CompletedTask;
         }
 
-        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -315,14 +315,14 @@ public class TtlConfigurationTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default)
+        public override Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;
             return Task.CompletedTask;
         }
 
-        public Task DeleteResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task DeleteResponseAsync(string responseId, CancellationToken ct = default)
         {
             Calls.Add("DeleteResponseAsync");
             if (!_responses.TryRemove(responseId, out _))
@@ -330,14 +330,35 @@ public class TtlConfigurationTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
+        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
             => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
 
-        public Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken ct = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
 
-        public Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken ct = default)
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<string>());
+
+        // --- Adapter factories for DI registration ---
+
+        internal ResponsesCancellationSignalProvider AsCancellationProvider() => new CancellationAdapter(this);
+        internal ResponsesStreamProvider AsStreamProvider() => new StreamAdapter(this);
+
+        private sealed class CancellationAdapter(NoEvictionProvider provider) : ResponsesCancellationSignalProvider
+        {
+            public override Task CancelResponseAsync(string responseId, CancellationToken ct = default)
+                => provider.CancelResponseAsync(responseId, ct);
+            public override Task<CancellationToken> GetResponseCancellationTokenAsync(string responseId, CancellationToken ct = default)
+                => provider.GetResponseCancellationTokenAsync(responseId, ct);
+        }
+
+        private sealed class StreamAdapter(NoEvictionProvider provider) : ResponsesStreamProvider
+        {
+            public override Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, CancellationToken ct = default)
+                => provider.CreateEventPublisherAsync(responseId, ct);
+            public override Task<IAsyncDisposable> SubscribeToEventsAsync(string responseId, IAsyncObserver<ResponseStreamEvent> observer, long? cursor = null, CancellationToken ct = default)
+                => provider.SubscribeToEventsAsync(responseId, observer, cursor, ct);
+        }
 
         public Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(
             string responseId, CancellationToken ct = default)

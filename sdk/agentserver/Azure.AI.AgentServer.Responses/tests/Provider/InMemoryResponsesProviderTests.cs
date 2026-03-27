@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Provider;
 
 /// <summary>
 /// Unit tests for <see cref="InMemoryResponsesProvider"/> — the default
-/// in-memory implementation of <see cref="IResponsesProvider"/>.
+/// in-memory implementation of <see cref="ResponsesProvider"/>.
 /// </summary>
 public class InMemoryResponsesProviderTests : IDisposable
 {

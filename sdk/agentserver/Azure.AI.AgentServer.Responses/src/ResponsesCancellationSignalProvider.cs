@@ -5,7 +5,7 @@ namespace Azure.AI.AgentServer.Responses;
 
 /// <summary>
 /// Provides cancellation signalling for in-flight responses.
-/// Implement this interface to back cancellation with a custom signalling mechanism
+/// Extend this class to back cancellation with a custom signalling mechanism
 /// (e.g., distributed pub/sub, Redis, message queue).
 /// </summary>
 /// <remarks>
@@ -15,7 +15,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// <c>AddResponsesServer()</c>.
 /// </para>
 /// </remarks>
-public interface IResponsesCancellationSignalProvider
+public abstract class ResponsesCancellationSignalProvider
 {
     /// <summary>
     /// Signals cancellation for an in-flight response.
@@ -26,7 +26,7 @@ public interface IResponsesCancellationSignalProvider
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <exception cref="ResourceNotFoundException">Thrown if the response does not exist.</exception>
     /// <exception cref="BadRequestException">Thrown if the response is already in a terminal state.</exception>
-    Task CancelResponseAsync(
+    public abstract Task CancelResponseAsync(
         string responseId,
         CancellationToken cancellationToken = default);
 
@@ -37,7 +37,7 @@ public interface IResponsesCancellationSignalProvider
     /// <param name="responseId">The unique response identifier.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>A cancellation token linked to the response's cancellation signal.</returns>
-    Task<CancellationToken> GetResponseCancellationTokenAsync(
+    public abstract Task<CancellationToken> GetResponseCancellationTokenAsync(
         string responseId,
         CancellationToken cancellationToken = default);
 }

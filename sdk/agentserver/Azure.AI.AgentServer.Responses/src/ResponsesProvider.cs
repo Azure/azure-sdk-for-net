@@ -11,13 +11,13 @@ namespace Azure.AI.AgentServer.Responses;
 /// <remarks>
 /// <para>
 /// The SDK delegates all response state operations to the registered
-/// <see cref="IResponsesProvider"/>. Consumers implement this interface
+/// <see cref="ResponsesProvider"/>. Consumers extend this class
 /// to support custom backends (e.g., Redis, SQL) for
 /// multi-instance deployments.
 /// </para>
 /// <para>
-/// For event streaming, implement <see cref="IResponsesStreamProvider"/>.
-/// For cancellation signalling, implement <see cref="IResponsesCancellationSignalProvider"/>.
+/// For event streaming, extend <see cref="ResponsesStreamProvider"/>.
+/// For cancellation signalling, extend <see cref="ResponsesCancellationSignalProvider"/>.
 /// </para>
 /// <para>
 /// When no custom implementation is registered, the SDK provides an
@@ -25,7 +25,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// <c>AddResponsesServer()</c>.
 /// </para>
 /// </remarks>
-public interface IResponsesProvider
+public abstract class ResponsesProvider
 {
     // --- State ---
 
@@ -34,7 +34,7 @@ public interface IResponsesProvider
     /// </summary>
     /// <param name="request">The create-response request containing the response snapshot, input items, and history item IDs.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
-    Task CreateResponseAsync(
+    public abstract Task CreateResponseAsync(
         CreateResponseRequest request,
         CancellationToken cancellationToken = default);
 
@@ -45,7 +45,7 @@ public interface IResponsesProvider
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>The response.</returns>
     /// <exception cref="ResourceNotFoundException">Thrown when the response does not exist.</exception>
-    Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default);
+    public abstract Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Persists an updated response snapshot. Handles all state transitions
@@ -53,7 +53,7 @@ public interface IResponsesProvider
     /// </summary>
     /// <param name="response">The updated response snapshot.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
-    Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default);
+    public abstract Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a response envelope by its identifier.
@@ -61,7 +61,7 @@ public interface IResponsesProvider
     /// <param name="responseId">The unique response identifier.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <exception cref="ResourceNotFoundException">Thrown when the response does not exist.</exception>
-    Task DeleteResponseAsync(string responseId, CancellationToken cancellationToken = default);
+    public abstract Task DeleteResponseAsync(string responseId, CancellationToken cancellationToken = default);
 
     // --- Input Items ---
 
@@ -77,7 +77,7 @@ public interface IResponsesProvider
     /// <returns>A paged result of output items.</returns>
     /// <exception cref="ResourceNotFoundException">Thrown when the response was never created.</exception>
     /// <exception cref="BadRequestException">Thrown when the response has been deleted.</exception>
-    Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+    public abstract Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
         string responseId,
         int limit = 20,
         bool ascending = false,
@@ -92,7 +92,7 @@ public interface IResponsesProvider
     /// <param name="itemIds">The item identifiers to look up.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>Output items matching the requested IDs (null for missing).</returns>
-    Task<IEnumerable<OutputItem?>> GetItemsAsync(
+    public abstract Task<IEnumerable<OutputItem?>> GetItemsAsync(
         IEnumerable<string> itemIds,
         CancellationToken cancellationToken = default);
 
@@ -105,7 +105,7 @@ public interface IResponsesProvider
     /// <param name="limit">Maximum number of history item IDs to return.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>An enumerable of history item IDs.</returns>
-    Task<IEnumerable<string>> GetHistoryItemIdsAsync(
+    public abstract Task<IEnumerable<string>> GetHistoryItemIdsAsync(
         string? previousResponseId,
         string? conversationId,
         int limit,

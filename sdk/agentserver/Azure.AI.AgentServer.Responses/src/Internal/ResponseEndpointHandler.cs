@@ -21,9 +21,9 @@ internal sealed class ResponseEndpointHandler
     private readonly ResponsesActivitySource _activitySource;
     private readonly ResponseOrchestrator _orchestrator;
     private readonly ResponseExecutionTracker _tracker;
-    private readonly IResponsesProvider _provider;
-    private readonly IResponsesCancellationSignalProvider _cancellationProvider;
-    private readonly IResponsesStreamProvider _streamProvider;
+    private readonly ResponsesProvider _provider;
+    private readonly ResponsesCancellationSignalProvider _cancellationProvider;
+    private readonly ResponsesStreamProvider _streamProvider;
     private readonly IOptions<ResponsesServerOptions> _options;
     private readonly ILogger<ResponseEndpointHandler> _logger;
     private readonly IPayloadValidator _validator;
@@ -35,9 +35,9 @@ internal sealed class ResponseEndpointHandler
         ResponsesActivitySource activitySource,
         ResponseOrchestrator orchestrator,
         ResponseExecutionTracker tracker,
-        IResponsesProvider provider,
-        IResponsesCancellationSignalProvider cancellationProvider,
-        IResponsesStreamProvider streamProvider,
+        ResponsesProvider provider,
+        ResponsesCancellationSignalProvider cancellationProvider,
+        ResponsesStreamProvider streamProvider,
         IOptions<ResponsesServerOptions> options,
         ILogger<ResponseEndpointHandler> logger,
         IPayloadValidator validator)
@@ -259,7 +259,7 @@ internal sealed class ResponseEndpointHandler
             }
 
             // In-flight and passed guards OR not-in-flight and exists in provider —
-            // delegate to the stream provider. A pluggable IResponsesStreamProvider
+            // delegate to the stream provider. A pluggable ResponsesStreamProvider
             // backed by persistent storage (Redis, Kafka, etc.) can replay events
             // even after the in-flight execution is gone.
 

@@ -13,7 +13,7 @@ HTTP Request → ResponseEndpointHandler → ResponseOrchestrator
   → PayloadValidator (S-002 enforcement)
   → ResponseHandler.HandleAsync()
   → ProcessEventsAsync() loop
-  → IResponsesProvider persistence
+  → ResponsesProvider persistence
   → IAsyncObserver<ResponseStreamEvent> publishing
   → SseWriter / JSON serialization
 ```

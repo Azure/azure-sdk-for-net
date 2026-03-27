@@ -15,7 +15,7 @@ public class ResponseContextImplTests
 {
     private ResponseContextImpl CreateContext(
         CreateResponse request,
-        IResponsesProvider? provider = null,
+        ResponsesProvider? provider = null,
         IOptions<ResponsesServerOptions>? options = null)
     {
         return new ResponseContextImpl(
@@ -46,7 +46,7 @@ public class ResponseContextImplTests
     }
 
     // ═══════════════════════════════════════════════════════════════════════
-    // T045: Resolves ItemReferenceParam via IResponsesProvider.GetItemsAsync
+    // T045: Resolves ItemReferenceParam via ResponsesProvider.GetItemsAsync
     // ═══════════════════════════════════════════════════════════════════════
 
     [Test]
@@ -293,7 +293,7 @@ public class ResponseContextImplTests
     // Stub/Recording Providers
     // ═══════════════════════════════════════════════════════════════════════
 
-    private class StubProvider : IResponsesProvider
+    private class StubProvider : ResponsesProvider
     {
         private readonly Dictionary<string, OutputItem> _items = new();
         private readonly Dictionary<string, string[]> _historyItemIds = new();
@@ -303,28 +303,28 @@ public class ResponseContextImplTests
         public void SetHistoryItemIds(string previousResponseId, string[] ids)
             => _historyItemIds[previousResponseId] = ids;
 
-        public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
             => Task.CompletedTask;
 
-        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
 
-        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default)
+        public override Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default)
             => Task.CompletedTask;
 
-        public Task DeleteResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task DeleteResponseAsync(string responseId, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
 
-        public Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
+        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
             => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
 
-        public virtual Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken ct = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken ct = default)
         {
             var results = itemIds.Select(id => _items.TryGetValue(id, out var item) ? item : null);
             return Task.FromResult(results);
         }
 
-        public virtual Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken ct = default)
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken ct = default)
         {
             if (previousResponseId is not null && _historyItemIds.TryGetValue(previousResponseId, out var ids))
             {

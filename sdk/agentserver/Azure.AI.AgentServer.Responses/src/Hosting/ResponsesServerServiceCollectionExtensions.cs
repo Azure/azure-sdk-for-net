@@ -62,17 +62,19 @@ public static class ResponsesServerServiceCollectionExtensions
         services.TryAddSingleton<ResponsesActivitySource>();
 
         // InMemoryResponsesProvider is always registered: it backs
-        // IResponsesCancellationSignalProvider and IResponsesStreamProvider even when
-        // FoundryStorageProvider handles IResponsesProvider in hosted environments.
+        // ResponsesCancellationSignalProvider and ResponsesStreamProvider even when
+        // FoundryStorageProvider handles ResponsesProvider in hosted environments.
         services.TryAddSingleton<InMemoryResponsesProvider>();
-        services.TryAddSingleton<IResponsesCancellationSignalProvider>(sp => sp.GetRequiredService<InMemoryResponsesProvider>());
-        services.TryAddSingleton<IResponsesStreamProvider>(sp => sp.GetRequiredService<InMemoryResponsesProvider>());
+        services.TryAddSingleton<ResponsesCancellationSignalProvider>(sp =>
+            new InMemoryCancellationSignalProvider(sp.GetRequiredService<InMemoryResponsesProvider>()));
+        services.TryAddSingleton<ResponsesStreamProvider>(sp =>
+            new InMemoryStreamProvider(sp.GetRequiredService<InMemoryResponsesProvider>()));
 
         // Auto-detect hosted environment: if FOUNDRY_PROJECT_ENDPOINT is set,
         // use FoundryStorageProvider for persistence; otherwise use in-memory.
         if (!string.IsNullOrWhiteSpace(FoundryEnvironment.ProjectEndpoint))
         {
-            services.TryAddSingleton<IResponsesProvider, FoundryStorageProvider>();
+            services.TryAddSingleton<ResponsesProvider, FoundryStorageProvider>();
 
             services.TryAddSingleton<TokenCredential>(_ => new DefaultAzureCredential());
 
@@ -85,7 +87,7 @@ public static class ResponsesServerServiceCollectionExtensions
         }
         else
         {
-            services.TryAddSingleton<IResponsesProvider>(sp => sp.GetRequiredService<InMemoryResponsesProvider>());
+            services.TryAddSingleton<ResponsesProvider>(sp => sp.GetRequiredService<InMemoryResponsesProvider>());
         }
 
         services.AddSingleton<ResponseExecutionTracker>();

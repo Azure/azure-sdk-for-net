@@ -58,7 +58,7 @@ The classification relies on three separate `CancellationTokenSource` instances 
 
 | Source | Set By | Flag |
 |--------|--------|------|
-| Cancel CTS | `IResponsesProvider.CancelResponseAsync()` → `GetResponseCancellationTokenAsync()` | `CancelRequested` |
+| Cancel CTS | `ResponsesProvider.CancelResponseAsync()` → `GetResponseCancellationTokenAsync()` | `CancelRequested` |
 | HTTP context `RequestAborted` | ASP.NET Core transport layer | `ClientDisconnected` |
 | `IHostApplicationLifetime.ApplicationStopping` | .NET host | `ShutdownRequested` |
 
