@@ -1,6 +1,6 @@
 # Azure AI Agent Server Core library for .NET
 
-Azure.AI.AgentServer.Core is a shared foundation for Azure AI Agent Server packages. It provides a library-owned ASP.NET Core host with built-in OpenTelemetry, health checks, graceful shutdown, and multi-protocol composition — so you can go from `dotnet add package` to a running agent server in minutes.
+Azure.AI.AgentServer.Core is a shared hosting foundation for Azure AI Agent Server packages. It provides a library-owned ASP.NET Core host with built-in OpenTelemetry, health checks, graceful shutdown, and multi-protocol composition — so you can go from `dotnet add package` to a running agent server in minutes.
 
 [Source code][source] | [Package (NuGet)][nuget] | [Product documentation][product_doc]
 
@@ -21,28 +21,32 @@ dotnet add package Azure.AI.AgentServer.Core --prerelease
 
 ### Start a server (recommended)
 
-Use the builder pattern to compose protocols on your server. You'll need a protocol package such as `Azure.AI.AgentServer.Responses`:
+Use the builder pattern to create a server. Protocol packages provide extension methods (`AddResponses<T>()`, `AddInvocations<T>()`) to register their endpoints:
 
-```C# Snippet:Hosting_ReadMe_Tier2
+```C# Snippet:Core_ReadMe_CreateBuilder
 var builder = AgentHost.CreateBuilder();
-builder.AddResponses<MyHandler>();
+
+// Register protocol endpoints (protocol packages provide extension methods).
+builder.RegisterProtocol("MyProtocol", endpoints =>
+{
+    endpoints.MapGet("/hello", () => "Hello from the agent server!");
+});
+
 var app = builder.Build();
 app.Run();
 ```
 
-This starts a Kestrel server with OpenTelemetry, a `/healthy` health endpoint, server user-agent headers, and your handler wired up to the Responses protocol.
-
-For even simpler one-line startup, protocol packages provide their own `Run` methods (e.g., `ResponsesServer.Run<MyHandler>()`).
+This starts a Kestrel server with OpenTelemetry, a `/healthy` health endpoint, and the `x-platform-server` identity header.
 
 ## Key concepts
 
 ### AgentHost
 
-The static entry point. `AgentHost.CreateBuilder()` returns an `AgentHostBuilder` for composing protocols and configuring the server. For one-line startup, protocol packages provide their own convenience methods (e.g., `ResponsesServer.Run<T>()`).
+The static entry point. `AgentHost.CreateBuilder()` returns an `AgentHostBuilder` for composing protocols and configuring the server.
 
 ### AgentHostBuilder
 
-Configures the underlying ASP.NET Core host with sensible defaults: Kestrel on the `PORT` environment variable (or 8088), OpenTelemetry traces and metrics, a `/healthy` health endpoint, and `x-platform-server` user-agent header via `ServerUserAgentMiddleware`. Use `.AddResponses<T>()` and `.AddInvocations<T>()` to compose protocol packages on a single host — each protocol registers its identity segment with the `ServerUserAgentRegistry`.
+Configures the underlying ASP.NET Core host with sensible defaults: Kestrel on the `PORT` environment variable (or 8088), OpenTelemetry traces and metrics, a `/healthy` health endpoint, and `x-platform-server` user-agent header via `ServerUserAgentMiddleware`. Protocol packages use `RegisterProtocol()` to add their endpoints — each protocol registers its identity segment with the `ServerUserAgentRegistry`.
 
 ### AgentHostApp
 
@@ -69,7 +73,7 @@ You can familiarise yourself with different APIs using [Samples](https://github.
 ### Common errors
 
 - **Port already in use**: The server defaults to port 8088 (or the `PORT` environment variable). If the port is occupied, set `PORT` to another value or configure Kestrel directly via the builder.
-- **No protocol registered**: If you use `AgentHost.CreateBuilder()` without calling a protocol registration method (e.g., `builder.AddResponses<T>()`), the server will start but will have no protocol endpoints mapped.
+- **No protocol registered**: If you use `AgentHost.CreateBuilder()` without calling `RegisterProtocol()` (or a protocol extension method), the server will start but will have no protocol endpoints mapped.
 
 ### Logging
 

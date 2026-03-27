@@ -50,6 +50,7 @@ namespace Azure.AI.AgentServer.Core
         public static string? AppInsightsConnectionString { get { throw null; } }
         public static string? OtlpEndpoint { get { throw null; } }
         public static int Port { get { throw null; } }
+        public static string? ProjectArmId { get { throw null; } }
         public static string? ProjectEndpoint { get { throw null; } }
         public static string? SessionId { get { throw null; } }
         public static System.TimeSpan SseKeepAliveInterval { get { throw null; } }

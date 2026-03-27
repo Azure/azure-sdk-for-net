@@ -31,16 +31,6 @@
     <Compile Remove="CustomMiddlewareTests.cs" />
     <Compile Remove="CustomShutdownTests.cs" />
     <Compile Remove="MultiProtocolCompositionTests.cs" />
-    <Compile Remove="Snippets\Sample3Snippets.cs" />
-  </ItemGroup>
-  <!-- Exclude tests requiring Responses when it is not present -->
-  <ItemGroup Condition="!Exists('..\..\Azure.AI.AgentServer.Responses\src\Azure.AI.AgentServer.Responses.csproj')">
-    <Compile Remove="Snippets\ReadMeSnippets.cs" />
-    <Compile Remove="Snippets\Sample1Snippets.cs" />
-  </ItemGroup>
-  <!-- Exclude tests requiring both packages when either is not present -->
-  <ItemGroup Condition="!Exists('..\..\Azure.AI.AgentServer.Invocations\src\Azure.AI.AgentServer.Invocations.csproj') OR !Exists('..\..\Azure.AI.AgentServer.Responses\src\Azure.AI.AgentServer.Responses.csproj')">
-    <Compile Remove="Snippets\Sample2Snippets.cs" />
   </ItemGroup>
   <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <Compile Remove="**\*.cs" />

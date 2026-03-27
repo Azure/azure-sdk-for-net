@@ -2,10 +2,13 @@
 
 ## 1.0.0-beta.21 (Unreleased)
 
+### Breaking Changes
+
+- Package renamed from `Azure.AI.AgentServer.Hosting` to `Azure.AI.AgentServer.Core`.
+- Namespace changed from `Azure.AI.AgentServer.Hosting` to `Azure.AI.AgentServer.Core`.
+
 ### Features Added
 
-- Renamed package from `Azure.AI.AgentServer.Hosting` to `Azure.AI.AgentServer.Core`.
-- Namespace changed from `Azure.AI.AgentServer.Hosting` to `Azure.AI.AgentServer.Core`.
 - Library-owned hosting foundation via `AgentHostBuilder` (composable builder pattern).
 - OpenTelemetry integration with `Azure.Monitor.OpenTelemetry.AspNetCore` and OTLP exporter support.
 - Health endpoint at `/healthy` for liveness and readiness probes.

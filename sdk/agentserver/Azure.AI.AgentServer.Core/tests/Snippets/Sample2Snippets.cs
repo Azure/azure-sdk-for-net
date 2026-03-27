@@ -1,40 +1,43 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Core;
-using Azure.AI.AgentServer.Invocations;
-using Azure.AI.AgentServer.Responses;
-using Azure.AI.AgentServer.Responses.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Core Sample2_MultiProtocol.md. Compiled to prevent rot.
+    /// Code snippets backing Sample2_Configuration.md. Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
     public class Sample2Snippets
     {
         [Test]
-        public void ComposeProtocols()
+        public void TracingAndShutdown()
         {
-            #region Snippet:Hosting_Sample2_Compose
+            #region Snippet:Core_Sample2_TracingAndShutdown
 
             var builder = AgentHost.CreateBuilder();
 
-            // Register the Responses protocol for streaming chat.
-            builder.AddResponses<ChatHandler>();
-
-            // Register the Invocations protocol for ticket submission.
-            builder.AddInvocations<TicketHandler>();
-
-            // Add a custom tracing source for your business logic.
+            // Add a custom OpenTelemetry tracing source.
             builder.ConfigureTracing(tracing =>
             {
-                tracing.AddSource("CustomerSupport.BusinessLogic");
+                tracing.AddSource("MyAgent.BusinessLogic");
+            });
+
+            // Set a custom shutdown timeout (default is 30s).
+            builder.ConfigureShutdown(TimeSpan.FromSeconds(15));
+
+            // Register a protocol endpoint.
+            builder.RegisterProtocol("MyProtocol", endpoints =>
+            {
+                endpoints.MapGet("/ping", () => "pong");
             });
 
             var app = builder.Build();
@@ -44,68 +47,66 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         }
 
         [Test]
-        public void Implement_Handlers()
+        public void HealthChecks()
         {
-            var chat = new ChatHandler();
-            Assert.That(chat, Is.Not.Null);
-            var ticket = new TicketHandler();
-            Assert.That(ticket, Is.Not.Null);
+            #region Snippet:Core_Sample2_HealthChecks
+
+            var builder = AgentHost.CreateBuilder();
+
+            // Add a custom health check alongside the default liveness probe.
+            builder.ConfigureHealth(health =>
+            {
+                health.AddCheck("database", () =>
+                    Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy("DB reachable"));
+            });
+
+            builder.RegisterProtocol("MyProtocol", endpoints =>
+            {
+                endpoints.MapGet("/ping", () => "pong");
+            });
+
+            var app = builder.Build();
+            app.Run();
+
+            #endregion
         }
 
-        #region Snippet:Hosting_Sample2_ChatHandler
-
-        public class ChatHandler : ResponseHandler
+        [Test]
+        public void EscapeHatch()
         {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
-                ResponseContext context,
-                [EnumeratorCancellation] CancellationToken cancellationToken)
+            #region Snippet:Core_Sample2_EscapeHatch
+
+            var builder = AgentHost.CreateBuilder();
+
+            // Access the underlying WebApplicationBuilder for CORS, auth, etc.
+            builder.WebApplicationBuilder.Services.AddCors(cors =>
             {
-                var stream = new ResponseEventStream(context, request);
-                yield return stream.EmitCreated();
-                yield return stream.EmitInProgress();
-
-                var message = stream.AddOutputItemMessage();
-                yield return message.EmitAdded();
-
-                var text = message.AddTextContent();
-                yield return text.EmitAdded();
-
-                var reply = "Hello! I'm the support agent. How can I help you today?";
-                yield return text.EmitDelta(reply);
-                yield return text.EmitDone(reply);
-
-                yield return message.EmitContentDone(text);
-                yield return message.EmitDone();
-                yield return stream.EmitCompleted();
-            }
-        }
-
-        #endregion
-
-        #region Snippet:Hosting_Sample2_TicketHandler
-
-        public class TicketHandler : InvocationHandler
-        {
-            public override async Task HandleAsync(
-                HttpRequest request,
-                HttpResponse response,
-                InvocationContext context,
-                CancellationToken cancellationToken)
-            {
-                var ticket = await request.ReadFromJsonAsync<TicketInput>(cancellationToken);
-
-                await response.WriteAsJsonAsync(new
+                cors.AddDefaultPolicy(policy =>
                 {
-                    ticket_id = context.InvocationId,
-                    subject = ticket?.Subject,
-                    status = "created"
-                }, cancellationToken);
-            }
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
+
+            // Register services on the builder's DI container.
+            builder.Services.AddSingleton<MyService>();
+
+            // Read configuration values.
+            var setting = builder.Configuration["MySetting"];
+
+            builder.RegisterProtocol("MyProtocol", endpoints =>
+            {
+                endpoints.MapGet("/ping", () => $"pong: {setting}");
+            });
+
+            var app = builder.Build();
+            app.Run();
+
+            #endregion
         }
 
-        public record TicketInput(string Subject, string Description);
-
-        #endregion
+        // Supporting type for the escape hatch snippet.
+        public class MyService { }
     }
 }

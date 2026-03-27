@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Core;
-using Azure.AI.AgentServer.Responses;
-using Azure.AI.AgentServer.Responses.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests.Snippets
@@ -17,29 +17,22 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
     public class ReadMeSnippets
     {
         [Test]
-        public void Tier2_Builder()
+        public void CreateBuilder()
         {
-            #region Snippet:Hosting_ReadMe_Tier2
+            #region Snippet:Core_ReadMe_CreateBuilder
 
             var builder = AgentHost.CreateBuilder();
-            builder.AddResponses<MyHandler>();
+
+            // Register protocol endpoints (protocol packages provide extension methods).
+            builder.RegisterProtocol("MyProtocol", endpoints =>
+            {
+                endpoints.MapGet("/hello", () => "Hello from the agent server!");
+            });
+
             var app = builder.Build();
             app.Run();
 
             #endregion
-        }
-
-        // Minimal handler for snippet compilation.
-        private class MyHandler : ResponseHandler
-        {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
-                ResponseContext context,
-                [EnumeratorCancellation] CancellationToken cancellationToken)
-            {
-                await Task.CompletedTask;
-                yield break;
-            }
         }
     }
 }
