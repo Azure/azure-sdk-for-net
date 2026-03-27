@@ -13,9 +13,9 @@ using GenFactory = Azure.ResourceManager.ContainerRegistry.ArmContainerRegistryM
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    // Backward-compatibility shim. Delegates to the generated factory in
-    // <c>Azure.ResourceManager.ContainerRegistry.ArmContainerRegistryModelFactory</c>.
-    // All methods are hidden from IntelliSense. 
+    /// <summary> Backward-compatibility shim. Delegates to the generated factory in
+    /// <c>Azure.ResourceManager.ContainerRegistry.ArmContainerRegistryModelFactory</c>.
+    /// All methods are hidden from IntelliSense. </summary>
     public static partial class ArmContainerRegistryModelFactory
     {
         /// <summary> Backward compatibility. </summary>
