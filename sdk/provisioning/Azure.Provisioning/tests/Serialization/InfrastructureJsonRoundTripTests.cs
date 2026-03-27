@@ -452,7 +452,9 @@ public class InfrastructureJsonRoundTripTests
         storage.BicepMetadata.Description = "Production storage account";
         storage.BicepMetadata.BatchSize = 3;
         storage.BicepMetadata.OnlyIfNotExists = true;
-        storage.BicepMetadata.Condition = new ProvisioningParameter("deployStorage", typeof(bool)) { Value = true };
+        var deployStorage = new ProvisioningParameter("deployStorage", typeof(bool)) { Value = true };
+        storage.BicepMetadata.Condition = deployStorage;
+        infra.Add(deployStorage);
         infra.Add(storage);
 
         SerializationTestHelpers.AssertJsonRoundTrip(infra);

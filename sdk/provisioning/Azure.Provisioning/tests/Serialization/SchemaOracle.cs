@@ -145,7 +145,8 @@ internal static class SchemaOracle
 
     /// <summary>
     /// Forward-compat expression kinds produced by the compiler but not yet in the spec.
-    /// These are kept so we don't reject valid compiled output.
+    /// The spec uses different kind names (e.g. "binary-operation" vs "binary")
+    /// and some kinds are not yet in the spec at all.
     /// </summary>
     public static readonly HashSet<string> ForwardCompatExpressionKinds = new()
     {

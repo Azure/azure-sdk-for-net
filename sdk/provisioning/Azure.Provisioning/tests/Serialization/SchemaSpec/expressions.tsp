@@ -72,6 +72,59 @@ model ContextualVariableExpression {
 }
 
 // ──────────────────────────────────────────────
+// Operators
+// ──────────────────────────────────────────────
+
+/** Binary operators supported in Bicep expressions. */
+union BinaryOperator {
+  modulo: "%",
+  multiply: "*",
+  add: "+",
+  subtract: "-",
+  divide: "/",
+  lessThan: "<",
+  lessThanOrEqual: "<=",
+  equal: "==",
+  notEqual: "!=",
+  regexMatch: "=~",
+  regexNotMatch: "!~",
+  greaterThan: ">",
+  greaterThanOrEqual: ">=",
+  logicalAnd: "&&",
+  logicalOr: "||",
+  coalesce: "??",
+}
+
+/** Unary operators supported in Bicep expressions. */
+union UnaryOperator {
+  not: "!",
+  negate: "-",
+}
+
+/** A binary operator expression (e.g. `a + b`, `a ?? b`, `a && b`). */
+model BinaryOperationExpression {
+  kind: "binary-operation";
+  operator: BinaryOperator;
+  left: ExpressionNode;
+  right: ExpressionNode;
+}
+
+/** A unary operator expression (e.g. `!enabled`, `-count`). */
+model UnaryOperationExpression {
+  kind: "unary-operation";
+  operator: UnaryOperator;
+  argument: ExpressionNode;
+}
+
+/** A ternary conditional expression (e.g. `condition ? whenTrue : whenFalse`). */
+model TernaryOperationExpression {
+  kind: "ternary-operation";
+  condition: ExpressionNode;
+  trueValue: ExpressionNode;
+  falseValue: ExpressionNode;
+}
+
+// ──────────────────────────────────────────────
 // Control flow
 // ──────────────────────────────────────────────
 
@@ -119,6 +172,9 @@ union ExpressionNode {
   "property-access": PropertyAccessExpression,
   "array-access": ArrayAccessExpression,
   "contextual-variable": ContextualVariableExpression,
+  "binary-operation": BinaryOperationExpression,
+  "unary-operation": UnaryOperationExpression,
+  "ternary-operation": TernaryOperationExpression,
   "if-condition": IfConditionExpression,
   "for-expression": ForExpression,
 }

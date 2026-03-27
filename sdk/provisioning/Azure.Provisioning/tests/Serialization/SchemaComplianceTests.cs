@@ -464,6 +464,40 @@ public class SchemaComplianceTests
                 AssertExpressionNode(ifCond, $"{path}.condition");
                 AssertExpressionNode(ifBody, $"{path}.body");
                 break;
+            case "binary":
+                Assert.IsTrue(node.TryGetProperty("operator", out _), $"Binary at {path} missing 'operator'");
+                Assert.IsTrue(node.TryGetProperty("left", out JsonElement binLeft), $"Binary at {path} missing 'left'");
+                Assert.IsTrue(node.TryGetProperty("right", out JsonElement binRight), $"Binary at {path} missing 'right'");
+                AssertExpressionNode(binLeft, $"{path}.left");
+                AssertExpressionNode(binRight, $"{path}.right");
+                break;
+            case "unary":
+                Assert.IsTrue(node.TryGetProperty("operator", out _), $"Unary at {path} missing 'operator'");
+                Assert.IsTrue(node.TryGetProperty("value", out JsonElement unaryVal), $"Unary at {path} missing 'value'");
+                AssertExpressionNode(unaryVal, $"{path}.value");
+                break;
+            case "conditional":
+                Assert.IsTrue(node.TryGetProperty("condition", out JsonElement condCond), $"Conditional at {path} missing 'condition'");
+                Assert.IsTrue(node.TryGetProperty("consequent", out JsonElement condCons), $"Conditional at {path} missing 'consequent'");
+                Assert.IsTrue(node.TryGetProperty("alternate", out JsonElement condAlt), $"Conditional at {path} missing 'alternate'");
+                AssertExpressionNode(condCond, $"{path}.condition");
+                AssertExpressionNode(condCons, $"{path}.consequent");
+                AssertExpressionNode(condAlt, $"{path}.alternate");
+                break;
+            case "interpolated-string":
+                Assert.IsTrue(node.TryGetProperty("segments", out JsonElement segments), $"InterpolatedString at {path} missing 'segments'");
+                foreach (JsonElement seg in segments.EnumerateArray())
+                    AssertExpressionNode(seg, $"{path}.segments[]");
+                break;
+            case "nested-access":
+                Assert.IsTrue(node.TryGetProperty("base", out JsonElement naBase), $"NestedAccess at {path} missing 'base'");
+                Assert.IsTrue(node.TryGetProperty("member", out _), $"NestedAccess at {path} missing 'member'");
+                AssertExpressionNode(naBase, $"{path}.base");
+                break;
+            case "decorator":
+                Assert.IsTrue(node.TryGetProperty("value", out JsonElement decVal), $"Decorator at {path} missing 'value'");
+                AssertExpressionNode(decVal, $"{path}.value");
+                break;
         }
     }
 
