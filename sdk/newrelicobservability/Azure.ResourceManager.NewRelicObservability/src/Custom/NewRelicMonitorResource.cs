@@ -4,22 +4,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.NewRelicObservability.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
     /// <summary>
     /// A Class representing a NewRelicMonitorResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="Azure.Core.ResourceIdentifier"/> you can construct a <see cref="NewRelicMonitorResource"/>
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NewRelicMonitorResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetNewRelicMonitorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="Azure.ResourceManager.Resources.ResourceGroupResource"/> using the GetNewRelicMonitorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNewRelicMonitorResource method.
     /// </summary>
-    // Backward compatibility: The generated Update operation is a long-running operation (LRO),
-    // but the previous SDK exposed convenience overloads that wait for completion and return
-    // Response<NewRelicMonitorResource> directly (without WaitUntil). These overloads are
-    // preserved here to avoid breaking existing callers.
     public partial class NewRelicMonitorResource : ArmResource
     {
         /// <summary>
