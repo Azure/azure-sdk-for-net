@@ -32,7 +32,7 @@ public class BasicSecurityCenterTests
     }
 
     [Test]
-    [Description("https://learn.microsoft.com/en-us/azure/defender-for-cloud/enable-enhanced-security")]
+    [Description("https://learn.microsoft.com/en-us/azure/defender-for-cloud/")]
     public async Task CreateDefenderPricing()
     {
         await using Trycep test = CreateDefenderPricingTest();

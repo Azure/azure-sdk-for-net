@@ -26,7 +26,7 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ### Enable Microsoft Defender for Servers
 
-This example demonstrates how to enable a Defender for Cloud pricing plan on a subscription, based on [Enable enhanced security](https://learn.microsoft.com/en-us/azure/defender-for-cloud/enable-enhanced-security).
+This example demonstrates how to enable a Defender for Cloud pricing plan on a subscription.
 
 ```C# Snippet:SecurityCenterBasic
 Infrastructure infra = new();
