@@ -52,11 +52,11 @@ public class SchemaComplianceTests
         using JsonDocument doc = JsonDocument.Parse(json);
         JsonElement root = doc.RootElement;
 
-        // === Top-level: { "bicepFiles": [...] } ===
-        Assert.IsTrue(root.TryGetProperty("bicepFiles", out JsonElement bicepFiles));
-        Assert.AreEqual(JsonValueKind.Array, bicepFiles.ValueKind);
+        // === Top-level: { "infras": [...] } ===
+        Assert.IsTrue(root.TryGetProperty("infras", out JsonElement infras));
+        Assert.AreEqual(JsonValueKind.Array, infras.ValueKind);
 
-        JsonElement file = bicepFiles[0];
+        JsonElement file = infras[0];
 
         // === File-level: fileName, targetScope ===
         Assert.AreEqual("main.bicep", file.GetProperty("fileName").GetString());
@@ -196,7 +196,7 @@ public class SchemaComplianceTests
         infra.Add(storage);
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = doc.RootElement.GetProperty("bicepFiles")[0];
+        var file = doc.RootElement.GetProperty("infras")[0];
         Assert.IsFalse(file.TryGetProperty("targetScope", out _), "targetScope should be omitted for resourceGroup (default)");
     }
 
@@ -206,7 +206,7 @@ public class SchemaComplianceTests
         Infrastructure infra = new() { TargetScope = DeploymentScope.Subscription };
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = doc.RootElement.GetProperty("bicepFiles")[0];
+        var file = doc.RootElement.GetProperty("infras")[0];
         Assert.AreEqual("subscription", file.GetProperty("targetScope").GetString());
     }
 
@@ -222,7 +222,7 @@ public class SchemaComplianceTests
         infra.Add(param);
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = doc.RootElement.GetProperty("bicepFiles")[0];
+        var file = doc.RootElement.GetProperty("infras")[0];
         var paramNode = file.GetProperty("parameters").GetProperty("myParam");
         if (paramNode.TryGetProperty("decorators", out JsonElement decs))
         {
@@ -282,7 +282,7 @@ public class SchemaComplianceTests
         using JsonDocument doc = JsonDocument.Parse(json);
         JsonElement root = doc.RootElement;
 
-        Assert.IsTrue(root.TryGetProperty("bicepFiles", out JsonElement files), "Missing 'bicepFiles'");
+        Assert.IsTrue(root.TryGetProperty("infras", out JsonElement files), "Missing 'infras'");
         Assert.AreEqual(JsonValueKind.Array, files.ValueKind);
 
         foreach (JsonElement file in files.EnumerateArray())

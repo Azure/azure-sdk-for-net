@@ -53,7 +53,7 @@ public class ModelReaderWriterTests
         string json = jsonData.ToString();
 
         using JsonDocument doc = JsonDocument.Parse(json);
-        Assert.IsTrue(doc.RootElement.TryGetProperty("bicepFiles", out _));
+        Assert.IsTrue(doc.RootElement.TryGetProperty("infras", out _));
     }
 
     [Test]

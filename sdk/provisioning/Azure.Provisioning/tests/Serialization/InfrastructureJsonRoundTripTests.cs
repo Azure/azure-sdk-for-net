@@ -259,7 +259,7 @@ public class InfrastructureJsonRoundTripTests
         using JsonDocument doc = JsonDocument.Parse(json);
         JsonElement root = doc.RootElement;
 
-        Assert.IsTrue(root.TryGetProperty("bicepFiles", out JsonElement files));
+        Assert.IsTrue(root.TryGetProperty("infras", out JsonElement files));
         Assert.AreEqual(JsonValueKind.Array, files.ValueKind);
         Assert.IsTrue(files.GetArrayLength() >= 1);
 

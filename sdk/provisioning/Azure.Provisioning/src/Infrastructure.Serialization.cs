@@ -120,7 +120,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         IDictionary<string, IEnumerable<BicepStatement>> modules = CompileModules(buildOptions);
 
         writer.WriteStartObject();
-        writer.WritePropertyName("bicepFiles");
+        writer.WritePropertyName("infras");
         writer.WriteStartArray();
 
         foreach (KeyValuePair<string, IEnumerable<BicepStatement>> module in modules)
@@ -245,7 +245,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
     {
         List<Infrastructure> modules = new();
 
-        foreach (JsonElement bicepFile in element.GetProperty("bicepFiles").EnumerateArray())
+        foreach (JsonElement bicepFile in element.GetProperty("infras").EnumerateArray())
         {
             string fileName = bicepFile.GetProperty("fileName").GetString()!;
             string moduleName = fileName.EndsWith(".bicep")

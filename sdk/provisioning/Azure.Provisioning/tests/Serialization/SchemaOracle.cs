@@ -108,7 +108,7 @@ internal static class SchemaOracle
         if (!unionMatch.Success) return kinds;
 
         string body = unionMatch.Groups[1].Value;
-        foreach (Match member in Regex.Matches(body, @"(\w+)\s*:\s*(""[^""]+""|\w+)"))
+        foreach (Match member in Regex.Matches(body, @"""?([\w-]+)""?\s*:\s*(""[^""]+""|\w+)"))
         {
             string value = member.Groups[2].Value;
             if (value.StartsWith("\""))

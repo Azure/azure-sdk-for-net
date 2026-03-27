@@ -15,10 +15,10 @@ namespace AzureCDK.Serialization;
 model DecoratorsNode {
   description?: string;
   secure?: true;
-  minValue?: int64;
-  maxValue?: int64;
-  minLength?: int64;
-  maxLength?: int64;
+  minValue?: int64str;
+  maxValue?: int64str;
+  minLength?: int64str;
+  maxLength?: int64str;
   metadata?: Record<ExpressionNode>;
   allowed?: ExpressionNode[];
   discriminator?: string;
@@ -79,7 +79,7 @@ model ResourceDeclarationNode {
   existing: boolean;
 
   /** The resource body. */
-  value: ObjectValue;
+  value: ObjectValue | IfConditionExpression | ForExpression;
 
   decorators?: DecoratorsNode;
 }
@@ -96,7 +96,7 @@ model ModuleDeclarationNode {
   path: string;
 
   /** The module body. */
-  value: ObjectValue;
+  value: ObjectValue | IfConditionExpression | ForExpression;
 
   decorators?: DecoratorsNode;
 }

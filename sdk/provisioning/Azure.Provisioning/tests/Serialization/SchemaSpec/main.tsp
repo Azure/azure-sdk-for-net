@@ -30,11 +30,11 @@ union TargetScope {
 }
 
 // ──────────────────────────────────────────────
-// Bicep file
+// Infra node
 // ──────────────────────────────────────────────
 
-/** Represents a single Bicep file in the serialization output. */
-model BicepFileNode {
+/** Represents a single infrastructure unit in the serialization output. */
+model InfraNode {
   /** The relative file path/name (e.g. "main.bicep", "modules/storage.bicep"). */
   fileName: string;
 
@@ -61,8 +61,11 @@ model BicepFileNode {
 // Top-level document
 // ──────────────────────────────────────────────
 
-/** The root serialization document containing all Bicep files. */
+/** The root serialization document containing all infra nodes. */
 model SerializationDocument {
-  /** The collection of Bicep files that make up this deployment. */
-  bicepFiles: BicepFileNode[];
+  /** The collection of infra nodes that make up this deployment. */
+  infras: InfraNode[];
 }
+
+@encode(string)
+scalar int64str extends int64;
