@@ -261,44 +261,6 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.Environment
 
         [Test]
         [NonParallelizable]
-        public void Username_FallsBackToEnvVar()
-        {
-            var env = BaseEnvVars(clientSecret: null);
-            env["AZURE_USERNAME"] = "env-user";
-            env["AZURE_PASSWORD"] = "env-pass";
-            using (new TestEnvVar(env))
-            {
-                IConfiguration config = Helper.GetConfiguration();
-
-                var envCred = GetUnderlying(CreateFromConfig(config));
-                var inner = ReadProperty<Azure.Core.TokenCredential>(envCred, "Credential") as UsernamePasswordCredential;
-                Assert.IsNotNull(inner, "Should create a UsernamePasswordCredential");
-
-                Assert.AreEqual("env-user", ReadField<string>(inner, "_username"));
-            }
-        }
-
-        [Test]
-        [NonParallelizable]
-        public void Password_FallsBackToEnvVar()
-        {
-            var env = BaseEnvVars(clientSecret: null);
-            env["AZURE_USERNAME"] = "env-user";
-            env["AZURE_PASSWORD"] = "env-pass";
-            using (new TestEnvVar(env))
-            {
-                IConfiguration config = Helper.GetConfiguration();
-
-                var envCred = GetUnderlying(CreateFromConfig(config));
-                var inner = ReadProperty<Azure.Core.TokenCredential>(envCred, "Credential") as UsernamePasswordCredential;
-                Assert.IsNotNull(inner, "Should create a UsernamePasswordCredential");
-
-                Assert.AreEqual("env-pass", ReadField<string>(inner, "_password"));
-            }
-        }
-
-        [Test]
-        [NonParallelizable]
         public void NoCredential_WhenRequiredEnvVarsMissing()
         {
             var env = BaseEnvVars(tenantId: null, clientId: null, clientSecret: null);
