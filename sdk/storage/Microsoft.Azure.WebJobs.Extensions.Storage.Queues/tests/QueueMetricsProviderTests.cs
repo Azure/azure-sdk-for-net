@@ -105,18 +105,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
         [Test]
         public async Task GetMetrics_PeekFailure_PreservesApproximateMessageCount()
         {
-            // Simulate: GetProperties returns 5 messages, but PeekMessages throws
-            // (e.g. message encoding mismatch, non-XML-compatible body).
+            // Simulate: GetProperties returns 5 messages, but PeekMessages returns
+            // an empty array (e.g. MessageDecodingFailed handler silently filtered
+            // out un-decodable messages due to encoding mismatch).
             // The queue length should be preserved as 5, not reset to 0.
             var queueProperties = QueuesModelFactory.QueueProperties(metadata: null, approximateMessagesCount: 5);
 
             _mockQueue.Setup(p => p.GetPropertiesAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(queueProperties, Mock.Of<Response>())));
 
+            // PeekMessages returns empty array (handler swallowed the decode failure)
             _mockQueue.Setup(p => p.PeekMessagesAsync(
                 It.IsAny<int?>(),
                 It.IsAny<CancellationToken>()))
-                .ThrowsAsync(new FormatException("The input is not a valid Base-64 string"));
+                .Returns(Task.FromResult(Response.FromValue(Array.Empty<PeekedMessage>(), Mock.Of<Response>())));
 
             var metrics = await _metricsProvider.GetMetricsAsync();
 
