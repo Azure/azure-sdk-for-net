@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A tool for integrating memories into the agent. </summary>
-    public partial class MemorySearchPreviewTool : AgentTool
+    public partial class MemorySearchPreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="MemorySearchPreviewTool"/>. </summary>
         /// <param name="memoryStoreName"> The name of the memory store to use. </param>

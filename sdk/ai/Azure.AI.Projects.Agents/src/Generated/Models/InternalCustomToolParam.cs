@@ -8,7 +8,7 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalCustomToolParam : AgentTool
+    internal partial class InternalCustomToolParam : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalCustomToolParam"/>. </summary>
         /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>

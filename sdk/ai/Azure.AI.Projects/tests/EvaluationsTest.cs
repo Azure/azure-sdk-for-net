@@ -48,7 +48,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(agentDefinition));
 
@@ -375,7 +375,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(agentDefinition));
         object[] testingCriteria = [
@@ -798,7 +798,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
         // Remove Agents.
-        foreach (AgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME))
         {
             await projectClient.Agents.DeleteAgentVersionAsync(agentName: ag.Name, agentVersion: ag.Version);
         }

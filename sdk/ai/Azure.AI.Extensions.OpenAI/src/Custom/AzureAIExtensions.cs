@@ -5,7 +5,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -108,7 +107,5 @@ public static partial class AzureAIExtensions
             get => options.Patch.GetStringEx("$.conversation.id"u8);
             set => options.Patch.SetOrClearEx("$.conversation.id"u8, "$.conversation"u8, value);
         }
-
-        public ExtraDataDictionary StructuredInputs => new ExtraDataDictionary(options, "$.structured_inputs"u8);
     }
 }

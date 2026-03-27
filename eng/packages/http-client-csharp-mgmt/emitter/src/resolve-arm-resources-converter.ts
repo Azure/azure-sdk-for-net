@@ -100,6 +100,12 @@ export function resolveArmResources(
   // Build a lookup map from methodId (crossLanguageDefinitionId) to apiVersions
   // so that we can efficiently resolve per-resource API versions
   const methodApiVersionsMap = new Map<string, string[]>();
+  // Build a lookup map from methodId to SdkMethod kind (basic, paging, lro, lropaging)
+  // so that we can detect pageable actions that should be classified as List
+  const methodKindMap = new Map<string, string>();
+  // Build a lookup map from methodId to the response item type's crossLanguageDefinitionId
+  // so that we can verify pageable actions return actual resource models
+  const methodResponseModelIdMap = new Map<string, string>();
   for (const client of getAllSdkClients(sdkContext)) {
     for (const method of client.methods) {
       if (!methodApiVersionsMap.has(method.crossLanguageDefinitionId)) {
@@ -107,6 +113,38 @@ export function resolveArmResources(
           method.crossLanguageDefinitionId,
           method.apiVersions
         );
+      }
+      if (!methodKindMap.has(method.crossLanguageDefinitionId)) {
+        methodKindMap.set(
+          method.crossLanguageDefinitionId,
+          method.kind
+        );
+      }
+      if (
+        (method.kind === "paging" || method.kind === "lropaging") &&
+        !methodResponseModelIdMap.has(method.crossLanguageDefinitionId)
+      ) {
+        const responseType = method.response?.type;
+        if (responseType?.kind === "array" && responseType.valueType.kind === "model") {
+          methodResponseModelIdMap.set(
+            method.crossLanguageDefinitionId,
+            (responseType.valueType as SdkModelType).crossLanguageDefinitionId
+          );
+        }
+      }
+    }
+  }
+
+  // Build the set of resource model IDs for validating pageable action responses
+  const resourceModelIds = new Set<string>();
+  if (provider.resources) {
+    for (const resolvedResource of provider.resources) {
+      const modelId = getCrossLanguageDefinitionId(
+        sdkContext,
+        resolvedResource.type
+      );
+      if (modelId) {
+        resourceModelIds.add(modelId);
       }
     }
   }
@@ -133,7 +171,10 @@ export function resolveArmResources(
       const metadata = convertResolvedResourceToMetadata(
         program,
         sdkContext,
-        resolvedResource
+        resolvedResource,
+        methodKindMap,
+        methodResponseModelIdMap,
+        resourceModelIds
       );
 
       const resource = {
@@ -198,7 +239,8 @@ export function resolveArmResources(
   const filteredResources = postProcessArmResources(
     resources,
     nonResourceMethods,
-    parentLookup
+    parentLookup,
+    methodResponseModelIdMap
   );
 
   // Add provider operations as non-resource methods
@@ -287,7 +329,10 @@ export function resolveArmResources(
 function convertResolvedResourceToMetadata(
   program: Program,
   sdkContext: CSharpEmitterContext,
-  resolvedResource: ResolvedResource
+  resolvedResource: ResolvedResource,
+  methodKindMap?: Map<string, string>,
+  methodResponseModelIdMap?: Map<string, string>,
+  resourceModelIds?: Set<string>
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
   const resourceScope = convertScopeToResourceScope(resolvedResource.scope);
@@ -385,9 +430,20 @@ function convertResolvedResourceToMetadata(
     for (const actionOp of resolvedResource.operations.actions) {
       const methodId = getMethodIdFromOperation(sdkContext, actionOp.operation);
       if (methodId) {
+        // Classify as List only if the action is pageable AND its response item type
+        // is a known resource model. This prevents metadata-returning pageable actions
+        // from being misclassified as List operations.
+        const sdkMethodKind = methodKindMap?.get(methodId);
+        const responseModelId = methodResponseModelIdMap?.get(methodId);
+        const isResourceList =
+          sdkMethodKind === "paging" &&
+          resourceModelIds !== undefined &&
+          resourceModelIds.has(responseModelId!);
         methods.push({
           methodId,
-          kind: ResourceOperationKind.Action,
+          kind: isResourceList
+            ? ResourceOperationKind.List
+            : ResourceOperationKind.Action,
           operationPath: actionOp.path,
           operationScope: resourceScope,
           resourceScope: calculateResourceScope(actionOp.path, resolvedResource)

@@ -155,7 +155,7 @@ public class Sample_Function : ProjectsOpenAITestBase
                     + "nicknames for cities whenever possible.",
             Tools = { getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool }
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -241,7 +241,7 @@ public class Sample_Function : ProjectsOpenAITestBase
                     + "nicknames for cities whenever possible.",
             Tools = { getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool }
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
