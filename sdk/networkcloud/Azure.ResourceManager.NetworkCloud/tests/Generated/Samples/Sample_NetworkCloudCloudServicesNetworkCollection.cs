@@ -63,7 +63,7 @@ Port = 443L,
 ["key2"] = "myvalue2"
 },
             };
-            ArmOperation<NetworkCloudCloudServicesNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServicesNetworkName, data);
+            ArmOperation<NetworkCloudCloudServicesNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServicesNetworkName, data, default);
             NetworkCloudCloudServicesNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -9,6 +9,10 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    // Backward compat: The old Swagger/AutoRest API exposed an ExtendedLocation property using
+    // the local model type and a constructor accepting it. The new TypeSpec-generated code uses
+    // the ARM common ExtendedLocation type. This file preserves the old constructor and property
+    // to avoid breaking existing consumers.
     public partial class NetworkCloudCloudServicesNetworkData
     {
         /// <summary> The extended location of the cluster associated with the resource. </summary>

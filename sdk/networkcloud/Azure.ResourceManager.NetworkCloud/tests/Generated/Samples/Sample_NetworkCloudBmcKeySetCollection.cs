@@ -67,7 +67,7 @@ UserPrincipalName = "userABC@contoso.com",
 ["key2"] = "myvalue2"
 },
             };
-            ArmOperation<NetworkCloudBmcKeySetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bmcKeySetName, data);
+            ArmOperation<NetworkCloudBmcKeySetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bmcKeySetName, data, default);
             NetworkCloudBmcKeySetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

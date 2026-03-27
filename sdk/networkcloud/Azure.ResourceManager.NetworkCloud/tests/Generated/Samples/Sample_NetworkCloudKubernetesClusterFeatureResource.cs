@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudKubernetesClusterFeatureResource networkCloudKubernetesClusterFeature = client.GetNetworkCloudKubernetesClusterFeatureResource(networkCloudKubernetesClusterFeatureResourceId);
 
             // invoke the operation
-            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudKubernetesClusterFeature.DeleteAsync(WaitUntil.Completed);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudKubernetesClusterFeature.DeleteAsync(WaitUntil.Completed, default);
             NetworkCloudOperationStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 },
                 Options = { new StringKeyValuePair("featureOptionName", "featureOptionValue") },
             };
-            ArmOperation<NetworkCloudKubernetesClusterFeatureResource> lro = await networkCloudKubernetesClusterFeature.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudKubernetesClusterFeatureResource> lro = await networkCloudKubernetesClusterFeature.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudKubernetesClusterFeatureResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

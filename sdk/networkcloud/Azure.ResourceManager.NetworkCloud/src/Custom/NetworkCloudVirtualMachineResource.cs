@@ -12,6 +12,10 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    // Backward compat: The old Swagger/AutoRest API exposed Update/Delete methods without
+    // MatchConditions parameter. The new TypeSpec-generated code adds MatchConditions for
+    // ETag-based conditional requests. These overloads preserve the old API signatures
+    // to avoid breaking existing consumers.
     public partial class NetworkCloudVirtualMachineResource
     {
         /// <summary>

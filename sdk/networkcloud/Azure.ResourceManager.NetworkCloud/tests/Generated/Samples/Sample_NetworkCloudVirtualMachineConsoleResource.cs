@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
                 ExpireOn = DateTimeOffset.Parse("2022-06-01T01:27:03.008Z"),
                 KeyData = "ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm",
             };
-            ArmOperation<NetworkCloudVirtualMachineConsoleResource> lro = await networkCloudVirtualMachineConsole.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudVirtualMachineConsoleResource> lro = await networkCloudVirtualMachineConsole.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudVirtualMachineConsoleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

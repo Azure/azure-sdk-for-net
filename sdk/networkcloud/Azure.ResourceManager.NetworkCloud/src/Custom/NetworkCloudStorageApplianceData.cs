@@ -11,6 +11,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    // Backward compat: The old Swagger/AutoRest API used a constructor with the local
+    // ExtendedLocation type and flattened CACertificate and ManagementIPv4Address as
+    // top-level properties. The new TypeSpec-generated code uses the ARM common
+    // ExtendedLocation type and nests these properties under Properties. This file
+    // suppresses the generated constructor and preserves the old flat API surface.
     [CodeGenSuppress("NetworkCloudStorageApplianceData", typeof(AzureLocation), typeof(ResourceIdentifier), typeof(string), typeof(long), typeof(string), typeof(AdministrativeCredentials), typeof(ExtendedLocation))]
     public partial class NetworkCloudStorageApplianceData
     {

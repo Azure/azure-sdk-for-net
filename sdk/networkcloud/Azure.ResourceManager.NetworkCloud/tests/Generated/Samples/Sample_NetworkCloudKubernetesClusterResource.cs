@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
                 },
                 KubernetesVersion = "1.XX.Y",
             };
-            ArmOperation<NetworkCloudKubernetesClusterResource> lro = await networkCloudKubernetesCluster.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudKubernetesClusterResource> lro = await networkCloudKubernetesCluster.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudKubernetesClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

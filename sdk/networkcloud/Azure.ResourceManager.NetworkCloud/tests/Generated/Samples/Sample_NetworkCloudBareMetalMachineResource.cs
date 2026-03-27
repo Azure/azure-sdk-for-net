@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 },
                 MachineDetails = "machinedetails",
             };
-            ArmOperation<NetworkCloudBareMetalMachineResource> lro = await networkCloudBareMetalMachine.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudBareMetalMachineResource> lro = await networkCloudBareMetalMachine.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudBareMetalMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

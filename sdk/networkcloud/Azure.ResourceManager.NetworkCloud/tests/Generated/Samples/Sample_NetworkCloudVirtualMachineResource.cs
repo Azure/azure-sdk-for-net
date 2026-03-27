@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
                     Password = "{password}",
                 },
             };
-            ArmOperation<NetworkCloudVirtualMachineResource> lro = await networkCloudVirtualMachine.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudVirtualMachineResource> lro = await networkCloudVirtualMachine.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudVirtualMachineResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

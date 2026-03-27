@@ -87,7 +87,7 @@ Description = "Needs access for troubleshooting as a part of the support team",
 UserPrincipalName = "userABC@contoso.com",
 }},
             };
-            ArmOperation<NetworkCloudBmcKeySetResource> lro = await networkCloudBmcKeySet.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudBmcKeySetResource> lro = await networkCloudBmcKeySet.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudBmcKeySetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

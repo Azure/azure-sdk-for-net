@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -259,6 +260,15 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary> The CA certificate information issued by the platform for connecting to TLS interfaces for the bare metal machine. Callers add this certificate to the trusted CA store on the Kubernetes control plane nodes to allow secure communication with the bare metal machine. </summary>
+        public NetworkCloudCertificateInfo CACertificate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CACertificate;
+            }
+        }
+
         /// <summary> The resource ID of the cluster this bare metal machine is associated with. </summary>
         public ResourceIdentifier ClusterId
         {
@@ -371,6 +381,33 @@ namespace Azure.ResourceManager.NetworkCloud
                     Properties = new BareMetalMachineProperties();
                 }
                 return Properties.MachineRoles;
+            }
+        }
+
+        /// <summary> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </summary>
+        public IPAddress OamIPv4Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OamIPv4Address;
+            }
+        }
+
+        /// <summary> The IPv6 address that is assigned to the bare metal machine during the cluster deployment. </summary>
+        public string OamIPv6Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OamIPv6Address;
+            }
+        }
+
+        /// <summary> The image that is currently provisioned to the OS disk. </summary>
+        public string OSImage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSImage;
             }
         }
 

@@ -10,6 +10,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    // Backward compat: The old Swagger/AutoRest API used a constructor with the local
+    // ExtendedLocation type and flattened AllocatedInSizeMiB as a top-level property.
+    // The new TypeSpec-generated code uses the ARM common ExtendedLocation type and nests
+    // AllocatedInSizeMiB under Properties. This file suppresses the generated constructor
+    // and preserves the old flat API surface.
     [CodeGenSuppress("NetworkCloudVolumeData", typeof(AzureLocation), typeof(long), typeof(ExtendedLocation))]
     public partial class NetworkCloudVolumeData
     {

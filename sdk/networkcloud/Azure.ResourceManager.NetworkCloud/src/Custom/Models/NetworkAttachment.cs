@@ -10,6 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
+    // Backward compat: The old Swagger/AutoRest API constructor accepted attachedNetworkId as
+    // a string. The new TypeSpec-generated code uses ResourceIdentifier type. This overload
+    // preserves the old constructor accepting a string to avoid breaking existing consumers.
     public partial class NetworkAttachment
     {
         /// <summary> Initializes a new instance of <see cref="NetworkAttachment"/>. </summary>

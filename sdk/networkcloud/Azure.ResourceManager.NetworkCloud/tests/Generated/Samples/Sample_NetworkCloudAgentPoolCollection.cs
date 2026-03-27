@@ -82,7 +82,7 @@ PluginType = KubernetesPluginType.Macvlan,
 ["key2"] = "myvalue2"
 },
             };
-            ArmOperation<NetworkCloudAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ArmOperation<NetworkCloudAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data, default);
             NetworkCloudAgentPoolResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -89,7 +89,7 @@ Description = "Needs access for troubleshooting as a part of the support team",
 UserPrincipalName = "userABC@contoso.com",
 }},
             };
-            ArmOperation<NetworkCloudBareMetalMachineKeySetResource> lro = await networkCloudBareMetalMachineKeySet.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudBareMetalMachineKeySetResource> lro = await networkCloudBareMetalMachineKeySet.UpdateAsync(WaitUntil.Completed, patch, default);
             NetworkCloudBareMetalMachineKeySetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
