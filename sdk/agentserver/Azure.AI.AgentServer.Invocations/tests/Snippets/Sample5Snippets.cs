@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Invocations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -11,7 +10,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Sample5_HostingAndConfiguration.md. Compiled to prevent rot.
+    /// Code snippets backing Sample5_HostingAndConfiguration.md (Tier 1). Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
@@ -98,37 +97,6 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     });
                 });
             });
-
-            #endregion
-        }
-
-        [Test]
-        public void BuilderWithFactory()
-        {
-            #region Snippet:Invocations_Sample5_BuilderWithFactory
-
-            var builder = AgentHost.CreateBuilder();
-
-            // Register services on the builder.
-            builder.Services.AddSingleton<ISummarizationService, OpenAISummarizationService>();
-
-            // Use a factory delegate for handler construction.
-            builder.AddInvocations(factory: sp =>
-            {
-                var summarizer = sp.GetRequiredService<ISummarizationService>();
-                return new SummarizationHandler(summarizer) { MaxTokens = 2000 };
-            });
-
-            // Configuration and tracing work the same way.
-            builder.ConfigureTracing(tracing =>
-            {
-                tracing.AddSource("MyAgent.BusinessLogic");
-            });
-
-            builder.ConfigureShutdown(TimeSpan.FromSeconds(15));
-
-            var app = builder.Build();
-            app.Run();
 
             #endregion
         }
