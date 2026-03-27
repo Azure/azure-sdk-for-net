@@ -7,9 +7,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    // Backward-compat: old autorest-generated code had a public parameterless constructor and settable properties.
-    // These are response-only models, so setters are shims for API compatibility.
-    [CodeGenSuppress("NewRelicAccountResourceData")]
     [CodeGenSuppress("Properties")]
     [CodeGenSuppress("OrganizationId")]
     [CodeGenSuppress("AccountId")]
@@ -18,7 +15,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public partial class NewRelicAccountResourceData
     {
         /// <summary> Initializes a new instance of <see cref="NewRelicAccountResourceData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public NewRelicAccountResourceData()
         {
         }

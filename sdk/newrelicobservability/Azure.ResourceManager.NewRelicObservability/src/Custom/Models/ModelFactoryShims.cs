@@ -16,10 +16,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     // offerId, subscriptionState, etc.). These shims delegate to the new overloads to avoid
     // breaking existing callers that use the old parameter lists.
     // Suppress generated factory methods that expose internal property types.
+    // See https://github.com/Azure/azure-sdk-for-net/issues/57525
     [CodeGenSuppress("NewRelicAccountResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(AccountProperties))]
     [CodeGenSuppress("NewRelicOrganizationResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(OrganizationProperties))]
     [CodeGenSuppress("NewRelicPlanData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(PlanDataProperties))]
-    // Suppress generated flattened factory methods (no default param values) so we can provide backward-compat versions with defaults.
+    // Suppress generated flattened factory methods (no default param values) to provide backward-compat versions with defaults.
+    // See https://github.com/Azure/azure-sdk-for-net/issues/57525
     [CodeGenSuppress("NewRelicAccountResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(string), typeof(string), typeof(AzureLocation?))]
     [CodeGenSuppress("NewRelicOrganizationResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(string), typeof(NewRelicObservabilityBillingSource?))]
     [CodeGenSuppress("NewRelicPlanData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(NewRelicPlanDetails), typeof(NewRelicObservabilityOrgCreationSource?), typeof(NewRelicObservabilityAccountCreationSource?))]
