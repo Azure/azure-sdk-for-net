@@ -17,8 +17,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AzureVmWorkloadSapHanaHSRProtectableItem))]
-    [ModelReaderWriterBuildable(typeof(AzureVmWorkloadSQLInstanceProtectedItem))]
     [ModelReaderWriterBuildable(typeof(BackupCommonSettings))]
     [ModelReaderWriterBuildable(typeof(BackupContent))]
     [ModelReaderWriterBuildable(typeof(BackupDay))]
@@ -298,6 +296,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(VmWorkloadSapHanaDBInstance))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSapHanaDBInstanceProtectedItem))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSapHanaHsrProtectableItem))]
+    [ModelReaderWriterBuildable(typeof(VmWorkloadSapHanaScaleoutProtectableItem))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSapHanaSystemProtectableItem))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSapHanaSystemWorkloadItem))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSqlAvailabilityGroupProtectableItem))]
@@ -305,6 +304,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(VmWorkloadSqlDatabaseProtectedItem))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSqlDatabaseWorkloadItem))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSqlInstanceProtectableItem))]
+    [ModelReaderWriterBuildable(typeof(VmWorkloadSqlInstanceProtectedItem))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSqlInstanceWorkloadItem))]
     [ModelReaderWriterBuildable(typeof(WeeklyRetentionFormat))]
     [ModelReaderWriterBuildable(typeof(WeeklyRetentionSchedule))]

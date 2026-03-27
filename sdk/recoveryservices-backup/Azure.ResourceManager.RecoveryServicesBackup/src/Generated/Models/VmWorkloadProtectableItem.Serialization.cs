@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "HanaHSRContainer":
                         return VmWorkloadSapHanaHsrProtectableItem.DeserializeVmWorkloadSapHanaHsrProtectableItem(element, options);
                     case "HanaScaleoutContainer":
-                        return AzureVmWorkloadSapHanaHSRProtectableItem.DeserializeAzureVmWorkloadSapHanaHSRProtectableItem(element, options);
+                        return VmWorkloadSapHanaScaleoutProtectableItem.DeserializeVmWorkloadSapHanaScaleoutProtectableItem(element, options);
                     case "SQLAvailabilityGroupContainer":
                         return VmWorkloadSqlAvailabilityGroupProtectableItem.DeserializeVmWorkloadSqlAvailabilityGroupProtectableItem(element, options);
                     case "SQLDataBase":

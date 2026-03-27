@@ -14,51 +14,51 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure VM workload-specific protectable item representing HANA scale out. </summary>
-    public partial class AzureVmWorkloadSapHanaHSRProtectableItem : VmWorkloadProtectableItem, IJsonModel<AzureVmWorkloadSapHanaHSRProtectableItem>
+    public partial class VmWorkloadSapHanaScaleoutProtectableItem : VmWorkloadProtectableItem, IJsonModel<VmWorkloadSapHanaScaleoutProtectableItem>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override WorkloadProtectableItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapHanaScaleoutProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureVmWorkloadSapHanaHSRProtectableItem(document.RootElement, options);
+                        return DeserializeVmWorkloadSapHanaScaleoutProtectableItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureVmWorkloadSapHanaHSRProtectableItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadSapHanaScaleoutProtectableItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapHanaScaleoutProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureVmWorkloadSapHanaHSRProtectableItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadSapHanaScaleoutProtectableItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VmWorkloadSapHanaScaleoutProtectableItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureVmWorkloadSapHanaHSRProtectableItem IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureVmWorkloadSapHanaHSRProtectableItem)PersistableModelCreateCore(data, options);
+        VmWorkloadSapHanaScaleoutProtectableItem IPersistableModel<VmWorkloadSapHanaScaleoutProtectableItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (VmWorkloadSapHanaScaleoutProtectableItem)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VmWorkloadSapHanaScaleoutProtectableItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureVmWorkloadSapHanaHSRProtectableItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VmWorkloadSapHanaScaleoutProtectableItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,34 +69,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapHanaScaleoutProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureVmWorkloadSapHanaHSRProtectableItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadSapHanaScaleoutProtectableItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureVmWorkloadSapHanaHSRProtectableItem IJsonModel<AzureVmWorkloadSapHanaHSRProtectableItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureVmWorkloadSapHanaHSRProtectableItem)JsonModelCreateCore(ref reader, options);
+        VmWorkloadSapHanaScaleoutProtectableItem IJsonModel<VmWorkloadSapHanaScaleoutProtectableItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VmWorkloadSapHanaScaleoutProtectableItem)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override WorkloadProtectableItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSapHanaHSRProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapHanaScaleoutProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureVmWorkloadSapHanaHSRProtectableItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadSapHanaScaleoutProtectableItem)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureVmWorkloadSapHanaHSRProtectableItem(document.RootElement, options);
+            return DeserializeVmWorkloadSapHanaScaleoutProtectableItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureVmWorkloadSapHanaHSRProtectableItem DeserializeAzureVmWorkloadSapHanaHSRProtectableItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static VmWorkloadSapHanaScaleoutProtectableItem DeserializeVmWorkloadSapHanaScaleoutProtectableItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureVmWorkloadSapHanaHSRProtectableItem(
+            return new VmWorkloadSapHanaScaleoutProtectableItem(
                 backupManagementType,
                 workloadType,
                 protectableItemType,
