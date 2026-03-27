@@ -175,7 +175,7 @@ namespace Azure.Identity
                 options.SendCertificateChain = source.EnvironmentSendCertificateChain.Value;
             }
 
-return new EnvironmentCredential(options);
+            return new EnvironmentCredential(options);
         }
 
         private static TokenCredential CreateWorkloadIdentityCredential(DefaultAzureCredentialOptions source)
