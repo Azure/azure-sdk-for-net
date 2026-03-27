@@ -15,6 +15,7 @@
 * Update OpenTelemetry dependencies
   - OpenTelemetry 1.15.1
   - OpenTelemetry.Extensions.Hosting 1.15.1
+  ([#57549](https://github.com/Azure/azure-sdk-for-net/pull/57549))
 
 * Made `AzureMonitorLogExporter`, `AzureMonitorMetricExporter`, `AzureMonitorTraceExporter`.
    ([#56344](https://github.com/Azure/azure-sdk-for-net/pull/56344))
