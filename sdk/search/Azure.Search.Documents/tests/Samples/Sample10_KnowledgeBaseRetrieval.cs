@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Tests.Samples
     public partial class KnowledgeBaseRetrieval : SearchTestBase
     {
         public KnowledgeBaseRetrieval(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null/* RecordedTestMode.Record /* to re-record */)
         {
         }
 
