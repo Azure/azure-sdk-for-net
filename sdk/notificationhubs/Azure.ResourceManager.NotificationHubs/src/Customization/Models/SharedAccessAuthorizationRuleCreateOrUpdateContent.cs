@@ -12,6 +12,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Parameters supplied to the CreateOrUpdate Namespace AuthorizationRules. </summary>
+    [Obsolete("This type is obsolete and will be removed in a future version.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent
     {

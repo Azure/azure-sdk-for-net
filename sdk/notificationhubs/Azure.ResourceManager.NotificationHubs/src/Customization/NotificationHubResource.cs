@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <summary> Patch a NotificationHub in a namespace. </summary>
         /// <param name="content"> Request content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<NotificationHubResource>> UpdateAsync(NotificationHubUpdateContent content, CancellationToken cancellationToken = default)
             => await UpdateAsync(ContentToPatch(content), cancellationToken).ConfigureAwait(false);
@@ -40,10 +41,12 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <summary> Patch a NotificationHub in a namespace. </summary>
         /// <param name="content"> Request content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NotificationHubResource> Update(NotificationHubUpdateContent content, CancellationToken cancellationToken = default)
             => Update(ContentToPatch(content), cancellationToken);
 
+        [Obsolete]
         private static NotificationHubPatch ContentToPatch(NotificationHubUpdateContent content)
         {
             Argument.AssertNotNull(content, nameof(content));

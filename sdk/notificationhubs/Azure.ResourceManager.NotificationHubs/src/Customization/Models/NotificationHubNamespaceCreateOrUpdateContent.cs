@@ -15,6 +15,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Parameters supplied to the CreateOrUpdate Namespace operation. </summary>
+    [Obsolete("This type is obsolete and will be removed in a future version.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class NotificationHubNamespaceCreateOrUpdateContent : TrackedResourceData
     {

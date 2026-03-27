@@ -8,10 +8,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Patch parameter for NamespaceResource. </summary>
+    [Obsolete("This type is obsolete and will be removed in a future version.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class NotificationHubUpdateContent
     {
         /// <summary> Initializes a new instance of <see cref="NotificationHubUpdateContent"/>. </summary>

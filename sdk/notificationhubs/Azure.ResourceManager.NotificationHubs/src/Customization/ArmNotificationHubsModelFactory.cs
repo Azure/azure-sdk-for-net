@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     public static partial class ArmNotificationHubsModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubCreateOrUpdateContent"/>. </summary>
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NotificationHubCreateOrUpdateContent NotificationHubCreateOrUpdateContent(
             ResourceIdentifier id = null,
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubNamespaceCreateOrUpdateContent"/>. </summary>
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NotificationHubNamespaceCreateOrUpdateContent NotificationHubNamespaceCreateOrUpdateContent(
             ResourceIdentifier id = null,

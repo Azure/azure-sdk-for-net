@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
         /// <param name="content"> The shared access authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NotificationHubAuthorizationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken)
         {
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
         /// <param name="content"> The shared access authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NotificationHubAuthorizationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken)
         {

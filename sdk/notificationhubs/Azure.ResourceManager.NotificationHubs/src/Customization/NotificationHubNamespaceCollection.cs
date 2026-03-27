@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="content"> Parameters supplied to create a Namespace Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NotificationHubNamespaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string namespaceName, NotificationHubNamespaceCreateOrUpdateContent content, CancellationToken cancellationToken)
         {
@@ -32,6 +34,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="content"> Parameters supplied to create a Namespace Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NotificationHubNamespaceResource> CreateOrUpdate(WaitUntil waitUntil, string namespaceName, NotificationHubNamespaceCreateOrUpdateContent content, CancellationToken cancellationToken)
         {
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.NotificationHubs
         public virtual Pageable<NotificationHubNamespaceResource> GetAll(CancellationToken cancellationToken)
             => GetAll(null, null, cancellationToken);
 
+        [Obsolete]
         private static NotificationHubNamespaceData ContentToData(NotificationHubNamespaceCreateOrUpdateContent content)
         {
             // Build NamespaceProperties via internal constructor to set output-only read-only properties

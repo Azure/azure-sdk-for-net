@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="notificationHubName"> The notification hub name. </param>
         /// <param name="content"> Parameters supplied to the create/update a NotificationHub Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NotificationHubResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string notificationHubName, NotificationHubCreateOrUpdateContent content, CancellationToken cancellationToken)
         {
@@ -31,6 +33,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="notificationHubName"> The notification hub name. </param>
         /// <param name="content"> Parameters supplied to the create/update a NotificationHub Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [Obsolete("This method is obsolete and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NotificationHubResource> CreateOrUpdate(WaitUntil waitUntil, string notificationHubName, NotificationHubCreateOrUpdateContent content, CancellationToken cancellationToken)
         {
@@ -53,6 +56,7 @@ namespace Azure.ResourceManager.NotificationHubs
         // AuthorizationRules is intentionally not mapped — the generated NotificationHubProperties
         // exposes it as IReadOnlyList<T> (output-only). Auth rules are managed via the
         // AuthorizationRule sub-resource CRUD operations, not via the NotificationHub body.
+        [Obsolete]
         private static NotificationHubData ContentToData(NotificationHubCreateOrUpdateContent content)
         {
             var data = new NotificationHubData(content.Location);
