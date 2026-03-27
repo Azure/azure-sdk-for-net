@@ -4,6 +4,7 @@
 #pragma warning disable OPENAI001 // Responses API is experimental in the OpenAI SDK
 
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
@@ -56,34 +57,42 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
-                // Call the upstream server without streaming.
+                // Build the upstream request using the OpenAI .NET SDK.
                 var options = new CreateResponseOptions()
                 {
                     Model = request.Model,
                     Instructions = request.Instructions,
                 };
-                options.InputItems.Add(
-                    ResponseItem.CreateUserMessageItem(request.GetInputText()));
 
+                // Translate every input item with full fidelity.
+                // Both model stacks share the same JSON wire format, so
+                // Item (ours) → JSON → ResponseItem (OpenAI) is a one-liner.
+                foreach (Item item in request.GetInputExpanded())
+                {
+                    options.InputItems.Add(
+                        ModelReaderWriter.Read<ResponseItem>(
+                            ModelReaderWriter.Write(item))!);
+                }
+
+                // Call upstream without streaming and get the complete response.
                 var result = await _upstream.CreateResponseAsync(options, cancellationToken);
-                string answer = result.Value.GetOutputText();
 
-                // Build a standard SSE event stream from the completed response.
+                // Build a standard SSE event stream, translating every output
+                // item back: ResponseItem (OpenAI) → JSON → OutputItem (ours).
                 var stream = new ResponseEventStream(context, request);
                 yield return stream.EmitCreated();
                 yield return stream.EmitInProgress();
 
-                var message = stream.AddOutputItemMessage();
-                yield return message.EmitAdded();
+                foreach (ResponseItem upstreamItem in result.Value.OutputItems)
+                {
+                    OutputItem outputItem = ModelReaderWriter.Read<OutputItem>(
+                        ModelReaderWriter.Write(upstreamItem))!;
 
-                var text = message.AddTextContent();
-                yield return text.EmitAdded();
+                    var builder = stream.AddOutputItem<OutputItem>(upstreamItem.Id);
+                    yield return builder.EmitAdded(outputItem);
+                    yield return builder.EmitDone(outputItem);
+                }
 
-                yield return text.EmitDelta(answer);
-                yield return text.EmitDone(answer);
-
-                yield return message.EmitContentDone(text);
-                yield return message.EmitDone();
                 yield return stream.EmitCompleted();
             }
         }

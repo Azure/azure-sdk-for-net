@@ -2,10 +2,14 @@
 
 This sample shows how to implement a `ResponseHandler` that acts as a **streaming proxy**: it receives requests from clients, forwards them to an upstream [OpenAI-compatible responses server](https://platform.openai.com/docs/api-reference/responses) using the [OpenAI .NET SDK](https://github.com/openai/openai-dotnet), and streams each event back as it arrives.
 
-Because both model stacks are generated from TypeSpec and share the same JSON wire format, translating between them is a one-liner using `ModelReaderWriter`:
+All input and output item types are preserved with full fidelity. Both model stacks are generated from TypeSpec and share the same JSON wire format, so translating between them is a one-liner using `ModelReaderWriter`:
 
 ```csharp
-// OpenAI SDK event → our ResponseStreamEvent
+// Our Item → OpenAI ResponseItem (input)
+ResponseItem openAiItem = ModelReaderWriter.Read<ResponseItem>(
+    ModelReaderWriter.Write(ourItem))!;
+
+// OpenAI StreamingResponseUpdate → our ResponseStreamEvent (output)
 ResponseStreamEvent ourEvent = ModelReaderWriter.Read<ResponseStreamEvent>(
     ModelReaderWriter.Write(openAiUpdate))!;
 ```
@@ -37,12 +41,20 @@ public class StreamingProxyHandler : ResponseHandler
             Model = request.Model,
             Instructions = request.Instructions,
         };
-        options.InputItems.Add(
-            ResponseItem.CreateUserMessageItem(request.GetInputText()));
 
-        // Stream from the upstream server. Both model stacks are generated
-        // from TypeSpec and share the same JSON wire format, so translating
-        // between them is a one-liner: serialize → deserialize as our type.
+        // Translate every input item with full fidelity. Both model stacks
+        // are generated from TypeSpec and share the same JSON wire format,
+        // so translating between them is a one-liner via ModelReaderWriter:
+        //   serialize our Item → JSON → deserialize as OpenAI ResponseItem.
+        foreach (Item item in request.GetInputExpanded())
+        {
+            options.InputItems.Add(
+                ModelReaderWriter.Read<ResponseItem>(
+                    ModelReaderWriter.Write(item))!);
+        }
+
+        // Stream from the upstream server. Each event is translated back
+        // using the same one-liner pattern in reverse.
         await foreach (StreamingResponseUpdate update in
             _upstream.CreateResponseStreamingAsync(options, cancellationToken))
         {
