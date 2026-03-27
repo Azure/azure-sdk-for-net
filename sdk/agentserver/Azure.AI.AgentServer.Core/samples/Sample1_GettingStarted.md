@@ -1,77 +1,59 @@
-# Sample 1: Tier 1 — Zero-Config Startup
+# Sample 1: Getting Started — Create and Run a Server
 
-This sample demonstrates the **Tier 1** developer experience: one package, one line of code, and you have a fully spec-compliant hosted agent container. The framework handles port binding, health probes, OpenTelemetry, graceful shutdown, and protocol endpoints.
+This sample demonstrates the foundational API: `AgentHost.CreateBuilder()` returns an `AgentHostBuilder` that configures Kestrel, OpenTelemetry, health probes, and the `x-platform-server` identity header automatically. You register your own endpoints via `RegisterProtocol()`.
+
+> **Note:** Most developers will use a **protocol package** (`Azure.AI.AgentServer.Responses` or `Azure.AI.AgentServer.Invocations`) instead of calling `RegisterProtocol()` directly. Those packages provide `AddResponses<T>()` / `AddInvocations<T>()` extension methods that wire everything up. See [Responses samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples) and [Invocations samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples) for the recommended getting-started experience.
 
 ## Prerequisites
 
 ```dotnetcli
-dotnet add package Azure.AI.AgentServer.Responses --prerelease
+dotnet add package Azure.AI.AgentServer.Core --prerelease
 ```
 
-## The entire Program.cs
+## Create and run a server
 
-```C# Snippet:Hosting_Sample1_StartServer
-ResponsesServer.Run<QnAHandler>();
-```
+```C# Snippet:Core_Sample1_CreateAndRun
+var builder = AgentHost.CreateBuilder();
 
-That's it. The framework configures everything else.
-
-## Implement the handler
-
-```C# Snippet:Hosting_Sample1_QnAHandler
-public class QnAHandler : IResponseHandler
+// Register a custom protocol endpoint directly.
+builder.RegisterProtocol("MyProtocol", endpoints =>
 {
-    public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
-        IResponseContext context,
-        [EnumeratorCancellation] CancellationToken cancellationToken)
-    {
-        var stream = new ResponseEventStream(context, request);
+    endpoints.MapGet("/hello", () => "Hello from the agent server!");
+});
 
-        yield return stream.EmitCreated();
-        yield return stream.EmitInProgress();
-
-        var message = stream.AddOutputItemMessage();
-        yield return message.EmitAdded();
-
-        var text = message.AddTextContent();
-        yield return text.EmitAdded();
-
-        // In a real agent, call your model or knowledge base here.
-        var answer = "The Azure AI Foundry is a platform for building, " +
-                     "deploying, and managing AI agents.";
-
-        yield return text.EmitDelta(answer);
-        yield return text.EmitDone(answer);
-
-        yield return message.EmitContentDone(text);
-        yield return message.EmitDone();
-        yield return stream.EmitCompleted();
-    }
-}
+var app = builder.Build();
+app.Run();
 ```
 
-## Running the server
-
-```bash
-dotnet run
-```
-
-The server starts on port 8088 (or the `PORT` environment variable) with:
-- OpenTelemetry traces and metrics configured automatically
-- A `/healthy` health endpoint for liveness probes
+This starts a server on port 8088 (or the `PORT` environment variable) with:
+- Kestrel HTTP/1.1 listening
+- OpenTelemetry traces and metrics
+- A `/healthy` health endpoint
 - The `x-platform-server` identity header on all responses
-- Responses protocol endpoints at `/responses`
+- Your custom `/hello` endpoint
 
-## Testing the server
+## Test the server
 
 ```bash
-curl -X POST http://localhost:8088/responses \
-  -H "Content-Type: application/json" \
-  -d '{"model":"qna","input":"What is Azure AI Foundry?"}' \
-  --no-buffer
+# Health probe
+curl http://localhost:8088/healthy
+
+# Custom endpoint
+curl http://localhost:8088/hello
 ```
 
-## When to use Tier 1
+## What `AgentHost.CreateBuilder()` gives you
 
-Use `ResponsesServer.Run<THandler>()` when you have a **single-protocol agent** and need no customization. This covers the vast majority of hosted agent scenarios.
+| Feature | Default behavior |
+|---------|-----------------|
+| **Port** | `PORT` env var, or 8088 |
+| **Health** | `/healthy` endpoint |
+| **Telemetry** | OpenTelemetry traces + metrics via Azure Monitor |
+| **User-Agent** | `x-platform-server` header on every response |
+| **Shutdown** | 30-second graceful shutdown |
+
+## Next steps
+
+For a full protocol experience, install a protocol package and use its extension methods:
+- [Responses samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples) — streaming AI responses
+- [Invocations samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples) — request/response agent tasks

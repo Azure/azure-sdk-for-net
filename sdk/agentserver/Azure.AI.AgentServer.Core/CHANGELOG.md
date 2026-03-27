@@ -4,8 +4,8 @@
 
 ### Breaking Changes
 
-- Package renamed from `Azure.AI.AgentServer.Core` to `Azure.AI.AgentServer.Core`.
-- Namespace changed from `Azure.AI.AgentServer.Core` to `Azure.AI.AgentServer.Core`.
+- Package renamed from `Azure.AI.AgentServer.Hosting` to `Azure.AI.AgentServer.Core`.
+- Namespace changed from `Azure.AI.AgentServer.Hosting` to `Azure.AI.AgentServer.Core`.
 
 ### Features Added
 
