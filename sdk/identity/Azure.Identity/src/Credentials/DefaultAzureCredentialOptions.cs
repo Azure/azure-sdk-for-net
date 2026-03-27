@@ -140,7 +140,7 @@ namespace Azure.Identity
                 EnvironmentSendCertificateChain = sendCertificateChain;
             }
 
-if (section[nameof(WorkloadIdentityCredentialOptions.TokenFilePath)] is string tokenFilePath)
+            if (section[nameof(WorkloadIdentityCredentialOptions.TokenFilePath)] is string tokenFilePath)
             {
                 WorkloadTokenFilePath = tokenFilePath;
             }
