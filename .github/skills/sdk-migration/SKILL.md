@@ -470,10 +470,10 @@ ApiCompat errors surface when `dotnet build` detects breaking changes vs the pre
 
 | ApiCompat Rule | What It Means | Fix |
 |---|---|---|
-| `MembersMustExist` (constructor) | Protected constructor removed from abstract type | Add `protected TypeName(params) : base(params) { }` in `Custom/BackwardCompat/AbstractTypeConstructors.cs`. Never edit Generated/ files. |
-| `MembersMustExist` (method/property) | Method signature changed (e.g., `IReadOnlyDictionary` → `IDictionary`) | Create forwarding overloads in `Custom/BackwardCompat/ClientMethodShims.cs` with the old `IReadOnlyDictionary` parameter type that convert and delegate to the new `IDictionary` method. Add `#pragma warning disable AZC0002` if overloads lack CancellationToken. For async forwarding methods, always use `ConfigureAwait(false)` on the awaited call. Never edit Generated/ files. |
-| `MembersMustExist` (ModelFactory) | ModelFactory overload signature changed (usually a parameter's enum type was removed) | Add forwarding overload with old signature in `Custom/BackwardCompat/ModelFactoryBackwardCompat.cs`. Accept the removed enum param and discard it, delegating to the new method. Mark `[EditorBrowsable(Never)]`. If the removed param's type no longer exists, create a stub struct in `MissingEnumTypes.cs`. |
-| `MembersMustExist` (`SerializedAdditionalRawData`) | Protected field renamed to `_additionalBinaryDataProperties` | Re-declare the old field in `Custom/BackwardCompat/SerializedAdditionalRawDataShims.cs`: `protected internal IDictionary<string, BinaryData> SerializedAdditionalRawData;` with `#pragma warning disable SA1307` and `SA1401`. |
+| `MembersMustExist` (constructor) | Protected constructor removed from abstract type | Add `protected TypeName(params) : base(params) { }` in `Custom/BackwardCompat/<TypeName>.cs`. Never edit Generated/ files. |
+| `MembersMustExist` (method/property) | Method signature changed (e.g., `IReadOnlyDictionary` → `IDictionary`) | Create forwarding overloads in `Custom/BackwardCompat/<ClientName>.cs` with the old `IReadOnlyDictionary` parameter type that convert and delegate to the new `IDictionary` method. Add `#pragma warning disable AZC0002` if overloads lack CancellationToken. For async forwarding methods, always use `ConfigureAwait(false)` on the awaited call. Never edit Generated/ files. |
+| `MembersMustExist` (ModelFactory) | ModelFactory overload signature changed (usually a parameter's enum type was removed) | Add forwarding overload with old signature in `Custom/BackwardCompat/<ModelFactoryName>.cs`. Accept the removed enum param and discard it, delegating to the new method. Mark `[EditorBrowsable(Never)]`. If the removed param's type no longer exists, create a stub struct in `MissingEnumTypes.cs`. |
+| `MembersMustExist` (`SerializedAdditionalRawData`) | Protected field renamed to `_additionalBinaryDataProperties` | Re-declare the old field in `Custom/BackwardCompat/<TypeName>.cs`: `protected internal IDictionary<string, BinaryData> SerializedAdditionalRawData;` with `#pragma warning disable SA1307` and `SA1401`. |
 | `MembersMustExist` (missing setter) | Property lost its setter | `[CodeGenSuppress("Property")]` + re-declare with `{ get; set; }` |
 | `MembersMustExist` (missing enum value) | Enum value removed/renamed | Add `[EditorBrowsable(EditorBrowsableState.Never)]` deprecated value in custom partial |
 | `MembersMustExist` (property type changed) | Property type changed (e.g., custom enum → `string`) | Use `[CodeGenSuppress("Property")]` to suppress the generated property, then re-declare it in a custom partial class returning the old type. Create a stub type (e.g., a `readonly struct` with `implicit operator` from `string`) in `MissingEnumTypes.cs`, marked `[EditorBrowsable(Never)]`. Never edit Generated/ files. |
@@ -482,13 +482,9 @@ ApiCompat errors surface when `dotnet build` detects breaking changes vs the pre
 | `CannotMakeMemberNonVirtual` | `virtual` → non-virtual (abstract type) | Add protected constructor shim to keep type inheritable (check for serialization constructor conflicts first — see constructor row above) |
 | `CannotSealType` | Type effectively sealed (private ctor) | Same as above — add protected constructor to keep type inheritable |
 
-**File organization**: Group shims by category in `Custom/BackwardCompat/`:
-- `AbstractTypeConstructors.cs` — Protected constructors for abstract types
-- `ClientMethodShims.cs` — Forwarding overloads for parameter type changes
-- `ModelFactoryBackwardCompat.cs` — Old ModelFactory overloads
-- `PropertyTypeShims.cs` — Properties with changed types
-- `MissingEnumTypes.cs` — Deprecated enum values
-- `SerializedAdditionalRawDataShims.cs` — `_serializedAdditionalRawData` backward compat
+**File organization**: Place backward-compat shims in `Custom/BackwardCompat/`, with each file named after the type it extends:
+- `<TypeName>.cs` — e.g., `PersistentAgentsModelFactory.cs` for ModelFactory shims, `SomeClient.cs` for client method shims, `MessageDeltaTextAnnotation.cs` for field renames
+- `MissingEnumTypes.cs` — stub types for removed enums (these don't map to a single generated type)
 
 **Mark all backward-compat shims with:**
 - `[EditorBrowsable(EditorBrowsableState.Never)]` — hide from IntelliSense
@@ -498,10 +494,10 @@ ApiCompat errors surface when `dotnet build` detects breaking changes vs the pre
 
 #### Detailed Examples
 
-**ModelFactoryBackwardCompat.cs** — When a ModelFactory method's old signature had an enum parameter that no longer exists (e.g., `MessageDeltaChunkObject`), create a forwarding overload that accepts the old enum and discards it:
+**PersistentAgentsModelFactory.cs** — When a ModelFactory method's old signature had an enum parameter that no longer exists (e.g., `MessageDeltaChunkObject`), create a forwarding overload that accepts the old enum and discards it:
 
 ```csharp
-// Custom/BackwardCompat/ModelFactoryBackwardCompat.cs
+// Custom/BackwardCompat/PersistentAgentsModelFactory.cs
 #nullable disable
 using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
@@ -521,10 +517,10 @@ namespace Azure.AI.Agents.Persistent
 }
 ```
 
-**SerializedAdditionalRawDataShims.cs** — When the protected field `SerializedAdditionalRawData` was renamed to `_additionalBinaryDataProperties`:
+**MessageDeltaTextAnnotation.cs** — When the protected field `SerializedAdditionalRawData` was renamed to `_additionalBinaryDataProperties`:
 
 ```csharp
-// Custom/BackwardCompat/SerializedAdditionalRawDataShims.cs
+// Custom/BackwardCompat/MessageDeltaTextAnnotation.cs
 using System;
 using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
@@ -540,7 +536,7 @@ namespace Azure.AI.Agents.Persistent
 }
 ```
 
-**ClientMethodShims.cs async pattern** — Always use `ConfigureAwait(false)` in async forwarding overloads:
+**SomeClient.cs async pattern** — Always use `ConfigureAwait(false)` in async forwarding overloads:
 
 ```csharp
 #pragma warning disable AZC0002
