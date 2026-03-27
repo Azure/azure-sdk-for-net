@@ -103,6 +103,37 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         }
 
         [Test]
+        public void BuilderWithFactory()
+        {
+            #region Snippet:Invocations_Sample5_BuilderWithFactory
+
+            var builder = AgentHost.CreateBuilder();
+
+            // Register services on the builder.
+            builder.Services.AddSingleton<ISummarizationService, OpenAISummarizationService>();
+
+            // Use a factory delegate for handler construction.
+            builder.AddInvocations(factory: sp =>
+            {
+                var summarizer = sp.GetRequiredService<ISummarizationService>();
+                return new SummarizationHandler(summarizer) { MaxTokens = 2000 };
+            });
+
+            // Configuration and tracing work the same way.
+            builder.ConfigureTracing(tracing =>
+            {
+                tracing.AddSource("MyAgent.BusinessLogic");
+            });
+
+            builder.ConfigureShutdown(TimeSpan.FromSeconds(15));
+
+            var app = builder.Build();
+            app.Run();
+
+            #endregion
+        }
+
+        [Test]
         public void Implement_SummarizationHandler()
         {
             var handler = new SummarizationHandler(new OpenAISummarizationService());
