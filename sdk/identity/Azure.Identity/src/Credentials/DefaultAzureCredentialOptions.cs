@@ -616,7 +616,7 @@ if (section[nameof(WorkloadIdentityCredentialOptions.TokenFilePath)] is string t
         /// </summary>
         internal bool? EnvironmentSendCertificateChain { get; set; }
 
-/// <summary>
+        /// <summary>
         /// Specifies the token file path for the WorkloadIdentityCredential.
         /// </summary>
         internal string WorkloadTokenFilePath { get; set; }

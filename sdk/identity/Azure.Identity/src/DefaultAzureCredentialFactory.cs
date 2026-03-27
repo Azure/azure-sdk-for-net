@@ -322,7 +322,7 @@ namespace Azure.Identity
                 options.SendCertificateChain = Options.EnvironmentSendCertificateChain.Value;
             }
 
-return new EnvironmentCredential(Pipeline, options);
+            return new EnvironmentCredential(Pipeline, options);
         }
 
         public virtual TokenCredential CreateWorkloadIdentityCredential()
