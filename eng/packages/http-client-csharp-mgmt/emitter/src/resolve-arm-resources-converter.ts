@@ -100,12 +100,21 @@ export function resolveArmResources(
   // Build a lookup map from methodId (crossLanguageDefinitionId) to apiVersions
   // so that we can efficiently resolve per-resource API versions
   const methodApiVersionsMap = new Map<string, string[]>();
+  // Build a lookup map from methodId to SdkMethod kind (basic, paging, lro, lropaging)
+  // so that we can detect pageable actions that should be classified as List
+  const methodKindMap = new Map<string, string>();
   for (const client of getAllSdkClients(sdkContext)) {
     for (const method of client.methods) {
       if (!methodApiVersionsMap.has(method.crossLanguageDefinitionId)) {
         methodApiVersionsMap.set(
           method.crossLanguageDefinitionId,
           method.apiVersions
+        );
+      }
+      if (!methodKindMap.has(method.crossLanguageDefinitionId)) {
+        methodKindMap.set(
+          method.crossLanguageDefinitionId,
+          method.kind
         );
       }
     }
@@ -133,7 +142,8 @@ export function resolveArmResources(
       const metadata = convertResolvedResourceToMetadata(
         program,
         sdkContext,
-        resolvedResource
+        resolvedResource,
+        methodKindMap
       );
 
       const resource = {
@@ -287,7 +297,8 @@ export function resolveArmResources(
 function convertResolvedResourceToMetadata(
   program: Program,
   sdkContext: CSharpEmitterContext,
-  resolvedResource: ResolvedResource
+  resolvedResource: ResolvedResource,
+  methodKindMap?: Map<string, string>
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
   const resourceScope = convertScopeToResourceScope(resolvedResource.scope);
@@ -385,9 +396,15 @@ function convertResolvedResourceToMetadata(
     for (const actionOp of resolvedResource.operations.actions) {
       const methodId = getMethodIdFromOperation(sdkContext, actionOp.operation);
       if (methodId) {
+        // If the action is pageable, classify as List instead of Action
+        // (handles ArmResourceActionSync used for list-children operations)
+        const sdkMethodKind = methodKindMap?.get(methodId);
         methods.push({
           methodId,
-          kind: ResourceOperationKind.Action,
+          kind:
+            sdkMethodKind === "paging"
+              ? ResourceOperationKind.List
+              : ResourceOperationKind.Action,
           operationPath: actionOp.path,
           operationScope: resourceScope,
           resourceScope: calculateResourceScope(actionOp.path, resolvedResource)
