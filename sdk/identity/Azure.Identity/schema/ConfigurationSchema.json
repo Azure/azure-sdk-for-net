@@ -518,7 +518,7 @@
                 "description": "The user-assigned managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdKind)."
               },
               "AzureCloud": {
-                "description": "The Azure cloud environment.",
+                "description": "The name of the Azure cloud where the managed identity is configured.",
                 "anyOf": [
                   {
                     "enum": [
@@ -1043,7 +1043,7 @@
                 "description": "The user-assigned managed identity identifier (client ID, resource ID, or object ID depending on ManagedIdentityIdKind)."
               },
               "AzureCloud": {
-                "description": "The Azure cloud environment.",
+                "description": "The name of the Azure cloud where the managed identity is configured.",
                 "anyOf": [
                   {
                     "enum": [
