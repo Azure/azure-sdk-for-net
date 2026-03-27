@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<BackupResourceVaultConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, BackupResourceVaultConfigData data, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperation<BackupResourceVaultConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, BackupResourceVaultConfigData data, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This method is not supported because BackupResourceVaultConfigResource is a singleton resource and should not have a collection class.");
         }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<BackupResourceVaultConfigResource>> GetAsync(string vaultName, CancellationToken cancellationToken = default)
+        public virtual Task<Response<BackupResourceVaultConfigResource>> GetAsync(string vaultName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This method is not supported because BackupResourceVaultConfigResource is a singleton resource and should not have a collection class.");
         }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<bool>> ExistsAsync(string vaultName, CancellationToken cancellationToken = default)
+        public virtual Task<Response<bool>> ExistsAsync(string vaultName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This method is not supported because BackupResourceVaultConfigResource is a singleton resource and should not have a collection class.");
         }
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<NullableResponse<BackupResourceVaultConfigResource>> GetIfExistsAsync(string vaultName, CancellationToken cancellationToken = default)
+        public virtual Task<NullableResponse<BackupResourceVaultConfigResource>> GetIfExistsAsync(string vaultName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This method is not supported because BackupResourceVaultConfigResource is a singleton resource and should not have a collection class.");
         }

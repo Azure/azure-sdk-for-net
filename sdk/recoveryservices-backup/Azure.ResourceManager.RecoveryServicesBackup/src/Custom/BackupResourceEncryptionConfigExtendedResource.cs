@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, BackupResourceEncryptionConfigExtendedCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-            => await CreateOrUpdateAsync(WaitUntil.Started, content, cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Updates Vault encryption config.

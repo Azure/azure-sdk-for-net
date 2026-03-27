@@ -5,7 +5,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    // TODO: the type of a discriminator property should be a extensible enum (struct) instead of fixed enum.
+    // TODO: the type of a discriminator property should be an extensible enum (struct) instead of fixed enum.
     internal partial struct ProtectableContainerType
     {
     }

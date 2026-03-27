@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BackupResourceConfigResource>> UpdateAsync(BackupResourceConfigData data, CancellationToken cancellationToken = default)
         {
-            var result = await CreateOrUpdateAsync(WaitUntil.Started, data, cancellationToken).ConfigureAwait(false);
+            var result = await CreateOrUpdateAsync(WaitUntil.Completed, data, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(result.Value, result.GetRawResponse());
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BackupResourceConfigResource> Update(BackupResourceConfigData data, CancellationToken cancellationToken = default)
         {
-            var result = CreateOrUpdate(WaitUntil.Started, data, cancellationToken);
+            var result = CreateOrUpdate(WaitUntil.Completed, data, cancellationToken);
             return Response.FromValue(result.Value, result.GetRawResponse());
         }
 
