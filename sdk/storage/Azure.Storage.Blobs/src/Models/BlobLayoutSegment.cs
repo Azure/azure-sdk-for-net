@@ -8,7 +8,7 @@ namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// The result of a GetLayout operation, containing the blob's layout
-    /// information along with properties from the response headers.
+    /// information.
     /// </summary>
     internal class BlobLayoutSegment
     {
