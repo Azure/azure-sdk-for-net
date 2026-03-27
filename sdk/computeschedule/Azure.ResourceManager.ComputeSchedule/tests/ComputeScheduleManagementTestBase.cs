@@ -537,35 +537,18 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             ExecuteCreateFlexContent content = executeCreateFlexRequest;
             CreateFlexResourceOperationResult result;
 
-            Console.WriteLine($"[DIAG-FLEX] Location: {location}");
-            Console.WriteLine($"[DIAG-FLEX] Subscription ID: {subid}");
-            Console.WriteLine($"[DIAG-FLEX] SubscriptionResource ID: {subscriptionResource.Id}");
-            Console.WriteLine($"[DIAG-FLEX] Expected URL pattern: https://{{endpoint}}/subscriptions/{subid}/providers/Microsoft.ComputeSchedule/locations/{location}/virtualMachinesExecuteCreateFlex?api-version=2026-03-01-preview");
-            Console.WriteLine($"[DIAG-FLEX] CorrelationId: {content.CorrelationId}");
-            Console.WriteLine($"[DIAG-FLEX] ResourceConfigParameters.Count: {content.ResourceConfigParameters?.ResourceCount}");
-            Console.WriteLine($"[DIAG-FLEX] FlexProperties.OsType: {content.ResourceConfigParameters?.FlexProperties?.OsType}");
-            Console.WriteLine($"[DIAG-FLEX] FlexProperties.PriorityProfile.Type: {content.ResourceConfigParameters?.FlexProperties?.PriorityProfile?.Type}");
-            Console.WriteLine($"[DIAG-FLEX] FlexProperties.PriorityProfile.AllocationStrategy: {content.ResourceConfigParameters?.FlexProperties?.PriorityProfile?.AllocationStrategy}");
-
             try
             {
-                Console.WriteLine($"[DIAG-FLEX] Calling VirtualMachinesExecuteCreateFlexAsync...");
                 result = await subscriptionResource.VirtualMachinesExecuteCreateFlexAsync(location, content);
-                Console.WriteLine($"[DIAG-FLEX] SUCCESS! Results count: {result?.Results?.Count}");
             }
             catch (RequestFailedException ex)
             {
-                Console.WriteLine($"[DIAG-FLEX] RequestFailedException!");
-                Console.WriteLine($"[DIAG-FLEX] Status: {ex.Status}");
-                Console.WriteLine($"[DIAG-FLEX] ErrorCode: {ex.ErrorCode}");
-                Console.WriteLine($"[DIAG-FLEX] Message: {ex.Message}");
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
                 throw;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[DIAG-FLEX] Exception: {ex.GetType().Name}");
-                Console.WriteLine($"[DIAG-FLEX] Message: {ex.Message}");
-                Console.WriteLine($"[DIAG-FLEX] InnerException: {ex.InnerException?.Message}");
+                Console.WriteLine(ex.InnerException?.Message);
                 throw;
             }
             return result;
