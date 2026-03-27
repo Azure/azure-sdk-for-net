@@ -47,7 +47,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         /// Enumerates all change feed events and verifies at least one event is returned.
         /// </summary>
         [RecordedTest]
-        //[Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
+        [Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
         public async Task GetChanges_ReturnsEvents()
         {
             ShareServiceClient shareServiceClient = GetShareServiceClient_SharedKey();
@@ -57,12 +57,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             ShareChangeFeedClient client = GetChangeFeedClient("fileschangefeedshare");
             ShareClient shareClient = shareServiceClient.GetShareClient("fileschangefeedshare");
 
-            for (int i = 0; i < 2000; i++)
-            {
-                ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient(Guid.NewGuid().ToString());
-                await directoryClient.CreateAsync();
-                await directoryClient.DeleteAsync();
-            }
+            //for (int i = 0; i < 2000; i++)
+            //{
+            //    ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient(Guid.NewGuid().ToString());
+            //    await directoryClient.CreateAsync();
+            //    await directoryClient.DeleteAsync();
+            //}
 
             await shareClient.CreateSnapshotAsync();
 
