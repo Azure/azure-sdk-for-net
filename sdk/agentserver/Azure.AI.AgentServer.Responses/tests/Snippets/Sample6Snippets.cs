@@ -66,22 +66,19 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
                 // Translate every input item with full fidelity. Both model stacks
                 // are generated from TypeSpec and share the same JSON wire format,
-                // so translating between them is a one-liner via ModelReaderWriter:
-                //   serialize our Item → JSON → deserialize as OpenAI ResponseItem.
+                // so .Translate().To<T>() round-trips through JSON to convert:
+                //   our Item → JSON → OpenAI ResponseItem.
                 foreach (Item item in request.GetInputExpanded())
                 {
-                    options.InputItems.Add(
-                        ModelReaderWriter.Read<ResponseItem>(
-                            ModelReaderWriter.Write(item))!);
+                    options.InputItems.Add(item.Translate().To<ResponseItem>());
                 }
 
                 // Stream from the upstream server. Each event is translated back
-                // using the same one-liner pattern in reverse.
+                // using the same pattern in reverse.
                 await foreach (StreamingResponseUpdate update in
                     _upstream.CreateResponseStreamingAsync(options, cancellationToken))
                 {
-                    yield return ModelReaderWriter.Read<ResponseStreamEvent>(
-                        ModelReaderWriter.Write(update))!;
+                    yield return update.Translate().To<ResponseStreamEvent>();
                 }
             }
         }

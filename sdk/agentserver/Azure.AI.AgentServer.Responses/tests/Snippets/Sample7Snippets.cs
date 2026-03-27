@@ -65,28 +65,25 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 };
 
                 // Translate every input item with full fidelity.
-                // Both model stacks share the same JSON wire format, so
-                // Item (ours) → JSON → ResponseItem (OpenAI) is a one-liner.
+                // .Translate().To<T>() round-trips through JSON to convert
+                // between model stacks that share the same wire format.
                 foreach (Item item in request.GetInputExpanded())
                 {
-                    options.InputItems.Add(
-                        ModelReaderWriter.Read<ResponseItem>(
-                            ModelReaderWriter.Write(item))!);
+                    options.InputItems.Add(item.Translate().To<ResponseItem>());
                 }
 
                 // Call upstream without streaming and get the complete response.
                 var result = await _upstream.CreateResponseAsync(options, cancellationToken);
 
                 // Build a standard SSE event stream, translating every output
-                // item back: ResponseItem (OpenAI) → JSON → OutputItem (ours).
+                // item back: OpenAI ResponseItem → our OutputItem.
                 var stream = new ResponseEventStream(context, request);
                 yield return stream.EmitCreated();
                 yield return stream.EmitInProgress();
 
                 foreach (ResponseItem upstreamItem in result.Value.OutputItems)
                 {
-                    OutputItem outputItem = ModelReaderWriter.Read<OutputItem>(
-                        ModelReaderWriter.Write(upstreamItem))!;
+                    OutputItem outputItem = upstreamItem.Translate().To<OutputItem>();
 
                     var builder = stream.AddOutputItem<OutputItem>(upstreamItem.Id);
                     yield return builder.EmitAdded(outputItem);

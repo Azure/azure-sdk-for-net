@@ -1,15 +1,15 @@
-# Sample 7: Non-Streaming Proxy — Call upstream and build event stream
+# Sample 7: Non-Streaming OpenAI Proxy — Call upstream and build event stream
 
 This sample shows how to implement a `ResponseHandler` that acts as a **non-streaming proxy**: it calls an upstream [OpenAI-compatible responses server](https://platform.openai.com/docs/api-reference/responses) using the [OpenAI .NET SDK](https://github.com/openai/openai-dotnet), waits for the complete response, and translates every output item back into a standard SSE event stream for the client.
 
-All item types (messages, function calls, reasoning, file search, etc.) are preserved with full fidelity using the same `ModelReaderWriter` one-liner pattern:
+All item types (messages, function calls, reasoning, file search, etc.) are preserved with full fidelity using a fluent `.Translate().To<T>()` helper:
 
 ```csharp
 // Our Item → OpenAI ResponseItem (input)
-options.InputItems.Add(ModelReaderWriter.Read<ResponseItem>(ModelReaderWriter.Write(item))!);
+options.InputItems.Add(item.Translate().To<ResponseItem>());
 
 // OpenAI ResponseItem → our OutputItem (output)
-OutputItem outputItem = ModelReaderWriter.Read<OutputItem>(ModelReaderWriter.Write(upstreamItem))!;
+OutputItem outputItem = upstreamItem.Translate().To<OutputItem>();
 ```
 
 This pattern is useful when your handler needs to inspect or transform the full response before streaming it to the client.
@@ -20,6 +20,10 @@ This pattern is useful when your handler needs to inspect or transform the full 
 dotnet add package Azure.AI.AgentServer.Responses --prerelease
 dotnet add package OpenAI
 ```
+
+## Wire-format translation helper
+
+See [Sample 6](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample6_StreamingOpenAIProxy.md#wire-format-translation-helper) for the `Translate().To<T>()` helper definition.
 
 ## Implement the handler
 
@@ -43,28 +47,25 @@ public class NonStreamingProxyHandler : ResponseHandler
         };
 
         // Translate every input item with full fidelity.
-        // Both model stacks share the same JSON wire format, so
-        // Item (ours) → JSON → ResponseItem (OpenAI) is a one-liner.
+        // .Translate().To<T>() round-trips through JSON to convert
+        // between model stacks that share the same wire format.
         foreach (Item item in request.GetInputExpanded())
         {
-            options.InputItems.Add(
-                ModelReaderWriter.Read<ResponseItem>(
-                    ModelReaderWriter.Write(item))!);
+            options.InputItems.Add(item.Translate().To<ResponseItem>());
         }
 
         // Call upstream without streaming and get the complete response.
         var result = await _upstream.CreateResponseAsync(options, cancellationToken);
 
         // Build a standard SSE event stream, translating every output
-        // item back: ResponseItem (OpenAI) → JSON → OutputItem (ours).
+        // item back: OpenAI ResponseItem → our OutputItem.
         var stream = new ResponseEventStream(context, request);
         yield return stream.EmitCreated();
         yield return stream.EmitInProgress();
 
         foreach (ResponseItem upstreamItem in result.Value.OutputItems)
         {
-            OutputItem outputItem = ModelReaderWriter.Read<OutputItem>(
-                ModelReaderWriter.Write(upstreamItem))!;
+            OutputItem outputItem = upstreamItem.Translate().To<OutputItem>();
 
             var builder = stream.AddOutputItem<OutputItem>(upstreamItem.Id);
             yield return builder.EmitAdded(outputItem);
