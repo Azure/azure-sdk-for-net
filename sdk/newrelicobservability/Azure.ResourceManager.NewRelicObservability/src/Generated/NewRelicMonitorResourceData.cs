@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NewRelicObservability.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
     /// <summary> A Monitor Resource by NewRelic. </summary>
-        public partial class NewRelicMonitorResourceData : TrackedResourceData
+    public partial class NewRelicMonitorResourceData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

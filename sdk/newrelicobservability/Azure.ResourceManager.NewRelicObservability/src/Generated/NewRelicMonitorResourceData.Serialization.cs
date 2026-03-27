@@ -12,14 +12,13 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NewRelicObservability.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
     /// <summary> A Monitor Resource by NewRelic. </summary>
-        public partial class NewRelicMonitorResourceData : TrackedResourceData, IJsonModel<NewRelicMonitorResourceData>
+    public partial class NewRelicMonitorResourceData : TrackedResourceData, IJsonModel<NewRelicMonitorResourceData>
     {
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourceData"/> for deserialization. </summary>
         internal NewRelicMonitorResourceData()
