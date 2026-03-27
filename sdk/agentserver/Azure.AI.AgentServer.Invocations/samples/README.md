@@ -14,3 +14,4 @@ description: Samples for the Azure.AI.AgentServer.Invocations client library.
 - [Long-Running Operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample2_LongRunning.md) — Document analysis agent (LRO with polling)
 - [Streaming](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample3_Streaming.md) — Code generation agent (SSE)
 - [Multi-turn Conversation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample4_MultiTurn.md) — Travel planner agent (session-based)
+- [Hosting and Configuration](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample5_HostingAndConfiguration.md) — Custom services, configuration, tracing, and factory delegates

@@ -26,10 +26,12 @@ namespace Azure.AI.AgentServer.Invocations
     public static partial class InvocationsBuilderExtensions
     {
         public static Azure.AI.AgentServer.Core.AgentHostBuilder AddInvocations(this Azure.AI.AgentServer.Core.AgentHostBuilder builder, Azure.AI.AgentServer.Invocations.InvocationHandler handler, System.Action<Azure.AI.AgentServer.Invocations.InvocationsServerOptions>? configure = null) { throw null; }
+        public static Azure.AI.AgentServer.Core.AgentHostBuilder AddInvocations(this Azure.AI.AgentServer.Core.AgentHostBuilder builder, System.Func<System.IServiceProvider, Azure.AI.AgentServer.Invocations.InvocationHandler> factory, System.Action<Azure.AI.AgentServer.Invocations.InvocationsServerOptions>? configure = null) { throw null; }
         public static Azure.AI.AgentServer.Core.AgentHostBuilder AddInvocations<THandler>(this Azure.AI.AgentServer.Core.AgentHostBuilder builder, System.Action<Azure.AI.AgentServer.Invocations.InvocationsServerOptions>? configure = null) where THandler : Azure.AI.AgentServer.Invocations.InvocationHandler { throw null; }
     }
     public static partial class InvocationsServer
     {
+        public static void Run(System.Func<System.IServiceProvider, Azure.AI.AgentServer.Invocations.InvocationHandler> factory, string[]? args = null, System.Action<Azure.AI.AgentServer.Core.AgentHostBuilder>? configure = null) { }
         public static void Run<THandler>(string[]? args = null, System.Action<Azure.AI.AgentServer.Core.AgentHostBuilder>? configure = null) where THandler : Azure.AI.AgentServer.Invocations.InvocationHandler { }
     }
     public static partial class InvocationsServerEndpointRouteBuilderExtensions

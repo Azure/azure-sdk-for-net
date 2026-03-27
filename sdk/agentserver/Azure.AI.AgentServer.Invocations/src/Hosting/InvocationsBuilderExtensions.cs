@@ -63,4 +63,31 @@ public static class InvocationsBuilderExtensions
 
         return builder;
     }
+
+    /// <summary>
+    /// Registers the Invocations protocol with a factory delegate that creates the handler.
+    /// Use this overload when you need full control over handler construction
+    /// while still having access to the <see cref="IServiceProvider"/>.
+    /// </summary>
+    /// <param name="builder">The agent server builder.</param>
+    /// <param name="factory">A factory that receives the service provider and returns an <see cref="InvocationHandler"/>.</param>
+    /// <param name="configure">Optional callback to configure <see cref="InvocationsServerOptions"/>.</param>
+    /// <returns>The builder for chaining.</returns>
+    public static AgentHostBuilder AddInvocations(
+        this AgentHostBuilder builder,
+        Func<IServiceProvider, InvocationHandler> factory,
+        Action<InvocationsServerOptions>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(factory);
+
+        builder.Services.AddInvocationsServer(configure);
+        builder.Services.AddScoped<InvocationHandler>(factory);
+
+        builder.RegisterProtocol("Invocations", endpoints =>
+        {
+            endpoints.MapInvocationsServer();
+        });
+
+        return builder;
+    }
 }

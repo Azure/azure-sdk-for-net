@@ -31,4 +31,22 @@ public static class InvocationsServer
         configure?.Invoke(builder);
         builder.Build().Run();
     }
+
+    /// <summary>
+    /// Builds and runs an Invocations protocol server using a factory delegate for handler construction.
+    /// Use this when you need full control over how the handler is created.
+    /// </summary>
+    /// <param name="factory">A factory that receives the service provider and returns an <see cref="InvocationHandler"/>.</param>
+    /// <param name="args">Optional command-line arguments.</param>
+    /// <param name="configure">Optional callback to further configure the builder before running.</param>
+    public static void Run(
+        Func<IServiceProvider, InvocationHandler> factory,
+        string[]? args = null,
+        Action<AgentHostBuilder>? configure = null)
+    {
+        var builder = AgentHost.CreateBuilder(args);
+        builder.AddInvocations(factory);
+        configure?.Invoke(builder);
+        builder.Build().Run();
+    }
 }
