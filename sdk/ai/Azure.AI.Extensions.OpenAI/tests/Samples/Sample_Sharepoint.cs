@@ -38,12 +38,12 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
         {
             ProjectConnections = { new ToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
         };
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
             Tools = { new SharepointPreviewTool(sharepointToolOption), }
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -89,12 +89,12 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
         {
             ProjectConnections = { new ToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
         };
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
             Tools = { new SharepointPreviewTool(sharepointToolOption), }
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion

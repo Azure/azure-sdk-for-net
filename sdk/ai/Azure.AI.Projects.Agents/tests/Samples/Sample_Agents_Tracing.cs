@@ -40,13 +40,13 @@ public class Sample_Agents_Tracing : SamplesBase
                         .AddConsoleExporter() // Export traces to the console
                         .Build();
         #endregion
-        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion1 = await agentsClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion1 = await agentsClient.CreateAgentVersionAsync(
             agentName: "myAgent1",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
@@ -77,13 +77,13 @@ public class Sample_Agents_Tracing : SamplesBase
 
         using (tracerProvider)
         {
-            AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+            AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };
-            AgentVersion agentVersion1 = agentsClient.CreateAgentVersion(
+            ProjectsAgentVersion agentVersion1 = agentsClient.CreateAgentVersion(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
@@ -106,7 +106,7 @@ public class Sample_Agents_Tracing : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var connectionString = TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING;
 #endif
-        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
         AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
@@ -119,11 +119,11 @@ public class Sample_Agents_Tracing : SamplesBase
 
         using (tracerProvider)
         {
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };
-            AgentVersion agentVersion1 = await agentsClient.CreateAgentVersionAsync(
+            ProjectsAgentVersion agentVersion1 = await agentsClient.CreateAgentVersionAsync(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
@@ -146,7 +146,7 @@ public class Sample_Agents_Tracing : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var connectionString = TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING;
 #endif
-        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         Console.WriteLine("Assign the retrieved string to the required environment variable.");
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", connectionString);
@@ -160,11 +160,11 @@ public class Sample_Agents_Tracing : SamplesBase
 
         using (tracerProvider)
         {
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };
-            AgentVersion agentVersion1 = agentsClient.CreateAgentVersion(
+            ProjectsAgentVersion agentVersion1 = agentsClient.CreateAgentVersion(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");

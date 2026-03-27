@@ -32,7 +32,7 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_CreateAgent_CodeInterpreter_File_Generation_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a personal math tutor. When asked a math question, generate the appropriate PDF, save it and return its file ID.",
             Tools = {
@@ -43,7 +43,7 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
                 ),
             }
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -110,7 +110,7 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_CreateAgent_CodeInterpreter_File_Generation_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a personal math tutor. When asked a math question, generate the appropriate PDF, save it and return its file ID.",
             Tools = {
@@ -121,7 +121,7 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
                 ),
             }
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion

@@ -164,14 +164,14 @@ public partial class ResponsesTelemetryTests
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant."
         };
         var agentName = "responseStreamingTelemetryAgent";
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName,
-            new AgentVersionCreationOptions(agentDefinition));
+            new ProjectsAgentVersionCreationOptions(agentDefinition));
 
         try
         {

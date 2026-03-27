@@ -1,14 +1,15 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2026-04-01)
 
 ### Features Added
 
+- Added `DynamicSizingEnabled` property to `StandbyVirtualMachinePoolElasticityProfile` and `StandbyContainerGroupPoolElasticityProfile`
+- Added `PostProvisioningDelay` property to `StandbyVirtualMachinePoolElasticityProfile`
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed upper limit of 2000 on `MaxReadyCapacity` and `MinReadyCapacity`
 
 ## 1.1.0 (2025-05-10)
 

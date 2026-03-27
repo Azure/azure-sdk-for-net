@@ -57,7 +57,14 @@ namespace BasicTypeSpec
             options ??= new BasicTypeSpecClientOptions();
 
             _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 

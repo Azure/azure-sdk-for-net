@@ -126,7 +126,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         };
         #endregion
         #region Snippet:Sample_CreateAgent_ComputerUse_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a computer automation assistant.\n\n" +
                            "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
@@ -138,7 +138,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                 ),
             }
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -229,7 +229,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         };
         #endregion
         #region Snippet:Sample_CreateAgent_ComputerUse_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a computer automation assistant.\n\n" +
                            "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
@@ -241,7 +241,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                 ),
             }
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition)
         );

@@ -216,8 +216,23 @@ namespace Azure.Generator.Visitors
             [NotNullWhen(true)] out MethodBodyStatement? updatedStatement)
         {
             updatedStatement = originalStatement;
-            if (originalStatement is not ExpressionStatement { Expression: KeywordExpression keywordExpression }
-                || keywordExpression.Expression is not BinaryOperatorExpression binaryOperatorExpression)
+            if (originalStatement is not ExpressionStatement { Expression: KeywordExpression keywordExpression })
+            {
+                return false;
+            }
+
+            // Handle simple return: return new T(Pipeline, _endpoint, ...);
+            if (keywordExpression.Expression is NewInstanceExpression simpleCtorExpression)
+            {
+                updatedStatement = Return(new NewInstanceExpression(
+                    simpleCtorExpression.Type,
+                    [clientDiagnostics, .. simpleCtorExpression.Parameters],
+                    simpleCtorExpression.InitExpression));
+                return true;
+            }
+
+            // Handle cached return: return Volatile.Read(ref _cachedT) ?? Interlocked.CompareExchange(ref _cachedT, new T(...), null) ?? _cachedT;
+            if (keywordExpression.Expression is not BinaryOperatorExpression binaryOperatorExpression)
             {
                 return false;
             }

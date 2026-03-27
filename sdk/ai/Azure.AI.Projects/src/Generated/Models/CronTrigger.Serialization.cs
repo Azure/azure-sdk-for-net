@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Cron based trigger. </summary>
-    public partial class CronTrigger : Trigger, IJsonModel<CronTrigger>
+    public partial class CronTrigger : ScheduleTrigger, IJsonModel<CronTrigger>
     {
         /// <summary> Initializes a new instance of <see cref="CronTrigger"/> for deserialization. </summary>
         internal CronTrigger()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Trigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ScheduleTrigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CronTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -101,7 +101,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Trigger JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ScheduleTrigger JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CronTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

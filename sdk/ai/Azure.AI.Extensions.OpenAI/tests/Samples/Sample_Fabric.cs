@@ -37,12 +37,12 @@ public class Sample_Fabric : ProjectsOpenAITestBase
         {
             ProjectConnections = { new ToolProjectConnection(projectConnectionId: fabricConnection.Id) }
         };
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
             Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -88,12 +88,12 @@ public class Sample_Fabric : ProjectsOpenAITestBase
         {
             ProjectConnections = { new ToolProjectConnection(projectConnectionId: fabricConnection.Id) }
         };
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
             Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion

@@ -1,5 +1,26 @@
 # Release History
 
+## 2.0.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+- `Insights` were renamed to `ProjectInsights`.
+- `Insight` was renamed to `ProjectsInsight`.
+- `Schedules` were renamed to `ProjectSchedules`.
+- `Schedule` was renamed to `ProjectsSchedule`.
+- `Target` was renamed to `EvaluationTarget`.
+- `Trigger` was renamed to `ScheduleTrigger`.
+- `AzureAIAgentTarget` and `AzureAIModelTarget` became internal.
+- `ScheduleTask` was renamed to `ProjectsScheduleTask`.
+- `Evaluators` client was renamed to `ProjectEvaluators`.
+- `DetailEnum` was renamed to `InternalImageDetailLevel` and made internal.
+- `InputImageContentParamAutoParam` was renamed to `InternalInputImageContentParamAutoParam` and made internal.
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 2.0.0-beta.2 (2026-03-12)
 
 ### Breaking Changes

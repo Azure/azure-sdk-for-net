@@ -121,14 +121,14 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            AgentProtocol protocol = default;
+            ProjectsAgentProtocol protocol = default;
             string version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("protocol"u8))
                 {
-                    protocol = new AgentProtocol(prop.Value.GetString());
+                    protocol = new ProjectsAgentProtocol(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("version"u8))

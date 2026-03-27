@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,8 +19,6 @@ namespace Azure.Security.CodeTransparency
     public partial class CodeTransparencyClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Authorization";
         private const string AuthorizationApiKeyPrefix = "Bearer";
         private readonly string _apiVersion;
@@ -34,6 +33,36 @@ namespace Azure.Security.CodeTransparency
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public CodeTransparencyClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new CodeTransparencyClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of CodeTransparencyClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal CodeTransparencyClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, CodeTransparencyClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new CodeTransparencyClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of CodeTransparencyClient from a <see cref="CodeTransparencyClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for CodeTransparencyClient. </param>
+        [Experimental("SCME0002")]
+        public CodeTransparencyClient(CodeTransparencyClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
         {
         }
 

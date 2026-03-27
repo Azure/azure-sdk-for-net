@@ -6,7 +6,6 @@
     <PackageId>Azure.ResourceManager.EventHubs</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.EventHub.</Description>
     <PackageTags>azure;management;eventhub</PackageTags>
-    <NoWarn>$(NoWarn);CS1591;</NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <NoWarn>$(NoWarn);CS1591;AZC0032;</NoWarn>
   </PropertyGroup>
 </Project>
