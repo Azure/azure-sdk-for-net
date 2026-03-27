@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Base class for container with backup items. Containers with specific workloads are derived from this class.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupServerContainer"/>, <see cref="DpmContainer"/>, <see cref="IaasClassicComputeVmContainer"/>, <see cref="IaasVmContainer"/>, <see cref="IaasComputeVmContainer"/>, <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="WorkloadContainer"/>, <see cref="SqlContainer"/>, <see cref="StorageContainer"/>, <see cref="VmAppContainerProtectionContainer"/>, <see cref="GenericContainer"/>, and <see cref="MabContainer"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownBackupGenericProtectionContainer))]
+    [PersistableModelProxy(typeof(UnknownProtectionContainer))]
     public abstract partial class BackupGenericProtectionContainer : IJsonModel<BackupGenericProtectionContainer>
     {
         /// <param name="data"> The data to parse. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return MabContainer.DeserializeMabContainer(element, options);
                 }
             }
-            return UnknownBackupGenericProtectionContainer.DeserializeUnknownBackupGenericProtectionContainer(element, options);
+            return UnknownProtectionContainer.DeserializeUnknownProtectionContainer(element, options);
         }
     }
 }

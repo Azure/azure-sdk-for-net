@@ -7,21 +7,22 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Defines workload agnostic properties for a job.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="StorageBackupJob"/>, <see cref="WorkloadBackupJob"/>, <see cref="DpmBackupJob"/>, <see cref="MabBackupJob"/>, and <see cref="VaultBackupJob"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownJob))]
-    public abstract partial class BackupGenericJob : IJsonModel<BackupGenericJob>
+    internal partial class UnknownJob : BackupGenericJob, IJsonModel<BackupGenericJob>
     {
+        /// <summary> Initializes a new instance of <see cref="UnknownJob"/> for deserialization. </summary>
+        internal UnknownJob()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupGenericJob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BackupGenericJob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupGenericJob>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupGenericJob>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -70,65 +71,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupGenericJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupGenericJob)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EntityFriendlyName))
-            {
-                writer.WritePropertyName("entityFriendlyName"u8);
-                writer.WriteStringValue(EntityFriendlyName);
-            }
-            if (Optional.IsDefined(BackupManagementType))
-            {
-                writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
-            }
-            if (Optional.IsDefined(Operation))
-            {
-                writer.WritePropertyName("operation"u8);
-                writer.WriteStringValue(Operation);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
-            }
-            if (Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
-            }
-            if (Optional.IsDefined(EndOn))
-            {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
-            }
-            if (Optional.IsDefined(ActivityId))
-            {
-                writer.WritePropertyName("activityId"u8);
-                writer.WriteStringValue(ActivityId);
-            }
-            writer.WritePropertyName("jobType"u8);
-            writer.WriteStringValue(JobType);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -137,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupGenericJob JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BackupGenericJob JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupGenericJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -150,33 +100,90 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BackupGenericJob DeserializeBackupGenericJob(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownJob DeserializeUnknownJob(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("jobType"u8, out JsonElement discriminator))
+            string entityFriendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string operation = default;
+            string status = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
+            string activityId = default;
+            string jobType = "unknown";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("entityFriendlyName"u8))
                 {
-                    case "AzureIaaSVMJob":
-                        return IaasVmBackupJob.DeserializeIaasVmBackupJob(element, options);
-                    case "AzureIaaSVMJobV2":
-                        return IaasVmBackupJobV2.DeserializeIaasVmBackupJobV2(element, options);
-                    case "AzureStorageJob":
-                        return StorageBackupJob.DeserializeStorageBackupJob(element, options);
-                    case "AzureWorkloadJob":
-                        return WorkloadBackupJob.DeserializeWorkloadBackupJob(element, options);
-                    case "DpmJob":
-                        return DpmBackupJob.DeserializeDpmBackupJob(element, options);
-                    case "MabJob":
-                        return MabBackupJob.DeserializeMabBackupJob(element, options);
-                    case "VaultJob":
-                        return VaultBackupJob.DeserializeVaultBackupJob(element, options);
+                    entityFriendlyName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("backupManagementType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupManagementType = new BackupManagementType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("operation"u8))
+                {
+                    operation = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("status"u8))
+                {
+                    status = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("startTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("endTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("activityId"u8))
+                {
+                    activityId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("jobType"u8))
+                {
+                    jobType = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownJob.DeserializeUnknownJob(element, options);
+            return new UnknownJob(
+                entityFriendlyName,
+                backupManagementType,
+                operation,
+                status,
+                startOn,
+                endOn,
+                activityId,
+                jobType,
+                additionalBinaryDataProperties);
         }
     }
 }

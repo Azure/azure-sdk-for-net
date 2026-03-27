@@ -7,21 +7,23 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Base class for backup ProtectionIntent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryServiceVaultProtectionIntent"/>, <see cref="ResourceProtectionIntent"/>, <see cref="WorkloadContainerAutoProtectionIntent"/>, <see cref="WorkloadAutoProtectionIntent"/>, and <see cref="WorkloadSqlAutoProtectionIntent"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownProtectionIntent))]
-    public abstract partial class BackupGenericProtectionIntent : IJsonModel<BackupGenericProtectionIntent>
+    internal partial class UnknownProtectionIntent : BackupGenericProtectionIntent, IJsonModel<BackupGenericProtectionIntent>
     {
+        /// <summary> Initializes a new instance of <see cref="UnknownProtectionIntent"/> for deserialization. </summary>
+        internal UnknownProtectionIntent()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupGenericProtectionIntent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BackupGenericProtectionIntent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionIntent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionIntent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -70,55 +72,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionIntent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupGenericProtectionIntent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("protectionIntentItemType"u8);
-            writer.WriteStringValue(ProtectionIntentItemType.ToString());
-            if (Optional.IsDefined(BackupManagementType))
-            {
-                writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
-            }
-            if (Optional.IsDefined(SourceResourceId))
-            {
-                writer.WritePropertyName("sourceResourceId"u8);
-                writer.WriteStringValue(SourceResourceId);
-            }
-            if (Optional.IsDefined(ItemId))
-            {
-                writer.WritePropertyName("itemId"u8);
-                writer.WriteStringValue(ItemId);
-            }
-            if (Optional.IsDefined(PolicyId))
-            {
-                writer.WritePropertyName("policyId"u8);
-                writer.WriteStringValue(PolicyId);
-            }
-            if (Optional.IsDefined(ProtectionState))
-            {
-                writer.WritePropertyName("protectionState"u8);
-                writer.WriteStringValue(ProtectionState.Value.ToString());
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -127,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupGenericProtectionIntent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BackupGenericProtectionIntent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionIntent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -140,29 +101,84 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BackupGenericProtectionIntent DeserializeBackupGenericProtectionIntent(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownProtectionIntent DeserializeUnknownProtectionIntent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("protectionIntentItemType"u8, out JsonElement discriminator))
+            ProtectionIntentItemType protectionIntentItemType = default;
+            BackupManagementType? backupManagementType = default;
+            ResourceIdentifier sourceResourceId = default;
+            ResourceIdentifier itemId = default;
+            ResourceIdentifier policyId = default;
+            BackupProtectionStatus? protectionState = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("protectionIntentItemType"u8))
                 {
-                    case "RecoveryServiceVaultItem":
-                        return RecoveryServiceVaultProtectionIntent.DeserializeRecoveryServiceVaultProtectionIntent(element, options);
-                    case "AzureResourceItem":
-                        return ResourceProtectionIntent.DeserializeResourceProtectionIntent(element, options);
-                    case "AzureWorkloadContainerAutoProtectionIntent":
-                        return WorkloadContainerAutoProtectionIntent.DeserializeWorkloadContainerAutoProtectionIntent(element, options);
-                    case "AzureWorkloadAutoProtectionIntent":
-                        return WorkloadAutoProtectionIntent.DeserializeWorkloadAutoProtectionIntent(element, options);
-                    case "AzureWorkloadSQLAutoProtectionIntent":
-                        return WorkloadSqlAutoProtectionIntent.DeserializeWorkloadSqlAutoProtectionIntent(element, options);
+                    protectionIntentItemType = new ProtectionIntentItemType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("backupManagementType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupManagementType = new BackupManagementType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("sourceResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("itemId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    itemId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("policyId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policyId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("protectionState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectionState = new BackupProtectionStatus(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownProtectionIntent.DeserializeUnknownProtectionIntent(element, options);
+            return new UnknownProtectionIntent(
+                protectionIntentItemType,
+                backupManagementType,
+                sourceResourceId,
+                itemId,
+                policyId,
+                protectionState,
+                additionalBinaryDataProperties);
         }
     }
 }

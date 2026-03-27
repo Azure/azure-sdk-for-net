@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Base class for backup items.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileshareProtectedItem"/>, <see cref="IaasClassicComputeVmProtectedItem"/>, <see cref="IaasVmProtectedItem"/>, <see cref="IaasComputeVmProtectedItem"/>, <see cref="SqlProtectedItem"/>, <see cref="VmWorkloadProtectedItem"/>, <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="VmWorkloadSqlDatabaseProtectedItem"/>, <see cref="AzureVmWorkloadSQLInstanceProtectedItem"/>, <see cref="DpmProtectedItem"/>, <see cref="GenericProtectedItem"/>, and <see cref="MabFileFolderProtectedItem"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownBackupGenericProtectedItem))]
+    [PersistableModelProxy(typeof(UnknownProtectedItem))]
     public abstract partial class BackupGenericProtectedItem : IJsonModel<BackupGenericProtectedItem>
     {
         /// <param name="data"> The data to parse. </param>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return MabFileFolderProtectedItem.DeserializeMabFileFolderProtectedItem(element, options);
                 }
             }
-            return UnknownBackupGenericProtectedItem.DeserializeUnknownBackupGenericProtectedItem(element, options);
+            return UnknownProtectedItem.DeserializeUnknownProtectedItem(element, options);
         }
     }
 }

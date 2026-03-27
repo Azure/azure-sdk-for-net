@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Base class for restore request. Workload-specific restore requests are derived from this class.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareRestoreContent"/>, <see cref="WorkloadPointInTimeRestoreContent"/>, <see cref="WorkloadRestoreContent"/>, <see cref="WorkloadSapHanaPointInTimeRestoreContent"/>, <see cref="WorkloadSapHanaRestoreContent"/>, <see cref="WorkloadSapAsePointInTimeRestoreContent"/>, <see cref="WorkloadSapAseRestoreContent"/>, <see cref="WorkloadSqlPointInTimeRestoreContent"/>, <see cref="WorkloadSqlRestoreContent"/>, <see cref="IaasVmRestoreContent"/>, <see cref="WorkloadSapHanaPointInTimeRestoreWithRehydrateContent"/>, <see cref="WorkloadSapHanaRestoreWithRehydrateContent"/>, <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateContent"/>, <see cref="WorkloadSqlRestoreWithRehydrateContent"/>, and <see cref="IaasVmRestoreWithRehydrationContent"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownRestoreContent))]
+    [PersistableModelProxy(typeof(UnknownRestoreRequest))]
     public abstract partial class RestoreContent : IJsonModel<RestoreContent>
     {
         /// <param name="data"> The data to parse. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return IaasVmRestoreWithRehydrationContent.DeserializeIaasVmRestoreWithRehydrationContent(element, options);
                 }
             }
-            return UnknownRestoreContent.DeserializeUnknownRestoreContent(element, options);
+            return UnknownRestoreRequest.DeserializeUnknownRestoreRequest(element, options);
         }
     }
 }

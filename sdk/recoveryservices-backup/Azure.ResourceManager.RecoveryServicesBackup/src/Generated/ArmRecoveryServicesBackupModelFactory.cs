@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 
-            return new UnknownBackupGenericProtectedItem(
+            return new UnknownProtectedItem(
                 protectedItemType,
                 backupManagementType,
                 workloadType,
@@ -1536,7 +1536,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             threatInfo ??= new ChangeTrackingList<RecoveryPointThreatInformation>();
 
-            return new UnknownBackupGenericRecoveryPoint(objectType, threatStatus, threatInfo.ToList(), additionalBinaryDataProperties: null);
+            return new UnknownRecoveryPoint(objectType, threatStatus, threatInfo.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Recovery Point Threat information. </summary>
@@ -2277,7 +2277,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 
-            return new UnknownRestoreContent(objectType, resourceGuardOperationRequests.ToList(), additionalBinaryDataProperties: null);
+            return new UnknownRestoreRequest(objectType, resourceGuardOperationRequests.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> AzureFileShare Restore Request. </summary>
@@ -3074,7 +3074,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 
-            return new UnknownBackupGenericProtectionPolicy(protectedItemsCount, backupManagementType, resourceGuardOperationRequests.ToList(), additionalBinaryDataProperties: null);
+            return new UnknownProtectionPolicy(protectedItemsCount, backupManagementType, resourceGuardOperationRequests.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Azure VM (Mercury) workload-specific backup policy. </summary>
@@ -4096,7 +4096,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.FetchTieringCostInfoContent"/> instance for mocking. </returns>
         public static FetchTieringCostInfoContent FetchTieringCostInfoContent(RecoveryPointTierType sourceTierType = default, RecoveryPointTierType targetTierType = default, string objectType = default)
         {
-            return new UnknownFetchTieringCostInfoContent(sourceTierType, targetTierType, objectType, additionalBinaryDataProperties: null);
+            return new UnknownFetchTieringCostInfoRequest(sourceTierType, targetTierType, objectType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request parameters for fetching cost info of rehydration. </summary>

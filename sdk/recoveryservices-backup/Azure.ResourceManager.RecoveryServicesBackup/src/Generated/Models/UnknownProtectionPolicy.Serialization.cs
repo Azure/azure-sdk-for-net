@@ -7,21 +7,22 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Base class for backup policy. Workload-specific backup policies are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmWorkloadProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/>, and <see cref="MabProtectionPolicy"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownProtectionPolicy))]
-    public abstract partial class BackupGenericProtectionPolicy : IJsonModel<BackupGenericProtectionPolicy>
+    internal partial class UnknownProtectionPolicy : BackupGenericProtectionPolicy, IJsonModel<BackupGenericProtectionPolicy>
     {
+        /// <summary> Initializes a new instance of <see cref="UnknownProtectionPolicy"/> for deserialization. </summary>
+        internal UnknownProtectionPolicy()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupGenericProtectionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BackupGenericProtectionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -70,50 +71,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ProtectedItemsCount))
-            {
-                writer.WritePropertyName("protectedItemsCount"u8);
-                writer.WriteNumberValue(ProtectedItemsCount.Value);
-            }
-            writer.WritePropertyName("backupManagementType"u8);
-            writer.WriteStringValue(BackupManagementType);
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
-            {
-                writer.WritePropertyName("resourceGuardOperationRequests"u8);
-                writer.WriteStartArray();
-                foreach (string item in ResourceGuardOperationRequests)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -122,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupGenericProtectionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BackupGenericProtectionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -135,31 +100,59 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BackupGenericProtectionPolicy DeserializeBackupGenericProtectionPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownProtectionPolicy DeserializeUnknownProtectionPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("backupManagementType"u8, out JsonElement discriminator))
+            int? protectedItemsCount = default;
+            string backupManagementType = "unknown";
+            IList<string> resourceGuardOperationRequests = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("protectedItemsCount"u8))
                 {
-                    case "AzureWorkload":
-                        return VmWorkloadProtectionPolicy.DeserializeVmWorkloadProtectionPolicy(element, options);
-                    case "AzureStorage":
-                        return FileShareProtectionPolicy.DeserializeFileShareProtectionPolicy(element, options);
-                    case "AzureIaasVM":
-                        return IaasVmProtectionPolicy.DeserializeIaasVmProtectionPolicy(element, options);
-                    case "AzureSql":
-                        return SqlProtectionPolicy.DeserializeSqlProtectionPolicy(element, options);
-                    case "GenericProtectionPolicy":
-                        return GenericProtectionPolicy.DeserializeGenericProtectionPolicy(element, options);
-                    case "MAB":
-                        return MabProtectionPolicy.DeserializeMabProtectionPolicy(element, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectedItemsCount = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("backupManagementType"u8))
+                {
+                    backupManagementType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("resourceGuardOperationRequests"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    resourceGuardOperationRequests = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownProtectionPolicy.DeserializeUnknownProtectionPolicy(element, options);
+            return new UnknownProtectionPolicy(protectedItemsCount, backupManagementType, resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

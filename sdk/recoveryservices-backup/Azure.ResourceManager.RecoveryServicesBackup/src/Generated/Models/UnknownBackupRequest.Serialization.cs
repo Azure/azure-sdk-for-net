@@ -7,21 +7,22 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Base class for backup request. Workload-specific backup requests are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareBackupContent"/>, <see cref="WorkloadBackupContent"/>, and <see cref="IaasVmBackupContent"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownBackupRequest))]
-    public abstract partial class BackupContent : IJsonModel<BackupContent>
+    internal partial class UnknownBackupRequest : BackupContent, IJsonModel<BackupContent>
     {
+        /// <summary> Initializes a new instance of <see cref="UnknownBackupRequest"/> for deserialization. </summary>
+        internal UnknownBackupRequest()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BackupContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -70,30 +71,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -102,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BackupContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -115,25 +100,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BackupContent DeserializeBackupContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownBackupRequest DeserializeUnknownBackupRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("objectType"u8, out JsonElement discriminator))
+            string objectType = "unknown";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("objectType"u8))
                 {
-                    case "AzureFileShareBackupRequest":
-                        return FileShareBackupContent.DeserializeFileShareBackupContent(element, options);
-                    case "AzureWorkloadBackupRequest":
-                        return WorkloadBackupContent.DeserializeWorkloadBackupContent(element, options);
-                    case "IaasVMBackupRequest":
-                        return IaasVmBackupContent.DeserializeIaasVmBackupContent(element, options);
+                    objectType = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownBackupRequest.DeserializeUnknownBackupRequest(element, options);
+            return new UnknownBackupRequest(objectType, additionalBinaryDataProperties);
         }
     }
 }
