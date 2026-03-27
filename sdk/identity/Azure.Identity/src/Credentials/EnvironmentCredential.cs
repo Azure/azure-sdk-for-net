@@ -29,7 +29,7 @@ namespace Azure.Identity
     /// <listheader><term>Variable</term><description>Description</description></listheader>
     /// <item><term>AZURE_TENANT_ID</term><description>The Microsoft Entra tenant (directory) ID.</description></item>
     /// <item><term>AZURE_CLIENT_ID</term><description>The client (application) ID of an App Registration in the tenant.</description></item>
-    /// <item><term>AZURE_CLIENT_CERTIFICATE_PATH</term><description>Path to the client certificate and the private key. The path must be to either a "pfx"- or "pem"-encoded certificate on disk, or a certifcate in the platform certificate store by thumbprint.
+    /// <item><term>AZURE_CLIENT_CERTIFICATE_PATH</term><description>Path to the client certificate and the private key. The path must be to either a "pfx"- or "pem"-encoded certificate on disk, or a certificate in the platform certificate store by thumbprint.
     /// For example:
     /// <list type="bullet">
     ///   <item><description><c>c:\data\certificate.pfx</c></description></item>
