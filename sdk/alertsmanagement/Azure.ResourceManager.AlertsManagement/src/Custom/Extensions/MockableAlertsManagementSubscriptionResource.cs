@@ -10,10 +10,12 @@ using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Mocking
 {
-    // Backward compatibility: the new generator places GetSummary on MockableAlertsManagementArmClient,
-    // but the old SDK had GetServiceAlertSummary on SubscriptionResource. This custom mockable extension
-    // provides the old method signatures (individual parameters and options object) on SubscriptionResource,
-    // delegating to the generated GetSummary via MockableAlertsManagementArmClient.
+    // Backward compatibility: the old SDK (AutoRest-based, v1.1.1) exposed
+    // GetServiceAlertSummary/GetServiceAlertSummaryAsync on SubscriptionResource with both
+    // individual-parameter and SubscriptionResourceGetServiceAlertSummaryOptions overloads.
+    // The new TypeSpec generator places GetSummary on MockableAlertsManagementArmClient (scope-based).
+    // This custom mockable class re-introduces the old method signatures on SubscriptionResource,
+    // delegating to the generated GetSummary method via MockableAlertsManagementArmClient.
     public partial class MockableAlertsManagementSubscriptionResource : ArmResource
     {
         internal MockableAlertsManagementSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)

@@ -8,7 +8,10 @@ using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Mocking
 {
-    // Backward compatibility: old SDK had GetServiceAlertMetadata methods on TenantResource.
+    // Backward compatibility: the old SDK (AutoRest-based, v1.1.1) exposed
+    // GetServiceAlertMetadata/GetServiceAlertMetadataAsync on TenantResource. The new TypeSpec
+    // generator renames these to MetaData/MetaDataAsync. These wrapper methods preserve the old
+    // method names, marked [EditorBrowsable(Never)] to hide from IntelliSense.
     public partial class MockableAlertsManagementTenantResource
     {
         /// <summary> Get alerts metadata. </summary>

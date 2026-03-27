@@ -9,8 +9,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    // Backward compatibility: old SDK had GetServiceAlerts on SubscriptionResource
-    // and GetServiceAlertMetadata on TenantResource. New SDK uses GetAlerts/MetaData.
+    // Backward compatibility: the old SDK (AutoRest-based, v1.1.1) exposed
+    // GetServiceAlerts(SubscriptionResource) and GetServiceAlertMetadata(TenantResource).
+    // The new TypeSpec generator places GetServiceAlerts on ArmClient (scope-based) and renames
+    // GetServiceAlertMetadata to MetaData on TenantResource. These extension methods re-introduce
+    // the old method signatures, marked [EditorBrowsable(Never)] to hide from IntelliSense while
+    // keeping binary/source compatibility.
     public static partial class AlertsManagementExtensions
     {
         /// <summary> Gets a collection of ServiceAlertCollection in the SubscriptionResource. </summary>

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading;
@@ -7,10 +7,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    // Backward compatibility: the generated AlertCollection is renamed to ServiceAlertCollection
-    // via [CodeGenType("AlertCollection")] to match the old SDK type name. Additionally, this file
-    // provides GetAll/GetAllAsync overloads accepting ServiceAlertCollectionGetAllOptions, which
-    // wraps the many individual query parameters into a single options object for easier use.
+    // Backward compatibility: the old SDK (AutoRest-based, v1.1.1) exposed a convenience overload
+    // ServiceAlertCollection.GetAll(ServiceAlertCollectionGetAllOptions) that wraps 17 individual
+    // query parameters into a single options object. The new TypeSpec generator only produces the
+    // individual-parameter overload. The [CodeGenType("AlertCollection")] maps the generated
+    // AlertCollection (from TypeSpec "Alert" resource renamed via @@clientName to "ServiceAlert")
+    // to ServiceAlertCollection to match the old SDK class name.
     [CodeGenType("AlertCollection")]
     public partial class ServiceAlertCollection
     {

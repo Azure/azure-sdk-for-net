@@ -1,8 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward compatibility: restore old enum values removed from the new spec.
-// The generated ServiceAlertModificationEvent only has 6 values; the old SDK had 9.
+// Backward compatibility: the TypeSpec spec (models.tsp AlertModificationEvent) and the
+// Swagger spec (2025-05-25-preview) define only 6 enum values: AlertCreated, StateChange,
+// SeverityChange, MonitorConditionChange, ActionsTriggered, ActionsSuppressed.
+// The old SDK (AutoRest-based, v1.1.1) had 9 values including ActionRuleTriggered,
+// ActionRuleSuppressed, and ActionsFailed. This custom enum restores all 9 values to
+// maintain backward compatibility with existing code that references these members.
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Reason for the modification. </summary>

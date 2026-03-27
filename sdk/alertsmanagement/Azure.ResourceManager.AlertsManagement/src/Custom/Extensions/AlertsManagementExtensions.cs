@@ -10,14 +10,25 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    // Backward compatibility: the generated extension method is named GetServiceAlertResource
-    // (from the TypeSpec Alert renamed to ServiceAlert), but the old SDK exposed GetAlertResource.
-    // CodeGenSuppress removes the generated method and this file re-adds it with the old name.
-    // Also provides GetServiceAlertSummary/GetServiceAlertSummaryAsync extension methods on
-    // SubscriptionResource with both individual-parameter and options-object overloads.
+    // Backward compatibility and API evolution:
+    // 1. The old SDK (AutoRest-based, v1.1.1) exposed GetServiceAlertResource(ArmClient, ResourceIdentifier).
+    //    The TypeSpec resource "Alert" is renamed to "ServiceAlert" via @@clientName, so the generator would
+    //    produce GetServiceAlertResource. However, the Obsolete folder marks GetServiceAlertResource with
+    //    [Obsolete(true)] to signal a planned rename. This file suppresses the generated method and re-adds
+    //    it as GetAlertResource, providing the new canonical method name.
+    // 2. The old SDK exposed GetServiceAlertSummary/GetServiceAlertSummaryAsync on SubscriptionResource.
+    //    The new TypeSpec generator places GetSummary on ArmClient (scope-based). This file re-introduces
+    //    the old SubscriptionResource extension methods delegating through MockableAlertsManagementSubscriptionResource.
     [CodeGenSuppress("GetServiceAlertResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     public static partial class AlertsManagementExtensions
     {
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceAlertResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceAlertResource.CreateResourceIdentifier" /> to create a <see cref="ServiceAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceAlertResource" /> object. </returns>
         public static ServiceAlertResource GetAlertResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));

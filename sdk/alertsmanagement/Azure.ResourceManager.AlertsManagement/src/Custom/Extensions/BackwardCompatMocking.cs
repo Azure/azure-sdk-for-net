@@ -5,7 +5,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Mocking
 {
-    // Backward compatibility: old SDK had GetServiceAlerts on SubscriptionResource.
+    // Backward compatibility: mocking support for the old SDK's
+    // GetServiceAlerts(SubscriptionResource) extension method. The old SDK placed this on
+    // SubscriptionResource; the new generator places it on ArmClient (scope-based). This
+    // delegates to the generated MockableAlertsManagementArmClient.GetServiceAlerts(Id).
     public partial class MockableAlertsManagementSubscriptionResource
     {
         /// <summary> Gets a collection of ServiceAlertCollection in the SubscriptionResource. </summary>

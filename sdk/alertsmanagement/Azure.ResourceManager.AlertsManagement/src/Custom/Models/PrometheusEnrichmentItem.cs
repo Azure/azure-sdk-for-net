@@ -10,8 +10,12 @@ using EnrichmentType = Azure.ResourceManager.AlertsManagement.Models.Type;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    // Workaround for generator bug: @hierarchyBuilding produces incorrect constructor base() calls
-    // in multi-level discriminated hierarchies, causing CS1503 compilation errors.
+    // Workaround for generator bug: the TypeSpec generator produces incorrect constructor base()
+    // calls in multi-level discriminated type hierarchies (AlertEnrichmentItem → PrometheusEnrichmentItem
+    // → PrometheusInstantQuery/PrometheusRangeQuery). The generated constructors pass
+    // AlertsManagementStatus where the base expects Type (the discriminator), causing CS1503 errors.
+    // This custom code suppresses the broken constructors and provides correct ones that pass the
+    // discriminator value (EnrichmentType.PrometheusEnrichmentItem) to the base class.
     // See: https://github.com/Azure/azure-sdk-for-net/issues/57452
     [CodeGenSuppress("PrometheusEnrichmentItem", typeof(string), typeof(string), typeof(AlertsManagementStatus), typeof(string), typeof(IEnumerable<string>), typeof(string), typeof(string))]
     [CodeGenSuppress("PrometheusEnrichmentItem", typeof(string), typeof(string), typeof(AlertsManagementStatus), typeof(EnrichmentType), typeof(string), typeof(IEnumerable<string>), typeof(string), typeof(string))]

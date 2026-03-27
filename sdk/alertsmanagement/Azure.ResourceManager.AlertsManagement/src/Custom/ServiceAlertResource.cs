@@ -8,8 +8,11 @@ using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    // Backward compatibility: old SDK had ChangeState(ServiceAlertState, string, CancellationToken).
-    // New SDK uses ServiceAlertComments model. These overloads provide backward compat.
+    // Backward compatibility: the old SDK (AutoRest-based, v1.1.1) exposed
+    // ChangeState(ServiceAlertState newState, string comment, CancellationToken) where the comment
+    // was a plain string. The new TypeSpec spec wraps the comment in a ServiceAlertComments model.
+    // These overloads convert the string into ServiceAlertComments and delegate to the generated
+    // method, preserving the old API surface.
     public partial class ServiceAlertResource
     {
         /// <summary> Change the state of an alert. </summary>

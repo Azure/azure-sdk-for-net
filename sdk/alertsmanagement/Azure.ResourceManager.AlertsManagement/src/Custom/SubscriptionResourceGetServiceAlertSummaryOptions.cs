@@ -3,7 +3,10 @@
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    // Backward-compatible wrapper over the generated summary parameter overload.
+    // Backward compatibility: the old SDK (AutoRest-based, v1.1.1) provided this options class
+    // for the Alerts_GetSummary operation on SubscriptionResource. It groups the required groupby
+    // parameter and 11 optional filter parameters into a single object. The new TypeSpec generator
+    // does not produce this wrapper class.
     public partial class SubscriptionResourceGetServiceAlertSummaryOptions
     {
         public SubscriptionResourceGetServiceAlertSummaryOptions(AlertsSummaryGroupByField groupby)

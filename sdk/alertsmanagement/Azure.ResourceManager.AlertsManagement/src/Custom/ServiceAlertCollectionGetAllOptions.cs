@@ -3,7 +3,10 @@
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    // Backward-compatible wrapper over the generated query parameter overload for listing alerts.
+    // Backward compatibility: the old SDK (AutoRest-based, v1.1.1) provided this options class
+    // to group the 17 query parameters of the Alerts_ListAll operation (targetResource,
+    // targetResourceType, monitorService, severity, alertState, timeRange, etc.) into a single
+    // object. The new TypeSpec generator does not produce this wrapper class.
     public partial class ServiceAlertCollectionGetAllOptions
     {
         public string TargetResource { get; set; }
