@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     public readonly partial struct KubernetesClusterExtensionStatusLevel : IEquatable<KubernetesClusterExtensionStatusLevel>
     {
         private readonly string _value;
-        /// <summary> Error. </summary>
+        /// <summary> Indicates an error status from the extension. </summary>
         private const string ErrorValue = "Error";
-        /// <summary> Warning. </summary>
+        /// <summary> Indicates a warning status from the extension. </summary>
         private const string WarningValue = "Warning";
-        /// <summary> Information. </summary>
+        /// <summary> Indicates an informational status from the extension. </summary>
         private const string InformationValue = "Information";
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionStatusLevel"/>. </summary>
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             _value = value;
         }
 
-        /// <summary> Error. </summary>
+        /// <summary> Indicates an error status from the extension. </summary>
         public static KubernetesClusterExtensionStatusLevel Error { get; } = new KubernetesClusterExtensionStatusLevel(ErrorValue);
 
-        /// <summary> Warning. </summary>
+        /// <summary> Indicates a warning status from the extension. </summary>
         public static KubernetesClusterExtensionStatusLevel Warning { get; } = new KubernetesClusterExtensionStatusLevel(WarningValue);
 
-        /// <summary> Information. </summary>
+        /// <summary> Indicates an informational status from the extension. </summary>
         public static KubernetesClusterExtensionStatusLevel Information { get; } = new KubernetesClusterExtensionStatusLevel(InformationValue);
 
         /// <summary> Determines if two <see cref="KubernetesClusterExtensionStatusLevel"/> values are the same. </summary>

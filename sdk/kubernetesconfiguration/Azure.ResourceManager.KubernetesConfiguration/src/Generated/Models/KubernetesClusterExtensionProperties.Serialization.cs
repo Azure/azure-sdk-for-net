@@ -190,6 +190,26 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 writer.WritePropertyName("isSystemExtension"u8);
                 writer.WriteBooleanValue(IsSystemExtension.Value);
             }
+            if (Optional.IsDefined(AutoUpgradeMode))
+            {
+                writer.WritePropertyName("autoUpgradeMode"u8);
+                writer.WriteStringValue(AutoUpgradeMode.Value.ToString());
+            }
+            if (Optional.IsDefined(ManagementDetails))
+            {
+                writer.WritePropertyName("managementDetails"u8);
+                writer.WriteObjectValue(ManagementDetails, options);
+            }
+            if (Optional.IsDefined(AdditionalDetails))
+            {
+                writer.WritePropertyName("additionalDetails"u8);
+                writer.WriteObjectValue(AdditionalDetails, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExtensionState))
+            {
+                writer.WritePropertyName("extensionState"u8);
+                writer.WriteStringValue(ExtensionState);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -247,6 +267,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Uri packageUri = default;
             ManagedServiceIdentity aksAssignedIdentity = default;
             bool? isSystemExtension = default;
+            KubernetesClusterAutoUpgradeMode? autoUpgradeMode = default;
+            KubernetesClusterManagementDetails managementDetails = default;
+            KubernetesClusterAdditionalDetails additionalDetails = default;
+            string extensionState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -421,6 +445,38 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     isSystemExtension = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("autoUpgradeMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoUpgradeMode = new KubernetesClusterAutoUpgradeMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("managementDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managementDetails = KubernetesClusterManagementDetails.DeserializeKubernetesClusterManagementDetails(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("additionalDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalDetails = KubernetesClusterAdditionalDetails.DeserializeKubernetesClusterAdditionalDetails(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("extensionState"u8))
+                {
+                    extensionState = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -442,6 +498,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 packageUri,
                 aksAssignedIdentity,
                 isSystemExtension,
+                autoUpgradeMode,
+                managementDetails,
+                additionalDetails,
+                extensionState,
                 additionalBinaryDataProperties);
         }
     }

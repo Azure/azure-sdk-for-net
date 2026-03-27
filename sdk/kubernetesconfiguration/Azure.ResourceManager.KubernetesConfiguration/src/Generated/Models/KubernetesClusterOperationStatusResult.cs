@@ -13,27 +13,27 @@ using Azure.ResourceManager.KubernetesConfiguration;
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> The current status of an async operation. </summary>
-    public partial class OperationStatusResult
+    public partial class KubernetesClusterOperationStatusResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterOperationStatusResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
-        internal OperationStatusResult(string status)
+        internal KubernetesClusterOperationStatusResult(string status)
         {
             Status = status;
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterOperationStatusResult"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="properties"> Additional information, if available. </param>
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationStatusResult(string id, string name, string status, IDictionary<string, string> properties, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesClusterOperationStatusResult(string id, string name, string status, IDictionary<string, string> properties, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

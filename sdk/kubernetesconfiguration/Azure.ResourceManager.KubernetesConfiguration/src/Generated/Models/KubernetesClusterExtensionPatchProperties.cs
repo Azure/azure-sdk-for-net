@@ -26,14 +26,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionPatchProperties"/>. </summary>
         /// <param name="autoUpgradeMinorVersion"> Flag to note if this extension participates in auto upgrade of minor version, or not. </param>
+        /// <param name="autoUpgradeMode">
+        /// The upgrade mode for auto upgrade.
+        /// The default is "compatible".
+        /// </param>
         /// <param name="releaseTrain"> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is 'true'. </param>
         /// <param name="version"> Version of the extension for this extension, if it is 'pinned' to a specific version. autoUpgradeMinorVersion must be 'false'. </param>
         /// <param name="configurationSettings"> Configuration settings, as name-value pairs for configuring this extension. </param>
         /// <param name="configurationProtectedSettings"> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesClusterExtensionPatchProperties(bool? autoUpgradeMinorVersion, string releaseTrain, string version, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesClusterExtensionPatchProperties(bool? autoUpgradeMinorVersion, KubernetesClusterAutoUpgradeMode? autoUpgradeMode, string releaseTrain, string version, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
+            AutoUpgradeMode = autoUpgradeMode;
             ReleaseTrain = releaseTrain;
             Version = version;
             ConfigurationSettings = configurationSettings;
@@ -43,6 +48,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         /// <summary> Flag to note if this extension participates in auto upgrade of minor version, or not. </summary>
         public bool? AutoUpgradeMinorVersion { get; set; }
+
+        /// <summary>
+        /// The upgrade mode for auto upgrade.
+        /// The default is "compatible".
+        /// </summary>
+        public KubernetesClusterAutoUpgradeMode? AutoUpgradeMode { get; set; }
 
         /// <summary> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is 'true'. </summary>
         public string ReleaseTrain { get; set; }

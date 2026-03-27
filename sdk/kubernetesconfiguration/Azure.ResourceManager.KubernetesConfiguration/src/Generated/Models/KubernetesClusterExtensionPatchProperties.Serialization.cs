@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
+            if (Optional.IsDefined(AutoUpgradeMode))
+            {
+                writer.WritePropertyName("autoUpgradeMode"u8);
+                writer.WriteStringValue(AutoUpgradeMode.Value.ToString());
+            }
             if (Optional.IsDefined(ReleaseTrain))
             {
                 writer.WritePropertyName("releaseTrain"u8);
@@ -164,6 +169,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 return null;
             }
             bool? autoUpgradeMinorVersion = default;
+            KubernetesClusterAutoUpgradeMode? autoUpgradeMode = default;
             string releaseTrain = default;
             string version = default;
             IDictionary<string, string> configurationSettings = default;
@@ -178,6 +184,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         continue;
                     }
                     autoUpgradeMinorVersion = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("autoUpgradeMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoUpgradeMode = new KubernetesClusterAutoUpgradeMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("releaseTrain"u8))
@@ -244,6 +259,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             return new KubernetesClusterExtensionPatchProperties(
                 autoUpgradeMinorVersion,
+                autoUpgradeMode,
                 releaseTrain,
                 version,
                 configurationSettings ?? new ChangeTrackingDictionary<string, string>(),

@@ -44,8 +44,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="packageUri"> Uri of the Helm package. </param>
         /// <param name="aksAssignedIdentity"> Identity of the Extension resource in an AKS cluster. </param>
         /// <param name="isSystemExtension"> Flag to note if this extension is a system extension. </param>
+        /// <param name="autoUpgradeMode">
+        /// The upgrade mode for auto upgrade.
+        /// The default is "compatible".
+        /// </param>
+        /// <param name="managementDetails"> Management details of the extension. </param>
+        /// <param name="additionalDetails"> Additional details provided by the publisher of the extension. </param>
+        /// <param name="extensionState"> State of the extension on the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesClusterExtensionProperties(string extensionType, bool? autoUpgradeMinorVersion, string releaseTrain, string version, KubernetesClusterExtensionScope scope, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings, string currentVersion, KubernetesConfigurationProvisioningState? provisioningState, IList<KubernetesClusterExtensionStatus> statuses, ResponseError errorInfo, IReadOnlyDictionary<string, string> customLocationSettings, Uri packageUri, ManagedServiceIdentity aksAssignedIdentity, bool? isSystemExtension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesClusterExtensionProperties(string extensionType, bool? autoUpgradeMinorVersion, string releaseTrain, string version, KubernetesClusterExtensionScope scope, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings, string currentVersion, KubernetesConfigurationProvisioningState? provisioningState, IList<KubernetesClusterExtensionStatus> statuses, ResponseError errorInfo, IReadOnlyDictionary<string, string> customLocationSettings, Uri packageUri, ManagedServiceIdentity aksAssignedIdentity, bool? isSystemExtension, KubernetesClusterAutoUpgradeMode? autoUpgradeMode, KubernetesClusterManagementDetails managementDetails, KubernetesClusterAdditionalDetails additionalDetails, string extensionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExtensionType = extensionType;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
@@ -62,6 +69,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             PackageUri = packageUri;
             AksAssignedIdentity = aksAssignedIdentity;
             IsSystemExtension = isSystemExtension;
+            AutoUpgradeMode = autoUpgradeMode;
+            ManagementDetails = managementDetails;
+            AdditionalDetails = additionalDetails;
+            ExtensionState = extensionState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -109,5 +120,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         /// <summary> Flag to note if this extension is a system extension. </summary>
         public bool? IsSystemExtension { get; }
+
+        /// <summary>
+        /// The upgrade mode for auto upgrade.
+        /// The default is "compatible".
+        /// </summary>
+        public KubernetesClusterAutoUpgradeMode? AutoUpgradeMode { get; set; }
+
+        /// <summary> Management details of the extension. </summary>
+        public KubernetesClusterManagementDetails ManagementDetails { get; set; }
+
+        /// <summary> Additional details provided by the publisher of the extension. </summary>
+        public KubernetesClusterAdditionalDetails AdditionalDetails { get; set; }
+
+        /// <summary> State of the extension on the cluster. </summary>
+        public string ExtensionState { get; }
     }
 }

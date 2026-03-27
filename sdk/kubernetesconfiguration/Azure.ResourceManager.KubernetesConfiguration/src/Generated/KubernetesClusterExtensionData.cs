@@ -33,12 +33,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of an Extension resource. </param>
         /// <param name="identity"> Identity of the Extension resource. </param>
+        /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
-        internal KubernetesClusterExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, KubernetesClusterExtensionProperties properties, ManagedServiceIdentity identity, ArmPlan plan) : base(id, name, resourceType, systemData)
+        internal KubernetesClusterExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, KubernetesClusterExtensionProperties properties, ManagedServiceIdentity identity, ResourceIdentifier managedBy, ArmPlan plan) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
+            ManagedBy = managedBy;
             Plan = plan;
         }
 
@@ -47,6 +49,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         /// <summary> Identity of the Extension resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </summary>
+        public ResourceIdentifier ManagedBy { get; set; }
 
         /// <summary> Details of the resource plan. </summary>
         public ArmPlan Plan { get; set; }
@@ -208,6 +213,69 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             get
             {
                 return Properties is null ? default : Properties.IsSystemExtension;
+            }
+        }
+
+        /// <summary>
+        /// The upgrade mode for auto upgrade.
+        /// The default is "compatible".
+        /// </summary>
+        public KubernetesClusterAutoUpgradeMode? AutoUpgradeMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoUpgradeMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterExtensionProperties();
+                }
+                Properties.AutoUpgradeMode = value.Value;
+            }
+        }
+
+        /// <summary> Management details of the extension. </summary>
+        public KubernetesClusterManagementDetails ManagementDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagementDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterExtensionProperties();
+                }
+                Properties.ManagementDetails = value;
+            }
+        }
+
+        /// <summary> Additional details provided by the publisher of the extension. </summary>
+        public KubernetesClusterAdditionalDetails AdditionalDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterExtensionProperties();
+                }
+                Properties.AdditionalDetails = value;
+            }
+        }
+
+        /// <summary> State of the extension on the cluster. </summary>
+        public string ExtensionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtensionState;
             }
         }
     }

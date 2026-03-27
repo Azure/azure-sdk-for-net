@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     public readonly partial struct KubernetesConfigurationProvisioningState : IEquatable<KubernetesConfigurationProvisioningState>
     {
         private readonly string _value;
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         private const string SucceededValue = "Succeeded";
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         private const string FailedValue = "Failed";
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         private const string CanceledValue = "Canceled";
-        /// <summary> Creating. </summary>
+        /// <summary> Resource is being created. </summary>
         private const string CreatingValue = "Creating";
-        /// <summary> Updating. </summary>
+        /// <summary> Resource is being updated. </summary>
         private const string UpdatingValue = "Updating";
-        /// <summary> Deleting. </summary>
+        /// <summary> Resource is being deleted. </summary>
         private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationProvisioningState"/>. </summary>
@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             _value = value;
         }
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static KubernetesConfigurationProvisioningState Succeeded { get; } = new KubernetesConfigurationProvisioningState(SucceededValue);
 
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static KubernetesConfigurationProvisioningState Failed { get; } = new KubernetesConfigurationProvisioningState(FailedValue);
 
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static KubernetesConfigurationProvisioningState Canceled { get; } = new KubernetesConfigurationProvisioningState(CanceledValue);
 
-        /// <summary> Creating. </summary>
+        /// <summary> Resource is being created. </summary>
         public static KubernetesConfigurationProvisioningState Creating { get; } = new KubernetesConfigurationProvisioningState(CreatingValue);
 
-        /// <summary> Updating. </summary>
+        /// <summary> Resource is being updated. </summary>
         public static KubernetesConfigurationProvisioningState Updating { get; } = new KubernetesConfigurationProvisioningState(UpdatingValue);
 
-        /// <summary> Deleting. </summary>
+        /// <summary> Resource is being deleted. </summary>
         public static KubernetesConfigurationProvisioningState Deleting { get; } = new KubernetesConfigurationProvisioningState(DeletingValue);
 
         /// <summary> Determines if two <see cref="KubernetesConfigurationProvisioningState"/> values are the same. </summary>

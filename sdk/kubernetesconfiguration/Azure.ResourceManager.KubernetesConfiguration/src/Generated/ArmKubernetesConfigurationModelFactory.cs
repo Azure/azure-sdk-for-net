@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -18,6 +19,92 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKubernetesConfigurationModelFactory
     {
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="extensionType"> Type of the Extension, of which this resource is an instance of.  It must be one of the Extension Types registered with Microsoft.KubernetesConfiguration by the Extension publisher. </param>
+        /// <param name="autoUpgradeMinorVersion"> Flag to note if this extension participates in auto upgrade of minor version, or not. </param>
+        /// <param name="releaseTrain"> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is 'true'. </param>
+        /// <param name="version"> User-specified version of the extension for this extension to 'pin'. To use 'version', autoUpgradeMinorVersion must be 'false'. </param>
+        /// <param name="scope"> Scope at which the extension is installed. </param>
+        /// <param name="configurationSettings"> Configuration settings, as name-value pairs for configuring this extension. </param>
+        /// <param name="configurationProtectedSettings"> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </param>
+        /// <param name="currentVersion"> Currently installed version of the extension. </param>
+        /// <param name="provisioningState"> Status of installation of this extension. </param>
+        /// <param name="statuses"> Status from this extension. </param>
+        /// <param name="errorInfo"> Error information from the Agent - e.g. errors during installation. </param>
+        /// <param name="customLocationSettings"> Custom Location settings properties. </param>
+        /// <param name="packageUri"> Uri of the Helm package. </param>
+        /// <param name="aksAssignedIdentity"> Identity of the Extension resource in an AKS cluster. </param>
+        /// <param name="isSystemExtension"> Flag to note if this extension is a system extension. </param>
+        /// <param name="autoUpgradeMode">
+        /// The upgrade mode for auto upgrade.
+        /// The default is "compatible".
+        /// </param>
+        /// <param name="managementDetails"> Management details of the extension. </param>
+        /// <param name="additionalDetails"> Additional details provided by the publisher of the extension. </param>
+        /// <param name="extensionState"> State of the extension on the cluster. </param>
+        /// <param name="identity"> Identity of the Extension resource. </param>
+        /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
+        /// <returns> A new <see cref="KubernetesConfiguration.KubernetesClusterExtensionData"/> instance for mocking. </returns>
+        public static KubernetesClusterExtensionData KubernetesClusterExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string extensionType = default, bool? autoUpgradeMinorVersion = default, string releaseTrain = default, string version = default, KubernetesClusterExtensionScope scope = default, IDictionary<string, string> configurationSettings = default, IDictionary<string, string> configurationProtectedSettings = default, string currentVersion = default, KubernetesConfigurationProvisioningState? provisioningState = default, IEnumerable<KubernetesClusterExtensionStatus> statuses = default, ResponseError errorInfo = default, IReadOnlyDictionary<string, string> customLocationSettings = default, Uri packageUri = default, ManagedServiceIdentity aksAssignedIdentity = default, bool? isSystemExtension = default, KubernetesClusterAutoUpgradeMode? autoUpgradeMode = default, KubernetesClusterManagementDetails managementDetails = default, KubernetesClusterAdditionalDetails additionalDetails = default, string extensionState = default, ManagedServiceIdentity identity = default, ResourceIdentifier managedBy = default, ArmPlan plan = default)
+        {
+            return new KubernetesClusterExtensionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                extensionType is null && autoUpgradeMinorVersion is null && releaseTrain is null && version is null && scope is null && configurationSettings is null && configurationProtectedSettings is null && currentVersion is null && provisioningState is null && statuses is null && errorInfo is null && customLocationSettings is null && packageUri is null && aksAssignedIdentity is null && isSystemExtension is null && autoUpgradeMode is null && managementDetails is null && additionalDetails is null && extensionState is null ? default : new KubernetesClusterExtensionProperties(
+                    extensionType,
+                    autoUpgradeMinorVersion,
+                    releaseTrain,
+                    version,
+                    scope,
+                    configurationSettings,
+                    configurationProtectedSettings,
+                    currentVersion,
+                    provisioningState,
+                    (statuses ?? new ChangeTrackingList<KubernetesClusterExtensionStatus>()).ToList(),
+                    errorInfo,
+                    customLocationSettings,
+                    packageUri,
+                    aksAssignedIdentity,
+                    isSystemExtension,
+                    autoUpgradeMode,
+                    managementDetails,
+                    additionalDetails,
+                    extensionState,
+                    null),
+                identity,
+                managedBy,
+                plan);
+        }
+
+        /// <summary> Metadata about the managing entity of the extension and the permitted operations. </summary>
+        /// <param name="category"> The category of the managing entity. </param>
+        /// <param name="accessDetails"> The list of access details of the managing entity. </param>
+        /// <returns> A new <see cref="Models.KubernetesClusterManagementDetails"/> instance for mocking. </returns>
+        public static KubernetesClusterManagementDetails KubernetesClusterManagementDetails(string category = default, IEnumerable<KubernetesClusterAccessDetail> accessDetails = default)
+        {
+            accessDetails ??= new ChangeTrackingList<KubernetesClusterAccessDetail>();
+
+            return new KubernetesClusterManagementDetails(category, accessDetails.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Metadata about the access details of the managing entity of the extension. </summary>
+        /// <param name="entity"> The entity to which the access details apply. </param>
+        /// <param name="allowedActions"> The list of allowed actions for the entity. </param>
+        /// <param name="description"> The description of the entity. </param>
+        /// <returns> A new <see cref="Models.KubernetesClusterAccessDetail"/> instance for mocking. </returns>
+        public static KubernetesClusterAccessDetail KubernetesClusterAccessDetail(string entity = default, IEnumerable<string> allowedActions = default, string description = default)
+        {
+            allowedActions ??= new ChangeTrackingList<string>();
+
+            return new KubernetesClusterAccessDetail(entity, allowedActions.ToList(), description, additionalBinaryDataProperties: null);
+        }
 
         /// <summary> The current status of an async operation. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
@@ -25,12 +112,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="status"> Operation status. </param>
         /// <param name="properties"> Additional information, if available. </param>
         /// <param name="error"> If present, details of the operation error. </param>
-        /// <returns> A new <see cref="Models.OperationStatusResult"/> instance for mocking. </returns>
-        public static OperationStatusResult OperationStatusResult(string id = default, string name = default, string status = default, IDictionary<string, string> properties = default, ResponseError error = default)
+        /// <returns> A new <see cref="Models.KubernetesClusterOperationStatusResult"/> instance for mocking. </returns>
+        public static KubernetesClusterOperationStatusResult KubernetesClusterOperationStatusResult(string id = default, string name = default, string status = default, IDictionary<string, string> properties = default, ResponseError error = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
 
-            return new OperationStatusResult(
+            return new KubernetesClusterOperationStatusResult(
                 id,
                 name,
                 status,
@@ -62,22 +149,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="aksAssignedIdentity"> Identity of the Extension resource in an AKS cluster. Current supported identity types: SystemAssigned, UserAssigned. </param>
         /// <param name="isSystemExtension"> Flag to note if this extension is a system extension. </param>
         /// <returns> A new <see cref="KubernetesConfiguration.KubernetesClusterExtensionData"/> instance for mocking. </returns>
-        public static KubernetesClusterExtensionData KubernetesClusterExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, ArmPlan plan = default, string extensionType = default, bool? autoUpgradeMinorVersion = default, string releaseTrain = default, string version = default, KubernetesClusterExtensionScope scope = default, IDictionary<string, string> configurationSettings = default, IDictionary<string, string> configurationProtectedSettings = default, string currentVersion = default, KubernetesConfigurationProvisioningState? provisioningState = default, IEnumerable<KubernetesClusterExtensionStatus> statuses = default, ResponseError errorInfo = default, IReadOnlyDictionary<string, string> customLocationSettings = default, Uri packageUri = default, ManagedServiceIdentity aksAssignedIdentity = default, bool? isSystemExtension = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KubernetesClusterExtensionData KubernetesClusterExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ArmPlan plan, string extensionType, bool? autoUpgradeMinorVersion, string releaseTrain, string version, KubernetesClusterExtensionScope scope, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings, string currentVersion, KubernetesConfigurationProvisioningState? provisioningState, IEnumerable<KubernetesClusterExtensionStatus> statuses, ResponseError errorInfo, IReadOnlyDictionary<string, string> customLocationSettings, Uri packageUri, ManagedServiceIdentity aksAssignedIdentity, bool? isSystemExtension)
         {
-            configurationSettings ??= new ChangeTrackingDictionary<string, string>();
-            configurationProtectedSettings ??= new ChangeTrackingDictionary<string, string>();
-            statuses ??= new ChangeTrackingList<KubernetesClusterExtensionStatus>();
-            customLocationSettings ??= new ChangeTrackingDictionary<string, string>();
-
-            return new KubernetesClusterExtensionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default,
-                identity,
-                plan);
+            return KubernetesClusterExtensionData(id, name, resourceType, systemData, extensionType, autoUpgradeMinorVersion, releaseTrain, version, scope, configurationSettings, configurationProtectedSettings, currentVersion, provisioningState, statuses, errorInfo, customLocationSettings, packageUri, aksAssignedIdentity, isSystemExtension, autoUpgradeMode: default, managementDetails: default, additionalDetails: default, extensionState: default, identity, managedBy: default, plan);
         }
     }
 }

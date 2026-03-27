@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
             TryGetApiVersion(ResourceType, out string kubernetesClusterExtensionApiVersion);
             _extensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration", ResourceType.Namespace, Diagnostics);
-            _extensionsRestClient = new Extensions(_extensionsClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2024-11-01");
+            _extensionsRestClient = new Extensions(_extensionsClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2025-03-01");
             _operationStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration", ResourceType.Namespace, Diagnostics);
-            _operationStatusRestClient = new OperationStatus(_operationStatusClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2024-11-01");
+            _operationStatusRestClient = new OperationStatus(_operationStatusClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2025-03-01");
             ValidateResourceId(id);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OperationStatusResult>> GetAsync(string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KubernetesClusterOperationStatusResult>> GetAsync(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 };
                 HttpMessage message = _operationStatusRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OperationStatusResult> response = Response.FromValue(OperationStatusResult.FromResponse(result), result);
+                Response<KubernetesClusterOperationStatusResult> response = Response.FromValue(KubernetesClusterOperationStatusResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OperationStatusResult> Get(string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<KubernetesClusterOperationStatusResult> Get(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 };
                 HttpMessage message = _operationStatusRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<OperationStatusResult> response = Response.FromValue(OperationStatusResult.FromResponse(result), result);
+                Response<KubernetesClusterOperationStatusResult> response = Response.FromValue(KubernetesClusterOperationStatusResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

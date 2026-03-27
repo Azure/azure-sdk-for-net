@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             _clusterResourceName = clusterResourceName;
             _clusterName = clusterName;
             _extensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration", KubernetesClusterExtensionResource.ResourceType.Namespace, Diagnostics);
-            _extensionsRestClient = new Extensions(_extensionsClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2024-11-01");
+            _extensionsRestClient = new Extensions(_extensionsClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2025-03-01");
             _operationStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration", KubernetesClusterExtensionResource.ResourceType.Namespace, Diagnostics);
-            _operationStatusRestClient = new OperationStatus(_operationStatusClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2024-11-01");
+            _operationStatusRestClient = new OperationStatus(_operationStatusClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2025-03-01");
             ValidateResourceId(id);
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -106,6 +106,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
+            if (Optional.IsDefined(ManagedBy))
+            {
+                writer.WritePropertyName("managedBy"u8);
+                writer.WriteStringValue(ManagedBy);
+            }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
@@ -145,6 +150,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             KubernetesClusterExtensionProperties properties = default;
             ManagedServiceIdentity identity = default;
+            ResourceIdentifier managedBy = default;
             ArmPlan plan = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,6 +204,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerKubernetesConfigurationContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("managedBy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedBy = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("plan"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -220,6 +235,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 additionalBinaryDataProperties,
                 properties,
                 identity,
+                managedBy,
                 plan);
         }
     }

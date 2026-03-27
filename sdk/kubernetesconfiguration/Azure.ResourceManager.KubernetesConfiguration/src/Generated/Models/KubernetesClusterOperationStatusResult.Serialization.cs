@@ -16,63 +16,63 @@ using Azure.ResourceManager.KubernetesConfiguration;
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> The current status of an async operation. </summary>
-    public partial class OperationStatusResult : IJsonModel<OperationStatusResult>
+    public partial class KubernetesClusterOperationStatusResult : IJsonModel<KubernetesClusterOperationStatusResult>
     {
-        /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/> for deserialization. </summary>
-        internal OperationStatusResult()
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterOperationStatusResult"/> for deserialization. </summary>
+        internal KubernetesClusterOperationStatusResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OperationStatusResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KubernetesClusterOperationStatusResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOperationStatusResult(document.RootElement, options);
+                        return DeserializeKubernetesClusterOperationStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationStatusResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterOperationStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OperationStatusResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterOperationStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OperationStatusResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KubernetesClusterOperationStatusResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OperationStatusResult IPersistableModel<OperationStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KubernetesClusterOperationStatusResult IPersistableModel<KubernetesClusterOperationStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OperationStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KubernetesClusterOperationStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OperationStatusResult"/> from. </param>
-        internal static OperationStatusResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KubernetesClusterOperationStatusResult"/> from. </param>
+        internal static KubernetesClusterOperationStatusResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOperationStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeKubernetesClusterOperationStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OperationStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KubernetesClusterOperationStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationStatusResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterOperationStatusResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Id))
             {
@@ -140,24 +140,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OperationStatusResult IJsonModel<OperationStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KubernetesClusterOperationStatusResult IJsonModel<KubernetesClusterOperationStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OperationStatusResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KubernetesClusterOperationStatusResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationStatusResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterOperationStatusResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOperationStatusResult(document.RootElement, options);
+            return DeserializeKubernetesClusterOperationStatusResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OperationStatusResult DeserializeOperationStatusResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static KubernetesClusterOperationStatusResult DeserializeKubernetesClusterOperationStatusResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OperationStatusResult(
+            return new KubernetesClusterOperationStatusResult(
                 id,
                 name,
                 status,

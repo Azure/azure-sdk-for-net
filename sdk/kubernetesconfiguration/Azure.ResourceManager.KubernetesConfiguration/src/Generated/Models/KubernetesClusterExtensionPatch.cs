@@ -50,6 +50,26 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
         }
 
+        /// <summary>
+        /// The upgrade mode for auto upgrade.
+        /// The default is "compatible".
+        /// </summary>
+        public KubernetesClusterAutoUpgradeMode? AutoUpgradeMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoUpgradeMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterExtensionPatchProperties();
+                }
+                Properties.AutoUpgradeMode = value.Value;
+            }
+        }
+
         /// <summary> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is 'true'. </summary>
         public string ReleaseTrain
         {
