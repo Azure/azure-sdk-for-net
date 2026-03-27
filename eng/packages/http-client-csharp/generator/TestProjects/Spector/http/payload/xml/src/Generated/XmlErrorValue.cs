@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,6 +16,8 @@ namespace Payload.Xml
     public partial class XmlErrorValue
     {
         protected XmlErrorValue() => throw null;
+
+        internal XmlErrorValue(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

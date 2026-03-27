@@ -23,16 +23,15 @@ namespace Azure.Developer.DevCenter
             _options = options ?? new DevCenterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(_options, true);
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(_options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(_options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = _options.Version;
         }
 
         /// <summary> Initializes a new instance of DevBoxesClient from DevCenterClient </summary>
-        public virtual DevBoxesClient GetDevBoxesClient() => new DevBoxesClient(_endpoint, _tokenCredential, _options);
+        public virtual DevBoxesClient GetDevBoxesClient() => new DevBoxesClient(Pipeline, _endpoint, _options);
 
         /// <summary> Initializes a new instance of DeploymentEnvironmentsClient from DevCenterClient </summary>
-        public virtual DeploymentEnvironmentsClient GetDeploymentEnvironmentsClient() => new DeploymentEnvironmentsClient(_endpoint, _tokenCredential, _options);
+        public virtual DeploymentEnvironmentsClient GetDeploymentEnvironmentsClient() => new DeploymentEnvironmentsClient(Pipeline, _endpoint, _options);
     }
 }

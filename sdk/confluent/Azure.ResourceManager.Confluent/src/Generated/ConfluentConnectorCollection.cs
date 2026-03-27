@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ConfluentConnectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectorName, ConfluentConnectorData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConfluentConnectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectorName, ConfluentConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ConfluentConnectorResource> CreateOrUpdate(WaitUntil waitUntil, string connectorName, ConfluentConnectorData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConfluentConnectorResource> CreateOrUpdate(WaitUntil waitUntil, string connectorName, ConfluentConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 

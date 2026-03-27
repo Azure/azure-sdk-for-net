@@ -15,4 +15,11 @@
   <ItemGroup>
     <PackageReference Include="Azure.Provisioning" />
   </ItemGroup>
+
+  <!-- Polyfill for ExperimentalAttribute on netstandard2.0.
+       Real SDK projects get this via $(AzureCoreSharedSources) in their Directory.Build.props.
+       Test projects don't inherit from the SDK tree, so we include it directly. -->
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ExperimentalAttribute.cs" LinkBase="Shared" />
+  </ItemGroup>
 </Project>

@@ -14,7 +14,7 @@ namespace Azure.Generator.Management.Models;
 public class ArmProviderSchema
 {
     /// <summary> Gets the list of ARM resource metadata. </summary>
-    public IReadOnlyList<ResourceMetadata> Resources { get; }
+    public IReadOnlyList<ArmResourceMetadata> Resources { get; }
 
     /// <summary> Gets the list of non-resource methods. </summary>
     public IReadOnlyList<NonResourceMethod> NonResourceMethods { get; }
@@ -22,7 +22,7 @@ public class ArmProviderSchema
     /// <summary> Initializes a new instance of <see cref="ArmProviderSchema"/>. </summary>
     /// <param name="resources"> The list of resource metadata. </param>
     /// <param name="nonResourceMethods"> The list of non-resource methods. </param>
-    public ArmProviderSchema(IReadOnlyList<ResourceMetadata> resources, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+    public ArmProviderSchema(IReadOnlyList<ArmResourceMetadata> resources, IReadOnlyList<NonResourceMethod> nonResourceMethods)
     {
         Resources = resources;
         NonResourceMethods = nonResourceMethods;
@@ -37,7 +37,7 @@ public class ArmProviderSchema
     /// <returns>A new ArmProviderSchema instance</returns>
     public static ArmProviderSchema Deserialize(IReadOnlyDictionary<string, BinaryData> arguments, ManagementInputLibrary library, Func<NonResourceMethod, bool>? methodFilter = null)
     {
-        var resourceMetadata = new List<ResourceMetadata>();
+        var resourceMetadata = new List<ArmResourceMetadata>();
         var resourceChildren = new Dictionary<string, List<string>>();
 
         // Deserialize resources
@@ -62,7 +62,7 @@ public class ArmProviderSchema
                 }
 
                 var children = new List<string>();
-                var metadata = ResourceMetadata.DeserializeResourceMetadata(item, model, children);
+                var metadata = ArmResourceMetadata.DeserializeResourceMetadata(item, model, children);
                 resourceMetadata.Add(metadata);
                 resourceChildren.Add(metadata.ResourceIdPattern, children);
             }

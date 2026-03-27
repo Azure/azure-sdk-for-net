@@ -9,6 +9,7 @@ namespace Azure.Developer.DevCenter
     public partial class DeploymentEnvironmentsClient
     {
         protected DeploymentEnvironmentsClient() { }
+        public DeploymentEnvironmentsClient(Azure.Developer.DevCenter.DeploymentEnvironmentsClientSettings settings) { }
         public DeploymentEnvironmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public DeploymentEnvironmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.DevCenter.DevCenterClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -57,9 +58,17 @@ namespace Azure.Developer.DevCenter
         public virtual Azure.AsyncPageable<System.BinaryData> GetEnvironmentTypesAsync(string projectName, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Developer.DevCenter.Models.DevCenterEnvironmentType> GetEnvironmentTypesAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DeploymentEnvironmentsClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DeploymentEnvironmentsClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Developer.DevCenter.DevCenterClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class DevBoxesClient
     {
         protected DevBoxesClient() { }
+        public DevBoxesClient(Azure.Developer.DevCenter.DevBoxesClientSettings settings) { }
         public DevBoxesClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public DevBoxesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.DevCenter.DevCenterClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -140,9 +149,17 @@ namespace Azure.Developer.DevCenter
         public virtual System.Threading.Tasks.Task<Azure.Operation> StopDevBoxAsync(Azure.WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> StopDevBoxAsync(Azure.WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DevBoxesClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DevBoxesClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Developer.DevCenter.DevCenterClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class DevCenterClient
     {
         protected DevCenterClient() { }
+        public DevCenterClient(Azure.Developer.DevCenter.DevCenterClientSettings settings) { }
         public DevCenterClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public DevCenterClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.DevCenter.DevCenterClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -164,6 +181,13 @@ namespace Azure.Developer.DevCenter
         {
             V2023_04_01 = 1,
         }
+    }
+    public partial class DevCenterClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DevCenterClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Developer.DevCenter.DevCenterClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
 }
 namespace Azure.Developer.DevCenter.Models

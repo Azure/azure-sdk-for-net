@@ -242,21 +242,21 @@ public class Sample_EvaluationRules : SamplesBase
     {
         #region Snippet:Sample_CreateClients_EvaluationRules
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
         #endregion
         #region Snippet:Sample_CreateAgent_EvaluationRules_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant that answers general questions",
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "evalAgent",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
@@ -289,7 +289,7 @@ public class Sample_EvaluationRules : SamplesBase
         Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
         #endregion
         #region Snippet:Sample_CreateConversation_EvaluationRules_Async
-        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
+        ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync();
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
         #endregion
         #region Snippet:Sample_AskQuestions_EvaluationRules_Async
@@ -354,7 +354,7 @@ public class Sample_EvaluationRules : SamplesBase
         Console.WriteLine($"To check evaluation runs, please open {reportUri} from the browser");
         #endregion
         #region Snippet:Sample_Cleanup_EvaluationRules_Async
-        await projectClient.OpenAI.Conversations.DeleteConversationAsync(conversation.Id);
+        await projectClient.OpenAI.GetProjectConversationsClient().DeleteConversationAsync(conversation.Id);
         await projectClient.EvaluationRules.DeleteAsync(id: continuousEvalRule.Id);
         await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         // Warning! After this step the evaluations will be deleted and will not be available on Microsoft Foundry portal.
@@ -373,20 +373,20 @@ public class Sample_EvaluationRules : SamplesBase
     public void EvaluationRulesExample()
     {
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
         #region Snippet:Sample_CreateAgent_EvaluationRules_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant that answers general questions",
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "evalAgent",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
@@ -417,7 +417,7 @@ public class Sample_EvaluationRules : SamplesBase
         Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
         #endregion
         #region Snippet:Sample_CreateConversation_EvaluationRules_Sync
-        ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation();
+        ProjectConversation conversation = projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversation();
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
         #endregion
         #region Snippet:Sample_AskQuestions_EvaluationRules_Sync
@@ -482,7 +482,7 @@ public class Sample_EvaluationRules : SamplesBase
         Console.WriteLine($"To check evaluation runs, please open {reportUri} from the browser");
         #endregion
         #region Snippet:Sample_Cleanup_EvaluationRules_Sync
-        projectClient.OpenAI.Conversations.DeleteConversation(conversation.Id);
+        projectClient.OpenAI.GetProjectConversationsClient().DeleteConversation(conversation.Id);
         projectClient.EvaluationRules.Delete(id: continuousEvalRule.Id);
         projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         // Warning! After this step the evaluations will be deleted and will not be available on Microsoft Foundry portal.

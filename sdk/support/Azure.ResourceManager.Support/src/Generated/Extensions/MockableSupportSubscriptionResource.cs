@@ -8,41 +8,52 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Support;
 using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableSupportSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _subscriptionSupportTicketSupportTicketsClientDiagnostics;
-        private SupportTicketsRestOperations _subscriptionSupportTicketSupportTicketsRestClient;
+        private ClientDiagnostics _classifyServicesClientDiagnostics;
+        private ClassifyServices _classifyServicesRestClient;
+        private ClientDiagnostics _classifyProblemsClientDiagnostics;
+        private ClassifyProblems _classifyProblemsRestClient;
+        private ClientDiagnostics _subscriptionSupportTicketClientDiagnostics;
+        private SubscriptionSupportTicket _subscriptionSupportTicketRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSupportSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSupportSubscriptionResource for mocking. </summary>
         protected MockableSupportSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSupportSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSupportSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSupportSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics SubscriptionSupportTicketSupportTicketsClientDiagnostics => _subscriptionSupportTicketSupportTicketsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support", SubscriptionSupportTicketResource.ResourceType.Namespace, Diagnostics);
-        private SupportTicketsRestOperations SubscriptionSupportTicketSupportTicketsRestClient => _subscriptionSupportTicketSupportTicketsRestClient ??= new SupportTicketsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SubscriptionSupportTicketResource.ResourceType));
+        private ClientDiagnostics ClassifyServicesClientDiagnostics => _classifyServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClassifyServices ClassifyServicesRestClient => _classifyServicesRestClient ??= new ClassifyServices(ClassifyServicesClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
 
-        /// <summary> Gets a collection of SubscriptionSupportTicketResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SubscriptionSupportTicketResources and their operations over a SubscriptionSupportTicketResource. </returns>
+        private ClientDiagnostics ClassifyProblemsClientDiagnostics => _classifyProblemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ClassifyProblems ClassifyProblemsRestClient => _classifyProblemsRestClient ??= new ClassifyProblems(ClassifyProblemsClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+
+        private ClientDiagnostics SubscriptionSupportTicketClientDiagnostics => _subscriptionSupportTicketClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SubscriptionSupportTicket SubscriptionSupportTicketRestClient => _subscriptionSupportTicketRestClient ??= new SubscriptionSupportTicket(SubscriptionSupportTicketClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+
+        /// <summary> Gets a collection of SubscriptionSupportTickets in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of SubscriptionSupportTickets and their operations over a SubscriptionSupportTicketResource. </returns>
         public virtual SubscriptionSupportTicketCollection GetSubscriptionSupportTickets()
         {
             return GetCachedClient(client => new SubscriptionSupportTicketCollection(client, Id));
@@ -52,20 +63,16 @@ namespace Azure.ResourceManager.Support.Mocking
         /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SupportTickets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SupportTickets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,6 +83,8 @@ namespace Azure.ResourceManager.Support.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionSupportTicketResource>> GetSubscriptionSupportTicketAsync(string supportTicketName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+
             return await GetSubscriptionSupportTickets().GetAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -83,20 +92,16 @@ namespace Azure.ResourceManager.Support.Mocking
         /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SupportTickets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SupportTickets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,11 +112,13 @@ namespace Azure.ResourceManager.Support.Mocking
         [ForwardsClientCalls]
         public virtual Response<SubscriptionSupportTicketResource> GetSubscriptionSupportTicket(string supportTicketName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+
             return GetSubscriptionSupportTickets().Get(supportTicketName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionFileWorkspaceResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SubscriptionFileWorkspaceResources and their operations over a SubscriptionFileWorkspaceResource. </returns>
+        /// <summary> Gets a collection of SubscriptionFileWorkspaces in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of SubscriptionFileWorkspaces and their operations over a SubscriptionFileWorkspaceResource. </returns>
         public virtual SubscriptionFileWorkspaceCollection GetSubscriptionFileWorkspaces()
         {
             return GetCachedClient(client => new SubscriptionFileWorkspaceCollection(client, Id));
@@ -121,20 +128,16 @@ namespace Azure.ResourceManager.Support.Mocking
         /// Gets details for a specific file workspace in an Azure subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileWorkspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionFileWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,6 +148,8 @@ namespace Azure.ResourceManager.Support.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionFileWorkspaceResource>> GetSubscriptionFileWorkspaceAsync(string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
+
             return await GetSubscriptionFileWorkspaces().GetAsync(fileWorkspaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -152,20 +157,16 @@ namespace Azure.ResourceManager.Support.Mocking
         /// Gets details for a specific file workspace in an Azure subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileWorkspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionFileWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -176,42 +177,200 @@ namespace Azure.ResourceManager.Support.Mocking
         [ForwardsClientCalls]
         public virtual Response<SubscriptionFileWorkspaceResource> GetSubscriptionFileWorkspace(string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
+
             return GetSubscriptionFileWorkspaces().Get(fileWorkspaceName, cancellationToken);
         }
 
         /// <summary>
-        /// Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription.
+        /// Classify the list of right Azure services.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/classifyServices. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SupportTickets_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClassifyServices_ClassifyServices. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SupportServiceClassificationOutput>> ClassifyServicesAsync(SupportServiceClassificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SubscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.CheckSupportTicketNameAvailability");
+            using DiagnosticScope scope = ClassifyServicesClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyServices");
             scope.Start();
             try
             {
-                var response = await SubscriptionSupportTicketSupportTicketsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ClassifyServicesRestClient.CreateClassifyServicesRequest(Guid.Parse(Id.SubscriptionId), SupportServiceClassificationContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SupportServiceClassificationOutput> response = Response.FromValue(SupportServiceClassificationOutput.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Classify the list of right Azure services.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/classifyServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ClassifyServices_ClassifyServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<SupportServiceClassificationOutput> ClassifyServices(SupportServiceClassificationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ClassifyServicesClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyServices");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ClassifyServicesRestClient.CreateClassifyServicesRequest(Guid.Parse(Id.SubscriptionId), SupportServiceClassificationContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SupportServiceClassificationOutput> response = Response.FromValue(SupportServiceClassificationOutput.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Classify the right problem classifications (categories) available for a specific Azure service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/services/{problemServiceName}/classifyProblems. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ClassifyProblems_ClassifyProblems. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="problemServiceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ProblemClassificationsClassificationOutput>> ClassifyProblemsAsync(string problemServiceName, ProblemClassificationsClassificationInput content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(problemServiceName, nameof(problemServiceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ClassifyProblemsClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyProblems");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ClassifyProblemsRestClient.CreateClassifyProblemsRequest(Guid.Parse(Id.SubscriptionId), problemServiceName, ProblemClassificationsClassificationInput.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ProblemClassificationsClassificationOutput> response = Response.FromValue(ProblemClassificationsClassificationOutput.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Classify the right problem classifications (categories) available for a specific Azure service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/services/{problemServiceName}/classifyProblems. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ClassifyProblems_ClassifyProblems. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="problemServiceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ProblemClassificationsClassificationOutput> ClassifyProblems(string problemServiceName, ProblemClassificationsClassificationInput content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(problemServiceName, nameof(problemServiceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ClassifyProblemsClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyProblems");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ClassifyProblemsRestClient.CreateClassifyProblemsRequest(Guid.Parse(Id.SubscriptionId), problemServiceName, ProblemClassificationsClassificationInput.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ProblemClassificationsClassificationOutput> response = Response.FromValue(ProblemClassificationsClassificationOutput.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -225,20 +384,64 @@ namespace Azure.ResourceManager.Support.Mocking
         /// Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SupportTickets_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> SupportTicketsOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = SubscriptionSupportTicketClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.CheckSupportTicketNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionSupportTicketRestClient.CreateCheckSupportTicketNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SupportNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SupportNameAvailabilityResult> response = Response.FromValue(SupportNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
+        /// <term> Operation Id. </term>
+        /// <description> SupportTicketsOperationGroup_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,11 +452,21 @@ namespace Azure.ResourceManager.Support.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SubscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.CheckSupportTicketNameAvailability");
+            using DiagnosticScope scope = SubscriptionSupportTicketClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.CheckSupportTicketNameAvailability");
             scope.Start();
             try
             {
-                var response = SubscriptionSupportTicketSupportTicketsRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubscriptionSupportTicketRestClient.CreateCheckSupportTicketNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SupportNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SupportNameAvailabilityResult> response = Response.FromValue(SupportNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

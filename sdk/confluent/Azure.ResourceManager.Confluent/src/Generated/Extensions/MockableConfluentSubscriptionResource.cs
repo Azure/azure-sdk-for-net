@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </summary>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfluentAgreement>> CreateMarketplaceAgreementAsync(ConfluentAgreement body = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentAgreement>> CreateMarketplaceAgreementAsync(ConfluentAgreement body, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = MarketplaceAgreementsOperationGroupClientDiagnostics.CreateScope("MockableConfluentSubscriptionResource.CreateMarketplaceAgreement");
             scope.Start();
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </summary>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfluentAgreement> CreateMarketplaceAgreement(ConfluentAgreement body = default, CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentAgreement> CreateMarketplaceAgreement(ConfluentAgreement body, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = MarketplaceAgreementsOperationGroupClientDiagnostics.CreateScope("MockableConfluentSubscriptionResource.CreateMarketplaceAgreement");
             scope.Start();

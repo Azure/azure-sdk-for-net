@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
-    public partial class OpenAPITool : AgentTool
+    public partial class OpenAPITool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="OpenAPITool"/>. </summary>
         /// <param name="functionDefinition"> The openapi function definition. </param>

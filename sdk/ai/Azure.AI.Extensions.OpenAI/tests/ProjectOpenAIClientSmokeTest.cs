@@ -17,7 +17,7 @@ namespace Azure.AI.Extensions.OpenAI.Tests;
 [Category("Smoke")]
 public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
 {
-    private static readonly string AGENT_NAME = "MyAgentOAI";
+    private static readonly string FOUNDRY_AGENT_NAME = "MyAgentOAI";
     public ProjectOpenAIClientSmokeTest(bool isAsync) : base(isAsync)
     {
     }
@@ -57,12 +57,12 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         }
 
         AIProjectClient projectClientWithoutApp = new(
-            endpoint: new Uri(TestEnvironment.PROJECT_ENDPOINT),
+            endpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
             options: WithExtraPolicy(new AIProjectClientOptions()));
 
         AIProjectClient projectClientWithApp = new(
-            endpoint: new Uri(TestEnvironment.PROJECT_ENDPOINT),
+            endpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
             options: WithExtraPolicy(new AIProjectClientOptions()
             {
@@ -70,28 +70,28 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
             }));
 
         ProjectOpenAIClient openAIClientWithoutApp = new(
-            projectEndpoint: new Uri(TestEnvironment.PROJECT_ENDPOINT),
+            projectEndpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
             options: WithExtraPolicy(new ProjectResponsesClientOptions()));
 
         ProjectOpenAIClient openAIClientWithApp = new(
-            projectEndpoint: new Uri(TestEnvironment.PROJECT_ENDPOINT),
+            projectEndpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
             options: WithExtraPolicy(new ProjectResponsesClientOptions()
             {
                 UserAgentApplicationId = "MyOtherApplication",
             }));
 
-        async Task DoCreateAgentAsync(AgentsClient agentsClient)
+        async Task DoCreateAgentAsync(AgentAdministrationClient agentsClient)
         {
             await agentsClient.CreateAgentVersionAsync(
                 agentName: "foobar",
-                options: new AgentVersionCreationOptions(
-                    definition: new PromptAgentDefinition("mock-model")));
+                options: new ProjectsAgentVersionCreationOptions(
+                    definition: new DeclarativeAgentDefinition("mock-model")));
         }
 
         ProjectResponsesClient responsesClientWithoutApp = new(
-            projectEndpoint: new(TestEnvironment.PROJECT_ENDPOINT),
+            projectEndpoint: new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
             options: WithExtraPolicy(new ProjectResponsesClientOptions()));
 
@@ -106,10 +106,10 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
 
         VerifyCall(DoCreateAgentAsync(projectClientWithoutApp.Agents), "Azure.AI.Projects.*");
         VerifyCall(DoCreateAgentAsync(projectClientWithApp.Agents), "MyApplication Azure.AI.Projects.*");
-        VerifyCall(DoResponseAsync(projectClientWithoutApp.OpenAI.Responses), "Azure.AI.Projects.*");
-        VerifyCall(DoResponseAsync(projectClientWithApp.OpenAI.Responses), "MyApplication Azure.AI.Projects.*");
-        VerifyCall(DoResponseAsync(openAIClientWithoutApp.Responses), "AIProjectClient OpenAI.*");
-        VerifyCall(DoResponseAsync(openAIClientWithApp.Responses), "MyOtherApplication-AIProjectClient OpenAI.*");
+        VerifyCall(DoResponseAsync(projectClientWithoutApp.OpenAI.GetProjectResponsesClient()), "Azure.AI.Projects.*");
+        VerifyCall(DoResponseAsync(projectClientWithApp.OpenAI.GetProjectResponsesClient()), "MyApplication Azure.AI.Projects.*");
+        VerifyCall(DoResponseAsync(openAIClientWithoutApp.GetProjectResponsesClient()), "AIProjectClient OpenAI.*");
+        VerifyCall(DoResponseAsync(openAIClientWithApp.GetProjectResponsesClient()), "MyOtherApplication-AIProjectClient OpenAI.*");
         VerifyCall(DoResponseAsync(responsesClientWithoutApp), "AIProjectClient.*");
     }
 
@@ -132,10 +132,10 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
     {
         if (Mode == RecordedTestMode.Playback)
             return;
-        Uri connectionString = new(TestEnvironment.PROJECT_ENDPOINT);
+        Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
         // Remove Agents.
-        foreach (AgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: FOUNDRY_AGENT_NAME))
         {
             projectClient.Agents.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }

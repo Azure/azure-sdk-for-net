@@ -82,7 +82,7 @@ dotnet add package Azure.Identity
 To interact with Azure AI Projects, you’ll need to create an instance of `AIProjectClient`. Use the appropriate credential type from the Azure Identity library. For example, [DefaultAzureCredential][azure_identity_dac]:
 
 ```C# Snippet:AI_Projects_OverviewCreateClient
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
@@ -98,8 +98,8 @@ The `GetPersistentAgentsClient` method on the `AIProjectsClient` gives you acces
 
 The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, as shown in the "Models + endpoints" tab, under the "Name" column.
 ```C# Snippet:AI_Projects_ExtensionsAgentsBasicsSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
 
@@ -175,15 +175,15 @@ Create Agent
 
 Synchronous call:
 ```C# Snippet:Sample_CreateAgentVersionCRUD_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent1",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-AgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent2",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
@@ -191,15 +191,15 @@ Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.
 
 Asynchronous call:
 ```C# Snippet:Sample_CreateAgentVersionCRUD_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent1",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent2",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
@@ -209,13 +209,13 @@ Get Agent
 
 Synchronous call:
 ```C# Snippet:Sample_GetAgentCRUD_Sync
-AgentRecord result = projectClient.Agents.GetAgent(agentVersion1.Name);
+ProjectsAgentRecord result = projectClient.Agents.GetAgent(agentVersion1.Name);
 Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
 ```
 
 Asynchronous call:
 ```C# Snippet:Sample_GetAgentCRUD_Async
-AgentRecord result = await projectClient.Agents.GetAgentAsync(agentVersion1.Name);
+ProjectsAgentRecord result = await projectClient.Agents.GetAgentAsync(agentVersion1.Name);
 Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
 ```
 
@@ -223,7 +223,7 @@ List Agents
 
 Synchronous call:
 ```C# Snippet:Sample_ListAgentsCRUD_Sync
-foreach (AgentRecord agent in projectClient.Agents.GetAgents())
+foreach (ProjectsAgentRecord agent in projectClient.Agents.GetAgents())
 {
     Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
 }
@@ -231,7 +231,7 @@ foreach (AgentRecord agent in projectClient.Agents.GetAgents())
 
 Asynchronous call:
 ```C# Snippet:Sample_ListAgentsCRUD_Async
-await foreach (AgentRecord agent in projectClient.Agents.GetAgentsAsync())
+await foreach (ProjectsAgentRecord agent in projectClient.Agents.GetAgentsAsync())
 {
     Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
 }
@@ -264,8 +264,8 @@ The code below assumes `modelDeploymentName` (a string) is defined. It's the dep
 You can update the `connectionName` with one of the connections in your Foundry project, and you can update the `apiVersion` value with one found in the "Data plane - inference" row [in this table](https://learn.microsoft.com/azure/ai-services/openai/reference#api-specs).
 
 ```C# Snippet:AI_Projects_AzureOpenAIChatSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI chat client");
 var credential = new DefaultAzureCredential();
@@ -292,8 +292,8 @@ Console.WriteLine(result.Content[0].Text);
 The code below shows some Deployments operations, which allow you to enumerate the AI models deployed to your AI Foundry Projects. These models can be seen in the "Models + endpoints" tab in your AI Foundry Project. Full samples can be found under the "Deployment" folder in the [package samples][samples].
 
 ```C# Snippet:AI_Projects_DeploymentExampleSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -320,7 +320,7 @@ Console.WriteLine(deploymentDetails);
 The code below shows some Connection operations, which allow you to enumerate the Azure Resources connected to your AI Foundry Projects. These connections can be seen in the "Management Center", in the "Connected resources" tab in your AI Foundry Project. Full samples can be found under the "Connections" folder in the [package samples][samples].
 
 ```C# Snippet:AI_Projects_ConnectionsExampleSync
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
@@ -359,7 +359,7 @@ Console.WriteLine(defaultConnectionCredentials);
 The code below shows some Dataset operations. Full samples can be found under the "Datasets" folder in the [package samples][samples].
 
 ```C# Snippet:AI_Projects_DatasetsExampleSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 var datasetVersion1 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_1") ?? "1.0";
@@ -420,7 +420,7 @@ projectClient.Datasets.Delete(datasetName, datasetVersion2);
 The code below shows some Indexes operations. Full samples can be found under the "Indexes" folder in the [package samples][samples].
 
 ```C# Snippet:AI_Projects_IndexesExampleSync
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var indexName = Environment.GetEnvironmentVariable("INDEX_NAME") ?? "my-index";
 var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
 var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
@@ -468,7 +468,7 @@ The code below shows some Files operations, which allow you to manage files thro
 The first step working with OpenAI files is to authenticate to Azure through `AIProjectClient` and get the `OpenAIFileClient`.
 ```C# Snippet:AI_Projects_Files_CreateClients
 string trainFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
@@ -508,8 +508,8 @@ The code below shows how to create a supervised fine-tuning job using the OpenAI
 ```C# Snippet:AI_Projects_FineTuning_CreateClients
 string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/sft_validation_set.jsonl";
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();

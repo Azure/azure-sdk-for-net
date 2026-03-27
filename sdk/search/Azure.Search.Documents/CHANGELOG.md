@@ -4,6 +4,11 @@
 
 ### Features Added
 
+- Added `SearchClientSettings` to support creating a `SearchClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `SearchIndexClientSettings` to support creating a `SearchIndexClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `SearchIndexerClientSettings` to support creating a `SearchIndexerClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `KnowledgeBaseRetrievalClientSettings` to support creating a `KnowledgeBaseRetrievalClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ### Breaking Changes
 
 ### Bugs Fixed

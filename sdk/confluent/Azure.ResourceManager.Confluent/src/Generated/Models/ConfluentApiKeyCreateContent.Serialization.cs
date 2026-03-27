@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(confluentApiKeyCreateContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(confluentApiKeyCreateContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

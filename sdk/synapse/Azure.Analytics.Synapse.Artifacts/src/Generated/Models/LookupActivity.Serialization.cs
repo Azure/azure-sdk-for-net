@@ -79,6 +79,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("firstRowOnly"u8);
                 writer.WriteObjectValue<object>(FirstRowOnly);
             }
+            if (Optional.IsDefined(TreatDecimalAsString))
+            {
+                writer.WritePropertyName("treatDecimalAsString"u8);
+                writer.WriteObjectValue<object>(TreatDecimalAsString);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -106,6 +111,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             CopySource source = default;
             DatasetReference dataset = default;
             object firstRowOnly = default;
+            object treatDecimalAsString = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -217,6 +223,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             firstRowOnly = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("treatDecimalAsString"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            treatDecimalAsString = property0.Value.GetObject();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -236,7 +251,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 policy,
                 source,
                 dataset,
-                firstRowOnly);
+                firstRowOnly,
+                treatDecimalAsString);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     public readonly partial struct ConfidentialLedgerRunningState : IEquatable<ConfidentialLedgerRunningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerRunningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConfidentialLedgerRunningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ActiveValue = "Active";
         private const string PausedValue = "Paused";
         private const string UnknownValue = "Unknown";
         private const string PausingValue = "Pausing";
         private const string ResumingValue = "Resuming";
 
-        /// <summary> Active. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerRunningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConfidentialLedgerRunningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Active. </summary>
         public static ConfidentialLedgerRunningState Active { get; } = new ConfidentialLedgerRunningState(ActiveValue);
-        /// <summary> Paused. </summary>
+
+        /// <summary> Gets the Paused. </summary>
         public static ConfidentialLedgerRunningState Paused { get; } = new ConfidentialLedgerRunningState(PausedValue);
-        /// <summary> Unknown. </summary>
+
+        /// <summary> Gets the Unknown. </summary>
         public static ConfidentialLedgerRunningState Unknown { get; } = new ConfidentialLedgerRunningState(UnknownValue);
-        /// <summary> Pausing. </summary>
+
+        /// <summary> Gets the Pausing. </summary>
         public static ConfidentialLedgerRunningState Pausing { get; } = new ConfidentialLedgerRunningState(PausingValue);
-        /// <summary> Resuming. </summary>
+
+        /// <summary> Gets the Resuming. </summary>
         public static ConfidentialLedgerRunningState Resuming { get; } = new ConfidentialLedgerRunningState(ResumingValue);
+
         /// <summary> Determines if two <see cref="ConfidentialLedgerRunningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConfidentialLedgerRunningState left, ConfidentialLedgerRunningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConfidentialLedgerRunningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConfidentialLedgerRunningState left, ConfidentialLedgerRunningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfidentialLedgerRunningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConfidentialLedgerRunningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConfidentialLedgerRunningState(string value) => new ConfidentialLedgerRunningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConfidentialLedgerRunningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConfidentialLedgerRunningState?(string value) => value == null ? null : new ConfidentialLedgerRunningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConfidentialLedgerRunningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConfidentialLedgerRunningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
