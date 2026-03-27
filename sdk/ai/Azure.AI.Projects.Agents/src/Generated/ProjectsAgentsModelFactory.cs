@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
     public static partial class ProjectsAgentsModelFactory
     {
 
-        /// <summary> The AgentVersion. </summary>
+        /// <summary> The ProjectsAgentVersion. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
@@ -27,12 +27,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the agent. </param>
         /// <param name="createdAt"> The Unix timestamp (seconds) when the agent was created. </param>
         /// <param name="definition"></param>
-        /// <returns> A new <see cref="Agents.AgentVersion"/> instance for mocking. </returns>
-        public static AgentVersion AgentVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, AgentDefinition definition = default)
+        /// <returns> A new <see cref="Agents.ProjectsAgentVersion"/> instance for mocking. </returns>
+        public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, ProjectsAgentDefinition definition = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AgentVersion(
+            return new ProjectsAgentVersion(
                 metadata,
                 "agent.version",
                 id,
@@ -45,15 +45,15 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// The AgentDefinition.
+        /// The ProjectsAgentDefinition.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeclarativeAgentDefinition"/>, <see cref="Agents.WorkflowAgentDefinition"/>, and <see cref="Agents.HostedAgentDefinition"/>.
         /// </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
-        /// <returns> A new <see cref="Agents.AgentDefinition"/> instance for mocking. </returns>
-        public static AgentDefinition AgentDefinition(string kind = default, ContentFilterConfiguration contentFilterConfiguration = default)
+        /// <returns> A new <see cref="Agents.ProjectsAgentDefinition"/> instance for mocking. </returns>
+        public static ProjectsAgentDefinition ProjectsAgentDefinition(string kind = default, ContentFilterConfiguration contentFilterConfiguration = default)
         {
-            return new UnknownAgentDefinition(new AgentKind(kind), contentFilterConfiguration, additionalBinaryDataProperties: null);
+            return new UnknownAgentDefinition(new ProjectsAgentKind(kind), contentFilterConfiguration, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration for Responsible AI (RAI) content filtering and safety features. </summary>
@@ -69,8 +69,8 @@ namespace Azure.AI.Projects.Agents
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, and <see cref="Agents.MemorySearchPreviewTool"/>.
         /// </summary>
         /// <param name="type"></param>
-        /// <returns> A new <see cref="Agents.AgentTool"/> instance for mocking. </returns>
-        public static AgentTool AgentTool(string @type = default)
+        /// <returns> A new <see cref="Agents.ProjectsAgentTool"/> instance for mocking. </returns>
+        public static ProjectsAgentTool ProjectsAgentTool(string @type = default)
         {
             return new UnknownTool(new ToolType(@type), additionalBinaryDataProperties: null);
         }
@@ -503,7 +503,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> A new <see cref="Agents.WorkflowAgentDefinition"/> instance for mocking. </returns>
         public static WorkflowAgentDefinition WorkflowAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string workflowYaml = default)
         {
-            return new WorkflowAgentDefinition(AgentKind.Workflow, contentFilterConfiguration, additionalBinaryDataProperties: null, workflowYaml);
+            return new WorkflowAgentDefinition(ProjectsAgentKind.Workflow, contentFilterConfiguration, additionalBinaryDataProperties: null, workflowYaml);
         }
 
         /// <summary> The hosted agent definition. </summary>
@@ -518,14 +518,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
         /// <param name="image"> The image ID for the agent, applicable to image-based hosted agents. </param>
         /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
-        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<AgentTool> tools = default, IEnumerable<ProtocolVersionRecord> versions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, string image = default)
+        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<ProjectsAgentTool> tools = default, IEnumerable<ProtocolVersionRecord> versions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, string image = default)
         {
-            tools ??= new ChangeTrackingList<AgentTool>();
+            tools ??= new ChangeTrackingList<ProjectsAgentTool>();
             versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
 
             return new HostedAgentDefinition(
-                AgentKind.Hosted,
+                ProjectsAgentKind.Hosted,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties: null,
                 tools.ToList(),
@@ -540,7 +540,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="protocol"> The protocol type. </param>
         /// <param name="version"> The version string for the protocol, e.g. 'v0.1.1'. </param>
         /// <returns> A new <see cref="Agents.ProtocolVersionRecord"/> instance for mocking. </returns>
-        public static ProtocolVersionRecord ProtocolVersionRecord(AgentProtocol protocol = default, string version = default)
+        public static ProtocolVersionRecord ProtocolVersionRecord(ProjectsAgentProtocol protocol = default, string version = default)
         {
             return new ProtocolVersionRecord(protocol, version, additionalBinaryDataProperties: null);
         }
@@ -565,7 +565,7 @@ namespace Azure.AI.Projects.Agents
             return new AgentManifestOptions(metadata, description, manifestId, parameterValues, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The AgentVersionCreationOptions. </summary>
+        /// <summary> The ProjectsAgentVersionCreationOptions. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
@@ -575,12 +575,12 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="description"> A human-readable description of the agent. </param>
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <returns> A new <see cref="Agents.AgentVersionCreationOptions"/> instance for mocking. </returns>
-        public static AgentVersionCreationOptions AgentVersionCreationOptions(IDictionary<string, string> metadata = default, string description = default, AgentDefinition definition = default)
+        /// <returns> A new <see cref="Agents.ProjectsAgentVersionCreationOptions"/> instance for mocking. </returns>
+        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata = default, string description = default, ProjectsAgentDefinition definition = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AgentVersionCreationOptions(metadata, description, definition, additionalBinaryDataProperties: null);
+            return new ProjectsAgentVersionCreationOptions(metadata, description, definition, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The CreateAgentVersionFromManifestRequest. </summary>

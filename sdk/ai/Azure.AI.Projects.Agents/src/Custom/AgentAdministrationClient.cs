@@ -13,8 +13,8 @@ using OpenAI;
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenSuppress("CreateAgent", typeof(string), typeof(AgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(AgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentVersionFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
@@ -24,10 +24,10 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetAgentVersions", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentVersionsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetInternalAgentResponsesClient")]
-[CodeGenSuppress("CreateAgentVersion", typeof(string), typeof(AgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentVersionAsync", typeof(string), typeof(AgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("UpdateAgent", typeof(string), typeof(AgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("UpdateAgentAsync", typeof(string), typeof(AgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentVersion", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentVersionAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 public partial class AgentAdministrationClient
@@ -73,12 +73,12 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<AgentRecord> GetAgent(string agentName, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectsAgentRecord> GetAgent(string agentName, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
         ClientResult result = GetAgent(agentName, cancellationToken.ToRequestOptions());
-        return result.ToProjectAgentsResult<AgentRecord>();
+        return result.ToProjectAgentsResult<ProjectsAgentRecord>();
     }
 
     /// <summary> Retrieves the agent. </summary>
@@ -87,12 +87,12 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<AgentRecord>> GetAgentAsync(string agentName, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectsAgentRecord>> GetAgentAsync(string agentName, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
         ClientResult result = await GetAgentAsync(agentName, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return result.ToProjectAgentsResult<AgentRecord>();
+        return result.ToProjectAgentsResult<ProjectsAgentRecord>();
     }
 
     /// <summary> Create a new agent version. </summary>
@@ -103,7 +103,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="options"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<AgentVersion> CreateAgentVersion(string agentName, AgentVersionCreationOptions options, string foundryFeatures = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersion(string agentName, ProjectsAgentVersionCreationOptions options, string foundryFeatures = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNull(options, nameof(options));
@@ -113,7 +113,7 @@ public partial class AgentAdministrationClient
             content: BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default)),
             foundryFeatures: foundryFeatures,
             options: cancellationToken.ToRequestOptions());
-        return result.ToProjectAgentsResult<AgentVersion>();
+        return result.ToProjectAgentsResult<ProjectsAgentVersion>();
     }
 
     /// <summary> Create a new agent version. </summary>
@@ -124,7 +124,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="options"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<AgentVersion>> CreateAgentVersionAsync(string agentName, AgentVersionCreationOptions options = null, string foundryFeatures = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionAsync(string agentName, ProjectsAgentVersionCreationOptions options = null, string foundryFeatures = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNull(options, nameof(options));
@@ -134,10 +134,10 @@ public partial class AgentAdministrationClient
             content: BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default)),
             foundryFeatures: foundryFeatures,
             options: cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return result.ToProjectAgentsResult<AgentVersion>();
+        return result.ToProjectAgentsResult<ProjectsAgentVersion>();
     }
 
-    public virtual ClientResult<AgentVersion> CreateAgentVersionFromManifest(string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromManifest(string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(manifestId, nameof(manifestId));
@@ -146,17 +146,17 @@ public partial class AgentAdministrationClient
         options ??= new();
 
         ClientResult result = CreateAgentVersionFromManifest(agentName, options, cancellationToken.ToRequestOptions());
-        return result.ToProjectAgentsResult<AgentVersion>();
+        return result.ToProjectAgentsResult<ProjectsAgentVersion>();
     }
 
-    public virtual async Task<ClientResult<AgentVersion>> CreateAgentVersionFromManifestAsync(string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromManifestAsync(string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(manifestId, nameof(manifestId));
         Argument.AssertNotNull(options, nameof(options));
 
         ClientResult result = await CreateAgentVersionFromManifestAsync(agentName, options, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return result.ToProjectAgentsResult<AgentVersion>();
+        return result.ToProjectAgentsResult<ProjectsAgentVersion>();
     }
 
     /// <summary> Returns the list of all agents. </summary>
@@ -181,9 +181,9 @@ public partial class AgentAdministrationClient
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<AgentRecord> GetAgents(AgentKind? kind = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<ProjectsAgentRecord> GetAgents(ProjectsAgentKind? kind = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
-        return new InternalOpenAICollectionResultOfT<AgentRecord>(
+        return new InternalOpenAICollectionResultOfT<ProjectsAgentRecord>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAgentsRequest(
@@ -193,7 +193,7 @@ public partial class AgentAdministrationClient
                     localCollectionOptions.AfterId,
                     localCollectionOptions.BeforeId,
                     localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<AgentRecord>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<ProjectsAgentRecord>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [kind?.ToString()]),
             cancellationToken.ToRequestOptions());
     }
@@ -220,9 +220,9 @@ public partial class AgentAdministrationClient
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<AgentRecord> GetAgentsAsync(AgentKind? kind = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<ProjectsAgentRecord> GetAgentsAsync(ProjectsAgentKind? kind = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
-        return new InternalOpenAIAsyncCollectionResultOfT<AgentRecord>(
+        return new InternalOpenAIAsyncCollectionResultOfT<ProjectsAgentRecord>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAgentsRequest(
@@ -232,7 +232,7 @@ public partial class AgentAdministrationClient
                     localCollectionOptions.AfterId,
                     localCollectionOptions.BeforeId,
                     localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<AgentRecord>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<ProjectsAgentRecord>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [kind?.ToString()]),
             cancellationToken.ToRequestOptions());
     }
@@ -261,11 +261,11 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<AgentVersion> GetAgentVersions(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<ProjectsAgentVersion> GetAgentVersions(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        return new InternalOpenAICollectionResultOfT<AgentVersion>(
+        return new InternalOpenAICollectionResultOfT<ProjectsAgentVersion>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAgentVersionsRequest(
@@ -275,7 +275,7 @@ public partial class AgentAdministrationClient
                     localCollectionOptions.AfterId,
                     localCollectionOptions.BeforeId,
                     localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<AgentVersion>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<ProjectsAgentVersion>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before)
             {
                 ParentResourceId = agentName,
@@ -307,11 +307,11 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<AgentVersion> GetAgentVersionsAsync(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<ProjectsAgentVersion> GetAgentVersionsAsync(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        return new InternalOpenAIAsyncCollectionResultOfT<AgentVersion>(
+        return new InternalOpenAIAsyncCollectionResultOfT<ProjectsAgentVersion>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAgentVersionsRequest(
@@ -321,7 +321,7 @@ public partial class AgentAdministrationClient
                     localCollectionOptions.AfterId,
                     localCollectionOptions.BeforeId,
                     localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<AgentVersion>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<ProjectsAgentVersion>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before)
             {
                 ParentResourceId = agentName,

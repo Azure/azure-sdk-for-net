@@ -624,7 +624,13 @@ function parseResourceOperation(
         };
       case armResourceActionName:
         return {
-          kind: ResourceOperationKind.Action,
+          // If the operation is pageable, it's actually a list operation
+          // (e.g., blobContainersList modeled as ArmResourceActionSync
+          // but returning paged results)
+          kind:
+            serviceMethod?.kind === "paging"
+              ? ResourceOperationKind.List
+              : ResourceOperationKind.Action,
           modelId: getResourceModelId(sdkContext, decorator),
           explicitResourceName: undefined
         };
