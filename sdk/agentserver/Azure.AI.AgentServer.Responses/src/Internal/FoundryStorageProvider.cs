@@ -56,7 +56,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
     }
 
     /// <inheritdoc/>
-    public async Task<Models.Response> GetResponseAsync(
+    public async Task<Models.ResponseObject> GetResponseAsync(
         string responseId,
         CancellationToken cancellationToken = default)
     {
@@ -71,7 +71,7 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
 
     /// <inheritdoc/>
     public async Task UpdateResponseAsync(
-        Models.Response response,
+        Models.ResponseObject response,
         CancellationToken cancellationToken = default)
     {
         using var content = StorageEnvelopeSerializer.SerializeResponse(response);

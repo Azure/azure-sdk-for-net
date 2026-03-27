@@ -9,15 +9,15 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Responses.Tests.PublicApi;
 
 /// <summary>
-/// T013: Validates that Models.Response has a 2-param convenience constructor (string id, string model)
-/// per FR-002 (Models.Response ≤ 5 required params) and FR-010 (convenience constructor).
+/// T013: Validates that Models.ResponseObject has a 2-param convenience constructor (string id, string model)
+/// per FR-002 (Models.ResponseObject ≤ 5 required params) and FR-010 (convenience constructor).
 /// </summary>
 public class ResponseConvenienceConstructorTests
 {
     [Test]
     public void Response_HasTwoParamConvenienceConstructor()
     {
-        var ctor = typeof(Models.Response).GetConstructor(new[] { typeof(string), typeof(string) });
+        var ctor = typeof(Models.ResponseObject).GetConstructor(new[] { typeof(string), typeof(string) });
         Assert.That(ctor, Is.Not.Null);
         Assert.That(ctor!.IsPublic, Is.True, "Response(string, string) should be public");
     }
@@ -25,7 +25,7 @@ public class ResponseConvenienceConstructorTests
     [Test]
     public void Response_ConvenienceConstructor_SetsIdAndModel()
     {
-        var response = new Models.Response("resp_123", "gpt-4o");
+        var response = new Models.ResponseObject("resp_123", "gpt-4o");
         Assert.That(response.Id, Is.EqualTo("resp_123"));
         Assert.That(response.Model, Is.EqualTo("gpt-4o"));
     }
@@ -34,7 +34,7 @@ public class ResponseConvenienceConstructorTests
     public void Response_ConvenienceConstructor_SetsCreatedAt()
     {
         var before = DateTimeOffset.UtcNow;
-        var response = new Models.Response("resp_123", "gpt-4o");
+        var response = new Models.ResponseObject("resp_123", "gpt-4o");
         var after = DateTimeOffset.UtcNow;
 
         XAssert.InRange(response.CreatedAt, before, after);
@@ -43,7 +43,7 @@ public class ResponseConvenienceConstructorTests
     [Test]
     public void Response_ConvenienceConstructor_HasEmptyOutput()
     {
-        var response = new Models.Response("resp_123", "gpt-4o");
+        var response = new Models.ResponseObject("resp_123", "gpt-4o");
         Assert.That(response.Output, Is.Not.Null);
         Assert.That(response.Output, Is.Empty);
     }
@@ -51,7 +51,7 @@ public class ResponseConvenienceConstructorTests
     [Test]
     public void Response_ConvenienceConstructor_DefaultsParallelToolCallsToFalse()
     {
-        var response = new Models.Response("resp_123", "gpt-4o");
+        var response = new Models.ResponseObject("resp_123", "gpt-4o");
         Assert.That(response.ParallelToolCalls, Is.False);
     }
 
@@ -59,8 +59,8 @@ public class ResponseConvenienceConstructorTests
     public void Response_ConvenienceConstructor_ProducesValidInstance()
     {
         // Validates the instance is usable (no NullReferenceException on access)
-        var response = new Models.Response("resp_123", "gpt-4o");
+        var response = new Models.ResponseObject("resp_123", "gpt-4o");
         Assert.That(response, Is.Not.Null);
-        XAssert.IsType<Models.Response>(response);
+        XAssert.IsType<Models.ResponseObject>(response);
     }
 }

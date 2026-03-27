@@ -17,7 +17,7 @@ public class SeekableReplaySubjectTests
 {
     private static ResponseStreamEvent CreateEvent(long seqNo = 0)
     {
-        var response = new Models.Response("resp_test", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_test", "gpt-4o") { Status = ResponseStatus.InProgress };
         return ResponsesModelFactory.ResponseCreatedEvent(sequenceNumber: seqNo, response: response);
     }
 

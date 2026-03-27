@@ -8,13 +8,13 @@ namespace Azure.AI.AgentServer.Responses.Tests.Builders;
 
 /// <summary>
 /// Tests that builder EmitDone() calls TrackCompletedOutputItem, accumulating
-/// items in the stream-owned Models.Response. Verifies that EmitCompleted() after
+/// items in the stream-owned Models.ResponseObject. Verifies that EmitCompleted() after
 /// builder emission produces a terminal event with the full Output list and
 /// correctly computed OutputText.
 /// </summary>
 public class BuilderAccumulationTests
 {
-    private static (ResponseEventStream Stream, Models.Response Response) CreateStream()
+    private static (ResponseEventStream Stream, Models.ResponseObject Response) CreateStream()
     {
         var context = new ResponseContext("resp_acc");
         var stream = new ResponseEventStream(context, new CreateResponse { Model = "gpt-4o" });

@@ -29,7 +29,7 @@ public class InMemoryResponsesProviderTests : IDisposable
     [Test]
     public async Task CreateResponseAsync_Stores_Response()
     {
-        var response = new Models.Response("resp_abc", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_abc", "gpt-4o") { Status = ResponseStatus.InProgress };
 
         await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
 
@@ -48,7 +48,7 @@ public class InMemoryResponsesProviderTests : IDisposable
     [Test]
     public async Task UpdateResponseAsync_PersistsChanges()
     {
-        var response = new Models.Response("resp_update", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_update", "gpt-4o") { Status = ResponseStatus.InProgress };
         await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
 
         // Mutate and update
@@ -63,8 +63,8 @@ public class InMemoryResponsesProviderTests : IDisposable
     [Test]
     public async Task CreateResponseAsync_DuplicateId_Throws()
     {
-        var response1 = new Models.Response("resp_dup", "gpt-4o") { Status = ResponseStatus.InProgress };
-        var response2 = new Models.Response("resp_dup", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response1 = new Models.ResponseObject("resp_dup", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response2 = new Models.ResponseObject("resp_dup", "gpt-4o") { Status = ResponseStatus.InProgress };
 
         await _provider.CreateResponseAsync(new CreateResponseRequest(response1, null, null));
         Assert.ThrowsAsync<InvalidOperationException>(
@@ -77,7 +77,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         var tasks = Enumerable.Range(0, 50).Select(async i =>
         {
             var id = $"resp_{i}";
-            var response = new Models.Response(id, "gpt-4o") { Status = ResponseStatus.InProgress };
+            var response = new Models.ResponseObject(id, "gpt-4o") { Status = ResponseStatus.InProgress };
             await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
             var retrieved = await _provider.GetResponseAsync(id);
             Assert.That(retrieved, Is.Not.Null);
@@ -94,7 +94,7 @@ public class InMemoryResponsesProviderTests : IDisposable
     [Test]
     public async Task CreateEventPublisherAsync_ReturnsObserver()
     {
-        var response = new Models.Response("resp_pub", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_pub", "gpt-4o") { Status = ResponseStatus.InProgress };
         await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
 
         var publisher = await _provider.CreateEventPublisherAsync("resp_pub");
@@ -115,7 +115,7 @@ public class InMemoryResponsesProviderTests : IDisposable
     [Test]
     public async Task EventStreaming_PublishAndSubscribe_ReceivesAllEvents()
     {
-        var response = new Models.Response("resp_stream", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_stream", "gpt-4o") { Status = ResponseStatus.InProgress };
         await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
 
         var publisher = await _provider.CreateEventPublisherAsync("resp_stream");
@@ -141,7 +141,7 @@ public class InMemoryResponsesProviderTests : IDisposable
     [Test]
     public async Task EventStreaming_CursorSubscription_SkipsEventsAtOrBeforeCursor()
     {
-        var response = new Models.Response("resp_cursor", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_cursor", "gpt-4o") { Status = ResponseStatus.InProgress };
         await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
 
         var publisher = await _provider.CreateEventPublisherAsync("resp_cursor");
@@ -167,7 +167,7 @@ public class InMemoryResponsesProviderTests : IDisposable
     [Test]
     public async Task EventStreaming_DisposeSubscription_StopsReceiving()
     {
-        var response = new Models.Response("resp_dispose", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_dispose", "gpt-4o") { Status = ResponseStatus.InProgress };
         await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
 
         var publisher = await _provider.CreateEventPublisherAsync("resp_dispose");
@@ -207,7 +207,7 @@ public class InMemoryResponsesProviderTests : IDisposable
     [Test]
     public async Task CancelResponseAsync_FiresCancellationToken()
     {
-        var response = new Models.Response("resp_cancel", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_cancel", "gpt-4o") { Status = ResponseStatus.InProgress };
         await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
 
         var ct = await _provider.GetResponseCancellationTokenAsync("resp_cancel");
@@ -221,7 +221,7 @@ public class InMemoryResponsesProviderTests : IDisposable
     [Test]
     public async Task CancelResponseAsync_IsFireAndForget()
     {
-        var response = new Models.Response("resp_fandf", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_fandf", "gpt-4o") { Status = ResponseStatus.InProgress };
         await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
 
         _ = await _provider.GetResponseCancellationTokenAsync("resp_fandf");
@@ -234,7 +234,7 @@ public class InMemoryResponsesProviderTests : IDisposable
     [Test]
     public async Task CancelResponseAsync_IdempotentDoubleCancel()
     {
-        var response = new Models.Response("resp_idem", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_idem", "gpt-4o") { Status = ResponseStatus.InProgress };
         await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
         _ = await _provider.GetResponseCancellationTokenAsync("resp_idem");
 
@@ -257,7 +257,7 @@ public class InMemoryResponsesProviderTests : IDisposable
     [Test]
     public async Task GetResponseCancellationTokenAsync_CreatesIfAbsent()
     {
-        var response = new Models.Response("resp_ct", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_ct", "gpt-4o") { Status = ResponseStatus.InProgress };
         await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
 
         // First call creates
@@ -280,7 +280,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         var options = Options.Create(new InMemoryProviderOptions { EventStreamTtl = TimeSpan.FromMinutes(5) });
         using var provider = new InMemoryResponsesProvider(options, timeProvider);
 
-        var response = new Models.Response("resp_evict", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_evict", "gpt-4o") { Status = ResponseStatus.InProgress };
         await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
         await provider.CreateEventPublisherAsync("resp_evict");
         await provider.GetResponseCancellationTokenAsync("resp_evict");
@@ -292,7 +292,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         // Advance past event stream TTL
         timeProvider.Advance(TimeSpan.FromMinutes(5).Add(TimeSpan.FromSeconds(1)));
 
-        // Models.Response is still retrievable (responses are never evicted)
+        // Models.ResponseObject is still retrievable (responses are never evicted)
         Assert.That(await provider.GetResponseAsync("resp_evict"), Is.Not.Null);
 
         // Event stream evicted — subscribing throws
@@ -309,7 +309,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         var options = Options.Create(new InMemoryProviderOptions { EventStreamTtl = TimeSpan.FromMinutes(1) });
         using var provider = new InMemoryResponsesProvider(options, timeProvider);
 
-        var response = new Models.Response("resp_persist", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_persist", "gpt-4o") { Status = ResponseStatus.InProgress };
         await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
 
         response.Status = ResponseStatus.Completed;
@@ -318,7 +318,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         // Advance well past event stream TTL
         timeProvider.Advance(TimeSpan.FromHours(1));
 
-        // Models.Response still retrievable — responses are retained indefinitely
+        // Models.ResponseObject still retrievable — responses are retained indefinitely
         Assert.That(await provider.GetResponseAsync("resp_persist"), Is.Not.Null);
     }
 
@@ -329,7 +329,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         var options = Options.Create(new InMemoryProviderOptions { EventStreamTtl = TimeSpan.FromMinutes(10) });
         using var provider = new InMemoryResponsesProvider(options, timeProvider);
 
-        var response = new Models.Response("resp_early", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_early", "gpt-4o") { Status = ResponseStatus.InProgress };
         await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
         var publisher = await provider.CreateEventPublisherAsync("resp_early");
         await publisher.OnNextAsync(CreateItemAddedEvent(0));
@@ -357,7 +357,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         var options = Options.Create(new InMemoryProviderOptions { EventStreamTtl = TimeSpan.FromMinutes(5) });
         using var provider = new InMemoryResponsesProvider(options, timeProvider);
 
-        var response = new Models.Response("resp_progress", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_progress", "gpt-4o") { Status = ResponseStatus.InProgress };
         await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
 
         // Advance way past TTL — but response never reached terminal status
@@ -374,7 +374,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         var options = Options.Create(new InMemoryProviderOptions { EventStreamTtl = TimeSpan.FromMinutes(1) });
         using var provider = new InMemoryResponsesProvider(options, timeProvider);
 
-        var response = new Models.Response("resp_cleanup", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_cleanup", "gpt-4o") { Status = ResponseStatus.InProgress };
         await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
         await provider.CreateEventPublisherAsync("resp_cleanup");
         var ct = await provider.GetResponseCancellationTokenAsync("resp_cleanup");
@@ -384,7 +384,7 @@ public class InMemoryResponsesProviderTests : IDisposable
 
         timeProvider.Advance(TimeSpan.FromMinutes(1).Add(TimeSpan.FromSeconds(1)));
 
-        // Models.Response still available (never evicted)
+        // Models.ResponseObject still available (never evicted)
         Assert.That(await provider.GetResponseAsync("resp_cleanup"), Is.Not.Null);
 
         // Event stream evicted
@@ -407,7 +407,7 @@ public class InMemoryResponsesProviderTests : IDisposable
 
         // Non-background path: CreateResponseAsync is called with a terminal response
         // (no UpdateResponseAsync call)
-        var response = new Models.Response("resp_nonbg", "gpt-4o") { Status = ResponseStatus.Completed };
+        var response = new Models.ResponseObject("resp_nonbg", "gpt-4o") { Status = ResponseStatus.Completed };
         await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
         await provider.CreateEventPublisherAsync("resp_nonbg");
         await provider.GetResponseCancellationTokenAsync("resp_nonbg");
@@ -415,7 +415,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         // Advance past TTL
         timeProvider.Advance(TimeSpan.FromMinutes(5).Add(TimeSpan.FromSeconds(1)));
 
-        // Models.Response still available
+        // Models.ResponseObject still available
         Assert.That(await provider.GetResponseAsync("resp_nonbg"), Is.Not.Null);
 
         // Event stream evicted

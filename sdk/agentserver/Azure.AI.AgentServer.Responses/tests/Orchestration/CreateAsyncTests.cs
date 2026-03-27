@@ -38,8 +38,8 @@ public class CreateAsyncTests : IDisposable
     public async Task Default_NonStreaming_NonBg_ReturnsCompleted()
     {
         // Default mode: run handler to completion, return final response
-        var response = new Models.Response("resp_create_01", "test") { Status = ResponseStatus.InProgress };
-        var completedResponse = new Models.Response("resp_create_01", "test") { Status = ResponseStatus.Completed };
+        var response = new Models.ResponseObject("resp_create_01", "test") { Status = ResponseStatus.InProgress };
+        var completedResponse = new Models.ResponseObject("resp_create_01", "test") { Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
             new ResponseCreatedEvent(0, response),
             new ResponseCompletedEvent(1, completedResponse));
@@ -57,8 +57,8 @@ public class CreateAsyncTests : IDisposable
     public async Task Background_NonStreaming_ReturnsCompleted()
     {
         // Background non-streaming: same pattern, returns completed result
-        var response = new Models.Response("resp_create_02", "test") { Status = ResponseStatus.InProgress };
-        var completedResponse = new Models.Response("resp_create_02", "test") { Status = ResponseStatus.Completed };
+        var response = new Models.ResponseObject("resp_create_02", "test") { Status = ResponseStatus.InProgress };
+        var completedResponse = new Models.ResponseObject("resp_create_02", "test") { Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
             new ResponseCreatedEvent(0, response),
             new ResponseCompletedEvent(1, completedResponse));
@@ -76,8 +76,8 @@ public class CreateAsyncTests : IDisposable
     public async Task Streaming_NonBg_ReturnsStreamingResult()
     {
         // Streaming mode: returns IAsyncEnumerable of events
-        var response = new Models.Response("resp_create_03", "test") { Status = ResponseStatus.InProgress };
-        var completedResponse = new Models.Response("resp_create_03", "test") { Status = ResponseStatus.Completed };
+        var response = new Models.ResponseObject("resp_create_03", "test") { Status = ResponseStatus.InProgress };
+        var completedResponse = new Models.ResponseObject("resp_create_03", "test") { Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
             new ResponseCreatedEvent(0, response),
             new ResponseCompletedEvent(1, completedResponse));
@@ -106,8 +106,8 @@ public class CreateAsyncTests : IDisposable
     public async Task Streaming_Background_ReturnsStreamingResult()
     {
         // Streaming + background: same as streaming, yields events
-        var response = new Models.Response("resp_create_04", "test") { Status = ResponseStatus.InProgress };
-        var completedResponse = new Models.Response("resp_create_04", "test") { Status = ResponseStatus.Completed };
+        var response = new Models.ResponseObject("resp_create_04", "test") { Status = ResponseStatus.InProgress };
+        var completedResponse = new Models.ResponseObject("resp_create_04", "test") { Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
             new ResponseCreatedEvent(0, response),
             new ResponseCompletedEvent(1, completedResponse));
@@ -149,8 +149,8 @@ public class CreateAsyncTests : IDisposable
     public async Task Default_CompletedResult_FinalizesExecution()
     {
         // Non-streaming: after completion, execution should be finalized
-        var response = new Models.Response("resp_create_06", "test") { Status = ResponseStatus.InProgress };
-        var completedResponse = new Models.Response("resp_create_06", "test") { Status = ResponseStatus.Completed };
+        var response = new Models.ResponseObject("resp_create_06", "test") { Status = ResponseStatus.InProgress };
+        var completedResponse = new Models.ResponseObject("resp_create_06", "test") { Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
             new ResponseCreatedEvent(0, response),
             new ResponseCompletedEvent(1, completedResponse));
@@ -168,8 +168,8 @@ public class CreateAsyncTests : IDisposable
     public async Task Streaming_AfterConsumption_FinalizesExecution()
     {
         // Streaming: finalization happens after the stream is fully consumed
-        var response = new Models.Response("resp_create_07", "test") { Status = ResponseStatus.InProgress };
-        var completedResponse = new Models.Response("resp_create_07", "test") { Status = ResponseStatus.Completed };
+        var response = new Models.ResponseObject("resp_create_07", "test") { Status = ResponseStatus.InProgress };
+        var completedResponse = new Models.ResponseObject("resp_create_07", "test") { Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
             new ResponseCreatedEvent(0, response),
             new ResponseCompletedEvent(1, completedResponse));
@@ -194,7 +194,7 @@ public class CreateAsyncTests : IDisposable
     public async Task Default_NoTerminalEvent_SetsResponseFailed()
     {
         // FR-009: handler ends without emitting a terminal event
-        var response = new Models.Response("resp_create_08", "test") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_create_08", "test") { Status = ResponseStatus.InProgress };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
             new ResponseCreatedEvent(0, response),
             new ResponseInProgressEvent(1, response));
@@ -231,7 +231,7 @@ public class CreateAsyncTests : IDisposable
     private static async IAsyncEnumerable<ResponseStreamEvent> ThrowAfterCreated(
         string responseId)
     {
-        var response = new Models.Response(responseId, "test") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject(responseId, "test") { Status = ResponseStatus.InProgress };
         yield return new ResponseCreatedEvent(0, response);
         await Task.CompletedTask;
         throw new InvalidOperationException("handler error");

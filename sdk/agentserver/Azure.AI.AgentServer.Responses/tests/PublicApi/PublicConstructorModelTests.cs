@@ -8,7 +8,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.PublicApi;
 
 /// <summary>
 /// T009: Reflection tests asserting key OutputItem subtypes, OutputContent subtypes,
-/// Models.Response, and Models.ResponseError have public constructors. Abstract bases and Unknown
+/// Models.ResponseObject, and Models.ResponseErrorInfo have public constructors. Abstract bases and Unknown
 /// variants must NOT have public constructors.
 /// </summary>
 public class PublicConstructorModelTests
@@ -131,20 +131,20 @@ public class PublicConstructorModelTests
     }
 
     // ========================================
-    // Models.Response and Models.ResponseError
+    // Models.ResponseObject and Models.ResponseErrorInfo
     // ========================================
 
     [Test]
     public void Response_HasAtLeastOnePublicConstructor()
     {
-        var publicCtors = typeof(Models.Response).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+        var publicCtors = typeof(Models.ResponseObject).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
         Assert.That(publicCtors.Length > 0, Is.True, "Response should have at least one public constructor.");
     }
 
     [Test]
     public void ResponseError_HasAtLeastOnePublicConstructor()
     {
-        var publicCtors = typeof(Models.ResponseError).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+        var publicCtors = typeof(Models.ResponseErrorInfo).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
         Assert.That(publicCtors.Length > 0, Is.True, "ResponseError should have at least one public constructor.");
     }
 

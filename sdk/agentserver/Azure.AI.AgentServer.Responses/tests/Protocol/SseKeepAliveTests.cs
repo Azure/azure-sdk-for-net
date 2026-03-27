@@ -106,7 +106,7 @@ public class SseKeepAliveTests : IDisposable
         IResponseContext ctx, TimeSpan delay,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
         await Task.Delay(delay, ct);
         response.SetCompleted();

@@ -1,0 +1,150 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Runtime.CompilerServices;
+using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Responses;
+using Azure.AI.AgentServer.Responses.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using NUnit.Framework;
+
+namespace Azure.AI.AgentServer.Responses.Tests.Snippets
+{
+    /// <summary>
+    /// Code snippets backing Sample5_Customization.md. Compiled to prevent rot.
+    /// </summary>
+    [TestFixture]
+    [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
+    public class Sample5Snippets
+    {
+        [Test]
+        public void CustomServices()
+        {
+            #region Snippet:Responses_Sample5_CustomServices
+
+            ResponsesServer.Run<KnowledgeHandler>(configure: builder =>
+            {
+                builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
+            });
+
+            #endregion
+        }
+
+        [Test]
+        public void ConfigAndTracing()
+        {
+            #region Snippet:Responses_Sample5_ConfigAndTracing
+
+            ResponsesServer.Run<KnowledgeHandler>(configure: builder =>
+            {
+                // Register custom services.
+                builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
+
+                // Read typed configuration from appsettings.json or environment variables.
+                builder.Services.Configure<KnowledgeBaseOptions>(
+                    builder.Configuration.GetSection("KnowledgeBase"));
+
+                // Add a custom OpenTelemetry tracing source.
+                builder.ConfigureTracing(tracing =>
+                {
+                    tracing.AddSource("MyAgent.BusinessLogic");
+                });
+
+                // Set a custom shutdown timeout (default is 30s).
+                builder.ConfigureShutdown(TimeSpan.FromSeconds(10));
+            });
+
+            #endregion
+        }
+
+        [Test]
+        public void WebAppAccess()
+        {
+            #region Snippet:Responses_Sample5_WebAppAccess
+
+            ResponsesServer.Run<KnowledgeHandler>(configure: builder =>
+            {
+                builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
+
+                // Add CORS support at the ASP.NET Core level.
+                builder.WebApplicationBuilder.Services.AddCors(cors =>
+                {
+                    cors.AddDefaultPolicy(policy =>
+                    {
+                        policy.AllowAnyOrigin()
+                              .AllowAnyMethod()
+                              .AllowAnyHeader();
+                    });
+                });
+            });
+
+            #endregion
+        }
+
+        [Test]
+        public void Implement_KnowledgeHandler()
+        {
+            var handler = new KnowledgeHandler(new WikiKnowledgeBase());
+            Assert.That(handler, Is.Not.Null);
+        }
+
+        #region Snippet:Responses_Sample5_KnowledgeHandler
+
+        public class KnowledgeHandler : IResponseHandler
+        {
+            private readonly IKnowledgeBase _kb;
+
+            public KnowledgeHandler(IKnowledgeBase kb) => _kb = kb;
+
+            public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+                CreateResponse request,
+                IResponseContext context,
+                [EnumeratorCancellation] CancellationToken cancellationToken)
+            {
+                var stream = new ResponseEventStream(context, request);
+
+                yield return stream.EmitCreated();
+                yield return stream.EmitInProgress();
+
+                var message = stream.AddOutputItemMessage();
+                yield return message.EmitAdded();
+
+                var text = message.AddTextContent();
+                yield return text.EmitAdded();
+
+                // Use the injected service to produce the answer.
+                var question = request.GetInputText();
+                var answer = await _kb.SearchAsync(question, cancellationToken);
+
+                yield return text.EmitDelta(answer);
+                yield return text.EmitDone(answer);
+
+                yield return message.EmitContentDone(text);
+                yield return message.EmitDone();
+                yield return stream.EmitCompleted();
+            }
+        }
+
+        #endregion
+
+        // Supporting types for the sample.
+
+        public interface IKnowledgeBase
+        {
+            Task<string> SearchAsync(string query, CancellationToken cancellationToken);
+        }
+
+        public class WikiKnowledgeBase : IKnowledgeBase
+        {
+            public Task<string> SearchAsync(string query, CancellationToken cancellationToken) =>
+                Task.FromResult($"Here is what I found about \"{query}\": [mock knowledge base result]");
+        }
+
+        public class KnowledgeBaseOptions
+        {
+            public string? IndexName { get; set; }
+            public int MaxResults { get; set; } = 5;
+        }
+    }
+}

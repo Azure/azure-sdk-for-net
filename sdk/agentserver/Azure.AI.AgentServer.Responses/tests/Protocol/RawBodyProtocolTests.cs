@@ -32,7 +32,7 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
         IResponseContext context,
         [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Azure.AI.AgentServer.Responses.Models.Response(context.ResponseId, request.Model ?? "test-model");
+        var response = new Azure.AI.AgentServer.Responses.Models.ResponseObject(context.ResponseId, request.Model ?? "test-model");
         yield return new Azure.AI.AgentServer.Responses.Models.ResponseCreatedEvent(0, response);
         response.SetCompleted();
         yield return new Azure.AI.AgentServer.Responses.Models.ResponseCompletedEvent(0, response);

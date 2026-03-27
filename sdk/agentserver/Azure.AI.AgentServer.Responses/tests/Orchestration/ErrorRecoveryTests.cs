@@ -45,7 +45,7 @@ public class ErrorRecoveryTests : IDisposable
         await _orchestrator.HandleExecutionExceptionAsync(
             execution, publisher, new InvalidOperationException("test"));
 
-        // Models.Response remains null — it was never created.
+        // Models.ResponseObject remains null — it was never created.
         Assert.That(execution.Response, Is.Null);
     }
 
@@ -54,7 +54,7 @@ public class ErrorRecoveryTests : IDisposable
     {
         // Case 2: OperationCanceledException when CancelRequested is true
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_err_02");
-        execution.Response = new Models.Response("resp_err_02", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new Models.ResponseObject("resp_err_02", "test") { Status = ResponseStatus.InProgress };
         execution.CancelRequested = true;
         var (events, observer) = await SubscribeToEvents("resp_err_02");
 
@@ -74,7 +74,7 @@ public class ErrorRecoveryTests : IDisposable
         // Case 3: OperationCanceledException when ShutdownRequested is true
         // SDK never auto-emits incomplete — shutdown OCE is treated as failure
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_err_03");
-        execution.Response = new Models.Response("resp_err_03", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new Models.ResponseObject("resp_err_03", "test") { Status = ResponseStatus.InProgress };
         execution.ShutdownRequested = true;
         var (events, observer) = await SubscribeToEvents("resp_err_03");
 
@@ -93,7 +93,7 @@ public class ErrorRecoveryTests : IDisposable
     {
         // Case 4: OperationCanceledException with neither CancelRequested nor ShutdownRequested
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_err_04");
-        execution.Response = new Models.Response("resp_err_04", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new Models.ResponseObject("resp_err_04", "test") { Status = ResponseStatus.InProgress };
         var (events, observer) = await SubscribeToEvents("resp_err_04");
 
         await _orchestrator.HandleExecutionExceptionAsync(
@@ -111,7 +111,7 @@ public class ErrorRecoveryTests : IDisposable
     {
         // Case 5: General exception after response.created
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_err_05");
-        execution.Response = new Models.Response("resp_err_05", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new Models.ResponseObject("resp_err_05", "test") { Status = ResponseStatus.InProgress };
         var (events, observer) = await SubscribeToEvents("resp_err_05");
 
         await _orchestrator.HandleExecutionExceptionAsync(
@@ -129,7 +129,7 @@ public class ErrorRecoveryTests : IDisposable
     {
         // If the handler already emitted a terminal event, don't override
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_err_06");
-        execution.Response = new Models.Response("resp_err_06", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new Models.ResponseObject("resp_err_06", "test") { Status = ResponseStatus.InProgress };
         execution.Response.SetCompleted();
         var (events, observer) = await SubscribeToEvents("resp_err_06");
 
@@ -147,7 +147,7 @@ public class ErrorRecoveryTests : IDisposable
     {
         // Case 6: ResponsesApiException after response.created
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_err_07");
-        execution.Response = new Models.Response("resp_err_07", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new Models.ResponseObject("resp_err_07", "test") { Status = ResponseStatus.InProgress };
         var (events, observer) = await SubscribeToEvents("resp_err_07");
 
         var apiEx = new ResponsesApiException(

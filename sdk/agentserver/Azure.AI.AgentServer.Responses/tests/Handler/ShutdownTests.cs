@@ -203,7 +203,7 @@ public class ShutdownTests : IDisposable
         TaskCompletionSource handlerStarted,
         Action<bool> captureIsShutdown)
     {
-        var response = new Models.Response(context.ResponseId, "test");
+        var response = new Models.ResponseObject(context.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
 
         handlerStarted.TrySetResult();
@@ -232,7 +232,7 @@ public class ShutdownTests : IDisposable
         TaskCompletionSource handlerStarted,
         TaskCompletionSource handlerDone)
     {
-        var response = new Models.Response(context.ResponseId, "test");
+        var response = new Models.ResponseObject(context.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
 
         handlerStarted.TrySetResult();
@@ -260,7 +260,7 @@ public class ShutdownTests : IDisposable
         IResponseContext context,
         TaskCompletionSource handlerStarted)
     {
-        var response = new Models.Response(context.ResponseId, "test");
+        var response = new Models.ResponseObject(context.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
 
         handlerStarted.TrySetResult();

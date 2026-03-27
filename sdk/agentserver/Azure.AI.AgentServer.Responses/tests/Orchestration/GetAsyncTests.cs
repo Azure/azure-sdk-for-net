@@ -42,7 +42,7 @@ public class GetAsyncTests : IDisposable
     public async Task StoreFalse_ThrowsResourceNotFoundException()
     {
         var execution = _tracker.Create("resp_get_store", isBackground: false, isStreaming: false, store: false);
-        execution.Response = new Models.Response("resp_get_store", "test") { Status = ResponseStatus.Completed };
+        execution.Response = new Models.ResponseObject("resp_get_store", "test") { Status = ResponseStatus.Completed };
         _tracker.MarkCompleted("resp_get_store");
 
         Assert.ThrowsAsync<ResourceNotFoundException>(
@@ -53,7 +53,7 @@ public class GetAsyncTests : IDisposable
     public async Task NonBg_ResponseNull_ThrowsResourceNotFoundException()
     {
         _tracker.Create("resp_get_nrc", isBackground: false, isStreaming: false, store: true);
-        // Models.Response stays null — response.created was never emitted
+        // Models.ResponseObject stays null — response.created was never emitted
 
         Assert.ThrowsAsync<ResourceNotFoundException>(
             () => _orchestrator.GetAsync("resp_get_nrc"));
@@ -63,7 +63,7 @@ public class GetAsyncTests : IDisposable
     public async Task NonBg_NotCompleted_ThrowsResourceNotFoundException()
     {
         var execution = _tracker.Create("resp_get_nc", isBackground: false, isStreaming: false, store: true);
-        execution.Response = new Models.Response("resp_get_nc", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new Models.ResponseObject("resp_get_nc", "test") { Status = ResponseStatus.InProgress };
         // CompletedAt is null — not completed yet
 
         Assert.ThrowsAsync<ResourceNotFoundException>(
@@ -74,7 +74,7 @@ public class GetAsyncTests : IDisposable
     public async Task NonBg_Cancelled_ThrowsResourceNotFoundException()
     {
         var execution = _tracker.Create("resp_get_can", isBackground: false, isStreaming: false, store: true);
-        execution.Response = new Models.Response("resp_get_can", "test") { Status = ResponseStatus.Cancelled };
+        execution.Response = new Models.ResponseObject("resp_get_can", "test") { Status = ResponseStatus.Cancelled };
         _tracker.MarkCompleted("resp_get_can");
 
         Assert.ThrowsAsync<ResourceNotFoundException>(
@@ -85,7 +85,7 @@ public class GetAsyncTests : IDisposable
     public async Task Success_ReturnsResponseSnapshot()
     {
         var execution = _tracker.Create("resp_get_ok", isBackground: false, isStreaming: false, store: true);
-        execution.Response = new Models.Response("resp_get_ok", "test") { Status = ResponseStatus.Completed };
+        execution.Response = new Models.ResponseObject("resp_get_ok", "test") { Status = ResponseStatus.Completed };
         _tracker.MarkCompleted("resp_get_ok");
 
         var result = await _orchestrator.GetAsync("resp_get_ok");
@@ -98,7 +98,7 @@ public class GetAsyncTests : IDisposable
     public async Task Background_ReturnsResponseEvenWhenNotCompleted()
     {
         var execution = _tracker.Create("resp_get_bg", isBackground: true, isStreaming: false, store: true);
-        execution.Response = new Models.Response("resp_get_bg", "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new Models.ResponseObject("resp_get_bg", "test") { Status = ResponseStatus.InProgress };
         // Not completed — bg responses are accessible before completion
 
         var result = await _orchestrator.GetAsync("resp_get_bg");

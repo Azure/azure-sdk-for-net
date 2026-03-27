@@ -9,6 +9,7 @@
     <PackageTags>Microsoft Azure AI Agent Server Responses API SSE Streaming</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <!-- AZC0100: Server-side hosting library on ASP.NET Core async pipeline — ConfigureAwait(false) is unnecessary and harmful.
          AZC0004: Async-only API — no sync variants needed (same exemption as AMQP-based SDKs).
          See AGENTS.md §0.VI for rationale. -->
@@ -21,11 +22,22 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
-    <ProjectReference Include="..\..\Azure.AI.AgentServer.Responses.Contracts\src\Azure.AI.AgentServer.Responses.Contracts.csproj" />
+  </ItemGroup>
+
+  <!-- Exclude TypeSpec compilation output (used only for copy to Generated/) -->
+  <ItemGroup>
+    <Compile Remove="TypeSpec/tsp-output/**" />
+    <None Remove="TypeSpec/tsp-output/**" />
+  </ItemGroup>
+
+  <!-- Re-include hand-written custom partials (Optional, CodeGenStubs, etc.) -->
+  <ItemGroup>
+    <Compile Include="TypeSpec/tsp-output/src/Custom/*.cs" />
   </ItemGroup>
 
 </Project>

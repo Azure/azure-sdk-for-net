@@ -40,7 +40,7 @@ public class TtlConfigurationTests : IDisposable
         Assert.That(options.Value.EventStreamTtl, Is.EqualTo(TimeSpan.FromMinutes(10)));
 
         // Create and complete a response with an event stream
-        var response = new Models.Response("resp_default_ttl", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_default_ttl", "gpt-4o") { Status = ResponseStatus.InProgress };
         await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
         var publisher = await provider.CreateEventPublisherAsync("resp_default_ttl");
         await publisher.OnNextAsync(ResponsesModelFactory.ResponseCreatedEvent(response));
@@ -81,7 +81,7 @@ public class TtlConfigurationTests : IDisposable
         using var provider = new InMemoryResponsesProvider(options, fakeTime);
 
         // Create and complete a response with event stream
-        var response = new Models.Response("resp_1s_ttl", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_1s_ttl", "gpt-4o") { Status = ResponseStatus.InProgress };
         await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
         var publisher = await provider.CreateEventPublisherAsync("resp_1s_ttl");
         await publisher.OnNextAsync(ResponsesModelFactory.ResponseCreatedEvent(response));
@@ -120,7 +120,7 @@ public class TtlConfigurationTests : IDisposable
         using var provider = new InMemoryResponsesProvider(options, fakeTime);
 
         // Create response with event stream
-        var response = new Models.Response("resp_split_ttl", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject("resp_split_ttl", "gpt-4o") { Status = ResponseStatus.InProgress };
         await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null));
         var publisher = await provider.CreateEventPublisherAsync("resp_split_ttl");
 
@@ -145,7 +145,7 @@ public class TtlConfigurationTests : IDisposable
         // Advance past event stream TTL
         fakeTime.Advance(TimeSpan.FromMinutes(1).Add(TimeSpan.FromSeconds(1)));
 
-        // Models.Response still retrievable (retained indefinitely)
+        // Models.ResponseObject still retrievable (retained indefinitely)
         Assert.That(await provider.GetResponseAsync("resp_split_ttl"), Is.Not.Null);
 
         // Event stream evicted — subscribing throws
@@ -206,7 +206,7 @@ public class TtlConfigurationTests : IDisposable
         // Wait much longer than the InMemoryProviderOptions TTL
         await Task.Delay(100);
 
-        // Models.Response still available via GET (custom provider never evicts)
+        // Models.ResponseObject still available via GET (custom provider never evicts)
         var getResponse = await client.GetAsync($"/responses/{responseId}");
         Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
@@ -224,7 +224,7 @@ public class TtlConfigurationTests : IDisposable
         IResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
         yield return new ResponseOutputItemDoneEvent();
         response.SetCompleted();
@@ -293,7 +293,7 @@ public class TtlConfigurationTests : IDisposable
     /// </summary>
     private sealed class NoEvictionProvider : IResponsesProvider, IResponsesCancellationSignalProvider, IResponsesStreamProvider
     {
-        private readonly ConcurrentDictionary<string, Models.Response> _responses = new();
+        private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
         private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _cts = new();
         public ConcurrentBag<string> Calls { get; } = new();
@@ -305,7 +305,7 @@ public class TtlConfigurationTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public Task<Models.Response> GetResponseAsync(string responseId, CancellationToken ct = default)
+        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -315,7 +315,7 @@ public class TtlConfigurationTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public Task UpdateResponseAsync(Models.Response response, CancellationToken ct = default)
+        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;

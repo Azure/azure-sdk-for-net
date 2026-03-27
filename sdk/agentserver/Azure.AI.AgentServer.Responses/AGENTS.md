@@ -49,13 +49,12 @@ The Responses library has three **authoritative contract documents** that define
 
 ### Dependency isolation
 
-- **Responses** depends only on **Responses.Contracts** (project reference) plus `Microsoft.AspNetCore.App` (framework reference). No additional NuGet packages in production.
-- **Responses.Contracts** has zero NuGet dependencies.
+- **Responses** depends on **Core** (project reference), `System.ClientModel`, `Azure.Identity`, plus `Microsoft.AspNetCore.App` (framework reference).
 - Test dependencies are managed via central package management (no per-package version overrides needed).
 
 ### ASP.NET target framework
 
-`Responses` uses `$(RequiredRunnableTargetFrameworks)` (resolves to `net10.0;net8.0`) because it references `Microsoft.AspNetCore.App`. Standard `$(RequiredTargetFrameworks)` is used for Contracts and Tests.
+`Responses` uses `$(RequiredRunnableTargetFrameworks)` (resolves to `net10.0;net8.0`) because it references `Microsoft.AspNetCore.App`. Standard `$(RequiredTargetFrameworks)` is used for Tests.
 
 ### Generated code suppressions
 

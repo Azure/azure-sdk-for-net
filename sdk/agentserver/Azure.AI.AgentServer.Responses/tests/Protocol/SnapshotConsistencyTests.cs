@@ -92,7 +92,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
 
     /// <summary>
     /// T010: SSE event snapshot isolation — response.output_item.added event's embedded
-    /// Models.Response does not include items added after it was emitted.
+    /// Models.ResponseObject does not include items added after it was emitted.
     /// response.completed contains all output items.
     /// </summary>
     [Test]
@@ -195,7 +195,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
         IResponseContext ctx, int itemCount, TaskCompletionSource handlerStarted,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.Response(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
         yield return new ResponseCreatedEvent(0, response);
         handlerStarted.TrySetResult();
 
@@ -212,7 +212,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
             yield return new ResponseOutputItemAddedEvent(0, i, msg);
         }
 
-        var completedResponse = new Models.Response(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
+        var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
         foreach (var item in items)
             completedResponse.Output.Add(item);
         completedResponse.CompletedAt = DateTimeOffset.UtcNow;
@@ -226,7 +226,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
     private static async IAsyncEnumerable<ResponseStreamEvent> MultiOutputStreamForSnapshotTest(
         IResponseContext ctx)
     {
-        var response = new Models.Response(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
         yield return new ResponseCreatedEvent(0, response);
 
         var msg1 = new OutputItemMessage(
@@ -241,7 +241,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
             Array.Empty<MessageContent>());
         yield return new ResponseOutputItemAddedEvent(0, 1, msg2);
 
-        var completedResponse = new Models.Response(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
+        var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
         completedResponse.Output.Add(msg1);
         completedResponse.Output.Add(msg2);
         completedResponse.CompletedAt = DateTimeOffset.UtcNow;
@@ -255,12 +255,12 @@ public class SnapshotConsistencyTests : ProtocolTestBase
     private static async IAsyncEnumerable<ResponseStreamEvent> SimpleBackgroundStream(
         IResponseContext ctx, TaskCompletionSource done)
     {
-        var response = new Models.Response(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
         yield return new ResponseCreatedEvent(0, response);
 
         await done.Task;
 
-        var completedResponse = new Models.Response(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
+        var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
         completedResponse.CompletedAt = DateTimeOffset.UtcNow;
         completedResponse.OutputText = completedResponse.ComputeOutputText();
         yield return new ResponseCompletedEvent(0, completedResponse);

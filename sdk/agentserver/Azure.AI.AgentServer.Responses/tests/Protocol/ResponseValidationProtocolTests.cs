@@ -10,7 +10,7 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// Protocol tests for B30 — Models.Response validation.
+/// Protocol tests for B30 — Models.ResponseObject validation.
 /// Handler-yielded invalid events → 500 <c>"server_error"</c> (non-streaming)
 /// or <c>response.failed</c> (streaming). Details are logged but never exposed to caller.
 /// </summary>

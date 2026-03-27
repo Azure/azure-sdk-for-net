@@ -79,7 +79,7 @@ public class CancelResponseTests : IDisposable
         TaskCompletionSource tcs,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
 
         var cancelled = false;

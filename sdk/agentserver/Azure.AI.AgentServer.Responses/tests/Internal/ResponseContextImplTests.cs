@@ -306,10 +306,10 @@ public class ResponseContextImplTests
         public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
             => Task.CompletedTask;
 
-        public Task<Models.Response> GetResponseAsync(string responseId, CancellationToken ct = default)
+        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
 
-        public Task UpdateResponseAsync(Models.Response response, CancellationToken ct = default)
+        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default)
             => Task.CompletedTask;
 
         public Task DeleteResponseAsync(string responseId, CancellationToken ct = default)

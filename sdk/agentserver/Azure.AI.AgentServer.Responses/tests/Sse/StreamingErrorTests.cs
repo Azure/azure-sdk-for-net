@@ -110,7 +110,7 @@ public class StreamingErrorTests : IDisposable
         IResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
         await Task.Yield();
         throw new InvalidOperationException("Simulated handler failure");
@@ -120,7 +120,7 @@ public class StreamingErrorTests : IDisposable
         IResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
         await Task.Yield();
 

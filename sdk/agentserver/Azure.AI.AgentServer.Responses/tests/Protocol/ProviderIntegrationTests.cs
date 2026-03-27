@@ -153,7 +153,7 @@ public class ProviderDiIntegrationTests : IDisposable
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
         await delayTask.WaitAsync(ct);
         response.SetCompleted();
@@ -173,7 +173,7 @@ public class ProviderDiIntegrationTests : IDisposable
     /// </summary>
     private sealed class RecordingResponsesProvider : IResponsesProvider, IResponsesCancellationSignalProvider, IResponsesStreamProvider, IDisposable
     {
-        private readonly ConcurrentDictionary<string, Models.Response> _responses = new();
+        private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
         private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _cancellationTokenSources = new();
         private readonly TimeSpan _ttl = TimeSpan.FromMinutes(30);
@@ -187,7 +187,7 @@ public class ProviderDiIntegrationTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public Task<Models.Response> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
+        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -197,7 +197,7 @@ public class ProviderDiIntegrationTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public Task UpdateResponseAsync(Models.Response response, CancellationToken cancellationToken = default)
+        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;
@@ -394,7 +394,7 @@ public class DefaultProviderZeroRegressionTests : ProtocolTestBase
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
         await delayTask.WaitAsync(ct);
         response.SetCompleted();
@@ -566,7 +566,7 @@ public class PartialProviderOverrideTests : IDisposable
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
         await delayTask.WaitAsync(ct);
         response.SetCompleted();
@@ -586,7 +586,7 @@ public class PartialProviderOverrideTests : IDisposable
     /// </summary>
     private sealed class StateOnlyProvider : IResponsesProvider
     {
-        private readonly ConcurrentDictionary<string, Models.Response> _responses = new();
+        private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
 
         public ConcurrentBag<string> Calls { get; } = new();
 
@@ -597,7 +597,7 @@ public class PartialProviderOverrideTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public Task<Models.Response> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
+        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -607,7 +607,7 @@ public class PartialProviderOverrideTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public Task UpdateResponseAsync(Models.Response response, CancellationToken cancellationToken = default)
+        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;

@@ -153,13 +153,13 @@ internal static class ApiErrorFactory
     }
 
     /// <summary>
-    /// Maps any handler exception to a <see cref="ResponseError"/> with the correct
+    /// Maps any handler exception to a <see cref="ResponseErrorInfo"/> with the correct
     /// <see cref="ResponseErrorCode"/> and message.
     /// </summary>
-    internal static Models.ResponseError ToResponseError(Exception exception)
+    internal static Models.ResponseErrorInfo ToResponseError(Exception exception)
     {
         var (code, message) = ExceptionErrorInfo(exception);
-        return new Models.ResponseError(ParseResponseErrorCode(code), message);
+        return new Models.ResponseErrorInfo(ParseResponseErrorCode(code), message);
     }
 
     // --- SSE standalone error event ---

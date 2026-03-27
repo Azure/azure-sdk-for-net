@@ -152,7 +152,7 @@ public abstract class ProtocolTestBase : IDisposable
             var response = await GetResponseAsync(responseId);
             if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                // Models.Response not yet created (handler hasn't yielded response.created yet)
+                // Models.ResponseObject not yet created (handler hasn't yielded response.created yet)
                 await Task.Delay(50);
                 continue;
             }

@@ -45,7 +45,7 @@ public interface IResponsesProvider
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>The response.</returns>
     /// <exception cref="ResourceNotFoundException">Thrown when the response does not exist.</exception>
-    Task<Models.Response> GetResponseAsync(string responseId, CancellationToken cancellationToken = default);
+    Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Persists an updated response snapshot. Handles all state transitions
@@ -53,7 +53,7 @@ public interface IResponsesProvider
     /// </summary>
     /// <param name="response">The updated response snapshot.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
-    Task UpdateResponseAsync(Models.Response response, CancellationToken cancellationToken = default);
+    Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a response envelope by its identifier.

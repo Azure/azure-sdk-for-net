@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Serialization;
 /// <summary>
 /// Tests for model serialization round-trips.
 /// T058: CreateResponse deserialization
-/// T059: Models.Response serialization
+/// T059: Models.ResponseObject serialization
 /// T060: ResponseStreamEvent serialization
 /// T061: Full round-trip for all model types
 /// </summary>
@@ -28,12 +28,12 @@ public class ModelRoundTripTests
         return options;
     }
 
-    private static Models.Response CreateTestResponse(
+    private static Models.ResponseObject CreateTestResponse(
         string id = "resp_test123",
         string model = "gpt-4o",
         ResponseStatus status = ResponseStatus.Completed)
     {
-        return new Models.Response(id, model)
+        return new Models.ResponseObject(id, model)
         {
             Status = status,
             CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero),
@@ -132,7 +132,7 @@ public class ModelRoundTripTests
     }
 
     // ========================================
-    // T059: Models.Response Serialization
+    // T059: Models.ResponseObject Serialization
     // ========================================
 
     [Test]
@@ -158,10 +158,10 @@ public class ModelRoundTripTests
     public void Response_Serialize_WithError_ContainsErrorObject()
     {
         var options = CreateOptions();
-        var response = new Models.Response("resp_err", "gpt-4o")
+        var response = new Models.ResponseObject("resp_err", "gpt-4o")
         {
             Status = ResponseStatus.Failed,
-            Error = new Models.ResponseError(ResponseErrorCode.ServerError, "Internal failure"),
+            Error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "Internal failure"),
             CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero),
         };
 
@@ -182,7 +182,7 @@ public class ModelRoundTripTests
         var metadata = new Metadata();
         metadata.AdditionalProperties["env"] = "test";
 
-        var response = new Models.Response("resp_meta", "gpt-4o")
+        var response = new Models.ResponseObject("resp_meta", "gpt-4o")
         {
             Status = ResponseStatus.Completed,
             Metadata = metadata,
@@ -310,7 +310,7 @@ public class ModelRoundTripTests
         var original = CreateTestResponse(id: "resp_rt1", model: "gpt-4o-mini", status: ResponseStatus.Failed);
 
         var json = JsonSerializer.Serialize(original, options);
-        var restored = JsonSerializer.Deserialize<Models.Response>(json, options);
+        var restored = JsonSerializer.Deserialize<Models.ResponseObject>(json, options);
 
         Assert.That(restored, Is.Not.Null);
         Assert.That(restored!.Id, Is.EqualTo("resp_rt1"));
@@ -322,15 +322,15 @@ public class ModelRoundTripTests
     public void Response_RoundTrip_WithError_PreservesError()
     {
         var options = CreateOptions();
-        var original = new Models.Response("resp_err_rt", "gpt-4o")
+        var original = new Models.ResponseObject("resp_err_rt", "gpt-4o")
         {
             Status = ResponseStatus.Failed,
-            Error = new Models.ResponseError(ResponseErrorCode.RateLimitExceeded, "Too many requests"),
+            Error = new Models.ResponseErrorInfo(ResponseErrorCode.RateLimitExceeded, "Too many requests"),
             CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero),
         };
 
         var json = JsonSerializer.Serialize(original, options);
-        var restored = JsonSerializer.Deserialize<Models.Response>(json, options);
+        var restored = JsonSerializer.Deserialize<Models.ResponseObject>(json, options);
 
         Assert.That(restored, Is.Not.Null);
         Assert.That(restored!.Error, Is.Not.Null);
@@ -381,9 +381,9 @@ public class ModelRoundTripTests
 
         foreach (var code in codes)
         {
-            var original = new Models.ResponseError(code, $"Error: {code}");
+            var original = new Models.ResponseErrorInfo(code, $"Error: {code}");
             var json = JsonSerializer.Serialize(original, options);
-            var restored = JsonSerializer.Deserialize<Models.ResponseError>(json, options);
+            var restored = JsonSerializer.Deserialize<Models.ResponseErrorInfo>(json, options);
 
             Assert.That(restored, Is.Not.Null);
             Assert.That(restored!.Code, Is.EqualTo(code));

@@ -12,7 +12,7 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Handler;
 
 /// <summary>
-/// Tests that the in-memory Models.Response.Output list is updated in real-time
+/// Tests that the in-memory Models.ResponseObject.Output list is updated in real-time
 /// as output_item.added and output_item.done events flow through the handler.
 /// </summary>
 public class LiveOutputTrackingTests : IDisposable
@@ -36,8 +36,8 @@ public class LiveOutputTrackingTests : IDisposable
 
         _handler.EventFactory = (_, ctx, ct) =>
         {
-            var response = new Models.Response(ctx.ResponseId, "test-model");
-            var completedResponse = new Models.Response(ctx.ResponseId, "test-model");
+            var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
+            var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
             completedResponse.Output.Add(item);
             completedResponse.SetCompleted();
             return YieldEvents(ct,
@@ -61,8 +61,8 @@ public class LiveOutputTrackingTests : IDisposable
 
         _handler.EventFactory = (_, ctx, ct) =>
         {
-            var response = new Models.Response(ctx.ResponseId, "test-model");
-            var completedResponse = new Models.Response(ctx.ResponseId, "test-model");
+            var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
+            var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
             completedResponse.Output.Add(item0);
             completedResponse.Output.Add(item1);
             completedResponse.SetCompleted();
@@ -105,8 +105,8 @@ public class LiveOutputTrackingTests : IDisposable
 
         _handler.EventFactory = (_, ctx, ct) =>
         {
-            var response = new Models.Response(ctx.ResponseId, "test-model");
-            var completedResponse = new Models.Response(ctx.ResponseId, "test-model");
+            var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
+            var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
             completedResponse.Output.Add(final_);
             completedResponse.SetCompleted();
             return YieldEvents(ct,
@@ -132,8 +132,8 @@ public class LiveOutputTrackingTests : IDisposable
 
         _handler.EventFactory = (_, ctx, ct) =>
         {
-            var response = new Models.Response(ctx.ResponseId, "test-model");
-            var completedResponse = new Models.Response(ctx.ResponseId, "test-model");
+            var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
+            var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
             completedResponse.Output.Add(item0);
             completedResponse.Output.Add(item1Done);
             completedResponse.SetCompleted();
@@ -163,8 +163,8 @@ public class LiveOutputTrackingTests : IDisposable
 
         _handler.EventFactory = (_, ctx, ct) =>
         {
-            var response = new Models.Response(ctx.ResponseId, "test-model");
-            var completedResponse = new Models.Response(ctx.ResponseId, "test-model");
+            var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
+            var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
             completedResponse.Output.Add(final_);
             completedResponse.SetCompleted();
             return YieldEvents(ct,
@@ -191,8 +191,8 @@ public class LiveOutputTrackingTests : IDisposable
 
         _handler.EventFactory = (_, ctx, ct) =>
         {
-            var response = new Models.Response(ctx.ResponseId, "test-model");
-            var completedResponse = new Models.Response(ctx.ResponseId, "test-model");
+            var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
+            var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
             completedResponse.Output.Add(item);
             completedResponse.SetCompleted();
             return YieldEvents(ct,
@@ -215,8 +215,8 @@ public class LiveOutputTrackingTests : IDisposable
         // before response.created is yielded → pre-created error → 500
         _handler.EventFactory = (_, ctx, ct) =>
         {
-            var response = new Models.Response(ctx.ResponseId, "test-model");
-            var completedResponse = new Models.Response(ctx.ResponseId, "test-model");
+            var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
+            var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
             completedResponse.SetCompleted();
             return YieldEvents(ct,
                 new ResponseCreatedEvent(0, response),
@@ -237,8 +237,8 @@ public class LiveOutputTrackingTests : IDisposable
         // before response.created is yielded → pre-created error → 500
         _handler.EventFactory = (_, ctx, ct) =>
         {
-            var response = new Models.Response(ctx.ResponseId, "test-model");
-            var completedResponse = new Models.Response(ctx.ResponseId, "test-model");
+            var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
+            var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
             completedResponse.SetCompleted();
             return YieldEvents(ct,
                 new ResponseCreatedEvent(0, response),
@@ -260,8 +260,8 @@ public class LiveOutputTrackingTests : IDisposable
 
         _handler.EventFactory = (_, ctx, ct) =>
         {
-            var response = new Models.Response(ctx.ResponseId, "test-model");
-            var completedResponse = new Models.Response(ctx.ResponseId, "test-model");
+            var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
+            var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
             completedResponse.Output.Add(second);
             completedResponse.SetCompleted();
             return YieldEvents(ct,
@@ -286,8 +286,8 @@ public class LiveOutputTrackingTests : IDisposable
 
         _handler.EventFactory = (_, ctx, ct) =>
         {
-            var response = new Models.Response(ctx.ResponseId, "test-model");
-            var completedResponse = new Models.Response(ctx.ResponseId, "test-model");
+            var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
+            var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
             completedResponse.Output.Add(item);
             completedResponse.SetCompleted();
             return YieldEvents(ct,
@@ -346,14 +346,14 @@ public class LiveOutputTrackingTests : IDisposable
         Action<IResponseContext> capture,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.Response(ctx.ResponseId, "test-model");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
         yield return new ResponseCreatedEvent(0, response);
         yield return new ResponseOutputItemAddedEvent(0, outputIndex: 0, item: item);
 
         // Capture context after the event has been processed by the handler pipeline
         capture(ctx);
 
-        var completedResponse = new Models.Response(ctx.ResponseId, "test-model");
+        var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
         completedResponse.Output.Add(item);
         completedResponse.SetCompleted();
         yield return new ResponseCompletedEvent(0, completedResponse);

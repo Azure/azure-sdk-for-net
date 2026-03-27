@@ -146,7 +146,7 @@ public class ModeOrchestrationTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
-        var response = new Models.Response(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
         yield return new ResponseCreatedEvent(0, response);
         response.SetCompleted();
         yield return new ResponseCompletedEvent(0, response);
@@ -157,7 +157,7 @@ public class ModeOrchestrationTests : IDisposable
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var response = new Models.Response(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
         yield return new ResponseCreatedEvent(0, response);
         await delayTask;
         response.SetCompleted();

@@ -97,7 +97,7 @@ public class RawEventInteropTests
     {
         // This test validates that the existing pattern of hand-built events
         // still works correctly — zero breaking changes
-        var response = new Models.Response("resp_test", "gpt-4o");
+        var response = new Models.ResponseObject("resp_test", "gpt-4o");
         var itemId = "msg_001";
 
         var events = new List<ResponseStreamEvent>

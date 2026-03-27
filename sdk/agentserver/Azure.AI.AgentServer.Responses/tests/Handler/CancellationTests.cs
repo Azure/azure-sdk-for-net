@@ -43,7 +43,7 @@ public class CancellationTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct)
     {
         await Task.CompletedTask;
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
 
         // Simulate handler throwing OperationCanceledException

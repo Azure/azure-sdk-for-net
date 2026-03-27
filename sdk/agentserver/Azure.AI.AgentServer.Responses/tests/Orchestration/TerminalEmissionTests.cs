@@ -104,7 +104,7 @@ public class TerminalEmissionTests : IDisposable
         CreateExecutionWithPublisher(string responseId)
     {
         var execution = _tracker.Create(responseId);
-        execution.Response = new Models.Response(responseId, "test") { Status = ResponseStatus.InProgress };
+        execution.Response = new Models.ResponseObject(responseId, "test") { Status = ResponseStatus.InProgress };
         var publisher = await _provider.CreateEventPublisherAsync(responseId);
         return (execution, publisher);
     }

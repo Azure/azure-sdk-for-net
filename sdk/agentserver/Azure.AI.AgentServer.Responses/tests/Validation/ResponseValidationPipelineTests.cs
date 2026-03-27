@@ -170,7 +170,7 @@ public class ResponseValidationPipelineTests : ProtocolTestBase
         IResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var resp = new Models.Response(ctx.ResponseId, "test");
+        var resp = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, resp);
         await Task.CompletedTask;
         // Simulate a response validation error after response.created
@@ -184,7 +184,7 @@ public class ResponseValidationPipelineTests : ProtocolTestBase
         IResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var resp = new Models.Response(ctx.ResponseId, "test");
+        var resp = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, resp);
         await Task.CompletedTask;
         throw new ResponseValidationException(
@@ -206,7 +206,7 @@ public class ResponseValidationPipelineTests : ProtocolTestBase
         IResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var resp = new Models.Response(ctx.ResponseId, "test");
+        var resp = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, resp);
         resp.SetCompleted();
         yield return new ResponseCompletedEvent(0, resp);

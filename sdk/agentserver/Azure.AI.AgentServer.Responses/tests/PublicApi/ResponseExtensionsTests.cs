@@ -14,21 +14,21 @@ public class ResponseExtensionsTests
     [Test]
     public void GetToolChoiceExpanded_NullResponse_ThrowsArgumentNullException()
     {
-        Models.Response? response = null;
+        Models.ResponseObject? response = null;
         Assert.Throws<ArgumentNullException>(() => response!.GetToolChoiceExpanded());
     }
 
     [Test]
     public void GetToolChoiceExpanded_NullToolChoice_ReturnsNull()
     {
-        var response = new Models.Response("resp_1", "gpt-4o");
+        var response = new Models.ResponseObject("resp_1", "gpt-4o");
         Assert.That(response.GetToolChoiceExpanded(), Is.Null);
     }
 
     [Test]
     public void GetToolChoiceExpanded_Auto_ReturnsToolChoiceAllowedAuto()
     {
-        var response = new Models.Response("resp_1", "gpt-4o")
+        var response = new Models.ResponseObject("resp_1", "gpt-4o")
         {
             ToolChoice = BinaryData.FromObjectAsJson("auto"),
         };
@@ -42,7 +42,7 @@ public class ResponseExtensionsTests
     [Test]
     public void GetToolChoiceExpanded_None_ReturnsNull()
     {
-        var response = new Models.Response("resp_1", "gpt-4o")
+        var response = new Models.ResponseObject("resp_1", "gpt-4o")
         {
             ToolChoice = BinaryData.FromObjectAsJson("none"),
         };
@@ -55,7 +55,7 @@ public class ResponseExtensionsTests
     [Test]
     public void SetToolChoice_ToolChoiceParam_RoundTrips()
     {
-        var response = new Models.Response("resp_1", "gpt-4o");
+        var response = new Models.ResponseObject("resp_1", "gpt-4o");
         var toolChoice = new ToolChoiceAllowed(ToolChoiceAllowedMode.Required, Array.Empty<IDictionary<string, BinaryData>>());
 
         response.SetToolChoice(toolChoice);
@@ -68,7 +68,7 @@ public class ResponseExtensionsTests
     [Test]
     public void SetToolChoice_NullParam_ThrowsArgumentNullException()
     {
-        var response = new Models.Response("resp_1", "gpt-4o");
+        var response = new Models.ResponseObject("resp_1", "gpt-4o");
         Assert.Throws<ArgumentNullException>(() => response.SetToolChoice((ToolChoiceParam)null!));
     }
 
@@ -77,7 +77,7 @@ public class ResponseExtensionsTests
     [Test]
     public void SetToolChoice_OptionsAuto_RoundTrips()
     {
-        var response = new Models.Response("resp_1", "gpt-4o");
+        var response = new Models.ResponseObject("resp_1", "gpt-4o");
 
         response.SetToolChoice(ToolChoiceOptions.Auto);
         var result = response.GetToolChoiceExpanded();
@@ -89,7 +89,7 @@ public class ResponseExtensionsTests
     [Test]
     public void SetToolChoice_OptionsRequired_RoundTrips()
     {
-        var response = new Models.Response("resp_1", "gpt-4o");
+        var response = new Models.ResponseObject("resp_1", "gpt-4o");
 
         response.SetToolChoice(ToolChoiceOptions.Required);
         var result = response.GetToolChoiceExpanded();
@@ -101,7 +101,7 @@ public class ResponseExtensionsTests
     [Test]
     public void SetToolChoice_OptionsNone_GetReturnsNull()
     {
-        var response = new Models.Response("resp_1", "gpt-4o");
+        var response = new Models.ResponseObject("resp_1", "gpt-4o");
 
         response.SetToolChoice(ToolChoiceOptions.None);
 
@@ -113,21 +113,21 @@ public class ResponseExtensionsTests
     [Test]
     public void GetInstructionItems_NullResponse_ThrowsArgumentNullException()
     {
-        Models.Response? response = null;
+        Models.ResponseObject? response = null;
         Assert.Throws<ArgumentNullException>(() => response!.GetInstructionItems());
     }
 
     [Test]
     public void GetInstructionItems_NullInstructions_ReturnsEmptyList()
     {
-        var response = new Models.Response("resp_1", "gpt-4o");
+        var response = new Models.ResponseObject("resp_1", "gpt-4o");
         Assert.That(response.GetInstructionItems(), Is.Empty);
     }
 
     [Test]
     public void GetInstructionItems_StringInstructions_ReturnsSingleItemMessage()
     {
-        var response = new Models.Response("resp_1", "gpt-4o")
+        var response = new Models.ResponseObject("resp_1", "gpt-4o")
         {
             Instructions = BinaryData.FromObjectAsJson("You are helpful."),
         };
@@ -147,7 +147,7 @@ public class ResponseExtensionsTests
     public void GetInstructionItems_ArrayInstructions_DeserializesCorrectly()
     {
         var json = """[{"type":"message","role":"developer","content":[{"type":"input_text","text":"Be concise."}]}]""";
-        var response = new Models.Response("resp_1", "gpt-4o")
+        var response = new Models.ResponseObject("resp_1", "gpt-4o")
         {
             Instructions = BinaryData.FromString(json),
         };
@@ -164,7 +164,7 @@ public class ResponseExtensionsTests
     [Test]
     public void SetInstructions_String_RoundTrips()
     {
-        var response = new Models.Response("resp_1", "gpt-4o");
+        var response = new Models.ResponseObject("resp_1", "gpt-4o");
 
         response.SetInstructions("You are a helpful assistant.");
         var result = response.GetInstructionItems();
@@ -180,7 +180,7 @@ public class ResponseExtensionsTests
     [Test]
     public void SetInstructions_NullString_ThrowsArgumentNullException()
     {
-        var response = new Models.Response("resp_1", "gpt-4o");
+        var response = new Models.ResponseObject("resp_1", "gpt-4o");
         Assert.Throws<ArgumentNullException>(() => response.SetInstructions((string)null!));
     }
 
@@ -189,7 +189,7 @@ public class ResponseExtensionsTests
     [Test]
     public void SetInstructions_ItemList_RoundTrips()
     {
-        var response = new Models.Response("resp_1", "gpt-4o");
+        var response = new Models.ResponseObject("resp_1", "gpt-4o");
         var items = new List<Item>
         {
             new ItemMessage(MessageRole.Developer, new List<MessageContent>
@@ -212,7 +212,7 @@ public class ResponseExtensionsTests
     [Test]
     public void SetInstructions_NullItemList_ThrowsArgumentNullException()
     {
-        var response = new Models.Response("resp_1", "gpt-4o");
+        var response = new Models.ResponseObject("resp_1", "gpt-4o");
         Assert.Throws<ArgumentNullException>(() => response.SetInstructions((IList<Item>)null!));
     }
 }

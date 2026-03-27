@@ -169,7 +169,7 @@ public class GetResponseTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
-        var response = new Models.Response(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
         yield return new ResponseCreatedEvent(0, response);
         yield return new ResponseOutputItemDoneEvent();
         response.SetCompleted();
@@ -181,7 +181,7 @@ public class GetResponseTests : IDisposable
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var response = new Models.Response(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
         yield return new ResponseCreatedEvent(0, response);
         await delayTask.WaitAsync(ct);
         response.SetCompleted();

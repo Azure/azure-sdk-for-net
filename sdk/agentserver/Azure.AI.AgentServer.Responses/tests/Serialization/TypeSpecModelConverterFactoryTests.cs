@@ -21,12 +21,12 @@ public class TypeSpecModelConverterFactoryTests
         return options;
     }
 
-    private static Models.Response CreateTestResponse(
+    private static Models.ResponseObject CreateTestResponse(
         string id = "resp_test123",
         string model = "gpt-4o",
         ResponseStatus status = ResponseStatus.Completed)
     {
-        return new Models.Response(id, model)
+        return new Models.ResponseObject(id, model)
         {
             Status = status,
             CreatedAt = new DateTimeOffset(2026, 3, 4, 12, 0, 0, TimeSpan.Zero),
@@ -39,7 +39,7 @@ public class TypeSpecModelConverterFactoryTests
     public void CanConvert_Response_ReturnsTrue()
     {
         var factory = new TypeSpecModelConverterFactory();
-        Assert.That(factory.CanConvert(typeof(Models.Response)), Is.True);
+        Assert.That(factory.CanConvert(typeof(Models.ResponseObject)), Is.True);
     }
 
     [Test]
@@ -119,7 +119,7 @@ public class TypeSpecModelConverterFactoryTests
     public void Serialize_ResponseError_ProducesCorrectStructure()
     {
         var options = CreateOptions();
-        var error = new Models.ResponseError(ResponseErrorCode.ServerError, "Something went wrong");
+        var error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "Something went wrong");
 
         var json = JsonSerializer.Serialize(error, options);
         using var doc = JsonDocument.Parse(json);
@@ -147,7 +147,7 @@ public class TypeSpecModelConverterFactoryTests
     public void Serialize_NullValue_WritesJsonNull()
     {
         var options = CreateOptions();
-        Models.Response? nullResponse = null;
+        Models.ResponseObject? nullResponse = null;
 
         var json = JsonSerializer.Serialize(nullResponse, options);
 
@@ -163,7 +163,7 @@ public class TypeSpecModelConverterFactoryTests
         var response = CreateTestResponse();
 
         var json = JsonSerializer.Serialize(response, options);
-        var deserialized = JsonSerializer.Deserialize<Models.Response>(json, options);
+        var deserialized = JsonSerializer.Deserialize<Models.ResponseObject>(json, options);
 
         Assert.That(deserialized, Is.Not.Null);
         Assert.That(deserialized!.Id, Is.EqualTo("resp_test123"));
@@ -175,10 +175,10 @@ public class TypeSpecModelConverterFactoryTests
     public void Deserialize_ResponseError_PreservesCodeAndMessage()
     {
         var options = CreateOptions();
-        var error = new Models.ResponseError(ResponseErrorCode.ServerError, "test error");
+        var error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "test error");
 
         var json = JsonSerializer.Serialize(error, options);
-        var deserialized = JsonSerializer.Deserialize<Models.ResponseError>(json, options);
+        var deserialized = JsonSerializer.Deserialize<Models.ResponseErrorInfo>(json, options);
 
         Assert.That(deserialized, Is.Not.Null);
         Assert.That(deserialized!.Code, Is.EqualTo(ResponseErrorCode.ServerError));
@@ -189,7 +189,7 @@ public class TypeSpecModelConverterFactoryTests
     public void Deserialize_NullJsonToken_ReturnsNull()
     {
         var options = CreateOptions();
-        var result = JsonSerializer.Deserialize<Models.Response>("null", options);
+        var result = JsonSerializer.Deserialize<Models.ResponseObject>("null", options);
         Assert.That(result, Is.Null);
     }
 
@@ -253,15 +253,15 @@ public class TypeSpecModelConverterFactoryTests
     public void RoundTrip_Response_PreservesAllSetFields()
     {
         var options = CreateOptions();
-        var original = new Models.Response("resp_roundtrip", "gpt-4o-mini")
+        var original = new Models.ResponseObject("resp_roundtrip", "gpt-4o-mini")
         {
             Status = ResponseStatus.Failed,
-            Error = new Models.ResponseError(ResponseErrorCode.InvalidPrompt, "bad prompt"),
+            Error = new Models.ResponseErrorInfo(ResponseErrorCode.InvalidPrompt, "bad prompt"),
             CreatedAt = new DateTimeOffset(2026, 1, 15, 8, 30, 0, TimeSpan.Zero),
         };
 
         var json = JsonSerializer.Serialize(original, options);
-        var restored = JsonSerializer.Deserialize<Models.Response>(json, options);
+        var restored = JsonSerializer.Deserialize<Models.ResponseObject>(json, options);
 
         Assert.That(restored, Is.Not.Null);
         Assert.That(restored!.Id, Is.EqualTo(original.Id));
@@ -309,8 +309,8 @@ public class TypeSpecModelConverterFactoryTests
         // Verify that multiple CanConvert calls for the same type are consistent
         var factory = new TypeSpecModelConverterFactory();
 
-        var first = factory.CanConvert(typeof(Models.Response));
-        var second = factory.CanConvert(typeof(Models.Response));
+        var first = factory.CanConvert(typeof(Models.ResponseObject));
+        var second = factory.CanConvert(typeof(Models.ResponseObject));
 
         Assert.That(second, Is.EqualTo(first));
         Assert.That(first, Is.True);

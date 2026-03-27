@@ -24,7 +24,7 @@ public class PublicConstructorSpikeTests
         var ctor = typeof(ResponseCreatedEvent).GetConstructor(
             BindingFlags.Public | BindingFlags.Instance,
             binder: null,
-            types: [typeof(long), typeof(Models.Response)],
+            types: [typeof(long), typeof(Models.ResponseObject)],
             modifiers: null);
 
         Assert.That(ctor, Is.Not.Null);
@@ -37,7 +37,7 @@ public class PublicConstructorSpikeTests
         var ctor = typeof(ResponseCompletedEvent).GetConstructor(
             BindingFlags.Public | BindingFlags.Instance,
             binder: null,
-            types: [typeof(long), typeof(Models.Response)],
+            types: [typeof(long), typeof(Models.ResponseObject)],
             modifiers: null);
 
         Assert.That(ctor, Is.Not.Null);
@@ -47,7 +47,7 @@ public class PublicConstructorSpikeTests
     [Test]
     public void ResponseError_HasPublicCompactConstructor()
     {
-        var ctor = typeof(Models.ResponseError).GetConstructor(
+        var ctor = typeof(Models.ResponseErrorInfo).GetConstructor(
             BindingFlags.Public | BindingFlags.Instance,
             binder: null,
             types: [typeof(ResponseErrorCode), typeof(string)],
@@ -78,7 +78,7 @@ public class PublicConstructorSpikeTests
         var fullCtor = typeof(ResponseCreatedEvent).GetConstructor(
             BindingFlags.NonPublic | BindingFlags.Instance,
             binder: null,
-            types: [typeof(ResponseStreamEventType), typeof(long), typeof(IDictionary<string, BinaryData>), typeof(Models.Response)],
+            types: [typeof(ResponseStreamEventType), typeof(long), typeof(IDictionary<string, BinaryData>), typeof(Models.ResponseObject)],
             modifiers: null);
 
         Assert.That(fullCtor, Is.Not.Null);
@@ -114,7 +114,7 @@ public class PublicConstructorSpikeTests
     [Test]
     public void ResponseError_Properties_HavePublicSetters()
     {
-        var type = typeof(Models.ResponseError);
+        var type = typeof(Models.ResponseErrorInfo);
 
         var codeProp = type.GetProperty("Code", BindingFlags.Public | BindingFlags.Instance);
         Assert.That(codeProp, Is.Not.Null);

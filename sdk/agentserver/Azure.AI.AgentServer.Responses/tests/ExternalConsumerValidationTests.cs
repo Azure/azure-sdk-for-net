@@ -19,7 +19,7 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_Response_ViaConvenienceConstructor()
     {
-        var response = new Models.Response("resp_123", "gpt-4o");
+        var response = new Models.ResponseObject("resp_123", "gpt-4o");
         Assert.That(response.Id, Is.EqualTo("resp_123"));
         Assert.That(response.Model, Is.EqualTo("gpt-4o"));
     }
@@ -27,7 +27,7 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseCreatedEvent()
     {
-        var response = new Models.Response("resp_123", "gpt-4o");
+        var response = new Models.ResponseObject("resp_123", "gpt-4o");
         var evt = new ResponseCreatedEvent(sequenceNumber: 0, response: response);
         Assert.That(evt, Is.Not.Null);
         Assert.That(evt.Response, Is.EqualTo(response));
@@ -36,7 +36,7 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseInProgressEvent()
     {
-        var response = new Models.Response("resp_123", "gpt-4o");
+        var response = new Models.ResponseObject("resp_123", "gpt-4o");
         var evt = new ResponseInProgressEvent(sequenceNumber: 1, response: response);
         Assert.That(evt, Is.Not.Null);
     }
@@ -72,7 +72,7 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseCompletedEvent()
     {
-        var response = new Models.Response("resp_123", "gpt-4o");
+        var response = new Models.ResponseObject("resp_123", "gpt-4o");
         var evt = new ResponseCompletedEvent(sequenceNumber: 4, response: response);
         Assert.That(evt, Is.Not.Null);
     }
@@ -80,8 +80,8 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ErrorPath()
     {
-        var error = new Models.ResponseError(ResponseErrorCode.ServerError, "failed");
-        var response = new Models.Response("resp_err", "gpt-4o");
+        var error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "failed");
+        var response = new Models.ResponseObject("resp_err", "gpt-4o");
         response.Error = error;
         var evt = new ResponseFailedEvent(sequenceNumber: 5, response: response);
 
@@ -128,7 +128,7 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseError()
     {
-        var error = new Models.ResponseError(ResponseErrorCode.ServerError, "test");
+        var error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "test");
         Assert.That(error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
         Assert.That(error.Message, Is.EqualTo("test"));
     }
@@ -136,10 +136,10 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanUse_ResponsesModelFactory()
     {
-        var response = ResponsesModelFactory.Response(id: "mock_resp");
+        var response = ResponsesModelFactory.ResponseObject(id: "mock_resp");
         Assert.That(response, Is.Not.Null);
 
-        var error = ResponsesModelFactory.ResponseError(
+        var error = ResponsesModelFactory.ResponseErrorInfo(
             code: ResponseErrorCode.InvalidPrompt,
             message: "bad input");
         Assert.That(error, Is.Not.Null);
@@ -149,7 +149,7 @@ public class ExternalConsumerValidationTests
     public void Consumer_CanSetProperties_AfterConstruction()
     {
         // R2 accepted: public setters allow post-construction customization
-        var response = new Models.Response("resp_123", "gpt-4o");
+        var response = new Models.ResponseObject("resp_123", "gpt-4o");
         response.Status = ResponseStatus.Completed;
 
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));

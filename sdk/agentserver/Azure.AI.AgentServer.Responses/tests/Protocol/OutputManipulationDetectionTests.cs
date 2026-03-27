@@ -9,9 +9,9 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// E2E protocol tests for detecting direct Models.Response.Output manipulation (FR-008a).
+/// E2E protocol tests for detecting direct Models.ResponseObject.Output manipulation (FR-008a).
 /// Validates that the SDK detects when a handler directly adds/removes items from
-/// Models.Response.Output without emitting corresponding output_item.* builder events.
+/// Models.ResponseObject.Output without emitting corresponding output_item.* builder events.
 /// </summary>
 public class OutputManipulationDetectionTests : ProtocolTestBase
 {
@@ -20,7 +20,7 @@ public class OutputManipulationDetectionTests : ProtocolTestBase
     [Test]
     public async Task POST_Responses_DirectOutputAdd_WithoutBuilderEvents_ReturnsBadHandlerError()
     {
-        // Handler directly adds an item to Models.Response.Output without emitting output_item.added
+        // Handler directly adds an item to Models.ResponseObject.Output without emitting output_item.added
         // → SDK detects inconsistency and fails with bad handler error (FR-008a)
         Handler.EventFactory = (req, ctx, ct) => OutputManipulationStream(ctx);
 

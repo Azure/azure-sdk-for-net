@@ -27,7 +27,7 @@ internal static class StorageEnvelopeSerializer
 
         writer.WriteStartObject();
         writer.WritePropertyName("response");
-        ((IJsonModel<Models.Response>)request.Response).Write(writer, JsonOptions);
+        ((IJsonModel<Models.ResponseObject>)request.Response).Write(writer, JsonOptions);
 
         writer.WritePropertyName("input_items");
         writer.WriteStartArray();
@@ -54,11 +54,11 @@ internal static class StorageEnvelopeSerializer
     /// <summary>
     /// Serializes a <see cref="Response"/> to a JSON HTTP body.
     /// </summary>
-    public static HttpContent SerializeResponse(Models.Response response)
+    public static HttpContent SerializeResponse(Models.ResponseObject response)
     {
         using var ms = new System.IO.MemoryStream();
         using var writer = new Utf8JsonWriter(ms);
-        ((IJsonModel<Models.Response>)response).Write(writer, JsonOptions);
+        ((IJsonModel<Models.ResponseObject>)response).Write(writer, JsonOptions);
         writer.Flush();
         return ToJsonContent(ms);
     }
@@ -94,10 +94,10 @@ internal static class StorageEnvelopeSerializer
     /// Deserializes a JSON string into a <see cref="Response"/>.
     /// </summary>
     [SuppressMessage("Usage", "AZC0150:Use ModelReaderWriterContext overload", Justification = "Generated contracts do not yet expose ModelReaderWriterContext.")]
-    public static Models.Response DeserializeResponse(string json)
+    public static Models.ResponseObject DeserializeResponse(string json)
     {
         var data = BinaryData.FromString(json);
-        return ModelReaderWriter.Read<Models.Response>(data, JsonOptions)
+        return ModelReaderWriter.Read<Models.ResponseObject>(data, JsonOptions)
             ?? throw new InvalidOperationException("Failed to deserialize Response from storage.");
     }
 

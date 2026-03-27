@@ -77,7 +77,7 @@ internal sealed class ResponseOrchestrator
     /// </param>
     /// <returns>
     /// An <see cref="OrchestratorResult"/> — either
-    /// <see cref="OrchestratorResult.Completed(Models.Response)"/> or
+    /// <see cref="OrchestratorResult.Completed(Models.ResponseObject)"/> or
     /// <see cref="OrchestratorResult.Streaming(IAsyncEnumerable{ResponseStreamEvent})"/>.
     /// </returns>
     public async Task<OrchestratorResult> CreateAsync(
@@ -126,7 +126,7 @@ internal sealed class ResponseOrchestrator
     /// <param name="responseId">The response ID to look up.</param>
     /// <returns>The Response snapshot.</returns>
     /// <exception cref="ResourceNotFoundException">If the response cannot be retrieved.</exception>
-    public async Task<Models.Response> GetAsync(string responseId)
+    public async Task<Models.ResponseObject> GetAsync(string responseId)
     {
         // If the response is in-flight, apply in-flight guards and return a snapshot.
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
@@ -163,7 +163,7 @@ internal sealed class ResponseOrchestrator
     /// <returns>The cancelled Response snapshot.</returns>
     /// <exception cref="ResourceNotFoundException">If the response is not found.</exception>
     /// <exception cref="BadRequestException">If the response cannot be cancelled.</exception>
-    public async Task<Models.Response> CancelAsync(string responseId)
+    public async Task<Models.ResponseObject> CancelAsync(string responseId)
     {
         if (!_tracker.TryGet(responseId, out var execution) || execution is null)
         {
@@ -321,7 +321,7 @@ internal sealed class ResponseOrchestrator
 
             // FR-008a: Detect direct Output manipulation on response.* events (after response.created)
             {
-                Models.Response? eventResponse = evt switch
+                Models.ResponseObject? eventResponse = evt switch
                 {
                     ResponseInProgressEvent e => e.Response,
                     ResponseCompletedEvent e => e.Response,

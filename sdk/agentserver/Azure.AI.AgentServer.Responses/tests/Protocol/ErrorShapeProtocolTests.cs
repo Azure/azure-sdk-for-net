@@ -80,7 +80,7 @@ public class ErrorShapeProtocolTests : ProtocolTestBase
         Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
-    // ── T015: Models.Response error shape on failed responses ────────
+    // ── T015: Models.ResponseObject error shape on failed responses ────────
 
     [Test]
     public async Task POST_HandlerThrows_FailedResponse_HasResponseError()

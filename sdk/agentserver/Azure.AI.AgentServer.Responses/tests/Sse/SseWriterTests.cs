@@ -21,9 +21,9 @@ public class SseWriterTests
         },
     };
 
-    private static Models.Response CreateTestResponse()
+    private static Models.ResponseObject CreateTestResponse()
     {
-        return new Models.Response("resp_test", "gpt-4o");
+        return new Models.ResponseObject("resp_test", "gpt-4o");
     }
 
     [Test]

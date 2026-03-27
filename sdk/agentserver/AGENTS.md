@@ -88,8 +88,7 @@ principles conflict, resolve in this priority order:
 | **Core Tests** | `Azure.AI.AgentServer.Core/tests/` | NUnit tests for Core |
 | **Invocations** | `Azure.AI.AgentServer.Invocations/src/` | Invocations protocol: `InvocationHandler`, session resolution, client header forwarding |
 | **Invocations Tests** | `Azure.AI.AgentServer.Invocations/tests/` | NUnit tests for Invocations |
-| **Responses.Contracts** | `Azure.AI.AgentServer.Responses.Contracts/src/` | TypeSpec-generated model contracts for Responses protocol |
-| **Responses** | `Azure.AI.AgentServer.Responses/src/` | Responses protocol: hosting extensions, SSE streaming, handlers |
+| **Responses** | `Azure.AI.AgentServer.Responses/src/` | Responses protocol: TypeSpec-generated models, hosting extensions, SSE streaming, handlers |
 | **Responses Tests** | `Azure.AI.AgentServer.Responses/tests/` | NUnit tests for Responses |
 
 > **Out of scope**: `Azure.AI.AgentServer.Core`, `Azure.AI.AgentServer.Contracts`, and
@@ -127,7 +126,6 @@ merge requirements enforced by CI, code review, and the Azure SDK architects.
 
 | Project type | Property to use | Example |
 |---|---|---|
-| Class libraries (Contracts) | `$(RequiredTargetFrameworks)` | `netstandard2.0;net8.0;net10.0` |
 | ASP.NET libraries (Core, Responses, Invocations) | `$(RequiredRunnableTargetFrameworks)` | `net8.0;net10.0` |
 | Test projects | Inherited from repo defaults | — |
 
@@ -144,9 +142,9 @@ string comparisons like `$(TargetFramework) != 'net462'`.
 
 | Mechanism | When to use | Example |
 |---|---|---|
-| `[assembly: SuppressMessage]` in `Suppression.cs` | Type-scoped rules (AZC0012) | `Responses.Contracts/src/Suppression.cs` |
+| `[assembly: SuppressMessage]` in `Suppression.cs` | Type-scoped rules (AZC0012) | `Responses/src/Suppression.cs` |
 | `#pragma warning disable` in file header | Generated file rules (AZC0014) | Emitted by `generate-validators.py` |
-| `<DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>` | Projects that are 90%+ generated code | `Responses.Contracts` csproj |
+| `<DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>` | Projects that are 90%+ generated code | `Responses` csproj |
 | `Generated/Directory.Build.props` | Suppress rules for entire `Generated/` folder | StyleCop, CS1591 in generated code |
 
 **Test `.csproj` NoWarn** — match the repo template exactly: `<NoWarn>$(NoWarn);CS1591</NoWarn>`. No extra codes. If a test triggers an analyzer, fix the code rather than suppressing.
@@ -379,7 +377,7 @@ avoid repeating them.
 
 | Mistake | Fix |
 |---|---|
-| `InternalsVisibleTo` from Contracts → Responses | Eliminate by adding `@@usage(..., Usage.input \| Usage.output)` in `client.tsp` or using public model factory |
+| `InternalsVisibleTo` from library → tests only | Ensure internal types use `@@usage(..., Usage.input \| Usage.output)` in `client.tsp` or public model factory for external consumers |
 
 ### 5.5 Documentation mistakes
 

@@ -199,7 +199,7 @@ public class CreateResponseTests : IDisposable
         string responseId,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        yield return new ResponseCreatedEvent(0, new Models.Response(responseId, "test-model"));
+        yield return new ResponseCreatedEvent(0, new Models.ResponseObject(responseId, "test-model"));
         await Task.CompletedTask;
         throw new InvalidOperationException("Simulated handler failure");
     }

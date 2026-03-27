@@ -12,11 +12,11 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 /// <summary>
 /// Protocol conformance tests for auto-stamping <c>agent_reference</c> on output items (US3).
 /// Validates that <c>agent_reference</c> from <c>CreateResponse</c> propagates to the
-/// <c>Models.Response</c> object and all output items, with handler-set values taking precedence.
+/// <c>Models.ResponseObject</c> object and all output items, with handler-set values taking precedence.
 /// </summary>
 public class AgentReferenceAutoStampProtocolTests : ProtocolTestBase
 {
-    // ── T024: agent_reference on CreateResponse appears on Models.Response ──
+    // ── T024: agent_reference on CreateResponse appears on Models.ResponseObject ──
 
     [Test]
     public async Task POST_Streaming_AgentReference_AppearsOnResponse()
@@ -196,7 +196,7 @@ public class AgentReferenceAutoStampProtocolTests : ProtocolTestBase
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
 
         yield return new ResponseCreatedEvent(0, response);
 

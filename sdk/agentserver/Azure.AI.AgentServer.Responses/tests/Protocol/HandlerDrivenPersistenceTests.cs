@@ -200,7 +200,7 @@ public class HandlerDrivenPersistenceTests : IDisposable
     {
         started.TrySetResult();
         await gate.WaitAsync(ct);
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
         response.SetCompleted();
         yield return new ResponseCompletedEvent(0, response);
@@ -247,7 +247,7 @@ public class HandlerDrivenPersistenceTests : IDisposable
 
     private sealed class RecordingProvider : IResponsesProvider, IResponsesCancellationSignalProvider, IResponsesStreamProvider, IDisposable
     {
-        private readonly ConcurrentDictionary<string, Models.Response> _responses = new();
+        private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
         private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _ctsSources = new();
         private readonly TimeSpan _ttl = TimeSpan.FromMinutes(30);
@@ -261,7 +261,7 @@ public class HandlerDrivenPersistenceTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public Task<Models.Response> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
+        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -271,7 +271,7 @@ public class HandlerDrivenPersistenceTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public Task UpdateResponseAsync(Models.Response response, CancellationToken cancellationToken = default)
+        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;

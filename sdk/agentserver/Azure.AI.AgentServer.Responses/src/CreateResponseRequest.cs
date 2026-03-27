@@ -26,7 +26,7 @@ public sealed class CreateResponseRequest
     /// <param name="historyItemIds">The resolved history item IDs, or <c>null</c> for empty.</param>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="response"/> is <c>null</c>.</exception>
     public CreateResponseRequest(
-        Models.Response response,
+        Models.ResponseObject response,
         IEnumerable<OutputItem>? inputItems,
         IEnumerable<string>? historyItemIds)
     {
@@ -36,7 +36,7 @@ public sealed class CreateResponseRequest
     }
 
     /// <summary>Gets the response snapshot to store.</summary>
-    public Models.Response Response { get; }
+    public Models.ResponseObject Response { get; }
 
     /// <summary>Gets the resolved input items for this response (empty if none).</summary>
     public IEnumerable<OutputItem> InputItems { get; }

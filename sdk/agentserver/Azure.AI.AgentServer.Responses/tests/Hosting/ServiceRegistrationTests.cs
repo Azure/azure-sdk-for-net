@@ -211,9 +211,9 @@ public class ServiceRegistrationTests
     private sealed class StubResponsesProvider : IResponsesProvider
     {
         public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default) => Task.CompletedTask;
-        public Task<Models.Response> GetResponseAsync(string responseId, CancellationToken ct = default)
+        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
-        public Task UpdateResponseAsync(Models.Response response, CancellationToken ct = default) => Task.CompletedTask;
+        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default) => Task.CompletedTask;
         public Task DeleteResponseAsync(string responseId, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
         public Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
@@ -244,7 +244,7 @@ public class ServiceRegistrationTests
     /// </summary>
     private sealed class RecordingStateProvider : IResponsesProvider
     {
-        private readonly ConcurrentDictionary<string, Models.Response> _responses = new();
+        private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
         public ConcurrentBag<string> Calls { get; } = new();
 
         public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
@@ -254,7 +254,7 @@ public class ServiceRegistrationTests
             return Task.CompletedTask;
         }
 
-        public Task<Models.Response> GetResponseAsync(string responseId, CancellationToken ct = default)
+        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -262,7 +262,7 @@ public class ServiceRegistrationTests
             return Task.FromResult(response);
         }
 
-        public Task UpdateResponseAsync(Models.Response response, CancellationToken ct = default)
+        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;
@@ -364,7 +364,7 @@ public class ServiceRegistrationTests
         IResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
         try
         {

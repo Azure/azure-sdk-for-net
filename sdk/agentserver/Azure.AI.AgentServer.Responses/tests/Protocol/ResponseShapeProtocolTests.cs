@@ -10,7 +10,7 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// Protocol conformance tests for the Models.Response object shape.
+/// Protocol conformance tests for the Models.ResponseObject object shape.
 /// Validates required fields, computed properties, and structural invariants.
 /// Validates: B31 — Required response fields
 /// All assertions use HttpClient + JsonDocument only — no SDK model types in assertions.

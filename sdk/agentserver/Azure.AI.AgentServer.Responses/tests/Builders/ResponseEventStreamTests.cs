@@ -154,7 +154,7 @@ public class ResponseEventStreamTests
 
         var evt = stream.EmitCreated();
 
-        // Models.Response is the stream-owned Models.Response
+        // Models.ResponseObject is the stream-owned Models.ResponseObject
         Assert.That(evt.Response, Is.SameAs(stream.Response));
     }
 
@@ -229,8 +229,8 @@ public class ResponseEventStreamTests
         var stream = new ResponseEventStream(context, request);
         var evt = stream.EmitCreated();
 
-        // The stream builds its own Models.Response — it's not the same as any externally-created instance
-        var externalResponse = new Models.Response("resp_ext", "gpt-4o");
+        // The stream builds its own Models.ResponseObject — it's not the same as any externally-created instance
+        var externalResponse = new Models.ResponseObject("resp_ext", "gpt-4o");
         Assert.That(evt.Response, Is.Not.SameAs(externalResponse));
     }
 

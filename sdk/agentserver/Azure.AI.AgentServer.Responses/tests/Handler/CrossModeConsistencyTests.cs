@@ -12,7 +12,7 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Handler;
 
 /// <summary>
-/// Verifies that the same handler produces consistent Models.Response state
+/// Verifies that the same handler produces consistent Models.ResponseObject state
 /// across all 4 delivery modes (default, streaming, background, streaming+background).
 /// </summary>
 public class CrossModeConsistencyTests : IDisposable
@@ -123,7 +123,7 @@ public class CrossModeConsistencyTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
-        var response = new Models.Response(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
         yield return new ResponseCreatedEvent(0, response);
 
         var textContent = new OutputMessageContentOutputTextContent(
@@ -135,7 +135,7 @@ public class CrossModeConsistencyTests : IDisposable
         yield return new ResponseOutputItemAddedEvent(0, 0, msg);
         yield return new ResponseOutputItemDoneEvent(0, 0, msg);
 
-        var completedResponse = new Models.Response(ctx.ResponseId, "test");
+        var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test");
         completedResponse.Output.Add(msg);
         completedResponse.SetCompleted();
         yield return new ResponseCompletedEvent(0, completedResponse);

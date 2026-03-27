@@ -89,7 +89,7 @@ public class CacheIntegrationTests : IDisposable
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.Response(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
+        var response = new Models.ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
         yield return new ResponseCreatedEvent(0, response);
         await delayTask.WaitAsync(ct);
         response.SetCompleted();

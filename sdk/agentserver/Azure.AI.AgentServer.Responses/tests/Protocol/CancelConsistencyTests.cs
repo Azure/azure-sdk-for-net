@@ -174,7 +174,7 @@ public class CancelConsistencyTests : IDisposable
         IResponseContext ctx, TaskCompletionSource started, TaskCompletionSource gate,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
         started.TrySetResult();
 
@@ -198,12 +198,12 @@ public class CancelConsistencyTests : IDisposable
     /// </summary>
     private sealed class RecordingProvider : IResponsesProvider, IResponsesCancellationSignalProvider, IResponsesStreamProvider
     {
-        private readonly ConcurrentDictionary<string, Models.Response> _responses = new();
+        private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
         private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _cts = new();
 
-        public ConcurrentBag<Models.Response> CreateCalls { get; } = new();
-        public ConcurrentBag<Models.Response> UpdateCalls { get; } = new();
+        public ConcurrentBag<Models.ResponseObject> CreateCalls { get; } = new();
+        public ConcurrentBag<Models.ResponseObject> UpdateCalls { get; } = new();
 
         public Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
         {
@@ -214,7 +214,7 @@ public class CancelConsistencyTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public Task<Models.Response> GetResponseAsync(string responseId, CancellationToken ct = default)
+        public Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
         {
             if (!_responses.TryGetValue(responseId, out var response))
             {
@@ -223,7 +223,7 @@ public class CancelConsistencyTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public Task UpdateResponseAsync(Models.Response response, CancellationToken ct = default)
+        public Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default)
         {
             // Snapshot the response at call time
             var snapshot = response.Snapshot();

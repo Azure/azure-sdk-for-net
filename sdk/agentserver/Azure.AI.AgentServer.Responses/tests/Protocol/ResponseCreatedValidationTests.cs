@@ -10,8 +10,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// E2E protocol tests for ResponseCreatedEvent validation rules.
-/// Validates FR-006 (Models.Response.Id must match IResponseContext.ResponseId) and
-/// FR-007 (Models.Response.Status must be non-terminal on ResponseCreatedEvent).
+/// Validates FR-006 (Models.ResponseObject.Id must match IResponseContext.ResponseId) and
+/// FR-007 (Models.ResponseObject.Status must be non-terminal on ResponseCreatedEvent).
 /// </summary>
 public class ResponseCreatedValidationTests : ProtocolTestBase
 {
@@ -125,7 +125,7 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
     {
         await Task.CompletedTask;
         // Deliberately use a different ID than context provides
-        var response = new Models.Response("wrong-id-not-matching-context", "test")
+        var response = new Models.ResponseObject("wrong-id-not-matching-context", "test")
         {
             Status = ResponseStatus.InProgress,
         };
@@ -140,7 +140,7 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
     {
         await Task.CompletedTask;
         // Use the correct ID but a terminal initial status
-        var response = new Models.Response(ctx.ResponseId, "test")
+        var response = new Models.ResponseObject(ctx.ResponseId, "test")
         {
             Status = ResponseStatus.Failed,
         };
@@ -153,7 +153,7 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
     {
         await Task.CompletedTask;
         // Deliberately omit Status — SDK should auto-stamp InProgress (B31)
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
 
         var textContent = new OutputMessageContentOutputTextContent(
@@ -165,7 +165,7 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
         yield return new ResponseOutputItemAddedEvent(1, 0, msg);
         yield return new ResponseOutputItemDoneEvent(2, 0, msg);
 
-        var completedResponse = new Models.Response(ctx.ResponseId, "test");
+        var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test");
         completedResponse.Output.Add(msg);
         completedResponse.SetCompleted();
         yield return new ResponseCompletedEvent(3, completedResponse);

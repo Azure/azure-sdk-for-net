@@ -94,7 +94,7 @@ public class BackgroundTerminalEventTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
         response.SetCompleted();
         yield return new ResponseCompletedEvent(0, response);
@@ -105,7 +105,7 @@ public class BackgroundTerminalEventTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
-        var response = new Models.Response(ctx.ResponseId, "test");
+        var response = new Models.ResponseObject(ctx.ResponseId, "test");
         yield return new ResponseCreatedEvent(0, response);
         throw new InvalidOperationException("Simulated handler failure");
     }

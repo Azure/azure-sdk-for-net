@@ -73,7 +73,7 @@ public class ErrorHandlingTests : IDisposable
         Assert.That(body.GetProperty("error").GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
-    // ── Handler-level errors return Models.Response (not ApiErrorResponse) ──
+    // ── Handler-level errors return Models.ResponseObject (not ApiErrorResponse) ──
 
     [Test]
     public async Task HandlerThrows_Returns500WithServerError()

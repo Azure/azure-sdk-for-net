@@ -8,7 +8,7 @@ using Azure.AI.AgentServer.Responses.Models;
 namespace Azure.AI.AgentServer.Responses.Tests.Serialization;
 
 /// <summary>
-/// T003: Tests for Models.Response.Snapshot() deep copy via ModelReaderWriter round-trip.
+/// T003: Tests for Models.ResponseObject.Snapshot() deep copy via ModelReaderWriter round-trip.
 /// Verifies snapshot independence, round-trip fidelity, and polymorphic subtype support.
 /// </summary>
 public class ResponseSnapshotTests
@@ -17,7 +17,7 @@ public class ResponseSnapshotTests
     public void Snapshot_ReturnsIndependentCopy_StatusMutationDoesNotAffectSnapshot()
     {
         // Arrange
-        var original = new Models.Response("resp_snap1", "gpt-4o")
+        var original = new Models.ResponseObject("resp_snap1", "gpt-4o")
         {
             Status = ResponseStatus.InProgress,
         };
@@ -35,7 +35,7 @@ public class ResponseSnapshotTests
     public void Snapshot_ReturnsIndependentCopy_AddingOutputDoesNotAffectSnapshot()
     {
         // Arrange
-        var original = new Models.Response("resp_snap2", "gpt-4o")
+        var original = new Models.ResponseObject("resp_snap2", "gpt-4o")
         {
             Status = ResponseStatus.InProgress,
         };
@@ -64,7 +64,7 @@ public class ResponseSnapshotTests
     public void Snapshot_PreservesAllCoreProperties()
     {
         // Arrange
-        var original = new Models.Response("resp_snap3", "gpt-4o")
+        var original = new Models.ResponseObject("resp_snap3", "gpt-4o")
         {
             Status = ResponseStatus.Completed,
             CompletedAt = new DateTimeOffset(2026, 3, 8, 12, 0, 0, TimeSpan.Zero),
@@ -97,7 +97,7 @@ public class ResponseSnapshotTests
             "get_weather",
             """{"location":"Seattle"}""");
 
-        var original = new Models.Response("resp_snap4", "gpt-4o")
+        var original = new Models.ResponseObject("resp_snap4", "gpt-4o")
         {
             Status = ResponseStatus.Completed,
         };
@@ -124,7 +124,7 @@ public class ResponseSnapshotTests
     public void Snapshot_PreservesMetadata()
     {
         // Arrange
-        var original = new Models.Response("resp_snap5", "gpt-4o")
+        var original = new Models.ResponseObject("resp_snap5", "gpt-4o")
         {
             Status = ResponseStatus.InProgress,
             Metadata = new Metadata
@@ -146,7 +146,7 @@ public class ResponseSnapshotTests
     public void Snapshot_MetadataMutationDoesNotAffectSnapshot()
     {
         // Arrange
-        var original = new Models.Response("resp_snap6", "gpt-4o")
+        var original = new Models.ResponseObject("resp_snap6", "gpt-4o")
         {
             Status = ResponseStatus.InProgress,
             Metadata = new Metadata
@@ -168,10 +168,10 @@ public class ResponseSnapshotTests
     public void Snapshot_PreservesErrorField()
     {
         // Arrange
-        var original = new Models.Response("resp_snap7", "gpt-4o")
+        var original = new Models.ResponseObject("resp_snap7", "gpt-4o")
         {
             Status = ResponseStatus.Failed,
-            Error = ResponsesModelFactory.ResponseError(
+            Error = ResponsesModelFactory.ResponseErrorInfo(
                 code: ResponseErrorCode.ServerError,
                 message: "Something went wrong"),
         };
@@ -189,7 +189,7 @@ public class ResponseSnapshotTests
     public void Snapshot_ReturnsNewInstance_NotSameReference()
     {
         // Arrange
-        var original = new Models.Response("resp_snap8", "gpt-4o");
+        var original = new Models.ResponseObject("resp_snap8", "gpt-4o");
 
         // Act
         var snapshot = original.Snapshot();
@@ -202,7 +202,7 @@ public class ResponseSnapshotTests
     public void Snapshot_EmptyResponse_RoundTripsSuccessfully()
     {
         // Arrange — minimal response with no output, no error, no metadata
-        var original = new Models.Response("resp_snap9", "gpt-4o")
+        var original = new Models.ResponseObject("resp_snap9", "gpt-4o")
         {
             Status = ResponseStatus.InProgress,
         };

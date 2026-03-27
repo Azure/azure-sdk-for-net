@@ -19,7 +19,5 @@ extends:
     Artifacts:
       - name: Azure.AI.AgentServer.Core
         safeName: AzureAIAgentServerCore
-      - name: Azure.AI.AgentServer.Responses.Contracts
-        safeName: AzureAIAgentServerResponsesContracts
       - name: Azure.AI.AgentServer.Responses
         safeName: AzureAIAgentServerResponses

@@ -26,7 +26,7 @@ public class ResponsesModelFactoryTests
     [Test]
     public void ResponsesModelFactory_Response_ReturnsValidInstance()
     {
-        var response = ResponsesModelFactory.Response(id: "resp_test");
+        var response = ResponsesModelFactory.ResponseObject(id: "resp_test");
         Assert.That(response, Is.Not.Null);
         Assert.That(response.Id, Is.EqualTo("resp_test"));
     }
@@ -34,7 +34,7 @@ public class ResponsesModelFactoryTests
     [Test]
     public void ResponsesModelFactory_Response_UsesNamedOptionalParameters()
     {
-        var response = ResponsesModelFactory.Response(
+        var response = ResponsesModelFactory.ResponseObject(
             id: "resp_test",
             model: "gpt-4o",
             status: ResponseStatus.Completed);
@@ -47,7 +47,7 @@ public class ResponsesModelFactoryTests
     [Test]
     public void ResponsesModelFactory_ResponseError_ReturnsValidInstance()
     {
-        var error = ResponsesModelFactory.ResponseError(
+        var error = ResponsesModelFactory.ResponseErrorInfo(
             code: ResponseErrorCode.ServerError,
             message: "Something went wrong");
 
@@ -59,7 +59,7 @@ public class ResponsesModelFactoryTests
     [Test]
     public void ResponsesModelFactory_ResponseCreatedEvent_ReturnsValidInstance()
     {
-        var response = new Models.Response("resp_123", "gpt-4o");
+        var response = new Models.ResponseObject("resp_123", "gpt-4o");
         var evt = ResponsesModelFactory.ResponseCreatedEvent(
             response: response,
             sequenceNumber: 1);

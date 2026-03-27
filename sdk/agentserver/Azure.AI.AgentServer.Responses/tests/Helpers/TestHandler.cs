@@ -56,7 +56,7 @@ public sealed class TestHandler : IResponseHandler
         }
 
         // Default: simple lifecycle
-        var response = new Models.Response(context.ResponseId, request.Model ?? "test-model");
+        var response = new Models.ResponseObject(context.ResponseId, request.Model ?? "test-model");
         yield return new ResponseCreatedEvent(0, response);
         response.SetCompleted();
         yield return new ResponseCompletedEvent(0, response);

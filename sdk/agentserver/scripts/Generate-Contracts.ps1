@@ -4,13 +4,13 @@
 
 <#
 .SYNOPSIS
-    Regenerates the Azure.AI.AgentServer.Responses.Contracts generated code.
+    Regenerates the Azure.AI.AgentServer.Responses generated model code.
 
 .DESCRIPTION
     Runs the full contract generation pipeline:
     1. Syncs upstream TypeSpec sources (eng/common/tsp-client)
     2. Compiles TypeSpec → C# models + OpenAPI spec (npx tsp compile)
-    3. Copies generated Models/ and Internal/ into Contracts/src/Generated/
+    3. Copies generated Models/ and Internal/ into Responses/src/Generated/
     4. Generates C# validators from the OpenAPI spec (python3 generate-validators.py)
     5. Cleans up tsp-output intermediates
 
@@ -44,9 +44,9 @@ Set-StrictMode -Version Latest
 # Resolve paths relative to the agentserver root (parent of scripts/)
 $AgentServerRoot = Split-Path -Parent $PSScriptRoot
 
-$TspDir = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses.Contracts" "src" "TypeSpec"
+$TspDir = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses" "src" "TypeSpec"
 $TspOut = Join-Path $TspDir "tsp-output"
-$ContractsGenerated = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses.Contracts" "src" "Generated"
+$ContractsGenerated = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses" "src" "Generated"
 $ValidatorsDir = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses" "src" "Generated" "Validators"
 $OverlayYaml = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses" "src" "Validation" "validation-overlay.yaml"
 $ValidatorsNamespace = "Azure.AI.AgentServer.Responses.Validators"
@@ -82,7 +82,7 @@ try {
         }
 
         Write-Host "Syncing upstream TypeSpec sources..."
-        $syncOutputDir = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses.Contracts" "src" "TypeSpec"
+        $syncOutputDir = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses" "src" "TypeSpec"
         npx --prefix $TspClientDir --no -- tsp-client sync --no-prompt --output-dir $syncOutputDir
         $TempTypeSpecDir = Join-Path $TspDir "TempTypeSpecFiles"
         if ($LASTEXITCODE -ne 0) {
@@ -134,8 +134,8 @@ try {
         }
         Write-Host "TypeSpec compiled."
 
-        # Step 3: Copy generated models into Contracts
-        Write-Host "Copying generated models into Contracts..."
+        # Step 3: Copy generated models into Responses
+        Write-Host "Copying generated models into Responses..."
         $modelsDir = Join-Path $ContractsGenerated "Models"
         $internalDir = Join-Path $ContractsGenerated "Internal"
 
@@ -224,7 +224,7 @@ try {
         Get-ChildItem -Path $TspOut -Exclude "src", "*.yaml" | Remove-Item -Recurse -Force
         Write-Host "  Preserved tsp-output/openapi.*.yaml and src/Custom/"
     }
-    Write-Host "All Responses contracts generated and cleaned up."
+    Write-Host "All Responses models generated and cleaned up."
 } finally {
     Pop-Location
 }
