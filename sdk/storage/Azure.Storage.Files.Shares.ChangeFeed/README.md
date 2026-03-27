@@ -9,7 +9,7 @@ build efficient incremental backup solutions, and react to file share mutations 
 Change feed is enabled per file share and records operations performed via both SMB and REST protocols,
 including creates, renames, deletes, writes, metadata updates, and security descriptor changes.
 
-[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
+[Source code][source] <!--| [Package (NuGet)][package] | [Product documentation][product_docs]-->
 
 ## Getting started
 
