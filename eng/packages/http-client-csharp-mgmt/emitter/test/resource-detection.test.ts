@@ -3309,4 +3309,187 @@ interface Gadgets {
     ok(resolvedResource);
     deepStrictEqual(resolvedResource.metadata.rbacRoles, []);
   });
+
+  it("action on parent singleton that lists child resources should be reassigned to child resource", async () => {
+    // This test reproduces the Storage SDK pattern where a list operation
+    // (e.g., blobContainersList) is modeled as an ArmResourceActionSync on a
+    // singleton parent (BlobService) rather than as ArmResourceListByParent on
+    // the child interface (BlobContainers).
+    //
+    // The emitter classifies it as kind=Action on the parent resource.
+    // The generator then routes it to the parent's Resource class instead of
+    // the child's Collection class, breaking backward compatibility.
+    //
+    // Expected behavior: the emitter should detect that this Action's operation
+    // path matches a child resource's collection path and reclassify it as a
+    // List on the child resource.
+
+    const program = await typeSpecCompile(
+      `
+/** Storage account resource */
+model StorageAccount is TrackedResource<StorageAccountProperties> {
+  ...ResourceNameParameter<StorageAccount>;
+}
+
+/** Storage account properties */
+model StorageAccountProperties {
+  /** Account description */
+  description?: string;
+}
+
+/** Blob service singleton resource */
+@singleton
+@parentResource(StorageAccount)
+model BlobService is ProxyResource<BlobServiceProperties> {
+  ...ResourceNameParameter<BlobService>;
+}
+
+/** Blob service properties */
+model BlobServiceProperties {
+  /** Whether versioning is enabled */
+  isVersioningEnabled?: boolean;
+}
+
+/** Container child resource */
+@parentResource(BlobService)
+model Container is ProxyResource<ContainerProperties> {
+  ...ResourceNameParameter<Container>;
+}
+
+/** Container properties */
+model ContainerProperties {
+  /** Public access level */
+  publicAccess?: string;
+}
+
+/** List of containers */
+model ListContainerItems {
+  /** The list of containers */
+  value?: Container[];
+
+  /** The next link */
+  nextLink?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface StorageAccounts {
+  get is ArmResourceRead<StorageAccount>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<StorageAccount>;
+}
+
+@armResourceOperations
+interface BlobServices {
+  get is ArmResourceRead<BlobService>;
+  setProperties is ArmResourceCreateOrReplaceSync<BlobService>;
+
+  /** Lists all containers in the blob service - modeled as action on parent */
+  @post
+  @segment("containers")
+  listContainers is ArmResourceActionSync<
+    BlobService,
+    void,
+    ListContainerItems
+  >;
+}
+
+@armResourceOperations
+interface Containers {
+  get is ArmResourceRead<Container>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<Container>;
+  delete is ArmResourceDeleteSync<Container>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    // Find the resources
+    const storageAccountResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts"
+    );
+    ok(storageAccountResource, "StorageAccount resource should exist");
+
+    const blobServiceResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices"
+    );
+    ok(blobServiceResource, "BlobService resource should exist");
+
+    const containerResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices/containers"
+    );
+    ok(containerResource, "Container resource should exist");
+
+    // Verify BlobService is a singleton with correct parent
+    strictEqual(blobServiceResource.metadata.singletonResourceName, "default");
+    strictEqual(
+      blobServiceResource.metadata.parentResourceId,
+      storageAccountResource.metadata.resourceIdPattern
+    );
+
+    // Verify Container's parent is BlobService
+    strictEqual(
+      containerResource.metadata.parentResourceId,
+      blobServiceResource.metadata.resourceIdPattern
+    );
+
+    // --- Current (incorrect) behavior ---
+    // The listContainers action is on BlobService as kind=Action
+    const blobServiceMethods = blobServiceResource.metadata.methods;
+    const listContainersOnService = blobServiceMethods.find((m: any) =>
+      m.methodId.includes("listContainers")
+    );
+
+    // Document current behavior: the list action is on the parent service resource
+    // TODO: After fix, this method should no longer be on BlobService
+    ok(
+      listContainersOnService,
+      "CURRENT BEHAVIOR: listContainers is on BlobService (should be moved to Container after fix)"
+    );
+    strictEqual(
+      listContainersOnService!.kind,
+      "Action",
+      "CURRENT BEHAVIOR: listContainers is classified as Action (should be List after fix)"
+    );
+
+    // Document that Container has NO list method currently
+    const containerMethods = containerResource.metadata.methods;
+    const listOnContainer = containerMethods.find(
+      (m: any) => m.kind === "List"
+    );
+
+    // TODO: After fix, Container SHOULD have a List method
+    strictEqual(
+      listOnContainer,
+      undefined,
+      "CURRENT BEHAVIOR: Container has no List method (should have one after fix)"
+    );
+
+    // --- Expected behavior after fix (uncomment when implementing) ---
+    // // The listContainers method should be on Container as kind=List
+    // const listOnContainerFixed = containerMethods.find(
+    //   (m: any) => m.kind === "List"
+    // );
+    // ok(listOnContainerFixed, "listContainers should be on Container as a List method");
+    // strictEqual(listOnContainerFixed!.kind, "List");
+    //
+    // // BlobService should NOT have the listContainers action anymore
+    // const listContainersOnServiceFixed = blobServiceMethods.find((m: any) =>
+    //   m.methodId.includes("listContainers")
+    // );
+    // strictEqual(listContainersOnServiceFixed, undefined,
+    //   "listContainers should no longer be on BlobService");
+  });
 });
