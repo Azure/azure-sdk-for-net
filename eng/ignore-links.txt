@@ -16,6 +16,6 @@ https://www.nuget.org/packages/Azure.AI.AgentServer.Hosting
 https://www.nuget.org/packages/Azure.AI.AgentServer.Responses
 https://www.nuget.org/packages/Azure.AI.AgentServer.Invocations
 https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses
-https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Hosting
+https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core
 https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations
 https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples
