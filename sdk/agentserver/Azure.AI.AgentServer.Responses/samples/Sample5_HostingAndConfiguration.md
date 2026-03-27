@@ -124,6 +124,42 @@ Use `ResponsesServer.Run<THandler>(configure: ...)` when you need:
 - **Custom tracing** sources for your business logic
 - **ASP.NET Core customization** (CORS, authentication, middleware)
 
-If you need to compose **multiple protocols** (Responses + Invocations), go to Tier 2 with `AgentHost.CreateBuilder()`.
+Use `ResponsesServer.Run(factory: ...)` when you need:
+- **Full control** over handler construction with non-DI parameters
+- **Runtime decisions** about which handler implementation to create
+
+## Use the builder directly (Tier 2)
+
+When you need more control — or want to compose multiple protocols — use
+`AgentHost.CreateBuilder()` directly. All the same customization is available,
+and you can use the factory delegate overload on the builder too:
+
+```C# Snippet:Responses_Sample5_BuilderWithFactory
+var builder = AgentHost.CreateBuilder();
+
+// Register services on the builder.
+builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
+
+// Use a factory delegate for handler construction.
+builder.AddResponses(factory: sp =>
+{
+    var kb = sp.GetRequiredService<IKnowledgeBase>();
+    return new KnowledgeHandler(kb);
+});
+
+// Configuration and tracing work the same way.
+builder.ConfigureTracing(tracing =>
+{
+    tracing.AddSource("MyAgent.BusinessLogic");
+});
+
+builder.ConfigureShutdown(TimeSpan.FromSeconds(15));
+
+var app = builder.Build();
+app.Run();
+```
+
+The builder pattern is especially useful when composing multiple protocols on a
+single host. For details, see the [Multi-protocol Composition](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples/Sample2_MultiProtocol.md) Core sample.
 
 ````

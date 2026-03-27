@@ -83,6 +83,37 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         }
 
         [Test]
+        public void BuilderWithFactory()
+        {
+            #region Snippet:Responses_Sample5_BuilderWithFactory
+
+            var builder = AgentHost.CreateBuilder();
+
+            // Register services on the builder.
+            builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
+
+            // Use a factory delegate for handler construction.
+            builder.AddResponses(factory: sp =>
+            {
+                var kb = sp.GetRequiredService<IKnowledgeBase>();
+                return new KnowledgeHandler(kb);
+            });
+
+            // Configuration and tracing work the same way.
+            builder.ConfigureTracing(tracing =>
+            {
+                tracing.AddSource("MyAgent.BusinessLogic");
+            });
+
+            builder.ConfigureShutdown(TimeSpan.FromSeconds(15));
+
+            var app = builder.Build();
+            app.Run();
+
+            #endregion
+        }
+
+        [Test]
         public void Implement_KnowledgeHandler()
         {
             var handler = new KnowledgeHandler(new WikiKnowledgeBase());
