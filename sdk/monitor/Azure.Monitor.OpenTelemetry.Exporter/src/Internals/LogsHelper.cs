@@ -114,10 +114,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         DateTimeOffset envelopeTime = availabilityInfo.Value.TestTimestamp != null
                             && DateTimeOffset.TryParse(
                                 availabilityInfo.Value.TestTimestamp,
-                                null,
+                                CultureInfo.InvariantCulture,
                                 System.Globalization.DateTimeStyles.RoundtripKind,
                                 out var parsedTs)
-                            ? parsedTs
+                            ? parsedTs.ToUniversalTime()
                             : TelemetryItem.FormatUtcTimestamp(logRecord.Timestamp);
 
                         telemetryItem = new TelemetryItem("Availability", envelopeTime, logRecord, resource, instrumentationKey, logContext)

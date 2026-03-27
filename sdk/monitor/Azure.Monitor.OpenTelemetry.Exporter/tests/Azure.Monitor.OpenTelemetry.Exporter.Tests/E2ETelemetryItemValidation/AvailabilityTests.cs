@@ -315,7 +315,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var uniqueTestId = Guid.NewGuid();
             var logCategoryName = $"logCategoryName{uniqueTestId}";
             var testTimestamp = "2025-04-19T12:10:59.9930000+00:00";
-            var expectedTime = DateTimeOffset.Parse(testTimestamp, null, DateTimeStyles.RoundtripKind);
+            var expectedTime = DateTimeOffset.Parse(testTimestamp, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime();
 
             List<TelemetryItem>? telemetryItems = null;
 
