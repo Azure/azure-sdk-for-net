@@ -12,13 +12,11 @@
             "AzureDeveloperCliCredential",
             "AzurePipelinesCredential",
             "AzurePowerShellCredential",
-            "BrokerCredential",
             "ChainedTokenCredential",
             "EnvironmentCredential",
             "InteractiveBrowserCredential",
             "ManagedIdentityAsFederatedIdentityCredential",
             "ManagedIdentityCredential",
-            "VisualStudioCodeCredential",
             "VisualStudioCredential",
             "WorkloadIdentityCredential"
           ]
@@ -454,95 +452,6 @@
           "if": {
             "properties": {
               "CredentialSource": {
-                "const": "VisualStudioCodeCredential"
-              }
-            },
-            "required": [
-              "CredentialSource"
-            ]
-          },
-          "then": {
-            "properties": {
-              "TenantId": {
-                "type": "string",
-                "description": "The Microsoft Entra tenant (directory) ID."
-              },
-              "AdditionallyAllowedTenants": {
-                "type": "array",
-                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "Retry": {
-                "$ref": "#/definitions/retry"
-              },
-              "Diagnostics": {
-                "$ref": "#/definitions/diagnostics"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "CredentialSource": {
-                "const": "BrokerCredential"
-              }
-            },
-            "required": [
-              "CredentialSource"
-            ]
-          },
-          "then": {
-            "properties": {
-              "TenantId": {
-                "type": "string",
-                "description": "The Microsoft Entra tenant (directory) ID."
-              },
-              "ClientId": {
-                "type": "string",
-                "description": "The client (application) ID."
-              },
-              "DisableInstanceDiscovery": {
-                "type": "boolean",
-                "description": "Skip Microsoft Entra instance discovery and validation."
-              },
-              "UseDefaultBrokerAccount": {
-                "type": "boolean",
-                "description": "Use the default broker account for authentication."
-              },
-              "IsLegacyMsaPassthroughEnabled": {
-                "type": "boolean",
-                "description": "Enable legacy Microsoft Account (MSA) passthrough."
-              },
-              "LoginHint": {
-                "type": "string",
-                "description": "Pre-populate the username/email in the login prompt."
-              },
-              "TokenCachePersistenceOptions": {
-                "$ref": "#/definitions/tokenCachePersistenceOptions"
-              },
-              "AdditionallyAllowedTenants": {
-                "type": "array",
-                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "Retry": {
-                "$ref": "#/definitions/retry"
-              },
-              "Diagnostics": {
-                "$ref": "#/definitions/diagnostics"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "CredentialSource": {
                 "const": "AzurePipelinesCredential"
               }
             },
@@ -694,12 +603,10 @@
             "AzureDeveloperCliCredential",
             "AzurePipelinesCredential",
             "AzurePowerShellCredential",
-            "BrokerCredential",
             "EnvironmentCredential",
             "InteractiveBrowserCredential",
             "ManagedIdentityAsFederatedIdentityCredential",
             "ManagedIdentityCredential",
-            "VisualStudioCodeCredential",
             "VisualStudioCredential",
             "WorkloadIdentityCredential"
           ]
@@ -1085,83 +992,6 @@
               "ProcessTimeout": {
                 "type": "string",
                 "description": "Timeout for the credential process (TimeSpan format, e.g. '00:00:30'). Default: 30 seconds."
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "CredentialSource": {
-                "const": "VisualStudioCodeCredential"
-              }
-            },
-            "required": [
-              "CredentialSource"
-            ]
-          },
-          "then": {
-            "properties": {
-              "TenantId": {
-                "type": "string",
-                "description": "The Microsoft Entra tenant (directory) ID."
-              },
-              "AdditionallyAllowedTenants": {
-                "type": "array",
-                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "CredentialSource": {
-                "const": "BrokerCredential"
-              }
-            },
-            "required": [
-              "CredentialSource"
-            ]
-          },
-          "then": {
-            "properties": {
-              "TenantId": {
-                "type": "string",
-                "description": "The Microsoft Entra tenant (directory) ID."
-              },
-              "ClientId": {
-                "type": "string",
-                "description": "The client (application) ID."
-              },
-              "DisableInstanceDiscovery": {
-                "type": "boolean",
-                "description": "Skip Microsoft Entra instance discovery and validation."
-              },
-              "UseDefaultBrokerAccount": {
-                "type": "boolean",
-                "description": "Use the default broker account for authentication."
-              },
-              "IsLegacyMsaPassthroughEnabled": {
-                "type": "boolean",
-                "description": "Enable legacy Microsoft Account (MSA) passthrough."
-              },
-              "LoginHint": {
-                "type": "string",
-                "description": "Pre-populate the username/email in the login prompt."
-              },
-              "TokenCachePersistenceOptions": {
-                "$ref": "#/definitions/tokenCachePersistenceOptions"
-              },
-              "AdditionallyAllowedTenants": {
-                "type": "array",
-                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
-                "items": {
-                  "type": "string"
-                }
               }
             }
           }
