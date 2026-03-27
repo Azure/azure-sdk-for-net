@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
+using Azure.Storage.Files.Shares;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
@@ -21,22 +22,30 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         // TODO: Replace with a test environment property once one is available for share names.
         private const string TestShareName = "changefeed-test-share";
 
-        public ShareChangeFeedClientLiveTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+        public ShareChangeFeedClientLiveTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ShareChangeFeedClient"/> via the extension method on <see cref="ShareClient"/>.
+        /// </summary>
+        private ShareChangeFeedClient GetChangeFeedClient()
+        {
+            ShareServiceClient serviceClient = GetShareServiceClient_SharedKey();
+            ShareClient shareClient = serviceClient.GetShareClient(TestShareName);
+            return shareClient.GetShareChangeFeedClient();
         }
 
         /// <summary>
         /// Enumerates all change feed events and verifies at least one event is returned.
         /// </summary>
         [RecordedTest]
-        [Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
+        //[Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
         public async Task GetChanges_ReturnsEvents()
         {
             // Arrange
-            ShareChangeFeedClient client = new ShareChangeFeedClient(
-                TestConfigDefault.ConnectionString,
-                TestShareName);
+            ShareChangeFeedClient client = GetChangeFeedClient();
 
             // Act
             List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();
@@ -77,10 +86,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             // Arrange
             DateTimeOffset start = DateTimeOffset.UtcNow.AddHours(-24);
             DateTimeOffset end = DateTimeOffset.UtcNow;
-
-            ShareChangeFeedClient client = new ShareChangeFeedClient(
-                TestConfigDefault.ConnectionString,
-                TestShareName);
+            ShareChangeFeedClient client = GetChangeFeedClient();
 
             // Act
             List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();
@@ -117,9 +123,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public async Task GetChanges_WithContinuationToken_ResumesCorrectly()
         {
             // Arrange
-            ShareChangeFeedClient client = new ShareChangeFeedClient(
-                TestConfigDefault.ConnectionString,
-                TestShareName);
+            ShareChangeFeedClient client = GetChangeFeedClient();
 
             // Act - read the first page
             HashSet<Guid> firstPageIds = new HashSet<Guid>();
@@ -192,9 +196,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public async Task GetLastConsumable_ReturnsTimestamp()
         {
             // Arrange
-            ShareChangeFeedClient client = new ShareChangeFeedClient(
-                TestConfigDefault.ConnectionString,
-                TestShareName);
+            ShareChangeFeedClient client = GetChangeFeedClient();
 
             // Act
             DateTimeOffset? lastConsumable = IsAsync
@@ -214,9 +216,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public async Task GetChanges_EventDataIsPopulated()
         {
             // Arrange
-            ShareChangeFeedClient client = new ShareChangeFeedClient(
-                TestConfigDefault.ConnectionString,
-                TestShareName);
+            ShareChangeFeedClient client = GetChangeFeedClient();
 
             // Act - get just a few events
             ShareChangeFeedEvent firstEvent = null;
@@ -266,10 +266,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             // from the test storage account.
             string beginSnapshot = "2024-01-15T08:00:00.000Z";
             string endSnapshot = "2024-01-15T09:00:00.000Z";
-
-            ShareChangeFeedClient client = new ShareChangeFeedClient(
-                TestConfigDefault.ConnectionString,
-                TestShareName);
+            ShareChangeFeedClient client = GetChangeFeedClient();
 
             // Act
             List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();

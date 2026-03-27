@@ -8,6 +8,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Files.Shares;
 using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
@@ -17,21 +18,21 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
     /// for building <see cref="BlobClientOptions"/> and simulating year/segment blob hierarchies.
     /// </summary>
     [ClientTestFixture(
-        BlobClientOptions.ServiceVersion.V2026_02_06,
-        BlobClientOptions.ServiceVersion.V2026_04_06,
-        BlobClientOptions.ServiceVersion.V2026_06_06,
+        ShareClientOptions.ServiceVersion.V2026_02_06,
+        ShareClientOptions.ServiceVersion.V2026_04_06,
+        ShareClientOptions.ServiceVersion.V2026_06_06,
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
     RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
     LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
     public class ShareChangeFeedTestBase : StorageTestBase<StorageTestEnvironment>
     {
-        protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
+        protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
 
         /// <summary>
         /// Initializes the test base with async mode, service version, and optional recorded test mode.
         /// </summary>
-        public ShareChangeFeedTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
+        public ShareChangeFeedTestBase(bool async, ShareClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
             _serviceVersion = serviceVersion;
@@ -40,9 +41,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         /// <summary>
         /// Creates instrumented <see cref="BlobClientOptions"/> configured with retry policy and recording support.
         /// </summary>
-        public BlobClientOptions GetOptions()
+        public ShareClientOptions GetOptions()
         {
-            var options = new BlobClientOptions(_serviceVersion)
+            ShareClientOptions options = new ShareClientOptions(_serviceVersion)
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =
@@ -60,6 +61,18 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
             return InstrumentClientOptions(options);
         }
+
+        /// <summary>
+        /// Creates an instrumented <see cref="ShareServiceClient"/> using shared key authentication.
+        /// </summary>
+        public ShareServiceClient GetShareServiceClient_SharedKey()
+            => InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigDefault.AccountName,
+                        TestConfigDefault.AccountKey),
+                    GetOptions()));
 
         /// <summary>
         /// Returns a page of mock year-level prefix paths (e.g., "idx/segments/2024/") for test setup.

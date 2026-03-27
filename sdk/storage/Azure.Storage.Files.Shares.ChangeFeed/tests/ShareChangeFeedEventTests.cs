@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Blobs;
+using Azure.Storage.Files.Shares;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
@@ -14,7 +14,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
     /// </summary>
     public class ShareChangeFeedEventTests : ShareChangeFeedTestBase
     {
-        public ShareChangeFeedEventTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+        public ShareChangeFeedEventTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null)
         {
         }

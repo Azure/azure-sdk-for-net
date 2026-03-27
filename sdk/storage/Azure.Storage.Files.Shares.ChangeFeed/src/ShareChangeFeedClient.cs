@@ -119,6 +119,29 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         }
 
         /// <summary>
+        /// Initializes a new instance of <see cref="ShareChangeFeedClient"/>
+        /// using a file service URI that includes a SAS token (or for anonymous access).
+        /// </summary>
+        /// <param name="fileServiceUri">The URI of the file service endpoint, optionally including a SAS token.</param>
+        /// <param name="shareName">The name of the file share whose change feed will be read.</param>
+        /// <param name="changeFeedOptions">Optional <see cref="ShareChangeFeedClientOptions"/> for tuning change feed behavior.</param>
+        public ShareChangeFeedClient(
+            Uri fileServiceUri,
+            string shareName,
+            ShareChangeFeedClientOptions changeFeedOptions = default)
+        {
+            _shareName = shareName ?? throw new ArgumentNullException(nameof(shareName));
+            _fileServiceUri = fileServiceUri ?? throw new ArgumentNullException(nameof(fileServiceUri));
+            _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
+
+            var blobOptions = new BlobClientOptions();
+            _pipeline = HttpPipelineBuilder.Build(blobOptions);
+
+            Uri blobEndpoint = ContainerDiscovery.FileToBlobEndpoint(fileServiceUri);
+            _blobServiceClient = new BlobServiceClient(blobEndpoint, blobOptions);
+        }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="ShareChangeFeedClient"/> for mocking purposes.
         /// </summary>
         protected ShareChangeFeedClient() { }

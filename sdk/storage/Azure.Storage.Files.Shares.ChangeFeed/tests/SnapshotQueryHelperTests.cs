@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Storage.Blobs;
+using Azure.Storage.Files.Shares;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
     /// </summary>
     public class SnapshotQueryHelperTests : ShareChangeFeedTestBase
     {
-        public SnapshotQueryHelperTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+        public SnapshotQueryHelperTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null)
         {
         }
