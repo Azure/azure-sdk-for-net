@@ -189,7 +189,6 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.AgentReference get_Agent(OpenAI.Responses.ResponseResult response) { throw null; }
         public static string get_AgentConversationId(OpenAI.Responses.CreateResponseOptions options) { throw null; }
         public static string get_AgentConversationId(OpenAI.Responses.ResponseResult response) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ExtraDataDictionary get_StructuredInputs(OpenAI.Responses.CreateResponseOptions options) { throw null; }
         public static void set_Agent(OpenAI.Responses.CreateResponseOptions options, Azure.AI.Extensions.OpenAI.AgentReference value) { }
         public static void set_AgentConversationId(OpenAI.Responses.CreateResponseOptions options, string value) { }
         public sealed partial class <G>$9441C364D6D7BED1E759B10623E362FD
@@ -197,7 +196,6 @@ namespace Azure.AI.Extensions.OpenAI
             internal <G>$9441C364D6D7BED1E759B10623E362FD() { }
             public Azure.AI.Extensions.OpenAI.AgentReference Agent { get { throw null; } set { } }
             public string AgentConversationId { get { throw null; } set { } }
-            public Azure.AI.Extensions.OpenAI.ExtraDataDictionary StructuredInputs { get { throw null; } }
             public static partial class <M>$CF4B939802E692FD9BEF27F36FABED87
             {
                 public static void <Extension>$(OpenAI.Responses.CreateResponseOptions options) { }
@@ -432,32 +430,6 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.SharepointGroundingToolCallOutput SharepointGroundingToolCallOutput(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, System.BinaryData output = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         public static Azure.AI.Extensions.OpenAI.UserProfileMemoryItem UserProfileMemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
     }
-    public partial class ExtraDataDictionary : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, System.BinaryData>>, System.Collections.Generic.IDictionary<string, System.BinaryData>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.BinaryData>>, System.Collections.IEnumerable
-    {
-        internal ExtraDataDictionary() { }
-        public int Count { get { throw null; } }
-        public bool IsReadOnly { get { throw null; } }
-        public System.BinaryData this[System.ReadOnlySpan<byte> key] { get { throw null; } set { } }
-        public System.BinaryData this[string key] { get { throw null; } set { } }
-        public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
-        public System.Collections.Generic.ICollection<System.BinaryData> Values { get { throw null; } }
-        public void Add(System.Collections.Generic.KeyValuePair<string, System.BinaryData> item) { }
-        public void Add(string key, System.BinaryData value) { }
-        public void Add(string key, bool value) { }
-        public void Add(string key, int value) { }
-        public void Add(string key, string value) { }
-        public void Clear() { }
-        public bool Contains(System.Collections.Generic.KeyValuePair<string, System.BinaryData> item) { throw null; }
-        public bool ContainsKey(string key) { throw null; }
-        public void CopyTo(System.Collections.Generic.KeyValuePair<string, System.BinaryData>[] array, int arrayIndex) { }
-        public bool Remove(System.Collections.Generic.KeyValuePair<string, System.BinaryData> item) { throw null; }
-        public bool Remove(string key) { throw null; }
-        public void SetData(System.BinaryData dictionaryJsonBytes) { }
-        System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, System.BinaryData>> System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<System.String,System.BinaryData>>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGetValue(System.ReadOnlySpan<byte> key, out System.BinaryData value) { throw null; }
-        public bool TryGetValue(string key, out System.BinaryData value) { throw null; }
-    }
     public partial class FabricDataAgentToolCall : Azure.AI.Extensions.OpenAI.AgentResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.FabricDataAgentToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.FabricDataAgentToolCall>
     {
         public FabricDataAgentToolCall(string callId, string arguments, Azure.AI.Extensions.OpenAI.ToolCallStatus status) { }
@@ -685,10 +657,6 @@ namespace Azure.AI.Extensions.OpenAI
         public ProjectOpenAIClient(System.ClientModel.Primitives.AuthenticationPolicy authenticationPolicy, Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions options) { }
         protected internal ProjectOpenAIClient(System.ClientModel.Primitives.ClientPipeline pipeline, Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions options) { }
         public ProjectOpenAIClient(System.Uri projectEndpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions options = null) { }
-        public virtual Azure.AI.Extensions.OpenAI.ProjectConversationsClient Conversations { get { throw null; } }
-        public virtual Azure.AI.Extensions.OpenAI.ProjectFilesClient Files { get { throw null; } }
-        public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient Responses { get { throw null; } }
-        public virtual Azure.AI.Extensions.OpenAI.ProjectVectorStoresClient VectorStores { get { throw null; } }
         public override OpenAI.Conversations.ConversationClient GetConversationClient() { throw null; }
         public override OpenAI.Files.OpenAIFileClient GetOpenAIFileClient() { throw null; }
         public virtual Azure.AI.Extensions.OpenAI.ProjectConversationsClient GetProjectConversationsClient() { throw null; }

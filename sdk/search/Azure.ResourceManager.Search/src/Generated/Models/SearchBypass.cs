@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Search.Models
         private readonly string _value;
         /// <summary> Indicates that no origin can bypass the rules defined in the 'ipRules' section. This is the default. </summary>
         private const string NoneValue = "None";
+        /// <summary> Indicates that requests originating from the Azure Portal can bypass the rules defined in the 'ipRules' section. </summary>
+        private const string AzurePortalValue = "AzurePortal";
         /// <summary> Indicates that requests originating from Azure trusted services can bypass the rules defined in the 'ipRules' section. </summary>
         private const string AzureServicesValue = "AzureServices";
 
@@ -32,6 +34,9 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Indicates that no origin can bypass the rules defined in the 'ipRules' section. This is the default. </summary>
         public static SearchBypass None { get; } = new SearchBypass(NoneValue);
+
+        /// <summary> Indicates that requests originating from the Azure Portal can bypass the rules defined in the 'ipRules' section. </summary>
+        public static SearchBypass AzurePortal { get; } = new SearchBypass(AzurePortalValue);
 
         /// <summary> Indicates that requests originating from Azure trusted services can bypass the rules defined in the 'ipRules' section. </summary>
         public static SearchBypass AzureServices { get; } = new SearchBypass(AzureServicesValue);

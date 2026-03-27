@@ -11,13 +11,13 @@ using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Indicates if the search service has an upgrade available. </summary>
+    /// <summary> Indicates if the dedicated search service has an upgrade available. </summary>
     public readonly partial struct SearchServiceUpgradeAvailable : IEquatable<SearchServiceUpgradeAvailable>
     {
         private readonly string _value;
-        /// <summary> An upgrade is currently not available for the service. </summary>
+        /// <summary> An upgrade is currently not available for the dedicated service. </summary>
         private const string NotAvailableValue = "notAvailable";
-        /// <summary> There is an upgrade available for the service. </summary>
+        /// <summary> There is an upgrade available for the dedicated service. </summary>
         private const string AvailableValue = "available";
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceUpgradeAvailable"/>. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Search.Models
             _value = value;
         }
 
-        /// <summary> An upgrade is currently not available for the service. </summary>
+        /// <summary> An upgrade is currently not available for the dedicated service. </summary>
         public static SearchServiceUpgradeAvailable NotAvailable { get; } = new SearchServiceUpgradeAvailable(NotAvailableValue);
 
-        /// <summary> There is an upgrade available for the service. </summary>
+        /// <summary> There is an upgrade available for the dedicated service. </summary>
         public static SearchServiceUpgradeAvailable Available { get; } = new SearchServiceUpgradeAvailable(AvailableValue);
 
         /// <summary> Determines if two <see cref="SearchServiceUpgradeAvailable"/> values are the same. </summary>

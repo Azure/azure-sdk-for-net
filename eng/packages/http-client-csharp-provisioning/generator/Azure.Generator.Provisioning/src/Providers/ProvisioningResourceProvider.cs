@@ -34,8 +34,6 @@ namespace Azure.Generator.Provisioning.Providers
     /// </summary>
     internal class ProvisioningResourceProvider : ModelProvider, IProvisioningPropertyInfo
     {
-        private const string FlattenPropertyDecoratorName = "Azure.ResourceManager.@flattenProperty";
-
         // System properties that should always be output-only
         private static readonly HashSet<string> OutputOnlyProperties = new(StringComparer.OrdinalIgnoreCase)
         {
@@ -398,54 +396,31 @@ namespace Azure.Generator.Provisioning.Providers
 
                 var serializedName = prop.SerializedName ?? prop.Name;
 
-                // Check if this property should be flattened (only via explicit decorator)
-                bool shouldFlatten = prop.Decorators.Any(d => d.Name == FlattenPropertyDecoratorName);
+                if (seen.Contains(serializedName)) continue;
+                seen.Add(serializedName);
 
-                if (shouldFlatten && prop.Type is InputModelType flattenModel)
+                // Skip "type" property
+                if (SkipProperties.Contains(serializedName)) continue;
+
+                var bicepPath = basePath != null
+                    ? [.. basePath, serializedName]
+                    : new[] { serializedName };
+
+                var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
+                        && !_createBodyWritableProperties.Contains(serializedName))
+                    || OutputOnlyProperties.Contains(serializedName);
+                var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
+
+                var propertyName = prop.Name.ToIdentifierName();
+                // For singleton resources, the "name" property is output-only with a default value
+                string? defaultValue = null;
+                if (serializedName == "name"
+                    && _resourceMetadata?.SingletonResourceName is not null)
                 {
-                    var flattenPath = basePath != null
-                        ? [.. basePath, serializedName]
-                        : new[] { serializedName };
-
-                    // Flatten the child model's properties
-                    CollectPropertiesFromModel(flattenModel, result, seen, flattenPath);
-
-                    // Also walk the child model's base chain
-                    var childBase = flattenModel.BaseModel;
-                    while (childBase != null)
-                    {
-                        CollectPropertiesFromModel(childBase, result, seen, flattenPath);
-                        childBase = childBase.BaseModel;
-                    }
+                    defaultValue = _resourceMetadata.SingletonResourceName;
+                    isOutput = true;
                 }
-                else
-                {
-                    if (seen.Contains(serializedName)) continue;
-                    seen.Add(serializedName);
-
-                    // Skip "type" property
-                    if (SkipProperties.Contains(serializedName)) continue;
-
-                    var bicepPath = basePath != null
-                        ? [.. basePath, serializedName]
-                        : new[] { serializedName };
-
-                    var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
-                            && !_createBodyWritableProperties.Contains(serializedName))
-                        || OutputOnlyProperties.Contains(serializedName);
-                    var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
-
-                    var propertyName = prop.Name.ToIdentifierName();
-                    // For singleton resources, the "name" property is output-only with a default value
-                    string? defaultValue = null;
-                    if (serializedName == "name"
-                        && _resourceMetadata?.SingletonResourceName is not null)
-                    {
-                        defaultValue = _resourceMetadata.SingletonResourceName;
-                        isOutput = true;
-                    }
-                    result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue));
-                }
+                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue));
             }
         }
 

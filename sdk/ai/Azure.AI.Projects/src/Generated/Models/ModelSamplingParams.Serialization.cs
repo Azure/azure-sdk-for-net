@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Represents a set of parameters used to control the sampling behavior of a language model during text generation. </summary>
-    public partial class ModelSamplingParams : IJsonModel<ModelSamplingParams>
+    internal partial class ModelSamplingParams : IJsonModel<ModelSamplingParams>
     {
         /// <summary> Initializes a new instance of <see cref="ModelSamplingParams"/> for deserialization. </summary>
         internal ModelSamplingParams()

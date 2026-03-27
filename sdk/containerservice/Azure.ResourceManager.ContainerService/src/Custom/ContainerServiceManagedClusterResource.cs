@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => await DeleteAsync(waitUntil, null, default, cancellationToken).ConfigureAwait(false);
+            => await DeleteAsync(waitUntil, default(ETag?), cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a managed cluster.
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => Delete(waitUntil, null, default, cancellationToken);
+            => Delete(waitUntil, default(ETag?), cancellationToken);
 
         /// <summary>
         /// Deletes a managed cluster.
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? ignorePodDisruptionBudget, CancellationToken cancellationToken)
-            => await DeleteAsync(waitUntil, null, ignorePodDisruptionBudget, cancellationToken).ConfigureAwait(false);
+            => await DeleteAsync(waitUntil, default(ETag?), cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a managed cluster.
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, bool? ignorePodDisruptionBudget, CancellationToken cancellationToken)
-            => Delete(waitUntil, null, ignorePodDisruptionBudget, cancellationToken);
+            => Delete(waitUntil, default(ETag?), cancellationToken);
 
         /// <summary>
         /// Updates tags on a managed cluster.
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken)
-            => await DeleteAsync(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, default, cancellationToken).ConfigureAwait(false);
+            => await DeleteAsync(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a managed cluster.
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken)
-            => Delete(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, default, cancellationToken);
+            => Delete(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
 
         /// <summary>
         /// Updates tags on a managed cluster.

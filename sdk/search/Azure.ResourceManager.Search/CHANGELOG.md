@@ -5,12 +5,14 @@
 ### Features Added
 
 - Upgraded api-version to 2026-03-01-preview.
-    - Added `KnowledgeRetrieval` property on search service for configuring agentic retrieval billing tier.
+    - Added `KnowledgeRetrieval` property on `SearchServiceProperties` for configuring agentic retrieval billing tier.
     - Added `ServiceLevelEncryptionKey` property on `SearchEncryptionWithCmk` for service-level CMK encryption.
-    - Added `SearchServiceEncryptionKey` model for encryption key configuration.
+    - Added `SearchResourceEncryptionKey` model for encryption key configuration.
     - Added `SearchDataIdentity` type hierarchy (`SearchDataNoneIdentity`, `SearchDataUserAssignedIdentity`) for identity configuration.
     - Added `SearchAadApplicationCredentials` model for Azure Active Directory application credentials.
     - Added `Stopped` value to `SearchServiceStatus` enum.
+    - Added `GetOfferings` operation at tenant level to list all features and SKUs offered by Azure AI Search in each region.
+    - Added `SearchFeatureOffering`, `SearchOfferingsByRegion`, `SearchSkuOffering`, and `SearchSkuLimits` models for offerings support.
 
 ## 1.3.0 (2025-07-23)
 

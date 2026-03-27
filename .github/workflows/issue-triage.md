@@ -36,7 +36,11 @@ safe-outputs:
         issues: write
       inputs:
         message:
-          description: "The full comment body including @mentions"
+          description: "The comment body text without any @mentions or @ symbols"
+          required: true
+          type: string
+        owners:
+          description: "Comma-separated GitHub usernames to notify, without the @ prefix (e.g. 'user1, user2, Azure/team-name')"
           required: true
           type: string
       steps:
@@ -96,12 +100,38 @@ safe-outputs:
               }
 
               for (const item of items) {
+                if (!item.owners || typeof item.owners !== 'string' || !item.owners.trim()) {
+                  await failSafe('mention_owners item missing owners field');
+                  return;
+                }
+
+                const mentions = item.owners
+                  .split(/[\s,]+/)
+                  .map(s => s.trim())
+                  .filter(Boolean)
+                  .map(raw => {
+                    const normalized = raw.replace(/^\\?@/, '');
+                    if (/\r|\n/.test(normalized)) return null;
+                    if (!/^[A-Za-z0-9-]+(?:\/[A-Za-z0-9-]+)?$/.test(normalized)) return null;
+                    return `@${normalized}`;
+                  })
+                  .filter(Boolean);
+
+                if (mentions.length === 0) {
+                  await failSafe('No valid owners after parsing owners field');
+                  return;
+                }
+
+                const body = item.message
+                  ? `${item.message} ${mentions.join(' ')}`
+                  : mentions.join(' ');
+
                 try {
                   await github.rest.issues.createComment({
                     owner, repo, issue_number: issueNumber,
-                    body: item.message
+                    body
                   });
-                  core.info(`Posted routing comment on #${issueNumber}`);
+                  core.info(`Posted routing comment on #${issueNumber} mentioning: ${mentions.join(', ')}`);
                 } catch (apiError) {
                   await failSafe(`GitHub API error posting comment: ${apiError.message}`);
                   return;
@@ -381,14 +411,20 @@ If AzureSdkOwners or ServiceOwners were identified in Step 4, use the `mention_o
 
 **Important:** Use the `mention_owners` tool (NOT `add_comment`) for this step; `mention_owners` preserves @mentions as real pings while `add_comment` neutralizes them
 
+**Critical:** Pass owner names in the `owners` field WITHOUT the @ prefix; the `mention_owners` job prepends @ on the server side to avoid safe-outputs sanitization. Never include @ symbols in any `mention_owners` tool parameter
+
 This comment should be concise: a brief routing message and the @mentions only; no analysis or debugging detail
 
 ```
 IF AzureSdkOwners were identified in Step 4:
-    - Use `mention_owners` with message: "Routing to the team for assistance: @owner1 @owner2"
+    - Use `mention_owners` with:
+        message: "//cc: "
+        owners: "owner1, owner2"
 
 ELSE IF ServiceOwners were identified in Step 4 (Service Attention path):
-    - Use `mention_owners` with message: "Thanks for the feedback! We are routing this to the appropriate team for follow-up. cc @owner1 @owner2"
+    - Use `mention_owners` with:
+        message: "//cc: "
+        owners: "owner1, owner2"
 
 ELSE:
     - Skip this step

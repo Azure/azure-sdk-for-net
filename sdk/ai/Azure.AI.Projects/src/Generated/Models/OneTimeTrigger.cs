@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> One-time trigger. </summary>
-    public partial class OneTimeTrigger : Trigger
+    public partial class OneTimeTrigger : ScheduleTrigger
     {
         /// <summary> Initializes a new instance of <see cref="OneTimeTrigger"/>. </summary>
         /// <param name="triggerAt"> Date and time for the one-time trigger in ISO 8601 format. </param>

@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("encryptionComplianceStatus"u8);
                 writer.WriteStringValue(EncryptionComplianceStatus.Value.ToSerialString());
             }
+            if (Optional.IsDefined(ServiceLevelEncryptionKey))
+            {
+                writer.WritePropertyName("serviceLevelEncryptionKey"u8);
+                writer.WriteObjectValue(ServiceLevelEncryptionKey, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +133,7 @@ namespace Azure.ResourceManager.Search.Models
             }
             SearchEncryptionWithCmkEnforcement? enforcement = default;
             SearchEncryptionComplianceStatus? encryptionComplianceStatus = default;
+            SearchResourceEncryptionKey serviceLevelEncryptionKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,12 +155,21 @@ namespace Azure.ResourceManager.Search.Models
                     encryptionComplianceStatus = prop.Value.GetString().ToSearchEncryptionComplianceStatus();
                     continue;
                 }
+                if (prop.NameEquals("serviceLevelEncryptionKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceLevelEncryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SearchEncryptionWithCmk(enforcement, encryptionComplianceStatus, additionalBinaryDataProperties);
+            return new SearchEncryptionWithCmk(enforcement, encryptionComplianceStatus, serviceLevelEncryptionKey, additionalBinaryDataProperties);
         }
     }
 }

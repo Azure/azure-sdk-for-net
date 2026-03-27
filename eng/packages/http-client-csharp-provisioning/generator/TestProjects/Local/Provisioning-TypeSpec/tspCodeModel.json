@@ -3563,8 +3563,13 @@
           "optional": true,
           "readOnly": false,
           "discriminator": false,
-          "flatten": false,
-          "decorators": [],
+          "flatten": true,
+          "decorators": [
+            {
+              "name": "Azure.ResourceManager.@flattenProperty",
+              "arguments": {}
+            }
+          ],
           "crossLanguageDefinitionId": "ProvisioningTypeSpec.Item.properties",
           "serializationOptions": {
             "json": {
